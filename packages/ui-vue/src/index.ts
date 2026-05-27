@@ -35,11 +35,18 @@ export { default as Dialog } from './components/Dialog.vue'
 export { default as DropdownMenu } from './components/DropdownMenu.vue'
 export type { MenuEntry } from './types'
 export { default as Combobox } from './components/Combobox.vue'
+export { default as MultiCombobox } from './components/MultiCombobox.vue'
 export { default as OverflowScroll } from './components/OverflowScroll.vue'
+export { default as Popover } from './components/Popover.vue'
+export { default as Drawer } from './components/Drawer.vue'
+export { default as Accordion } from './components/Accordion.vue'
+export type { AccordionEntry } from './components/Accordion.vue'
+export { default as Field } from './components/Field.vue'
+export { default as Toaster } from './components/Toaster.vue'
 
 // Composables
 export { useServerSearch } from './composables/useServerSearch'
 export type { SearchOption } from './composables/useServerSearch'
 export { useHoldRepeat } from './composables/useHoldRepeat'
-
-// Pending (Reka-backed): Drawer, Toast, MultiCombobox, Accordion, Popover
+export { useToast } from './composables/useToast'
+export type { ToastItem, ToastVariant, ToastOptions, ToastAction } from './composables/useToast'

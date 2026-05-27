@@ -40,8 +40,14 @@ Built + verified in the playground:
 | Tooltip | Reka `Tooltip*` | built (hover) |
 | Dialog / Modal | Reka `Dialog*` | ✓ scrim + centered + header/body/footer |
 | DropdownMenu | Reka `DropdownMenu*` | ✓ items, shortcut, separator, destructive |
-| Combobox | Reka `Combobox*` | ✓ client + **server-search** (focus-clears-search, loading, seen-map) |
+| Combobox | Reka `Combobox*` | ✓ client + **server-search** (focus-clears-search, loading, seen-map), capped + scrollable popover |
+| MultiCombobox | Reka `Combobox*` (multiple) | ✓ chips-in-field, checkmark rows, clears search on **close**, seen-map |
 | OverflowScroll | native + `useHoldRepeat` | ✓ scroll arrows (h/v/both), fade edges, press-hold |
+| Popover | Reka `Popover*` | ✓ side/align/offset, optional arrow |
+| Drawer | Reka `Dialog*` (side) | ✓ left/right, scrim, header/body/footer |
+| Accordion | Reka `Accordion*` | ✓ single/multiple, collapsible, animated height |
+| Field | native wrapper | ✓ label + helper/error/success, `aria-describedby` via slot props |
+| Toast | Reka `Toast*` + `useToast` | ✓ success/danger/warning/info, action, sticky, stack position |
 
 **Composables:** `useServerSearch(fetcher)` (debounced + seen-map + `optionsFor(selected)`), `useHoldRepeat` (press-and-hold). DVLA patterns from v2 (`useSearchableUsers`/`OverflowScroll`) distilled into reusable, framework-light form.
 
@@ -50,14 +56,14 @@ Styling note: live overlay positioning lives in `ui-vue/src/overlays.css` (the g
 
 ## Pending
 
-### `@lookbook/ui-vue` molecules — remaining
-Drawer (Reka Dialog, side) · Toast (Reka Toast + a `useToast` composable) · MultiCombobox (Reka Popover + chips, multi-select) · Popover (Reka Popover) · Accordion · Field wrapper (label+helper+error).
+### `@lookbook/ui-vue` molecules — DONE
+All molecules built (see table above). Batch 2 (Drawer, Toast, MultiCombobox, Popover, Accordion, Field) browser-verified across light, dark, and DVLA skin.
 
-### Organisms — LATER
+### Gallery specimens still missing
+Combobox / MultiCombobox / OverflowScroll have no visual specimen yet, and Accordion's styling lives in `overlays.css` (no spec block). A Claude Design prompt to add a "Lists & selection" subsection (+ Accordion) is queued; ingest the export with `scripts/sync-gallery.sh`, then promote `.lb-accordion*` into `components.css`.
+
+### Organisms — NEXT
 App shell (sidebar + topbar), data table, page header, filter bar — bigger; build after molecules.
-
-### Field/Form wrappers
-`Field` (label + control + helper + error with `aria-describedby`) and `FieldSuccess` — flagged as gaps in the self-service mapping.
 
 ## Notes
 - Self-service worktree was **not touched** — integration is a separate, user-led step.

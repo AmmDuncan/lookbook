@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {
-  Alert, Avatar, Badge, Button, Card, CardBody, CardFooter, CardHeader,
-  Checkbox, Combobox, Dialog, DropdownMenu, Input, OverflowScroll, Radio,
-  Select, Skeleton, Spinner, Stepper, Switch, Tabs, Textarea, Tooltip,
-  useServerSearch,
+  Accordion, Alert, Avatar, Badge, Button, Card, CardBody, CardFooter, CardHeader,
+  Checkbox, Combobox, Dialog, Drawer, DropdownMenu, Field, Input, MultiCombobox,
+  OverflowScroll, Popover, Radio, Select, Skeleton, Spinner, Stepper, Switch,
+  Tabs, Textarea, Toaster, Tooltip, useServerSearch, useToast,
 } from '@lookbook/ui-vue'
 // Brand skin loaded as raw CSS so we can toggle it to prove the re-skin contract.
 import dvlaSkin from '@lookbook/tokens/skins/dvla-self-service.css?raw'
@@ -65,6 +65,27 @@ const mockApi = (q: string) =>
   })
 const officerSearch = useServerSearch(mockApi)
 const officerOptions = officerSearch.optionsFor(officerId)
+
+// MultiCombobox — client-side multi-select over the regions list
+const pickedRegions = ref<(string | number)[]>(['ga', 'as'])
+
+// Popover + Drawer open state
+const drawerOpen = ref(false)
+const drawerSide = ref<'right' | 'left'>('right')
+
+// Field demo
+const licence = ref('')
+
+// Toasts
+const { success, error, warning, info } = useToast()
+
+// Accordion
+const faq = ref('a')
+const faqItems = [
+  { value: 'a', title: 'How do I record a walk-in payment?', content: 'Open the service, choose the fee, then record payment from the invoice.' },
+  { value: 'b', title: 'Can I bill a co-owner?', content: 'Yes — pick the billing party on the service before generating the invoice.' },
+  { value: 'c', title: 'What if the licence has expired?', content: 'You will be prompted to run the renewal flow before proceeding.' },
+]
 </script>
 
 <template>
@@ -251,5 +272,62 @@ const officerOptions = officerSearch.optionsFor(officerId)
         <div class="pg-row"><Skeleton variant="avatar" /><Skeleton variant="button" /></div>
       </div>
     </section>
+
+    <section class="pg-section">
+      <h2>Batch 2 molecules</h2>
+      <p>Field wrapper · MultiCombobox · Popover · Drawer · Accordion · Toast — behavior from Reka, styled to spec</p>
+
+      <div class="pg-grid">
+        <Field label="Licence number" required helper="Format: GR-1234-23" #default="{ id, describedby, invalid }">
+          <Input :id="id" v-model="licence" :aria-describedby="describedby" :error="invalid" placeholder="GR-…" />
+        </Field>
+        <Field label="Email" error="That address is already registered." #default="{ id, describedby, invalid }">
+          <Input :id="id" model-value="taken@dvla.gov" :aria-describedby="describedby" :error="invalid" />
+        </Field>
+        <Field label="Phone" success="Verified." #default="{ id, describedby }">
+          <Input :id="id" model-value="024 000 0000" :aria-describedby="describedby" />
+        </Field>
+        <div class="pg-field">
+          <span class="pg-label">multi-select</span>
+          <MultiCombobox v-model="pickedRegions" :options="regions" placeholder="Add regions…" />
+        </div>
+      </div>
+
+      <div class="pg-row" style="margin-top: 16px">
+        <Popover :arrow="true" side="bottom">
+          <template #trigger><Button variant="secondary">Open popover</Button></template>
+          <strong style="display: block; margin-bottom: 4px">Quick info</strong>
+          <p style="margin: 0; color: var(--text-secondary); font-size: var(--text-body-sm-size)">Rich content in a positioned, focus-trapped popover with an arrow.</p>
+        </Popover>
+
+        <Button variant="secondary" @click="drawerSide = 'right'; drawerOpen = true">Drawer (right)</Button>
+        <Button variant="secondary" @click="drawerSide = 'left'; drawerOpen = true">Drawer (left)</Button>
+        <Drawer v-model:open="drawerOpen" :side="drawerSide" title="Filters" description="Narrow the results">
+          <div class="pg-row" style="flex-direction: column; align-items: stretch; gap: 12px">
+            <label class="pg-row" style="gap: 8px"><Checkbox /> Paid</label>
+            <label class="pg-row" style="gap: 8px"><Checkbox /> Pending</label>
+            <label class="pg-row" style="gap: 8px"><Checkbox /> Overdue</label>
+          </div>
+          <template #footer>
+            <Button variant="ghost" size="sm" @click="drawerOpen = false">Clear</Button>
+            <Button size="sm" @click="drawerOpen = false">Apply</Button>
+          </template>
+        </Drawer>
+      </div>
+
+      <div class="pg-row" style="margin-top: 16px">
+        <Button variant="secondary" size="sm" @click="success('Payment recorded', { message: 'Receipt is ready to print.' })">Toast: success</Button>
+        <Button variant="secondary" size="sm" @click="error('Verification failed', { message: 'Check the licence number.' })">danger</Button>
+        <Button variant="secondary" size="sm" @click="warning('Invoice expiring', { action: { label: 'Renew', onClick: () => {} } })">warning + action</Button>
+        <Button variant="secondary" size="sm" @click="info('OTP sent', { duration: 0 })">info (sticky)</Button>
+      </div>
+
+      <p style="margin-top: 24px">Accordion (single, collapsible):</p>
+      <div style="max-width: 520px">
+        <Accordion v-model="faq" :items="faqItems" />
+      </div>
+    </section>
+
+    <Toaster position="br" />
   </div>
 </template>

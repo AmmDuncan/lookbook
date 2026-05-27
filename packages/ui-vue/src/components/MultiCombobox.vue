@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import {
   ComboboxAnchor, ComboboxContent, ComboboxEmpty, ComboboxInput,
-  ComboboxItem, ComboboxPortal, ComboboxRoot, ComboboxTrigger, ComboboxViewport,
+  ComboboxItem, ComboboxItemIndicator, ComboboxPortal, ComboboxRoot,
+  ComboboxTrigger, ComboboxViewport,
 } from 'reka-ui'
 import { computed, ref, watch } from 'vue'
 
 import type { SearchOption } from '../composables/useServerSearch'
 
+type Value = string | number
 type Size = 'sm' | 'md' | 'lg'
 
 const props = withDefaults(
@@ -24,55 +26,66 @@ const props = withDefaults(
   }>(),
   { size: 'md', placeholder: 'Search…', emptyText: 'No matches.' },
 )
-const model = defineModel<string | number | null>()
+const model = defineModel<Value[]>({ default: () => [] })
 const searchTerm = defineModel<string>('searchTerm', { default: '' })
 
 const open = ref(false)
 
-/** Selected label shown in the closed input — not the raw value. */
-function displayValue(value: unknown): string {
-  if (value == null || value === '') return ''
+/** Resolve a selected value to its label — falls back to the raw value. */
+function labelFor(value: Value): string {
   const opt = props.options.find((o) => String(o.value) === String(value))
   return opt?.displayLabel ?? opt?.label ?? String(value)
 }
 
-function onChange(value: string | number | null) {
-  if (value == null) { model.value = null; return }
-  const matched = props.options.find((o) => String(o.value) === String(value))
-  model.value = matched ? matched.value : value
+const selected = computed(() => model.value ?? [])
+
+function removeChip(value: Value) {
+  model.value = selected.value.filter((v) => String(v) !== String(value))
 }
 
 function onFocus() {
   if (!props.disabled) open.value = true
 }
 
-// Clear the search on open so the FULL list shows, not a list pre-filtered
-// to the current selection's label.
+// Multi-select keeps the search across selections, so clear it on CLOSE
+// (the inverse of single Combobox, which clears on open).
 watch(open, (isOpen) => {
-  if (isOpen && searchTerm.value) searchTerm.value = ''
+  if (!isOpen && searchTerm.value) searchTerm.value = ''
 })
 
-const inputClass = computed(() => ['input', `input--${props.size}`, 'has-trailing', { 'is-error': props.error }])
+const anchorClass = computed(() => [
+  'input-affix lb-multi-anchor', `lb-multi-anchor--${props.size}`,
+  { 'is-error': props.error, 'is-disabled': props.disabled },
+])
 </script>
 
 <template>
   <ComboboxRoot
-    :model-value="model"
+    :model-value="selected"
     :open="open"
+    multiple
     :ignore-filter="serverSide"
     :disabled="disabled"
-    @update:model-value="onChange"
+    @update:model-value="(v) => (model = (v as Value[]))"
     @update:open="(v) => (open = v)"
   >
-    <ComboboxAnchor class="input-affix">
-      <span class="input-leading">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-      </span>
+    <ComboboxAnchor :class="anchorClass">
+      <button
+        v-for="v in selected"
+        :key="String(v)"
+        type="button"
+        class="chip is-active lb-multi-chip"
+        @click.stop="removeChip(v)"
+      >
+        {{ labelFor(v) }}
+        <span class="chip-x" aria-label="Remove">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" /></svg>
+        </span>
+      </button>
       <ComboboxInput
         v-model:search-term="searchTerm"
-        :class="inputClass"
-        :placeholder="placeholder"
-        :display-value="displayValue"
+        class="lb-multi-input"
+        :placeholder="selected.length ? '' : placeholder"
         :aria-invalid="error || undefined"
         @focus="onFocus"
       />
@@ -94,8 +107,13 @@ const inputClass = computed(() => ['input', `input--${props.size}`, 'has-trailin
             :key="String(opt.value)"
             :value="opt.value"
             :disabled="opt.disabled"
-            :class="['menu-item', { 'is-disabled': opt.disabled }]"
+            :class="['menu-item lb-multi-item', { 'is-disabled': opt.disabled }]"
           >
+            <span class="lb-multi-check">
+              <ComboboxItemIndicator>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12" /></svg>
+              </ComboboxItemIndicator>
+            </span>
             <slot name="option" :opt="opt">{{ opt.displayLabel ?? opt.label }}</slot>
           </ComboboxItem>
         </ComboboxViewport>

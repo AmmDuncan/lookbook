@@ -35,7 +35,9 @@
    Map Reka's data-attributes onto the spec's menu-item states. */
 .lb-select-content {
   min-width: var(--reka-select-trigger-width);
-  max-height: var(--reka-select-content-available-height);
+  /* Hard cap so a long option list scrolls instead of running off-screen. */
+  max-height: min(20rem, var(--reka-select-content-available-height, 20rem));
+  overflow-y: auto;
 }
 .select [data-placeholder] { color: var(--text-muted); }
 .menu-item[data-highlighted] { outline: none; background: var(--surface-sunken); }
@@ -45,8 +47,13 @@
 /* Combobox — dropdown matches trigger width; loading + empty rows */
 .lb-combobox-content {
   min-width: var(--reka-combobox-trigger-width, 220px);
-  max-height: var(--reka-combobox-content-available-height, 320px);
+  /* Hard cap so a long list scrolls inside the popover, not down the page. */
+  max-height: min(20rem, var(--reka-combobox-content-available-height, 20rem));
+  display: flex; flex-direction: column;
+  overflow: hidden;
 }
+/* The loading row stays pinned; only the option viewport scrolls. */
+.lb-combobox-viewport { overflow-y: auto; min-height: 0; }
 .lb-combobox-loading {
   display: flex; align-items: center; gap: 8px;
   padding: 8px 10px; border-bottom: 1px solid var(--border);
@@ -57,6 +64,93 @@
   font-size: var(--text-body-sm-size); color: var(--text-muted);
 }
 
-/* Drawer (when added) — fixed full-height panel */
+/* Drawer — fixed full-height side panel (visual from .drawer in components.css) */
 .lb-drawer-scrim { position: fixed; inset: 0; background: color-mix(in oklch, var(--text-primary) 45%, transparent); z-index: var(--z-overlay); }
-.lb-drawer-content { position: fixed; top: 0; right: 0; bottom: 0; z-index: var(--z-modal); }
+.lb-drawer-content {
+  position: fixed; top: 0; bottom: 0; z-index: var(--z-modal);
+  max-width: calc(100vw - 32px);
+}
+.lb-drawer-content--right { right: 0; left: auto; border-left: 1px solid var(--border); }
+.lb-drawer-content--left  { left: 0; right: auto; border-left: 0; border-right: 1px solid var(--border); }
+
+/* Popover arrow — Reka renders an SVG polygon; fill it to read as a connected nub */
+.lb-popover-arrow { fill: var(--surface-raised); }
+
+/* Accordion — no in-frame gallery specimen yet, so the styling lives here
+   (token-based). Promote into components.css once the gallery ships a specimen. */
+.lb-accordion {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  overflow: hidden;
+}
+.lb-accordion-item + .lb-accordion-item { border-top: 1px solid var(--border); }
+.lb-accordion-header { margin: 0; }
+.lb-accordion-trigger {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 16px;
+  background: transparent; border: 0; cursor: pointer;
+  font: inherit; font-weight: 500; color: var(--text-primary);
+  text-align: left;
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+.lb-accordion-trigger:hover { background: var(--surface-sunken); }
+.lb-accordion-trigger:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.lb-accordion-trigger[data-disabled] { opacity: 0.5; cursor: not-allowed; }
+.lb-accordion-chevron {
+  flex-shrink: 0; color: var(--text-muted);
+  transition: transform var(--duration-base) var(--ease-standard);
+}
+.lb-accordion-trigger[data-state="open"] .lb-accordion-chevron { transform: rotate(180deg); }
+.lb-accordion-content {
+  overflow: hidden;
+  color: var(--text-secondary);
+  font-size: var(--text-body-sm-size); line-height: var(--text-body-sm-lh);
+}
+.lb-accordion-content > div { padding: 0 16px 14px; }
+.lb-accordion-content[data-state="open"] { animation: lb-acc-down var(--duration-base) var(--ease-standard); }
+.lb-accordion-content[data-state="closed"] { animation: lb-acc-up var(--duration-base) var(--ease-standard); }
+@keyframes lb-acc-down { from { height: 0 } to { height: var(--reka-accordion-content-height) } }
+@keyframes lb-acc-up   { from { height: var(--reka-accordion-content-height) } to { height: 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .lb-accordion-content[data-state="open"],
+  .lb-accordion-content[data-state="closed"] { animation: none; }
+  .lb-accordion-chevron { transition: none; }
+}
+
+/* MultiCombobox — chips + search input share one field-shaped anchor.
+   Heights track the shared size scale (sm/md/lg) but grow to fit chip rows. */
+.lb-multi-anchor {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  width: 100%;
+  padding: 5px 34px 5px 10px;
+  min-height: var(--size-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: text;
+  transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
+}
+.lb-multi-anchor--sm { min-height: var(--size-sm); }
+.lb-multi-anchor--lg { min-height: var(--size-lg); }
+.lb-multi-anchor:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-subtle); }
+.lb-multi-anchor.is-error { border-color: var(--color-danger-500); }
+.lb-multi-anchor.is-error:focus-within { box-shadow: 0 0 0 3px var(--danger-bg); }
+.lb-multi-anchor.is-disabled { opacity: 0.55; pointer-events: none; background: var(--surface-sunken); }
+.lb-multi-chip { height: 24px; --chip-h: 24px; }
+.lb-multi-input {
+  flex: 1; min-width: 60px;
+  border: 0; outline: none; background: transparent;
+  font-size: var(--text-body-sm-size); color: var(--text-primary);
+  padding: 2px 0;
+}
+.lb-multi-input::placeholder { color: var(--text-muted); }
+.lb-multi-anchor .input-trailing {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  display: inline-flex; align-items: center;
+}
+.lb-multi-anchor { position: relative; }
+.lb-multi-item { display: flex; align-items: center; gap: 8px; }
+.lb-multi-check { width: 14px; height: 14px; flex-shrink: 0; color: var(--accent); display: inline-flex; }
+.lb-multi-item[data-state="unchecked"] .lb-multi-check { visibility: hidden; }

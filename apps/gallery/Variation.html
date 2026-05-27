@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — Variation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Archivo:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: ['class', '[data-theme="dark"]'] };</script>
+  <style>
+    /* ===== Move card =================================================== */
+    .move-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 900px) { .move-grid { grid-template-columns: 1fr; } }
+    .move {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      background: var(--surface);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .move-stage {
+      background: var(--surface-sunken);
+      padding: var(--space-6);
+      min-height: 240px;
+      display: flex;
+      align-items: center; justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .move-meta {
+      padding: var(--space-4) var(--space-5);
+      display: flex; flex-direction: column;
+      gap: var(--space-2);
+      border-top: 1px solid var(--border);
+    }
+    .move-meta .num {
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .move-meta h3 { margin: 0; font-size: var(--text-h4-size); font-weight: 600; letter-spacing: -0.014em; }
+    .move-meta .use, .move-meta .avoid {
+      font-size: var(--text-body-sm-size);
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .move-meta .use strong { color: var(--text-primary); font-weight: 500; }
+    .move-meta .avoid strong { color: var(--danger-fg); font-weight: 500; }
+
+    /* === Per-move demo styles === */
+
+    /* 1. Oversized type */
+    .demo-oversized {
+      font-family: "Archivo", var(--font-display);
+      font-size: 124px;
+      font-weight: 800;
+      letter-spacing: -0.060em;
+      line-height: 0.9;
+      color: var(--text-primary);
+    }
+
+    /* 2. Mono as display */
+    .demo-mono-display {
+      font-family: var(--font-mono);
+      font-size: 38px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: var(--text-primary);
+    }
+    .demo-mono-display .accent { color: var(--accent); }
+
+    /* 3. Asymmetric hero */
+    .demo-asym {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      align-items: end;
+    }
+    .demo-asym .ttl {
+      font-family: var(--font-display);
+      font-size: 44px;
+      font-weight: 700;
+      letter-spacing: -0.040em;
+      line-height: 0.95;
+      color: var(--text-primary);
+      margin-bottom: 40px;
+    }
+    .demo-asym .img {
+      aspect-ratio: 3 / 5;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, oklch(0.68 0.06 250), oklch(0.40 0.08 220));
+    }
+
+    /* 4. Full-bleed image, tiny copy */
+    .demo-bleed {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 30% 30%, oklch(0.62 0.10 60), transparent 65%),
+        linear-gradient(160deg, oklch(0.55 0.10 30), oklch(0.30 0.07 280));
+    }
+    .demo-bleed::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.35), transparent 60%);
+    }
+    .demo-bleed-copy {
+      position: absolute;
+      left: 24px; right: 24px; bottom: 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: white;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      display: flex; justify-content: space-between;
+      z-index: 2;
+    }
+
+    /* 5. Marquee */
+    .demo-marquee {
+      width: 100%;
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .demo-marquee-track {
+      display: flex;
+      gap: 32px;
+      animation: marquee 14s linear infinite;
+      width: max-content;
+      align-items: center;
+    }
+    .demo-marquee-track span {
+      font-family: "Archivo", var(--font-display);
+      font-size: 52px;
+      font-weight: 700;
+      letter-spacing: -0.045em;
+      color: var(--text-primary);
+      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 32px;
+    }
+    .demo-marquee-track span::after {
+      content: "★";
+      font-size: 28px;
+      color: var(--accent);
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(-50% - 16px)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .demo-marquee-track { animation: none; }
+    }
+
+    /* 6. Scroll-driven type */
+    .demo-scroll-type {
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: -0.040em;
+      line-height: 0.95;
+      color: var(--text-primary);
+      display: flex; flex-direction: column;
+      gap: 4px;
+      width: 100%;
+    }
+    .demo-scroll-type span:nth-child(1) { font-size: 14px; opacity: 0.4; }
+    .demo-scroll-type span:nth-child(2) { font-size: 24px; opacity: 0.6; }
+    .demo-scroll-type span:nth-child(3) { font-size: 40px; opacity: 0.85; }
+    .demo-scroll-type span:nth-child(4) { font-size: 62px; opacity: 1; }
+    .demo-scroll-type span:nth-child(5) { font-size: 40px; opacity: 0.85; }
+    .demo-scroll-type span:nth-child(6) { font-size: 24px; opacity: 0.6; }
+
+    /* 7. Edge anchor */
+    .demo-edge {
+      position: absolute; inset: 0;
+      display: flex;
+    }
+    .demo-edge .left {
+      flex: 0 0 60%;
+      padding: var(--space-5);
+      display: flex; align-items: center; justify-content: flex-end;
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 600;
+      letter-spacing: -0.030em;
+      line-height: 1.05;
+      color: var(--text-primary);
+      text-align: right;
+    }
+    .demo-edge .right {
+      flex: 1;
+      background: var(--accent);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: white;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: var(--space-3) 0;
+    }
+
+    /* 8. Sticky reveal */
+    .demo-sticky {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .demo-sticky .col {
+      padding: var(--space-4);
+      display: flex; flex-direction: column;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .demo-sticky .col-left {
+      background: var(--surface);
+      color: var(--text-secondary);
+      border-right: 1px solid var(--border);
+    }
+    .demo-sticky .col-right {
+      background: var(--accent);
+      color: white;
+      align-items: flex-start;
+    }
+    .demo-sticky .col-right .ttl {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.030em;
+      line-height: 1.05;
+      text-transform: none;
+      letter-spacing: -0.030em;
+      color: white;
+    }
+    .demo-sticky .dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: var(--radius-full);
+      background: currentColor;
+      margin-right: 6px;
+      vertical-align: 1px;
+      opacity: 0.4;
+    }
+    .demo-sticky .dot.is-active { opacity: 1; }
+
+    /* 9. Off-grid alignment */
+    .demo-offgrid {
+      width: 100%;
+      position: relative;
+      background:
+        linear-gradient(90deg, color-mix(in oklch, var(--accent) 12%, transparent) 1px, transparent 1px);
+      background-size: calc(100% / 12) 100%;
+      min-height: 180px;
+      padding: var(--space-4);
+    }
+    .demo-offgrid .card {
+      position: absolute;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 8px 12px;
+      font-size: var(--text-body-sm-size);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* 10. Hand-drawn underline */
+    .demo-underline {
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 600;
+      letter-spacing: -0.030em;
+      line-height: 1.1;
+      color: var(--text-primary);
+      text-align: center;
+    }
+    .demo-underline em {
+      font-style: normal;
+      position: relative;
+      display: inline-block;
+    }
+    .demo-underline em::after {
+      content: "";
+      position: absolute;
+      left: -2px; right: -2px;
+      bottom: -2px;
+      height: 12px;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'><path d='M2 8 Q 40 2, 80 6 T 160 5 T 198 7' stroke='%2329257aaa' stroke-width='3' fill='none' stroke-linecap='round'/></svg>");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+    [data-theme="dark"] .demo-underline em::after {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'><path d='M2 8 Q 40 2, 80 6 T 160 5 T 198 7' stroke='%23a4b8ffaa' stroke-width='3' fill='none' stroke-linecap='round'/></svg>");
+    }
+
+    /* 11. Oversized numerals */
+    .demo-numerals {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+      width: 100%;
+    }
+    .demo-numerals .cell {
+      display: flex; flex-direction: column;
+      gap: 6px;
+      padding-top: 8px;
+      border-top: 2px solid var(--text-primary);
+    }
+    .demo-numerals .num {
+      font-family: var(--font-display);
+      font-size: 88px;
+      font-weight: 600;
+      letter-spacing: -0.050em;
+      line-height: 0.95;
+      color: var(--text-primary);
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    .demo-numerals .lbl {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* 12. Rotated label */
+    .demo-rotated {
+      width: 100%;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-4);
+      align-items: stretch;
+    }
+    .demo-rotated .tag {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      padding: var(--space-2) 4px;
+      border-right: 1px solid var(--border);
+    }
+    .demo-rotated .body {
+      display: flex; flex-direction: column;
+      gap: var(--space-3);
+      padding: var(--space-2);
+    }
+    .demo-rotated .body h4 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 600;
+      letter-spacing: -0.028em;
+      line-height: 1.05;
+      color: var(--text-primary);
+    }
+    .demo-rotated .body p {
+      margin: 0;
+      font-size: var(--text-body-sm-size);
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ===== Worked example: same brief, three signatures =================== */
+    .signature {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .signature-stage {
+      padding: var(--space-6);
+      min-height: 220px;
+      background: var(--surface-sunken);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .signature-meta {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      gap: var(--space-3);
+    }
+    .signature-meta .name { font-size: var(--text-body-sm-size); font-weight: 600; }
+    .signature-meta .move {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* sig: oversized */
+    .sig-a .ttl {
+      font-family: "Archivo", var(--font-display);
+      font-size: 88px;
+      font-weight: 800;
+      letter-spacing: -0.060em;
+      line-height: 0.88;
+      color: var(--text-primary);
+    }
+    .sig-a .ttl em { font-style: normal; color: var(--accent); }
+    .sig-a .meta {
+      margin-top: var(--space-3);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* sig: mono-as-display */
+    .sig-b {
+      font-family: var(--font-mono);
+    }
+    .sig-b .ttl {
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: var(--text-primary);
+    }
+    .sig-b .ttl::before {
+      content: "→ ";
+      color: var(--accent);
+    }
+    .sig-b .lede {
+      margin-top: var(--space-3);
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      max-width: 480px;
+    }
+
+    /* sig: edge anchor */
+    .sig-c { width: 100%; height: 100%; display: flex; }
+    .sig-c .body {
+      flex: 1;
+      padding: var(--space-5);
+      display: flex; flex-direction: column;
+      justify-content: center;
+    }
+    .sig-c .body .ttl {
+      font-family: "Fraunces", var(--font-display);
+      font-size: 44px;
+      font-weight: 500;
+      letter-spacing: -0.030em;
+      line-height: 1.0;
+      color: var(--text-primary);
+    }
+    .sig-c .stripe {
+      width: 14%;
+      background: var(--accent);
+      align-self: stretch;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: white;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">variation · v0.1</span>
+      </div>
+      <nav class="lb-page-nav" aria-label="Chapters"></nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#rule">The rule</a></li>
+        <li><a href="#catalog">The catalog</a></li>
+        <li><a href="#example">Same brief, three signatures</a></li>
+        <li><a href="#discipline">Discipline</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>Variation</h5>
+        <p>How to make this client's site not look like the last one. Twelve composition plays. One per project — never two.</p>
+      </div>
+    </aside>
+
+    <main class="lb-main">
+
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 16</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track); font-family: var(--font-display);">Variation.</h2>
+          <p class="lede">A consistent system + Personality dials + one Marketing signature gets you 90% of the way. The last 10% — the thing that makes this client's site memorable instead of competent — is a deliberate <em>move</em>. This chapter is the catalog: twelve composition plays, with one rule about how to use them.</p>
+        </header>
+      </section>
+
+      <!-- 1. THE RULE -->
+      <section class="lb-section" id="rule">
+        <header>
+          <div class="eyebrow">01 — The rule</div>
+          <h2>One move per project <a class="anchor" href="#rule">#rule</a></h2>
+          <p class="lede">The system is the foundation. The Personality dials adjust the register. The signature is the one thing the visitor remembers ten minutes after closing the tab. Two signatures cancel each other out — and now the site has a costume problem.</p>
+        </header>
+
+        <div class="specimen">
+          <div class="specimen-body">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-5);">
+              <div>
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">Foundation</div>
+                <div style="font-size: var(--text-body-size); color: var(--text-primary); font-weight: 500; margin-bottom: 4px;">The system</div>
+                <p style="margin: 0; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">Atoms, molecules, organisms. The infrastructure. Identical across every project.</p>
+              </div>
+              <div>
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">Adjustment</div>
+                <div style="font-size: var(--text-body-size); color: var(--text-primary); font-weight: 500; margin-bottom: 4px;">Personality dials</div>
+                <p style="margin: 0; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">Color, type pair, radius, density, motion, pattern intensity. Set per project from the Approach mapping table.</p>
+              </div>
+              <div>
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">Signature</div>
+                <div style="font-size: var(--text-body-size); color: var(--text-primary); font-weight: 500; margin-bottom: 4px;">One move</div>
+                <p style="margin: 0; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">One play from the catalog below. The thing that makes the visitor say "huh." Used once, well — never four times, defensively.</p>
+              </div>
+            </div>
+          </div>
+          <div class="specimen-caption">The signature isn't decoration. It's the moment of conviction that tells the visitor a designer was in the room.</div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 2. THE CATALOG -->
+      <section class="lb-section" id="catalog">
+        <header>
+          <div class="eyebrow">02 — The catalog</div>
+          <h2>Twelve composition moves <a class="anchor" href="#catalog">#catalog</a></h2>
+          <p class="lede">Each is a CSS-only intervention — no extra libraries, no fancy build step. Pick one. Apply it deliberately to the hero, the section break, or the lockup. Then leave the rest of the system alone.</p>
+        </header>
+
+        <div class="move-grid">
+
+          <!-- 1. Oversized type -->
+          <div class="move">
+            <div class="move-stage">
+              <div class="demo-oversized">Type.</div>
+            </div>
+            <div class="move-meta">
+              <span class="num">01 — Oversized display</span>
+              <h3>Type as the centerpiece</h3>
+              <p class="use"><strong>Use</strong> when the headline IS the design. 80–140px display, tracked tight, one word doing the work.</p>
+              <p class="avoid"><strong>Avoid</strong> when the headline is longer than three words — the move dies at line two.</p>
+            </div>
+          </div>
+
+          <!-- 2. Mono as display -->
+          <div class="move">
+            <div class="move-stage">
+              <div class="demo-mono-display">Build the <span class="accent">→</span><br/>thing that <br/>matters.</div>
+            </div>
+            <div class="move-meta">
+              <span class="num">02 — Mono-as-display</span>
+              <h3>Monospace where serifs live</h3>
+              <p class="use"><strong>Use</strong> for technical, developer, infra, or indie brands. Signals "made by builders" without spelling it out.</p>
+              <p class="avoid"><strong>Avoid</strong> in consumer or wellness brands — the technical register fights the warmth.</p>
+            </div>
+          </div>
+
+          <!-- 3. Asymmetric hero -->
+          <div class="move">
+            <div class="move-stage">
+              <div class="demo-asym">
+                <div class="ttl">Make<br/>quiet<br/>things.</div>
+                <div class="img"></div>
+              </div>
+            </div>
+            <div class="move-meta">
+              <span class="num">03 — Asymmetric hero</span>
+              <h3>The image taller than the type</h3>
+              <p class="use"><strong>Use</strong> for brands with a portrait-format image and a short, confident headline.</p>
+              <p class="avoid"><strong>Avoid</strong> with multi-line CTAs and form fields — the asymmetry stops feeling deliberate.</p>
+            </div>
+          </div>
+
+          <!-- 4. Full-bleed image + tiny copy -->
+          <div class="move">
+            <div class="move-stage" style="padding: 0;">
+              <div class="demo-bleed"></div>
+              <div class="demo-bleed-copy">
+                <span>Acme · 2026</span>
+                <span>Issue 04 →</span>
+              </div>
+            </div>
+            <div class="move-meta">
+              <span class="num">04 — Full-bleed + tiny copy</span>
+              <h3>Photograph leads. Type whispers.</h3>
+              <p class="use"><strong>Use</strong> when the imagery is genuinely good. The copy becomes a label, not a pitch.</p>
+              <p class="avoid"><strong>Avoid</strong> if the image is stock — the move amplifies the source. Stock-led full-bleed reads as a placeholder.</p>
+            </div>
+          </div>
+
+          <!-- 5. Marquee -->
+          <div class="move">
+            <div class="move-stage" style="padding: 0; align-items: stretch;">
+              <div style="width: 100%; display: flex; align-items: center;">
+                <div class="demo-marquee">
+                  <div class="demo-marquee-track">
+                    <span>Built for builders</span>
+                    <span>Built for builders</span>
+                    <span>Built for builders</span>
+                    <span>Built for builders</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="move-meta">
+              <span class="num">05 — Marquee band</span>
+              <h3>A statement on rails</h3>
+              <p class="use"><strong>Use</strong> as a section break between hero and features. Pin a slogan, a value, or rotating customer logos.</p>
+              <p class="avoid"><strong>Avoid</strong> autoplaying without a reduced-motion fallback. And never put critical info on the marquee.</p>
+            </div>
+          </div>
+
+          <!-- 6. Scroll-driven type scaling -->
+          <div class="move">
+            <div class="move-stage">
+              <div class="demo-scroll-type">
+                <span>start</span>
+                <span>quietly</span>
+                <span>and grow</span>
+                <span>louder.</span>
+                <span>then fade</span>
+                <span>out.</span>
+              </div>
+            </div>
+            <div class="move-meta">
+              <span class="num">06 — Scroll-driven scaling</span>
+              <h3>Type peaks at the fold</h3>
+              <p class="use"><strong>Use</strong> CSS scroll-driven animations to grow a headline as it crosses the viewport center. One headline per page.</p>
+              <p class="avoid"><strong>Avoid</strong> in product UI — the move belongs on marketing surfaces only.</p>
+            </div>
+          </div>
+
+          <!-- 7. Edge anchor -->
+          <div class="move">
+            <div class="move-stage" style="padding: 0; align-items: stretch;">
+              <div class="demo-edge">
+                <div class="left">Hold the<br/>edge.</div>
+                <div class="right">Issue · 04 · Edge</div>
+              </div>
+            </div>
+            <div class="move-meta">
+              <span class="num">07 — Edge anchor</span>
+              <h3>A label welded to the viewport edge</h3>
+              <p class="use"><strong>Use</strong> a thin strip pinned to the viewport edge — vertical type, accent color, runs the full height. Editorial register.</p>
+              <p class="avoid"><strong>Avoid</strong> in dense product UI — the strip eats horizontal space that pages need.</p>
+            </div>
+          </div>
+
+          <!-- 8. Sticky reveal -->
+          <div class="move">
+            <div class="move-stage">
+              <div class="demo-sticky">
+                <div class="col col-left">
+                  <span><span class="dot is-active"></span> 01 Pin the rail</span>
+                  <span><span class="dot"></span> 02 Scroll the side</span>
+                  <span><span class="dot"></span> 03 Reveal beats</span>
+                </div>
+                <div class="col col-right">
+                  <span style="opacity:0.9;">01 / 03</span>
+                  <div class="ttl">Pin one,<br/>scroll the other.</div>
+                </div>
+              </div>
+            </div>
+            <div class="move-meta">
+              <span class="num">08 — Sticky reveal</span>
+              <h3>Two columns, one fixed</h3>
+              <p class="use"><strong>Use</strong> for product walkthroughs: pin a visual on one side, scroll a list of steps on the other. Position-sticky carries it.</p>
+              <p class="avoid"><strong>Avoid</strong> on mobile without a fallback — sticky reveal collapses to a normal stack at narrow widths.</p>
+            </div>
+          </div>
+
+          <!-- 9. Off-grid placement -->
+          <div class="move">
+            <div class="move-stage">
+              <div class="demo-offgrid">
+                <div class="card" style="left: 8%; top: 12%; width: 38%;">On-grid · 4 cols</div>
+                <div class="card" style="left: 36%; top: 50%; width: 30%; transform: rotate(-2deg);">Off-grid · skewed</div>
+                <div class="card" style="left: 62%; top: 22%; width: 32%;">On-grid · 4 cols</div>
+              </div>
+            </div>
+            <div class="move-meta">
+              <span class="num">09 — Off-grid placement</span>
+              <h3>One card breaks the grid</h3>
+              <p class="use"><strong>Use</strong> a strict grid; let exactly one element sit a few columns off or rotated 2°. Reads as deliberate, not broken.</p>
+              <p class="avoid"><strong>Avoid</strong> rotating multiple things — it stops being a wink and becomes a costume.</p>
+            </div>
+          </div>
+
+          <!-- 10. Hand-drawn underline -->
+          <div class="move">
+            <div class="move-stage">
+              <div class="demo-underline">Build things<br/>that <em>matter</em>.</div>
+            </div>
+            <div class="move-meta">
+              <span class="num">10 — Hand-drawn accent</span>
+              <h3>A wobble in the geometry</h3>
+              <p class="use"><strong>Use</strong> a single hand-drawn underline (or circle, or arrow) under one word in the hero. SVG, accent color, 60–70% opacity.</p>
+              <p class="avoid"><strong>Avoid</strong> using on more than one word per page. The marker becomes wallpaper.</p>
+            </div>
+          </div>
+
+          <!-- 11. Oversized numerals -->
+          <div class="move">
+            <div class="move-stage">
+              <div class="demo-numerals">
+                <div class="cell"><span class="num">47</span><span class="lbl">Hours saved / wk</span></div>
+                <div class="cell"><span class="num">12k</span><span class="lbl">Teams using Acme</span></div>
+                <div class="cell"><span class="num">99.9</span><span class="lbl">Uptime · %</span></div>
+              </div>
+            </div>
+            <div class="move-meta">
+              <span class="num">11 — Oversized numerals</span>
+              <h3>Numbers as the typography</h3>
+              <p class="use"><strong>Use</strong> on social-proof and case-study sections. 80–120px figures, tabular numerals, top-anchored 2px rule above each.</p>
+              <p class="avoid"><strong>Avoid</strong> using vanity numbers ("4 founders, 7 cups of coffee"). Numbers earn the size or they don't.</p>
+            </div>
+          </div>
+
+          <!-- 12. Rotated label -->
+          <div class="move">
+            <div class="move-stage">
+              <div class="demo-rotated">
+                <div class="tag">Section · 04 · Variation</div>
+                <div class="body">
+                  <h4>Set in the margin.</h4>
+                  <p>The eyebrow rotates into the gutter — leaves the headline alone.</p>
+                </div>
+              </div>
+            </div>
+            <div class="move-meta">
+              <span class="num">12 — Rotated margin label</span>
+              <h3>The eyebrow lives in the gutter</h3>
+              <p class="use"><strong>Use</strong> a section number or category tag rotated 90° in the left margin. Editorial; signals magazine layout.</p>
+              <p class="avoid"><strong>Avoid</strong> in dense product UI or on mobile — the rotated text collapses awkwardly.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 3. SAME BRIEF, THREE SIGNATURES -->
+      <section class="lb-section" id="example">
+        <header>
+          <div class="eyebrow">03 — Worked example</div>
+          <h2>Same brief, three signatures <a class="anchor" href="#example">#example</a></h2>
+          <p class="lede">One client. One headline. Three different signature moves. Same components underneath, same content, same accent — only the wildcard differs. This is what variation looks like in practice.</p>
+        </header>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+
+          <!-- A -->
+          <div class="signature">
+            <div class="signature-stage">
+              <div class="sig-a">
+                <div class="ttl">Build the <em>quiet</em><br/>tools that last.</div>
+                <div class="meta">Acme · for builders · since 2025</div>
+              </div>
+            </div>
+            <div class="signature-meta">
+              <span class="name">A — Oversized display</span>
+              <span class="move">Move 01</span>
+            </div>
+          </div>
+
+          <!-- B -->
+          <div class="signature">
+            <div class="signature-stage">
+              <div class="sig-b">
+                <div class="ttl">Build the quiet tools that last.</div>
+                <p class="lede">Acme is the analytics layer for teams who'd rather ship than dashboard. One sentence, one product, one bill.</p>
+              </div>
+            </div>
+            <div class="signature-meta">
+              <span class="name">B — Mono-as-display</span>
+              <span class="move">Move 02</span>
+            </div>
+          </div>
+
+          <!-- C -->
+          <div class="signature">
+            <div class="signature-stage" style="padding: 0;">
+              <div class="sig-c">
+                <div class="body">
+                  <div class="ttl">Build the<br/>quiet tools<br/>that last.</div>
+                </div>
+                <div class="stripe">Acme · for builders · since 2025</div>
+              </div>
+            </div>
+            <div class="signature-meta">
+              <span class="name">C — Edge anchor + editorial serif</span>
+              <span class="move">Move 07</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="specimen">
+          <div class="specimen-body">
+            <div class="t-overline text-muted" style="margin-bottom: var(--space-3);">Why all three are right</div>
+            <p style="margin: 0; font-size: var(--text-body-size); line-height: 1.55; color: var(--text-secondary);">Each version expresses the same brief — quiet, technical, builder-led. A is loud and confident; B reads as a Linear/Plain peer; C borrows from print editorial. The decision is the brief's wildcard from the Approach kickoff doc: which one matches the audience and the founder?</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 4. DISCIPLINE -->
+      <section class="lb-section" id="discipline">
+        <header>
+          <div class="eyebrow">04 — Discipline</div>
+          <h2>Don't over-do it <a class="anchor" href="#discipline">#discipline</a></h2>
+          <p class="lede">More moves do not equal more design. They equal more noise. The discipline that makes variation work is what you <em>don't</em> add.</p>
+        </header>
+
+        <div class="rules-grid">
+          <div class="rules-row">
+            <div class="rules-name">One signature per project<span class="sub">never two</span></div>
+            <div class="rules-when"><strong>Pick</strong> the wildcard in the Approach kickoff doc. Use it on the hero, the about-page header, and one section break. Three appearances, max.</div>
+            <div class="rules-avoid"><strong>Don't</strong> apply a different move on every section. The first one stops being a signature.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">The system is the floor<span class="sub">the move sits on top</span></div>
+            <div class="rules-when"><strong>Build</strong> the page with the standard components first. Add the move last. If you can remove the move and the page still works, you got the order right.</div>
+            <div class="rules-avoid"><strong>Don't</strong> design the move first and pour content into it. The result is a costume looking for a body.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Moves use existing tokens<span class="sub">no new colors · no new sizes</span></div>
+            <div class="rules-when"><strong>Express</strong> the move using the existing accent, font-display, and motion easings. The move is a composition decision, not a token swap.</div>
+            <div class="rules-avoid"><strong>Don't</strong> introduce a one-off color or font for the move. You're back to a costume.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Reduced-motion fallback<span class="sub">every animated move</span></div>
+            <div class="rules-when"><strong>Define</strong> the final state and skip-to-it under <code class="token-pill">prefers-reduced-motion</code>. The visual still works; the kinetic does not.</div>
+            <div class="rules-avoid"><strong>Don't</strong> ship marquees, scroll-driven type, or sticky reveals without the static fallback.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Mobile dignity<span class="sub">every move</span></div>
+            <div class="rules-when"><strong>Decide</strong> what the move becomes at &lt; 640px. Many — edge anchor, rotated label, sticky reveal — collapse to the standard layout cleanly.</div>
+            <div class="rules-avoid"><strong>Don't</strong> let a desktop signature trash the mobile experience. The mobile fallback is part of the move.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLOSING -->
+      <section class="lb-section">
+        <hr class="rule" />
+        <div style="display: flex; gap: var(--space-6); align-items: flex-start; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 280px;">
+            <h3 class="t-h3" style="margin: 0;">The signature is the proof a designer was here.</h3>
+            <p class="t-body-lg text-secondary" style="max-width: 640px; margin-top: 6px;">Every chapter before this builds the floor under your work. This one is the small, deliberate gesture on top — the move that turns a competent site into a recognized one. Pick well, use once, leave the rest of the system alone.</p>
+          </div>
+          <a href="Guide.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--surface); font-size: var(--text-body-sm-size); font-weight: 500;">Next — Guide <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script></body>
+</html>

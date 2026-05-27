@@ -59,9 +59,10 @@ Raw Tailwind default colors (`bg-emerald-500`, `text-rose-100`, `bg-amber-300/20
 
 When building or redesigning a screen:
 
-1. **Identify the archetype** (gallery → **Recipes**): CRUD list · record detail/profile · create/edit form · wizard/onboarding · settings · search & results · feed/activity · dashboard · checkout/billing · pricing · detail-with-map · kanban.
+0. **Frame it** — for a new product/site, start at gallery → **Approach** (strategy) and **SiteArchetypes** (what *kind* of site/app this is); pull the brand from **Identity** + **Imagery**.
+1. **Identify the page archetype** (gallery → **Recipes**): CRUD list · record detail/profile · create/edit form · wizard/onboarding · settings · search & results · feed/activity · dashboard · checkout/billing · pricing · detail-with-map · kanban.
 2. **Pull the recipe** — its Ingredients (which components), Required states, and responsive note.
-3. **Generate 2–3 composition directions** using the Layout grammar (gallery → **Layout**). Vary **primary/secondary emphasis**, the **region split**, and the **section rhythm** — *never* the design language. For a new or important surface, render all directions and let the human choose. (This is what makes pages feel distinct while staying consistent.)
+3. **Generate 2–3 composition directions** using the Layout grammar (gallery → **Layout**) and the **Variation** chapter (the sanctioned ways to diverge). Vary **primary/secondary emphasis**, the **region split**, and the **section rhythm** — *never* the design language. For a new or important surface, render all directions and let the human choose. (This is what makes pages feel distinct while staying consistent — see **Variation**.)
 4. **Build the chosen direction** from Lookbook primitives + tokens, with all required states.
 
 ### How to make 3 directions (without breaking consistency)
@@ -120,9 +121,17 @@ import "@lookbook/tokens/tokens.css";   // shared contract
 
 ---
 
-## Gallery map
+## Gallery map (18 chapters, grouped)
 
-`Foundations` (tokens + theme presets + font pairings) · `Atoms` · `Molecules` · `Organisms` · `Auth` · `States` · `Motion` · `DataViz` · `Marketing` · `Personality` · `Recipes` · `Layout` · `Guide`.
+- **Approach** — how to approach a design problem (read first for strategy).
+- **System** — `Foundations` (tokens + theme presets + font pairings) · `Atoms` · `Molecules` · `Organisms` · `States`.
+- **Flows** — `Auth`.
+- **Brand** — `Identity` · `Personality` · `Imagery`.
+- **Craft** — `Motion` · `DataViz`.
+- **Outward** — `Marketing` · `SiteArchetypes` (pick the site/app archetype).
+- **Reference** — `Layout` (composition grammar) · `Recipes` (page archetypes) · `Variation` (how to make designs differ without breaking the system) · `Guide` (decision rules).
+
+The gallery ships a grouped chapter switcher (top-right, `G` shortcut).
 
 ---
 

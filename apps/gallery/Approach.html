@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — Approach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: ['class', '[data-theme="dark"]'] };</script>
+  <style>
+    /* Question list */
+    .q-list { display: flex; flex-direction: column; }
+    .q-row {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      border-top: 1px solid var(--border);
+      align-items: start;
+    }
+    .q-row:first-of-type { border-top: 0; }
+    .q-row .num {
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      padding-top: 2px;
+    }
+    .q-row .q { font-size: var(--text-body-size); font-weight: 500; color: var(--text-primary); line-height: 1.5; }
+    .q-row .why {
+      margin-top: 4px;
+      font-size: var(--text-body-sm-size);
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    .q-row .why em {
+      font-style: normal;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--text-muted);
+      padding: 1px 5px;
+      background: var(--surface-sunken);
+      border-radius: var(--radius-sm);
+      margin-right: 4px;
+    }
+
+    /* Audit checklist */
+    .audit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 900px) { .audit-grid { grid-template-columns: 1fr; } }
+    .audit-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      padding: var(--space-5);
+      display: flex; flex-direction: column;
+      gap: var(--space-3);
+    }
+    .audit-card h4 {
+      margin: 0;
+      font-size: var(--text-body-size);
+      font-weight: 600;
+      letter-spacing: -0.012em;
+    }
+    .audit-card .eyebrow-sm {
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .audit-card ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .audit-card li {
+      display: grid;
+      grid-template-columns: 14px 1fr;
+      gap: 8px;
+      align-items: start;
+      font-size: var(--text-body-sm-size);
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .audit-card li::before {
+      content: "";
+      width: 11px; height: 11px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: 3px;
+      margin-top: 4px;
+    }
+
+    /* Mapping table */
+    .map-table {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .map-head, .map-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr;
+      align-items: stretch;
+    }
+    .map-head {
+      background: var(--surface-sunken);
+      border-bottom: 1px solid var(--border);
+    }
+    .map-head > div {
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .map-row { border-top: 1px solid var(--border); }
+    .map-row:first-of-type { border-top: 0; }
+    .map-row > div {
+      padding: 14px;
+      border-left: 1px solid var(--border);
+      font-size: var(--text-body-sm-size);
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+    .map-row > div:first-child {
+      border-left: 0;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: var(--text-body-size);
+    }
+    .map-row .sub {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    /* Sitemap diagrams */
+    .sitemap {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .sitemap-head {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--space-3);
+    }
+    .sitemap-head .name { font-size: var(--text-body-sm-size); font-weight: 600; }
+    .sitemap-head .tag {
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .sitemap-body {
+      padding: var(--space-5);
+      background: var(--surface-sunken);
+      min-height: 220px;
+      display: flex;
+      align-items: center; justify-content: center;
+    }
+    .sitemap-foot {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+      font-size: var(--text-micro-size);
+      color: var(--text-secondary);
+      line-height: var(--text-micro-lh);
+    }
+    .node {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .node.is-root { background: var(--accent-subtle); color: var(--accent); border-color: color-mix(in oklch, var(--accent) 30%, transparent); }
+    .node.is-leaf { background: var(--surface-sunken); color: var(--text-secondary); }
+    .tree-line { width: 1px; background: var(--border-strong); }
+    .tree-h { height: 1px; background: var(--border-strong); }
+
+    /* Scope tiers */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 900px) { .tier-grid { grid-template-columns: 1fr; } }
+    .tier {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      padding: var(--space-5);
+      display: flex; flex-direction: column;
+      gap: var(--space-3);
+    }
+    .tier.is-mid {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-subtle);
+    }
+    .tier-name {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: var(--space-3);
+    }
+    .tier-name h4 { margin: 0; font-size: var(--text-h4-size); font-weight: 600; letter-spacing: -0.014em; }
+    .tier-name .week {
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .tier-desc { font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55; margin: 0; }
+    .tier ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .tier li {
+      display: grid;
+      grid-template-columns: 14px 1fr;
+      gap: 8px;
+      font-size: var(--text-body-sm-size);
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+    .tier li::before {
+      content: "";
+      width: 10px; height: 10px;
+      border-radius: var(--radius-full);
+      background: var(--accent);
+      margin-top: 6px;
+    }
+    .tier li.is-off { color: var(--text-muted); }
+    .tier li.is-off::before { background: transparent; border: 1.5px solid var(--border-strong); }
+
+    /* Kickoff doc */
+    .kickoff {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      padding: var(--space-6);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+    @media (max-width: 900px) { .kickoff { grid-template-columns: 1fr; gap: var(--space-5); } }
+    .kickoff h4 {
+      margin: 0 0 6px;
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .kickoff p { margin: 0; font-size: var(--text-body-sm-size); line-height: 1.55; color: var(--text-secondary); }
+    .kickoff .field {
+      padding: var(--space-3) 0;
+      border-top: 1px dashed var(--border);
+    }
+    .kickoff .field:first-child { border-top: 0; }
+    .kickoff .field .ans {
+      margin-top: 6px;
+      padding: 8px 10px;
+      background: var(--surface-sunken);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">approach · v0.1</span>
+      </div>
+      <nav class="lb-page-nav" aria-label="Chapters"></nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#brief">The brief</a></li>
+        <li><a href="#audit">The audit</a></li>
+        <li><a href="#mapping">Brand → dials</a></li>
+        <li><a href="#sitemaps">Sitemap patterns</a></li>
+        <li><a href="#tiers">Scope tiers</a></li>
+        <li><a href="#kickoff">Kickoff one-pager</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>Approach</h5>
+        <p>The front of the project. What to ask, what to audit, how to translate a client's brand into the system's dials — before any pixels.</p>
+      </div>
+    </aside>
+
+    <main class="lb-main">
+
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 00</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track); font-family: var(--font-display);">Approach.</h2>
+          <p class="lede">The reason most sites look the same isn't the components — it's that the project started without a brief. This chapter is the layer above the system: discovery, audit, and how to translate what you learn into which dials to turn before you open the editor.</p>
+        </header>
+      </section>
+
+      <!-- 1. THE BRIEF -->
+      <section class="lb-section" id="brief">
+        <header>
+          <div class="eyebrow">01 — Discovery</div>
+          <h2>The brief, in 12 questions <a class="anchor" href="#brief">#brief</a></h2>
+          <p class="lede">One call. Ninety minutes. These twelve questions in this order. Each one closes off a part of the design space — by the end you know which Personality preset to load, which type pair to start from, and which page archetypes to plan.</p>
+        </header>
+
+        <div class="specimen">
+          <div class="specimen-body" style="padding: 0;">
+            <div class="q-list">
+              <div class="q-row"><span class="num">01</span><div>
+                <div class="q">Who is the visitor and what are they hoping to do in the first 10 seconds?</div>
+                <div class="why"><em>scope</em>If you can't answer this, every page-rank decision later will be a coin flip.</div>
+              </div></div>
+              <div class="q-row"><span class="num">02</span><div>
+                <div class="q">What's the single primary action the site has to drive — and how do you measure success in 90 days?</div>
+                <div class="why"><em>goal</em>Sign-up, demo request, deposit, app-store install. One. Pricing CTA next to a careers link is a failure mode.</div>
+              </div></div>
+              <div class="q-row"><span class="num">03</span><div>
+                <div class="q">What's the existing brand maturity? Wordmark + tokens + voice doc, just a logo, or starting from scratch?</div>
+                <div class="why"><em>identity</em>Determines whether Chapter 07 (Identity) is a half-day or two weeks. Tell the client up front.</div>
+              </div></div>
+              <div class="q-row"><span class="num">04</span><div>
+                <div class="q">Three sites the client admires (any industry) — and one sentence each on why.</div>
+                <div class="why"><em>taste</em>The "why" matters more than the "what." Three sites that all share "feels confident" point at a personality dial; three sites that all share "uses a lot of orange" point at a token.</div>
+              </div></div>
+              <div class="q-row"><span class="num">05</span><div>
+                <div class="q">One site they explicitly don't want to look like — and why.</div>
+                <div class="why"><em>anti-taste</em>The exclusions tighten the brief faster than the inclusions. Worth two affirmative references.</div>
+              </div></div>
+              <div class="q-row"><span class="num">06</span><div>
+                <div class="q">Who's the audience tone-wise? Founders, ops managers, designers, consumers, regulated industries?</div>
+                <div class="why"><em>voice</em>Routes you to a column on the brand-voice axis. Don't write copy in the wrong voice and hope the client will tell you.</div>
+              </div></div>
+              <div class="q-row"><span class="num">07</span><div>
+                <div class="q">What real photography or imagery do they have today — and can you see it before the kickoff ends?</div>
+                <div class="why"><em>imagery</em>If the answer is "we'll get stock later," budget a content strategy line item. Stock without direction sinks more sites than bad type.</div>
+              </div></div>
+              <div class="q-row"><span class="num">08</span><div>
+                <div class="q">What pages and flows are in scope, and which are out — explicitly?</div>
+                <div class="why"><em>scope</em>Write the out-of-scope list down. "Just the homepage" never means just the homepage.</div>
+              </div></div>
+              <div class="q-row"><span class="num">09</span><div>
+                <div class="q">Who's the decider, who's the gatekeeper, and who has veto?</div>
+                <div class="why"><em>politics</em>If the founder is the decider and Marketing is the gatekeeper, send drafts to Marketing and finals to the founder.</div>
+              </div></div>
+              <div class="q-row"><span class="num">10</span><div>
+                <div class="q">What's the launch date and what's hard about it (event, fundraise, end of quarter)?</div>
+                <div class="why"><em>schedule</em>A launch tied to a fundraise is a different project than a launch tied to a Friday.</div>
+              </div></div>
+              <div class="q-row"><span class="num">11</span><div>
+                <div class="q">Who builds it after I hand off — a dev team, a no-code tool, the client themselves?</div>
+                <div class="why"><em>handoff</em>If the builder is Webflow, design for it. If it's a Next.js team, ship tokens. If it's the client, build them an editable kit.</div>
+              </div></div>
+              <div class="q-row"><span class="num">12</span><div>
+                <div class="q">What would make you feel embarrassed if this site shipped that way?</div>
+                <div class="why"><em>guardrails</em>The most useful answer you'll get all call. Write it on the kickoff one-pager and keep it visible the whole project.</div>
+              </div></div>
+            </div>
+          </div>
+          <div class="specimen-caption">Skip a question and you'll guess at the answer later — usually wrong, usually the night before launch.</div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 2. THE AUDIT -->
+      <section class="lb-section" id="audit">
+        <header>
+          <div class="eyebrow">02 — Existing-site audit</div>
+          <h2>What to look at on an inherited site <a class="anchor" href="#audit">#audit</a></h2>
+          <p class="lede">If they already have a site, audit it before you redesign. Four lenses: information architecture, content, brand, performance. One page per lens; tick the items as you go.</p>
+        </header>
+
+        <div class="audit-grid">
+          <div class="audit-card">
+            <div class="eyebrow-sm">A — Information architecture</div>
+            <h4>Does the structure match the goal?</h4>
+            <ul>
+              <li>Sitemap fits on one page — count the pages</li>
+              <li>Primary nav has ≤ 7 items</li>
+              <li>Footer doesn't duplicate the primary nav</li>
+              <li>Every page has one clear job (state it in 5 words)</li>
+              <li>No orphan pages from old campaigns</li>
+              <li>Search exists if the catalog is > 50 items</li>
+              <li>Breadcrumbs make sense at depth ≥ 3</li>
+            </ul>
+          </div>
+
+          <div class="audit-card">
+            <div class="eyebrow-sm">B — Content</div>
+            <h4>Does what's written earn its slot?</h4>
+            <ul>
+              <li>Homepage hero says what the product does in 8 words</li>
+              <li>Feature copy describes a benefit, not a feature</li>
+              <li>No "lorem" — and no placeholder team photos</li>
+              <li>Copy uses sentence case, not Title Case Everywhere</li>
+              <li>CTAs are verbs the user would actually say</li>
+              <li>Testimonials name a person + a role</li>
+              <li>Pricing page answers "what do I lose by not upgrading?"</li>
+            </ul>
+          </div>
+
+          <div class="audit-card">
+            <div class="eyebrow-sm">C — Brand</div>
+            <h4>Is there a system, or just a logo?</h4>
+            <ul>
+              <li>Single accent color used consistently for the primary action</li>
+              <li>Type pair holds across pages (display + body don't drift)</li>
+              <li>Imagery feels like it's from the same shoot or library</li>
+              <li>Icons share a stroke weight and family</li>
+              <li>Spacing rhythm reads as one rhythm (it doesn't on most sites)</li>
+              <li>404 and empty states feel made, not generic</li>
+              <li>Mobile feels designed, not squeezed</li>
+            </ul>
+          </div>
+
+          <div class="audit-card">
+            <div class="eyebrow-sm">D — Performance &amp; basics</div>
+            <h4>Will the design actually load?</h4>
+            <ul>
+              <li>LCP under 2.5s on a throttled 4G run</li>
+              <li>Hero image is &lt; 200kb, served as AVIF/WebP</li>
+              <li>Font payload is &lt; 100kb total (subset + woff2)</li>
+              <li>No layout shift on hero load</li>
+              <li>Keyboard nav works through primary tasks</li>
+              <li>Color contrast passes AA for body text</li>
+              <li>Reduced-motion doesn't break any animation</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 3. MAPPING BRAND → DIALS -->
+      <section class="lb-section" id="mapping">
+        <header>
+          <div class="eyebrow">03 — Brand → dials</div>
+          <h2>Mapping a brand into the system <a class="anchor" href="#mapping">#mapping</a></h2>
+          <p class="lede">Given what you learned in the brief, this is the cheat sheet. Match the client to a column; the row tells you which Personality preset, which type pair, which density default, which motion vocabulary. Start there — refine within.</p>
+        </header>
+
+        <div class="map-table">
+          <div class="map-head">
+            <div>Brand archetype</div>
+            <div>Personality preset</div>
+            <div>Type pairing</div>
+            <div>Density</div>
+            <div>Motion</div>
+          </div>
+
+          <div class="map-row">
+            <div>Editorial<span class="sub">media · long-form · publication</span></div>
+            <div>Restrained, low accent intensity, serif display</div>
+            <div>Newsreader / Fraunces + Inter</div>
+            <div>Airy (--space-20)</div>
+            <div>Slow fades only · no springs</div>
+          </div>
+
+          <div class="map-row">
+            <div>Technical<span class="sub">dev tools · infra · API</span></div>
+            <div>Mono accents, high contrast, dial down patterns</div>
+            <div>Inter + JetBrains Mono</div>
+            <div>Comfortable (--space-12)</div>
+            <div>Crisp · 120ms standard</div>
+          </div>
+
+          <div class="map-row">
+            <div>Soft consumer<span class="sub">wellness · finance · everyday</span></div>
+            <div>Warm palette, rounded radii, moderate accent</div>
+            <div>Plus Jakarta + Inter, or Manrope alone</div>
+            <div>Comfortable (--space-12)</div>
+            <div>Decelerate dominant · soft springs</div>
+          </div>
+
+          <div class="map-row">
+            <div>Brutalist<span class="sub">indie · agency · niche editorial</span></div>
+            <div>No radius, mono-as-display, high pattern</div>
+            <div>Space Grotesk or Archivo + Inter</div>
+            <div>Tight (--space-8)</div>
+            <div>Snap · 80ms · no easing</div>
+          </div>
+
+          <div class="map-row">
+            <div>Luxe<span class="sub">premium · hospitality · ecomm</span></div>
+            <div>Single jewel accent, thin display, generous space</div>
+            <div>DM Serif Display + Inter Light</div>
+            <div>Hero-airy (--space-24)</div>
+            <div>Slow decelerate · 320ms+</div>
+          </div>
+
+          <div class="map-row">
+            <div>Playful<span class="sub">creator tools · consumer apps</span></div>
+            <div>Saturated palette, expressive patterns, rounded</div>
+            <div>Archivo + Inter, or Manrope display</div>
+            <div>Comfortable (--space-12)</div>
+            <div>Spring curves welcome · stagger lists</div>
+          </div>
+        </div>
+
+        <div class="specimen" style="margin-top: var(--space-6);">
+          <div class="specimen-body">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6);">
+              <div>
+                <div class="t-overline text-muted" style="margin-bottom: 8px;">How to use this table</div>
+                <p style="margin: 0; font-size: var(--text-body-size); line-height: 1.55; color: var(--text-secondary);">Don't pick a single row and stop. Pick a row as your starting point, then check whether <em style="color: var(--text-primary); font-style: normal;">one</em> dial from another row earns the swap. A Technical product with a Playful motion vocabulary is interesting; a Technical product with all six Playful dials is a costume.</p>
+              </div>
+              <div>
+                <div class="t-overline text-muted" style="margin-bottom: 8px;">The rule</div>
+                <p style="margin: 0; font-size: var(--text-body-size); line-height: 1.55; color: var(--text-secondary);">Five of six dials live in the same column. The sixth is the wildcard — the moment that makes this client's site different from the next Technical product or the next Editorial publication.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 4. SITEMAP PATTERNS -->
+      <section class="lb-section" id="sitemaps">
+        <header>
+          <div class="eyebrow">04 — Site shapes</div>
+          <h2>Five sitemap patterns <a class="anchor" href="#sitemaps">#sitemaps</a></h2>
+          <p class="lede">Every site you'll be asked to design is one of these five shapes, or a hybrid of two. Knowing the shape early decides the nav, the page archetypes, and where to spend the budget.</p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4);">
+
+          <!-- Marketing -->
+          <div class="sitemap">
+            <div class="sitemap-head">
+              <span class="name">Product marketing</span>
+              <span class="tag">SaaS · most common</span>
+            </div>
+            <div class="sitemap-body">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="node is-root">Home</div>
+                <div class="tree-line" style="height: 16px;"></div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                  <div class="node">Product</div>
+                  <div class="node">Pricing</div>
+                  <div class="node">Customers</div>
+                  <div class="node">Blog</div>
+                  <div class="node">Docs ↗</div>
+                </div>
+                <div class="tree-line" style="height: 16px;"></div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                  <div class="node is-leaf">Features</div>
+                  <div class="node is-leaf">Integrations</div>
+                  <div class="node is-leaf">Changelog</div>
+                  <div class="node is-leaf">About</div>
+                  <div class="node is-leaf">Careers</div>
+                </div>
+              </div>
+            </div>
+            <div class="sitemap-foot">Budget the hero, pricing, and customer-story templates first — they take 60% of decisions.</div>
+          </div>
+
+          <!-- App -->
+          <div class="sitemap">
+            <div class="sitemap-head">
+              <span class="name">Product app</span>
+              <span class="tag">in-product chrome</span>
+            </div>
+            <div class="sitemap-body">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="node is-root">App shell</div>
+                <div class="tree-line" style="height: 16px;"></div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                  <div class="node">Dashboard</div>
+                  <div class="node">List view</div>
+                  <div class="node">Detail</div>
+                  <div class="node">Settings</div>
+                </div>
+                <div class="tree-line" style="height: 16px;"></div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                  <div class="node is-leaf">Empty / loading / error</div>
+                  <div class="node is-leaf">Onboarding</div>
+                  <div class="node is-leaf">Billing</div>
+                </div>
+              </div>
+            </div>
+            <div class="sitemap-foot">The shell + one canonical CRUD list carries the system. Build them right; the rest composes.</div>
+          </div>
+
+          <!-- Agency portfolio -->
+          <div class="sitemap">
+            <div class="sitemap-head">
+              <span class="name">Agency / portfolio</span>
+              <span class="tag">case-study driven</span>
+            </div>
+            <div class="sitemap-body">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="node is-root">Home</div>
+                <div class="tree-line" style="height: 16px;"></div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                  <div class="node">Work</div>
+                  <div class="node">Studio</div>
+                  <div class="node">Journal</div>
+                  <div class="node">Contact</div>
+                </div>
+                <div class="tree-line" style="height: 16px;"></div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                  <div class="node is-leaf">Case study × N</div>
+                  <div class="node is-leaf">Bio · process · clients</div>
+                </div>
+              </div>
+            </div>
+            <div class="sitemap-foot">One case-study template, used 6–12 times, is the work. Don't design each one bespoke.</div>
+          </div>
+
+          <!-- Docs -->
+          <div class="sitemap">
+            <div class="sitemap-head">
+              <span class="name">Docs site</span>
+              <span class="tag">deep · indexable</span>
+            </div>
+            <div class="sitemap-body">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="node is-root">Docs home</div>
+                <div class="tree-line" style="height: 16px;"></div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                  <div class="node">Guides</div>
+                  <div class="node">Reference</div>
+                  <div class="node">API</div>
+                  <div class="node">Recipes</div>
+                </div>
+                <div class="tree-line" style="height: 16px;"></div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                  <div class="node is-leaf">Article (sidebar + content + TOC)</div>
+                  <div class="node is-leaf">Search</div>
+                  <div class="node is-leaf">Edit on GitHub</div>
+                </div>
+              </div>
+            </div>
+            <div class="sitemap-foot">Three things matter: search, the article template, and code-block treatment. Everything else is window dressing.</div>
+          </div>
+
+          <!-- Editorial -->
+          <div class="sitemap" style="grid-column: span 2;">
+            <div class="sitemap-head">
+              <span class="name">Editorial publication</span>
+              <span class="tag">content-first · serif-friendly</span>
+            </div>
+            <div class="sitemap-body">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div class="node is-root">Home (issue / feed)</div>
+                <div class="tree-line" style="height: 16px;"></div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                  <div class="node">Sections</div>
+                  <div class="node">Authors</div>
+                  <div class="node">Archive</div>
+                  <div class="node">Newsletter</div>
+                  <div class="node">About</div>
+                </div>
+                <div class="tree-line" style="height: 16px;"></div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                  <div class="node is-leaf">Article (long-form)</div>
+                  <div class="node is-leaf">Section index</div>
+                  <div class="node is-leaf">Author page</div>
+                  <div class="node is-leaf">Tag page</div>
+                </div>
+              </div>
+            </div>
+            <div class="sitemap-foot">Spend on the article template, the index card, and the typography. Cut everything else.</div>
+          </div>
+
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 5. SCOPE TIERS -->
+      <section class="lb-section" id="tiers">
+        <header>
+          <div class="eyebrow">05 — Engagement size</div>
+          <h2>Three scope tiers <a class="anchor" href="#tiers">#tiers</a></h2>
+          <p class="lede">Three honest envelopes for client work. Pick one before you write the proposal — if the client wants the middle list at the bottom-tier price, that's the conversation.</p>
+        </header>
+
+        <div class="tier-grid">
+
+          <div class="tier">
+            <div class="tier-name">
+              <h4>Refresh</h4>
+              <span class="week">1–2 weeks</span>
+            </div>
+            <p class="tier-desc">Existing brand, existing structure. New tokens, new type, new homepage + one supporting page. No re-IA.</p>
+            <ul>
+              <li>Token swap (color · type · radius)</li>
+              <li>Homepage redesign</li>
+              <li>One supporting page (about or pricing)</li>
+              <li>Mobile pass for both</li>
+              <li class="is-off">New IA · sitemap rewrite</li>
+              <li class="is-off">Photography direction</li>
+              <li class="is-off">Marketing pages × N</li>
+              <li class="is-off">Component library handoff</li>
+            </ul>
+          </div>
+
+          <div class="tier is-mid">
+            <div class="tier-name">
+              <h4>Rebuild</h4>
+              <span class="week">4–8 weeks</span>
+            </div>
+            <p class="tier-desc">The default tier. New design system on existing brand. Full marketing site, no app chrome. The shape most clients actually need.</p>
+            <ul>
+              <li>Full token kit · light + dark</li>
+              <li>5–8 marketing pages</li>
+              <li>Blog index + article template</li>
+              <li>Mobile across all surfaces</li>
+              <li>Photography direction + 1 shoot brief</li>
+              <li>Handoff (tokens + Figma or code)</li>
+              <li class="is-off">Brand identity from scratch</li>
+              <li class="is-off">In-product UI</li>
+            </ul>
+          </div>
+
+          <div class="tier">
+            <div class="tier-name">
+              <h4>Reposition</h4>
+              <span class="week">3–6 months</span>
+            </div>
+            <p class="tier-desc">Brand + system + site + app chrome. The only tier where "everything" is a fair word. Worth it if the company is at an inflection point.</p>
+            <ul>
+              <li>Brand strategy + identity</li>
+              <li>Wordmark + lockups + app icon</li>
+              <li>Full design system + tokens</li>
+              <li>Marketing site (10+ pages)</li>
+              <li>App shell + key product surfaces</li>
+              <li>Photography shoot + asset library</li>
+              <li>Voice doc + microcopy lib</li>
+              <li>Engineering handoff package</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 6. KICKOFF ONE-PAGER -->
+      <section class="lb-section" id="kickoff">
+        <header>
+          <div class="eyebrow">06 — Kickoff doc</div>
+          <h2>The one-pager you write after the brief <a class="anchor" href="#kickoff">#kickoff</a></h2>
+          <p class="lede">Pin this on the project Notion. Refer back to it weekly. If a decision contradicts something on this page, that's the moment to call it out — not in the review.</p>
+        </header>
+
+        <div class="kickoff">
+          <div>
+            <div class="field">
+              <h4>The visitor</h4>
+              <p>One sentence. Who shows up and what are they trying to do?</p>
+              <div class="ans">Solo developer evaluating analytics tools, comparing pricing pages on a Wednesday afternoon.</div>
+            </div>
+            <div class="field">
+              <h4>The primary action</h4>
+              <p>One thing the site has to drive. One metric.</p>
+              <div class="ans">Start free trial → reach 200 signups/month within 90 days.</div>
+            </div>
+            <div class="field">
+              <h4>The shape</h4>
+              <p>Which of the five sitemap patterns is this site?</p>
+              <div class="ans">Product marketing + Docs (hybrid). Marketing site at root; docs at /docs.</div>
+            </div>
+            <div class="field">
+              <h4>The archetype</h4>
+              <p>Which row of the brand → dials table?</p>
+              <div class="ans">Technical with one Playful dial (the motion vocabulary).</div>
+            </div>
+          </div>
+          <div>
+            <div class="field">
+              <h4>The wildcard</h4>
+              <p>The one dial that makes this site not look like the row above.</p>
+              <div class="ans">Bouncy stagger on the feature grid — the only spring curve in the whole site.</div>
+            </div>
+            <div class="field">
+              <h4>The references</h4>
+              <p>Three liked, one disliked. One sentence each on why.</p>
+              <div class="ans">Like: Linear (calm density), Stripe (type rhythm), Plain (color restraint). Dislike: Generic dashboard SaaS (over-decorated empty states).</div>
+            </div>
+            <div class="field">
+              <h4>The embarrassment guardrail</h4>
+              <p>What would make us regret shipping?</p>
+              <div class="ans">Looking like a Tailwind template. Default gradient buttons. Stock photos of people pointing at laptops.</div>
+            </div>
+            <div class="field">
+              <h4>Out of scope</h4>
+              <p>What we are not building, written down.</p>
+              <div class="ans">In-product UI, login flow, customer dashboard, mobile app store assets, email templates.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="specimen" style="margin-top: var(--space-6);">
+          <div class="specimen-body" style="display: flex; gap: var(--space-6); align-items: center; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 280px;">
+              <div class="t-overline text-muted" style="margin-bottom: 8px;">Why this doc exists</div>
+              <p style="margin: 0; font-size: var(--text-body-size); line-height: 1.55; color: var(--text-secondary);">Halfway through every project, someone forgets what was decided in the brief. The kickoff one-pager is the receipt. When a reviewer says "can we make it more colorful?" you point at the wildcard line and ask which other dial they want to trade.</p>
+            </div>
+            <div style="flex: 1; min-width: 280px; padding: var(--space-4); border-radius: var(--radius-md); background: var(--surface-sunken); font-family: var(--font-mono); font-size: 12px; line-height: 1.6; color: var(--text-secondary);">
+              <div style="color: var(--accent); margin-bottom: 6px;">→ When in doubt</div>
+              Re-read the embarrassment guardrail. It's the<br/>only line a client will write that's worth more<br/>than your taste.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLOSING -->
+      <section class="lb-section">
+        <hr class="rule" />
+        <div style="display: flex; gap: var(--space-6); align-items: flex-start; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 280px;">
+            <h3 class="t-h3" style="margin: 0;">Approach, then system.</h3>
+            <p class="t-body-lg text-secondary" style="max-width: 640px; margin-top: 6px;">Every chapter after this one is output. This one is input. The reason most sites look the same isn't the components — it's that they started without the brief.</p>
+          </div>
+          <a href="Foundations.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--surface); font-size: var(--text-body-sm-size); font-weight: 500;">Next — Foundations <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script></body>
+</html>

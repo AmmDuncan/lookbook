@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — Imagery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: ['class', '[data-theme="dark"]'] };</script>
+  <style>
+    /* ===== Synthetic photo surfaces ====================================
+       We build "photos" with CSS so the system stays self-contained.
+       Each .photo gets a layered gradient and a soft noise texture
+       suggesting subject matter without depicting it. */
+    .photo {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface-sunken);
+      isolation: isolate;
+    }
+    .photo::after {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.10), transparent 22%),
+        radial-gradient(circle at 78% 65%, rgba(0,0,0,0.10), transparent 32%);
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+    .photo::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' /><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.4 0' /></filter><rect width='100%' height='100%' filter='url(%23n)' /></svg>");
+      opacity: 0.6;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    /* Subject-matter swatches — each captures the *mood* of a category */
+    .ph-product   { background: linear-gradient(135deg, oklch(0.86 0.04 230) 0%, oklch(0.62 0.07 250) 100%); }
+    .ph-people    { background: linear-gradient(150deg, oklch(0.82 0.07 60) 0%, oklch(0.52 0.10 30) 100%); }
+    .ph-place     { background: linear-gradient(165deg, oklch(0.78 0.06 165) 0%, oklch(0.42 0.07 220) 100%); }
+    .ph-abstract  { background: conic-gradient(from 220deg at 60% 40%, oklch(0.70 0.16 35), oklch(0.55 0.18 280), oklch(0.65 0.14 165), oklch(0.70 0.16 35)); }
+    .ph-doc       { background: linear-gradient(180deg, oklch(0.96 0.005 250) 0%, oklch(0.86 0.005 250) 100%); }
+
+    /* Caption row inside a card */
+    .photo-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .photo-card .photo { aspect-ratio: 4 / 3; }
+    .photo-card .meta {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      gap: var(--space-3);
+    }
+    .photo-card .meta .name { font-size: var(--text-body-sm-size); font-weight: 600; }
+    .photo-card .meta .tag {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Treatment overlays */
+    .tx-natural    { /* no extra */ }
+    .tx-duotone {
+      filter: grayscale(1) contrast(1.05);
+    }
+    .tx-duotone::before {
+      opacity: 0.45;
+    }
+    .tx-duotone::after {
+      background: linear-gradient(135deg, color-mix(in oklch, var(--accent) 70%, transparent), color-mix(in oklch, var(--accent-secondary, oklch(0.62 0.155 35)) 70%, transparent));
+      mix-blend-mode: color;
+    }
+    .tx-desat-accent {
+      filter: saturate(0.35) contrast(1.05);
+    }
+    .tx-desat-accent::after {
+      background: radial-gradient(ellipse at 65% 60%, color-mix(in oklch, var(--accent) 55%, transparent) 0%, transparent 38%);
+      mix-blend-mode: color;
+    }
+    .tx-masked {
+      mask-image: radial-gradient(110% 90% at 50% 60%, #000 60%, transparent 100%);
+      -webkit-mask-image: radial-gradient(110% 90% at 50% 60%, #000 60%, transparent 100%);
+    }
+    .tx-blur-bg {
+      filter: blur(14px) saturate(1.2);
+    }
+    .tx-grade-warm {
+      filter: contrast(1.05) saturate(1.05);
+    }
+    .tx-grade-warm::after {
+      background: linear-gradient(180deg, rgba(255, 200, 140, 0.18) 0%, rgba(255, 130, 90, 0.10) 100%);
+      mix-blend-mode: soft-light;
+    }
+    .tx-grade-cool {
+      filter: contrast(1.05);
+    }
+    .tx-grade-cool::after {
+      background: linear-gradient(180deg, rgba(140, 180, 255, 0.20) 0%, rgba(60, 90, 160, 0.14) 100%);
+      mix-blend-mode: soft-light;
+    }
+
+    /* Aspect ratio swatches */
+    .ratio-row {
+      display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: flex-end;
+    }
+    .ratio-card {
+      display: flex; flex-direction: column; gap: 8px;
+      align-items: stretch;
+    }
+    .ratio-card .photo {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+    .ratio-card .lbl {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-align: center;
+    }
+    .ratio-card .lbl strong {
+      display: block;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: var(--text-body-sm-size);
+      letter-spacing: -0.005em;
+      text-transform: none;
+      margin-bottom: 2px;
+    }
+
+    /* Composition layouts */
+    .comp {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .comp-stage {
+      padding: var(--space-5);
+      background: var(--surface);
+    }
+    .comp-foot {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+      background: var(--surface-sunken);
+      font-size: var(--text-micro-size);
+      color: var(--text-secondary);
+      line-height: var(--text-micro-lh);
+    }
+    .comp .photo { border-radius: var(--radius-md); }
+
+    /* Stock-vs-custom split */
+    .vs-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    @media (max-width: 700px) { .vs-split { grid-template-columns: 1fr; } }
+    .vs-side {
+      background: var(--surface);
+      padding: var(--space-5);
+      display: flex; flex-direction: column; gap: var(--space-3);
+    }
+    .vs-side h4 {
+      margin: 0;
+      font-size: var(--text-body-size);
+      font-weight: 600;
+    }
+    .vs-side .badge {
+      align-self: flex-start;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      background: var(--surface-sunken);
+      border: 1px solid var(--border);
+    }
+    .vs-side .badge.is-when {
+      color: var(--accent);
+      background: var(--accent-subtle);
+      border-color: color-mix(in oklch, var(--accent) 25%, transparent);
+    }
+    .vs-side ul {
+      margin: 4px 0 0; padding: 0; list-style: none;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .vs-side li {
+      display: grid; grid-template-columns: 12px 1fr; gap: 8px;
+      font-size: var(--text-body-sm-size);
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .vs-side li::before {
+      content: "—";
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    /* Placeholder progression */
+    .ph-progression {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-3);
+    }
+    @media (max-width: 700px) { .ph-progression { grid-template-columns: 1fr 1fr; } }
+    .ph-stage {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .ph-stage .body {
+      aspect-ratio: 4 / 3;
+      position: relative;
+    }
+    .ph-stage .body .photo { position: absolute; inset: 0; }
+    .ph-stage .body.is-skeleton {
+      background:
+        linear-gradient(90deg, var(--surface-sunken) 0%, color-mix(in oklch, var(--surface-sunken) 60%, var(--surface)) 50%, var(--surface-sunken) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .ph-stage .body.is-domcolor { background: oklch(0.62 0.07 250); }
+    .ph-stage .body.is-blurhash {
+      background:
+        radial-gradient(40% 50% at 25% 35%, oklch(0.78 0.05 230), transparent 70%),
+        radial-gradient(50% 60% at 70% 65%, oklch(0.52 0.08 250), transparent 70%),
+        oklch(0.62 0.07 240);
+      filter: blur(2px);
+    }
+    .ph-stage .lbl {
+      padding: var(--space-2) var(--space-3);
+      border-top: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex; justify-content: space-between;
+    }
+    .ph-stage .lbl strong { color: var(--text-primary); font-weight: 600; letter-spacing: -0.005em; text-transform: none; }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">imagery · v0.1</span>
+      </div>
+      <nav class="lb-page-nav" aria-label="Chapters"></nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#subject">Subject matter</a></li>
+        <li><a href="#treatment">Treatment</a></li>
+        <li><a href="#ratios">Aspect ratios</a></li>
+        <li><a href="#composition">Composition</a></li>
+        <li><a href="#stock">Stock vs custom</a></li>
+        <li><a href="#placeholders">Placeholders</a></li>
+        <li><a href="#rules">Rules</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>Imagery</h5>
+        <p>Most sites stand or fall on this. Subject matter, treatment, crop, composition, placeholders — the visual register that the system underneath can't control.</p>
+      </div>
+    </aside>
+
+    <main class="lb-main">
+
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 09</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track); font-family: var(--font-display);">Imagery.</h2>
+          <p class="lede">The chapter that decides whether a site feels alive or templated. Components are silent here — what matters is what's in the picture, how it's treated, how it's cropped, and what fills the space while it loads. Visuals in this chapter are CSS-rendered placeholders; in production each becomes a real photograph or illustration.</p>
+        </header>
+      </section>
+
+      <!-- 1. SUBJECT MATTER -->
+      <section class="lb-section" id="subject">
+        <header>
+          <div class="eyebrow">01 — Subject matter</div>
+          <h2>What's in the picture <a class="anchor" href="#subject">#subject</a></h2>
+          <p class="lede">Five subject categories. Pick a primary and a secondary; the rest stay off the site. Most projects fail by trying all five at once — the site reads as a stock library instead of a brand.</p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-3);">
+          <div class="photo-card">
+            <div class="photo ph-product"></div>
+            <div class="meta"><span class="name">Product</span><span class="tag">tight</span></div>
+          </div>
+          <div class="photo-card">
+            <div class="photo ph-people"></div>
+            <div class="meta"><span class="name">People</span><span class="tag">candid</span></div>
+          </div>
+          <div class="photo-card">
+            <div class="photo ph-place"></div>
+            <div class="meta"><span class="name">Place</span><span class="tag">environment</span></div>
+          </div>
+          <div class="photo-card">
+            <div class="photo ph-abstract"></div>
+            <div class="meta"><span class="name">Abstract</span><span class="tag">texture</span></div>
+          </div>
+          <div class="photo-card">
+            <div class="photo ph-doc"></div>
+            <div class="meta"><span class="name">Document</span><span class="tag">UI · screenshot</span></div>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <div class="specimen-body" style="padding: 0;">
+            <div class="rules-grid" style="border: 0; border-radius: 0;">
+              <div class="rules-row">
+                <div class="rules-name">Product<span class="sub">objects · packaging · UI screenshots</span></div>
+                <div class="rules-when"><strong>Use</strong> when the product is the story. Tight crops, controlled background, consistent lighting.</div>
+                <div class="rules-avoid"><strong>Avoid</strong> the hero-on-blank-white shot — it reads as e-commerce, not brand.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">People<span class="sub">candid · environmental portrait</span></div>
+                <div class="rules-when"><strong>Use</strong> when the brand is people-facing or wants warmth. Candids over posed. Real users over models.</div>
+                <div class="rules-avoid"><strong>Avoid</strong> stock people pointing at laptops, generic diversity sampling, white-toothed handshakes.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Place<span class="sub">environment · architecture · landscape</span></div>
+                <div class="rules-when"><strong>Use</strong> for travel, real-estate, hospitality, fintech ("trust"), or when the product is invisible.</div>
+                <div class="rules-avoid"><strong>Avoid</strong> drone-shot mountain ranges as a metaphor for software. Be literal.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Abstract<span class="sub">texture · 3D · generative</span></div>
+                <div class="rules-when"><strong>Use</strong> for technical, infrastructure, or pre-product brands. Renders earn their place when the product isn't shippable yet.</div>
+                <div class="rules-avoid"><strong>Avoid</strong> the default "swirling 3D blob" — every dev tool launched in 2023 used it. The genericness is the problem.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Document<span class="sub">UI screenshot · code · diagram</span></div>
+                <div class="rules-when"><strong>Use</strong> for tools where seeing the interface is the pitch. Show the product, not a logo on a marketing card.</div>
+                <div class="rules-avoid"><strong>Avoid</strong> blurry "actual product UI" thumbnails — they undersell. Re-shoot at 2x or design a clean specimen frame.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 2. TREATMENT -->
+      <section class="lb-section" id="treatment">
+        <header>
+          <div class="eyebrow">02 — Treatment</div>
+          <h2>Six treatment recipes <a class="anchor" href="#treatment">#treatment</a></h2>
+          <p class="lede">One subject, six post-processing recipes. Each gives the same source image a different brand register. Pick one per project and apply it across every photo so the site reads as one shoot, even if it's six.</p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3);">
+          <div class="photo-card">
+            <div class="photo ph-people tx-natural"></div>
+            <div class="meta"><span class="name">Natural</span><span class="tag">no filter</span></div>
+          </div>
+          <div class="photo-card">
+            <div class="photo ph-people tx-grade-warm"></div>
+            <div class="meta"><span class="name">Warm grade</span><span class="tag">amber lift</span></div>
+          </div>
+          <div class="photo-card">
+            <div class="photo ph-people tx-grade-cool"></div>
+            <div class="meta"><span class="name">Cool grade</span><span class="tag">blue lift</span></div>
+          </div>
+          <div class="photo-card">
+            <div class="photo ph-people tx-duotone"></div>
+            <div class="meta"><span class="name">Duotone</span><span class="tag">accent ↔ secondary</span></div>
+          </div>
+          <div class="photo-card">
+            <div class="photo ph-people tx-desat-accent"></div>
+            <div class="meta"><span class="name">Desat + accent pop</span><span class="tag">spot color</span></div>
+          </div>
+          <div class="photo-card">
+            <div class="photo ph-people tx-masked"></div>
+            <div class="meta"><span class="name">Masked vignette</span><span class="tag">subject only</span></div>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <div class="specimen-body" style="padding: 0;">
+            <div class="rules-grid" style="border: 0; border-radius: 0;">
+              <div class="rules-row">
+                <div class="rules-name">Natural<span class="sub">no post-treatment</span></div>
+                <div class="rules-when"><strong>Default</strong> when the photography is genuinely high-quality and on-brand. Trust the source.</div>
+                <div class="rules-avoid"><strong>Don't</strong> reach for natural just because you don't want to commit to a grade. Pick one.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Color grade<span class="sub">warm · cool · neutral</span></div>
+                <div class="rules-when"><strong>Use</strong> a consistent grade across every photo. Warm reads as human, premium, considered. Cool reads as technical, calm, scientific.</div>
+                <div class="rules-avoid"><strong>Don't</strong> mix grades. One site, one grade — even if the photos came from different sources.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Duotone<span class="sub">accent ↔ secondary</span></div>
+                <div class="rules-when"><strong>Use</strong> when source quality varies wildly and you need a great unifier. Or as a deliberate strong brand register.</div>
+                <div class="rules-avoid"><strong>Don't</strong> duotone product UI screenshots — the colors stop carrying information. Duotone is for photos only.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Desat + accent pop<span class="sub">spot color on subject</span></div>
+                <div class="rules-when"><strong>Use</strong> when the brand color is the story. Photo recedes; accent leads.</div>
+                <div class="rules-avoid"><strong>Don't</strong> use on faces — desaturated skin tones look corpse-like. Subjects only.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Masked vignette<span class="sub">isolate the subject</span></div>
+                <div class="rules-when"><strong>Use</strong> for portraits or single-object shots where the background distracts. Fade to the surface color, not to black.</div>
+                <div class="rules-avoid"><strong>Don't</strong> mask architecture or landscape — the negative space is what makes the photo work.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 3. ASPECT RATIOS -->
+      <section class="lb-section" id="ratios">
+        <header>
+          <div class="eyebrow">03 — Aspect ratios</div>
+          <h2>How the photo is cropped <a class="anchor" href="#ratios">#ratios</a></h2>
+          <p class="lede">Five aspect ratios cover almost every use. Standardize them in the system so the photographer (or you) shoots with the crops in mind, not against them.</p>
+        </header>
+
+        <div class="ratio-row">
+          <div class="ratio-card">
+            <div class="photo ph-place" style="aspect-ratio: 21 / 9; width: 280px;"></div>
+            <div class="lbl"><strong>21:9</strong>cinema · hero band</div>
+          </div>
+          <div class="ratio-card">
+            <div class="photo ph-place" style="aspect-ratio: 16 / 9; width: 220px;"></div>
+            <div class="lbl"><strong>16:9</strong>video · hero · feature</div>
+          </div>
+          <div class="ratio-card">
+            <div class="photo ph-place" style="aspect-ratio: 4 / 3; width: 180px;"></div>
+            <div class="lbl"><strong>4:3</strong>card · grid · index</div>
+          </div>
+          <div class="ratio-card">
+            <div class="photo ph-place" style="aspect-ratio: 1 / 1; width: 160px;"></div>
+            <div class="lbl"><strong>1:1</strong>avatar · social · grid</div>
+          </div>
+          <div class="ratio-card">
+            <div class="photo ph-place" style="aspect-ratio: 3 / 4; width: 130px;"></div>
+            <div class="lbl"><strong>3:4</strong>portrait · editorial</div>
+          </div>
+        </div>
+
+        <div class="specimen" style="margin-top: var(--space-4);">
+          <div class="specimen-body" style="padding: 0;">
+            <div class="rules-grid" style="border: 0; border-radius: 0;">
+              <div class="rules-row">
+                <div class="rules-name">21:9 cinematic<span class="sub">hero bands · scroll-driven panoramas</span></div>
+                <div class="rules-when"><strong>Use</strong> sparingly — once per page max. A panoramic hero is a powerful first impression; two is wasted scroll.</div>
+                <div class="rules-avoid"><strong>Don't</strong> crop a portrait subject to 21:9 — you'll cut the head off. Reserve for environment / abstract.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">16:9<span class="sub">default media ratio</span></div>
+                <div class="rules-when"><strong>Default</strong> for hero, feature blocks, embedded video, opengraph. If in doubt, this.</div>
+                <div class="rules-avoid"><strong>Don't</strong> use for index cards — too wide, leaves dead space below the image.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">4:3<span class="sub">classic grid</span></div>
+                <div class="rules-when"><strong>Default</strong> for card grids, blog index, gallery. Reads as photography, not video.</div>
+                <div class="rules-avoid"><strong>Don't</strong> mix 4:3 and 16:9 in the same grid — the rows misalign.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">1:1 square<span class="sub">avatars · OG · masonry</span></div>
+                <div class="rules-when"><strong>Use</strong> for avatars, social posts, masonry blocks that need a strong rhythmic beat.</div>
+                <div class="rules-avoid"><strong>Don't</strong> hero in 1:1 — squares don't lead the eye anywhere.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">3:4 portrait<span class="sub">editorial · team pages</span></div>
+                <div class="rules-when"><strong>Use</strong> for portraits, team pages, editorial layouts that want a magazine register.</div>
+                <div class="rules-avoid"><strong>Don't</strong> use portrait crops in a tight nav or card grid — they punch holes vertically.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 4. COMPOSITION -->
+      <section class="lb-section" id="composition">
+        <header>
+          <div class="eyebrow">04 — Composition</div>
+          <h2>Where the image sits on the page <a class="anchor" href="#composition">#composition</a></h2>
+          <p class="lede">Six composition patterns. Each is a relationship between image and text. The system stays the same; the dynamic changes.</p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4);">
+
+          <!-- 1. Image right, text left -->
+          <div class="comp">
+            <div class="comp-stage" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); align-items: center;">
+              <div>
+                <div class="t-overline text-muted" style="margin-bottom: 8px;">A — text · image</div>
+                <h3 style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.020em;">Tell the story first.</h3>
+                <p style="margin: 8px 0 0; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">The image supports the headline. Reading flows naturally left → right.</p>
+              </div>
+              <div class="photo ph-product" style="aspect-ratio: 4 / 3;"></div>
+            </div>
+            <div class="comp-foot">Default feature row. Alternate sides on consecutive blocks to add rhythm.</div>
+          </div>
+
+          <!-- 2. Full bleed with overlay -->
+          <div class="comp">
+            <div class="comp-stage" style="position: relative; padding: 0; min-height: 220px;">
+              <div class="photo ph-place" style="position: absolute; inset: 0; border-radius: 0;"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 100%);"></div>
+              <div style="position: absolute; left: var(--space-5); right: var(--space-5); bottom: var(--space-5); color: white;">
+                <div style="font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.85;">B — full bleed</div>
+                <h3 style="margin: 4px 0 0; font-size: 22px; font-weight: 600; letter-spacing: -0.020em; color: white;">Let the image lead.</h3>
+              </div>
+            </div>
+            <div class="comp-foot">For heroes and section breaks. Always add a scrim — text on photo without one is fragile.</div>
+          </div>
+
+          <!-- 3. Photo grid -->
+          <div class="comp">
+            <div class="comp-stage" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; padding: var(--space-5); align-items: stretch;">
+              <div class="photo ph-place" style="aspect-ratio: 1 / 1; border-radius: var(--radius-md);"></div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="photo ph-product" style="flex: 1; border-radius: var(--radius-md);"></div>
+                <div class="photo ph-abstract" style="flex: 1; border-radius: var(--radius-md);"></div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="photo ph-people" style="flex: 1; border-radius: var(--radius-md);"></div>
+                <div class="photo ph-place" style="flex: 1; border-radius: var(--radius-md);"></div>
+              </div>
+            </div>
+            <div class="comp-foot">Mosaic grid — one anchor + smaller satellites. For about pages and brand showcases.</div>
+          </div>
+
+          <!-- 4. Single big photo -->
+          <div class="comp">
+            <div class="comp-stage" style="display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-5);">
+              <div class="photo ph-place" style="aspect-ratio: 16 / 9; border-radius: var(--radius-md);"></div>
+              <div style="display: flex; justify-content: space-between; gap: var(--space-3);">
+                <span style="font-family: var(--font-mono); font-size: 10.5px; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase;">C — single anchor</span>
+                <span style="font-size: var(--text-body-sm-size); color: var(--text-secondary);">Image-led. Caption optional.</span>
+              </div>
+            </div>
+            <div class="comp-foot">When the photograph is the whole point. Editorial, case studies, hero sections.</div>
+          </div>
+
+          <!-- 5. Polaroid stack -->
+          <div class="comp">
+            <div class="comp-stage" style="display: flex; align-items: center; justify-content: center; min-height: 220px; gap: 0; padding: var(--space-6);">
+              <div class="photo ph-people" style="width: 140px; aspect-ratio: 3 / 4; border-radius: var(--radius-md); transform: rotate(-7deg) translateX(20px); box-shadow: var(--shadow-md); border: 4px solid white;"></div>
+              <div class="photo ph-product" style="width: 140px; aspect-ratio: 3 / 4; border-radius: var(--radius-md); transform: rotate(3deg); box-shadow: var(--shadow-lg); border: 4px solid white; z-index: 2;"></div>
+              <div class="photo ph-place" style="width: 140px; aspect-ratio: 3 / 4; border-radius: var(--radius-md); transform: rotate(9deg) translateX(-20px); box-shadow: var(--shadow-md); border: 4px solid white;"></div>
+            </div>
+            <div class="comp-foot">Polaroid stack — playful, biographical. About pages, "the team" sections. Use sparingly.</div>
+          </div>
+
+          <!-- 6. Masked silhouette behind text -->
+          <div class="comp">
+            <div class="comp-stage" style="position: relative; padding: var(--space-6); min-height: 220px;">
+              <div class="photo ph-abstract" style="position: absolute; inset: var(--space-5); border-radius: var(--radius-lg); mask-image: radial-gradient(60% 60% at 30% 50%, #000 60%, transparent 100%); -webkit-mask-image: radial-gradient(60% 60% at 30% 50%, #000 60%, transparent 100%);"></div>
+              <div style="position: relative; max-width: 60%; margin-left: 35%;">
+                <div class="t-overline text-muted" style="margin-bottom: 8px;">D — bleed-through</div>
+                <h3 style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.020em;">Image behind, text in front.</h3>
+                <p style="margin: 8px 0 0; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">The photo fades into the surface, headline lives on the clean side.</p>
+              </div>
+            </div>
+            <div class="comp-foot">Masked-bleed composition. The image is felt more than seen. Reserve for opening sections.</div>
+          </div>
+
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 5. STOCK VS CUSTOM -->
+      <section class="lb-section" id="stock">
+        <header>
+          <div class="eyebrow">05 — Stock vs custom</div>
+          <h2>When each works <a class="anchor" href="#stock">#stock</a></h2>
+          <p class="lede">Custom photography is always better — and almost never in scope. The honest question is: how do you make stock not look like stock? Treatment, crop, and curation. The bar is "could this have been on the shoot?"</p>
+        </header>
+
+        <div class="vs-split">
+          <div class="vs-side">
+            <span class="badge is-when">Custom</span>
+            <h4>Earn it for brand moments.</h4>
+            <ul>
+              <li>Founder portraits, team pages, real customer interviews</li>
+              <li>The hero on the homepage (if the brand is people-led)</li>
+              <li>One signature shot per campaign — better than ten generic ones</li>
+              <li>Half-day shoot covers most needs; don't overscope</li>
+            </ul>
+          </div>
+          <div class="vs-side">
+            <span class="badge">Stock</span>
+            <h4>OK for everything else, with rules.</h4>
+            <ul>
+              <li>Pick from one curated library (Unsplash+, Stocksy, Death to Stock)</li>
+              <li>Apply the same treatment across all — grade, duotone, or desat-pop</li>
+              <li>Avoid the top-200 most-downloaded shots; they're everywhere already</li>
+              <li>Crop aggressively — full-frame stock is the giveaway</li>
+              <li>Never use stock people on a page that talks about your real users</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="specimen" style="margin-top: var(--space-4);">
+          <div class="specimen-body">
+            <div class="t-overline text-muted" style="margin-bottom: var(--space-3);">The rescue treatment</div>
+            <p style="margin: 0 0 var(--space-4); font-size: var(--text-body-size); color: var(--text-secondary); line-height: 1.55;">Same stock source, two passes. Left is what comes out of the library. Right is what ships on the site.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+              <div class="photo ph-people" style="aspect-ratio: 4 / 3; border-radius: var(--radius-md);"></div>
+              <div class="photo ph-people tx-duotone" style="aspect-ratio: 4 / 3; border-radius: var(--radius-md);"></div>
+            </div>
+          </div>
+          <div class="specimen-caption">Apply the same treatment to every photo on the site. Library variety + system unifier = site-as-one-shoot.</div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 6. PLACEHOLDERS -->
+      <section class="lb-section" id="placeholders">
+        <header>
+          <div class="eyebrow">06 — Placeholders</div>
+          <h2>What fills the space while it loads <a class="anchor" href="#placeholders">#placeholders</a></h2>
+          <p class="lede">Four progressive techniques, in order of increasing investment. Pick one and apply everywhere — the layout shouldn't flicker between strategies as the page loads.</p>
+        </header>
+
+        <div class="ph-progression">
+          <div class="ph-stage">
+            <div class="body is-skeleton"></div>
+            <div class="lbl"><strong>Skeleton</strong><span>0kb</span></div>
+          </div>
+          <div class="ph-stage">
+            <div class="body is-domcolor"></div>
+            <div class="lbl"><strong>Dominant color</strong><span>4 bytes</span></div>
+          </div>
+          <div class="ph-stage">
+            <div class="body is-blurhash"></div>
+            <div class="lbl"><strong>Blurhash · LQIP</strong><span>~30 bytes</span></div>
+          </div>
+          <div class="ph-stage">
+            <div class="body"><div class="photo ph-place"></div></div>
+            <div class="lbl"><strong>Loaded</strong><span>~80kb</span></div>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <div class="specimen-body" style="padding: 0;">
+            <div class="rules-grid" style="border: 0; border-radius: 0;">
+              <div class="rules-row">
+                <div class="rules-name">Skeleton<span class="sub">shimmer rect</span></div>
+                <div class="rules-when"><strong>Use</strong> in product UI where the layout matters more than the content (lists, dashboards, profile cards).</div>
+                <div class="rules-avoid"><strong>Don't</strong> use for marketing hero images — the shimmer reads as "loading" not "designed."</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Dominant color<span class="sub">single average hex</span></div>
+                <div class="rules-when"><strong>Use</strong> for grids and feeds — the color makes the page feel composed before any image lands.</div>
+                <div class="rules-avoid"><strong>Don't</strong> use pure gray. The whole point is anticipating the photo's mood.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Blurhash · LQIP<span class="sub">tiny encoded preview</span></div>
+                <div class="rules-when"><strong>Use</strong> for hero, feature, and any photo above the fold. Generated at build time, served with the markup.</div>
+                <div class="rules-avoid"><strong>Don't</strong> rely on the browser blur — it's heavier than the LQIP. Use a real Blurhash.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Native lazy<span class="sub">loading="lazy" decoding="async"</span></div>
+                <div class="rules-when"><strong>Always</strong> on every img below the fold. Reduces LCP. Free.</div>
+                <div class="rules-avoid"><strong>Don't</strong> lazy-load the hero — you'll tank LCP. Eager + fetchpriority="high".</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 7. RULES -->
+      <section class="lb-section" id="rules">
+        <header>
+          <div class="eyebrow">07 — The non-negotiables</div>
+          <h2>Imagery rules <a class="anchor" href="#rules">#rules</a></h2>
+        </header>
+
+        <div class="rules-grid">
+          <div class="rules-row">
+            <div class="rules-name">One subject category dominates<span class="sub">~70% of photos</span></div>
+            <div class="rules-when"><strong>Set</strong> a primary in the kickoff doc. Secondary supports — never two primaries.</div>
+            <div class="rules-avoid"><strong>Don't</strong> rotate through all five categories looking for balance.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">One treatment, across the whole site<span class="sub">grade · duotone · desat-pop</span></div>
+            <div class="rules-when"><strong>Apply</strong> the chosen recipe to every photo at export time. Document it as part of the brand guide.</div>
+            <div class="rules-avoid"><strong>Don't</strong> let "natural" be the default — that's not a choice.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Aspect ratios live in the system<span class="sub">--aspect-hero · --aspect-card</span></div>
+            <div class="rules-when"><strong>Token-ize</strong> the ratios. The CMS, the photographer, and the engineer all read from one list.</div>
+            <div class="rules-avoid"><strong>Don't</strong> let editors choose crops in the CMS. Crop once at upload, store all sizes.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Every image has a placeholder<span class="sub">blurhash · domcolor · skeleton</span></div>
+            <div class="rules-when"><strong>Render</strong> a placeholder before the image lands. The page should be "designed" at every step of load.</div>
+            <div class="rules-avoid"><strong>Don't</strong> ship an empty rectangle. Empty rectangles are the loudest signal of a half-built site.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Real over generic<span class="sub">always</span></div>
+            <div class="rules-when"><strong>Always</strong> push for real customers, real products, real environments — even at lower fidelity.</div>
+            <div class="rules-avoid"><strong>Don't</strong> use stock for anything the site claims is real. That's the only inviolable rule.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLOSING -->
+      <section class="lb-section">
+        <hr class="rule" />
+        <div style="display: flex; gap: var(--space-6); align-items: flex-start; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 280px;">
+            <h3 class="t-h3" style="margin: 0;">Imagery is the brand register the system can't enforce.</h3>
+            <p class="t-body-lg text-secondary" style="max-width: 640px; margin-top: 6px;">Two sites with identical components look like different companies because of what's in the photos. Pick the dials in this chapter deliberately or the site will feel templated no matter how good the type pairing is.</p>
+          </div>
+          <a href="Motion.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--surface); font-size: var(--text-body-sm-size); font-weight: 500;">Next — Motion <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script></body>
+</html>

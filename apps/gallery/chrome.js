@@ -150,19 +150,24 @@
 
     // ----- Chapter picker ----------------------------------------------------
     const CHAPTERS = [
-      { num: '01', file: 'Foundations.html', name: 'Foundations', group: 'System' },
-      { num: '02', file: 'Atoms.html',       name: 'Atoms',       group: 'System' },
-      { num: '03', file: 'Molecules.html',   name: 'Molecules',   group: 'System' },
-      { num: '04', file: 'Organisms.html',   name: 'Organisms',   group: 'System' },
-      { num: '05', file: 'States.html',      name: 'States',      group: 'System' },
-      { num: '06', file: 'Auth.html',        name: 'Auth',        group: 'Flows' },
-      { num: '07', file: 'Personality.html', name: 'Personality', group: 'Craft' },
-      { num: '08', file: 'Motion.html',      name: 'Motion',      group: 'Craft' },
-      { num: '09', file: 'DataViz.html',     name: 'Data viz',    group: 'Craft' },
-      { num: '10', file: 'Marketing.html',   name: 'Marketing',   group: 'Outward' },
-      { num: '11', file: 'Layout.html',       name: 'Layout',      group: 'Reference' },
-      { num: '12', file: 'Recipes.html',      name: 'Recipes',     group: 'Reference' },
-      { num: '13', file: 'Guide.html',        name: 'Guide',       group: 'Reference' },
+      { num: '00', file: 'Approach.html',      name: 'Approach',        group: 'Approach' },
+      { num: '01', file: 'Foundations.html',   name: 'Foundations',     group: 'System' },
+      { num: '02', file: 'Atoms.html',         name: 'Atoms',           group: 'System' },
+      { num: '03', file: 'Molecules.html',     name: 'Molecules',       group: 'System' },
+      { num: '04', file: 'Organisms.html',     name: 'Organisms',       group: 'System' },
+      { num: '05', file: 'States.html',        name: 'States',          group: 'System' },
+      { num: '06', file: 'Auth.html',          name: 'Auth',            group: 'Flows' },
+      { num: '07', file: 'Identity.html',      name: 'Identity',        group: 'Brand' },
+      { num: '08', file: 'Personality.html',   name: 'Personality',     group: 'Brand' },
+      { num: '09', file: 'Imagery.html',       name: 'Imagery',         group: 'Brand' },
+      { num: '10', file: 'Motion.html',        name: 'Motion',          group: 'Craft' },
+      { num: '11', file: 'DataViz.html',       name: 'Data viz',        group: 'Craft' },
+      { num: '12', file: 'Marketing.html',     name: 'Marketing',       group: 'Outward' },
+      { num: '13', file: 'SiteArchetypes.html',name: 'Site archetypes', group: 'Outward' },
+      { num: '14', file: 'Layout.html',        name: 'Layout',          group: 'Reference' },
+      { num: '15', file: 'Recipes.html',       name: 'Recipes',         group: 'Reference' },
+      { num: '16', file: 'Variation.html',     name: 'Variation',       group: 'Reference' },
+      { num: '17', file: 'Guide.html',         name: 'Guide',           group: 'Reference' },
     ];
     const currentFile = location.pathname.split('/').pop() || 'Foundations.html';
     const currentChap = CHAPTERS.find(c => c.file === currentFile) || CHAPTERS[0];

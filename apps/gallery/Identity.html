@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — Identity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: ['class', '[data-theme="dark"]'] };</script>
+  <style>
+    /* Wordmark stage */
+    .wm-stage {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-10) var(--space-8);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 220px;
+    }
+    .wm-stage.is-dark {
+      background: var(--color-gray-900);
+      border-color: var(--color-gray-800);
+    }
+    .wm-stage.is-accent {
+      background: var(--accent);
+      border-color: var(--accent-hover);
+    }
+    .wm-stage.is-image {
+      background-image:
+        linear-gradient(135deg, oklch(0.45 0.05 250) 0%, oklch(0.30 0.06 220) 100%);
+      border-color: transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    .wm-stage.is-image::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(120% 80% at 30% 30%, rgba(255,255,255,0.18), transparent 60%);
+      pointer-events: none;
+    }
+
+    /* The mark itself — a constructed wordmark to demonstrate, not a real brand */
+    .wm-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .wm-mark .glyph {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: var(--text-primary);
+      display: inline-flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .wm-mark .glyph::before {
+      content: "";
+      width: 14px; height: 14px;
+      background: var(--bg);
+      border-radius: 3px;
+      transform: rotate(45deg);
+    }
+    .wm-mark .word {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.028em;
+      color: var(--text-primary);
+    }
+    .wm-stage.is-dark .wm-mark .glyph { background: white; }
+    .wm-stage.is-dark .wm-mark .glyph::before { background: var(--color-gray-900); }
+    .wm-stage.is-dark .wm-mark .word { color: white; }
+    .wm-stage.is-accent .wm-mark .glyph { background: white; }
+    .wm-stage.is-accent .wm-mark .glyph::before { background: var(--accent); }
+    .wm-stage.is-accent .wm-mark .word { color: white; }
+    .wm-stage.is-image .wm-mark .glyph { background: white; }
+    .wm-stage.is-image .wm-mark .glyph::before { background: oklch(0.45 0.05 250); }
+    .wm-stage.is-image .wm-mark .word { color: white; }
+
+    /* Anatomy callouts */
+    .anatomy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+    @media (max-width: 900px) { .anatomy-grid { grid-template-columns: 1fr; } }
+    .anatomy-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      padding: var(--space-5);
+      display: flex; flex-direction: column; gap: var(--space-3);
+    }
+    .anatomy-card .name {
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .anatomy-card h4 { margin: 0; font-size: var(--text-body-size); font-weight: 600; }
+    .anatomy-card p { margin: 0; font-size: var(--text-body-sm-size); line-height: 1.55; color: var(--text-secondary); }
+
+    /* Clear-space diagram */
+    .clearspace-stage {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .clearspace-frame {
+      position: relative;
+      padding: 32px;
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      background:
+        linear-gradient(90deg, color-mix(in oklch, var(--accent) 12%, transparent) 1px, transparent 1px),
+        linear-gradient(0deg, color-mix(in oklch, var(--accent) 12%, transparent) 1px, transparent 1px);
+      background-size: 16px 16px;
+      background-position: 0 0;
+    }
+    .clearspace-x {
+      position: absolute;
+      width: 14px; height: 14px;
+      background: var(--accent);
+      border-radius: 2px;
+      color: white;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      line-height: 1;
+    }
+
+    /* Lockup grid */
+    .lockup-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 900px) { .lockup-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .lockup-grid { grid-template-columns: 1fr; } }
+    .lockup {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .lockup-stage {
+      padding: var(--space-6) var(--space-4);
+      min-height: 120px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--surface);
+    }
+    .lockup-stage.is-sunken { background: var(--surface-sunken); }
+    .lockup-foot {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--space-3);
+    }
+    .lockup-foot .name { font-size: var(--text-body-sm-size); font-weight: 600; }
+    .lockup-foot .use {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-align: right;
+      max-width: 50%;
+    }
+
+    /* Token extraction diagram */
+    .extract-diagram {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      padding: var(--space-6);
+      display: grid;
+      grid-template-columns: 1fr 32px 1fr;
+      gap: var(--space-4);
+      align-items: center;
+    }
+    @media (max-width: 900px) { .extract-diagram { grid-template-columns: 1fr; } .extract-arrow { display: none !important; } }
+    .extract-arrow {
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+    }
+    .extract-side h5 {
+      margin: 0 0 var(--space-3);
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .extract-token {
+      display: grid;
+      grid-template-columns: 22px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface-sunken);
+      margin-top: 6px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+    }
+    .extract-token .swatch-dot {
+      width: 18px; height: 18px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .extract-token .name { color: var(--text-primary); }
+    .extract-token .val { color: var(--text-muted); }
+
+    /* Brand voice */
+    .voice-axis {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      padding: var(--space-5);
+    }
+    .voice-axis-name {
+      display: flex; justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: var(--space-3);
+    }
+    .voice-axis-track {
+      position: relative;
+      height: 6px;
+      border-radius: var(--radius-full);
+      background: var(--surface-sunken);
+      border: 1px solid var(--border);
+      margin: 0 6px;
+    }
+    .voice-axis-tick {
+      position: absolute;
+      top: -7px;
+      width: 18px; height: 18px;
+      border-radius: var(--radius-full);
+      background: var(--accent);
+      border: 3px solid var(--surface);
+      box-shadow: var(--shadow-sm);
+      transform: translateX(-50%);
+    }
+    .voice-examples {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+    .voice-example {
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--surface-sunken);
+      font-size: var(--text-body-sm-size);
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+    .voice-example .label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    /* App icon grid */
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-4);
+      align-items: end;
+    }
+    @media (max-width: 900px) { .icon-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px) { .icon-grid { grid-template-columns: repeat(2, 1fr); } }
+    .icon-cell {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+      padding: var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+    .icon-cell.is-dark { background: var(--color-gray-900); border-color: var(--color-gray-800); }
+    .icon-cell .icon {
+      border-radius: 22%;
+      background: var(--text-primary);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .icon-cell .icon::before {
+      content: "";
+      width: 30%; height: 30%;
+      background: var(--bg);
+      border-radius: 12%;
+      transform: rotate(45deg);
+    }
+    .icon-cell.is-dark .icon { background: white; }
+    .icon-cell.is-dark .icon::before { background: var(--color-gray-900); }
+    .icon-cell .size {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .icon-cell.is-dark .size { color: var(--color-gray-400); }
+
+    /* Misuse list */
+    .misuse {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 900px) { .misuse { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .misuse { grid-template-columns: 1fr; } }
+    .misuse-card {
+      border: 1px solid var(--danger-fg);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .misuse-stage {
+      background: var(--surface-sunken);
+      padding: var(--space-5);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100px;
+    }
+    .misuse-foot {
+      padding: var(--space-3) var(--space-4);
+      background: var(--danger-bg);
+      color: var(--danger-fg);
+      font-size: var(--text-body-sm-size);
+      font-weight: 500;
+      line-height: 1.5;
+      border-top: 1px solid var(--danger-fg);
+    }
+    .misuse-foot::before {
+      content: "✕  ";
+      font-weight: 700;
+      margin-right: 4px;
+    }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">identity · v0.1</span>
+      </div>
+      <nav class="lb-page-nav" aria-label="Chapters"></nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#wordmark">Wordmark anatomy</a></li>
+        <li><a href="#lockups">Lockups</a></li>
+        <li><a href="#clearspace">Clear space</a></li>
+        <li><a href="#context">On context</a></li>
+        <li><a href="#tokens">Logo → tokens</a></li>
+        <li><a href="#voice">Brand voice</a></li>
+        <li><a href="#icon">App icon · favicon</a></li>
+        <li><a href="#misuse">Misuse</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>Identity</h5>
+        <p>The seam between a client's brand and the system. Wordmark, lockups, clear-space, color extraction, voice axes, app icon.</p>
+      </div>
+    </aside>
+
+    <main class="lb-main">
+
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 07</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track); font-family: var(--font-display);">Identity.</h2>
+          <p class="lede">A brand isn't a logo and tokens aren't a brand. This chapter is the bridge — how a client's wordmark, voice, and visual personality translate into the system underneath. Get this seam right and the system disappears; get it wrong and every project looks like the same template wearing a different hat.</p>
+        </header>
+      </section>
+
+      <!-- 1. WORDMARK ANATOMY -->
+      <section class="lb-section" id="wordmark">
+        <header>
+          <div class="eyebrow">01 — Wordmark</div>
+          <h2>Wordmark anatomy <a class="anchor" href="#wordmark">#wordmark</a></h2>
+          <p class="lede">The wordmark is the first decision. Six properties to set deliberately — never let them be defaults.</p>
+        </header>
+
+        <div class="wm-stage">
+          <div class="wm-mark">
+            <span class="glyph"></span>
+            <span class="word">Acme</span>
+          </div>
+        </div>
+
+        <div class="anatomy-grid">
+          <div class="anatomy-card">
+            <div class="name">A — Typeface</div>
+            <h4>Display, not body</h4>
+            <p>Choose a display cut, not the body weight. The body font in the system covers UI; the wordmark gets a distinct cut chosen for confidence at one specific size.</p>
+          </div>
+          <div class="anatomy-card">
+            <div class="name">B — Weight</div>
+            <h4>Semibold, almost always</h4>
+            <p>Light feels luxe but disappears at small sizes (favicon). Bold feels loud at large sizes (hero). Semibold survives both. Pick light only if the brand truly is luxe.</p>
+          </div>
+          <div class="anatomy-card">
+            <div class="name">C — Tracking</div>
+            <h4>Tighter than UI</h4>
+            <p>Body type tracks at 0 to -0.02em. Wordmark tracks at -0.025 to -0.035em. The tighter spacing reads as "designed" instead of "typed."</p>
+          </div>
+          <div class="anatomy-card">
+            <div class="name">D — Casing</div>
+            <h4>Capitalize the first letter only</h4>
+            <p>"Acme" not "ACME" — unless the brand is genuinely shout-y (industrial, regulated, performance). All-caps wordmarks read as 1990s. Lowercase reads as 2014.</p>
+          </div>
+          <div class="anatomy-card">
+            <div class="name">E — Optical pairs</div>
+            <h4>Kern by hand</h4>
+            <p>Most automated kerning lies. Walk through the actual letters: Av, Wa, Ty, fi. If two letters touch awkwardly, fix them. The wordmark is one specific arrangement — not a font sample.</p>
+          </div>
+          <div class="anatomy-card">
+            <div class="name">F — Companion glyph</div>
+            <h4>Optional, but earn it</h4>
+            <p>A glyph buys you favicon, app icon, and social avatar in one move. But a bad glyph is worse than no glyph. If you can't justify the shape, drop it and use the wordmark's initial instead.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 2. LOCKUPS -->
+      <section class="lb-section" id="lockups">
+        <header>
+          <div class="eyebrow">02 — Lockups</div>
+          <h2>Six lockups, one identity <a class="anchor" href="#lockups">#lockups</a></h2>
+          <p class="lede">The wordmark appears in six contexts. Design all six up front; never improvise one in production. The system stays coherent because the same identity carries through, sized for the surface.</p>
+        </header>
+
+        <div class="lockup-grid">
+
+          <div class="lockup">
+            <div class="lockup-stage">
+              <div class="wm-mark"><span class="glyph"></span><span class="word">Acme</span></div>
+            </div>
+            <div class="lockup-foot">
+              <span class="name">Primary</span>
+              <span class="use">hero · footer · header</span>
+            </div>
+          </div>
+
+          <div class="lockup">
+            <div class="lockup-stage">
+              <div class="wm-mark" style="gap: 8px;">
+                <span class="glyph" style="width: 26px; height: 26px; border-radius: 7px;"></span>
+                <span class="word" style="font-size: 19px;">Acme</span>
+              </div>
+            </div>
+            <div class="lockup-foot">
+              <span class="name">Inline</span>
+              <span class="use">nav · article byline</span>
+            </div>
+          </div>
+
+          <div class="lockup">
+            <div class="lockup-stage">
+              <span class="glyph" style="width: 64px; height: 64px; border-radius: 14px; background: var(--text-primary); display:inline-flex; align-items:center; justify-content:center; position:relative;">
+                <span style="display:block; width: 20px; height: 20px; background: var(--bg); border-radius: 4px; transform: rotate(45deg);"></span>
+              </span>
+            </div>
+            <div class="lockup-foot">
+              <span class="name">Mark only</span>
+              <span class="use">favicon · app icon · avatar</span>
+            </div>
+          </div>
+
+          <div class="lockup">
+            <div class="lockup-stage">
+              <span class="word" style="font-family: var(--font-display); font-size: 28px; font-weight: 600; letter-spacing: -0.028em;">Acme</span>
+            </div>
+            <div class="lockup-foot">
+              <span class="name">Word only</span>
+              <span class="use">tight rows · email signature</span>
+            </div>
+          </div>
+
+          <div class="lockup">
+            <div class="lockup-stage" style="align-items: flex-start; flex-direction: column; gap: 6px;">
+              <div class="wm-mark"><span class="glyph"></span><span class="word">Acme</span></div>
+              <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; padding-left: 56px;">Analytics for builders</div>
+            </div>
+            <div class="lockup-foot">
+              <span class="name">With tagline</span>
+              <span class="use">about · press</span>
+            </div>
+          </div>
+
+          <div class="lockup">
+            <div class="lockup-stage" style="flex-direction: column; gap: 12px;">
+              <span class="glyph" style="width: 48px; height: 48px; border-radius: 11px; background: var(--text-primary); display:inline-flex; align-items:center; justify-content:center; position:relative;">
+                <span style="display:block; width: 16px; height: 16px; background: var(--bg); border-radius: 3px; transform: rotate(45deg);"></span>
+              </span>
+              <span class="word" style="font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -0.028em;">Acme</span>
+            </div>
+            <div class="lockup-foot">
+              <span class="name">Stacked</span>
+              <span class="use">square avatars · sponsor lockup</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 3. CLEAR SPACE -->
+      <section class="lb-section" id="clearspace">
+        <header>
+          <div class="eyebrow">03 — Clear space</div>
+          <h2>The margin around the mark <a class="anchor" href="#clearspace">#clearspace</a></h2>
+          <p class="lede">Define clear space as a multiple of the mark's own height — never in pixels. That way the rule scales when the lockup does. Use 1× minimum, 2× preferred.</p>
+        </header>
+
+        <div class="clearspace-stage">
+          <div class="clearspace-frame">
+            <div class="wm-mark"><span class="glyph"></span><span class="word">Acme</span></div>
+            <span class="clearspace-x" style="top: 8px; left: 8px;">x</span>
+            <span class="clearspace-x" style="top: 8px; right: 8px;">x</span>
+            <span class="clearspace-x" style="bottom: 8px; left: 8px;">x</span>
+            <span class="clearspace-x" style="bottom: 8px; right: 8px;">x</span>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <div class="specimen-body">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6);">
+              <div>
+                <div class="t-overline text-muted" style="margin-bottom: 8px;">x = mark height</div>
+                <p style="margin: 0; font-size: var(--text-body-size); line-height: 1.55; color: var(--text-secondary);">In the diagram above, the mark's glyph is 44px. Clear space is then 44px (1x) on every side — the minimum any other element can approach. Preferred is 88px (2x).</p>
+              </div>
+              <div>
+                <div class="t-overline text-muted" style="margin-bottom: 8px;">When to enforce</div>
+                <p style="margin: 0; font-size: var(--text-body-size); line-height: 1.55; color: var(--text-secondary);">Hard rule on partner lockups, press kits, and external surfaces. Soft rule in your own site nav, where 1x is usually impractical — at 0.5x it still reads as a logo, not a label.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 4. CONTEXT -->
+      <section class="lb-section" id="context">
+        <header>
+          <div class="eyebrow">04 — Context</div>
+          <h2>The mark in four environments <a class="anchor" href="#context">#context</a></h2>
+          <p class="lede">The mark needs to survive light, dark, color, and imagery. Design every variant up front and put them in a shared kit — not "we'll figure it out for the dark theme later."</p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4);">
+          <div class="wm-stage">
+            <div class="wm-mark"><span class="glyph"></span><span class="word">Acme</span></div>
+          </div>
+          <div class="wm-stage is-dark">
+            <div class="wm-mark"><span class="glyph"></span><span class="word">Acme</span></div>
+          </div>
+          <div class="wm-stage is-accent">
+            <div class="wm-mark"><span class="glyph"></span><span class="word">Acme</span></div>
+          </div>
+          <div class="wm-stage is-image">
+            <div class="wm-mark"><span class="glyph"></span><span class="word">Acme</span></div>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <div class="specimen-body" style="padding: 0;">
+            <div class="q-list">
+              <div class="q-row" style="display: grid; grid-template-columns: 140px 1fr; padding: var(--space-4) var(--space-5);">
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">On light</div>
+                <div style="font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">Mark in <code class="token-pill">--text-primary</code>. Default. Test on <code class="token-pill">--bg</code> AND <code class="token-pill">--surface-sunken</code> — the sunken case is where a too-light glyph disappears.</div>
+              </div>
+              <div class="q-row" style="display: grid; grid-template-columns: 140px 1fr; padding: var(--space-4) var(--space-5); border-top: 1px solid var(--border);">
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">On dark</div>
+                <div style="font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">Mark in white, not <code class="token-pill">--text-primary</code> (which is off-white on dark). Pure white earns the contrast and reads as confident. Glyph's internal cut switches to dark background.</div>
+              </div>
+              <div class="q-row" style="display: grid; grid-template-columns: 140px 1fr; padding: var(--space-4) var(--space-5); border-top: 1px solid var(--border);">
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">On accent</div>
+                <div style="font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">Mark in white. Glyph in white with the accent showing through the cut. Test AA contrast against the accent — if it fails, the accent is too bright for this purpose; create a darker brand-only accent.</div>
+              </div>
+              <div class="q-row" style="display: grid; grid-template-columns: 140px 1fr; padding: var(--space-4) var(--space-5); border-top: 1px solid var(--border);">
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">On image</div>
+                <div style="font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">White mark with a subtle scrim behind. Never just slap white on a photo — add a 12% black gradient or a 6% blur so the mark survives any future image swap. The scrim is part of the lockup.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 5. LOGO → TOKENS -->
+      <section class="lb-section" id="tokens">
+        <header>
+          <div class="eyebrow">05 — Extraction</div>
+          <h2>From mark to tokens <a class="anchor" href="#tokens">#tokens</a></h2>
+          <p class="lede">When the client hands you a logo, three things come out of it: the accent color, the display font family, and the radius personality. Extract them deliberately — don't let the rest of the system silently inherit defaults.</p>
+        </header>
+
+        <div class="extract-diagram">
+          <div class="extract-side">
+            <h5>From the mark</h5>
+            <div style="padding: var(--space-5); background: var(--surface-sunken); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; min-height: 140px;">
+              <div class="wm-mark"><span class="glyph"></span><span class="word">Acme</span></div>
+            </div>
+            <div style="margin-top: var(--space-3); font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">
+              Glyph corner radius (10px), wordmark typeface, optical weight (semibold), kerning. Three signals.
+            </div>
+          </div>
+
+          <div class="extract-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+
+          <div class="extract-side">
+            <h5>Into the contract</h5>
+            <div class="extract-token">
+              <span class="swatch-dot" style="background: var(--accent);"></span>
+              <span class="name">--accent</span>
+              <span class="val">oklch(0.49 0.18 252)</span>
+            </div>
+            <div class="extract-token">
+              <span class="swatch-dot" style="background: var(--text-primary);"></span>
+              <span class="name">--font-display</span>
+              <span class="val">Inter 600</span>
+            </div>
+            <div class="extract-token">
+              <span class="swatch-dot" style="background: transparent; border-radius: 6px;"></span>
+              <span class="name">--radius-md</span>
+              <span class="val">10px</span>
+            </div>
+            <div class="extract-token">
+              <span class="swatch-dot" style="background: var(--text-primary); border-radius: 999px;"></span>
+              <span class="name">--text-h1-track</span>
+              <span class="val">-0.034em</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="specimen" style="margin-top: var(--space-6);">
+          <div class="specimen-body" style="padding: 0;">
+            <div class="rules-grid" style="border: 0; border-radius: 0;">
+              <div class="rules-row">
+                <div class="rules-name">Accent comes from the mark — once<span class="sub">never invent a hex separately</span></div>
+                <div class="rules-when"><strong>Do</strong> sample the dominant hue of the logo and tune it for product contrast (usually a step darker than the brand swatch — brand colors are tuned for print).</div>
+                <div class="rules-avoid"><strong>Don't</strong> use the logo color literally — most logo colors fail AA on white at body weight.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Display font matches the mark<span class="sub">but body stays neutral</span></div>
+                <div class="rules-when"><strong>Do</strong> use the wordmark's family for <code class="token-pill">--font-display</code> if it has reading sizes; otherwise pair a sibling.</div>
+                <div class="rules-avoid"><strong>Don't</strong> use the wordmark font for body. Most wordmark cuts can't survive at 14px.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Radius matches the glyph<span class="sub">a square logo → small radii everywhere</span></div>
+                <div class="rules-when"><strong>Do</strong> set <code class="token-pill">--radius-md</code> to roughly match the glyph's corner radius at its actual size.</div>
+                <div class="rules-avoid"><strong>Don't</strong> use a hard-edged logo with pill-shaped buttons. The mismatch tells the user the brand and the product weren't designed together.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 6. BRAND VOICE -->
+      <section class="lb-section" id="voice">
+        <header>
+          <div class="eyebrow">06 — Voice</div>
+          <h2>Brand voice as two axes <a class="anchor" href="#voice">#voice</a></h2>
+          <p class="lede">Voice usually fails because it's described in adjectives ("confident, friendly, modern") that don't survive contact with a microcopy decision. Pick a point on two axes and write a sample sentence for each surface. Then the agent — human or otherwise — can match it.</p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+          <div class="voice-axis">
+            <div class="voice-axis-name">
+              <span>Formal</span>
+              <span>Playful</span>
+            </div>
+            <div class="voice-axis-track">
+              <div class="voice-axis-tick" style="left: 35%;"></div>
+            </div>
+            <div class="voice-examples">
+              <div class="voice-example">
+                <span class="label">Error</span>
+                We couldn't sign you in. Check your password and try again.
+              </div>
+              <div class="voice-example">
+                <span class="label">Empty</span>
+                No projects yet. Create one to get started.
+              </div>
+            </div>
+          </div>
+
+          <div class="voice-axis">
+            <div class="voice-axis-name">
+              <span>Terse</span>
+              <span>Warm</span>
+            </div>
+            <div class="voice-axis-track">
+              <div class="voice-axis-tick" style="left: 55%;"></div>
+            </div>
+            <div class="voice-examples">
+              <div class="voice-example">
+                <span class="label">Success</span>
+                Saved. Your changes are live.
+              </div>
+              <div class="voice-example">
+                <span class="label">Welcome</span>
+                Welcome back, Andrea. Pick up where you left off.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="specimen" style="margin-top: var(--space-6);">
+          <div class="specimen-body">
+            <div class="t-overline text-muted" style="margin-bottom: var(--space-3);">The same message at three points on the formal ↔ playful axis</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4);">
+              <div style="padding: var(--space-4); border-radius: var(--radius-md); background: var(--surface-sunken);">
+                <div style="font-family: var(--font-mono); font-size: 10.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">Formal</div>
+                <div style="font-size: var(--text-body-size); color: var(--text-primary); line-height: 1.5;">Your account has been successfully created.</div>
+              </div>
+              <div style="padding: var(--space-4); border-radius: var(--radius-md); background: var(--surface-sunken); outline: 2px solid var(--accent); outline-offset: -2px;">
+                <div style="font-family: var(--font-mono); font-size: 10.5px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">Default · neutral</div>
+                <div style="font-size: var(--text-body-size); color: var(--text-primary); line-height: 1.5;">You're in. Andrea, your workspace is ready.</div>
+              </div>
+              <div style="padding: var(--space-4); border-radius: var(--radius-md); background: var(--surface-sunken);">
+                <div style="font-family: var(--font-mono); font-size: 10.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">Playful</div>
+                <div style="font-size: var(--text-body-size); color: var(--text-primary); line-height: 1.5;">You're in! 🎉 Let's get you started.</div>
+              </div>
+            </div>
+          </div>
+          <div class="specimen-caption">Pick a column up front. The middle column is the default; the others are deliberate. Never mix all three on one site.</div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 7. APP ICON & FAVICON -->
+      <section class="lb-section" id="icon">
+        <header>
+          <div class="eyebrow">07 — App icon · favicon</div>
+          <h2>The mark at every size <a class="anchor" href="#icon">#icon</a></h2>
+          <p class="lede">The wordmark cannot fit at 16px. Design the icon as a separate artifact derived from the mark — usually a simplified glyph in a rounded square. Then export at every size you'll actually use.</p>
+        </header>
+
+        <div class="icon-grid">
+          <div class="icon-cell">
+            <div class="icon" style="width: 96px; height: 96px;"></div>
+            <span class="size">512 · 192</span>
+          </div>
+          <div class="icon-cell">
+            <div class="icon" style="width: 64px; height: 64px;"></div>
+            <span class="size">128 · 64</span>
+          </div>
+          <div class="icon-cell">
+            <div class="icon" style="width: 48px; height: 48px;"></div>
+            <span class="size">48 · apple-touch</span>
+          </div>
+          <div class="icon-cell">
+            <div class="icon" style="width: 32px; height: 32px;"></div>
+            <span class="size">32</span>
+          </div>
+          <div class="icon-cell">
+            <div class="icon" style="width: 16px; height: 16px; border-radius: 25%;"></div>
+            <span class="size">16 · favicon</span>
+          </div>
+        </div>
+
+        <div class="icon-grid" style="margin-top: var(--space-4);">
+          <div class="icon-cell is-dark">
+            <div class="icon" style="width: 96px; height: 96px;"></div>
+            <span class="size">512 dark</span>
+          </div>
+          <div class="icon-cell is-dark">
+            <div class="icon" style="width: 64px; height: 64px;"></div>
+            <span class="size">128 dark</span>
+          </div>
+          <div class="icon-cell is-dark">
+            <div class="icon" style="width: 48px; height: 48px;"></div>
+            <span class="size">48 dark</span>
+          </div>
+          <div class="icon-cell is-dark">
+            <div class="icon" style="width: 32px; height: 32px;"></div>
+            <span class="size">32 dark</span>
+          </div>
+          <div class="icon-cell is-dark">
+            <div class="icon" style="width: 16px; height: 16px; border-radius: 25%;"></div>
+            <span class="size">16 dark</span>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <div class="specimen-body" style="padding: 0;">
+            <div class="rules-grid" style="border: 0; border-radius: 0;">
+              <div class="rules-row">
+                <div class="rules-name">At 16px, the glyph must lose detail<span class="sub">never just scale</span></div>
+                <div class="rules-when"><strong>Redraw</strong> the 16px favicon by hand. Round the corners more, thicken the strokes, drop any internal shapes.</div>
+                <div class="rules-avoid"><strong>Don't</strong> export the 512 directly to 16 — the result is mush.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Dark variant always<span class="sub">macOS · iOS · light/dark themes</span></div>
+                <div class="rules-when"><strong>Export</strong> a dark-background variant where the glyph is pure white. Required for app stores and modern OS.</div>
+                <div class="rules-avoid"><strong>Don't</strong> rely on the OS inverting your light version. It looks broken.</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Rounded square, always<span class="sub">iOS rounds anyway · Android rounds anyway</span></div>
+                <div class="rules-when"><strong>Design</strong> on a 22% corner-radius square (iOS curve). Center the glyph at 60–70% of the square's width.</div>
+                <div class="rules-avoid"><strong>Don't</strong> design edge-to-edge. The OS may letterbox or crop and the visual weight breaks.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 8. MISUSE -->
+      <section class="lb-section" id="misuse">
+        <header>
+          <div class="eyebrow">08 — What not to do</div>
+          <h2>The seven misuses <a class="anchor" href="#misuse">#misuse</a></h2>
+          <p class="lede">Every brand guide has these. Most are ignored because they feel obvious — until you see them in a partner email or a press kit. Write them down anyway.</p>
+        </header>
+
+        <div class="misuse">
+
+          <div class="misuse-card">
+            <div class="misuse-stage">
+              <div class="wm-mark" style="transform: skewX(-12deg);"><span class="glyph"></span><span class="word">Acme</span></div>
+            </div>
+            <div class="misuse-foot">Don't skew, rotate, or distort the mark.</div>
+          </div>
+
+          <div class="misuse-card">
+            <div class="misuse-stage" style="background: linear-gradient(45deg, #ff0080, #ffd700);">
+              <div class="wm-mark"><span class="glyph"></span><span class="word">Acme</span></div>
+            </div>
+            <div class="misuse-foot">Don't place on uncontrolled gradients or busy color.</div>
+          </div>
+
+          <div class="misuse-card">
+            <div class="misuse-stage">
+              <div class="wm-mark" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));"><span class="glyph"></span><span class="word">Acme</span></div>
+            </div>
+            <div class="misuse-foot">Don't add shadows, glows, bevels, or strokes.</div>
+          </div>
+
+          <div class="misuse-card">
+            <div class="misuse-stage">
+              <div class="wm-mark"><span class="glyph" style="background: oklch(0.6 0.2 30);"></span><span class="word" style="color: oklch(0.6 0.2 30);">Acme</span></div>
+            </div>
+            <div class="misuse-foot">Don't recolor the mark outside the approved set.</div>
+          </div>
+
+          <div class="misuse-card">
+            <div class="misuse-stage">
+              <div class="wm-mark" style="gap: 28px;"><span class="glyph"></span><span class="word">Acme</span></div>
+            </div>
+            <div class="misuse-foot">Don't change the spacing between glyph and wordmark.</div>
+          </div>
+
+          <div class="misuse-card">
+            <div class="misuse-stage">
+              <div class="wm-mark"><span class="glyph"></span><span class="word" style="font-family: var(--font-mono); letter-spacing: 0;">Acme</span></div>
+            </div>
+            <div class="misuse-foot">Don't re-typeset the wordmark in another font.</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- CLOSING -->
+      <section class="lb-section">
+        <hr class="rule" />
+        <div style="display: flex; gap: var(--space-6); align-items: flex-start; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 280px;">
+            <h3 class="t-h3" style="margin: 0;">Brand sits above tokens.</h3>
+            <p class="t-body-lg text-secondary" style="max-width: 640px; margin-top: 6px;">Identity is what makes two sites built on the same system feel like two different companies. Map the mark into the contract once — then let Personality, Motion, and Imagery do their work.</p>
+          </div>
+          <a href="Personality.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--surface); font-size: var(--text-body-sm-size); font-weight: 500;">Next — Personality <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script></body>
+</html>

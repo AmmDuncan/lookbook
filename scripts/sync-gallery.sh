@@ -31,10 +31,5 @@ cp "$WORK"/tokens.css "$TOKENS"/tokens.css
 # (ui-vue/src/styles.css aggregates this + overlays.css; don't overwrite it.)
 cp "$WORK"/components.css "$ROOT"/packages/ui-vue/src/components.css
 
-# Re-inject the cross-chapter nav (exports don't include it).
-for f in "$GALLERY"/*.html; do
-  grep -q 'gallery-nav.js' "$f" || perl -0pi -e 's#</body>#  <script defer src="gallery-nav.js"></script>\n</body>#' "$f"
-done
-
 echo "Synced gallery + tokens from: $SRC"
 ls "$GALLERY" | grep '\.html$' | sed 's/^/  /'

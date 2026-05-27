@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — Site archetypes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: ['class', '[data-theme="dark"]'] };</script>
+  <style>
+    /* ===== Mini-mock layout ============================================= */
+    .archetype {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      background: var(--surface);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+    }
+    @media (max-width: 980px) { .archetype { grid-template-columns: 1fr; } }
+    .arch-stage {
+      background: var(--surface-sunken);
+      padding: var(--space-6);
+      border-right: 1px solid var(--border);
+      min-height: 480px;
+    }
+    @media (max-width: 980px) { .arch-stage { border-right: 0; border-bottom: 1px solid var(--border); } }
+    .arch-meta {
+      padding: var(--space-6);
+      display: flex; flex-direction: column;
+      gap: var(--space-4);
+    }
+    .arch-meta h3 { margin: 0; font-size: var(--text-h3-size); font-weight: 600; letter-spacing: var(--text-h3-track); line-height: 1.2; }
+    .arch-meta .lede { margin: 0; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55; }
+
+    .sections-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .sections-list li {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 10px;
+      padding: 9px 12px;
+      font-size: var(--text-body-sm-size);
+      color: var(--text-primary);
+      border-top: 1px solid var(--border);
+      line-height: 1.45;
+    }
+    .sections-list li:first-child { border-top: 0; }
+    .sections-list li .step {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+      padding-top: 2px;
+      letter-spacing: 0.04em;
+    }
+    .sections-list li .sub {
+      display: block;
+      font-size: var(--text-caption-size);
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .rule-pill {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--accent-subtle);
+      border: 1px solid color-mix(in oklch, var(--accent) 25%, transparent);
+      color: var(--accent);
+      font-size: var(--text-body-sm-size);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+    .rule-pill::before {
+      content: "→";
+      font-family: var(--font-mono);
+      font-weight: 700;
+      margin-top: -1px;
+    }
+
+    /* ===== Wireframe primitives ========================================== */
+    .wf { display: flex; flex-direction: column; gap: var(--space-3); }
+    .wf-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      display: flex; flex-direction: column;
+      gap: 6px;
+    }
+    .wf-block.is-tight { padding: var(--space-2) var(--space-3); }
+    .wf-line {
+      height: 6px;
+      background: var(--surface-sunken);
+      border-radius: 3px;
+    }
+    .wf-line.is-strong { background: color-mix(in oklch, var(--text-primary) 75%, transparent); }
+    .wf-line.is-accent { background: var(--accent); }
+    .wf-line.is-thin { height: 4px; }
+    .wf-line.is-thick { height: 10px; }
+    .wf-line.w-30 { width: 30%; } .wf-line.w-40 { width: 40%; } .wf-line.w-50 { width: 50%; }
+    .wf-line.w-60 { width: 60%; } .wf-line.w-70 { width: 70%; } .wf-line.w-80 { width: 80%; }
+    .wf-line.w-90 { width: 90%; } .wf-line.w-100 { width: 100%; }
+
+    .wf-photo {
+      background:
+        radial-gradient(circle at 30% 35%, oklch(0.78 0.06 230), transparent 55%),
+        linear-gradient(135deg, oklch(0.68 0.06 250), oklch(0.45 0.08 230));
+      border-radius: var(--radius-md);
+    }
+    .wf-photo.is-portrait { background: linear-gradient(165deg, oklch(0.78 0.06 60), oklch(0.50 0.10 30)); }
+    .wf-photo.is-place { background: linear-gradient(180deg, oklch(0.76 0.06 200), oklch(0.42 0.08 220)); }
+    .wf-photo.is-abstract {
+      background: conic-gradient(from 220deg at 60% 40%,
+        oklch(0.70 0.16 35), oklch(0.55 0.18 280),
+        oklch(0.65 0.14 165), oklch(0.70 0.16 35));
+    }
+
+    .wf-nav {
+      display: flex; justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      gap: var(--space-3);
+    }
+    .wf-nav .left { display: flex; align-items: center; gap: 14px; }
+    .wf-nav .glyph { width: 14px; height: 14px; background: var(--text-primary); border-radius: 4px; }
+    .wf-nav .items { display: flex; gap: 8px; }
+    .wf-nav .item { width: 28px; height: 4px; background: var(--surface-sunken); border-radius: 2px; }
+    .wf-nav .cta { width: 50px; height: 18px; background: var(--accent); border-radius: var(--radius-sm); }
+
+    /* Two-col split */
+    .wf-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+    .wf-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+    .wf-row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); }
+    .wf-row-2c1 { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-3); }
+    .wf-row-2c2 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-3); }
+
+    /* Long-form prose mock */
+    .wf-article {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+      display: flex; flex-direction: column;
+      gap: var(--space-3);
+      font-family: var(--font-display);
+    }
+    .wf-article .ttl {
+      font-family: "Newsreader", var(--font-display);
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.020em;
+      line-height: 1.15;
+      color: var(--text-primary);
+    }
+    .wf-article .body-line {
+      height: 6px; background: var(--surface-sunken); border-radius: 3px;
+    }
+    .wf-article .pullquote {
+      border-left: 3px solid var(--accent);
+      padding: 4px 0 4px 12px;
+      font-family: "Newsreader", var(--font-display);
+      font-size: 14px;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    .wf-article .figure {
+      height: 100px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, oklch(0.68 0.06 250), oklch(0.45 0.08 230));
+    }
+    .wf-article .code {
+      background: var(--color-gray-900);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: oklch(0.85 0.06 165);
+      line-height: 1.55;
+    }
+
+    /* Status badges for status page */
+    .status-row {
+      display: grid;
+      grid-template-columns: 1fr 22px;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-caption-size);
+    }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: var(--radius-full);
+      background: var(--success-fg);
+    }
+    .status-dot.is-warn { background: var(--warning-fg); }
+    .status-dot.is-down { background: var(--danger-fg); }
+
+    .status-bars {
+      display: flex; gap: 2px;
+      width: 22px; align-items: stretch;
+    }
+    .status-bar {
+      flex: 1; height: 16px; background: var(--success-fg); border-radius: 1px;
+    }
+    .status-bar.is-warn { background: var(--warning-fg); }
+    .status-bar.is-down { background: var(--danger-fg); }
+
+    /* Card grid for blog index */
+    .blog-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .blog-card .img {
+      aspect-ratio: 16 / 9;
+    }
+    .blog-card .body {
+      padding: var(--space-3);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+
+    /* Docs sidebar */
+    .docs-side {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .docs-side .group {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 10px 0 4px;
+      padding-left: 6px;
+    }
+    .docs-side .group:first-child { margin-top: 0; }
+    .docs-side .item {
+      padding: 5px 8px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      border-radius: var(--radius-sm);
+    }
+    .docs-side .item.is-active {
+      background: var(--accent-subtle);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* TOC sidebar */
+    .toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .toc .title {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .toc .item {
+      padding: 3px 0;
+      font-size: 11px;
+      color: var(--text-secondary);
+      border-left: 2px solid transparent;
+      padding-left: 10px;
+    }
+    .toc .item.is-active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+
+    /* Changelog rows */
+    .changelog-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .changelog-row .meta {
+      display: flex; gap: 10px; align-items: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .changelog-row .meta .tag {
+      padding: 1px 6px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-sunken);
+      border: 1px solid var(--border);
+    }
+    .changelog-row .meta .tag.is-add { color: var(--success-fg); background: var(--success-bg); border-color: color-mix(in oklch, var(--success-fg) 25%, transparent); }
+    .changelog-row .meta .tag.is-fix { color: var(--accent); background: var(--accent-subtle); border-color: color-mix(in oklch, var(--accent) 25%, transparent); }
+
+    /* 404 */
+    .err-stage {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: var(--space-12) var(--space-6);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      gap: var(--space-3);
+      min-height: 280px;
+    }
+    .err-code {
+      font-family: var(--font-display);
+      font-size: 96px;
+      font-weight: 600;
+      letter-spacing: -0.060em;
+      line-height: 0.95;
+      color: var(--text-primary);
+    }
+
+    /* Job listing rows */
+    .job-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      display: grid;
+      grid-template-columns: 1fr 100px 80px;
+      gap: var(--space-3);
+      align-items: center;
+    }
+    .job-row .meta { font-size: var(--text-caption-size); color: var(--text-muted); font-family: var(--font-mono); }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">site archetypes · v0.1</span>
+      </div>
+      <nav class="lb-page-nav" aria-label="Chapters"></nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#careers">Careers</a></li>
+        <li><a href="#case">Case study</a></li>
+        <li><a href="#blog-index">Blog index</a></li>
+        <li><a href="#blog-post">Blog post</a></li>
+        <li><a href="#docs-home">Docs home</a></li>
+        <li><a href="#docs-article">Docs article</a></li>
+        <li><a href="#changelog">Changelog</a></li>
+        <li><a href="#status">Status</a></li>
+        <li><a href="#legal">Legal</a></li>
+        <li><a href="#404">404</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>Site archetypes</h5>
+        <p>Marketing-side equivalent of Recipes. The supporting-page templates every site needs but most ship as afterthoughts.</p>
+      </div>
+    </aside>
+
+    <main class="lb-main">
+
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 13</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track); font-family: var(--font-display);">Site archetypes.</h2>
+          <p class="lede">Marketing covered hero / features / pricing / CTA — the parts every site has. This chapter covers the parts every site <em>needs</em> but most treat as afterthoughts: about, careers, case study, blog, docs, changelog, status, legal, 404. Each has a shape. Get the shape right; the system you've built does the rest.</p>
+        </header>
+      </section>
+
+      <!-- 1. ABOUT -->
+      <section class="lb-section" id="about">
+        <header>
+          <div class="eyebrow">01 — About</div>
+          <h2>About page <a class="anchor" href="#about">#about</a></h2>
+        </header>
+
+        <div class="archetype">
+          <div class="arch-stage">
+            <div class="wf">
+              <div class="wf-nav">
+                <div class="left"><span class="glyph"></span>
+                  <div class="items"><span class="item"></span><span class="item"></span><span class="item"></span><span class="item"></span></div>
+                </div>
+                <div class="cta"></div>
+              </div>
+              <div class="wf-block" style="padding: var(--space-6) var(--space-5);">
+                <div class="wf-line is-thick is-strong w-70"></div>
+                <div class="wf-line is-thick is-strong w-50"></div>
+                <div class="wf-line w-80" style="margin-top: 6px;"></div>
+                <div class="wf-line w-60"></div>
+              </div>
+              <div class="wf-row-2">
+                <div class="wf-photo is-portrait" style="aspect-ratio: 4/5;"></div>
+                <div class="wf-block">
+                  <div class="wf-line w-30 is-strong"></div>
+                  <div class="wf-line w-90"></div>
+                  <div class="wf-line w-80"></div>
+                  <div class="wf-line w-90"></div>
+                  <div class="wf-line w-60"></div>
+                </div>
+              </div>
+              <div class="wf-row-3">
+                <div class="wf-block is-tight" style="text-align: center; align-items: center;">
+                  <div class="wf-line is-thick is-accent w-50"></div>
+                  <div class="wf-line w-70"></div>
+                </div>
+                <div class="wf-block is-tight" style="text-align: center; align-items: center;">
+                  <div class="wf-line is-thick is-accent w-50"></div>
+                  <div class="wf-line w-70"></div>
+                </div>
+                <div class="wf-block is-tight" style="text-align: center; align-items: center;">
+                  <div class="wf-line is-thick is-accent w-50"></div>
+                  <div class="wf-line w-70"></div>
+                </div>
+              </div>
+              <div class="wf-row-4">
+                <div class="wf-photo is-portrait" style="aspect-ratio: 1/1;"></div>
+                <div class="wf-photo is-portrait" style="aspect-ratio: 1/1;"></div>
+                <div class="wf-photo is-portrait" style="aspect-ratio: 1/1;"></div>
+                <div class="wf-photo is-portrait" style="aspect-ratio: 1/1;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-meta">
+            <h3>The story, plainly.</h3>
+            <p class="lede">About is the most-misused page on most sites. It's not a brand essay — it's the page where a prospect decides if you're real. Show the people, the founding moment, and the metrics. Skip the mission-vision-values.</p>
+            <ul class="sections-list">
+              <li><span class="step">01</span><div>Hero — one-sentence company story<span class="sub">8–14 words. What you do, for whom.</span></div></li>
+              <li><span class="step">02</span><div>Origin — why this exists<span class="sub">One photo, two paragraphs.</span></div></li>
+              <li><span class="step">03</span><div>Three numbers that earn trust<span class="sub">Users · customers · funding · longevity.</span></div></li>
+              <li><span class="step">04</span><div>The team grid<span class="sub">Real portraits. Names + roles. Link to LinkedIn.</span></div></li>
+              <li><span class="step">05</span><div>What we believe — 3 principles, max<span class="sub">Skip values lists. State positions.</span></div></li>
+              <li><span class="step">06</span><div>CTA — usually careers or contact<span class="sub">Not "sign up." Wrong moment.</span></div></li>
+            </ul>
+            <div class="rule-pill">Real founder portraits beat stock office shots, always.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 2. CAREERS -->
+      <section class="lb-section" id="careers">
+        <header>
+          <div class="eyebrow">02 — Careers</div>
+          <h2>Careers page <a class="anchor" href="#careers">#careers</a></h2>
+        </header>
+
+        <div class="archetype">
+          <div class="arch-stage">
+            <div class="wf">
+              <div class="wf-nav">
+                <div class="left"><span class="glyph"></span>
+                  <div class="items"><span class="item"></span><span class="item"></span><span class="item"></span><span class="item"></span></div>
+                </div>
+                <div class="cta"></div>
+              </div>
+              <div class="wf-block" style="padding: var(--space-5);">
+                <div class="wf-line is-thick is-strong w-60"></div>
+                <div class="wf-line is-thick is-strong w-40"></div>
+                <div class="wf-line w-80" style="margin-top: 6px;"></div>
+                <div class="wf-line w-70"></div>
+              </div>
+              <div class="wf-row-3">
+                <div class="wf-block is-tight" style="align-items: flex-start; gap: 4px;">
+                  <div class="wf-line is-accent w-30 is-thick"></div>
+                  <div class="wf-line w-80"></div>
+                  <div class="wf-line w-70"></div>
+                </div>
+                <div class="wf-block is-tight" style="align-items: flex-start; gap: 4px;">
+                  <div class="wf-line is-accent w-30 is-thick"></div>
+                  <div class="wf-line w-80"></div>
+                  <div class="wf-line w-70"></div>
+                </div>
+                <div class="wf-block is-tight" style="align-items: flex-start; gap: 4px;">
+                  <div class="wf-line is-accent w-30 is-thick"></div>
+                  <div class="wf-line w-80"></div>
+                  <div class="wf-line w-70"></div>
+                </div>
+              </div>
+              <div class="wf-block" style="padding: var(--space-4); gap: 8px;">
+                <div class="wf-line w-30 is-strong"></div>
+                <div class="job-row">
+                  <div style="display: flex; flex-direction: column; gap: 4px;"><div class="wf-line w-60 is-thick is-strong"></div><div class="wf-line w-40"></div></div>
+                  <div class="meta">Engineering</div>
+                  <div class="meta" style="text-align: right;">Remote</div>
+                </div>
+                <div class="job-row">
+                  <div style="display: flex; flex-direction: column; gap: 4px;"><div class="wf-line w-70 is-thick is-strong"></div><div class="wf-line w-40"></div></div>
+                  <div class="meta">Design</div>
+                  <div class="meta" style="text-align: right;">SF</div>
+                </div>
+                <div class="job-row">
+                  <div style="display: flex; flex-direction: column; gap: 4px;"><div class="wf-line w-50 is-thick is-strong"></div><div class="wf-line w-30"></div></div>
+                  <div class="meta">Sales</div>
+                  <div class="meta" style="text-align: right;">NYC</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-meta">
+            <h3>Roles list, with a reason to apply.</h3>
+            <p class="lede">Two failure modes: (1) a 2000-word company manifesto, (2) just a Greenhouse iframe. The right answer is a short pitch, three benefits, then the role list — sortable by team and location.</p>
+            <ul class="sections-list">
+              <li><span class="step">01</span><div>Hero — what's it like to work here<span class="sub">One sentence. One real photo.</span></div></li>
+              <li><span class="step">02</span><div>Three benefits that aren't "free snacks"<span class="sub">Equity, autonomy, learning budget, remote.</span></div></li>
+              <li><span class="step">03</span><div>Open roles, by team<span class="sub">Filter: team · location. Show count.</span></div></li>
+              <li><span class="step">04</span><div>"No fit right now" CTA<span class="sub">General-interest form for great people.</span></div></li>
+              <li><span class="step">05</span><div>Recruiter-blocked footer<span class="sub">Recruiters please don't contact us.</span></div></li>
+            </ul>
+            <div class="rule-pill">Every role title is a verb people would say out loud — never "Strategic Operations Lead II."</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 3. CASE STUDY -->
+      <section class="lb-section" id="case">
+        <header>
+          <div class="eyebrow">03 — Case study</div>
+          <h2>Customer case study <a class="anchor" href="#case">#case</a></h2>
+        </header>
+
+        <div class="archetype">
+          <div class="arch-stage">
+            <div class="wf">
+              <div class="wf-block" style="padding: var(--space-2) var(--space-4); flex-direction: row; align-items: center; justify-content: space-between;">
+                <div class="wf-line w-30"></div>
+                <div class="wf-line w-30"></div>
+              </div>
+              <div class="wf-photo is-place" style="aspect-ratio: 21 / 9;"></div>
+              <div class="wf-block" style="padding: var(--space-5);">
+                <div class="wf-line w-30"></div>
+                <div class="wf-line is-thick is-strong w-80" style="margin-top: 4px;"></div>
+                <div class="wf-line is-thick is-strong w-50"></div>
+              </div>
+              <div class="wf-row-3">
+                <div class="wf-block is-tight" style="align-items: center;">
+                  <div class="wf-line is-accent w-60 is-thick"></div>
+                  <div class="wf-line w-50"></div>
+                </div>
+                <div class="wf-block is-tight" style="align-items: center;">
+                  <div class="wf-line is-accent w-60 is-thick"></div>
+                  <div class="wf-line w-50"></div>
+                </div>
+                <div class="wf-block is-tight" style="align-items: center;">
+                  <div class="wf-line is-accent w-60 is-thick"></div>
+                  <div class="wf-line w-50"></div>
+                </div>
+              </div>
+              <div class="wf-row-2c1">
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <div class="wf-block is-tight">
+                    <div class="wf-line w-40 is-strong"></div>
+                    <div class="wf-line w-80"></div>
+                  </div>
+                  <div class="wf-block is-tight">
+                    <div class="wf-line w-40 is-strong"></div>
+                    <div class="wf-line w-80"></div>
+                  </div>
+                </div>
+                <div class="wf-block" style="gap: 8px;">
+                  <div class="wf-line w-30 is-strong"></div>
+                  <div class="wf-line w-90"></div>
+                  <div class="wf-line w-80"></div>
+                  <div class="wf-line w-90"></div>
+                  <div class="wf-line w-50"></div>
+                  <div class="wf-line w-70" style="margin-top: 6px;"></div>
+                  <div class="wf-line w-90"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-meta">
+            <h3>Numbers in the hero. Story underneath.</h3>
+            <p class="lede">The case study lives or dies on the first screen. Three numbers, one quote, one face. Then the longer story below — for the reader who's already convinced and wants the details.</p>
+            <ul class="sections-list">
+              <li><span class="step">01</span><div>Customer name + tagline<span class="sub">"Acme reduced support tickets 47% with…"</span></div></li>
+              <li><span class="step">02</span><div>Hero photo — the product or the user<span class="sub">Never a generic office shot.</span></div></li>
+              <li><span class="step">03</span><div>Three stats, big and bold<span class="sub">Increase X · saved Y · faster than Z.</span></div></li>
+              <li><span class="step">04</span><div>Quote with face and role<span class="sub">Real person. Real role. Linkable.</span></div></li>
+              <li><span class="step">05</span><div>Problem → solution → result<span class="sub">Three sections, equal weight.</span></div></li>
+              <li><span class="step">06</span><div>Related case studies + CTA<span class="sub">"Talk to a customer like you."</span></div></li>
+            </ul>
+            <div class="rule-pill">One template, used six times. Don't bespoke each case study.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 4. BLOG INDEX -->
+      <section class="lb-section" id="blog-index">
+        <header>
+          <div class="eyebrow">04 — Blog index</div>
+          <h2>Blog / journal index <a class="anchor" href="#blog-index">#blog-index</a></h2>
+        </header>
+
+        <div class="archetype">
+          <div class="arch-stage">
+            <div class="wf">
+              <div class="wf-nav">
+                <div class="left"><span class="glyph"></span>
+                  <div class="items"><span class="item"></span><span class="item"></span><span class="item"></span><span class="item"></span></div>
+                </div>
+                <div class="cta"></div>
+              </div>
+              <div class="wf-block" style="padding: var(--space-4); flex-direction: row; justify-content: space-between; align-items: center;">
+                <div class="wf-line w-30 is-thick is-strong"></div>
+                <div style="display:flex; gap: 6px;">
+                  <span style="height: 16px; padding: 0 8px; background: var(--surface-sunken); border-radius: var(--radius-full); border: 1px solid var(--border); display: inline-block; min-width: 50px;"></span>
+                  <span style="height: 16px; padding: 0 8px; background: var(--accent); border-radius: var(--radius-full); display: inline-block; min-width: 50px;"></span>
+                  <span style="height: 16px; padding: 0 8px; background: var(--surface-sunken); border-radius: var(--radius-full); border: 1px solid var(--border); display: inline-block; min-width: 50px;"></span>
+                  <span style="height: 16px; padding: 0 8px; background: var(--surface-sunken); border-radius: var(--radius-full); border: 1px solid var(--border); display: inline-block; min-width: 50px;"></span>
+                </div>
+              </div>
+              <div class="wf-row-3">
+                <div class="blog-card">
+                  <div class="img wf-photo"></div>
+                  <div class="body">
+                    <div class="wf-line w-30"></div>
+                    <div class="wf-line is-strong w-90"></div>
+                    <div class="wf-line is-strong w-70"></div>
+                  </div>
+                </div>
+                <div class="blog-card">
+                  <div class="img wf-photo is-portrait"></div>
+                  <div class="body">
+                    <div class="wf-line w-30"></div>
+                    <div class="wf-line is-strong w-90"></div>
+                    <div class="wf-line is-strong w-60"></div>
+                  </div>
+                </div>
+                <div class="blog-card">
+                  <div class="img wf-photo is-abstract"></div>
+                  <div class="body">
+                    <div class="wf-line w-30"></div>
+                    <div class="wf-line is-strong w-80"></div>
+                    <div class="wf-line is-strong w-70"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="wf-row-3">
+                <div class="blog-card">
+                  <div class="img wf-photo is-place"></div>
+                  <div class="body">
+                    <div class="wf-line w-30"></div>
+                    <div class="wf-line is-strong w-90"></div>
+                    <div class="wf-line is-strong w-50"></div>
+                  </div>
+                </div>
+                <div class="blog-card">
+                  <div class="img wf-photo"></div>
+                  <div class="body">
+                    <div class="wf-line w-30"></div>
+                    <div class="wf-line is-strong w-90"></div>
+                    <div class="wf-line is-strong w-70"></div>
+                  </div>
+                </div>
+                <div class="blog-card">
+                  <div class="img wf-photo is-portrait"></div>
+                  <div class="body">
+                    <div class="wf-line w-30"></div>
+                    <div class="wf-line is-strong w-90"></div>
+                    <div class="wf-line is-strong w-50"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-meta">
+            <h3>One image ratio. One card. One rhythm.</h3>
+            <p class="lede">Most blog indexes fail by trying to be a magazine — featured hero card, sidebar, multiple layouts. Pick one card, repeat it, filter by tag. Discoverability beats variety.</p>
+            <ul class="sections-list">
+              <li><span class="step">01</span><div>Title + tag filters<span class="sub">5–8 tags max. Active state is the accent.</span></div></li>
+              <li><span class="step">02</span><div>Card grid — 3 cols desktop, 1 mobile<span class="sub">16:9 image · date · title · 2-line excerpt.</span></div></li>
+              <li><span class="step">03</span><div>Pagination or "load more"<span class="sub">Whichever matches the post volume.</span></div></li>
+              <li><span class="step">04</span><div>RSS link in the footer<span class="sub">The actual readers want it.</span></div></li>
+            </ul>
+            <div class="rule-pill">Don't bespoke "featured" cards — the system has one card, used N times.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 5. BLOG POST / ARTICLE -->
+      <section class="lb-section" id="blog-post">
+        <header>
+          <div class="eyebrow">05 — Blog post</div>
+          <h2>Long-form article <a class="anchor" href="#blog-post">#blog-post</a></h2>
+        </header>
+
+        <div class="archetype">
+          <div class="arch-stage">
+            <div class="wf">
+              <div class="wf-nav">
+                <div class="left"><span class="glyph"></span>
+                  <div class="items"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+                </div>
+              </div>
+              <div class="wf-article" style="max-width: 560px; margin: 0 auto;">
+                <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">Engineering · 8 min read</div>
+                <div class="ttl">Designing systems that survive scale.</div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+                  <div style="width: 24px; height: 24px; border-radius: var(--radius-full); background: var(--tint-1-bg);"></div>
+                  <div class="wf-line w-40"></div>
+                </div>
+                <div class="body-line" style="width: 95%;"></div>
+                <div class="body-line" style="width: 90%;"></div>
+                <div class="body-line" style="width: 80%;"></div>
+                <div class="figure"></div>
+                <div class="body-line" style="width: 90%;"></div>
+                <div class="body-line" style="width: 85%;"></div>
+                <div class="pullquote">A pull-quote earns the slot — one per article, never two.</div>
+                <div class="body-line" style="width: 95%;"></div>
+                <div class="code">$ npm run build · 1.2s · 0 errors</div>
+                <div class="body-line" style="width: 90%;"></div>
+                <div class="body-line" style="width: 70%;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-meta">
+            <h3>Reading first. Decoration last.</h3>
+            <p class="lede">Long-form is one place a serif belongs. The whole page is built for one job: keep the reader on the page. Hero photo optional. Author + date essential. Pull-quotes, figures, and code blocks all share a single rhythm.</p>
+            <ul class="sections-list">
+              <li><span class="step">01</span><div>Eyebrow — category + read time<span class="sub">Sets expectation in 6 words.</span></div></li>
+              <li><span class="step">02</span><div>Title — display weight, generous tracking<span class="sub">Optional serif for editorial register.</span></div></li>
+              <li><span class="step">03</span><div>Author + date + share<span class="sub">Small. Right under the title.</span></div></li>
+              <li><span class="step">04</span><div>Body at 720px max-width<span class="sub">Measure is ~65 characters per line.</span></div></li>
+              <li><span class="step">05</span><div>Figures, pull-quotes, code blocks<span class="sub">Each breaks the rhythm intentionally.</span></div></li>
+              <li><span class="step">06</span><div>Related posts + newsletter signup<span class="sub">The page ends with a next click.</span></div></li>
+            </ul>
+            <div class="rule-pill">Body type at 18px. Line-height 1.55–1.65. Anything tighter is hostile.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 6. DOCS HOME -->
+      <section class="lb-section" id="docs-home">
+        <header>
+          <div class="eyebrow">06 — Docs home</div>
+          <h2>Docs landing <a class="anchor" href="#docs-home">#docs-home</a></h2>
+        </header>
+
+        <div class="archetype">
+          <div class="arch-stage">
+            <div class="wf">
+              <div class="wf-nav">
+                <div class="left"><span class="glyph"></span>
+                  <div class="items"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+                </div>
+                <div style="width: 180px; height: 22px; background: var(--surface-sunken); border: 1px solid var(--border); border-radius: var(--radius-md); display: flex; align-items: center; padding: 0 8px; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">⌘K  search</div>
+              </div>
+              <div class="wf-block" style="padding: var(--space-5);">
+                <div class="wf-line is-thick is-strong w-50"></div>
+                <div class="wf-line w-70" style="margin-top: 6px;"></div>
+              </div>
+              <div class="wf-row-3">
+                <div class="wf-block" style="gap: 8px;">
+                  <div class="wf-line w-30 is-thick is-accent"></div>
+                  <div class="wf-line w-70 is-strong is-thick"></div>
+                  <div class="wf-line w-80"></div>
+                  <div class="wf-line w-60"></div>
+                </div>
+                <div class="wf-block" style="gap: 8px;">
+                  <div class="wf-line w-30 is-thick is-accent"></div>
+                  <div class="wf-line w-70 is-strong is-thick"></div>
+                  <div class="wf-line w-80"></div>
+                  <div class="wf-line w-60"></div>
+                </div>
+                <div class="wf-block" style="gap: 8px;">
+                  <div class="wf-line w-30 is-thick is-accent"></div>
+                  <div class="wf-line w-70 is-strong is-thick"></div>
+                  <div class="wf-line w-80"></div>
+                  <div class="wf-line w-60"></div>
+                </div>
+              </div>
+              <div class="wf-block" style="gap: 10px; padding: var(--space-4);">
+                <div class="wf-line w-30 is-strong"></div>
+                <div class="wf-row-2">
+                  <div class="wf-block is-tight" style="gap: 4px;"><div class="wf-line w-60 is-strong"></div><div class="wf-line w-80"></div></div>
+                  <div class="wf-block is-tight" style="gap: 4px;"><div class="wf-line w-60 is-strong"></div><div class="wf-line w-80"></div></div>
+                  <div class="wf-block is-tight" style="gap: 4px;"><div class="wf-line w-60 is-strong"></div><div class="wf-line w-80"></div></div>
+                  <div class="wf-block is-tight" style="gap: 4px;"><div class="wf-line w-60 is-strong"></div><div class="wf-line w-80"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-meta">
+            <h3>Search above the fold. Quick-starts below.</h3>
+            <p class="lede">Docs home is a wayfinding page, not a content page. Three things matter, in order: search, the top-level categories, the most-clicked starting points. Spend the budget on the article template — that's where users actually land.</p>
+            <ul class="sections-list">
+              <li><span class="step">01</span><div>Title — what the docs cover<span class="sub">"API · SDK · Guides for X."</span></div></li>
+              <li><span class="step">02</span><div>Search bar (⌘K)<span class="sub">Hero element. Algolia / Typesense / built-in.</span></div></li>
+              <li><span class="step">03</span><div>3–4 top-level category cards<span class="sub">Guides · Reference · Tutorials · API.</span></div></li>
+              <li><span class="step">04</span><div>Popular starting points<span class="sub">Top 6 articles by traffic. Save the new user a click.</span></div></li>
+              <li><span class="step">05</span><div>Community + changelog + status footer<span class="sub">Three links. Not a full nav.</span></div></li>
+            </ul>
+            <div class="rule-pill">If your docs home is longer than this, it's a marketing page in disguise.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 7. DOCS ARTICLE -->
+      <section class="lb-section" id="docs-article">
+        <header>
+          <div class="eyebrow">07 — Docs article</div>
+          <h2>Docs article (sidebar + content + TOC) <a class="anchor" href="#docs-article">#docs-article</a></h2>
+        </header>
+
+        <div class="archetype">
+          <div class="arch-stage">
+            <div class="wf">
+              <div class="wf-nav">
+                <div class="left"><span class="glyph"></span>
+                  <div class="items"><span class="item"></span><span class="item"></span></div>
+                </div>
+                <div style="width: 140px; height: 18px; background: var(--surface-sunken); border: 1px solid var(--border); border-radius: var(--radius-md);"></div>
+              </div>
+              <div style="display: grid; grid-template-columns: 160px 1fr 140px; gap: var(--space-3); align-items: start;">
+                <div class="docs-side">
+                  <div class="group">Guides</div>
+                  <div class="item">Quickstart</div>
+                  <div class="item is-active">Installation</div>
+                  <div class="item">Configuration</div>
+                  <div class="group">Reference</div>
+                  <div class="item">CLI</div>
+                  <div class="item">API</div>
+                  <div class="item">Hooks</div>
+                  <div class="group">Recipes</div>
+                  <div class="item">Auth</div>
+                  <div class="item">Caching</div>
+                </div>
+                <div class="wf-article">
+                  <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">Guides → Installation</div>
+                  <div class="ttl" style="font-family: var(--font-sans); font-weight: 600;">Installation</div>
+                  <div class="body-line" style="width: 95%;"></div>
+                  <div class="body-line" style="width: 85%;"></div>
+                  <div class="code">$ npm install acme</div>
+                  <div class="body-line" style="width: 90%;"></div>
+                  <div class="body-line" style="width: 80%;"></div>
+                  <div class="wf-line w-50 is-thick is-strong" style="margin-top: 8px;"></div>
+                  <div class="body-line" style="width: 90%;"></div>
+                  <div class="code">acme init --config ./acme.config.ts</div>
+                </div>
+                <div class="toc">
+                  <div class="title">On this page</div>
+                  <div class="item is-active">Install</div>
+                  <div class="item">Configure</div>
+                  <div class="item">Verify</div>
+                  <div class="item">Next steps</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-meta">
+            <h3>Three columns. One job: stay readable.</h3>
+            <p class="lede">The canonical docs layout. Left sidebar for category navigation; center for prose at a reading width; right TOC for in-page anchors. On mobile the sidebar collapses to a button, TOC sinks below the title.</p>
+            <ul class="sections-list">
+              <li><span class="step">01</span><div>Left rail — category tree<span class="sub">~200px. Active branch expanded.</span></div></li>
+              <li><span class="step">02</span><div>Breadcrumb above title<span class="sub">"Guides → Installation"</span></div></li>
+              <li><span class="step">03</span><div>Body at ~680px max<span class="sub">Reading measure beats wide columns.</span></div></li>
+              <li><span class="step">04</span><div>Code blocks · 14px mono · dark<span class="sub">Copy button top-right.</span></div></li>
+              <li><span class="step">05</span><div>Right rail — TOC, sticky<span class="sub">Active section highlighted on scroll.</span></div></li>
+              <li><span class="step">06</span><div>"Edit on GitHub" + prev / next<span class="sub">At the bottom. Always.</span></div></li>
+            </ul>
+            <div class="rule-pill">Code blocks earn dark backgrounds — even in light mode.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 8. CHANGELOG -->
+      <section class="lb-section" id="changelog">
+        <header>
+          <div class="eyebrow">08 — Changelog</div>
+          <h2>Changelog <a class="anchor" href="#changelog">#changelog</a></h2>
+        </header>
+
+        <div class="archetype">
+          <div class="arch-stage">
+            <div class="wf">
+              <div class="wf-block" style="padding: var(--space-5);">
+                <div class="wf-line w-30"></div>
+                <div class="wf-line is-thick is-strong w-50" style="margin-top: 6px;"></div>
+                <div class="wf-line w-70" style="margin-top: 6px;"></div>
+              </div>
+              <div class="changelog-row">
+                <div class="meta"><span>v2.4.1</span> <span>·</span> <span>2026-05-12</span> <span class="tag is-add">added</span></div>
+                <div class="wf-line w-80 is-strong is-thick"></div>
+                <div class="wf-line w-90"></div>
+                <div class="wf-line w-60"></div>
+              </div>
+              <div class="changelog-row">
+                <div class="meta"><span>v2.4.0</span> <span>·</span> <span>2026-05-08</span> <span class="tag is-add">added</span> <span class="tag is-fix">fixed</span></div>
+                <div class="wf-line w-70 is-strong is-thick"></div>
+                <div class="wf-line w-90"></div>
+                <div class="wf-line w-80"></div>
+                <div class="wf-line w-50"></div>
+              </div>
+              <div class="changelog-row">
+                <div class="meta"><span>v2.3.2</span> <span>·</span> <span>2026-05-01</span> <span class="tag is-fix">fixed</span></div>
+                <div class="wf-line w-60 is-strong is-thick"></div>
+                <div class="wf-line w-80"></div>
+              </div>
+              <div class="changelog-row">
+                <div class="meta"><span>v2.3.0</span> <span>·</span> <span>2026-04-22</span> <span class="tag is-add">added</span></div>
+                <div class="wf-line w-80 is-strong is-thick"></div>
+                <div class="wf-line w-90"></div>
+                <div class="wf-line w-70"></div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-meta">
+            <h3>Dated entries. Conventional tags. RSS.</h3>
+            <p class="lede">The most under-designed page on every site. Three things make it usable: a real date on every entry, tags for change type, and an RSS feed for the users who care. Don't gamify it.</p>
+            <ul class="sections-list">
+              <li><span class="step">01</span><div>Title + RSS + Subscribe<span class="sub">Three icons in the corner. That's the header.</span></div></li>
+              <li><span class="step">02</span><div>Reverse-chronological entries<span class="sub">Newest first. Permalink per entry.</span></div></li>
+              <li><span class="step">03</span><div>Tags: Added · Improved · Fixed · Removed<span class="sub">Four colors. Held consistent across releases.</span></div></li>
+              <li><span class="step">04</span><div>Body — short paragraphs, no buried lede<span class="sub">User-facing changes only. Internal refactors are noise.</span></div></li>
+              <li><span class="step">05</span><div>Inline image / video for visual changes<span class="sub">A 30s loop beats 200 words.</span></div></li>
+            </ul>
+            <div class="rule-pill">Every entry is permalinkable. People share these.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 9. STATUS -->
+      <section class="lb-section" id="status">
+        <header>
+          <div class="eyebrow">09 — Status</div>
+          <h2>Status page <a class="anchor" href="#status">#status</a></h2>
+        </header>
+
+        <div class="archetype">
+          <div class="arch-stage">
+            <div class="wf">
+              <div class="wf-block" style="padding: var(--space-5); align-items: center; gap: 8px; text-align: center;">
+                <div style="width: 12px; height: 12px; border-radius: var(--radius-full); background: var(--success-fg); box-shadow: 0 0 0 4px var(--success-bg);"></div>
+                <div class="wf-line is-thick is-strong" style="width: 280px;"></div>
+                <div class="wf-line" style="width: 240px;"></div>
+              </div>
+              <div class="wf-block" style="padding: var(--space-4); gap: 8px;">
+                <div class="wf-line w-30 is-strong"></div>
+                <div class="status-row">
+                  <div style="display: flex; align-items: center; gap: 10px;"><span class="status-dot"></span><div class="wf-line w-60 is-strong"></div></div>
+                  <div class="status-bars">
+                    <span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span>
+                  </div>
+                </div>
+                <div class="status-row">
+                  <div style="display: flex; align-items: center; gap: 10px;"><span class="status-dot is-warn"></span><div class="wf-line w-70 is-strong"></div></div>
+                  <div class="status-bars">
+                    <span class="status-bar"></span><span class="status-bar"></span><span class="status-bar is-warn"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span>
+                  </div>
+                </div>
+                <div class="status-row">
+                  <div style="display: flex; align-items: center; gap: 10px;"><span class="status-dot"></span><div class="wf-line w-50 is-strong"></div></div>
+                  <div class="status-bars">
+                    <span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span>
+                  </div>
+                </div>
+                <div class="status-row">
+                  <div style="display: flex; align-items: center; gap: 10px;"><span class="status-dot"></span><div class="wf-line w-65 is-strong" style="width: 65%;"></div></div>
+                  <div class="status-bars">
+                    <span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span><span class="status-bar"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="wf-block" style="padding: var(--space-4); gap: 8px;">
+                <div class="wf-line w-40 is-strong"></div>
+                <div class="wf-line w-90"></div>
+                <div class="wf-line w-70"></div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-meta">
+            <h3>Honest, immediate, scannable.</h3>
+            <p class="lede">Users land here panicked. The job is to confirm "yes, we know" in under a second. Big overall-status pill at the top; service-by-service breakdown below; the most recent incident's note in plain language.</p>
+            <ul class="sections-list">
+              <li><span class="step">01</span><div>One overall-status pill<span class="sub">Operational · Degraded · Down. Dot + word.</span></div></li>
+              <li><span class="step">02</span><div>Service rows with 90-day history<span class="sub">Bar chart of uptime per service.</span></div></li>
+              <li><span class="step">03</span><div>Active incident with timeline<span class="sub">Investigating → Identified → Monitoring → Resolved.</span></div></li>
+              <li><span class="step">04</span><div>Subscribe by email / SMS / webhook<span class="sub">Right side. Persistent.</span></div></li>
+              <li><span class="step">05</span><div>Past incidents — last 30 days<span class="sub">Honesty over polish.</span></div></li>
+            </ul>
+            <div class="rule-pill">A green page during a real outage is worse than a yellow page during a small one. Update fast.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 10. LEGAL -->
+      <section class="lb-section" id="legal">
+        <header>
+          <div class="eyebrow">10 — Legal</div>
+          <h2>Terms · Privacy · Legal <a class="anchor" href="#legal">#legal</a></h2>
+        </header>
+
+        <div class="archetype">
+          <div class="arch-stage">
+            <div class="wf">
+              <div class="wf-nav">
+                <div class="left"><span class="glyph"></span></div>
+              </div>
+              <div style="display: grid; grid-template-columns: 160px 1fr; gap: var(--space-4); align-items: start;">
+                <div class="toc">
+                  <div class="title">Sections</div>
+                  <div class="item">1 Definitions</div>
+                  <div class="item is-active">2 Use of service</div>
+                  <div class="item">3 Privacy</div>
+                  <div class="item">4 Liability</div>
+                  <div class="item">5 Termination</div>
+                  <div class="item">6 Contact</div>
+                </div>
+                <div class="wf-article" style="max-width: 560px;">
+                  <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">Updated 2026-04-01 · v3.2</div>
+                  <div class="ttl" style="font-family: var(--font-sans); font-weight: 600;">Terms of Service</div>
+                  <div class="wf-line w-80 is-thick is-strong" style="margin-top: 8px;"></div>
+                  <div class="body-line" style="width: 95%;"></div>
+                  <div class="body-line" style="width: 90%;"></div>
+                  <div class="body-line" style="width: 85%;"></div>
+                  <div class="body-line" style="width: 80%;"></div>
+                  <div class="wf-line w-70 is-thick is-strong" style="margin-top: 12px;"></div>
+                  <div class="body-line" style="width: 95%;"></div>
+                  <div class="body-line" style="width: 90%;"></div>
+                  <div class="body-line" style="width: 70%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-meta">
+            <h3>Readable. Versioned. Tracked.</h3>
+            <p class="lede">A legal page is still a page. Single column at reading width, numbered sections, a real TOC, a clear last-updated stamp. Effort here signals trust the same way a great about page does.</p>
+            <ul class="sections-list">
+              <li><span class="step">01</span><div>Title + version + last-updated stamp<span class="sub">Real semantic version, not "updated recently."</span></div></li>
+              <li><span class="step">02</span><div>Numbered TOC, sticky on desktop<span class="sub">People deep-link to specific clauses.</span></div></li>
+              <li><span class="step">03</span><div>Body at reading width<span class="sub">Same body style as long-form blog.</span></div></li>
+              <li><span class="step">04</span><div>"Plain-language summary" box per section<span class="sub">Optional but loved. Not legal advice.</span></div></li>
+              <li><span class="step">05</span><div>Changelog at the bottom — what changed and when<span class="sub">Builds trust the same as any other changelog.</span></div></li>
+            </ul>
+            <div class="rule-pill">Same body styles as the blog. The legal page is not a different brand.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 11. 404 -->
+      <section class="lb-section" id="404">
+        <header>
+          <div class="eyebrow">11 — 404</div>
+          <h2>The not-found page <a class="anchor" href="#404">#404</a></h2>
+        </header>
+
+        <div class="archetype">
+          <div class="arch-stage">
+            <div class="wf">
+              <div class="wf-nav">
+                <div class="left"><span class="glyph"></span>
+                  <div class="items"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+                </div>
+              </div>
+              <div class="err-stage">
+                <div class="err-code">404</div>
+                <div class="wf-line is-thick is-strong" style="width: 280px;"></div>
+                <div class="wf-line" style="width: 240px;"></div>
+                <div style="display: flex; gap: 8px; margin-top: 8px;">
+                  <span style="height: 28px; padding: 0 14px; background: var(--accent); border-radius: var(--radius-md); display: inline-flex; align-items: center; min-width: 100px;"></span>
+                  <span style="height: 28px; padding: 0 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); display: inline-flex; align-items: center; min-width: 100px;"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="arch-meta">
+            <h3>One sentence. Two actions. Don't try to be clever.</h3>
+            <p class="lede">The 404 is where most sites attempt humor and fail. The actual job: tell the user what happened, give them somewhere to go, and look like the rest of the site. The signature moment, if you want one, belongs on the homepage — not here.</p>
+            <ul class="sections-list">
+              <li><span class="step">01</span><div>Code — 404 in your display type<span class="sub">Big. Brand-consistent. No mascots.</span></div></li>
+              <li><span class="step">02</span><div>Plain-language explanation<span class="sub">"The page you wanted has moved or doesn't exist."</span></div></li>
+              <li><span class="step">03</span><div>Primary action — go home<span class="sub">Or "back to where you were."</span></div></li>
+              <li><span class="step">04</span><div>Secondary — search or contact<span class="sub">For the user who's truly stuck.</span></div></li>
+            </ul>
+            <div class="rule-pill">If your 404 takes longer than your homepage to design, you're avoiding harder problems.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLOSING -->
+      <section class="lb-section">
+        <hr class="rule" />
+        <div style="display: flex; gap: var(--space-6); align-items: flex-start; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 280px;">
+            <h3 class="t-h3" style="margin: 0;">The supporting pages are the brand test.</h3>
+            <p class="t-body-lg text-secondary" style="max-width: 640px; margin-top: 6px;">Anyone can design a beautiful homepage. The career-level question is whether the changelog, the 404, the legal page, and the careers list all feel like the same site. When they do, you've built a system — not a campaign.</p>
+          </div>
+          <a href="Layout.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--surface); font-size: var(--text-body-sm-size); font-weight: 500;">Next — Layout <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script></body>
+</html>

@@ -7,6 +7,21 @@
    .tooltip) still come from components.css.
    ============================================================ */
 
+/* Self-contained text reset — components.css assumes the host has zeroed
+   intrinsic <p>/<h*> margins (the gallery HTML does; Tailwind Preflight does).
+   ui-vue ships without a global reset, so we neutralise those margins on the
+   text elements our components render — otherwise default paragraph margins
+   blow gaps open (e.g. Alert title↔message). Scoped to component classes so
+   it never touches consumer content. */
+.alert-title, .alert-msg,
+.modal-title, .modal-subtitle,
+.drawer-title,
+.toast-title, .toast-msg,
+.card-title, .card-subtitle,
+.field-helper, .field-error, .field-success {
+  margin: 0;
+}
+
 /* Dialog — Reka portals Overlay + Content as siblings */
 .lb-scrim {
   position: fixed;

@@ -38,13 +38,13 @@ Built + verified in the playground:
 | Alert / inline-banner | native | ✓ 4 variants, dismissible |
 | Tabs (pill + underline) | Reka `Tabs*` | ✓ active/disabled, keyboard |
 | Tooltip | Reka `Tooltip*` | built (hover) |
-| Dialog / Modal | Reka `Dialog*` | ✓ scrim + centered + header/body/footer |
+| Dialog / Modal | Reka `Dialog*` | ✓ scrim + header/body/footer; **scroll-aware separators** (hairline only when content clips the edge) + `stickyBorders` to force; sticky header/footer, body scrolls |
 | DropdownMenu | Reka `DropdownMenu*` | ✓ items, shortcut, separator, destructive |
 | Combobox | Reka `Combobox*` | ✓ client + **server-search** (focus-clears-search, loading, seen-map), capped + scrollable popover |
 | MultiCombobox | Reka `Combobox*` (multiple) | ✓ chips-in-field, checkmark rows, clears search on **close**, seen-map |
 | OverflowScroll | native + `useHoldRepeat` | ✓ scroll arrows (h/v/both), fade edges, press-hold |
 | Popover | Reka `Popover*` | ✓ side/align/offset, optional arrow |
-| Drawer | Reka `Dialog*` (side) | ✓ left/right, scrim, header/body/footer |
+| Drawer | Reka `Dialog*` (side) | ✓ left/right, scrim, header/body/footer; same scroll-aware separators + `stickyBorders` |
 | Accordion | Reka `Accordion*` | ✓ single/multiple, collapsible, animated height |
 | Field | native wrapper | ✓ label + helper/error/success, `aria-describedby` via slot props |
 | Toast | Reka `Toast*` + `useToast` | ✓ success/danger/warning/info, action, sticky, stack position |

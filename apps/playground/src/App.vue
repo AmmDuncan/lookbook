@@ -73,6 +73,10 @@ const pickedRegions = ref<(string | number)[]>(['ga', 'as'])
 const drawerOpen = ref(false)
 const drawerSide = ref<'right' | 'left'>('right')
 
+// Scroll-aware modal borders
+const longDialogOpen = ref(false)
+const stickyDialogOpen = ref(false)
+
 // Field demo
 const licence = ref('')
 
@@ -320,6 +324,29 @@ const faqItems = [
         <Button variant="secondary" size="sm" @click="error('Verification failed', { message: 'Check the licence number.' })">danger</Button>
         <Button variant="secondary" size="sm" @click="warning('Invoice expiring', { action: { label: 'Renew', onClick: () => {} } })">warning + action</Button>
         <Button variant="secondary" size="sm" @click="info('OTP sent', { duration: 0 })">info (sticky)</Button>
+      </div>
+
+      <p style="margin-top: 24px">Scroll-aware modal separators — borders appear only as content scrolls past the edge; <code>stickyBorders</code> forces them:</p>
+      <div class="pg-row">
+        <Button variant="secondary" @click="longDialogOpen = true">Long modal (contextual borders)</Button>
+        <Dialog v-model="longDialogOpen" title="Terms of service" description="Scroll to see the header/footer hairlines appear">
+          <p v-for="n in 12" :key="n" style="margin: 0 0 12px; color: var(--text-secondary)">
+            Section {{ n }} — when the body overflows, a hairline fades in under the header (content above) and above the footer (content below). At the very top there's no header border; scrolled to the bottom there's no footer border. A short body shows neither.
+          </p>
+          <template #footer>
+            <Button variant="ghost" size="sm" @click="longDialogOpen = false">Decline</Button>
+            <Button size="sm" @click="longDialogOpen = false">Accept</Button>
+          </template>
+        </Dialog>
+
+        <Button variant="secondary" @click="stickyDialogOpen = true">Sticky borders (both)</Button>
+        <Dialog v-model="stickyDialogOpen" sticky-borders="both" title="Sectioned record" description="Borders forced on regardless of scroll">
+          <p style="margin: 0; color: var(--text-secondary)">Short body, but the header and footer hairlines stay because <code>stickyBorders="both"</code> — use when the body has its own dividers that would float against a borderless header.</p>
+          <template #footer>
+            <Button variant="ghost" size="sm" @click="stickyDialogOpen = false">Cancel</Button>
+            <Button size="sm" @click="stickyDialogOpen = false">Save</Button>
+          </template>
+        </Dialog>
       </div>
 
       <p style="margin-top: 24px">Accordion (single, collapsible):</p>

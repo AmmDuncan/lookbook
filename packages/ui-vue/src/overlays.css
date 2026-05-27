@@ -22,7 +22,8 @@
   z-index: var(--z-modal);
   width: calc(100% - 32px);
   max-height: 85vh;
-  overflow: auto;
+  /* Body owns the scroll (see .lb-dialog-body); header/footer stay put. */
+  overflow: hidden;
 }
 
 /* Dropdown menu + tooltip + popover — Reka positions the wrapper;
@@ -72,6 +73,26 @@
 }
 .lb-drawer-content--right { right: 0; left: auto; border-left: 1px solid var(--border); }
 .lb-drawer-content--left  { left: 0; right: auto; border-left: 0; border-right: 1px solid var(--border); }
+
+/* Scroll-aware Dialog/Drawer chrome — the body owns the scroll; the header
+   and footer hairlines are contextual (appear only when content is clipped
+   past that edge) unless forced on via the `stickyBorders` prop. The base
+   .modal-header/.modal-footer borders in components.css are always-on, so we
+   neutralise them here and reinstate per scroll state / prop. */
+.lb-dialog-body, .lb-drawer-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+.modal-header, .modal-footer,
+.drawer-header, .drawer-footer {
+  flex-shrink: 0;
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+.lb-dialog-content .modal-header,
+.lb-drawer-content .drawer-header { border-bottom-color: transparent; }
+.lb-dialog-content .modal-footer,
+.lb-drawer-content .drawer-footer { border-top-color: transparent; }
+.lb-header-border .modal-header,
+.lb-header-border .drawer-header { border-bottom-color: var(--border); }
+.lb-footer-border .modal-footer,
+.lb-footer-border .drawer-footer { border-top-color: var(--border); }
 
 /* Popover arrow — Reka renders an SVG polygon; fill it to read as a connected nub */
 .lb-popover-arrow { fill: var(--surface-raised); }

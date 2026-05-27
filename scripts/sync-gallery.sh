@@ -27,5 +27,8 @@ cp "$WORK"/components.css "$WORK"/lookbook.css "$WORK"/chrome.js "$GALLERY"/ 2>/
 # tokens.css is the shared contract — it lives in the tokens package.
 cp "$WORK"/tokens.css "$TOKENS"/tokens.css
 
+# components.css is the component-layer spec — it also styles @lookbook/ui-vue.
+cp "$WORK"/components.css "$ROOT"/packages/ui-vue/src/styles.css
+
 echo "Synced gallery + tokens from: $SRC"
 ls "$GALLERY" | grep '\.html$' | sed 's/^/  /'

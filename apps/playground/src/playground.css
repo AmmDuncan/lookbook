@@ -1,0 +1,13 @@
+/* Playground chrome only — NOT part of the design system. */
+body { margin: 0; background: var(--bg); color: var(--text-primary); font-family: var(--font-sans); }
+.pg-wrap { max-width: 1100px; margin: 0 auto; padding: 40px 32px 120px; }
+.pg-bar { display: flex; gap: 12px; align-items: center; position: sticky; top: 0; padding: 16px 0; background: var(--bg); border-bottom: 1px solid var(--border); z-index: 10; }
+.pg-section { margin-top: 48px; }
+.pg-section > h2 { font: var(--text-h3-weight) var(--text-h3-size)/var(--text-h3-lh) var(--font-display); letter-spacing: var(--text-h3-track); margin: 0 0 4px; }
+.pg-section > p { color: var(--text-secondary); margin: 0 0 20px; font-size: var(--text-body-sm-size); }
+.pg-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-bottom: 14px; }
+.pg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.pg-label { font-size: var(--text-caption-size); color: var(--text-muted); width: 110px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+.pg-field { display: flex; flex-direction: column; gap: 6px; max-width: 280px; }
+.pg-toggle { font-size: 14px; padding: 6px 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); color: var(--text-primary); cursor: pointer; }
+.pg-toggle.is-on { background: var(--accent); color: var(--text-on-accent); border-color: var(--accent); }

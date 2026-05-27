@@ -4,10 +4,12 @@
   "description": "Framework-agnostic Lookbook design tokens (CSS custom properties). The single source of truth, shared verbatim by every project and framework.",
   "exports": {
     ".": "./src/tokens.css",
-    "./tokens.css": "./src/tokens.css"
+    "./tokens.css": "./src/tokens.css",
+    "./skins/*": "./skins/*"
   },
   "files": [
-    "src/tokens.css"
+    "src/tokens.css",
+    "skins"
   ],
   "sideEffects": [
     "*.css"

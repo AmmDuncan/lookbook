@@ -1,0 +1,46 @@
+/* ============================================================
+   Example skin — DVLA Self-Service
+   Demonstrates the re-skin contract: load AFTER tokens.css and
+   these overrides map Lookbook onto the self-service brand
+   (derived from dvla-self-service config/theme.js — DVLA green).
+
+   This is a REFERENCE example. When self-service adopts Lookbook,
+   copy this into the app and import it after @lookbook/tokens.
+   ============================================================ */
+
+:root,
+[data-theme="light"] {
+  --bg:              #F6F8F4;   /* pagebg */
+  --surface:         #FFFFFF;
+  --surface-raised:  #FFFFFF;
+  --surface-sunken:  #F2F6F3;   /* inputbg */
+
+  --border:          #DDE7E1;   /* gray.line1 */
+  --border-strong:   #C2D2C9;
+
+  --text-primary:    #10251B;   /* black */
+  --text-secondary:  #5D6B64;   /* gray.1 */
+  --text-muted:      #8A9891;   /* gray.2 */
+  --text-on-accent:  #FFFFFF;
+
+  --accent:          #168A4A;   /* green DEFAULT */
+  --accent-hover:    #0B6B3A;   /* green.1 */
+  --accent-subtle:   #F0FBF4;   /* green.4 */
+  --focus-ring:      #41B16E;   /* green.2 */
+
+  --accent-secondary:     #907AFF;   /* purple — hero/CTA/signature only */
+  --accent-gradient:      linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+
+  --success-bg: #D9F6E5;  --success-fg: #0B6B3A;
+  --warning-bg: #FFF5DD;  --warning-fg: #8A5A00;
+  --danger-bg:  #FFDEDE;  --danger-fg:  #D80027;
+  --info-bg:    #BDEBFA;  --info-fg:    #0072CC;
+
+  --font-sans:    'SF Pro', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sans);
+
+  /* self-service runs rounder than Lookbook defaults */
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}

@@ -25,6 +25,13 @@ This resolves the central tension — consistency vs. "every page looks the same
 
 Never introduce ad-hoc colors, spacing, or one-off components (that breaks convergence). Never force every page into one identical template (that kills healthy divergence). Variety comes from composition, not from reinventing the parts.
 
+**The three-layer model (how a project becomes recognizably itself):**
+1. **System** — tokens + primitives. Identical across every project.
+2. **Personality dials** — per-project token *values* (accent, fonts, neutrals, radius, density), set from the brand via **Identity**.
+3. **Signature move** — exactly **one** pick from **Variation**'s catalog (oversized type, asymmetric hero, edge anchor, etc.), used **at most 3 times** on a page, built last, and removable without breaking the layout.
+
+Two signatures cancel each other out. Five of six dials match the chosen brand archetype; the sixth is the deliberate wildcard (see **Approach**). This is how every project shares DNA yet none look the same.
+
 ---
 
 ## Tokens — the contract

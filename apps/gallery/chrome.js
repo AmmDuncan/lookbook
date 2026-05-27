@@ -9,6 +9,38 @@
   // ----- Inject picker styles (must run before DOMContentLoaded UI is shown) ---
   const styles = `
     .lb-page-nav { display: inline-flex; align-items: center; margin-left: auto; margin-right: 8px; }
+
+    /* Theme toggle \u2014 inject here so it survives Tailwind preflight regardless of CSS load order. */
+    .lb-theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .lb-theme-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px;
+      height: 26px;
+      border-radius: calc(var(--radius-md) - 2px);
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      line-height: 1;
+      transition: background-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
+    }
+    .lb-theme-btn[aria-pressed="true"] {
+      background: var(--surface-sunken);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .lb-theme-btn:hover { color: var(--text-primary); }
+    .lb-theme-btn > svg { display: inline-block; flex-shrink: 0; }
     .lb-picker { position: relative; display: inline-flex; }
     .lb-picker-trigger {
       display: inline-flex; align-items: center; gap: 8px;
@@ -128,8 +160,9 @@
       { num: '08', file: 'Motion.html',      name: 'Motion',      group: 'Craft' },
       { num: '09', file: 'DataViz.html',     name: 'Data viz',    group: 'Craft' },
       { num: '10', file: 'Marketing.html',   name: 'Marketing',   group: 'Outward' },
-      { num: '11', file: 'Recipes.html',      name: 'Recipes',     group: 'Reference' },
-      { num: '12', file: 'Guide.html',        name: 'Guide',       group: 'Reference' },
+      { num: '11', file: 'Layout.html',       name: 'Layout',      group: 'Reference' },
+      { num: '12', file: 'Recipes.html',      name: 'Recipes',     group: 'Reference' },
+      { num: '13', file: 'Guide.html',        name: 'Guide',       group: 'Reference' },
     ];
     const currentFile = location.pathname.split('/').pop() || 'Foundations.html';
     const currentChap = CHAPTERS.find(c => c.file === currentFile) || CHAPTERS[0];

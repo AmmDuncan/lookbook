@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — Layout &amp; composition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: ['class', '[data-theme="dark"]'] };</script>
+  <style>
+    /* Grid overlay — visual representation of the column grid */
+    .grid-overlay {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-6) var(--space-4);
+      overflow: hidden;
+    }
+    .grid-overlay::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(90deg,
+          color-mix(in oklch, var(--accent) 12%, transparent) 0,
+          color-mix(in oklch, var(--accent) 12%, transparent) var(--col-width),
+          transparent var(--col-width),
+          transparent calc(var(--col-width) + var(--col-gap)));
+      background-size: calc(var(--col-width) + var(--col-gap)) 100%;
+      background-position: var(--space-4) 0;
+      background-repeat: repeat-x;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    .grid-overlay-content {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(var(--cols, 12), 1fr);
+      gap: var(--col-gap, var(--space-4));
+    }
+    .grid-cell {
+      background: var(--accent-subtle);
+      border: 1px dashed color-mix(in oklch, var(--accent) 35%, transparent);
+      border-radius: var(--radius-sm);
+      padding: var(--space-2) var(--space-3);
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      color: var(--accent);
+      text-align: center;
+    }
+
+    /* Region diagram */
+    .region {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface-sunken);
+      padding: var(--space-3);
+      display: grid;
+      gap: var(--space-2);
+      min-height: 180px;
+    }
+    .region-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: var(--space-4);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-size: var(--text-caption-size);
+      color: var(--text-secondary);
+      min-height: 120px;
+    }
+    .region-block.is-primary {
+      background: var(--accent-subtle);
+      border-color: color-mix(in oklch, var(--accent) 30%, transparent);
+      color: var(--accent);
+    }
+    .region-block.is-rail {
+      background: var(--surface);
+      border-style: dashed;
+    }
+    .region-block.is-sticky::after {
+      content: " · sticky";
+      opacity: 0.6;
+    }
+
+    .region-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .region-card-head {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--space-3);
+    }
+    .region-card-head .name { font-size: var(--text-body-sm-size); font-weight: 600; }
+    .region-card-head .ratio { font-family: var(--font-mono); font-size: var(--text-overline-size); color: var(--text-muted); }
+    .region-card-foot {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+      background: var(--surface-sunken);
+      font-size: var(--text-micro-size);
+      color: var(--text-secondary);
+      line-height: var(--text-micro-lh);
+    }
+
+    /* Rhythm ruler */
+    .ruler-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 60px;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+    }
+    .ruler-row:first-of-type { border-top: 0; }
+    .ruler-row .name { font-family: var(--font-mono); font-size: var(--text-caption-size); color: var(--text-primary); }
+    .ruler-row .bar {
+      height: 16px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .ruler-row .val { font-family: var(--font-mono); font-size: var(--text-caption-size); color: var(--text-secondary); text-align: right; }
+
+    /* Auto-fit demo */
+    .autofit {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(var(--min, 220px), 1fr));
+      gap: var(--space-4);
+    }
+    .autofit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      display: flex; flex-direction: column; gap: var(--space-2);
+      min-height: 100px;
+    }
+    .autofit-card .label { font-family: var(--font-mono); font-size: var(--text-overline-size); color: var(--text-muted); }
+    .autofit-card .name { font-size: var(--text-body-sm-size); font-weight: 500; }
+
+    /* Reflow timeline */
+    .reflow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-3);
+    }
+    .reflow-step {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .reflow-step-head {
+      padding: var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-sunken);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .reflow-step-body {
+      padding: var(--space-3);
+      flex: 1;
+      display: grid;
+      gap: var(--space-2);
+      min-height: 140px;
+    }
+
+    /* Density mini-mock */
+    .density-mock {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      padding: var(--pad, var(--space-4));
+      display: flex; flex-direction: column;
+      gap: var(--gap, var(--space-3));
+    }
+    .density-mock .row {
+      display: grid;
+      grid-template-columns: 1fr 80px 60px 40px;
+      gap: var(--space-3);
+      align-items: center;
+      padding: var(--row-pad, var(--space-2) 0);
+      border-bottom: 1px solid var(--border);
+    }
+    .density-mock .row:last-child { border-bottom: 0; }
+    .density-mock .row .title { font-size: var(--row-fs, var(--text-body-sm-size)); font-weight: 500; }
+    .density-mock .row .meta { font-family: var(--font-mono); font-size: var(--text-caption-size); color: var(--text-muted); }
+
+    /* Worked example mocks */
+    .we-mock {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--bg);
+      display: flex; flex-direction: column;
+    }
+    .we-mock-head {
+      padding: var(--space-2) var(--space-3);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .we-mock-body {
+      padding: var(--space-4);
+      flex: 1;
+      min-height: 380px;
+    }
+    .we-mock-foot {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+      background: var(--surface-sunken);
+      font-size: var(--text-micro-size);
+      color: var(--text-secondary);
+      line-height: var(--text-micro-lh);
+    }
+    .we-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      display: flex; flex-direction: column; gap: var(--space-1);
+    }
+    .we-card .name { font-size: var(--text-body-sm-size); font-weight: 600; }
+    .we-card .meta { font-size: var(--text-caption-size); color: var(--text-muted); }
+
+    /* Rules table */
+    .rules-grid {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .rules-row {
+      display: grid;
+      grid-template-columns: 200px 1fr 1fr;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      border-top: 1px solid var(--border);
+      align-items: start;
+    }
+    .rules-row:first-of-type { border-top: 0; }
+    .rules-name { font-size: var(--text-body-sm-size); font-weight: 600; }
+    .rules-name .sub { display: block; font-family: var(--font-mono); font-size: var(--text-overline-size); color: var(--text-muted); margin-top: 2px; font-weight: 400; letter-spacing: 0; }
+    .rules-when, .rules-avoid { font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55; }
+    .rules-when strong, .rules-avoid strong { color: var(--text-primary); font-weight: 500; }
+
+    @media (max-width: 900px) {
+      .rules-row { grid-template-columns: 1fr; }
+      .reflow { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">layout · v0.1</span>
+      </div>
+      <nav class="lb-page-nav" aria-label="Chapters"></nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#grid">Grid system</a></li>
+        <li><a href="#rhythm">Section rhythm</a></li>
+        <li><a href="#regions">Region splits</a></li>
+        <li><a href="#dynamic">Dynamic layout</a></li>
+        <li><a href="#rules">Column-split rules</a></li>
+        <li><a href="#reflow">Responsive reflow</a></li>
+        <li><a href="#density">Density &amp; rhythm</a></li>
+        <li><a href="#three-directions">Three directions</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>Layout</h5>
+        <p>How to compose a blank page from Lookbook parts. Grid → regions → reflow → rhythm. The grammar between atoms and recipes.</p>
+      </div>
+    </aside>
+
+    <main class="lb-main">
+
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 12</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track); font-family: var(--font-display);">Layout.</h2>
+          <p class="lede">The grammar between atoms and recipes. How to divide a blank page into regions, decide column splits, reflow on small screens, and keep vertical rhythm tight enough to feel like one system.</p>
+        </header>
+      </section>
+
+      <!-- 1. GRID SYSTEM -->
+      <section class="lb-section" id="grid">
+        <header>
+          <div class="eyebrow">01 — The grid</div>
+          <h2>Page container &amp; column grid <a class="anchor" href="#grid">#grid</a></h2>
+          <p class="lede">Three container widths. A 12-column grid with token-based gutters. Page margins step up with breakpoint.</p>
+        </header>
+
+        <div class="lb-subsection">
+          <h3>Container widths <span class="token-pill">prose · app · full-bleed</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="background: var(--surface-sunken); padding: var(--space-6);">
+              <!-- Prose -->
+              <div style="display:flex; flex-direction:column; gap: var(--space-2); margin-bottom: var(--space-5);">
+                <div style="display:flex; justify-content:space-between; font-family: var(--font-mono); font-size: var(--text-overline-size); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;"><span>prose · 720</span><span>articles · docs · long-form</span></div>
+                <div style="height: 28px; max-width: 720px; background: var(--accent); border-radius: var(--radius-sm);"></div>
+              </div>
+              <!-- App -->
+              <div style="display:flex; flex-direction:column; gap: var(--space-2); margin-bottom: var(--space-5);">
+                <div style="display:flex; justify-content:space-between; font-family: var(--font-mono); font-size: var(--text-overline-size); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;"><span>app · 1280</span><span>most product surfaces</span></div>
+                <div style="height: 28px; max-width: 1280px; background: var(--accent); border-radius: var(--radius-sm); opacity: 0.7;"></div>
+              </div>
+              <!-- Wide -->
+              <div style="display:flex; flex-direction:column; gap: var(--space-2); margin-bottom: var(--space-5);">
+                <div style="display:flex; justify-content:space-between; font-family: var(--font-mono); font-size: var(--text-overline-size); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;"><span>wide · 1536</span><span>dashboards · tables</span></div>
+                <div style="height: 28px; max-width: 1536px; background: var(--accent); border-radius: var(--radius-sm); opacity: 0.5;"></div>
+              </div>
+              <!-- Full-bleed -->
+              <div style="display:flex; flex-direction:column; gap: var(--space-2);">
+                <div style="display:flex; justify-content:space-between; font-family: var(--font-mono); font-size: var(--text-overline-size); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;"><span>full-bleed</span><span>hero sections · marketing CTAs</span></div>
+                <div style="height: 28px; background: var(--accent); border-radius: var(--radius-sm); opacity: 0.3;"></div>
+              </div>
+            </div>
+            <div class="specimen-caption">Prose caps text at ~720 for reading. App / wide hold the chrome. Full-bleed only for sections that intentionally break the rhythm.</div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>12-column grid <span class="token-pill">gutter · --space-4 (16) · gutters scale per bp</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="padding: var(--space-6);">
+              <div class="grid-overlay" style="--cols: 12; --col-gap: var(--space-4);">
+                <div class="grid-overlay-content">
+                  <div class="grid-cell" style="grid-column: span 12;">12</div>
+                </div>
+              </div>
+              <div class="grid-overlay" style="--cols: 12; --col-gap: var(--space-4); margin-top: var(--space-3);">
+                <div class="grid-overlay-content">
+                  <div class="grid-cell" style="grid-column: span 6;">6</div>
+                  <div class="grid-cell" style="grid-column: span 6;">6</div>
+                </div>
+              </div>
+              <div class="grid-overlay" style="--cols: 12; --col-gap: var(--space-4); margin-top: var(--space-3);">
+                <div class="grid-overlay-content">
+                  <div class="grid-cell" style="grid-column: span 8;">8</div>
+                  <div class="grid-cell" style="grid-column: span 4;">4</div>
+                </div>
+              </div>
+              <div class="grid-overlay" style="--cols: 12; --col-gap: var(--space-4); margin-top: var(--space-3);">
+                <div class="grid-overlay-content">
+                  <div class="grid-cell" style="grid-column: span 4;">4</div>
+                  <div class="grid-cell" style="grid-column: span 4;">4</div>
+                  <div class="grid-cell" style="grid-column: span 4;">4</div>
+                </div>
+              </div>
+              <div class="grid-overlay" style="--cols: 12; --col-gap: var(--space-4); margin-top: var(--space-3);">
+                <div class="grid-overlay-content">
+                  <div class="grid-cell" style="grid-column: span 3;">3</div>
+                  <div class="grid-cell" style="grid-column: span 3;">3</div>
+                  <div class="grid-cell" style="grid-column: span 3;">3</div>
+                  <div class="grid-cell" style="grid-column: span 3;">3</div>
+                </div>
+              </div>
+            </div>
+            <div class="specimen-caption">12 columns · gutter <code class="token-pill">--space-4</code>. Spans of 12 / 6+6 / 8+4 / 4+4+4 / 3×4 cover ~90% of cases.</div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Page margins <span class="token-pill">scale per --bp-*</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="padding: 0;">
+              <div class="rules-grid" style="border: 0; border-radius: 0;">
+                <div class="rules-row">
+                  <div class="rules-name">&lt; sm (mobile)<span class="sub">--space-4 · 16px</span></div>
+                  <div class="rules-when">Edge-to-edge breathing. Don't go below 16 — content kisses the bezel.</div>
+                  <div class="rules-avoid"><strong>Avoid</strong> negative-margin tricks at this size; let cards span full width.</div>
+                </div>
+                <div class="rules-row">
+                  <div class="rules-name">sm – lg<span class="sub">--space-6 · 24px</span></div>
+                  <div class="rules-when">Comfortable thumb zone. Card grids breathe; sidebars stay collapsed.</div>
+                  <div class="rules-avoid"><strong>Avoid</strong> bigger margins until lg — wastes column count.</div>
+                </div>
+                <div class="rules-row">
+                  <div class="rules-name">lg+<span class="sub">--space-10 · 40px</span></div>
+                  <div class="rules-when">Desktop. Margin big enough that the page reads as bounded, not stretched.</div>
+                  <div class="rules-avoid"><strong>Avoid</strong> max-width inside the container; let the container do it.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 2. SECTION RHYTHM -->
+      <section class="lb-section" id="rhythm">
+        <header>
+          <div class="eyebrow">02 — Section rhythm</div>
+          <h2>Whitespace as hierarchy <a class="anchor" href="#rhythm">#rhythm</a></h2>
+          <p class="lede">Spacing between sections is the loudest signal on a page. Three rhythms: tight, comfortable, airy. Pick one per surface and hold it.</p>
+        </header>
+
+        <div class="specimen">
+          <div class="specimen-body" style="padding: 0;">
+            <div class="ruler-row">
+              <span class="name">tight</span>
+              <span class="bar" style="width: 32px;"></span>
+              <span class="val">--space-8 · 32</span>
+            </div>
+            <div class="ruler-row">
+              <span class="name">comfortable</span>
+              <span class="bar" style="width: 48px;"></span>
+              <span class="val">--space-12 · 48</span>
+            </div>
+            <div class="ruler-row">
+              <span class="name">airy</span>
+              <span class="bar" style="width: 80px;"></span>
+              <span class="val">--space-20 · 80</span>
+            </div>
+            <div class="ruler-row">
+              <span class="name">hero-airy</span>
+              <span class="bar" style="width: 96px;"></span>
+              <span class="val">--space-24 · 96</span>
+            </div>
+          </div>
+          <div class="specimen-caption">tight = dense admin · comfortable = default product · airy = marketing · hero-airy = launch heroes</div>
+        </div>
+
+        <div class="rules-grid" style="margin-top: var(--space-4);">
+          <div class="rules-row">
+            <div class="rules-name">Inside a card / form<span class="sub">--space-3 to --space-6</span></div>
+            <div class="rules-when"><strong>Use</strong> for label → input → helper stacks and card body padding.</div>
+            <div class="rules-avoid"><strong>Don't</strong> mix the inside-rhythm with the between-section rhythm; cards collapse visually.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Between sections<span class="sub">--space-12 to --space-24</span></div>
+            <div class="rules-when"><strong>Use</strong> between distinct content blocks: hero → features → social proof.</div>
+            <div class="rules-avoid"><strong>Don't</strong> drop below 32 between sections — readers stop reading them as sections.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Hierarchy by spacing<span class="sub">whitespace > size</span></div>
+            <div class="rules-when"><strong>Use</strong> a bigger gap above a heading than below — group heading + body by proximity.</div>
+            <div class="rules-avoid"><strong>Don't</strong> rely on font size alone for hierarchy. Spacing does more work.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 3. REGION SPLITS -->
+      <section class="lb-section" id="regions">
+        <header>
+          <div class="eyebrow">03 — Region splits</div>
+          <h2>Dividing the page <a class="anchor" href="#regions">#regions</a></h2>
+          <p class="lede">Six common splits. Each diagram shows the regions; the footer explains when to reach for it and which side holds the primary scan path.</p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4);">
+
+          <div class="region-card">
+            <div class="region-card-head"><span class="name">Single column</span><span class="ratio">12</span></div>
+            <div class="region" style="grid-template-rows: 1fr;">
+              <div class="region-block is-primary">content</div>
+            </div>
+            <div class="region-card-foot"><strong style="color: var(--text-primary); font-weight: 500;">Use when</strong> reading > scanning · prose, docs, walkthroughs. Focus is the body.</div>
+          </div>
+
+          <div class="region-card">
+            <div class="region-card-head"><span class="name">Main + right rail</span><span class="ratio">8 / 4 · 1fr / 320</span></div>
+            <div class="region" style="grid-template-columns: 1fr 0.45fr;">
+              <div class="region-block is-primary">main</div>
+              <div class="region-block is-rail is-sticky">rail</div>
+            </div>
+            <div class="region-card-foot"><strong style="color: var(--text-primary); font-weight: 500;">Use when</strong> primary content drives, secondary supports — TOC, summary, related. F-pattern scan: eye lands on the main first.</div>
+          </div>
+
+          <div class="region-card">
+            <div class="region-card-head"><span class="name">Main + left rail</span><span class="ratio">4 / 8</span></div>
+            <div class="region" style="grid-template-columns: 0.45fr 1fr;">
+              <div class="region-block is-rail">nav</div>
+              <div class="region-block is-primary">main</div>
+            </div>
+            <div class="region-card-foot"><strong style="color: var(--text-primary); font-weight: 500;">Use when</strong> the rail is navigation, not supporting content — settings, docs sections, admin sidebars. Z-pattern.</div>
+          </div>
+
+          <div class="region-card">
+            <div class="region-card-head"><span class="name">Two equal</span><span class="ratio">6 / 6</span></div>
+            <div class="region" style="grid-template-columns: 1fr 1fr;">
+              <div class="region-block is-primary">A</div>
+              <div class="region-block is-primary" style="background: var(--surface);">B</div>
+            </div>
+            <div class="region-card-foot"><strong style="color: var(--text-primary); font-weight: 500;">Use when</strong> two truly equal items — auth split (form vs brand), compare view, side-by-side editor.</div>
+          </div>
+
+          <div class="region-card">
+            <div class="region-card-head"><span class="name">Asymmetric</span><span class="ratio">7 / 5</span></div>
+            <div class="region" style="grid-template-columns: 1fr 0.7fr;">
+              <div class="region-block is-primary">main</div>
+              <div class="region-block">aside</div>
+            </div>
+            <div class="region-card-foot"><strong style="color: var(--text-primary); font-weight: 500;">Use when</strong> hero pages with media on one side. The 7/5 split signals priority without shouting.</div>
+          </div>
+
+          <div class="region-card">
+            <div class="region-card-head"><span class="name">Three column</span><span class="ratio">3 / 6 / 3</span></div>
+            <div class="region" style="grid-template-columns: 0.4fr 1fr 0.4fr;">
+              <div class="region-block is-rail">nav</div>
+              <div class="region-block is-primary">main</div>
+              <div class="region-block is-rail is-sticky">rail</div>
+            </div>
+            <div class="region-card-foot"><strong style="color: var(--text-primary); font-weight: 500;">Use when</strong> dense app shells — nav, work area, properties panel (design tools, IDEs). Rare for web product.</div>
+          </div>
+
+        </div>
+
+        <div class="rules-grid" style="margin-top: var(--space-6);">
+          <div class="rules-row">
+            <div class="rules-name">Sticky regions<span class="sub">when to pin</span></div>
+            <div class="rules-when"><strong>Pin</strong> right rails (summary, TOC, related), checkout summaries, action footers in forms.</div>
+            <div class="rules-avoid"><strong>Don't pin</strong> main content, anything taller than ~70vh, or anything on mobile.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Rail width<span class="sub">320 · sometimes 280</span></div>
+            <div class="rules-when"><strong>Default</strong> 320px (room for a card with padding + content). 280px when the rail is dense / mostly text.</div>
+            <div class="rules-avoid"><strong>Avoid</strong> rails over ~360 — at that point it's a second column, not a rail.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 4. DYNAMIC LAYOUT -->
+      <section class="lb-section" id="dynamic">
+        <header>
+          <div class="eyebrow">04 — Dynamic layout</div>
+          <h2>Auto-fit grids <a class="anchor" href="#dynamic">#dynamic</a></h2>
+          <p class="lede">Cards flow to fit the container. Resize the window — the grid below reshapes itself without a single breakpoint.</p>
+        </header>
+
+        <div class="specimen">
+          <div class="specimen-body" style="padding: var(--space-6);">
+            <div class="autofit" style="--min: 220px;">
+              <div class="autofit-card"><div class="label">Project</div><div class="name">Onboarding v2</div><span class="badge badge--success badge--sm"><span class="badge-dot"></span>Live</span></div>
+              <div class="autofit-card"><div class="label">Project</div><div class="name">Launch plan Q2</div><span class="badge badge--warning badge--sm"><span class="badge-dot"></span>Review</span></div>
+              <div class="autofit-card"><div class="label">Project</div><div class="name">Brand refresh</div><span class="badge badge--neutral badge--sm"><span class="badge-dot"></span>Draft</span></div>
+              <div class="autofit-card"><div class="label">Project</div><div class="name">Pricing A/B</div><span class="badge badge--danger badge--sm"><span class="badge-dot"></span>Failed</span></div>
+              <div class="autofit-card"><div class="label">Project</div><div class="name">Docs site</div><span class="badge badge--info badge--sm"><span class="badge-dot"></span>Planning</span></div>
+            </div>
+          </div>
+          <div class="specimen-caption font-mono">grid-template-columns: repeat(auto-fit, minmax(220px, 1fr))</div>
+        </div>
+
+        <div class="rules-grid" style="margin-top: var(--space-4);">
+          <div class="rules-row">
+            <div class="rules-name">Auto-fit<span class="sub">repeat(auto-fit, minmax(N, 1fr))</span></div>
+            <div class="rules-when"><strong>Use</strong> when items are equivalent and the count is unknown — card grids, gallery, search results.</div>
+            <div class="rules-avoid"><strong>Avoid</strong> when item count is fixed and meaningful (a 4-up KPI row should stay 4-up, then break to 2).</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Fixed columns<span class="sub">repeat(N, 1fr) + media queries</span></div>
+            <div class="rules-when"><strong>Use</strong> for headline KPI rows, hero feature grids — when "4 across" is part of the story.</div>
+            <div class="rules-avoid"><strong>Avoid</strong> long lists of cards. Auto-fit handles unknown counts; fixed columns don't.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Container queries<span class="sub">when available</span></div>
+            <div class="rules-when"><strong>Use</strong> for components reused in multiple regions (card that renders differently in a rail vs main).</div>
+            <div class="rules-avoid"><strong>Avoid</strong> at the page-shell level — viewport queries are still the right tool there.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 5. COLUMN-SPLIT RULES -->
+      <section class="lb-section" id="rules">
+        <header>
+          <div class="eyebrow">05 — Column-split rules</div>
+          <h2>1 vs 2 vs 3 <a class="anchor" href="#rules">#rules</a></h2>
+          <p class="lede">When to split a page, when not to, and which side gets which job.</p>
+        </header>
+
+        <div class="rules-grid">
+          <div class="rules-row">
+            <div class="rules-name">1 column<span class="sub">single track</span></div>
+            <div class="rules-when"><strong>Use</strong> for prose, mobile, modal bodies, anything that reads top-to-bottom without comparison.</div>
+            <div class="rules-avoid"><strong>Cap line length</strong> at 70–90 characters (~720px max-width). Past that, the eye loses the next line.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">2 columns<span class="sub">main + rail OR equal</span></div>
+            <div class="rules-when"><strong>Use</strong> when one piece supports the other (rail) OR when two items deserve equal weight (split). Most product pages.</div>
+            <div class="rules-avoid"><strong>Don't</strong> split body copy into 2 columns. That's print, not screen — readers can't tell which column continues where.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">3 columns<span class="sub">nav · main · rail</span></div>
+            <div class="rules-when"><strong>Use</strong> for app shells where all three are persistent surfaces (IDE, design tool, email client).</div>
+            <div class="rules-avoid"><strong>Avoid</strong> for public pages — three persistent columns leave no breathing room on a laptop.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Left vs right rail<span class="sub">scan order matters</span></div>
+            <div class="rules-when"><strong>Left rail</strong> for navigation. <strong>Right rail</strong> for supporting content (summary, related, TOC).</div>
+            <div class="rules-avoid"><strong>Never</strong> put navigation on the right or summaries on the left — readers learn left = where I am, right = what's nearby.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Reading width<span class="sub">~65ch</span></div>
+            <div class="rules-when"><strong>Body copy</strong> at 60–75 characters per line. Long-form caps at <code class="token-pill">max-width: 65ch</code>.</div>
+            <div class="rules-avoid"><strong>Don't</strong> stretch text the full width of a wide container. Cap it; let the container be wider than the text.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 6. RESPONSIVE REFLOW -->
+      <section class="lb-section" id="reflow">
+        <header>
+          <div class="eyebrow">06 — Responsive reflow</div>
+          <h2>How splits collapse <a class="anchor" href="#reflow">#reflow</a></h2>
+          <p class="lede">For each region split, what happens at each breakpoint. Mobile-first — start from the right, build up to the left.</p>
+        </header>
+
+        <div class="lb-subsection">
+          <h3>Main + right rail across breakpoints</h3>
+          <div class="reflow">
+            <div class="reflow-step">
+              <div class="reflow-step-head"><span>≥ lg (1024)</span><span>desktop</span></div>
+              <div class="reflow-step-body" style="grid-template-columns: 1fr 0.45fr;">
+                <div class="region-block is-primary" style="min-height: 100px;">main</div>
+                <div class="region-block is-rail is-sticky" style="min-height: 100px;">rail</div>
+              </div>
+            </div>
+            <div class="reflow-step">
+              <div class="reflow-step-head"><span>md – lg</span><span>tablet</span></div>
+              <div class="reflow-step-body" style="grid-template-columns: 1fr 0.5fr;">
+                <div class="region-block is-primary" style="min-height: 100px;">main</div>
+                <div class="region-block is-rail" style="min-height: 100px;">rail (un-sticky)</div>
+              </div>
+            </div>
+            <div class="reflow-step">
+              <div class="reflow-step-head"><span>sm – md</span><span>large phone</span></div>
+              <div class="reflow-step-body">
+                <div class="region-block is-primary" style="min-height: 80px;">main</div>
+                <div class="region-block is-rail" style="min-height: 60px;">rail (below)</div>
+              </div>
+            </div>
+            <div class="reflow-step">
+              <div class="reflow-step-head"><span>&lt; sm</span><span>phone</span></div>
+              <div class="reflow-step-body">
+                <div class="region-block is-primary" style="min-height: 80px;">main</div>
+                <div class="region-block is-rail" style="min-height: 60px;">rail (collapsed)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Three-column app shell</h3>
+          <div class="reflow">
+            <div class="reflow-step">
+              <div class="reflow-step-head"><span>≥ lg</span><span>full shell</span></div>
+              <div class="reflow-step-body" style="grid-template-columns: 0.4fr 1fr 0.4fr;">
+                <div class="region-block is-rail" style="min-height: 100px;">nav</div>
+                <div class="region-block is-primary" style="min-height: 100px;">main</div>
+                <div class="region-block is-rail" style="min-height: 100px;">rail</div>
+              </div>
+            </div>
+            <div class="reflow-step">
+              <div class="reflow-step-head"><span>md – lg</span><span>2-col</span></div>
+              <div class="reflow-step-body" style="grid-template-columns: 60px 1fr;">
+                <div class="region-block is-rail" style="min-height: 100px;">nav (icon-rail)</div>
+                <div class="region-block is-primary" style="min-height: 100px;">main · rail tabs in</div>
+              </div>
+            </div>
+            <div class="reflow-step">
+              <div class="reflow-step-head"><span>sm – md</span><span>drawer</span></div>
+              <div class="reflow-step-body">
+                <div class="region-block is-primary" style="min-height: 100px;">main · nav drawer</div>
+              </div>
+            </div>
+            <div class="reflow-step">
+              <div class="reflow-step-head"><span>&lt; sm</span><span>single</span></div>
+              <div class="reflow-step-body">
+                <div class="region-block is-primary" style="min-height: 100px;">main · everything modal</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-grid" style="margin-top: var(--space-4);">
+          <div class="rules-row">
+            <div class="rules-name">Mobile-first<span class="sub">@media (min-width: ...)</span></div>
+            <div class="rules-when"><strong>Default</strong> styles are mobile. Add layers as the viewport grows — never the other way around.</div>
+            <div class="rules-avoid"><strong>Avoid</strong> max-width media queries except for true overrides (e.g. disabling sticky below md).</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Tables on mobile<span class="sub">scroll or stack</span></div>
+            <div class="rules-when"><strong>Use</strong> horizontal scroll for &gt; 4-column tables. <strong>Use</strong> card-per-row for ≤ 4 columns of related fields.</div>
+            <div class="rules-avoid"><strong>Don't</strong> hide columns silently. If a column matters, surface it; if it doesn't, drop it everywhere.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Sticky on mobile<span class="sub">usually drop</span></div>
+            <div class="rules-when"><strong>Drop</strong> most sticky behavior on phones — sticky elements eat thumb-zone real estate.</div>
+            <div class="rules-avoid"><strong>Keep</strong> only the primary action footer (checkout, form save) sticky on mobile.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 7. DENSITY -->
+      <section class="lb-section" id="density">
+        <header>
+          <div class="eyebrow">07 — Density &amp; rhythm</div>
+          <h2>Comfortable vs compact <a class="anchor" href="#density">#density</a></h2>
+          <p class="lede">Same components, two densities. Pick by context: marketing breathes; admin packs in.</p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+
+          <div>
+            <div style="display:flex; align-items:center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <div class="t-overline text-muted">Comfortable</div>
+              <span class="token-pill">marketing · onboarding · forms</span>
+            </div>
+            <div class="density-mock" style="--pad: var(--space-6); --gap: var(--space-4); --row-pad: var(--space-3) 0; --row-fs: var(--text-body-size);">
+              <div class="row"><div class="title">Onboarding v2</div><div class="meta">Marketing</div><span class="badge badge--success badge--sm"><span class="badge-dot"></span>Live</span><div></div></div>
+              <div class="row"><div class="title">Launch plan Q2</div><div class="meta">Engineering</div><span class="badge badge--warning badge--sm"><span class="badge-dot"></span>Review</span><div></div></div>
+              <div class="row"><div class="title">Brand refresh</div><div class="meta">Design</div><span class="badge badge--neutral badge--sm"><span class="badge-dot"></span>Draft</span><div></div></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex; align-items:center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <div class="t-overline text-muted">Compact</div>
+              <span class="token-pill">admin · data tables · IDEs</span>
+            </div>
+            <div class="density-mock" style="--pad: var(--space-3); --gap: var(--space-1); --row-pad: var(--space-1) 0; --row-fs: var(--text-body-sm-size);">
+              <div class="row"><div class="title">Onboarding v2</div><div class="meta">Marketing</div><span class="badge badge--success badge--sm"><span class="badge-dot"></span>Live</span><div></div></div>
+              <div class="row"><div class="title">Launch plan Q2</div><div class="meta">Engineering</div><span class="badge badge--warning badge--sm"><span class="badge-dot"></span>Review</span><div></div></div>
+              <div class="row"><div class="title">Brand refresh</div><div class="meta">Design</div><span class="badge badge--neutral badge--sm"><span class="badge-dot"></span>Draft</span><div></div></div>
+              <div class="row"><div class="title">Pricing A/B</div><div class="meta">Growth</div><span class="badge badge--danger badge--sm"><span class="badge-dot"></span>Failed</span><div></div></div>
+              <div class="row"><div class="title">Docs site</div><div class="meta">Operations</div><span class="badge badge--info badge--sm"><span class="badge-dot"></span>Plan</span><div></div></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="rules-grid" style="margin-top: var(--space-4);">
+          <div class="rules-row">
+            <div class="rules-name">Control density<span class="sub">--size-* heights</span></div>
+            <div class="rules-when"><strong>Comfortable</strong> uses --size-md (36) controls. <strong>Compact</strong> uses --size-sm (28) for tables, lists, dense sidebars.</div>
+            <div class="rules-avoid"><strong>Never</strong> compact on touch — md auto-promotes to 44px on coarse pointers; preserve that.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Vertical rhythm<span class="sub">one rhythm per surface</span></div>
+            <div class="rules-when"><strong>Pick</strong> the rhythm for the surface and hold it. Mixing comfortable cards with compact tables on the same page looks accidental.</div>
+            <div class="rules-avoid"><strong>Avoid</strong> letting individual components decide their own density. The surface decides.</div>
+          </div>
+          <div class="rules-row">
+            <div class="rules-name">Density by audience<span class="sub">map to context</span></div>
+            <div class="rules-when"><strong>Marketing &amp; consumer</strong> → airy. <strong>Product UI</strong> → comfortable. <strong>Power tools</strong> → compact with a "comfortable mode" toggle.</div>
+            <div class="rules-avoid"><strong>Don't</strong> ship compact as the default — make the user opt in.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- 8. ONE PAGE, THREE DIRECTIONS -->
+      <section class="lb-section" id="three-directions">
+        <header>
+          <div class="eyebrow">08 — Worked example</div>
+          <h2>One page, three directions <a class="anchor" href="#three-directions">#three-directions</a></h2>
+          <p class="lede">Same content set — Onboarding v2 detail: title + status + KPIs + body + activity. Three layouts. Same atoms, same tokens; only the region split + emphasis + rhythm change.</p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-4);">
+
+          <!-- A — hero + tabs + right rail -->
+          <div class="we-mock">
+            <div class="we-mock-head"><span>A · Hero + tabs + rail</span><span class="ratio" style="font-family: var(--font-mono);">8 / 4</span></div>
+            <div class="we-mock-body" style="display: grid; grid-template-rows: auto auto 1fr; gap: var(--space-3);">
+              <!-- Hero band -->
+              <div style="background: var(--accent-subtle); border-radius: var(--radius-md); padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-1);">
+                <div style="font-family: var(--font-mono); font-size: var(--text-overline-size); color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em;">Project</div>
+                <div style="font-size: var(--text-h3-size); line-height: var(--text-h3-lh); font-weight: var(--text-h3-weight); letter-spacing: var(--text-h3-track); font-family: var(--font-display);">Onboarding v2</div>
+                <div style="display:flex; gap: var(--space-2); align-items: center;"><span class="badge badge--success badge--sm"><span class="badge-dot"></span>Live</span><span style="font-size: var(--text-caption-size); color: var(--text-muted);">Marketing · 2h ago</span></div>
+              </div>
+              <!-- Tabs -->
+              <div class="tabs--underline" style="padding: 0;"><button class="tab is-active">Overview</button><button class="tab">Activity</button><button class="tab">Settings</button></div>
+              <!-- Body + rail -->
+              <div style="display: grid; grid-template-columns: 1fr 0.5fr; gap: var(--space-3); min-height: 0;">
+                <div style="display:flex; flex-direction:column; gap: var(--space-2);">
+                  <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);">
+                    <div class="we-card"><div class="meta">Views</div><div class="name">8,432</div></div>
+                    <div class="we-card"><div class="meta">Done</div><div class="name">62%</div></div>
+                  </div>
+                  <div class="we-card" style="flex: 1;"><div class="meta">Overview</div><div style="font-size: var(--text-caption-size); color: var(--text-secondary); line-height: 1.5;">A redesigned first-run flow…</div></div>
+                </div>
+                <div class="we-card"><div class="meta">Related</div><div style="font-size: var(--text-caption-size); color: var(--text-secondary); line-height: 1.5;">Email copy<br/>Launch plan</div></div>
+              </div>
+            </div>
+            <div class="we-mock-foot"><strong style="color: var(--text-primary); font-weight: 500;">Feels like</strong> a campaign page. <strong style="color: var(--text-primary); font-weight: 500;">Use when</strong> the project IS the brand moment.</div>
+          </div>
+
+          <!-- B — sticky-summary split -->
+          <div class="we-mock">
+            <div class="we-mock-head"><span>B · Sticky summary split</span><span class="ratio" style="font-family: var(--font-mono);">7 / 5 · rail sticky</span></div>
+            <div class="we-mock-body" style="display: grid; grid-template-columns: 1fr 0.6fr; gap: var(--space-3); align-items: start;">
+              <!-- Main -->
+              <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                <div>
+                  <div style="font-family: var(--font-mono); font-size: var(--text-overline-size); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">Projects · Onboarding v2</div>
+                  <div style="font-size: var(--text-h3-size); line-height: var(--text-h3-lh); font-weight: var(--text-h3-weight); letter-spacing: var(--text-h3-track); font-family: var(--font-display); margin-top: 4px;">Overview</div>
+                </div>
+                <div class="we-card"><div class="meta">Description</div><div style="font-size: var(--text-caption-size); color: var(--text-secondary); line-height: 1.5;">A redesigned first-run experience…</div></div>
+                <div class="we-card"><div class="meta">Activity</div><div style="font-size: var(--text-caption-size); color: var(--text-secondary); line-height: 1.5;">Andrea published<br/>Robin commented</div></div>
+                <div class="we-card"><div class="meta">Reviewers</div><div class="name">3 assigned</div></div>
+              </div>
+              <!-- Sticky rail -->
+              <div class="we-card" style="position: sticky; top: 0; background: var(--surface); border-color: var(--border-strong);">
+                <div class="meta">Summary</div>
+                <div class="name" style="margin-top: 6px;">Onboarding v2</div>
+                <div style="display:flex; flex-direction: column; gap: 4px; margin-top: 8px; font-size: var(--text-caption-size);">
+                  <div style="display:flex; justify-content: space-between;"><span style="color: var(--text-muted);">Status</span><span class="badge badge--success badge--sm"><span class="badge-dot"></span>Live</span></div>
+                  <div style="display:flex; justify-content: space-between;"><span style="color: var(--text-muted);">Owner</span><span>Andrea</span></div>
+                  <div style="display:flex; justify-content: space-between;"><span style="color: var(--text-muted);">Updated</span><span>2h ago</span></div>
+                </div>
+                <button class="btn btn--primary btn--sm" style="margin-top: 10px; width: 100%;">Publish</button>
+              </div>
+            </div>
+            <div class="we-mock-foot"><strong style="color: var(--text-primary); font-weight: 500;">Feels like</strong> a working file. <strong style="color: var(--text-primary); font-weight: 500;">Use when</strong> users return often and need quick reference.</div>
+          </div>
+
+          <!-- C — single column stacked -->
+          <div class="we-mock">
+            <div class="we-mock-head"><span>C · Single column stacked</span><span class="ratio" style="font-family: var(--font-mono);">12 · anchors</span></div>
+            <div class="we-mock-body" style="display: grid; grid-template-rows: auto auto 1fr; gap: var(--space-4); max-width: 480px; margin: 0 auto;">
+              <div>
+                <div style="font-family: var(--font-mono); font-size: var(--text-overline-size); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">Project</div>
+                <div style="font-size: var(--text-h3-size); line-height: var(--text-h3-lh); font-weight: var(--text-h3-weight); letter-spacing: var(--text-h3-track); font-family: var(--font-display); margin-top: 4px;">Onboarding v2</div>
+                <div style="font-size: var(--text-caption-size); color: var(--text-muted); margin-top: 4px;">Marketing · Andrea Mendez</div>
+              </div>
+              <div style="display:flex; gap: var(--space-2); flex-wrap: wrap;">
+                <a href="#" style="font-size: var(--text-caption-size); color: var(--accent); text-decoration: underline; text-underline-offset: 3px;">Overview</a>
+                <span style="color: var(--text-muted);">·</span>
+                <a href="#" style="font-size: var(--text-caption-size); color: var(--text-secondary);">Metrics</a>
+                <span style="color: var(--text-muted);">·</span>
+                <a href="#" style="font-size: var(--text-caption-size); color: var(--text-secondary);">Activity</a>
+                <span style="color: var(--text-muted);">·</span>
+                <a href="#" style="font-size: var(--text-caption-size); color: var(--text-secondary);">Reviewers</a>
+              </div>
+              <div style="display:flex; flex-direction:column; gap: var(--space-4);">
+                <div class="we-card"><div class="meta">Overview</div><div style="font-size: var(--text-caption-size); color: var(--text-secondary); line-height: 1.5;">A redesigned first-run experience for new workspaces…</div></div>
+                <div class="we-card"><div class="meta">Metrics</div><div class="name">8,432 views · 62% completion</div></div>
+              </div>
+            </div>
+            <div class="we-mock-foot"><strong style="color: var(--text-primary); font-weight: 500;">Feels like</strong> a long-form doc. <strong style="color: var(--text-primary); font-weight: 500;">Use when</strong> content reads top-to-bottom; mobile-equivalent already.</div>
+          </div>
+
+        </div>
+
+        <div class="specimen" style="margin-top: var(--space-6);">
+          <div class="specimen-body" style="padding: var(--space-5);">
+            <div style="display: flex; gap: var(--space-3); align-items: flex-start;">
+              <div class="state-glyph is-accent" style="margin: 0; flex-shrink: 0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div>
+                <h3 style="margin: 0; font-size: var(--text-h4-size); line-height: var(--text-h4-lh); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track); font-family: var(--font-display);">How to generate three directions</h3>
+                <p style="margin: 6px 0 0; font-size: var(--text-body-size); color: var(--text-secondary); line-height: 1.6; max-width: 720px;">
+                  Keep the components identical. Keep the tokens identical. Vary <strong style="color: var(--text-primary); font-weight: 500;">three things only</strong>: the primary/secondary <em>emphasis</em> (which content leads), the <em>region split</em> (hero + tabs vs. main + rail vs. single column), and the <em>section rhythm</em> (comfortable vs. airy vs. tight). Never vary the design language. This is the sanctioned way to make pages feel distinct without breaking consistency.
+                </p>
+                <div style="display: flex; gap: var(--space-2); margin-top: var(--space-3); flex-wrap: wrap;">
+                  <span class="token-pill" style="background: var(--accent-subtle); color: var(--accent); border-color: color-mix(in oklch, var(--accent) 30%, transparent);">vary · emphasis</span>
+                  <span class="token-pill" style="background: var(--accent-subtle); color: var(--accent); border-color: color-mix(in oklch, var(--accent) 30%, transparent);">vary · region split</span>
+                  <span class="token-pill" style="background: var(--accent-subtle); color: var(--accent); border-color: color-mix(in oklch, var(--accent) 30%, transparent);">vary · section rhythm</span>
+                  <span class="token-pill">keep · components</span>
+                  <span class="token-pill">keep · tokens</span>
+                  <span class="token-pill">keep · type scale</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <section style="padding-top: var(--space-8); border-top: 1px solid var(--border);">
+        <div style="display: flex; align-items: flex-start; gap: var(--space-3);">
+          <div style="width: 32px; height: 32px; border-radius: var(--radius-md); background: var(--accent-subtle); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h4 class="t-h4">Layout chapter complete.</h4>
+            <p class="t-body text-secondary" style="margin-top: 4px; max-width: 540px;">The grammar that sits between atoms and recipes. Compose any page from this scaffolding without breaking the system.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script>
+</body>
+</html>

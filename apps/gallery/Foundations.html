@@ -1,0 +1,1230 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — Foundations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=Archivo:wght@500;600;700;800&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+            mono: ['JetBrains Mono', 'ui-monospace'],
+          },
+        }
+      }
+    };
+  </script>
+  <style>
+    /* Page-local token utilities — keep narrow; everything else is in tokens.css */
+    .bg-bg       { background-color: var(--bg); }
+    .bg-surface  { background-color: var(--surface); }
+    .bg-sunken   { background-color: var(--surface-sunken); }
+    .bg-raised   { background-color: var(--surface-raised); }
+    .text-primary   { color: var(--text-primary); }
+    .text-secondary { color: var(--text-secondary); }
+    .text-muted     { color: var(--text-muted); }
+    .border-default      { border-color: var(--border); }
+    .border-strong       { border-color: var(--border-strong); }
+    .shadow-token-sm { box-shadow: var(--shadow-sm); }
+    .shadow-token-md { box-shadow: var(--shadow-md); }
+    .shadow-token-lg { box-shadow: var(--shadow-lg); }
+    .shadow-token-xl { box-shadow: var(--shadow-xl); }
+
+    /* Tile pattern for "transparent" / surface-sunken demos. */
+    .tile-grid {
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 8px 8px;
+      background-position: -0.5px -0.5px;
+    }
+
+    /* Subtle nav active state. */
+    .nav-link {
+      display: flex; align-items: center;
+      padding: 6px 10px;
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: var(--text-body-sm-size);
+      transition: background-color var(--duration-fast) var(--ease-standard),
+                  color var(--duration-fast) var(--ease-standard);
+    }
+    .nav-link:hover { background-color: var(--surface-sunken); color: var(--text-primary); }
+    .nav-link.is-active { background-color: var(--accent-subtle); color: var(--accent); font-weight: 500; }
+
+    /* Mono code-y inline pill. */
+    .token-pill {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      padding: 2px 6px;
+      background-color: var(--surface-sunken);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    /* Swatch base. */
+    .swatch {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      background: var(--surface);
+    }
+    .swatch-color { aspect-ratio: 4/3; }
+    .swatch-meta {
+      padding: 8px 10px 9px;
+      border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 2px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .swatch-meta .name { color: var(--text-primary); font-weight: 500; }
+    .swatch-meta .hex  { color: var(--text-muted); text-transform: lowercase; }
+
+    /* Section heading anchor. */
+    .anchor-link {
+      opacity: 0; transition: opacity var(--duration-fast) var(--ease-standard);
+      color: var(--text-muted);
+    }
+    h2:hover .anchor-link, h3:hover .anchor-link { opacity: 1; }
+
+    /* Focus rings on interactive bits. */
+    :focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Section dividers. */
+    .rule { border-color: var(--border); }
+
+    /* Motion demo. */
+    .motion-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px;
+      border-radius: var(--radius-full);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      user-select: none;
+    }
+    .motion-dot {
+      width: 10px; height: 10px;
+      border-radius: var(--radius-full);
+      background: var(--accent);
+      transform: translateX(0);
+    }
+    .motion-track {
+      position: relative;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: var(--surface-sunken);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .motion-ball {
+      position: absolute;
+      top: 50%; left: 4px;
+      width: 24px; height: 24px;
+      transform: translate(0, -50%);
+      border-radius: var(--radius-full);
+      background: var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+    .motion-row.playing .motion-ball {
+      animation-name: motion-run;
+      animation-fill-mode: forwards;
+      animation-iteration-count: 1;
+    }
+    @keyframes motion-run {
+      0%   { left: 4px; }
+      50%  { left: calc(100% - 28px); }
+      100% { left: 4px; }
+    }
+
+    /* Reduce noisy outline on the body when not keyboard. */
+    body:not(:focus-visible) :focus { outline: none; }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <!-- ===================== TOP BAR ===================== -->
+  <header class="sticky top-0 z-40 backdrop-blur-sm bg-bg/85 border-b border-default" style="z-index: var(--z-sticky);">
+    <div class="max-w-[1400px] mx-auto flex items-center justify-between px-6 lg:px-10 h-14">
+      <div class="flex items-center gap-3">
+        <div class="w-6 h-6 rounded-md flex items-center justify-center" style="background: var(--text-primary);">
+          <div class="w-2 h-2 rounded-sm" style="background: var(--bg);"></div>
+        </div>
+        <span class="t-h4">Lookbook</span>
+        <span class="token-pill ml-2">foundations · v0.1</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <nav class="lb-page-nav" aria-label="Chapters"></nav>
+        <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+          <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            Light
+          </button>
+          <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            Dark
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 grid lg:grid-cols-[200px_1fr] gap-10 pt-10 pb-32">
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <nav class="hidden lg:block sticky top-24 self-start" aria-label="Sections">
+      <div class="t-overline text-muted mb-3 pl-2.5">On this page</div>
+      <ul class="space-y-0.5">
+        <li><a class="nav-link" href="#overview">Overview</a></li>
+        <li><a class="nav-link" href="#color">Color</a></li>
+        <li><a class="nav-link" href="#spacing">Spacing</a></li>
+        <li><a class="nav-link" href="#radius">Radius</a></li>
+        <li><a class="nav-link" href="#elevation">Elevation</a></li>
+        <li><a class="nav-link" href="#typography">Typography</a></li>
+        <li><a class="nav-link" href="#pairings">Font pairings</a></li>
+        <li><a class="nav-link" href="#breakpoints">Breakpoints</a></li>
+        <li><a class="nav-link" href="#zindex">Z-index</a></li>
+        <li><a class="nav-link" href="#motion">Motion</a></li>
+      </ul>
+      <div class="mt-8 p-3 rounded-lg border border-default bg-sunken">
+        <div class="t-overline text-muted mb-1.5">Source</div>
+        <div class="font-mono text-[11.5px] text-secondary leading-relaxed">
+          tokens.css<br/>
+          + Tailwind utilities<br/>
+          + light / dark themes
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===================== MAIN ===================== -->
+    <main class="min-w-0 space-y-24">
+
+      <!-- ----- OVERVIEW ----- -->
+      <section id="overview" class="space-y-6">
+        <div>
+          <div class="t-overline text-muted mb-3">Lookbook · Chapter 1</div>
+          <h1 class="t-display tracking-tight max-w-3xl">Foundations.</h1>
+          <p class="t-body-lg text-secondary max-w-2xl mt-5">
+            The token layer the rest of the system stands on. Every color, spacing
+            value, radius, shadow, type size, breakpoint, layer, and easing curve
+            you'll use lives here and nowhere else.
+          </p>
+        </div>
+        <dl class="grid grid-cols-2 md:grid-cols-4 gap-px bg-default border border-default rounded-lg overflow-hidden" style="background-color: var(--border);">
+          <div class="bg-surface p-5">
+            <dt class="t-caption text-muted">Format</dt>
+            <dd class="t-h4 mt-1">CSS custom props</dd>
+          </div>
+          <div class="bg-surface p-5">
+            <dt class="t-caption text-muted">Themes</dt>
+            <dd class="t-h4 mt-1">Light + Dark</dd>
+          </div>
+          <div class="bg-surface p-5">
+            <dt class="t-caption text-muted">Base grid</dt>
+            <dd class="t-h4 mt-1">4 px</dd>
+          </div>
+          <div class="bg-surface p-5">
+            <dt class="t-caption text-muted">Type</dt>
+            <dd class="t-h4 mt-1">Inter / JetBrains</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- ----- RE-SKINNING NOTE ----- -->
+      <section id="reskinning" class="rounded-xl border border-default overflow-hidden">
+        <div class="grid md:grid-cols-[1fr_1.4fr]">
+          <div class="p-8 lg:p-10 bg-surface flex flex-col gap-4">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-md flex items-center justify-center border border-default" style="background: var(--accent-subtle);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+              </div>
+              <div class="t-overline text-muted">Re-skinning Lookbook</div>
+            </div>
+            <h3 class="t-h2 tracking-tight">A contract, not a skin.</h3>
+            <p class="t-body text-secondary">
+              Token <strong class="text-primary font-medium">names</strong> and semantic roles are the constant.
+              Token <strong class="text-primary font-medium">values</strong> — accent hue, neutral
+              temperature, type family, radius personality, shadow softness, density — are
+              meant to be swapped per project. Components reference
+              <code class="token-pill">var(--…)</code> only; never a literal hex, px, or
+              radius. A new project keeps the structure, states, and rules — and gets a
+              distinct look from fresh values, sharing the same DNA and quality bar.
+            </p>
+          </div>
+
+          <!-- Live skin previews — same markup, three skins. -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-px" style="background-color: var(--border);" id="skin-preview-grid">
+
+            <!-- Skin 1: Lookbook (default values) -->
+            <div class="p-5 flex flex-col gap-3 bg-surface">
+              <div class="flex items-center justify-between">
+                <span class="t-overline text-muted">Lookbook</span>
+                <span class="w-3 h-3 rounded-full" style="background: var(--accent);"></span>
+              </div>
+              <div class="rounded-md border border-default p-3 flex flex-col gap-2" style="background: var(--bg);">
+                <div class="text-[13px] font-medium text-primary">Saved draft</div>
+                <div class="text-[11.5px] text-secondary">2 minutes ago</div>
+                <div class="flex items-center gap-2 mt-1">
+                  <button class="text-[11px] font-medium px-2.5 py-1 rounded-sm text-on-accent" style="background: var(--accent); color: var(--text-on-accent); border-radius: var(--radius-sm);">Publish</button>
+                  <span class="text-[10.5px] px-1.5 py-0.5 rounded-sm font-mono" style="background: var(--success-bg); color: var(--success-fg); border-radius: var(--radius-sm);">ready</span>
+                </div>
+              </div>
+              <div class="font-mono text-[10.5px] text-muted">--accent · oklch(.49 .18 252)</div>
+            </div>
+
+            <!-- Skin 2: Citrine — warm amber, squarer -->
+            <div class="p-5 flex flex-col gap-3 bg-surface" style="
+              --accent: oklch(0.640 0.165 65);
+              --accent-hover: oklch(0.580 0.170 60);
+              --accent-subtle: oklch(0.955 0.045 75);
+              --radius-sm: 2px;
+              --radius-md: 4px;
+            ">
+              <div class="flex items-center justify-between">
+                <span class="t-overline text-muted">Citrine</span>
+                <span class="w-3 h-3 rounded-full" style="background: var(--accent);"></span>
+              </div>
+              <div class="border border-default p-3 flex flex-col gap-2" style="background: var(--bg); border-radius: var(--radius-md);">
+                <div class="text-[13px] font-medium text-primary">Saved draft</div>
+                <div class="text-[11.5px] text-secondary">2 minutes ago</div>
+                <div class="flex items-center gap-2 mt-1">
+                  <button class="text-[11px] font-medium px-2.5 py-1" style="background: var(--accent); color: var(--text-on-accent); border-radius: var(--radius-sm);">Publish</button>
+                  <span class="text-[10.5px] px-1.5 py-0.5 font-mono" style="background: var(--success-bg); color: var(--success-fg); border-radius: var(--radius-sm);">ready</span>
+                </div>
+              </div>
+              <div class="font-mono text-[10.5px] text-muted">--accent · oklch(.64 .17 65)</div>
+            </div>
+
+            <!-- Skin 3: Verdant — green, generous radius -->
+            <div class="p-5 flex flex-col gap-3 bg-surface" style="
+              --accent: oklch(0.500 0.130 155);
+              --accent-hover: oklch(0.430 0.135 155);
+              --accent-subtle: oklch(0.945 0.040 155);
+              --radius-sm: 6px;
+              --radius-md: 14px;
+            ">
+              <div class="flex items-center justify-between">
+                <span class="t-overline text-muted">Verdant</span>
+                <span class="w-3 h-3 rounded-full" style="background: var(--accent);"></span>
+              </div>
+              <div class="border border-default p-3 flex flex-col gap-2" style="background: var(--bg); border-radius: var(--radius-md);">
+                <div class="text-[13px] font-medium text-primary">Saved draft</div>
+                <div class="text-[11.5px] text-secondary">2 minutes ago</div>
+                <div class="flex items-center gap-2 mt-1">
+                  <button class="text-[11px] font-medium px-2.5 py-1" style="background: var(--accent); color: var(--text-on-accent); border-radius: var(--radius-sm);">Publish</button>
+                  <span class="text-[10.5px] px-1.5 py-0.5 font-mono" style="background: var(--success-bg); color: var(--success-fg); border-radius: var(--radius-sm);">ready</span>
+                </div>
+              </div>
+              <div class="font-mono text-[10.5px] text-muted">--accent · oklch(.50 .13 155)</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ----- COLOR ----- -->
+      <section id="color" class="space-y-10">
+        <header class="space-y-3">
+          <div class="t-overline text-muted">01 — Color</div>
+          <h2 class="t-h1 flex items-baseline gap-3 group">Color
+            <a href="#color" class="anchor-link t-body-sm font-mono">#color</a>
+          </h2>
+          <p class="t-body-lg text-secondary max-w-2xl">
+            Two ramps, one accent. Semantic roles are wired through these ramps
+            so a single token change cascades. Status colors carry both a subtle
+            background and a strong foreground variant.
+          </p>
+        </header>
+
+        <!-- Gray ramp -->
+        <div class="space-y-4">
+          <h3 class="t-h4 flex items-baseline gap-2 group">Neutral gray ramp
+            <span class="token-pill">--color-gray-*</span>
+          </h3>
+          <div class="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-11 gap-2" data-ramp="gray">
+            <!-- swatches injected -->
+          </div>
+        </div>
+
+        <!-- Accent ramp -->
+        <div class="space-y-4">
+          <h3 class="t-h4 flex items-baseline gap-2 group">Accent ramp
+            <span class="token-pill">--color-accent-*</span>
+          </h3>
+          <div class="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-11 gap-2" data-ramp="accent">
+            <!-- swatches injected -->
+          </div>
+        </div>
+
+        <!-- Semantic roles, light + dark side by side -->
+        <div class="space-y-4">
+          <h3 class="t-h4 flex items-baseline gap-2 group">Semantic roles
+            <span class="token-pill">light + dark</span>
+          </h3>
+          <div class="rounded-xl border border-default overflow-hidden">
+            <div class="grid grid-cols-[1.4fr_1fr_1fr] text-[11.5px] font-mono text-muted bg-sunken">
+              <div class="px-4 py-2.5">Token</div>
+              <div class="px-4 py-2.5 border-l border-default">Light</div>
+              <div class="px-4 py-2.5 border-l border-default">Dark</div>
+            </div>
+            <div id="semantic-rows"></div>
+          </div>
+        </div>
+
+        <!-- Status colors -->
+        <div class="space-y-4">
+          <h3 class="t-h4 flex items-baseline gap-2 group">Status
+            <span class="token-pill">success / warning / danger / info</span>
+          </h3>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" id="status-grid"></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ----- SPACING ----- -->
+      <section id="spacing" class="space-y-8">
+        <header class="space-y-3">
+          <div class="t-overline text-muted">02 — Spacing</div>
+          <h2 class="t-h1 flex items-baseline gap-3 group">Spacing
+            <a href="#spacing" class="anchor-link t-body-sm font-mono">#spacing</a>
+          </h2>
+          <p class="t-body-lg text-secondary max-w-2xl">
+            4px base. Step from 0 → 96px in calibrated increments. Use generously
+            — most things want more air than you think.
+          </p>
+        </header>
+        <div class="rounded-xl border border-default bg-surface overflow-hidden">
+          <div id="spacing-ruler" class="divide-y" style="--tw-divide-opacity: 1; border-color: var(--border);"></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ----- RADIUS ----- -->
+      <section id="radius" class="space-y-8">
+        <header class="space-y-3">
+          <div class="t-overline text-muted">03 — Radius</div>
+          <h2 class="t-h1 flex items-baseline gap-3 group">Radius
+            <a href="#radius" class="anchor-link t-body-sm font-mono">#radius</a>
+          </h2>
+          <p class="t-body-lg text-secondary max-w-2xl">
+            Five steps. Match curvature to scale: sm for chips and inputs, md for
+            cards, lg for sheets, xl for hero containers, full for pills + avatars.
+          </p>
+        </header>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4" id="radius-grid"></div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ----- ELEVATION ----- -->
+      <section id="elevation" class="space-y-8">
+        <header class="space-y-3">
+          <div class="t-overline text-muted">04 — Elevation</div>
+          <h2 class="t-h1 flex items-baseline gap-3 group">Elevation
+            <a href="#elevation" class="anchor-link t-body-sm font-mono">#elevation</a>
+          </h2>
+          <p class="t-body-lg text-secondary max-w-2xl">
+            Four steps. Restrained — shadows lift, they don't shout. Dark theme
+            shadows are stronger to do real work against dark surfaces.
+          </p>
+        </header>
+        <div class="rounded-xl border border-default bg-sunken p-8">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-6" id="elevation-grid"></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ----- TYPOGRAPHY ----- -->
+      <section id="typography" class="space-y-8">
+        <header class="space-y-3">
+          <div class="t-overline text-muted">05 — Typography</div>
+          <h2 class="t-h1 flex items-baseline gap-3 group">Typography
+            <a href="#typography" class="anchor-link t-body-sm font-mono">#typography</a>
+          </h2>
+          <p class="t-body-lg text-secondary max-w-2xl">
+            Inter for UI, JetBrains Mono for code and tokens. Ten roles from
+            <em>display</em> down to <em>overline</em> — each with size, weight,
+            line-height, tracking.
+          </p>
+        </header>
+        <div class="rounded-xl border border-default bg-surface overflow-hidden divide-y" style="border-color: var(--border);" id="type-list">
+          <!-- type rows injected -->
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="rounded-xl border border-default bg-surface p-6">
+            <div class="t-overline text-muted">Sans</div>
+            <div class="mt-2 t-h2" style="font-family: var(--font-sans);">Aa</div>
+            <div class="mt-1 text-secondary t-body-sm font-mono">Inter</div>
+            <div class="mt-4 t-body-sm text-secondary">
+              The quick brown fox jumps over the lazy dog. 0123456789
+            </div>
+          </div>
+          <div class="rounded-xl border border-default bg-surface p-6">
+            <div class="t-overline text-muted">Mono</div>
+            <div class="mt-2 t-h2 font-mono">Aa</div>
+            <div class="mt-1 text-secondary t-body-sm font-mono">JetBrains Mono</div>
+            <div class="mt-4 t-body-sm text-secondary font-mono">
+              const x = await fetch('/');  /* 0123456789 */
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ----- FONT PAIRINGS ----- -->
+      <section id="pairings" class="space-y-8">
+        <header class="space-y-3">
+          <div class="t-overline text-muted">05b — Font pairings</div>
+          <h2 class="t-h1 flex items-baseline gap-3 group">Font pairings
+            <a href="#pairings" class="anchor-link t-body-sm font-mono">#pairings</a>
+          </h2>
+          <p class="t-body-lg text-secondary max-w-2xl">
+            Typeface is a re-skin dial. The scale, weights, and tracking stay constant; only the
+            <code class="token-pill">--font-display</code> and <code class="token-pill">--font-sans</code> values change per project.
+            Six curated pairings below — drop one into <code class="token-pill">:root</code> and the whole system shifts personality.
+          </p>
+        </header>
+
+        <div class="grid lg:grid-cols-2 gap-4" id="pairings-grid">
+          <!-- Pairings rendered below using per-card scoped styles so each card shows its own fonts. -->
+
+          <!-- (a) Neutral product · the safe default -->
+          <div class="rounded-xl border border-default overflow-hidden bg-surface"
+               style="--font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
+                      --font-sans:    'Inter', ui-sans-serif, system-ui, sans-serif;">
+            <div class="px-5 pt-5 pb-4 flex flex-col gap-3">
+              <div class="flex items-baseline justify-between">
+                <div class="t-overline text-muted">Neutral product</div>
+                <span class="token-pill">safe default</span>
+              </div>
+              <div class="t-h2" style="font-family: var(--font-display);">Make the right thing easy.</div>
+              <p class="t-body" style="color: var(--text-secondary); font-family: var(--font-sans);">
+                A neutral grotesk for both display and body. Reads as quiet and confident at every size — the
+                pairing every product can run for years without it feeling dated.
+              </p>
+              <div class="flex items-center gap-3 pt-1">
+                <button class="btn btn--primary btn--sm">Continue</button>
+                <span class="t-caption text-muted">UI · controls · table cells</span>
+              </div>
+            </div>
+            <div class="px-5 py-3 bg-sunken border-t border-default flex items-center justify-between font-mono text-[11.5px] text-muted">
+              <span>Display · Inter</span><span>Body · Inter</span>
+              <span style="color: var(--text-secondary);">use when: product UI default</span>
+            </div>
+          </div>
+
+          <!-- (b) Editorial · serif display + sans body -->
+          <div class="rounded-xl border border-default overflow-hidden bg-surface"
+               style="--font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+                      --font-sans:    'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;">
+            <div class="px-5 pt-5 pb-4 flex flex-col gap-3">
+              <div class="flex items-baseline justify-between">
+                <div class="t-overline text-muted">Editorial</div>
+                <span class="token-pill">serif + sans</span>
+              </div>
+              <div class="t-h2" style="font-family: var(--font-display); font-weight: 500; font-variation-settings: 'SOFT' 50;">Stories worth your evening.</div>
+              <p class="t-body" style="color: var(--text-secondary); font-family: var(--font-sans);">
+                Variable serif display lends weight and warmth to long-form headlines. Pair with a neutral
+                humanist sans for body — never the same family for both, or the contrast dies.
+              </p>
+              <div class="flex items-center gap-3 pt-1">
+                <button class="btn btn--primary btn--sm" style="font-family: var(--font-sans);">Read article</button>
+                <span class="t-caption text-muted">Long-form · publishing · media</span>
+              </div>
+            </div>
+            <div class="px-5 py-3 bg-sunken border-t border-default flex items-center justify-between font-mono text-[11.5px] text-muted">
+              <span>Display · Fraunces</span><span>Body · Plus Jakarta Sans</span>
+              <span style="color: var(--text-secondary);">use when: editorial, publishing, lifestyle</span>
+            </div>
+          </div>
+
+          <!-- (c) Modern bold · expressive grotesk + clean sans -->
+          <div class="rounded-xl border border-default overflow-hidden bg-surface"
+               style="--font-display: 'Archivo', 'Inter', ui-sans-serif, sans-serif;
+                      --font-sans:    'Inter', ui-sans-serif, system-ui, sans-serif;">
+            <div class="px-5 pt-5 pb-4 flex flex-col gap-3">
+              <div class="flex items-baseline justify-between">
+                <div class="t-overline text-muted">Modern bold</div>
+                <span class="token-pill">tight grotesk display</span>
+              </div>
+              <div class="t-h2" style="font-family: var(--font-display); font-weight: 800; font-stretch: 90%;">Ship the next thing.</div>
+              <p class="t-body" style="color: var(--text-secondary); font-family: var(--font-sans);">
+                A tighter variable grotesk for hero copy, paired with neutral Inter for body. The display face
+                does the shouting; the body stays calm so it can be read.
+              </p>
+              <div class="flex items-center gap-3 pt-1">
+                <button class="btn btn--primary btn--sm">Get started</button>
+                <span class="t-caption text-muted">Marketing · launches · campaigns</span>
+              </div>
+            </div>
+            <div class="px-5 py-3 bg-sunken border-t border-default flex items-center justify-between font-mono text-[11.5px] text-muted">
+              <span>Display · Archivo</span><span>Body · Inter</span>
+              <span style="color: var(--text-secondary);">use when: launches, marketing pages</span>
+            </div>
+          </div>
+
+          <!-- (d) Warm friendly · humanist sans pair -->
+          <div class="rounded-xl border border-default overflow-hidden bg-surface"
+               style="--font-display: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+                      --font-sans:    'Manrope', ui-sans-serif, system-ui, sans-serif;">
+            <div class="px-5 pt-5 pb-4 flex flex-col gap-3">
+              <div class="flex items-baseline justify-between">
+                <div class="t-overline text-muted">Warm friendly</div>
+                <span class="token-pill">humanist sans</span>
+              </div>
+              <div class="t-h2" style="font-family: var(--font-display); font-weight: 700;">Welcome — start anywhere.</div>
+              <p class="t-body" style="color: var(--text-secondary); font-family: var(--font-sans);">
+                Manrope's open apertures and gentle curves keep the system feeling approachable. One family
+                throughout works when the brand wants quiet warmth instead of contrast.
+              </p>
+              <div class="flex items-center gap-3 pt-1">
+                <button class="btn btn--primary btn--sm">Try it free</button>
+                <span class="t-caption text-muted">Consumer · wellness · onboarding</span>
+              </div>
+            </div>
+            <div class="px-5 py-3 bg-sunken border-t border-default flex items-center justify-between font-mono text-[11.5px] text-muted">
+              <span>Display · Manrope</span><span>Body · Manrope</span>
+              <span style="color: var(--text-secondary);">use when: consumer-friendly brands</span>
+            </div>
+          </div>
+
+          <!-- (e) Technical · sans body + prominent mono accents -->
+          <div class="rounded-xl border border-default overflow-hidden bg-surface"
+               style="--font-display: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+                      --font-sans:    'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+                      --font-mono:    'JetBrains Mono', ui-monospace, monospace;">
+            <div class="px-5 pt-5 pb-4 flex flex-col gap-3">
+              <div class="flex items-baseline justify-between">
+                <div class="t-overline text-muted">Technical</div>
+                <span class="token-pill">sans + mono accents</span>
+              </div>
+              <div class="t-h2" style="font-family: var(--font-display); font-weight: 600;">200 OK <span class="font-mono" style="color: var(--accent); font-size: 0.7em;">/v2/projects</span></div>
+              <p class="t-body" style="color: var(--text-secondary); font-family: var(--font-sans);">
+                Use mono not just for code blocks but for token names, IDs, timestamps. The mono accent makes
+                technical surfaces feel like the actual product, not a marketing rewrite of one.
+              </p>
+              <div class="flex items-center gap-3 pt-1">
+                <button class="btn btn--primary btn--sm" style="font-family: var(--font-mono);">curl --get</button>
+                <span class="t-caption text-muted font-mono">trace · 7f3a2c9e</span>
+              </div>
+            </div>
+            <div class="px-5 py-3 bg-sunken border-t border-default flex items-center justify-between font-mono text-[11.5px] text-muted">
+              <span>Display · IBM Plex Sans</span><span>Mono · JetBrains Mono</span>
+              <span style="color: var(--text-secondary);">use when: dev tools, APIs, data products</span>
+            </div>
+          </div>
+
+          <!-- (f) High-contrast brand · distinctive display + restrained body -->
+          <div class="rounded-xl border border-default overflow-hidden bg-surface"
+               style="--font-display: 'DM Serif Display', Georgia, serif;
+                      --font-sans:    'Inter', ui-sans-serif, system-ui, sans-serif;">
+            <div class="px-5 pt-5 pb-4 flex flex-col gap-3">
+              <div class="flex items-baseline justify-between">
+                <div class="t-overline text-muted">High-contrast brand</div>
+                <span class="token-pill">distinctive display</span>
+              </div>
+              <div class="t-h2" style="font-family: var(--font-display); font-weight: 400; letter-spacing: -0.030em;">An old idea, made new.</div>
+              <p class="t-body" style="color: var(--text-secondary); font-family: var(--font-sans);">
+                A high-contrast serif gives hero moments enormous personality. The body stays neutral so the
+                display can do its job — never let the display face leak into UI controls.
+              </p>
+              <div class="flex items-center gap-3 pt-1">
+                <button class="btn btn--primary btn--sm">Discover</button>
+                <span class="t-caption text-muted">Brand sites · campaigns · about pages</span>
+              </div>
+            </div>
+            <div class="px-5 py-3 bg-sunken border-t border-default flex items-center justify-between font-mono text-[11.5px] text-muted">
+              <span>Display · DM Serif Display</span><span>Body · Inter</span>
+              <span style="color: var(--text-secondary);">use when: brand-led storytelling</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pairing rules + re-skin note -->
+        <div class="rounded-xl border border-default overflow-hidden bg-surface">
+          <div class="px-6 py-5 border-b border-default">
+            <h3 class="t-h4 flex items-baseline gap-2">Pairing rules <span class="token-pill">read once, follow always</span></h3>
+          </div>
+          <div class="grid md:grid-cols-2 gap-px" style="background-color: var(--border);">
+            <div class="p-5 bg-surface flex flex-col gap-2">
+              <div class="t-overline text-muted">Contrast by role, not chaos</div>
+              <p class="t-body-sm text-secondary">Pair fonts that play different ROLES — a display face vs. a body face. Two similar grotesks fighting on the same page reads as a mistake, not a system.</p>
+            </div>
+            <div class="p-5 bg-surface flex flex-col gap-2">
+              <div class="t-overline text-muted">Max 2 families + mono</div>
+              <p class="t-body-sm text-secondary">One display, one body, one mono. Past three families the system loses coherence and the extra HTTP weight stops being worth it.</p>
+            </div>
+            <div class="p-5 bg-surface flex flex-col gap-2">
+              <div class="t-overline text-muted">Compatible x-heights</div>
+              <p class="t-body-sm text-secondary">Pair faces with similar x-height so 14 px body and 14 px overline don't look like different sizes when they sit next to each other.</p>
+            </div>
+            <div class="p-5 bg-surface flex flex-col gap-2">
+              <div class="t-overline text-muted">Weight strategy</div>
+              <p class="t-body-sm text-secondary">Display heavier (600–800) to do the lifting; body regular (400) for legibility. Skip bold body — that's the display face's job.</p>
+            </div>
+            <div class="p-5 bg-surface flex flex-col gap-2">
+              <div class="t-overline text-muted">When to go expressive</div>
+              <p class="t-body-sm text-secondary">Marketing pages, heroes, brand moments. Stay neutral for data-dense surfaces — admin, forms, tables. Never an expressive display face on a settings page.</p>
+            </div>
+            <div class="p-5 bg-surface flex flex-col gap-2">
+              <div class="t-overline text-muted">Performance + fallbacks</div>
+              <p class="t-body-sm text-secondary">Always include a system fallback stack and <code class="token-pill">font-display: swap</code>. Prefer variable fonts (one file, many weights). Each extra family is a real cost — budget it.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Re-skin contract -->
+        <div class="rounded-xl border border-default overflow-hidden">
+          <div class="grid md:grid-cols-[1.2fr_1fr]">
+            <div class="p-6 bg-surface flex flex-col gap-3">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-md flex items-center justify-center border border-default" style="background: var(--accent-subtle);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+                </div>
+                <div class="t-overline text-muted">Typography re-skin contract</div>
+              </div>
+              <h3 class="t-h3">Change the families, keep the system.</h3>
+              <p class="t-body text-secondary">
+                A project picks a pairing by overriding ONLY <code class="token-pill">--font-display</code> /
+                <code class="token-pill">--font-sans</code> (and optionally <code class="token-pill">--font-mono</code>) in <code class="token-pill">:root</code>.
+                The scale, weights, tracking, and line-heights are structural constants — they don't move.
+                Fonts become another re-skin dial alongside the accent color and radius personality.
+              </p>
+            </div>
+            <pre class="bg-sunken p-6 font-mono text-[12px] text-secondary overflow-auto leading-relaxed" style="border-left: 1px solid var(--border); margin: 0;"><span style="color: var(--text-muted);">/* Per-project skin: override only the families. */</span>
+:root {
+  --font-display: <span style="color: var(--accent);">"Fraunces"</span>, Georgia, serif;
+  --font-sans:    <span style="color: var(--accent);">"Plus Jakarta Sans"</span>, ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    <span style="color: var(--accent);">"JetBrains Mono"</span>, ui-monospace, monospace;
+}
+
+<span style="color: var(--text-muted);">/* Structural \u2014 do NOT change per project. */</span>
+<span style="color: var(--text-muted);">--text-h1-size, --text-h1-weight, --text-h1-track</span>
+<span style="color: var(--text-muted);">--text-body-size, --text-body-lh</span>
+<span style="color: var(--text-muted);">/* \u2026etc. */</span></pre>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+      <section id="breakpoints" class="space-y-8">
+        <header class="space-y-3">
+          <div class="t-overline text-muted">06 — Breakpoints</div>
+          <h2 class="t-h1 flex items-baseline gap-3 group">Breakpoints
+            <a href="#breakpoints" class="anchor-link t-body-sm font-mono">#breakpoints</a>
+          </h2>
+          <p class="t-body-lg text-secondary max-w-2xl">
+            Min-width breakpoints, matching Tailwind defaults. Design mobile-first;
+            layer up.
+          </p>
+        </header>
+        <div class="rounded-xl border border-default bg-surface p-6">
+          <div id="breakpoint-bar" class="relative h-32"></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ----- Z-INDEX ----- -->
+      <section id="zindex" class="space-y-8">
+        <header class="space-y-3">
+          <div class="t-overline text-muted">07 — Z-index</div>
+          <h2 class="t-h1 flex items-baseline gap-3 group">Z-index layers
+            <a href="#zindex" class="anchor-link t-body-sm font-mono">#zindex</a>
+          </h2>
+          <p class="t-body-lg text-secondary max-w-2xl">
+            Discrete layers, spaced by 100, so portals never sit between values.
+            Don't invent intermediate z-values.
+          </p>
+        </header>
+        <div class="rounded-xl border border-default bg-sunken p-12 overflow-hidden">
+          <div class="relative h-72 mx-auto max-w-2xl" id="zindex-stack"></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ----- MOTION ----- -->
+      <section id="motion" class="space-y-8">
+        <header class="space-y-3">
+          <div class="t-overline text-muted">08 — Motion</div>
+          <h2 class="t-h1 flex items-baseline gap-3 group">Motion
+            <a href="#motion" class="anchor-link t-body-sm font-mono">#motion</a>
+          </h2>
+          <p class="t-body-lg text-secondary max-w-2xl">
+            Three durations, four easings. Default to <code class="token-pill">--duration-base</code>
+            +&nbsp;<code class="token-pill">--ease-standard</code>. Click any row to play it.
+          </p>
+        </header>
+
+        <div class="grid sm:grid-cols-3 gap-4" id="duration-grid"></div>
+
+        <div class="rounded-xl border border-default bg-surface overflow-hidden divide-y" style="border-color: var(--border);" id="easing-list"></div>
+      </section>
+
+      <!-- ----- FOOTER NOTE ----- -->
+      <section class="pt-8 border-t border-default">
+        <div class="flex items-start gap-4">
+          <div class="w-8 h-8 rounded-md flex items-center justify-center border border-default flex-shrink-0" style="background: var(--accent-subtle);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="t-h4">Foundations confirmed.</div>
+            <p class="t-body text-secondary mt-1 max-w-xl">
+              Next chapter (Atoms + Molecules) will reference these tokens directly.
+              No new colors, no new sizes — every component reuses what's defined here.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===================== SCRIPT — renders specimens ===================== -->
+  <script src="chrome.js"></script>
+  <script>
+    // chrome.js handles theme toggle + chapter picker. Re-resolve swatch
+    // hex labels whenever theme changes (event fired by chrome.js).
+    window.addEventListener('lookbook:themechange', () => {
+      requestAnimationFrame(() => {
+        if (typeof resolveAllHexes === 'function') resolveAllHexes();
+        if (typeof resolveScopedHexes === 'function') resolveScopedHexes();
+      });
+    });
+
+    // -- Color helpers --------------------------------------------------------
+    const rgbToHex = (str) => {
+      const m = str.match(/rgba?\(([\d.\s,/%]+)\)/);
+      if (!m) return str;
+      const parts = m[1].split(/[ ,/]+/).filter(Boolean).map(s => s.endsWith('%') ? Math.round(parseFloat(s) * 2.55) : parseFloat(s));
+      const [r, g, b, a] = parts;
+      const hex = '#' + [r, g, b].map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join('');
+      if (a !== undefined && a < 1) return hex + Math.round(a * 255).toString(16).padStart(2, '0');
+      return hex;
+    };
+
+    const swatchesToResolve = [];
+    const renderSwatch = ({ varName, label, hexTarget }) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'swatch';
+      wrap.innerHTML = `
+        <div class="swatch-color" style="background: var(${varName});"></div>
+        <div class="swatch-meta">
+          <span class="name">${label}</span>
+          <span class="hex" data-hex>—</span>
+        </div>
+      `;
+      swatchesToResolve.push({ el: wrap.querySelector('[data-hex]'), varName });
+      return wrap;
+    };
+
+    const resolveAllHexes = () => {
+      const probe = document.createElement('span');
+      probe.style.display = 'none';
+      document.body.appendChild(probe);
+      swatchesToResolve.forEach(({ el, varName }) => {
+        probe.style.color = `var(${varName})`;
+        const computed = getComputedStyle(probe).color;
+        el.textContent = rgbToHex(computed);
+      });
+      probe.remove();
+    };
+
+    // -- Ramps ---------------------------------------------------------------
+    const grayStops = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+    const accentStops = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+    const grayWrap = document.querySelector('[data-ramp="gray"]');
+    grayStops.forEach(s => grayWrap.appendChild(renderSwatch({ varName: `--color-gray-${s}`, label: `gray-${s}` })));
+    const accentWrap = document.querySelector('[data-ramp="accent"]');
+    accentStops.forEach(s => accentWrap.appendChild(renderSwatch({ varName: `--color-accent-${s}`, label: `accent-${s}` })));
+
+    // -- Semantic rows -------------------------------------------------------
+    const semanticTokens = [
+      { name: '--bg',             desc: 'Page background, never pure white' },
+      { name: '--surface',        desc: 'Card / panel surface' },
+      { name: '--surface-raised', desc: 'Popovers, menus, raised surfaces' },
+      { name: '--surface-sunken', desc: 'Inset wells, code blocks' },
+      { name: '--border',         desc: 'Default 1px hairline' },
+      { name: '--border-strong',  desc: 'Hover / emphasized borders' },
+      { name: '--text-primary',   desc: 'Body, headings, primary content' },
+      { name: '--text-secondary', desc: 'Supporting copy, labels' },
+      { name: '--text-muted',     desc: 'Helper text, meta' },
+      { name: '--text-on-accent', desc: 'Foreground over --accent' },
+      { name: '--accent',         desc: 'Primary action / link' },
+      { name: '--accent-hover',   desc: 'Accent hover state' },
+      { name: '--accent-subtle',  desc: 'Tinted accent background' },
+      { name: '--focus-ring',     desc: 'Keyboard focus outline' },
+    ];
+
+    const semanticRows = document.getElementById('semantic-rows');
+    semanticTokens.forEach((tk, i) => {
+      const row = document.createElement('div');
+      row.className = 'grid grid-cols-[1.4fr_1fr_1fr] items-stretch';
+      row.style.borderTop = i === 0 ? '1px solid var(--border)' : '1px solid var(--border)';
+      row.innerHTML = `
+        <div class="px-4 py-3 flex flex-col justify-center bg-surface">
+          <div class="font-mono text-[12px] text-primary">${tk.name}</div>
+          <div class="text-[12px] text-muted mt-0.5">${tk.desc}</div>
+        </div>
+        <div data-theme="light" class="px-4 py-3 border-l border-default flex items-center gap-3" style="background: var(--bg);">
+          <span class="inline-block w-8 h-8 rounded-md border" style="background: var(${tk.name}); border-color: var(--border);"></span>
+          <span class="font-mono text-[11px]" style="color: var(--text-muted);" data-hex-for="${tk.name}">—</span>
+        </div>
+        <div data-theme="dark" class="px-4 py-3 border-l border-default flex items-center gap-3" style="background: var(--bg);">
+          <span class="inline-block w-8 h-8 rounded-md border" style="background: var(${tk.name}); border-color: var(--border);"></span>
+          <span class="font-mono text-[11px]" style="color: var(--text-muted);" data-hex-for-dark="${tk.name}">—</span>
+        </div>
+      `;
+      semanticRows.appendChild(row);
+    });
+
+    // Resolve semantic-row hex labels per-scope.
+    // Swap the document's data-theme while probing — child-scoped data-theme
+    // doesn't always cascade as expected through hidden probes, so we
+    // measure at document root and restore.
+    const resolveScopedHexes = () => {
+      const root = document.documentElement;
+      const original = root.getAttribute('data-theme') || 'light';
+      const probe = document.createElement('span');
+      probe.style.display = 'none';
+      document.body.appendChild(probe);
+
+      ['light', 'dark'].forEach(theme => {
+        root.setAttribute('data-theme', theme);
+        const attr = theme === 'light' ? 'data-hex-for' : 'data-hex-for-dark';
+        semanticTokens.forEach(tk => {
+          document.querySelectorAll(`[${attr}="${tk.name}"]`).forEach(el => {
+            probe.style.color = `var(${tk.name})`;
+            el.textContent = rgbToHex(getComputedStyle(probe).color);
+          });
+        });
+      });
+
+      probe.remove();
+      root.setAttribute('data-theme', original);
+    };
+
+    // -- Status grid ---------------------------------------------------------
+    const statuses = [
+      { key: 'success', label: 'Success', msg: 'Saved successfully.',  icon: '<polyline points="20 6 9 17 4 12"/>' },
+      { key: 'warning', label: 'Warning', msg: 'Approaching limit.',   icon: '<path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>' },
+      { key: 'danger',  label: 'Danger',  msg: 'Action could not complete.', icon: '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>' },
+      { key: 'info',    label: 'Info',    msg: 'Quick reminder.',      icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>' },
+    ];
+    const statusGrid = document.getElementById('status-grid');
+    statuses.forEach(st => {
+      const el = document.createElement('div');
+      el.className = 'rounded-xl border border-default bg-surface overflow-hidden';
+      el.innerHTML = `
+        <div class="p-4 flex items-start gap-3" style="background: var(--${st.key}-bg);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--${st.key}-fg)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:1px;">${st.icon}</svg>
+          <div class="min-w-0">
+            <div class="font-medium text-[14px]" style="color: var(--${st.key}-fg);">${st.label}</div>
+            <div class="text-[13px] mt-0.5" style="color: var(--${st.key}-fg); opacity: 0.85;">${st.msg}</div>
+          </div>
+        </div>
+        <div class="p-3 font-mono text-[11px] text-muted flex flex-col gap-0.5 bg-surface">
+          <span>--${st.key}-bg</span>
+          <span>--${st.key}-fg</span>
+        </div>
+      `;
+      statusGrid.appendChild(el);
+    });
+
+    // -- Spacing -------------------------------------------------------------
+    const spaceTokens = [
+      ['--space-0',   '0',   0],
+      ['--space-0-5', '0.5', 2],
+      ['--space-1',   '1',   4],
+      ['--space-1-5', '1.5', 6],
+      ['--space-2',   '2',   8],
+      ['--space-2-5', '2.5', 10],
+      ['--space-3',   '3',   12],
+      ['--space-4',   '4',   16],
+      ['--space-5',   '5',   20],
+      ['--space-6',   '6',   24],
+      ['--space-8',   '8',   32],
+      ['--space-10',  '10',  40],
+      ['--space-12',  '12',  48],
+      ['--space-16',  '16',  64],
+      ['--space-20',  '20',  80],
+      ['--space-24',  '24',  96],
+    ];
+    const ruler = document.getElementById('spacing-ruler');
+    spaceTokens.forEach(([name, alias, px]) => {
+      const row = document.createElement('div');
+      row.className = 'grid grid-cols-[120px_60px_1fr_60px] items-center gap-4 px-5 py-2.5';
+      row.style.borderColor = 'var(--border)';
+      row.innerHTML = `
+        <div class="font-mono text-[12px] text-primary">${name}</div>
+        <div class="font-mono text-[12px] text-muted">${alias}</div>
+        <div class="h-3 rounded-sm" style="width: ${Math.max(px, 1)}px; background: var(--accent); opacity: ${px === 0 ? '0.3' : '1'};"></div>
+        <div class="font-mono text-[12px] text-secondary text-right">${px}px</div>
+      `;
+      ruler.appendChild(row);
+    });
+
+    // -- Radius --------------------------------------------------------------
+    // Live-read px from --radius-* tokens.
+    const radii = [
+      ['--radius-sm',   'sm'],
+      ['--radius-md',   'md'],
+      ['--radius-lg',   'lg'],
+      ['--radius-xl',   'xl'],
+      ['--radius-full', 'full'],
+    ];
+    const readToken = (name) => {
+      const probe = document.createElement('span');
+      probe.style.cssText = `display: block; width: 0; height: 0; border-top-left-radius: var(${name});`;
+      document.body.appendChild(probe);
+      const v = getComputedStyle(probe).borderTopLeftRadius;
+      probe.remove();
+      return v;
+    };
+    const radiusGrid = document.getElementById('radius-grid');
+    radii.forEach(([name, alias]) => {
+      const val = readToken(name);
+      const el = document.createElement('div');
+      el.className = 'rounded-xl border border-default bg-surface p-5 flex flex-col items-center gap-4';
+      el.innerHTML = `
+        <div class="w-full aspect-square border" style="border-radius: var(${name}); background: var(--accent-subtle); border-color: var(--accent); border-style: dashed;"></div>
+        <div class="flex flex-col items-center gap-0.5">
+          <div class="font-mono text-[12px] text-primary">${name}</div>
+          <div class="font-mono text-[11px] text-muted">${alias} · ${val}</div>
+        </div>
+      `;
+      radiusGrid.appendChild(el);
+    });
+
+    // -- Elevation -----------------------------------------------------------
+    const shadows = [
+      ['--shadow-sm', 'sm', '1px soft drop'],
+      ['--shadow-md', 'md', '2px lift'],
+      ['--shadow-lg', 'lg', '8px float'],
+      ['--shadow-xl', 'xl', '20px hover'],
+    ];
+    const elevGrid = document.getElementById('elevation-grid');
+    shadows.forEach(([name, alias, desc]) => {
+      const el = document.createElement('div');
+      el.className = 'flex flex-col items-center gap-4';
+      el.innerHTML = `
+        <div class="w-full aspect-[5/3] rounded-xl bg-surface flex items-center justify-center" style="box-shadow: var(${name}); border: 1px solid var(--border);">
+          <span class="font-mono text-[14px] text-secondary">${alias}</span>
+        </div>
+        <div class="text-center">
+          <div class="font-mono text-[12px] text-primary">${name}</div>
+          <div class="text-[11.5px] text-muted mt-0.5">${desc}</div>
+        </div>
+      `;
+      elevGrid.appendChild(el);
+    });
+
+    // -- Typography ----------------------------------------------------------
+    // Roles live-read from --text-* tokens via getComputedStyle so the spec
+    // table never goes stale when tokens are retuned.
+    const typeRoles = [
+      { cls: 't-display',  name: '--text-display',  sample: 'A clear hierarchy.' },
+      { cls: 't-h1',       name: '--text-h1',       sample: 'Section headline' },
+      { cls: 't-h2',       name: '--text-h2',       sample: 'Subsection heading' },
+      { cls: 't-h3',       name: '--text-h3',       sample: 'Group label' },
+      { cls: 't-h4',       name: '--text-h4',       sample: 'Card title' },
+      { cls: 't-body-lg',  name: '--text-body-lg',  sample: 'Lead paragraph copy that sets context.' },
+      { cls: 't-body',     name: '--text-body',     sample: 'The default reading size used across the system.' },
+      { cls: 't-body-sm',  name: '--text-body-sm',  sample: 'Dense UI copy, table cells, helpers.' },
+      { cls: 't-caption',  name: '--text-caption',  sample: 'Caption beneath a figure or chart.' },
+      { cls: 't-overline', name: '--text-overline', sample: 'Section eyebrow' },
+    ];
+    const cssRead = (name) => {
+      const probe = document.createElement('span');
+      probe.style.display = 'none';
+      document.body.appendChild(probe);
+      probe.style.fontSize     = `var(${name}-size)`;
+      probe.style.lineHeight   = `var(${name}-lh)`;
+      probe.style.fontWeight   = `var(${name}-weight)`;
+      probe.style.letterSpacing= `var(${name}-track)`;
+      const cs = getComputedStyle(probe);
+      const out = { size: cs.fontSize, lh: cs.lineHeight, w: cs.fontWeight, tr: cs.letterSpacing };
+      probe.remove();
+      return out;
+    };
+    const typeList = document.getElementById('type-list');
+    typeRoles.forEach(r => {
+      const v = cssRead(r.name);
+      const row = document.createElement('div');
+      row.className = 'grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-6 px-6 py-5 items-baseline';
+      row.style.borderColor = 'var(--border)';
+      row.innerHTML = `
+        <div class="${r.cls} text-primary">${r.sample}</div>
+        <div class="font-mono text-[11.5px] text-muted grid grid-cols-2 gap-x-2 gap-y-0.5 self-center">
+          <div class="text-primary col-span-2">${r.name}</div>
+          <div>size</div>     <div class="text-secondary">${v.size}</div>
+          <div>line-height</div><div class="text-secondary">${v.lh}</div>
+          <div>weight</div>   <div class="text-secondary">${v.w}</div>
+          <div>tracking</div> <div class="text-secondary">${v.tr}</div>
+        </div>
+      `;
+      typeList.appendChild(row);
+    });
+
+    // -- Breakpoints ---------------------------------------------------------
+    // Live-read --bp-* tokens (parsed as px).
+    const bpDefs = [
+      { name: 'sm',  varName: '--bp-sm',  desc: 'Large phone / portrait tablet' },
+      { name: 'md',  varName: '--bp-md',  desc: 'Tablet' },
+      { name: 'lg',  varName: '--bp-lg',  desc: 'Laptop' },
+      { name: 'xl',  varName: '--bp-xl',  desc: 'Desktop' },
+      { name: '2xl', varName: '--bp-2xl', desc: 'Wide desktop' },
+    ];
+    const readPx = (name) => {
+      const probe = document.createElement('span');
+      probe.style.cssText = `display: block; width: var(${name}); height: 0;`;
+      document.body.appendChild(probe);
+      const v = parseFloat(getComputedStyle(probe).width);
+      probe.remove();
+      return v;
+    };
+    const bps = bpDefs.map(b => ({ ...b, px: readPx(b.varName) }));
+    const bpEl = document.getElementById('breakpoint-bar');
+    const maxBp = 1536;
+    // Axis line
+    bpEl.innerHTML = `<div class="absolute left-0 right-0 top-[60%] h-px" style="background: var(--border);"></div>`;
+    bps.forEach(({ name, px, desc }) => {
+      const pct = (px / maxBp) * 100;
+      const m = document.createElement('div');
+      m.className = 'absolute flex flex-col items-center';
+      m.style.left = `${pct}%`;
+      m.style.top = '0';
+      m.style.transform = 'translateX(-50%)';
+      m.innerHTML = `
+        <div class="font-mono text-[11px] text-muted">${px}px</div>
+        <div class="font-mono text-[13px] text-primary font-medium mt-0.5">${name}</div>
+        <div class="w-px h-5 mt-1" style="background: var(--border-strong);"></div>
+        <div class="w-2 h-2 rounded-full" style="background: var(--accent);"></div>
+        <div class="text-[11px] text-muted mt-2 w-24 text-center leading-tight">${desc}</div>
+      `;
+      bpEl.appendChild(m);
+    });
+
+    // -- Z-index stack -------------------------------------------------------
+    // Live-read --z-* tokens.
+    const zDefs = [
+      { name: '--z-base',     label: 'base',     offset: 0 },
+      { name: '--z-dropdown', label: 'dropdown', offset: 1 },
+      { name: '--z-sticky',   label: 'sticky',   offset: 2 },
+      { name: '--z-overlay',  label: 'overlay',  offset: 3 },
+      { name: '--z-modal',    label: 'modal',    offset: 4 },
+      { name: '--z-toast',    label: 'toast',    offset: 5 },
+    ];
+    const readZ = (name) => {
+      const probe = document.createElement('span');
+      probe.style.cssText = `position: absolute; z-index: var(${name});`;
+      document.body.appendChild(probe);
+      const v = parseInt(getComputedStyle(probe).zIndex, 10);
+      probe.remove();
+      return v;
+    };
+    const zLayers = zDefs.map(z => ({ ...z, val: readZ(z.name) }));
+    const zStack = document.getElementById('zindex-stack');
+    zLayers.forEach(({ name, val, label, offset }) => {
+      const card = document.createElement('div');
+      card.className = 'absolute rounded-lg bg-surface border border-default px-5 py-3 flex items-center justify-between';
+      card.style.left   = `${offset * 36}px`;
+      card.style.top    = `${offset * 28}px`;
+      card.style.width  = 'calc(100% - 200px)';
+      card.style.boxShadow = 'var(--shadow-md)';
+      card.style.zIndex = `var(${name})`;
+      card.innerHTML = `
+        <div class="flex items-center gap-3">
+          <span class="font-mono text-[12px] text-muted">${String(val).padStart(4, ' ')}</span>
+          <span class="text-[14px] font-medium text-primary">${label}</span>
+        </div>
+        <span class="font-mono text-[11.5px] text-muted">${name}</span>
+      `;
+      zStack.appendChild(card);
+    });
+
+    // -- Motion --------------------------------------------------------------
+    const durations = [
+      ['--duration-fast', 'fast', '120ms', 'Hover, micro-toggle, ripple'],
+      ['--duration-base', 'base', '200ms', 'Default — most UI transitions'],
+      ['--duration-slow', 'slow', '320ms', 'Sheets, drawers, page-level'],
+    ];
+    const durationGrid = document.getElementById('duration-grid');
+    durations.forEach(([name, alias, val, desc]) => {
+      const el = document.createElement('div');
+      el.className = 'rounded-xl border border-default bg-surface p-5 flex flex-col gap-3';
+      el.innerHTML = `
+        <div class="flex items-baseline justify-between">
+          <span class="font-mono text-[12px] text-primary">${name}</span>
+          <span class="font-mono text-[14px] text-primary font-medium">${val}</span>
+        </div>
+        <div class="text-[12px] text-secondary">${desc}</div>
+        <div class="w-full h-1.5 rounded-full overflow-hidden" style="background: var(--surface-sunken);">
+          <div class="h-full rounded-full" style="width: 100%; background: var(--accent); transform-origin: left; animation: dur-bar var(${name}) var(--ease-standard) infinite alternate;"></div>
+        </div>
+      `;
+      durationGrid.appendChild(el);
+    });
+    // Bar keyframe (declared once, in JS so we can stay near the demo).
+    const styleEl = document.createElement('style');
+    styleEl.textContent = `@keyframes dur-bar { from { transform: scaleX(0.05); } to { transform: scaleX(1); } }`;
+    document.head.appendChild(styleEl);
+
+    const easings = [
+      ['--ease-standard',   'standard',   'cubic-bezier(0.2, 0, 0, 1)',      'Most UI — enters AND exits cleanly'],
+      ['--ease-decelerate', 'decelerate', 'cubic-bezier(0, 0, 0.2, 1)',      'Entering content — fast in, soft land'],
+      ['--ease-accelerate', 'accelerate', 'cubic-bezier(0.3, 0, 1, 1)',      'Exiting content — soft start, fast out'],
+      ['--ease-spring',     'spring',     'cubic-bezier(0.5, 1.6, 0.4, 1)',  'Playful overshoot — toasts, success ticks'],
+    ];
+    const easingList = document.getElementById('easing-list');
+    easings.forEach(([name, alias, val, desc]) => {
+      const row = document.createElement('div');
+      row.className = 'motion-row grid grid-cols-1 lg:grid-cols-[200px_1fr_220px] gap-5 px-6 py-5 items-center cursor-pointer';
+      row.style.borderColor = 'var(--border)';
+      row.innerHTML = `
+        <div>
+          <div class="font-mono text-[12px] text-primary">${name}</div>
+          <div class="text-[12px] text-secondary mt-0.5">${desc}</div>
+        </div>
+        <div class="motion-track">
+          <div class="motion-ball" style="animation-duration: 1400ms; animation-timing-function: var(${name});"></div>
+        </div>
+        <div class="font-mono text-[11px] text-muted text-right">${val}</div>
+      `;
+      easingList.appendChild(row);
+      row.addEventListener('click', () => {
+        row.classList.remove('playing');
+        void row.offsetWidth;
+        row.classList.add('playing');
+      });
+    });
+
+    // -- Resolve everything --------------------------------------------------
+    requestAnimationFrame(() => {
+      resolveAllHexes();
+      resolveScopedHexes();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1113 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — The Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: ['class', '[data-theme="dark"]'] };</script>
+  <style>
+    /* Decision rule cards */
+    .rule-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .rule-card-head {
+      padding: 12px 16px;
+      background: var(--surface-sunken);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .rule-row {
+      display: grid;
+      grid-template-columns: 160px 1fr 1fr;
+      padding: 14px 16px;
+      gap: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 13.5px;
+      align-items: flex-start;
+    }
+    .rule-row:first-of-type { border-top: 0; }
+    .rule-name { font-weight: 600; font-size: 14px; letter-spacing: -0.010em; }
+    .rule-name .sub { font-size: 11.5px; color: var(--text-muted); font-weight: 400; margin-top: 2px; display: block; font-family: var(--font-mono); letter-spacing: 0; }
+    .rule-when, .rule-avoid { font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+    .rule-when::before {
+      content: "use when";
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-success-600);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      padding: 2px 6px;
+      background: var(--success-bg);
+      border-radius: var(--radius-sm);
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .rule-avoid::before {
+      content: "avoid for";
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-danger-600);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      padding: 2px 6px;
+      background: var(--danger-bg);
+      border-radius: var(--radius-sm);
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    /* Checklist */
+    .check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; }
+    .check-list li {
+      display: grid;
+      grid-template-columns: 24px 1fr 220px;
+      gap: 12px;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      align-items: start;
+      font-size: 14px;
+    }
+    .check-list li:first-child { border-top: 0; }
+    .check-list .check-mark {
+      width: 20px; height: 20px;
+      border-radius: var(--radius-full);
+      background: var(--success-bg);
+      color: var(--success-fg);
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .check-list .check-mark svg { width: 12px; height: 12px; }
+    .check-list .check-title { font-weight: 500; }
+    .check-list .check-desc { margin-top: 3px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; }
+    .check-list .check-token {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 3px 6px;
+      background: var(--surface-sunken);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      justify-self: end;
+      white-space: nowrap;
+    }
+
+    /* Do / Don't pair */
+    .dd-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .dd-cell {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .dd-flag {
+      padding: 8px 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .dd-flag.is-do { background: var(--success-bg); color: var(--success-fg); border-bottom: 1px solid color-mix(in oklch, var(--success-fg) 25%, transparent); }
+    .dd-flag.is-dont { background: var(--danger-bg); color: var(--danger-fg); border-bottom: 1px solid color-mix(in oklch, var(--danger-fg) 25%, transparent); }
+    .dd-body { padding: 24px; flex: 1; display: flex; align-items: center; justify-content: center; min-height: 140px; }
+    .dd-caption {
+      padding: 10px 14px;
+      border-top: 1px solid var(--border);
+      background: var(--surface-sunken);
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Token summary tables */
+    .token-table {
+      width: 100%;
+      border-collapse: separate; border-spacing: 0;
+      font-size: 13px;
+    }
+    .token-table th {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--surface-sunken);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+    .token-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .token-table td:first-child { font-family: var(--font-mono); font-size: 12px; color: var(--text-primary); width: 240px; }
+    .token-table td:nth-child(2) { color: var(--text-secondary); }
+    .token-table tr:last-child td { border-bottom: 0; }
+
+    .swatch-mini {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      vertical-align: -3px;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <!-- TOP BAR -->
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">guide · v0.1</span>
+      </div>
+      <nav class="lb-page-nav">
+        <a class="lb-page-link" href="Foundations.html">Foundations</a>
+        <a class="lb-page-link" href="Atoms.html">Atoms</a>
+        <a class="lb-page-link" href="Molecules.html">Molecules</a>
+        <a class="lb-page-link" href="Organisms.html">Organisms</a>
+        <a class="lb-page-link" href="Auth.html">Auth</a>
+        <a class="lb-page-link" href="States.html">States</a>
+        <a class="lb-page-link" href="Personality.html">Personality</a>
+        <a class="lb-page-link" href="Motion.html">Motion</a>
+        <a class="lb-page-link" href="DataViz.html">Data viz</a>
+        <a class="lb-page-link" href="Marketing.html">Marketing</a>
+        <a class="lb-page-link" href="Guide.html">Guide</a>
+      </nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#decisions">When to use what</a></li>
+        <li><a href="#spacing">Spacing &amp; sizing</a></li>
+        <li><a href="#a11y">Accessibility</a></li>
+        <li><a href="#responsive">Responsive</a></li>
+        <li><a href="#microcopy">Microcopy</a></li>
+        <li><a href="#dodont">Do / Don't</a></li>
+        <li><a href="#tokens">Token-name map</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>The Guide</h5>
+        <p>Decision rules for the agents that consume this system. Built to be scanned, not read end-to-end.</p>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="lb-main">
+
+      <!-- Intro -->
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 8</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track);">The Guide.</h2>
+          <p class="lede">Decision rules, accessibility checklist, responsive behavior, microcopy, do / don't pairs, and the complete token-name map. Closing the system.</p>
+        </header>
+      </section>
+
+      <!-- DECISIONS -->
+      <section class="lb-section" id="decisions">
+        <header>
+          <div class="eyebrow">01 — When to use what</div>
+          <h2>Decision rules <a class="anchor" href="#decisions">#decisions</a></h2>
+          <p class="lede">Pick the lowest-impact pattern that solves the problem. Reach for heavier patterns (modal, full page) only when the lighter ones can't.</p>
+        </header>
+
+        <!-- Overlays -->
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Overlays</span><span>least → most disruptive</span></div>
+          <div class="rule-row">
+            <div class="rule-name">Tooltip<span class="sub">.tooltip</span></div>
+            <div class="rule-when">Label-only hint for a control. One short line, no interactive content inside.</div>
+            <div class="rule-avoid">Any content the user might want to copy, click, or focus.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Popover<span class="sub">.popover</span></div>
+            <div class="rule-when">Small contextual UI — a quick form, a single setting, related links.</div>
+            <div class="rule-avoid">Multi-step flows or anything wider than ~280 px.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Dropdown menu<span class="sub">.menu</span></div>
+            <div class="rule-when">Picking an action from a fixed list of 3–10 items.</div>
+            <div class="rule-avoid">More than ~10 items — use a search field or command palette.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Drawer<span class="sub">.drawer</span></div>
+            <div class="rule-when">Detail / edit view that should keep the parent visible. Comfortable for 1–3 fields with prose.</div>
+            <div class="rule-avoid">Pure confirmations (use modal) or hidden-from-context workflows (use a page).</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Modal / Dialog<span class="sub">.modal</span></div>
+            <div class="rule-when">Single, blocking decision: confirm a destructive action, or capture 1–6 fields the user must finish.</div>
+            <div class="rule-avoid">Anything skippable, exploratory, or with side scrolling. Never stack modals.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Full page<span class="sub">/route</span></div>
+            <div class="rule-when">Multi-step flows, deeply linkable content, anything the user might bookmark or share.</div>
+            <div class="rule-avoid">Quick edits that yank the user out of context.</div>
+          </div>
+        </div>
+
+        <!-- Data display -->
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Data display</span><span>structured → scannable</span></div>
+          <div class="rule-row">
+            <div class="rule-name">Data table<span class="sub">.tbl</span></div>
+            <div class="rule-when">5+ items with comparable columns (status, owner, date) and bulk actions.</div>
+            <div class="rule-avoid">Mobile-primary surfaces and items where columns are mostly empty.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Card grid<span class="sub">.card grid</span></div>
+            <div class="rule-when">Items with rich media or unequal hierarchy. Browsing, gallery, showcase.</div>
+            <div class="rule-avoid">When the user needs to sort / filter / select multiple at once.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">List<span class="sub">vertical row stack</span></div>
+            <div class="rule-when">Many items, low column count, mobile-first surfaces.</div>
+            <div class="rule-avoid">When users need to compare values across items.</div>
+          </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Messages</span><span>scope → persistence</span></div>
+          <div class="rule-row">
+            <div class="rule-name">Inline field error<span class="sub">.field-error</span></div>
+            <div class="rule-when">Validation tied to a specific input. Bound via aria-describedby + aria-invalid.</div>
+            <div class="rule-avoid">System-level problems (use banner) or transient updates (use toast).</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Toast<span class="sub">.toast</span></div>
+            <div class="rule-when">Transient feedback after an action — saved, sent, copied. Auto-dismiss in 4–7 s.</div>
+            <div class="rule-avoid">Anything the user MUST read (use banner / modal) or critical errors.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Inline banner<span class="sub">.alert</span></div>
+            <div class="rule-when">Persistent context-scoped message: billing on hold, sync failed, info to remember.</div>
+            <div class="rule-avoid">Decoration. Don't stack 3 alerts at the top of every page.</div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Navigation</span><span>within page → across product</span></div>
+          <div class="rule-row">
+            <div class="rule-name">Tabs<span class="sub">.tabs--underline / .tabs--pill</span></div>
+            <div class="rule-when">2–5 sibling views of the same resource. URLs may not change.</div>
+            <div class="rule-avoid">When views differ significantly in shape, or have separate URLs you want to share.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Separate pages<span class="sub">/routes</span></div>
+            <div class="rule-when">Distinct workflows · permalink-worthy · 6+ siblings · ownership boundaries.</div>
+            <div class="rule-avoid">When the user wants to toggle quickly back and forth between views.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- SPACING -->
+      <section class="lb-section" id="spacing">
+        <header>
+          <div class="eyebrow">02 — Spacing &amp; sizing</div>
+          <h2>Spacing &amp; sizing rules <a class="anchor" href="#spacing">#spacing</a></h2>
+          <p class="lede">Two clocks: <em>inside</em> a component (small, 4–12 px) and <em>between</em> sections (large, 32–96 px). Don't mix them.</p>
+        </header>
+
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Inside-component</span><span>--space-1 → --space-6</span></div>
+          <div class="rule-row">
+            <div class="rule-name">Icon ↔ label<span class="sub">--space-2 (8)</span></div>
+            <div class="rule-when">Inside a button, menu item, breadcrumb, badge.</div>
+            <div class="rule-avoid">Different gaps for different controls — keep one rhythm.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Field ↔ label / helper<span class="sub">--space-1-5 (6)</span></div>
+            <div class="rule-when">Label → input → helper / error vertical stack.</div>
+            <div class="rule-avoid">Tight 4 px (cramped) or generous 16 px (loose) — 6 is the sweet spot.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Card padding<span class="sub">--space-4 to --space-6 (16–24)</span></div>
+            <div class="rule-when">Card header / body / footer; modal body; popover body.</div>
+            <div class="rule-avoid">Padding smaller than 16 — cards lose definition.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Toolbar gap<span class="sub">--space-2 (8)</span></div>
+            <div class="rule-when">Button groups, action rows, segmented controls.</div>
+            <div class="rule-avoid">No gap (controls touch) or 16 (looks disorganized).</div>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Between sections</span><span>--space-8 → --space-24</span></div>
+          <div class="rule-row">
+            <div class="rule-name">Section vertical rhythm<span class="sub">--space-12 to --space-24 (48–96)</span></div>
+            <div class="rule-when">Marketing pages, dashboards, anywhere with clear section boundaries.</div>
+            <div class="rule-avoid">Tight section gaps — large sections need real breathing room.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Page top padding<span class="sub">--space-10 (40)</span></div>
+            <div class="rule-when">First section under any sticky header.</div>
+            <div class="rule-avoid">Sticking content tight to the top bar.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Page-container width<span class="sub">~1200 / 1400 max</span></div>
+            <div class="rule-when">Wide content: dashboards, settings, tables.</div>
+            <div class="rule-avoid">Stretching prose past ~720 px — readability collapses.</div>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Control sizing</span><span>--size-*-h</span></div>
+          <div class="rule-row">
+            <div class="rule-name">Default control height<span class="sub">--size-md-h · 36 px desktop</span></div>
+            <div class="rule-when">Buttons, inputs, selects, steppers inside product UI.</div>
+            <div class="rule-avoid">Mixing heights in a single row — atoms share a height ladder, use it.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Touch target floor<span class="sub">44 px · auto on coarse pointer</span></div>
+            <div class="rule-when">Any tappable target on a touch device. md auto-promotes — no opt-in needed.</div>
+            <div class="rule-avoid">Manually re-sizing controls for mobile. The media query handles it.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Dense rows<span class="sub">--size-sm-h · 28 px</span></div>
+            <div class="rule-when">Tables, lists, sidebars — surfaces that benefit from density.</div>
+            <div class="rule-avoid">Primary actions and forms — too small to feel pressable.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ACCESSIBILITY -->
+      <section class="lb-section" id="a11y">
+        <header>
+          <div class="eyebrow">03 — Accessibility</div>
+          <h2>The non-negotiables <a class="anchor" href="#a11y">#a11y</a></h2>
+          <p class="lede">Hard requirements. If a component you build can't pass these, it's not done.</p>
+        </header>
+
+        <div class="rule-card">
+          <ol class="check-list">
+            <li>
+              <span class="check-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div>
+                <div class="check-title">Visible focus ring on every interactive element</div>
+                <div class="check-desc"><code class="token-pill">:focus-visible</code> renders a 2 px outline at <code class="token-pill">--focus-ring</code> with 2 px offset. Never set <code class="token-pill">outline: none</code> without replacing it.</div>
+              </div>
+              <span class="check-token">--focus-ring</span>
+            </li>
+            <li>
+              <span class="check-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div>
+                <div class="check-title">4.5:1 contrast for body text · 3:1 for ≥18 px or bold</div>
+                <div class="check-desc">All semantic <code class="token-pill">--text-*</code> tokens meet this in both themes. If you introduce a new color, verify with an oklch contrast check.</div>
+              </div>
+              <span class="check-token">--text-* · --border-strong</span>
+            </li>
+            <li>
+              <span class="check-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div>
+                <div class="check-title">Every input has a label</div>
+                <div class="check-desc">Visible <code class="token-pill">&lt;label for&gt;</code> preferred. <code class="token-pill">aria-label</code> only for icon-only controls. Placeholder is not a label.</div>
+              </div>
+              <span class="check-token">.field-label</span>
+            </li>
+            <li>
+              <span class="check-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div>
+                <div class="check-title">Errors announced via aria-invalid + aria-describedby</div>
+                <div class="check-desc">Validation messages bound to the input with <code class="token-pill">aria-describedby</code>; input flagged with <code class="token-pill">aria-invalid="true"</code>. Visible icon + text — never color alone.</div>
+              </div>
+              <span class="check-token">.field-error</span>
+            </li>
+            <li>
+              <span class="check-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div>
+                <div class="check-title">Full keyboard operability</div>
+                <div class="check-desc">Tab order matches visual order. Esc closes overlays. Arrow keys traverse tablists / menus / option lists. Enter activates the focused control.</div>
+              </div>
+              <span class="check-token">tabindex · roles</span>
+            </li>
+            <li>
+              <span class="check-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div>
+                <div class="check-title">Roles + labels on every overlay</div>
+                <div class="check-desc">Modals: <code class="token-pill">role="dialog" aria-modal="true" aria-labelledby</code>. Toasts: <code class="token-pill">role="status"</code> or <code class="token-pill">role="alert"</code> for errors. Menus: <code class="token-pill">role="menu"</code> with <code class="token-pill">role="menuitem"</code> children.</div>
+              </div>
+              <span class="check-token">role · aria-*</span>
+            </li>
+            <li>
+              <span class="check-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div>
+                <div class="check-title">Focus trapped in modals · restored on close</div>
+                <div class="check-desc">When a modal opens, focus moves to its primary action or first input. When it closes, focus returns to the trigger.</div>
+              </div>
+              <span class="check-token">.modal · .drawer</span>
+            </li>
+            <li>
+              <span class="check-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div>
+                <div class="check-title">Respect prefers-reduced-motion</div>
+                <div class="check-desc">All transforms / animations disabled under <code class="token-pill">@media (prefers-reduced-motion: reduce)</code>. Replace motion with instant state change, never remove the affordance.</div>
+              </div>
+              <span class="check-token">--duration-* · --ease-*</span>
+            </li>
+            <li>
+              <span class="check-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div>
+                <div class="check-title">Live regions on async updates</div>
+                <div class="check-desc">Toast container carries <code class="token-pill">aria-live="polite"</code> (status updates) or <code class="token-pill">aria-live="assertive"</code> + <code class="token-pill">role="alert"</code> for errors. Inline counters that change without a page navigation wrap their text in a polite live region too.</div>
+              </div>
+              <span class="check-token">aria-live · role="alert"</span>
+            </li>
+            <li>
+              <span class="check-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <div>
+                <div class="check-title">Color is never the only signal</div>
+                <div class="check-desc">Status badges carry an icon or dot in addition to color. Error inputs carry a message + icon, not just a red border. Critical for color-blind users and printed views.</div>
+              </div>
+              <span class="check-token">.badge-dot · .alert-icon</span>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- RESPONSIVE -->
+      <section class="lb-section" id="responsive">
+        <header>
+          <div class="eyebrow">04 — Responsive</div>
+          <h2>Responsive rules <a class="anchor" href="#responsive">#responsive</a></h2>
+          <p class="lede">Mobile-first. Each breakpoint adds capability; nothing critical hides forever.</p>
+        </header>
+
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Breakpoint behavior</span><span>--bp-sm 640 · md 768 · lg 1024 · xl 1280 · 2xl 1536</span></div>
+          <div class="rule-row" style="grid-template-columns: 120px 1fr 1fr;">
+            <div class="rule-name">Sidebar nav<span class="sub">app-sidebar</span></div>
+            <div class="rule-when">≥ lg (1024): expanded; ≥ md (768): collapsible icon rail.</div>
+            <div class="rule-avoid">&lt; md (768): collapses into a drawer behind a hamburger; scrim closes it.</div>
+          </div>
+          <div class="rule-row" style="grid-template-columns: 120px 1fr 1fr;">
+            <div class="rule-name">Data table<span class="sub">.tbl</span></div>
+            <div class="rule-when">≥ md: full table with horizontal scroll if needed.</div>
+            <div class="rule-avoid">&lt; md: collapse to card-per-row OR keep the table inside <code class="token-pill">overflow-x: auto</code>. Never crush cells.</div>
+          </div>
+          <div class="rule-row" style="grid-template-columns: 120px 1fr 1fr;">
+            <div class="rule-name">Page header actions<span class="sub">.page-header-actions</span></div>
+            <div class="rule-when">≥ md: actions row aligned right.</div>
+            <div class="rule-avoid">&lt; md: collapse secondary actions into an overflow menu; primary stays visible.</div>
+          </div>
+          <div class="rule-row" style="grid-template-columns: 120px 1fr 1fr;">
+            <div class="rule-name">Form layout<span class="sub">.form-section</span></div>
+            <div class="rule-when">≥ md: two-column grid (meta / fields).</div>
+            <div class="rule-avoid">&lt; md: stack to single column; meta becomes a small header above its fields.</div>
+          </div>
+          <div class="rule-row" style="grid-template-columns: 120px 1fr 1fr;">
+            <div class="rule-name">Modal / Drawer<span class="sub">.modal · .drawer</span></div>
+            <div class="rule-when">≥ md: centered modal / right-side drawer at defined widths.</div>
+            <div class="rule-avoid">&lt; md: bottom-sheet drawer or full-screen modal; never a 320 px box on a 360 px screen.</div>
+          </div>
+          <div class="rule-row" style="grid-template-columns: 120px 1fr 1fr;">
+            <div class="rule-name">Touch targets<span class="sub">--size-md-h</span></div>
+            <div class="rule-when">Pointer: coarse · auto-promotes md (36) → lg (44). No code change required.</div>
+            <div class="rule-avoid">Manually re-sizing controls per breakpoint — the media query covers it.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- MICROCOPY -->
+      <section class="lb-section" id="microcopy">
+        <header>
+          <div class="eyebrow">05 — Microcopy</div>
+          <h2>Words are atoms too <a class="anchor" href="#microcopy">#microcopy</a></h2>
+          <p class="lede">The fastest way to make a system feel cheap is generic copy. Specific verbs, honest errors, sentence case.</p>
+        </header>
+
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Button labels</span><span>verb · object</span></div>
+          <div class="rule-row">
+            <div class="rule-name">Save changes<span class="sub">specific verb + object</span></div>
+            <div class="rule-when">Confirms what will happen when pressed. "Send invite", "Publish update", "Delete project".</div>
+            <div class="rule-avoid">"OK", "Submit", "Done" — they don't tell the user what the button does.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Cancel / Discard<span class="sub">the escape</span></div>
+            <div class="rule-when">Pairs with a primary action. "Discard" when changes are lost; "Cancel" when nothing was done.</div>
+            <div class="rule-avoid">"Close" or "Nope" — too informal or unclear.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Sentence case<span class="sub">First word capitalized only</span></div>
+            <div class="rule-when">Buttons, titles, menu items, headings — everywhere except proper nouns.</div>
+            <div class="rule-avoid">Title Case — looks dated and inflated. ALL CAPS — looks shouty (overline tokens already handle it where needed).</div>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Errors</span><span>what + why + how to fix</span></div>
+          <div class="rule-row">
+            <div class="rule-name">"Enter a valid email"<span class="sub">specific + actionable</span></div>
+            <div class="rule-when">Tells the user what's wrong AND what to do. Add a hint when the rule is non-obvious.</div>
+            <div class="rule-avoid">"Invalid input" or "Error 422" — the user can't fix what they don't understand.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">"We couldn't save your changes"<span class="sub">honest + first person</span></div>
+            <div class="rule-when">System errors say "we", not "you". Pair with a retry action and a way out (contact support).</div>
+            <div class="rule-avoid">"Something went wrong" with no detail, no retry, no context.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Trace IDs for 5xx<span class="sub">hex string in monospace</span></div>
+            <div class="rule-when">Server errors that go to your logs. Lets users include it when contacting support.</div>
+            <div class="rule-avoid">Burying the trace ID in a network tab. Surface it tastefully.</div>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Empty states</span><span>guide, don't apologize</span></div>
+          <div class="rule-row">
+            <div class="rule-name">"Create your first project"<span class="sub">primary action in the copy</span></div>
+            <div class="rule-when">First-use. Explain what the thing is for, then point at the action.</div>
+            <div class="rule-avoid">"No projects" with no path forward. "Nothing to see here" — patronizing.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">"No results for 'fnordling'"<span class="sub">echo the query</span></div>
+            <div class="rule-when">Search empties. Offer to clear filters / widen scope. Echoing the query reassures the user the search ran.</div>
+            <div class="rule-avoid">A blank screen. A spinner that resolved to nothing without explanation.</div>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Loading-state copy</span><span>verb + ellipsis</span></div>
+          <div class="rule-row">
+            <div class="rule-name">"Saving…"<span class="sub">specific gerund</span></div>
+            <div class="rule-when">Says what the system is doing right now. "Sending…", "Generating…", "Connecting…".</div>
+            <div class="rule-avoid">"Please wait" or "Loading…" — same words for every state, the user learns nothing.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Replace, don't append<span class="sub">on a button</span></div>
+            <div class="rule-when">Button label SWAPS — "Save" → "Saving…" → "Saved" — so the same control teaches the user what's happening.</div>
+            <div class="rule-avoid">Adding a spinner next to an unchanged label. Less information, same button area.</div>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Numbers · dates · currency</span><span>locale-aware, never ambiguous</span></div>
+          <div class="rule-row">
+            <div class="rule-name">Large numbers<span class="sub">thousands separator + tabular-nums</span></div>
+            <div class="rule-when">24,832 · 1,248,300 · $248,932. Use <code class="token-pill">font-variant-numeric: tabular-nums</code> wherever digits stack vertically (tables, KPIs).</div>
+            <div class="rule-avoid">24832 (unreadable). Mixing proportional digits with stacked values.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Abbreviation rules<span class="sub">k, M, B</span></div>
+            <div class="rule-when">24.8k · 1.2M · 3.4B for headline KPIs and tight chrome. One decimal max.</div>
+            <div class="rule-avoid">Mixing abbreviated and full forms in the same table column.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Dates<span class="sub">Mar 14, 2026 · 14 Mar 2026 — never 03/04/2026</span></div>
+            <div class="rule-when">Spell the month when space allows; ISO (2026-03-14) for system surfaces and CSVs. Relative ("2 hours ago", "Yesterday") inside the recency window.</div>
+            <div class="rule-avoid">"03/04/2026" — ambiguous across locales. Burying the year for dates in different calendar years.</div>
+          </div>
+          <div class="rule-row">
+            <div class="rule-name">Currency<span class="sub">symbol + ISO when ambiguous</span></div>
+            <div class="rule-when">$24.50 in a US-only context · $24.50 USD when other currencies appear nearby. Always 2 decimal places for fiat, even at whole values ($24.00).</div>
+            <div class="rule-avoid">Mixing "$" without context when supporting multiple currencies. Dropping decimals at zero ("$24").</div>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head"><span>Confirmations</span><span>name the consequence</span></div>
+          <div class="rule-row">
+            <div class="rule-name">"Delete project 'Onboarding v2'?"<span class="sub">include the target</span></div>
+            <div class="rule-when">Destructive modals — name the thing being acted on so the user can sanity-check.</div>
+            <div class="rule-avoid">"Are you sure?" — answers nothing. Especially bad for delete actions.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- DO / DON'T -->
+      <section class="lb-section" id="dodont">
+        <header>
+          <div class="eyebrow">06 — Do / Don't</div>
+          <h2>Side-by-side <a class="anchor" href="#dodont">#dodont</a></h2>
+          <p class="lede">Six pairs contrasting this system with the generic-AI look that ships when nobody designs.</p>
+        </header>
+
+        <!-- 1: Buttons -->
+        <div class="dd-row">
+          <div class="dd-cell">
+            <div class="dd-flag is-do">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Do
+            </div>
+            <div class="dd-body">
+              <button class="btn btn--primary">Publish update</button>
+            </div>
+            <div class="dd-caption">Solid accent, specific verb + object, restrained shadow.</div>
+          </div>
+          <div class="dd-cell">
+            <div class="dd-flag is-dont">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Don't
+            </div>
+            <div class="dd-body">
+              <button style="background: linear-gradient(135deg, oklch(0.62 0.20 280), oklch(0.58 0.22 320)); color: white; padding: 10px 22px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 600; box-shadow: 0 8px 24px oklch(0.50 0.20 300 / 0.4); cursor: pointer;">🚀 Submit</button>
+            </div>
+            <div class="dd-caption">Purple-to-pink gradient + emoji icon + chunky shadow + "Submit". The generic AI button.</div>
+          </div>
+        </div>
+
+        <!-- 2: Cards -->
+        <div class="dd-row" style="margin-top: 16px;">
+          <div class="dd-cell">
+            <div class="dd-flag is-do">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Do
+            </div>
+            <div class="dd-body" style="padding: 24px;">
+              <div class="card" style="max-width: 280px; width: 100%;">
+                <div class="card-body">
+                  <div style="font-size: 14px; font-weight: 600;">Project saved</div>
+                  <p style="margin: 6px 0 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55;">2 minutes ago · synced across devices.</p>
+                </div>
+              </div>
+            </div>
+            <div class="dd-caption">Pure-white card on off-white bg, 1 px border, whisper shadow. Reads as a real surface.</div>
+          </div>
+          <div class="dd-cell">
+            <div class="dd-flag is-dont">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Don't
+            </div>
+            <div class="dd-body" style="padding: 24px; background: linear-gradient(135deg, oklch(0.95 0.05 280), oklch(0.92 0.06 320));">
+              <div style="max-width: 280px; width: 100%; padding: 16px; backdrop-filter: blur(20px); background: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.5); border-radius: 24px; box-shadow: 0 20px 60px rgba(120, 80, 200, 0.2);">
+                <div style="font-size: 14px; font-weight: 700; background: linear-gradient(90deg, oklch(0.50 0.20 280), oklch(0.55 0.22 320)); background-clip: text; -webkit-background-clip: text; color: transparent;">✨ Project saved!</div>
+                <p style="margin: 6px 0 0; font-size: 13px; color: rgba(0,0,0,0.6);">2 minutes ago</p>
+              </div>
+            </div>
+            <div class="dd-caption">Glassmorphism, gradient text, sparkle emoji, chunky drop shadow. Looks like a 2022 portfolio.</div>
+          </div>
+        </div>
+
+        <!-- 3: Error message -->
+        <div class="dd-row" style="margin-top: 16px;">
+          <div class="dd-cell">
+            <div class="dd-flag is-do">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Do
+            </div>
+            <div class="dd-body" style="padding: 20px;">
+              <div class="field" style="max-width: 320px; width: 100%;">
+                <label class="field-label">Work email</label>
+                <input class="input is-error" value="andrea@acme" aria-invalid="true" />
+                <span class="field-error">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  Add a domain (e.g. acme.co).
+                </span>
+              </div>
+            </div>
+            <div class="dd-caption">Bound to the field, names the problem, tells the user how to fix.</div>
+          </div>
+          <div class="dd-cell">
+            <div class="dd-flag is-dont">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Don't
+            </div>
+            <div class="dd-body" style="padding: 20px;">
+              <div style="max-width: 320px; width: 100%;">
+                <label style="font-size: 13px; font-weight: 500;">Email</label>
+                <input value="andrea@acme" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-md); margin-top: 6px;" />
+                <div style="margin-top: 16px; padding: 12px; background: oklch(0.96 0.04 25); border-radius: 4px; font-size: 13px; color: oklch(0.40 0.10 25);">⚠️ Error 422: Invalid input</div>
+              </div>
+            </div>
+            <div class="dd-caption">Unbound banner, generic message, status code shown to the user, emoji as icon.</div>
+          </div>
+        </div>
+
+        <!-- 4: Spacing -->
+        <div class="dd-row" style="margin-top: 16px;">
+          <div class="dd-cell">
+            <div class="dd-flag is-do">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Do
+            </div>
+            <div class="dd-body" style="padding: 28px;">
+              <div style="max-width: 320px; width: 100%; display:flex; flex-direction: column; gap: 14px;">
+                <div>
+                  <div style="font-size: 18px; font-weight: 600; letter-spacing: -0.014em;">Workspace name</div>
+                  <p style="margin: 4px 0 0; font-size: 13px; color: var(--text-secondary);">Visible to your team and guests.</p>
+                </div>
+                <input class="input" value="Acme" />
+                <button class="btn btn--primary">Save</button>
+              </div>
+            </div>
+            <div class="dd-caption">Air between elements. The eye can scan, the form can breathe.</div>
+          </div>
+          <div class="dd-cell">
+            <div class="dd-flag is-dont">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Don't
+            </div>
+            <div class="dd-body" style="padding: 8px;">
+              <div style="max-width: 320px; width: 100%; display:flex; flex-direction: column; gap: 2px;">
+                <div style="font-size: 18px; font-weight: 600;">Workspace name</div>
+                <div style="font-size: 13px; color: var(--text-secondary);">Visible to your team and guests.</div>
+                <input value="Acme" style="padding: 4px 6px; font-size: 13px; border: 1px solid var(--border); border-radius: 3px;" />
+                <button style="padding: 4px 8px; font-size: 12px; background: var(--accent); color: white; border: 0; border-radius: 3px; cursor: pointer;">Save</button>
+              </div>
+            </div>
+            <div class="dd-caption">Everything crammed together with 2 px gaps. Looks rushed and unprofessional.</div>
+          </div>
+        </div>
+
+        <!-- 5: Icons -->
+        <div class="dd-row" style="margin-top: 16px;">
+          <div class="dd-cell">
+            <div class="dd-flag is-do">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Do
+            </div>
+            <div class="dd-body">
+              <div style="display:flex; flex-direction: column; gap: 8px;">
+                <button class="menu-item" style="min-width: 180px;"><span class="menu-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>New file</button>
+                <button class="menu-item"><span class="menu-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span>New folder</button>
+                <button class="menu-item is-destructive"><span class="menu-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></span>Delete</button>
+              </div>
+            </div>
+            <div class="dd-caption">Stroked icons from a single set (Lucide). Same weight, same corner style.</div>
+          </div>
+          <div class="dd-cell">
+            <div class="dd-flag is-dont">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Don't
+            </div>
+            <div class="dd-body">
+              <div style="display:flex; flex-direction: column; gap: 8px; min-width: 180px;">
+                <button style="display:flex; align-items:center; gap:8px; padding: 6px 10px; background: transparent; border: 0; cursor: pointer; font-size: 13px;">📄 New file</button>
+                <button style="display:flex; align-items:center; gap:8px; padding: 6px 10px; background: transparent; border: 0; cursor: pointer; font-size: 13px;">📁 New folder</button>
+                <button style="display:flex; align-items:center; gap:8px; padding: 6px 10px; background: transparent; border: 0; cursor: pointer; font-size: 13px; color: oklch(0.50 0.20 25);">🗑️ Delete</button>
+              </div>
+            </div>
+            <div class="dd-caption">Emoji as icons. Different render across OSes, look casual, can't be color-controlled.</div>
+          </div>
+        </div>
+
+        <!-- Typography -->
+        <div class="dd-row" style="margin-top: 16px;">
+          <div class="dd-cell">
+            <div class="dd-flag is-do"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Do</div>
+            <div class="dd-body" style="padding: 24px;">
+              <div style="max-width: 280px;">
+                <div class="t-overline text-muted" style="margin-bottom: 6px;">Engineering</div>
+                <h3 style="margin: 0; font-size: 24px; line-height: 1.24; font-weight: 600; letter-spacing: -0.020em;">A clear hierarchy</h3>
+                <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: var(--text-secondary);">Body sits at 14, supporting copy at 12.5. Headings carry their weight.</p>
+              </div>
+            </div>
+            <div class="dd-caption">Real type scale · sentence case · tight tracking on heading · clear hierarchy.</div>
+          </div>
+          <div class="dd-cell">
+            <div class="dd-flag is-dont"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Don't</div>
+            <div class="dd-body" style="padding: 24px;">
+              <div style="max-width: 280px;">
+                <div style="font-size: 14px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0; font-weight: 700;">ENGINEERING</div>
+                <h3 style="margin: 0; font-size: 14px; line-height: 1.4; font-weight: 700; letter-spacing: 0;">A Clear Hierarchy</h3>
+                <p style="margin: 4px 0 0; font-size: 14px; line-height: 1.4; color: var(--text-primary);">Everything at 14px. Title Case. Bold for emphasis. The hierarchy is in the bold, the bold is everywhere.</p>
+              </div>
+            </div>
+            <div class="dd-caption">Uniform 14 px · Title Case · bold-as-hierarchy · everything shouts, nothing leads.</div>
+          </div>
+        </div>
+
+        <!-- Color / accent -->
+        <div class="dd-row" style="margin-top: 16px;">
+          <div class="dd-cell">
+            <div class="dd-flag is-do"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Do</div>
+            <div class="dd-body" style="padding: 24px;">
+              <div style="display: flex; gap: 6px; flex-wrap: wrap; max-width: 320px;">
+                <span class="badge badge--neutral">Draft</span>
+                <span class="badge badge--neutral">Marketing</span>
+                <span class="badge badge--neutral">Q2</span>
+                <span class="badge badge--accent"><span class="badge-dot"></span>Live</span>
+                <span class="badge badge--neutral">v 2.4</span>
+              </div>
+            </div>
+            <div class="dd-caption">One accent reserved for the meaningful state. Everything else neutral. The eye knows where to land.</div>
+          </div>
+          <div class="dd-cell">
+            <div class="dd-flag is-dont"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Don't</div>
+            <div class="dd-body" style="padding: 24px;">
+              <div style="display: flex; gap: 6px; flex-wrap: wrap; max-width: 320px;">
+                <span style="display:inline-flex; align-items:center; padding: 0 8px; height: 22px; font-size: 12px; font-weight: 500; border-radius: 9999px; background: oklch(0.92 0.10 250); color: oklch(0.40 0.13 250);">Draft</span>
+                <span style="display:inline-flex; align-items:center; padding: 0 8px; height: 22px; font-size: 12px; font-weight: 500; border-radius: 9999px; background: oklch(0.92 0.10 60); color: oklch(0.40 0.13 60);">Marketing</span>
+                <span style="display:inline-flex; align-items:center; padding: 0 8px; height: 22px; font-size: 12px; font-weight: 500; border-radius: 9999px; background: oklch(0.92 0.10 305); color: oklch(0.40 0.13 305);">Q2</span>
+                <span style="display:inline-flex; align-items:center; padding: 0 8px; height: 22px; font-size: 12px; font-weight: 500; border-radius: 9999px; background: oklch(0.92 0.10 155); color: oklch(0.40 0.13 155);">Live</span>
+                <span style="display:inline-flex; align-items:center; padding: 0 8px; height: 22px; font-size: 12px; font-weight: 500; border-radius: 9999px; background: oklch(0.92 0.10 25); color: oklch(0.40 0.13 25);">v 2.4</span>
+              </div>
+            </div>
+            <div class="dd-caption">Every chip a different color. The eye has nowhere to land — and "Live" no longer reads as different.</div>
+          </div>
+        </div>
+
+        <!-- 6: States -->
+        <div class="dd-row" style="margin-top: 16px;">
+          <div class="dd-cell">
+            <div class="dd-flag is-do">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Do
+            </div>
+            <div class="dd-body" style="padding: 16px;">
+              <div class="state" style="padding: 16px;">
+                <div class="state-glyph is-accent" style="width:44px; height:44px;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:20px; height:20px;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <h4 class="state-title" style="font-size: 15px;">No projects yet</h4>
+                <p class="state-msg" style="font-size: 13px;">Create your first to invite the team.</p>
+                <div class="state-actions"><button class="btn btn--primary btn--sm">Create project</button></div>
+              </div>
+            </div>
+            <div class="dd-caption">Empty state ships with the happy path. Icon, message, next-step CTA.</div>
+          </div>
+          <div class="dd-cell">
+            <div class="dd-flag is-dont">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Don't
+            </div>
+            <div class="dd-body">
+              <div style="text-align:center; color: var(--text-muted); font-size: 13px;">
+                No data
+              </div>
+            </div>
+            <div class="dd-caption">"No data." No icon, no explanation, no path forward. The user is stuck.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- TOKEN-NAME MAP -->
+      <section class="lb-section" id="tokens">
+        <header>
+          <div class="eyebrow">07 — Token-name map</div>
+          <h2>Every token, one place <a class="anchor" href="#tokens">#tokens</a></h2>
+          <p class="lede">The complete contract. Reference this when picking a token; never invent a literal hex / px / radius in a component.</p>
+        </header>
+
+        <!-- Color -->
+        <div class="lb-subsection">
+          <h3>Color — semantic roles</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="padding: 0;">
+              <table class="token-table">
+                <thead><tr><th>Token</th><th>Used for</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="swatch-mini" style="background: var(--bg);"></span>--bg</td><td>Page background, never pure white</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--surface);"></span>--surface</td><td>Card / panel surface</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--surface-raised);"></span>--surface-raised</td><td>Popovers, menus, raised surfaces</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--surface-sunken);"></span>--surface-sunken</td><td>Inset wells, code blocks, headers</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--border);"></span>--border</td><td>Default 1 px hairline</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--border-strong);"></span>--border-strong</td><td>Hover / emphasized borders</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--text-primary);"></span>--text-primary</td><td>Body, headings, primary content</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--text-secondary);"></span>--text-secondary</td><td>Supporting copy, labels</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--text-muted);"></span>--text-muted</td><td>Helper text, meta</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--accent);"></span>--accent</td><td>Primary action / link</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--accent-hover);"></span>--accent-hover</td><td>Accent hover state</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--accent-subtle);"></span>--accent-subtle</td><td>Tinted accent background</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--focus-ring);"></span>--focus-ring</td><td>Keyboard focus outline</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--success-bg);"></span>--success-bg / --success-fg</td><td>Success status</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--warning-bg);"></span>--warning-bg / --warning-fg</td><td>Warning status</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--danger-bg);"></span>--danger-bg / --danger-fg</td><td>Danger / error status</td></tr>
+                  <tr><td><span class="swatch-mini" style="background: var(--info-bg);"></span>--info-bg / --info-fg</td><td>Info status</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Color ramps -->
+        <div class="lb-subsection">
+          <h3>Color — raw ramps</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="padding: 0;">
+              <table class="token-table">
+                <thead><tr><th>Token</th><th>Used for</th></tr></thead>
+                <tbody>
+                  <tr><td>--color-gray-{50…950}</td><td>11-step neutral gray ramp (theme-agnostic)</td></tr>
+                  <tr><td>--color-accent-{50…950}</td><td>11-step accent ramp (theme-agnostic)</td></tr>
+                  <tr><td>--color-success-{100, 500, 600, 900}</td><td>Status — success</td></tr>
+                  <tr><td>--color-warning-{100, 500, 600, 900}</td><td>Status — warning</td></tr>
+                  <tr><td>--color-danger-{100, 500, 600, 900}</td><td>Status — danger</td></tr>
+                  <tr><td>--color-info-{100, 500, 600, 900}</td><td>Status — info</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Typography -->
+        <div class="lb-subsection">
+          <h3>Type</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="padding: 0;">
+              <table class="token-table">
+                <thead><tr><th>Token</th><th>Used for</th></tr></thead>
+                <tbody>
+                  <tr><td>--font-sans</td><td>UI default — Inter</td></tr>
+                  <tr><td>--font-mono</td><td>Code, tokens, numbers — JetBrains Mono</td></tr>
+                  <tr><td>--text-display-{size, lh, weight, track}</td><td>Hero display 56 px</td></tr>
+                  <tr><td>--text-h1-{size, lh, weight, track}</td><td>40 px page title</td></tr>
+                  <tr><td>--text-h2-{size, lh, weight, track}</td><td>32 px section heading</td></tr>
+                  <tr><td>--text-h3-{size, lh, weight, track}</td><td>24 px subsection</td></tr>
+                  <tr><td>--text-h4-{size, lh, weight, track}</td><td>18 px card title</td></tr>
+                  <tr><td>--text-body-lg-{size, lh, weight, track}</td><td>18 px lead copy</td></tr>
+                  <tr><td>--text-body-{size, lh, weight, track}</td><td>16 px default reading</td></tr>
+                  <tr><td>--text-body-sm-{size, lh, weight, track}</td><td>14 px dense UI</td></tr>
+                  <tr><td>--text-caption-{size, lh, weight, track}</td><td>13 px caption / figure note</td></tr>
+                  <tr><td>--text-overline-{size, lh, weight, track}</td><td>12 px uppercase eyebrow</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Size scale -->
+        <div class="lb-subsection">
+          <h3>Size scale — controls</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="padding: 0;">
+              <table class="token-table">
+                <thead><tr><th>Token</th><th>Used for</th></tr></thead>
+                <tbody>
+                  <tr><td>--size-{xs, sm, md, lg, xl}-h</td><td>Control height · 20 / 28 / 36 / 44 / 56 px</td></tr>
+                  <tr><td>--size-{xs, sm, md, lg, xl}-px</td><td>Horizontal padding inside a control</td></tr>
+                  <tr><td>--size-{xs, sm, md, lg, xl}-fs</td><td>Font size for that control size</td></tr>
+                  <tr><td>--size-{xs, sm, md, lg, xl}-icon</td><td>Inline icon size · 12 / 14 / 16 / 18 / 20 px</td></tr>
+                  <tr><td>--size-{xs, sm, md, lg, xl}-gap</td><td>Gap between icon and label</td></tr>
+                  <tr><td>--size-{xs, sm, md, lg, xl}-radius</td><td>Border-radius for that control size</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="specimen-caption">Touch: on <code class="token-pill">pointer: coarse</code>, --size-md-* auto-promotes to --size-lg-* values (44 px tap target).</div>
+          </div>
+        </div>
+
+        <!-- Spacing / radius / shadow -->
+        <div class="lb-subsection">
+          <h3>Spacing · radius · shadow</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="padding: 0;">
+              <table class="token-table">
+                <thead><tr><th>Token</th><th>Used for</th></tr></thead>
+                <tbody>
+                  <tr><td>--space-{0, 0-5, 1, 1-5, 2, 2-5, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24}</td><td>4 px-based spacing scale, 0 → 96 px</td></tr>
+                  <tr><td>--radius-{sm, md, lg, xl, full}</td><td>4 / 8 / 12 / 16 / 9999 px</td></tr>
+                  <tr><td>--shadow-{sm, md, lg, xl}</td><td>Elevation — theme-aware (stronger in dark)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Breakpoints / z-index / motion -->
+        <div class="lb-subsection">
+          <h3>Breakpoints · z-index · motion</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="padding: 0;">
+              <table class="token-table">
+                <thead><tr><th>Token</th><th>Used for</th></tr></thead>
+                <tbody>
+                  <tr><td>--bp-{sm, md, lg, xl, 2xl}</td><td>640 / 768 / 1024 / 1280 / 1536 — mobile-first min-width</td></tr>
+                  <tr><td>--z-{base, dropdown, sticky, overlay, modal, toast}</td><td>0 / 1000 / 1100 / 1200 / 1300 / 1400 — discrete, spaced by 100</td></tr>
+                  <tr><td>--duration-{fast, base, slow}</td><td>120 / 200 / 320 ms</td></tr>
+                  <tr><td>--ease-{standard, accelerate, decelerate, spring}</td><td>Cubic bezier curves for the four motion intents</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Wrap-up -->
+      <section style="padding-top: 32px; border-top: 1px solid var(--border);">
+        <div style="display:flex; align-items: flex-start; gap: 18px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-lg); background: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-on-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h3 class="t-h3">Lookbook complete.</h3>
+            <p class="t-body-lg text-secondary" style="max-width: 640px; margin-top: 6px;">Eight chapters: Foundations, Atoms, Molecules, Organisms, Auth, States, Personality, and this Guide.</p>
+            <p class="t-body text-secondary" style="margin-top: 12px; max-width: 640px;">
+              The contract is the token names. The values are the skin. Components reference tokens only — and they're written to keep that promise across every variant, every state, every theme.
+            </p>
+            <p class="t-body text-secondary" style="margin-top: 8px; max-width: 640px;">
+              When an agent picks up this system: start at <a href="Foundations.html" style="color: var(--accent); font-weight:500;">Foundations</a> to confirm the tokens, browse <a href="Atoms.html" style="color: var(--accent); font-weight:500;">Atoms</a> and <a href="Molecules.html" style="color: var(--accent); font-weight:500;">Molecules</a> for the parts list, lift composition shapes from <a href="Organisms.html" style="color: var(--accent); font-weight:500;">Organisms</a>, copy from <a href="Auth.html" style="color: var(--accent); font-weight:500;">Auth</a> / <a href="States.html" style="color: var(--accent); font-weight:500;">States</a> as needed, and dial up <a href="Personality.html" style="color: var(--accent); font-weight:500;">Personality</a> where it earns the room.
+            </p>
+            <div style="display:flex; gap: 6px; margin-top: 20px; flex-wrap: wrap;">
+              <span class="token-pill">Foundations</span>
+              <span class="token-pill">Atoms</span>
+              <span class="token-pill">Molecules</span>
+              <span class="token-pill">Organisms</span>
+              <span class="token-pill">Auth</span>
+              <span class="token-pill">States</span>
+              <span class="token-pill">Personality</span>
+              <span class="token-pill" style="background: var(--accent-subtle); color: var(--accent); border-color: color-mix(in oklch, var(--accent) 30%, transparent);">Guide</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script>
+</body>
+</html>

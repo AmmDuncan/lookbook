@@ -1,0 +1,15 @@
+{
+  "name": "@lookbook/tokens",
+  "version": "0.1.0",
+  "description": "Framework-agnostic Lookbook design tokens (CSS custom properties). The single source of truth, shared verbatim by every project and framework.",
+  "exports": {
+    ".": "./src/tokens.css",
+    "./tokens.css": "./src/tokens.css"
+  },
+  "files": [
+    "src/tokens.css"
+  ],
+  "sideEffects": [
+    "*.css"
+  ]
+}

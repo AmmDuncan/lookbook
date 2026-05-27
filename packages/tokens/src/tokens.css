@@ -1,0 +1,402 @@
+/* ============================================================
+   Lookbook — Design Tokens
+   Single source of truth. Everything downstream references these.
+   ============================================================ */
+
+/* ---- 1. Raw color ramps (theme-agnostic) ---- */
+:root {
+  /* Gray — true gray, tiny cool cast (hue 250, chroma 0.005). */
+  --color-gray-50:  oklch(0.985 0.003 250);
+  --color-gray-100: oklch(0.965 0.004 250);
+  --color-gray-200: oklch(0.925 0.005 250);
+  --color-gray-300: oklch(0.865 0.006 250);
+  --color-gray-400: oklch(0.715 0.008 250);
+  --color-gray-500: oklch(0.565 0.009 250);
+  --color-gray-600: oklch(0.460 0.010 250);
+  --color-gray-700: oklch(0.370 0.010 250);
+  --color-gray-800: oklch(0.265 0.009 250);
+  --color-gray-900: oklch(0.180 0.008 250);
+  --color-gray-950: oklch(0.110 0.008 250);
+
+  /* Accent — calm, slightly muted blue (hue 252). */
+  --color-accent-50:  oklch(0.970 0.018 252);
+  --color-accent-100: oklch(0.935 0.038 252);
+  --color-accent-200: oklch(0.870 0.075 252);
+  --color-accent-300: oklch(0.780 0.115 252);
+  --color-accent-400: oklch(0.665 0.155 252);
+  --color-accent-500: oklch(0.560 0.170 252);
+  --color-accent-600: oklch(0.490 0.175 252);
+  --color-accent-700: oklch(0.420 0.155 252);
+  --color-accent-800: oklch(0.340 0.130 252);
+  --color-accent-900: oklch(0.265 0.095 252);
+  --color-accent-950: oklch(0.180 0.060 252);
+
+  /* Status hues — defined as raw refs; semantic wiring happens below. */
+  --color-success-500: oklch(0.620 0.140 150);
+  --color-success-600: oklch(0.530 0.140 150);
+  --color-success-100: oklch(0.945 0.045 150);
+  --color-success-900: oklch(0.260 0.070 150);
+
+  --color-warning-500: oklch(0.760 0.140 75);
+  --color-warning-600: oklch(0.680 0.150 65);
+  --color-warning-100: oklch(0.955 0.045 85);
+  --color-warning-900: oklch(0.310 0.075 60);
+
+  --color-danger-500:  oklch(0.620 0.200 25);
+  --color-danger-600:  oklch(0.540 0.205 25);
+  --color-danger-700:  oklch(0.470 0.210 25);
+  --color-danger-100:  oklch(0.950 0.030 25);
+  --color-danger-900:  oklch(0.280 0.110 25);
+
+  --color-info-500: oklch(0.620 0.130 230);
+  --color-info-600: oklch(0.530 0.150 235);
+  --color-info-100: oklch(0.950 0.030 230);
+  --color-info-900: oklch(0.280 0.090 235);
+
+  /* Spacing — 4px base. */
+  --space-0:    0;
+  --space-0-5:  2px;
+  --space-1:    4px;
+  --space-1-5:  6px;
+  --space-2:    8px;
+  --space-2-5:  10px;
+  --space-3:    12px;
+  --space-4:    16px;
+  --space-5:    20px;
+  --space-6:    24px;
+  --space-8:    32px;
+  --space-10:   40px;
+  --space-12:   48px;
+  --space-16:   64px;
+  --space-20:   80px;
+  --space-24:   96px;
+
+  /* Radius. */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+
+  /* Type — families.
+     The pairing is the re-skin dial: override --font-display + --font-sans
+     in :root for a per-project look. The scale, weights, and tracking are
+     structural constants and never change. */
+  --font-sans:    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-sans);
+  --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Type — scale. (size / line-height / weight / tracking) */
+  --text-display-size:    56px;
+  --text-display-lh:      1.03;
+  --text-display-weight:  700;
+  --text-display-track:   -0.048em;
+
+  --text-h1-size:    40px;
+  --text-h1-lh:      1.07;
+  --text-h1-weight:  700;
+  --text-h1-track:   -0.038em;
+
+  --text-h2-size:    32px;
+  --text-h2-lh:      1.14;
+  --text-h2-weight:  600;
+  --text-h2-track:   -0.026em;
+
+  --text-h3-size:    24px;
+  --text-h3-lh:      1.24;
+  --text-h3-weight:  600;
+  --text-h3-track:   -0.020em;
+
+  --text-h4-size:    18px;
+  --text-h4-lh:      1.35;
+  --text-h4-weight:  600;
+  --text-h4-track:   -0.014em;
+
+  --text-body-lg-size:    18px;
+  --text-body-lg-lh:      1.55;
+  --text-body-lg-weight:  400;
+  --text-body-lg-track:   0;
+
+  --text-body-size:    16px;
+  --text-body-lh:      1.55;
+  --text-body-weight:  400;
+  --text-body-track:   0;
+
+  --text-body-sm-size:    14px;
+  --text-body-sm-lh:      1.50;
+  --text-body-sm-weight:  400;
+  --text-body-sm-track:   0;
+
+  --text-caption-size:    13px;
+  --text-caption-lh:      1.45;
+  --text-caption-weight:  400;
+  --text-caption-track:   0;
+
+  --text-overline-size:    12px;
+  --text-overline-lh:      1.20;
+  --text-overline-weight:  600;
+  --text-overline-track:   0.080em;
+
+  /* Micro size — helpers, captions, dense chrome */
+  --text-micro-size:   12.5px;
+  --text-micro-lh:     1.45;
+  --text-micro-weight: 400;
+
+  /* Error code (404 / 500 hero numerals) */
+  --text-errcode-size:   96px;
+  --text-errcode-lh:     1.0;
+  --text-errcode-weight: 600;
+  --text-errcode-track:  -0.050em;
+
+  /* Breakpoints (also re-declared in @media; here for reference). */
+  --bp-sm:  640px;
+  --bp-md:  768px;
+  --bp-lg:  1024px;
+  --bp-xl:  1280px;
+  --bp-2xl: 1536px;
+
+  /* Z-index layers. */
+  --z-base:     0;
+  --z-dropdown: 1000;
+  --z-sticky:   1100;
+  --z-overlay:  1200;
+  --z-modal:    1300;
+  --z-toast:    1400;
+
+  /* Motion — durations. */
+  --duration-fast:    120ms;
+  --duration-base:    200ms;
+  --duration-slow:    320ms;
+  --duration-slower:  900ms;
+  --duration-stagger: 40ms;
+
+  /* Motion — easings. */
+  --ease-standard:   cubic-bezier(0.2, 0, 0, 1);
+  --ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --ease-spring:     cubic-bezier(0.5, 1.6, 0.4, 1);
+  --ease-shimmer:    ease-in-out;
+
+  /* ------------------------------------------------------------
+     Size scale — shared across every control.
+     Height is the anchor: a button, input, select, stepper, and
+     avatar at the SAME size step will share the same height and
+     line up on a single row. Badges (chips) sit below the scale.
+     ------------------------------------------------------------ */
+  --size-xs-h:     20px;
+  --size-sm-h:     28px;
+  --size-md-h:     36px;
+  --size-lg-h:     44px;
+  --size-xl-h:     56px;
+
+  --size-xs-px:    6px;
+  --size-sm-px:    10px;
+  --size-md-px:    12px;
+  --size-lg-px:    16px;
+  --size-xl-px:    20px;
+
+  --size-xs-fs:    11px;
+  --size-sm-fs:    13px;
+  --size-md-fs:    14px;
+  --size-lg-fs:    15px;
+  --size-xl-fs:    16px;
+
+  --size-xs-icon:  12px;
+  --size-sm-icon:  14px;
+  --size-md-icon:  16px;
+  --size-lg-icon:  18px;
+  --size-xl-icon:  20px;
+
+  --size-xs-gap:   4px;
+  --size-sm-gap:   6px;
+  --size-md-gap:   8px;
+  --size-lg-gap:   10px;
+  --size-xl-gap:   12px;
+
+  --size-xs-radius: var(--radius-sm);
+  --size-sm-radius: var(--radius-sm);
+  --size-md-radius: var(--radius-md);
+  --size-lg-radius: var(--radius-md);
+  --size-xl-radius: var(--radius-lg);
+}
+
+/* ------------------------------------------------------------
+   Touch pointer override.
+   Desktop keeps a dense 36px 'md' (xs/sm/md/lg/xl = 20/28/36/44/56).
+   On coarse pointers (touch phones, tablets, touch laptops) we
+   auto-promote 'md' to lg-equivalent values so the DEFAULT control
+   meets the 44px AAA tap-target minimum without any component or
+   designer-facing change. xs/sm/lg/xl are unchanged.
+   ------------------------------------------------------------ */
+@media (pointer: coarse) {
+  :root {
+    --size-md-h:      var(--size-lg-h);
+    --size-md-px:     var(--size-lg-px);
+    --size-md-fs:     var(--size-lg-fs);
+    --size-md-icon:   var(--size-lg-icon);
+    --size-md-gap:    var(--size-lg-gap);
+    --size-md-radius: var(--size-lg-radius);
+  }
+}
+
+/* ---- 2. Semantic roles — light theme (default) ---- */
+:root,
+[data-theme="light"] {
+  --bg:              oklch(0.985 0.002 250); /* off-white, never pure white */
+  --surface:         #ffffff;                /* pure white cards */
+  --surface-raised:  #ffffff;
+  --surface-sunken:  var(--color-gray-50);
+
+  --border:          var(--color-gray-200);
+  --border-strong:   var(--color-gray-300);
+
+  --text-primary:    var(--color-gray-900);
+  --text-secondary:  var(--color-gray-600);
+  --text-muted:      var(--color-gray-500);
+  --text-on-accent:  #ffffff;
+
+  --accent:          var(--color-accent-600);
+  --accent-hover:    var(--color-accent-700);
+  --accent-subtle:   var(--color-accent-50);
+
+  /* Secondary accent + gradient — for hero / expressive surfaces ONLY.
+     NEVER on cards, atoms, status, or in-product UI. */
+  --accent-secondary:   oklch(0.620 0.155 35);
+  --accent-gradient:    linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+  --accent-gradient-soft: linear-gradient(135deg,
+                            color-mix(in oklch, var(--accent) 16%, var(--bg)) 0%,
+                            color-mix(in oklch, var(--accent-secondary) 14%, var(--bg)) 100%);
+
+  /* Chart palette — restrained 6-stop sequence derived from the accent.
+     Use in order; don't reach past --chart-6 — collapse small slices instead. */
+  --chart-1: var(--accent);
+  --chart-2: oklch(0.560 0.140 165);
+  --chart-3: oklch(0.660 0.155 65);
+  --chart-4: oklch(0.560 0.180 25);
+  --chart-5: oklch(0.520 0.140 305);
+  --chart-6: oklch(0.560 0.060 250);
+  --chart-grid: var(--border);
+  --chart-axis: var(--text-muted);
+
+  --focus-ring:      var(--color-accent-500);
+
+  /* Status — subtle bg + strong fg. */
+  --success-bg:      var(--color-success-100);
+  --success-fg:      var(--color-success-600);
+  --warning-bg:      var(--color-warning-100);
+  --warning-fg:      var(--color-warning-600);
+  --danger-bg:       var(--color-danger-100);
+  --danger-fg:       var(--color-danger-600);
+  --info-bg:         var(--color-info-100);
+  --info-fg:         var(--color-info-600);
+
+  /* Tinted surfaces — 6-slot palette for avatars / icon tiles / project tags.
+     Bg-fg pairs guarantee contrast; dark mode flips bg to a translucent dim. */
+  --tint-1-bg: oklch(0.945 0.045 65);   --tint-1-fg: oklch(0.430 0.110 65);
+  --tint-2-bg: oklch(0.945 0.045 155);  --tint-2-fg: oklch(0.430 0.110 155);
+  --tint-3-bg: oklch(0.945 0.045 305);  --tint-3-fg: oklch(0.430 0.110 305);
+  --tint-4-bg: oklch(0.945 0.045 250);  --tint-4-fg: oklch(0.430 0.110 250);
+  --tint-5-bg: oklch(0.950 0.040 25);   --tint-5-fg: oklch(0.450 0.140 25);
+  --tint-6-bg: var(--surface-sunken);   --tint-6-fg: var(--text-secondary);
+
+  /* Shadows — light theme: soft, short. */
+  --shadow-sm: 0 1px 2px 0 rgb(15 17 23 / 0.04);
+  --shadow-md: 0 2px 4px -1px rgb(15 17 23 / 0.06), 0 1px 2px -1px rgb(15 17 23 / 0.04);
+  --shadow-lg: 0 8px 16px -4px rgb(15 17 23 / 0.08), 0 4px 6px -2px rgb(15 17 23 / 0.04);
+  --shadow-xl: 0 20px 32px -8px rgb(15 17 23 / 0.12), 0 8px 16px -4px rgb(15 17 23 / 0.06);
+
+  color-scheme: light;
+}
+
+/* ---- 3. Semantic roles — dark theme ---- */
+[data-theme="dark"] {
+  --bg:              oklch(0.140 0.005 250); /* near-black with cool cast */
+  --surface:         oklch(0.185 0.006 250);
+  --surface-raised:  oklch(0.220 0.007 250);
+  --surface-sunken:  oklch(0.120 0.005 250);
+
+  --border:          oklch(0.270 0.008 250);
+  --border-strong:   oklch(0.340 0.009 250);
+
+  --text-primary:    oklch(0.965 0.004 250);
+  --text-secondary:  oklch(0.760 0.008 250);
+  --text-muted:      oklch(0.580 0.009 250);
+  --text-on-accent:  #ffffff;
+
+  --accent:          var(--color-accent-400);
+  --accent-hover:    var(--color-accent-300);
+  --accent-subtle:   oklch(0.280 0.080 252 / 0.35);
+
+  --accent-secondary:   oklch(0.700 0.140 35);
+  --accent-gradient:    linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+  --accent-gradient-soft: linear-gradient(135deg,
+                            color-mix(in oklch, var(--accent) 20%, var(--bg)) 0%,
+                            color-mix(in oklch, var(--accent-secondary) 18%, var(--bg)) 100%);
+
+  --chart-1: var(--accent);
+  --chart-2: oklch(0.700 0.135 165);
+  --chart-3: oklch(0.760 0.150 65);
+  --chart-4: oklch(0.680 0.165 25);
+  --chart-5: oklch(0.650 0.150 305);
+  --chart-6: oklch(0.660 0.050 250);
+  --chart-grid: var(--border);
+  --chart-axis: var(--text-muted);
+
+  --focus-ring:      var(--color-accent-400);
+
+  --success-bg:      oklch(0.300 0.060 150 / 0.45);
+  --success-fg:      oklch(0.760 0.140 150);
+  --warning-bg:      oklch(0.330 0.070 70 / 0.45);
+  --warning-fg:      oklch(0.830 0.140 80);
+  --danger-bg:       oklch(0.330 0.090 25 / 0.45);
+  --danger-fg:       oklch(0.760 0.170 25);
+  --info-bg:         oklch(0.300 0.080 235 / 0.45);
+  --info-fg:         oklch(0.770 0.130 230);
+
+  /* Dark-theme tint pairs — translucent dim bg + lifted fg */
+  --tint-1-bg: oklch(0.300 0.075 65 / 0.40);   --tint-1-fg: oklch(0.780 0.105 65);
+  --tint-2-bg: oklch(0.300 0.075 155 / 0.40);  --tint-2-fg: oklch(0.780 0.105 155);
+  --tint-3-bg: oklch(0.310 0.075 305 / 0.40);  --tint-3-fg: oklch(0.780 0.105 305);
+  --tint-4-bg: oklch(0.300 0.075 250 / 0.40);  --tint-4-fg: oklch(0.780 0.105 250);
+  --tint-5-bg: oklch(0.310 0.080 25 / 0.45);   --tint-5-fg: oklch(0.790 0.125 25);
+  --tint-6-bg: var(--surface-sunken);          --tint-6-fg: var(--text-secondary);
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.40);
+  --shadow-md: 0 2px 4px -1px rgb(0 0 0 / 0.50), 0 1px 2px -1px rgb(0 0 0 / 0.40);
+  --shadow-lg: 0 8px 16px -4px rgb(0 0 0 / 0.60), 0 4px 6px -2px rgb(0 0 0 / 0.40);
+  --shadow-xl: 0 20px 32px -8px rgb(0 0 0 / 0.70), 0 8px 16px -4px rgb(0 0 0 / 0.50);
+
+  color-scheme: dark;
+}
+
+/* ---- 4. Base + type primitives ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-lh);
+  color: var(--text-primary);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv11", "ss01";
+  transition: background-color var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard);
+}
+
+/* Type utility classes (mirror token names). Display roles use --font-display;
+   body/UI roles inherit --font-sans from <body>. */
+.t-display  { font-family: var(--font-display); font-size: var(--text-display-size);  line-height: var(--text-display-lh);  font-weight: var(--text-display-weight);  letter-spacing: var(--text-display-track); }
+.t-h1       { font-family: var(--font-display); font-size: var(--text-h1-size);       line-height: var(--text-h1-lh);       font-weight: var(--text-h1-weight);       letter-spacing: var(--text-h1-track); }
+.t-h2       { font-family: var(--font-display); font-size: var(--text-h2-size);       line-height: var(--text-h2-lh);       font-weight: var(--text-h2-weight);       letter-spacing: var(--text-h2-track); }
+.t-h3       { font-family: var(--font-display); font-size: var(--text-h3-size);       line-height: var(--text-h3-lh);       font-weight: var(--text-h3-weight);       letter-spacing: var(--text-h3-track); }
+.t-h4       { font-family: var(--font-display); font-size: var(--text-h4-size);       line-height: var(--text-h4-lh);       font-weight: var(--text-h4-weight);       letter-spacing: var(--text-h4-track); }
+.t-body-lg  { font-size: var(--text-body-lg-size);  line-height: var(--text-body-lg-lh);  font-weight: var(--text-body-lg-weight); }
+.t-body     { font-size: var(--text-body-size);     line-height: var(--text-body-lh);     font-weight: var(--text-body-weight); }
+.t-body-sm  { font-size: var(--text-body-sm-size);  line-height: var(--text-body-sm-lh);  font-weight: var(--text-body-sm-weight); }
+.t-caption  { font-size: var(--text-caption-size);  line-height: var(--text-caption-lh);  font-weight: var(--text-caption-weight); }
+.t-overline { font-size: var(--text-overline-size); line-height: var(--text-overline-lh); font-weight: var(--text-overline-weight); letter-spacing: var(--text-overline-track); text-transform: uppercase; }
+
+.font-mono { font-family: var(--font-mono); }

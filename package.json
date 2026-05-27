@@ -1,0 +1,15 @@
+{
+  "name": "lookbook",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Lookbook — the design-system mastermind: tokens, component specs, page recipes, and composition grammar that back all web-app UI work.",
+  "packageManager": "pnpm@8.12.1",
+  "scripts": {
+    "gallery": "pnpm --filter @lookbook/gallery serve",
+    "sync-gallery": "bash scripts/sync-gallery.sh"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
+}

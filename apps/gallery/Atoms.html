@@ -1,0 +1,1103 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — Atoms</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: ['class', '[data-theme="dark"]'] };
+  </script>
+  <style>
+    /* Page-local helpers */
+    .row-grid {
+      display: grid;
+      grid-template-columns: 130px repeat(5, minmax(0, 1fr));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .row-grid > .head, .row-grid > .cell, .row-grid > .label {
+      padding: 16px 14px;
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 72px;
+    }
+    .row-grid > .head {
+      background: var(--surface-sunken);
+      border-top: 0;
+      padding: 10px 14px;
+      min-height: 36px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      justify-content: flex-start;
+    }
+    .row-grid > .head:first-child { border-left: 0; }
+    .row-grid > .label {
+      justify-content: flex-start;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-primary);
+      border-left: 0;
+    }
+
+    /* Mini sample/aside next to cells */
+    .gallery {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    }
+    .gallery .item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      padding: 14px 10px 10px;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .gallery .item .name {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    /* Size scale reference grid */
+    .size-scale-row {
+      display: grid;
+      grid-template-columns: 56px 140px repeat(6, minmax(0, 1fr));
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding: 14px 18px;
+      gap: 16px;
+    }
+    .size-scale-row:first-child { border-top: 0; }
+    .size-scale-row.is-header {
+      background: var(--surface-sunken);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding-top: 10px; padding-bottom: 10px;
+    }
+    .size-scale-name {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-primary);
+    }
+    .size-scale-bar {
+      width: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .size-scale-val {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <!-- TOP BAR -->
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">atoms · v0.1</span>
+      </div>
+      <nav class="lb-page-nav">
+        <a class="lb-page-link" href="Foundations.html">Foundations</a>
+        <a class="lb-page-link" href="Atoms.html">Atoms</a>
+        <a class="lb-page-link" href="Molecules.html">Molecules</a>
+        <a class="lb-page-link" href="Organisms.html">Organisms</a>
+        <a class="lb-page-link" href="Auth.html">Auth</a>
+        <a class="lb-page-link" href="States.html">States</a>
+        <a class="lb-page-link" href="Personality.html">Personality</a>
+        <a class="lb-page-link" href="Motion.html">Motion</a>
+        <a class="lb-page-link" href="DataViz.html">Data viz</a>
+        <a class="lb-page-link" href="Marketing.html">Marketing</a>
+        <a class="lb-page-link" href="Guide.html">Guide</a>
+      </nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#typography">Typography</a></li>
+        <li><a href="#sizes">Size scale</a></li>
+        <li><a href="#buttons">Buttons</a></li>
+        <li><a href="#inputs">Inputs &amp; form</a></li>
+        <li><a href="#badges">Badges</a></li>
+        <li><a href="#avatars">Avatars</a></li>
+        <li><a href="#icons">Icons</a></li>
+        <li><a href="#cards">Cards</a></li>
+        <li><a href="#loading">Spinner &amp; skeleton</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>Atoms</h5>
+        <p>Every component reads tokens only. State modifiers (.is-hover, .is-focus, .is-active, .is-disabled, .is-loading) match real interactive states.</p>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="lb-main">
+
+      <!-- Intro -->
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 2</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track);">Atoms.</h2>
+          <p class="lede">The smallest reusable parts. Each one is a copy-pasteable block that reads from <code class="token-pill">tokens.css</code> only — never a hardcoded hex, size, or radius.</p>
+        </header>
+      </section>
+
+      <!-- TYPOGRAPHY -->
+      <section class="lb-section" id="typography">
+        <header>
+          <div class="eyebrow">01 — Typography in practice</div>
+          <h2>Typography <a class="anchor" href="#typography">#typography</a></h2>
+          <p class="lede">Specimen-on-content. Same scale as Foundations, applied to a realistic article shell.</p>
+        </header>
+        <div class="specimen">
+          <div class="specimen-body" style="padding: 48px;">
+            <div style="max-width: 640px; display: flex; flex-direction: column; gap: 16px;">
+              <div class="t-overline text-muted">Engineering</div>
+              <h1 class="t-h1">Designing a token-first component library.</h1>
+              <p class="t-body-lg text-secondary">A coherent system starts at the smallest unit. When every button, input, and badge reads from the same set of variables, swapping the skin doesn't break the silhouette.</p>
+              <h3 class="t-h3">Why the token names matter</h3>
+              <p class="t-body">Components reference roles, not literals. <code class="token-pill">--accent</code> can be cobalt today and ochre tomorrow; the button still knows where to put its color, and the underline still knows where to land.</p>
+              <p class="t-body-sm text-secondary">Dense UI copy lives at 14 px. Helpers and meta drop to 13 and 12 — never smaller in product surfaces.</p>
+              <div class="t-caption text-muted">Figure 1 — From a draft published March 2026.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- SIZE SCALE -->
+      <section class="lb-section" id="sizes">
+        <header>
+          <div class="eyebrow">02 — Size scale</div>
+          <h2>Size scale <a class="anchor" href="#sizes">#sizes</a></h2>
+          <p class="lede">One scale, five steps, height-anchored. <code class="token-pill">button-md</code>, <code class="token-pill">input-md</code>, <code class="token-pill">select-md</code>, and <code class="token-pill">stepper-md</code> share the same height — drop them in a row and they line up. On coarse-pointer devices, <code class="token-pill">md</code> auto-promotes to <code class="token-pill">lg</code> values so the default control clears the 44 px AAA tap target without any code change.</p>
+        </header>
+
+        <!-- Reference grid -->
+        <div class="lb-subsection">
+          <h3>Scale tokens <span class="token-pill">--size-{xs,sm,md,lg,xl}-*</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="padding: 0;">
+              <div id="size-scale-grid"></div>
+            </div>
+            <div class="specimen-caption">Desktop values. On coarse pointers <code class="token-pill">md</code> aliases <code class="token-pill">lg</code> — 36 → 44 — so every default control passes the WCAG 2.5.5 AAA 44 px tap target.</div>
+          </div>
+        </div>
+
+        <!-- Cross-atom alignment -->
+        <div class="lb-subsection">
+          <h3>Cross-atom alignment <span class="token-pill">button · input · select · stepper · avatar · badge</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; flex-direction: column; gap: 28px; overflow-x: auto;">
+
+              <!-- sm row -->
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <span class="font-mono" style="font-size: 11px; color: var(--text-muted); width: 40px; text-transform: uppercase; letter-spacing: 0.04em;">sm</span>
+                <button class="btn btn--secondary btn--sm">Save</button>
+                <button class="btn btn--secondary btn--sm btn--icon" aria-label="Add">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+                <input class="input input--sm" value="search" style="width: 160px;" />
+                <select class="select select--sm" style="width: 140px;"><option>Engineering</option></select>
+                <div class="stepper stepper--sm">
+                  <button type="button" class="stepper-btn" aria-label="Decrement"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                  <input class="stepper-input" type="text" value="3" />
+                  <button type="button" class="stepper-btn" aria-label="Increment"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                </div>
+                <span class="avatar avatar--sm">AM</span>
+                <span class="badge badge--accent badge--sm">beta</span>
+                <span class="font-mono" style="font-size: 11px; color: var(--text-muted); margin-left: auto;">28px</span>
+              </div>
+
+              <!-- md row -->
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <span class="font-mono" style="font-size: 11px; color: var(--text-muted); width: 40px; text-transform: uppercase; letter-spacing: 0.04em;">md</span>
+                <button class="btn btn--secondary">Save</button>
+                <button class="btn btn--secondary btn--icon" aria-label="Add">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+                <input class="input" value="search" style="width: 180px;" />
+                <select class="select" style="width: 160px;"><option>Engineering</option></select>
+                <div class="stepper">
+                  <button type="button" class="stepper-btn" aria-label="Decrement"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                  <input class="stepper-input" type="text" value="12" />
+                  <button type="button" class="stepper-btn" aria-label="Increment"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                </div>
+                <span class="avatar avatar--md">AM</span>
+                <span class="badge badge--accent">beta</span>
+                <span class="font-mono" style="font-size: 11px; color: var(--text-muted); margin-left: auto;">36px</span>
+              </div>
+
+              <!-- lg row -->
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <span class="font-mono" style="font-size: 11px; color: var(--text-muted); width: 40px; text-transform: uppercase; letter-spacing: 0.04em;">lg</span>
+                <button class="btn btn--secondary btn--lg">Save</button>
+                <button class="btn btn--secondary btn--lg btn--icon" aria-label="Add">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+                <input class="input input--lg" value="search" style="width: 200px;" />
+                <select class="select select--lg" style="width: 180px;"><option>Engineering</option></select>
+                <div class="stepper stepper--lg">
+                  <button type="button" class="stepper-btn" aria-label="Decrement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                  <input class="stepper-input" type="text" value="48" />
+                  <button type="button" class="stepper-btn" aria-label="Increment"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                </div>
+                <span class="avatar avatar--lg">AM</span>
+                <span class="font-mono" style="font-size: 11px; color: var(--text-muted); margin-left: auto;">44px</span>
+              </div>
+
+            </div>
+            <div class="specimen-caption">Same row, same height. Drop any combination in a flex row and they'll baseline-align without manual offsets.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- BUTTONS -->
+      <section class="lb-section" id="buttons">
+        <header>
+          <div class="eyebrow">03 — Buttons</div>
+          <h2>Buttons <a class="anchor" href="#buttons">#buttons</a></h2>
+          <p class="lede">Five variants. Five sizes pulled from the shared scale. Six states each. Use <em>primary</em> for the one action you want users to take; everything else steps down.</p>
+        </header>
+
+        <!-- States matrix -->
+        <div class="lb-subsection">
+          <h3>State matrix <span class="token-pill">5 variants × 6 states</span></h3>
+          <div class="state-matrix" id="button-matrix"></div>
+        </div>
+
+        <!-- Sizes -->
+        <div class="lb-subsection">
+          <h3>Sizes <span class="token-pill">xs · sm · md · lg · xl</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+              <button class="btn btn--primary btn--xs">Extra small</button>
+              <button class="btn btn--primary btn--sm">Small</button>
+              <button class="btn btn--primary btn--md">Medium</button>
+              <button class="btn btn--primary btn--lg">Large</button>
+              <button class="btn btn--primary btn--xl">Extra large</button>
+            </div>
+            <div class="specimen-caption">20px · 28px · 36px · 44px · 56px</div>
+          </div>
+        </div>
+
+        <!-- Icon-only -->
+        <div class="lb-subsection">
+          <h3>Icon-only <span class="token-pill">.btn .btn--icon</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+              <button class="btn btn--secondary btn--xs btn--icon" aria-label="Add">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+              <button class="btn btn--secondary btn--sm btn--icon" aria-label="Add">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+              <button class="btn btn--secondary btn--md btn--icon" aria-label="Add">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+              <button class="btn btn--secondary btn--lg btn--icon" aria-label="Add">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+              <button class="btn btn--secondary btn--xl btn--icon" aria-label="Add">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+              <span style="width: 1px; height: 28px; background: var(--border);"></span>
+              <button class="btn btn--ghost btn--md btn--icon" aria-label="More">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              </button>
+              <button class="btn btn--primary btn--md btn--icon" aria-label="Search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </button>
+              <button class="btn btn--destructive btn--md btn--icon" aria-label="Delete">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+              </button>
+            </div>
+            <div class="specimen-caption">Square footprint = height. Always provide aria-label.</div>
+          </div>
+        </div>
+
+        <!-- Icons -->
+        <div class="lb-subsection">
+          <h3>Leading &amp; trailing icons</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+              <button class="btn btn--primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                Create project
+              </button>
+              <button class="btn btn--secondary">
+                Continue
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </button>
+              <button class="btn btn--ghost">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Comment
+              </button>
+              <button class="btn btn--destructive">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                Delete
+              </button>
+              <a href="#" class="btn btn--link">Learn more →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- INPUTS -->
+      <section class="lb-section" id="inputs">
+        <header>
+          <div class="eyebrow">04 — Inputs &amp; form</div>
+          <h2>Inputs <a class="anchor" href="#inputs">#inputs</a></h2>
+          <p class="lede">Five-state coverage across text, textarea, select, choice, switch, and stepper controls. Three sizes (sm/md/lg) on every text-like control, all anchored to the shared scale. Every control announces error via <code class="token-pill">aria-invalid</code>.</p>
+        </header>
+
+        <!-- Sizes -->
+        <div class="lb-subsection">
+          <h3>Sizes <span class="token-pill">sm · md · lg</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: grid; grid-template-columns: 60px repeat(4, minmax(0, 1fr)); gap: 14px 16px; align-items: center;">
+              <span></span>
+              <span class="font-mono" style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">.input</span>
+              <span class="font-mono" style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">.select</span>
+              <span class="font-mono" style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">.textarea</span>
+              <span class="font-mono" style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">.stepper</span>
+
+              <span class="font-mono" style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">sm</span>
+              <input class="input input--sm" placeholder="email@example.com" />
+              <select class="select select--sm"><option>Engineering</option></select>
+              <textarea class="textarea textarea--sm" placeholder="Note…"></textarea>
+              <div class="stepper stepper--sm" style="align-self: start;">
+                <button type="button" class="stepper-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                <input class="stepper-input" type="text" value="3" />
+                <button type="button" class="stepper-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+              </div>
+
+              <span class="font-mono" style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">md</span>
+              <input class="input" placeholder="email@example.com" />
+              <select class="select"><option>Engineering</option></select>
+              <textarea class="textarea" placeholder="Note…"></textarea>
+              <div class="stepper" style="align-self: start;">
+                <button type="button" class="stepper-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                <input class="stepper-input" type="text" value="12" />
+                <button type="button" class="stepper-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+              </div>
+
+              <span class="font-mono" style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">lg</span>
+              <input class="input input--lg" placeholder="email@example.com" />
+              <select class="select select--lg"><option>Engineering</option></select>
+              <textarea class="textarea textarea--lg" placeholder="Note…"></textarea>
+              <div class="stepper stepper--lg" style="align-self: start;">
+                <button type="button" class="stepper-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                <input class="stepper-input" type="text" value="48" />
+                <button type="button" class="stepper-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+              </div>
+
+              <span class="font-mono" style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">xl</span>
+              <input class="input input--xl" placeholder="email@example.com" />
+              <select class="select select--xl"><option>Engineering</option></select>
+              <textarea class="textarea textarea--xl" placeholder="Note…"></textarea>
+              <div class="stepper stepper--xl" style="align-self: start;">
+                <button type="button" class="stepper-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                <input class="stepper-input" type="text" value="120" />
+                <button type="button" class="stepper-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+              </div>
+            </div>
+            <div class="specimen-caption">28 · 36 · 44 · 56 px — same height ladder as buttons.</div>
+          </div>
+        </div>
+
+        <!-- Text inputs -->
+        <div class="lb-subsection">
+          <h3>Text input</h3>
+          <div class="row-grid">
+            <div class="head">control</div>
+            <div class="head">default</div>
+            <div class="head">focus</div>
+            <div class="head">disabled</div>
+            <div class="head">error</div>
+            <div class="head">read-only</div>
+
+            <div class="label">.input</div>
+            <div class="cell"><input class="input" placeholder="email@example.com" /></div>
+            <div class="cell"><input class="input is-focus" value="user@company.com" /></div>
+            <div class="cell"><input class="input is-disabled" value="user@company.com" disabled /></div>
+            <div class="cell"><input class="input is-error" value="not-an-email" aria-invalid="true" /></div>
+            <div class="cell"><input class="input is-readonly" value="user@company.com" readonly /></div>
+          </div>
+        </div>
+
+        <!-- Textarea -->
+        <div class="lb-subsection">
+          <h3>Textarea</h3>
+          <div class="row-grid">
+            <div class="head">control</div>
+            <div class="head">default</div>
+            <div class="head">focus</div>
+            <div class="head">disabled</div>
+            <div class="head">error</div>
+            <div class="head">read-only</div>
+
+            <div class="label">.textarea</div>
+            <div class="cell" style="min-height: 110px;"><textarea class="textarea" placeholder="Add a note…"></textarea></div>
+            <div class="cell" style="min-height: 110px;"><textarea class="textarea is-focus">Shipping today.</textarea></div>
+            <div class="cell" style="min-height: 110px;"><textarea class="textarea is-disabled" disabled>Locked field</textarea></div>
+            <div class="cell" style="min-height: 110px;"><textarea class="textarea is-error" aria-invalid="true">Too short</textarea></div>
+            <div class="cell" style="min-height: 110px;"><textarea class="textarea is-readonly" readonly>Read-only note.</textarea></div>
+          </div>
+        </div>
+
+        <!-- Select -->
+        <div class="lb-subsection">
+          <h3>Select</h3>
+          <div class="row-grid">
+            <div class="head">control</div>
+            <div class="head">default</div>
+            <div class="head">focus</div>
+            <div class="head">disabled</div>
+            <div class="head">error</div>
+            <div class="head">read-only</div>
+
+            <div class="label">.select</div>
+            <div class="cell"><select class="select"><option>Engineering</option><option>Design</option></select></div>
+            <div class="cell"><select class="select is-focus"><option>Engineering</option></select></div>
+            <div class="cell"><select class="select is-disabled" disabled><option>Engineering</option></select></div>
+            <div class="cell"><select class="select is-error" aria-invalid="true"><option>Please select…</option></select></div>
+            <div class="cell"><select class="select is-readonly" disabled><option>Engineering</option></select></div>
+          </div>
+        </div>
+
+        <!-- Choice + Switch -->
+        <div class="lb-subsection">
+          <h3>Checkbox · Radio · Switch</h3>
+          <div class="row-grid" style="grid-template-columns: 130px repeat(5, minmax(0, 1fr));">
+            <div class="head">control</div>
+            <div class="head">default</div>
+            <div class="head">checked</div>
+            <div class="head">focus</div>
+            <div class="head">disabled</div>
+            <div class="head">checked + disabled</div>
+
+            <div class="label">.checkbox</div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="checkbox" class="checkbox" />Subscribe</label></div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="checkbox" class="checkbox" checked />Subscribe</label></div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="checkbox" class="checkbox is-focus" checked />Subscribe</label></div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="checkbox" class="checkbox" disabled />Subscribe</label></div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="checkbox" class="checkbox" checked disabled />Subscribe</label></div>
+
+            <div class="label">.radio</div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="radio" name="r1" class="radio" />Option</label></div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="radio" name="r2" class="radio" checked />Option</label></div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="radio" name="r3" class="radio is-focus" checked />Option</label></div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="radio" name="r4" class="radio" disabled />Option</label></div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="radio" name="r5" class="radio" checked disabled />Option</label></div>
+
+            <div class="label">.switch</div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="checkbox" class="switch" />Notify</label></div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="checkbox" class="switch" checked />Notify</label></div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="checkbox" class="switch is-focus" checked />Notify</label></div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="checkbox" class="switch" disabled />Notify</label></div>
+            <div class="cell"><label style="display:inline-flex; align-items:center; gap:8px; font-size:13px;"><input type="checkbox" class="switch" checked disabled />Notify</label></div>
+          </div>
+        </div>
+
+        <!-- Stepper -->
+        <div class="lb-subsection">
+          <h3>Number stepper</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; gap: 32px; flex-wrap: wrap;">
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <span class="field-label">Default</span>
+                <div class="stepper">
+                  <button type="button" class="stepper-btn" aria-label="Decrement"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                  <input class="stepper-input" type="text" value="3" />
+                  <button type="button" class="stepper-btn" aria-label="Increment"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <span class="field-label">Focused</span>
+                <div class="stepper" style="border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in oklch, var(--focus-ring) 22%, transparent);">
+                  <button type="button" class="stepper-btn" aria-label="Decrement"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                  <input class="stepper-input" type="text" value="12" />
+                  <button type="button" class="stepper-btn" aria-label="Increment"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <span class="field-label">Disabled</span>
+                <div class="stepper is-disabled">
+                  <button type="button" class="stepper-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                  <input class="stepper-input" type="text" value="0" readonly />
+                  <button type="button" class="stepper-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- BADGES -->
+      <section class="lb-section" id="badges">
+        <header>
+          <div class="eyebrow">05 — Badges</div>
+          <h2>Badges &amp; chips <a class="anchor" href="#badges">#badges</a></h2>
+          <p class="lede">Subtle for status; solid only when the chip is the centerpiece. Two sizes (sm/md) — chips sit just below the control scale. Add a dot or icon when distinguishing many simultaneous chips.</p>
+        </header>
+
+        <div class="lb-subsection">
+          <h3>Sizes <span class="token-pill">sm · md</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+              <span class="badge badge--neutral badge--sm">small</span>
+              <span class="badge badge--neutral">medium</span>
+              <span style="width: 1px; height: 24px; background: var(--border);"></span>
+              <span class="badge badge--success badge--sm"><span class="badge-dot"></span>live</span>
+              <span class="badge badge--success"><span class="badge-dot"></span>live</span>
+              <span style="width: 1px; height: 24px; background: var(--border);"></span>
+              <span class="badge badge--accent badge--sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>verified</span>
+              <span class="badge badge--accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>verified</span>
+            </div>
+            <div class="specimen-caption">20px · 24px</div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Subtle <span class="token-pill">default style</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <span class="badge badge--neutral">Draft</span>
+                <span class="badge badge--accent">Beta</span>
+                <span class="badge badge--success">Live</span>
+                <span class="badge badge--warning">Pending</span>
+                <span class="badge badge--danger">Failed</span>
+                <span class="badge badge--info">New</span>
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <span class="badge badge--neutral"><span class="badge-dot"></span>Draft</span>
+                <span class="badge badge--accent"><span class="badge-dot"></span>Beta</span>
+                <span class="badge badge--success"><span class="badge-dot"></span>Live</span>
+                <span class="badge badge--warning"><span class="badge-dot"></span>Pending</span>
+                <span class="badge badge--danger"><span class="badge-dot"></span>Failed</span>
+                <span class="badge badge--info"><span class="badge-dot"></span>New</span>
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <span class="badge badge--success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Verified</span>
+                <span class="badge badge--warning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Review</span>
+                <span class="badge badge--danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Blocked</span>
+                <span class="badge badge--info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Note</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Solid</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <span class="badge badge--neutral is-solid">Draft</span>
+              <span class="badge badge--accent  is-solid">Beta</span>
+              <span class="badge badge--success is-solid">Live</span>
+              <span class="badge badge--warning is-solid">Pending</span>
+              <span class="badge badge--danger  is-solid">Failed</span>
+              <span class="badge badge--info    is-solid">New</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- AVATARS -->
+      <section class="lb-section" id="avatars">
+        <header>
+          <div class="eyebrow">06 — Avatars</div>
+          <h2>Avatars <a class="anchor" href="#avatars">#avatars</a></h2>
+          <p class="lede">Image or initials. Five sizes. Status dot wraps the avatar; groups stagger with a clip border so the underlying surface shows through.</p>
+        </header>
+
+        <div class="lb-subsection">
+          <h3>Sizes <span class="token-pill">xs / sm / md / lg / xl</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap;">
+              <span class="avatar avatar--xs">AM</span>
+              <span class="avatar avatar--sm">AM</span>
+              <span class="avatar avatar--md">AM</span>
+              <span class="avatar avatar--lg">AM</span>
+              <span class="avatar avatar--xl">AM</span>
+              <span style="width: 1px; height: 48px; background: var(--border); align-self: center;"></span>
+              <span class="avatar avatar--lg tint-1">JS</span>
+              <span class="avatar avatar--lg tint-2">RT</span>
+              <span class="avatar avatar--lg tint-3">CW</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Image variant <span class="token-pill">img → initials fallback</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap;">
+              <!-- Working image -->
+              <span class="avatar avatar--lg">
+                <img src="https://i.pravatar.cc/96?img=15" alt="Andrea Mendez" onerror="this.dataset.failed='1';" />
+                AM
+              </span>
+              <!-- Broken URL → fallback to initials -->
+              <span class="avatar avatar--lg tint-1">
+                <img src="/__intentionally_missing__.jpg" alt="Jordan Sims" onerror="this.dataset.failed='1';" />
+                JS
+              </span>
+              <!-- With status dot -->
+              <span class="avatar avatar--lg">
+                <img src="https://i.pravatar.cc/96?img=32" alt="Robin Tate" onerror="this.dataset.failed='1';" />
+                RT
+                <span class="avatar-status avatar-status--online"></span>
+              </span>
+              <!-- Group with mixed image + initials -->
+              <div class="avatar-group">
+                <span class="avatar avatar--md"><img src="https://i.pravatar.cc/72?img=12" alt="" onerror="this.dataset.failed='1';" />AM</span>
+                <span class="avatar avatar--md"><img src="https://i.pravatar.cc/72?img=47" alt="" onerror="this.dataset.failed='1';" />JS</span>
+                <span class="avatar avatar--md tint-2">RT</span>
+                <span class="avatar avatar--md tint-3">CW</span>
+                <span class="avatar avatar--md avatar--more">+8</span>
+              </div>
+              <span class="t-body-sm text-secondary">img · broken-img fallback · + status · mixed group</span>
+            </div>
+            <div class="specimen-caption">When the image fails to load, the inline initials show through automatically — no JS state, no flash of empty avatar.</div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Status dot</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+              <span class="avatar avatar--lg">AM<span class="avatar-status avatar-status--online"></span></span>
+              <span class="avatar avatar--lg">JS<span class="avatar-status avatar-status--away"></span></span>
+              <span class="avatar avatar--lg">RT<span class="avatar-status avatar-status--busy"></span></span>
+              <span class="avatar avatar--lg">CW<span class="avatar-status avatar-status--offline"></span></span>
+              <span class="t-body-sm text-secondary">online · away · busy · offline</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Group</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+              <div class="avatar-group">
+                <span class="avatar avatar--md">AM</span>
+                <span class="avatar avatar--md tint-1">JS</span>
+                <span class="avatar avatar--md tint-2">RT</span>
+                <span class="avatar avatar--md tint-3">CW</span>
+                <span class="avatar avatar--md avatar--more">+8</span>
+              </div>
+              <div class="avatar-group">
+                <span class="avatar avatar--sm">A</span>
+                <span class="avatar avatar--sm">B</span>
+                <span class="avatar avatar--sm">C</span>
+                <span class="avatar avatar--sm avatar--more">+3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ICONS -->
+      <section class="lb-section" id="icons">
+        <header>
+          <div class="eyebrow">07 — Icons</div>
+          <h2>Icons <a class="anchor" href="#icons">#icons</a></h2>
+          <p class="lede">Set: <strong>Lucide</strong> — open-source, stroked, 24×24 viewBox, 2px stroke. Sizes <code class="token-pill">xs / sm / md / lg / xl</code> map to <code class="token-pill">12 / 14 / 16 / 18 / 20</code> from the shared scale, plus an extra <code class="token-pill">24</code> for empty states and large affordances.</p>
+        </header>
+
+        <div class="lb-subsection">
+          <h3>Sizes</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; align-items: flex-end; gap: 28px; color: var(--text-primary);">
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+                <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                <span class="t-caption text-muted font-mono">xs · 12</span>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                <span class="t-caption text-muted font-mono">sm · 14</span>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+                <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                <span class="t-caption text-muted font-mono">md · 16</span>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+                <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                <span class="t-caption text-muted font-mono">lg · 18</span>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+                <svg class="icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                <span class="t-caption text-muted font-mono">xl · 20</span>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+                <svg class="icon-24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                <span class="t-caption text-muted font-mono">24</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Sample set <span class="token-pill">Lucide @ 20px</span></h3>
+          <div class="gallery" id="icon-gallery"></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- CARDS -->
+      <section class="lb-section" id="cards">
+        <header>
+          <div class="eyebrow">08 — Cards</div>
+          <h2>Cards <a class="anchor" href="#cards">#cards</a></h2>
+          <p class="lede">Surface elevation comes from 1px border plus <code class="token-pill">--shadow-sm</code>. Interactive cards lift one step on hover.</p>
+        </header>
+
+        <div class="lb-subsection">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+
+            <!-- Base card -->
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Quiet card</h4>
+                <p class="card-subtitle">Single content block.</p>
+                <p class="t-body" style="margin-top: 12px; color: var(--text-secondary);">No header, no footer. Used for grids of equally-weighted items.</p>
+              </div>
+            </div>
+
+            <!-- Header/body/footer -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h4 class="card-title">Active project</h4>
+                  <p class="card-subtitle">Ships Friday</p>
+                </div>
+                <span class="badge badge--success"><span class="badge-dot"></span>On track</span>
+              </div>
+              <div class="card-body">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div class="avatar-group">
+                    <span class="avatar avatar--sm">AM</span>
+                    <span class="avatar avatar--sm tint-1">JS</span>
+                    <span class="avatar avatar--sm tint-2">RT</span>
+                  </div>
+                  <span class="t-body-sm text-secondary">3 collaborators</span>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn--ghost btn--sm">View</button>
+                <button class="btn btn--primary btn--sm">Open</button>
+              </div>
+            </div>
+
+            <!-- Interactive -->
+            <a href="#" class="card card--interactive">
+              <div class="card-body">
+                <div style="display:flex; align-items:flex-start; gap:12px;">
+                  <div style="width:36px; height:36px; border-radius: var(--radius-md); background: var(--accent-subtle); color: var(--accent); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14 2 14 8 20 8"/><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+                  </div>
+                  <div style="min-width:0;">
+                    <h4 class="card-title">Hoverable</h4>
+                    <p class="card-subtitle">Whole tile is the affordance.</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- SPINNERS + SKELETONS -->
+      <section class="lb-section" id="loading">
+        <header>
+          <div class="eyebrow">09 — Spinner &amp; skeleton</div>
+          <h2>Loading states <a class="anchor" href="#loading">#loading</a></h2>
+          <p class="lede">Spinner for indeterminate work under <em>1s</em>; skeleton for content that has known shape and may take longer. Don't mix them on the same surface.</p>
+        </header>
+
+        <div class="lb-subsection">
+          <h3>Spinner sizes</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; align-items: flex-end; gap: 28px;">
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px;"><span class="spinner spinner--xs"></span><span class="t-caption text-muted font-mono">xs · 12</span></div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px;"><span class="spinner spinner--sm"></span><span class="t-caption text-muted font-mono">sm · 14</span></div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px;"><span class="spinner spinner--md"></span><span class="t-caption text-muted font-mono">md · 16</span></div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px;"><span class="spinner spinner--lg"></span><span class="t-caption text-muted font-mono">lg · 18</span></div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px;"><span class="spinner spinner--xl"></span><span class="t-caption text-muted font-mono">xl · 20</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Toast stack <span class="token-pill">fixed bottom-right cluster</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="position: relative; min-height: 280px; background: var(--surface-sunken); padding: 0;">
+              <!-- Mock app surface under the stack -->
+              <div style="padding: 24px; color: var(--text-muted); font-size: var(--text-body-sm-size);">
+                <div style="font-size: var(--text-h4-size); line-height: var(--text-h4-lh); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track); color: var(--text-primary);">Workspace</div>
+                <div style="margin-top: 8px;">Toasts stack from the bottom-right corner. Newest on top.</div>
+              </div>
+              <!-- Real .toast-stack specimen -->
+              <div class="toast-stack toast-stack--br toast-stack--in-frame" aria-live="polite" role="status">
+                <div class="toast toast--success">
+                  <div class="toast-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                  <div class="toast-body">
+                    <div class="toast-title">Project published</div>
+                    <div class="toast-msg">"Onboarding v2" is now live.</div>
+                  </div>
+                  <div class="toast-actions">
+                    <button class="btn btn--link btn--sm" style="font-size: var(--text-micro-size);">View</button>
+                    <button class="toast-close" aria-label="Dismiss"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                  </div>
+                </div>
+                <div class="toast toast--info">
+                  <div class="toast-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+                  <div class="toast-body">
+                    <div class="toast-title">New comment from Robin</div>
+                    <div class="toast-msg">"Small note on the empty state…"</div>
+                  </div>
+                  <div class="toast-actions">
+                    <button class="toast-close" aria-label="Dismiss"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                  </div>
+                </div>
+                <div class="toast toast--warning">
+                  <div class="toast-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+                  <div class="toast-body">
+                    <div class="toast-title">Approaching usage limit</div>
+                    <div class="toast-msg">92% of monthly quota used.</div>
+                  </div>
+                  <div class="toast-actions">
+                    <button class="toast-close" aria-label="Dismiss"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="specimen-caption">.toast-stack.toast-stack--br · aria-live="polite" · use --tr/--bl/--tc to relocate.</div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Skeleton shapes</h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;">
+
+              <!-- Text lines -->
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <div class="t-caption text-muted font-mono">text lines</div>
+                <div class="skeleton skeleton--heading" style="width: 60%;"></div>
+                <div class="skeleton skeleton--text"></div>
+                <div class="skeleton skeleton--text" style="width: 90%;"></div>
+                <div class="skeleton skeleton--text" style="width: 75%;"></div>
+              </div>
+
+              <!-- Avatar + lines -->
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <div class="t-caption text-muted font-mono">profile row</div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div class="skeleton skeleton--avatar"></div>
+                  <div style="display:flex; flex-direction:column; gap:6px; flex:1; min-width:0;">
+                    <div class="skeleton skeleton--text" style="width:45%;"></div>
+                    <div class="skeleton skeleton--line" style="width:70%; height:10px;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card -->
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <div class="t-caption text-muted font-mono">card</div>
+                <div class="card" style="border-radius: var(--radius-md);">
+                  <div class="card-body" style="display:flex; flex-direction:column; gap:10px;">
+                    <div class="skeleton skeleton--heading" style="width: 70%;"></div>
+                    <div class="skeleton skeleton--text"></div>
+                    <div class="skeleton skeleton--text" style="width:85%;"></div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                      <div class="skeleton skeleton--line" style="width:30%; height:10px;"></div>
+                      <div class="skeleton skeleton--button" style="width: 72px; height: 28px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <section style="padding-top: 32px; border-top: 1px solid var(--border);">
+        <div style="display: flex; align-items: flex-start; gap: 16px;">
+          <div style="width:32px; height:32px; border-radius: var(--radius-md); background: var(--accent-subtle); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h4 class="t-h4">Atoms complete.</h4>
+            <p class="t-body text-secondary" style="margin-top: 4px; max-width: 540px;">
+              Next: <a href="Molecules.html" style="color: var(--accent); font-weight: 500;">Molecules</a> — combinations of these atoms into form fields, menus, tooltips, toasts, tabs, pagination, dialogs, drawers, and a command palette.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script>
+  <script>
+    // ============================================================
+    // Button matrix — 5 variants × 6 states
+    // ============================================================
+    const SPINNER_SVG = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" opacity="0.25"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`;
+    const variants = [
+      { key: 'primary',     label: 'Primary',     copy: 'Save changes' },
+      { key: 'secondary',   label: 'Secondary',   copy: 'Cancel' },
+      { key: 'ghost',       label: 'Ghost',       copy: 'More' },
+      { key: 'destructive', label: 'Destructive', copy: 'Delete' },
+      { key: 'link',        label: 'Link',        copy: 'Read docs →' },
+    ];
+    const states = ['default', 'hover', 'focus', 'active', 'disabled', 'loading'];
+
+    const matrix = document.getElementById('button-matrix');
+    // Header row
+    const head = document.createElement('div');
+    head.className = 'state-matrix-head';
+    head.innerHTML = `<div>variant</div>${states.map(s => `<div>${s}</div>`).join('')}`;
+    matrix.appendChild(head);
+
+    variants.forEach(v => {
+      const row = document.createElement('div');
+      row.className = 'state-matrix-row';
+      const cells = states.map(s => {
+        const stateClass = s === 'default' ? '' : (s === 'loading' ? ' is-loading' : ` is-${s}`);
+        const inner = s === 'loading'
+          ? `<span class="btn-spinner">${SPINNER_SVG}</span><span class="btn-content">${v.copy}</span>`
+          : v.copy;
+        return `<div class="cell"><button class="btn btn--${v.key}${stateClass}" ${s === 'disabled' ? 'disabled' : ''}>${inner}</button></div>`;
+      }).join('');
+      row.innerHTML = `<div class="row-label">${v.label}</div>${cells}`;
+      matrix.appendChild(row);
+    });
+
+    // ============================================================
+    // Icon sample grid — Lucide silhouettes
+    // ============================================================
+    const ICONS = {
+      'arrow-right':   '<path d="M5 12h14M13 5l7 7-7 7"/>',
+      'plus':          '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+      'check':         '<polyline points="20 6 9 17 4 12"/>',
+      'x':             '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+      'search':        '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+      'settings':      '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+      'user':          '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+      'bell':          '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
+      'home':          '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-4v-7H10v7H6a2 2 0 0 1-2-2z"/>',
+      'mail':          '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+      'calendar':      '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+      'file':          '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+      'folder':        '<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>',
+      'trash':         '<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+      'edit':          '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4z"/>',
+      'copy':          '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+      'eye':           '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+      'lock':          '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+      'chevron-down':  '<polyline points="6 9 12 15 18 9"/>',
+      'chevron-right': '<polyline points="9 18 15 12 9 6"/>',
+      'more':          '<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>',
+      'filter':        '<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>',
+      'download':      '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+      'upload':        '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
+    };
+    const gallery = document.getElementById('icon-gallery');
+    Object.entries(ICONS).forEach(([name, body]) => {
+      const item = document.createElement('div');
+      item.className = 'item';
+      item.innerHTML = `
+        <svg class="icon-20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-primary);">${body}</svg>
+        <span class="name">${name}</span>
+      `;
+      gallery.appendChild(item);
+    });
+
+    // ============================================================
+    // Size scale reference grid
+    // ============================================================
+    const SIZES = [
+      { name: 'xs', h: 20, px: 6,  fs: 11, icon: 12, gap: 4,  radius: 'sm · 4px' },
+      { name: 'sm', h: 28, px: 10, fs: 13, icon: 14, gap: 6,  radius: 'sm · 4px' },
+      { name: 'md', h: 36, px: 12, fs: 14, icon: 16, gap: 8,  radius: 'md · 8px' },
+      { name: 'lg', h: 44, px: 16, fs: 15, icon: 18, gap: 10, radius: 'md · 8px' },
+      { name: 'xl', h: 56, px: 20, fs: 16, icon: 20, gap: 12, radius: 'lg · 12px' },
+    ];
+    const scaleGrid = document.getElementById('size-scale-grid');
+    if (scaleGrid) {
+      const head = document.createElement('div');
+      head.className = 'size-scale-row is-header';
+      head.innerHTML = '<div>size</div><div>height</div><div>h</div><div>px</div><div>fs</div><div>icon</div><div>gap</div><div>radius</div>';
+      scaleGrid.appendChild(head);
+      SIZES.forEach(s => {
+        const row = document.createElement('div');
+        row.className = 'size-scale-row';
+        row.innerHTML = `
+          <div class="size-scale-name">${s.name}</div>
+          <div class="size-scale-bar" style="height: ${s.h}px;"></div>
+          <div class="size-scale-val">${s.h}px</div>
+          <div class="size-scale-val">${s.px}px</div>
+          <div class="size-scale-val">${s.fs}px</div>
+          <div class="size-scale-val">${s.icon}px</div>
+          <div class="size-scale-val">${s.gap}px</div>
+          <div class="size-scale-val">${s.radius}</div>
+        `;
+        scaleGrid.appendChild(row);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — Marketing + Signature</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script>/* tailwind cdn removed for standalone bundle — page renders from tokens.css + components.css */</script>
+  <template id="__bundler_thumbnail" data-bg-color="#fafaf9">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="t-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#2f6fda"/>
+          <stop offset="100%" stop-color="#e07b4a"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="800" fill="#fafaf9"/>
+      <rect x="320" y="200" width="560" height="400" rx="24" fill="url(#t-grad)"/>
+      <circle cx="820" cy="280" r="120" fill="#ffffff" opacity="0.14"/>
+      <circle cx="380" cy="560" r="80"  fill="#ffffff" opacity="0.10"/>
+      <rect x="420" y="350" width="280" height="20" rx="6" fill="#ffffff" opacity="0.95"/>
+      <rect x="420" y="392" width="200" height="14" rx="5" fill="#ffffff" opacity="0.7"/>
+      <rect x="420" y="448" width="140" height="40" rx="10" fill="#ffffff"/>
+    </svg>
+  </template>
+  <style>
+    .frame {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--bg);
+      overflow: hidden;
+    }
+    .frame-caption {
+      padding: 10px 14px;
+      border-top: 1px solid var(--border);
+      background: var(--surface-sunken);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    /* Marketing top bar mock */
+    .mk-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 28px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .mk-nav .brand { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; letter-spacing: -0.012em; }
+    .mk-nav .brand .mark {
+      width: 22px; height: 22px; border-radius: var(--radius-sm); background: var(--text-primary);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .mk-nav .brand .mark > i { width: 7px; height: 7px; background: var(--bg); border-radius: 2px; display: block; }
+    .mk-nav .links { display: flex; gap: 18px; font-size: 13px; color: var(--text-secondary); }
+    .mk-nav .links a:hover { color: var(--text-primary); }
+    .mk-nav .actions { display: flex; gap: 8px; }
+
+    /* Hero shapes */
+    .hero-shapes { position: relative; aspect-ratio: 4/3; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface-sunken); overflow: hidden; }
+    .hero-shapes::before {
+      content: ""; position: absolute; inset: 0;
+      background-image: radial-gradient(var(--border) 1px, transparent 1px);
+      background-size: 12px 12px; opacity: 0.7;
+    }
+
+    /* Logo cloud — simple wordmarks */
+    .logo {
+      font-family: var(--font-sans);
+      letter-spacing: -0.022em;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 20px;
+      opacity: 0.7;
+    }
+
+    /* Signature card */
+    .sig-card { border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); overflow: hidden; display: flex; flex-direction: column; }
+    .sig-canvas { aspect-ratio: 4/3; position: relative; overflow: hidden; }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">marketing · v0.1</span>
+      </div>
+      <nav class="lb-page-nav">
+        <a class="lb-page-link" href="Foundations.html">Foundations</a>
+        <a class="lb-page-link" href="Atoms.html">Atoms</a>
+        <a class="lb-page-link" href="Organisms.html">Organisms</a>
+        <a class="lb-page-link" href="Personality.html">Personality</a>
+        <a class="lb-page-link" href="Motion.html">Motion</a>
+        <a class="lb-page-link" href="DataViz.html">Data viz</a>
+        <a class="lb-page-link" href="Marketing.html">Marketing</a>
+        <a class="lb-page-link" href="Guide.html">Guide</a>
+      </nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#secondary">Secondary accent</a></li>
+        <li><a href="#heroes">Heroes</a></li>
+        <li><a href="#features">Feature sections</a></li>
+        <li><a href="#proof">Social proof</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#cta">CTA banner</a></li>
+        <li><a href="#footer">Footer</a></li>
+        <li><a href="#signature">Signature moment</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>Marketing</h5>
+        <p>Outward-facing blocks. Same tokens, more breathing room — and one signature touch per project, not three.</p>
+      </div>
+    </aside>
+
+    <main class="lb-main">
+
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 11</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track);">Marketing.</h2>
+          <p class="lede">The outward-facing layer. Heroes, feature blocks, social proof, pricing, CTA, footer — plus the one signature touch each project earns.</p>
+        </header>
+      </section>
+
+      <!-- SECONDARY ACCENT -->
+      <section class="lb-section" id="secondary">
+        <header>
+          <div class="eyebrow">01 — Secondary accent &amp; gradient</div>
+          <h2>The marketing-only tokens <a class="anchor" href="#secondary">#secondary</a></h2>
+          <p class="lede">Two new tokens added to the contract: <code class="token-pill">--accent-secondary</code> and <code class="token-pill">--accent-gradient</code>. They live ONLY on heroes, CTA banners, and signature surfaces — never on cards, atoms, status, or in-product UI.</p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+          <div class="specimen">
+            <div class="specimen-body" style="padding: 0;">
+              <div style="height: 140px; background: var(--accent);"></div>
+              <div style="padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border);">
+                <span style="font-family: var(--font-mono); font-size: 12px;">--accent</span>
+                <span style="font-size: 12px; color: var(--text-muted);">in-product · buttons · links</span>
+              </div>
+              <div style="height: 140px; background: var(--accent-secondary); border-top: 1px solid var(--border);"></div>
+              <div style="padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border);">
+                <span style="font-family: var(--font-mono); font-size: 12px;">--accent-secondary</span>
+                <span style="font-size: 12px; color: var(--text-muted);">hero only</span>
+              </div>
+              <div style="height: 140px; background: var(--accent-gradient); border-top: 1px solid var(--border);"></div>
+              <div style="padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border);">
+                <span style="font-family: var(--font-mono); font-size: 12px;">--accent-gradient</span>
+                <span style="font-size: 12px; color: var(--text-muted);">hero · CTA banner · signature</span>
+              </div>
+              <div style="height: 140px; background: var(--accent-gradient-soft); border-top: 1px solid var(--border);"></div>
+              <div style="padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border);">
+                <span style="font-family: var(--font-mono); font-size: 12px;">--accent-gradient-soft</span>
+                <span style="font-size: 12px; color: var(--text-muted);">tinted hero backgrounds</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="specimen">
+            <div class="specimen-body" style="padding: 24px; display: flex; flex-direction: column; gap: 14px;">
+              <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <div class="state-glyph is-success" style="width: 28px; height: 28px; margin: 0;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <div style="font-weight: 600; font-size: 14px;">Allowed on</div>
+                  <p style="margin: 4px 0 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55;">Hero backgrounds (low-key tint or sharp band). CTA banners that need to break the page rhythm. The single signature surface per project. Brand mark in the footer.</p>
+                </div>
+              </div>
+              <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <div class="state-glyph is-danger" style="width: 28px; height: 28px; margin: 0;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+                <div>
+                  <div style="font-weight: 600; font-size: 14px;">Never on</div>
+                  <p style="margin: 4px 0 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55;">Buttons (use solid <code class="token-pill">--accent</code>). Cards, badges, alerts, inputs, focus rings. Charts (use the chart palette). Any in-product surface. A gradient button is the fastest way to make a system look generic.</p>
+                </div>
+              </div>
+              <div class="alert alert--info" style="margin-top: 4px;">
+                <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <div class="alert-body">
+                  <div class="alert-title">Pick a hue that pairs.</div>
+                  <div class="alert-msg">The default secondary is a warm tone that pairs with the cool blue accent — but feel free to retune it per skin. Aim for ~120° hue rotation from the accent.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- HEROES -->
+      <section class="lb-section" id="heroes">
+        <header>
+          <div class="eyebrow">02 — Hero</div>
+          <h2>Three hero layouts <a class="anchor" href="#heroes">#heroes</a></h2>
+          <p class="lede">Centered, split, and full-bleed. Same atoms — different stage shape. Pick the one that matches what the page is selling.</p>
+        </header>
+
+        <!-- (a) Centered -->
+        <div class="lb-subsection">
+          <h3>(a) Centered <span class="token-pill">use when: a single clear message · product launch</span></h3>
+          <div class="frame">
+            <div class="mk-nav">
+              <div class="brand"><span class="mark"><i></i></span> Acme</div>
+              <div class="links"><a>Product</a><a>Pricing</a><a>Docs</a><a>Blog</a></div>
+              <div class="actions"><button class="btn btn--ghost btn--sm">Sign in</button><button class="btn btn--primary btn--sm">Start free</button></div>
+            </div>
+            <div style="padding: 80px 24px; text-align: center; position: relative; background: var(--accent-gradient-soft);">
+              <span class="badge badge--accent" style="margin-bottom: 18px;"><span class="badge-dot"></span>Beta 2.4 · ship branches</span>
+              <h1 style="margin: 0; font-size: 56px; line-height: 1.03; font-weight: 700; letter-spacing: -0.048em; max-width: 720px; margin-inline: auto;">A faster way to ship onboarding flows.</h1>
+              <p style="margin: 18px auto 0; font-size: 18px; line-height: 1.55; color: var(--text-secondary); max-width: 540px;">Designed for product teams that ship every week. Author once, target by segment, push without engineering.</p>
+              <div style="display: inline-flex; gap: 8px; margin-top: 24px;">
+                <button class="btn btn--primary btn--lg">Start free</button>
+                <button class="btn btn--ghost btn--lg">Watch tour · 2m</button>
+              </div>
+              <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 14px;">No credit card · cancel anytime</div>
+            </div>
+            <div class="frame-caption">Centered narrow hero · tinted gradient bg · single CTA pair</div>
+          </div>
+        </div>
+
+        <!-- (b) Split with media -->
+        <div class="lb-subsection">
+          <h3>(b) Split with media <span class="token-pill">use when: product is the proof · show, then tell</span></h3>
+          <div class="frame">
+            <div class="mk-nav">
+              <div class="brand"><span class="mark"><i></i></span> Acme</div>
+              <div class="links"><a>Product</a><a>Pricing</a><a>Docs</a><a>Blog</a></div>
+              <div class="actions"><button class="btn btn--ghost btn--sm">Sign in</button><button class="btn btn--primary btn--sm">Start free</button></div>
+            </div>
+            <div style="padding: 56px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+              <div style="display: flex; flex-direction: column; gap: 14px;">
+                <span class="badge badge--accent" style="align-self: flex-start;">v2.4</span>
+                <h1 style="margin: 0; font-size: 44px; line-height: 1.04; font-weight: 700; letter-spacing: -0.044em;">Onboarding that actually onboards.</h1>
+                <p style="margin: 0; font-size: 17px; line-height: 1.55; color: var(--text-secondary);">Three steps, skippable, mobile-first. Templates for SaaS, finance, and dev tools — or start blank.</p>
+                <div style="display: flex; gap: 8px; margin-top: 6px;">
+                  <button class="btn btn--primary btn--lg">Try the templates</button>
+                  <button class="btn btn--ghost btn--lg">Read the docs →</button>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
+                  <div class="avatar-group">
+                    <span class="avatar avatar--sm">AM</span>
+                    <span class="avatar $1 tint-1">JS</span>
+                    <span class="avatar $1 tint-2">RT</span>
+                  </div>
+                  <span style="font-size: 13px; color: var(--text-muted);">Trusted by 24k+ teams</span>
+                </div>
+              </div>
+              <!-- Product screenshot stand-in -->
+              <div class="hero-shapes" style="aspect-ratio: auto; height: 360px;">
+                <div style="position: absolute; inset: 24px; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-lg); padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-danger-500);"></span>
+                    <span style="width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-warning-500);"></span>
+                    <span style="width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-success-500);"></span>
+                    <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-left: 6px;">acme.app / onboarding</span>
+                  </div>
+                  <div class="tabs--underline">
+                    <button class="tab is-active">Steps</button>
+                    <button class="tab">Audience</button>
+                    <button class="tab">Analytics</button>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 8px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--accent-subtle);">
+                      <div style="width: 18px; height: 18px; border-radius: var(--radius-full); background: var(--accent); color: var(--text-on-accent); display:inline-flex; align-items:center; justify-content:center; font-size: 10px; font-weight: 600;">1</div>
+                      <span style="font-size: 13px; font-weight: 500;">Welcome — pick your workspace name</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 8px; border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                      <div style="width: 18px; height: 18px; border-radius: var(--radius-full); background: var(--surface-sunken); color: var(--text-muted); display:inline-flex; align-items:center; justify-content:center; font-size: 10px; font-weight: 600;">2</div>
+                      <span style="font-size: 13px;">Invite teammates</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 8px; border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                      <div style="width: 18px; height: 18px; border-radius: var(--radius-full); background: var(--surface-sunken); color: var(--text-muted); display:inline-flex; align-items:center; justify-content:center; font-size: 10px; font-weight: 600;">3</div>
+                      <span style="font-size: 13px;">Connect your first integration</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="frame-caption">50/50 split · product mock on the right · trust strip under CTAs</div>
+          </div>
+        </div>
+
+        <!-- (c) Full-bleed background — restrained vs expressive comparison -->
+        <div class="lb-subsection">
+          <h3>(c) Full-bleed <span class="token-pill">use when: brand moment · launch · marketing site</span></h3>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+            <!-- Restrained -->
+            <div class="frame">
+              <div style="padding: 64px 32px; background: var(--surface);
+                background-image:
+                  radial-gradient(circle at 20% 0%, color-mix(in oklch, var(--accent) 12%, transparent), transparent 50%),
+                  radial-gradient(circle at 100% 100%, color-mix(in oklch, var(--accent-secondary) 8%, transparent), transparent 60%);
+                text-align: center; min-height: 360px; display: flex; flex-direction: column; justify-content: center;">
+                <h1 style="margin: 0; font-size: 40px; line-height: 1.05; font-weight: 700; letter-spacing: -0.040em;">Ship something this week.</h1>
+                <p style="margin: 14px auto 0; font-size: 16px; color: var(--text-secondary); max-width: 480px; line-height: 1.55;">A starter pack for product teams. Free during beta.</p>
+                <div style="display: inline-flex; gap: 8px; margin-top: 22px; align-self: center;">
+                  <button class="btn btn--primary btn--lg">Get started</button>
+                </div>
+              </div>
+              <div class="frame-caption">Restrained · soft accent radial · single CTA</div>
+            </div>
+
+            <!-- Expressive -->
+            <div class="frame">
+              <div style="padding: 64px 32px; background: var(--accent-gradient); color: white; text-align: center; min-height: 360px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: -40%; right: -10%; width: 400px; height: 400px; border-radius: var(--radius-full); background: rgba(255,255,255,0.08);"></div>
+                <div style="position: absolute; bottom: -30%; left: -10%; width: 300px; height: 300px; border-radius: var(--radius-full); background: rgba(255,255,255,0.06);"></div>
+                <div style="position: relative;">
+                  <span style="display: inline-block; padding: 4px 10px; border-radius: var(--radius-full); background: rgba(255,255,255,0.2); color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 16px;">Now in beta</span>
+                  <h1 style="margin: 0; font-size: 44px; line-height: 1.04; font-weight: 700; letter-spacing: -0.044em; color: white;">Ship something this week.</h1>
+                  <p style="margin: 14px auto 0; font-size: 16px; color: rgba(255,255,255,0.85); max-width: 480px; line-height: 1.55;">A starter pack for product teams. Free during beta.</p>
+                  <div style="display: inline-flex; gap: 8px; margin-top: 22px;">
+                    <button class="btn btn--lg" style="background: white; color: var(--accent);">Get started</button>
+                    <button class="btn btn--lg" style="background: transparent; color: white; border-color: rgba(255,255,255,0.4);">Watch tour →</button>
+                  </div>
+                </div>
+              </div>
+              <div class="frame-caption">Expressive · full --accent-gradient + soft floating shapes · save for launches</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- FEATURES -->
+      <section class="lb-section" id="features">
+        <header>
+          <div class="eyebrow">03 — Feature sections</div>
+          <h2>Feature grid &amp; feature rows <a class="anchor" href="#features">#features</a></h2>
+          <p class="lede">Grid for breadth, rows for depth. Don't use both on one page.</p>
+        </header>
+
+        <!-- Grid -->
+        <div class="lb-subsection">
+          <h3>Feature grid <span class="token-pill">6–9 cards · icon + headline + 1 sentence</span></h3>
+          <div class="frame">
+            <div style="padding: 56px 32px;">
+              <div style="text-align: center; margin-bottom: 36px;">
+                <div style="font-size: 11px; color: var(--accent); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">Why teams pick Acme</div>
+                <h2 style="margin: 8px 0 0; font-size: 36px; font-weight: 700; letter-spacing: -0.034em;">Everything you need to ship.</h2>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <div style="width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--accent-subtle); color: var(--accent); display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg></div>
+                  <h3 style="margin:0; font-size: 16px; font-weight: 600; letter-spacing: -0.012em;">Author without code</h3>
+                  <p style="margin:0; font-size: 14px; color: var(--text-secondary); line-height: 1.55;">Drag steps into place, paste from a doc, ship in an afternoon.</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <div style="width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--accent-subtle); color: var(--accent); display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></div>
+                  <h3 style="margin:0; font-size: 16px; font-weight: 600; letter-spacing: -0.012em;">Target precisely</h3>
+                  <p style="margin:0; font-size: 14px; color: var(--text-secondary); line-height: 1.55;">Show the right flow to the right user — by plan, role, geo, or anything in your data layer.</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <div style="width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--accent-subtle); color: var(--accent); display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="20" x2="21" y2="20"/><line x1="3" y1="20" x2="3" y2="4"/><polyline points="8 14 12 10 16 14 21 9"/></svg></div>
+                  <h3 style="margin:0; font-size: 16px; font-weight: 600; letter-spacing: -0.012em;">Measure outcomes</h3>
+                  <p style="margin:0; font-size: 14px; color: var(--text-secondary); line-height: 1.55;">Activation, completion, drop-off — surfaced on the same surface where you authored.</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <div style="width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--accent-subtle); color: var(--accent); display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                  <h3 style="margin:0; font-size: 16px; font-weight: 600; letter-spacing: -0.012em;">SOC 2 from day one</h3>
+                  <p style="margin:0; font-size: 14px; color: var(--text-secondary); line-height: 1.55;">SSO, SCIM, audit log, data residency. Plans you can take to security review without a flinch.</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <div style="width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--accent-subtle); color: var(--accent); display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+                  <h3 style="margin:0; font-size: 16px; font-weight: 600; letter-spacing: -0.012em;">API + SDKs</h3>
+                  <p style="margin:0; font-size: 14px; color: var(--text-secondary); line-height: 1.55;">Drop in to your existing stack. JS, iOS, Android, React Native. Webhooks for the rest.</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <div style="width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--accent-subtle); color: var(--accent); display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                  <h3 style="margin:0; font-size: 16px; font-weight: 600; letter-spacing: -0.012em;">99.99% uptime</h3>
+                  <p style="margin:0; font-size: 14px; color: var(--text-secondary); line-height: 1.55;">Multi-region, real-time failover, status page that doesn't lie.</p>
+                </div>
+              </div>
+            </div>
+            <div class="frame-caption">3-col grid · single accent on icon tiles · 1 sentence per feature</div>
+          </div>
+        </div>
+
+        <!-- Alternating rows -->
+        <div class="lb-subsection">
+          <h3>Feature rows <span class="token-pill">2–4 deep features · alternate sides</span></h3>
+          <div class="frame">
+            <div style="padding: 48px 32px; display: flex; flex-direction: column; gap: 56px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+                <div>
+                  <div style="font-size: 11px; color: var(--accent); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px;">Author</div>
+                  <h3 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.026em; line-height: 1.15;">Drag, drop, ship.</h3>
+                  <p style="margin: 12px 0 0; font-size: 15px; color: var(--text-secondary); line-height: 1.6;">A canvas built for content people. Paste from a Google Doc, drag a screenshot, type — the right component appears.</p>
+                  <ul style="margin: 18px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px;">
+                    <li style="display: flex; gap: 8px; font-size: 14px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>Pixel-snap to the design system grid</li>
+                    <li style="display: flex; gap: 8px; font-size: 14px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>Live preview on web, iOS, Android</li>
+                    <li style="display: flex; gap: 8px; font-size: 14px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>Branch and preview without merging</li>
+                  </ul>
+                </div>
+                <div class="hero-shapes" style="aspect-ratio: 4/3;">
+                  <div style="position: absolute; top: 16%; left: 12%; width: 60%; height: 60%; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-md);"></div>
+                  <div style="position: absolute; bottom: 14%; right: 16%; width: 40%; height: 40%; background: var(--accent-subtle); border: 1px solid color-mix(in oklch, var(--accent) 25%, transparent); border-radius: var(--radius-md);"></div>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+                <div class="hero-shapes" style="aspect-ratio: 4/3;">
+                  <div style="position: absolute; inset: 16%; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">audience: paid · weeks-2-to-4</div>
+                    <div style="height: 6px; border-radius: var(--radius-full); background: var(--accent-subtle); position: relative;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 62%; background: var(--accent); border-radius: var(--radius-full);"></div></div>
+                    <div style="font-size: 12px; font-weight: 500;">62% completed step 3</div>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size: 11px; color: var(--accent); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px;">Measure</div>
+                  <h3 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.026em; line-height: 1.15;">See what's working.</h3>
+                  <p style="margin: 12px 0 0; font-size: 15px; color: var(--text-secondary); line-height: 1.6;">Activation, completion, drop-off, time-to-value — pinned to the canvas where you authored, not buried in an analytics tab.</p>
+                  <button class="btn btn--link" style="margin-top: 14px;">See the metrics →</button>
+                </div>
+              </div>
+            </div>
+            <div class="frame-caption">Two-up rows · alternate the image side · scroll-revealed motion if dialed up</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- SOCIAL PROOF -->
+      <section class="lb-section" id="proof">
+        <header>
+          <div class="eyebrow">04 — Social proof</div>
+          <h2>Stats · logos · testimonial <a class="anchor" href="#proof">#proof</a></h2>
+          <p class="lede">Stats strip for breadth, logo cloud for trust, single testimonial for depth. Three different jobs — one stays understated, one stays out of the way, one earns the room.</p>
+        </header>
+
+        <!-- Stats strip -->
+        <div class="lb-subsection">
+          <h3>Stats / social-proof strip</h3>
+          <div class="frame">
+            <div style="padding: 40px 32px; background: var(--surface-sunken); display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center;">
+              <div>
+                <div style="font-size: 36px; font-weight: 700; letter-spacing: -0.030em; font-variant-numeric: tabular-nums;">24k+</div>
+                <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Teams shipping</div>
+              </div>
+              <div>
+                <div style="font-size: 36px; font-weight: 700; letter-spacing: -0.030em; font-variant-numeric: tabular-nums;">99.99%</div>
+                <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Uptime · last 12mo</div>
+              </div>
+              <div>
+                <div style="font-size: 36px; font-weight: 700; letter-spacing: -0.030em; font-variant-numeric: tabular-nums;">1.4B</div>
+                <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Flows delivered / mo</div>
+              </div>
+              <div>
+                <div style="font-size: 36px; font-weight: 700; letter-spacing: -0.030em; font-variant-numeric: tabular-nums;">SOC 2</div>
+                <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Type II audited</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logo cloud -->
+        <div class="lb-subsection">
+          <h3>Logo cloud</h3>
+          <div class="frame">
+            <div style="padding: 40px 32px;">
+              <div style="text-align: center; font-size: 12.5px; color: var(--text-muted); font-weight: 500; margin-bottom: 24px;">Trusted by product teams at</div>
+              <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 28px; align-items: center; justify-items: center;">
+                <span class="logo">Northwind</span>
+                <span class="logo" style="font-style: italic;">helix</span>
+                <span class="logo" style="font-weight: 800; letter-spacing: -0.030em;">UMBRA</span>
+                <span class="logo" style="text-transform: uppercase; letter-spacing: 0.18em; font-size: 14px;">contour</span>
+                <span class="logo">Citrine&nbsp;Labs</span>
+                <span class="logo" style="font-weight: 500;">/&nbsp;Verdant</span>
+              </div>
+            </div>
+            <div class="frame-caption">Wordmarks in --text-muted at ~70% opacity. No real logos in a system page — placeholders only.</div>
+          </div>
+        </div>
+
+        <!-- Testimonial -->
+        <div class="lb-subsection">
+          <h3>Testimonial card</h3>
+          <div class="frame">
+            <div style="padding: 56px 32px; display: grid; grid-template-columns: 1fr; max-width: 760px; margin: 0 auto;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--accent)" style="opacity: 0.35;"><path d="M6 17H2v-7l4-4v4h2v7zm10 0h-4v-7l4-4v4h2v7z"/></svg>
+              <blockquote style="margin: 14px 0 0; font-size: 26px; font-weight: 500; letter-spacing: -0.022em; line-height: 1.35; color: var(--text-primary);">Onboarding new teammates dropped from forty minutes to under five. We didn't expect that.</blockquote>
+              <div style="display: flex; align-items: center; gap: 12px; margin-top: 24px;">
+                <span class="avatar avatar--lg">EH</span>
+                <div>
+                  <div style="font-size: 14px; font-weight: 500;">Elena Hahn</div>
+                  <div style="font-size: 12.5px; color: var(--text-muted);">Head of Ops, Northwind</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- PRICING -->
+      <section class="lb-section" id="pricing">
+        <header>
+          <div class="eyebrow">05 — Pricing</div>
+          <h2>Three tiles <a class="anchor" href="#pricing">#pricing</a></h2>
+          <p class="lede">Free / Pro / Business is the default rhythm. Pro is the recommended path — give it a quiet accent ring, not a screaming gradient.</p>
+        </header>
+        <div class="frame">
+          <div style="padding: 56px 32px; background: var(--bg);">
+            <div style="text-align: center; margin-bottom: 32px;">
+              <h2 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.026em;">Simple pricing.</h2>
+              <p style="margin: 8px 0 0; font-size: 14.5px; color: var(--text-secondary);">Start free. Grow when you're ready.</p>
+              <div class="tabs--pill" style="margin-top: 18px;">
+                <button class="tab is-active">Monthly</button>
+                <button class="tab">Yearly · save 20%</button>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 960px; margin: 0 auto;">
+
+              <div class="card">
+                <div class="card-body" style="padding: 24px; display: flex; flex-direction: column; gap: 14px;">
+                  <div>
+                    <div style="font-size: 12.5px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Free</div>
+                    <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 8px;">
+                      <span style="font-size: 36px; font-weight: 700; letter-spacing: -0.030em;">$0</span>
+                      <span style="font-size: 13px; color: var(--text-muted);">/ month</span>
+                    </div>
+                    <p style="margin: 8px 0 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55;">For solo builders trying out the system.</p>
+                  </div>
+                  <button class="btn btn--secondary">Start free</button>
+                  <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
+                    <li style="display:flex; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>Up to 3 projects</li>
+                    <li style="display:flex; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>1 seat</li>
+                    <li style="display:flex; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>Community support</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Pro — highlighted -->
+              <div class="card" style="border-color: var(--accent); position: relative; box-shadow: 0 0 0 1px var(--accent);">
+                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%);"><span class="badge badge--accent is-solid">Most popular</span></div>
+                <div class="card-body" style="padding: 24px; display: flex; flex-direction: column; gap: 14px;">
+                  <div>
+                    <div style="font-size: 12.5px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Pro</div>
+                    <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 8px;">
+                      <span style="font-size: 36px; font-weight: 700; letter-spacing: -0.030em;">$24</span>
+                      <span style="font-size: 13px; color: var(--text-muted);">/ seat / month</span>
+                    </div>
+                    <p style="margin: 8px 0 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55;">For teams that ship every week.</p>
+                  </div>
+                  <button class="btn btn--primary">Start free trial</button>
+                  <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
+                    <li style="display:flex; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>Unlimited projects</li>
+                    <li style="display:flex; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>Branches + previews</li>
+                    <li style="display:flex; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>Analytics + cohorts</li>
+                    <li style="display:flex; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>Email support</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body" style="padding: 24px; display: flex; flex-direction: column; gap: 14px;">
+                  <div>
+                    <div style="font-size: 12.5px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Business</div>
+                    <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 8px;">
+                      <span style="font-size: 36px; font-weight: 700; letter-spacing: -0.030em;">Talk</span>
+                    </div>
+                    <p style="margin: 8px 0 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55;">For orgs that need SSO, SCIM, and an MSA.</p>
+                  </div>
+                  <button class="btn btn--secondary">Contact sales</button>
+                  <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
+                    <li style="display:flex; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>SSO + SCIM</li>
+                    <li style="display:flex; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>Audit log + data residency</li>
+                    <li style="display:flex; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>Dedicated SRE</li>
+                    <li style="display:flex; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>Custom MSA</li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- CTA BANNER -->
+      <section class="lb-section" id="cta">
+        <header>
+          <div class="eyebrow">06 — CTA banner</div>
+          <h2>One last ask <a class="anchor" href="#cta">#cta</a></h2>
+          <p class="lede">The page's closing line. One sentence, one primary action. This is one of the few spots where <code class="token-pill">--accent-gradient</code> is welcome.</p>
+        </header>
+        <div class="frame">
+          <div style="padding: 48px 32px; background: var(--accent-gradient); color: white; display: flex; align-items: center; justify-content: space-between; gap: 32px; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: -40%; right: 10%; width: 320px; height: 320px; border-radius: var(--radius-full); background: rgba(255,255,255,0.08); pointer-events: none;"></div>
+            <div style="position: relative;">
+              <h2 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.030em; line-height: 1.15; color: white;">Ship your first flow this week.</h2>
+              <p style="margin: 8px 0 0; font-size: 15px; color: rgba(255,255,255,0.85);">Free during beta. No credit card.</p>
+            </div>
+            <div style="display: flex; gap: 8px; position: relative;">
+              <button class="btn btn--lg" style="background: white; color: var(--accent);">Start free</button>
+              <button class="btn btn--lg" style="background: transparent; color: white; border-color: rgba(255,255,255,0.4);">Talk to us →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- FOOTER -->
+      <section class="lb-section" id="footer">
+        <header>
+          <div class="eyebrow">07 — Footer</div>
+          <h2>Site footer <a class="anchor" href="#footer">#footer</a></h2>
+          <p class="lede">Last bit of chrome. Sitemap on the left, brand on the right. Sets aside legal links without becoming a basement.</p>
+        </header>
+        <div class="frame">
+          <div style="padding: 56px 32px 24px; background: var(--surface);">
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 32px;">
+              <div>
+                <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; letter-spacing: -0.012em;">
+                  <span style="width: 22px; height: 22px; border-radius: var(--radius-sm); background: var(--text-primary); display:flex; align-items:center; justify-content:center;"><span style="width: 7px; height: 7px; background: var(--bg); border-radius: 2px;"></span></span>
+                  Acme
+                </div>
+                <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55; max-width: 280px;">The fastest way to ship onboarding flows. Built for product teams.</p>
+                <div style="display: flex; gap: 10px; margin-top: 16px;">
+                  <a href="#" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); border: 1px solid var(--border); color: var(--text-muted);"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.7 2.7 1.2 3.4.9.1-.7.4-1.2.7-1.5-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3 0 0 1-.3 3.3 1.2 1-.3 2-.4 3-.4s2 .1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.6 1.5.2 2.7.1 3 .8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5z"/></svg></a>
+                  <a href="#" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); border: 1px solid var(--border); color: var(--text-muted);"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+                </div>
+              </div>
+              <div>
+                <div style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 12px;">Product</div>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
+                  <li><a href="#" style="color: var(--text-secondary);">Features</a></li>
+                  <li><a href="#" style="color: var(--text-secondary);">Templates</a></li>
+                  <li><a href="#" style="color: var(--text-secondary);">Pricing</a></li>
+                  <li><a href="#" style="color: var(--text-secondary);">Changelog</a></li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 12px;">Developers</div>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
+                  <li><a href="#" style="color: var(--text-secondary);">Docs</a></li>
+                  <li><a href="#" style="color: var(--text-secondary);">API reference</a></li>
+                  <li><a href="#" style="color: var(--text-secondary);">SDKs</a></li>
+                  <li><a href="#" style="color: var(--text-secondary);">Status</a></li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 12px;">Company</div>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
+                  <li><a href="#" style="color: var(--text-secondary);">About</a></li>
+                  <li><a href="#" style="color: var(--text-secondary);">Blog</a></li>
+                  <li><a href="#" style="color: var(--text-secondary);">Careers</a></li>
+                  <li><a href="#" style="color: var(--text-secondary);">Contact</a></li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 12px;">Legal</div>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px;">
+                  <li><a href="#" style="color: var(--text-secondary);">Terms</a></li>
+                  <li><a href="#" style="color: var(--text-secondary);">Privacy</a></li>
+                  <li><a href="#" style="color: var(--text-secondary);">Security</a></li>
+                  <li><a href="#" style="color: var(--text-secondary);">DPA</a></li>
+                </ul>
+              </div>
+            </div>
+            <div style="margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: var(--text-muted);">
+              <div>© 2026 Acme Inc.</div>
+              <div style="display: flex; gap: 14px;">
+                <span style="display: inline-flex; align-items: center; gap: 5px;"><span style="width:7px; height:7px; border-radius: var(--radius-full); background: var(--color-success-500);"></span>All systems normal</span>
+                <span>v 2.4.1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- SIGNATURE MOMENT -->
+      <section class="lb-section" id="signature">
+        <header>
+          <div class="eyebrow">08 — Signature moment</div>
+          <h2>One signature per app <a class="anchor" href="#signature">#signature</a></h2>
+          <p class="lede">Pick <strong style="color: var(--text-primary); font-weight: 500;">one</strong> distinctive, branded touch per project. Not three. Not a sprinkle. One.</p>
+        </header>
+
+        <div class="specimen">
+          <div class="specimen-body" style="padding: 24px; display: flex; flex-direction: column; gap: 14px;">
+            <p style="margin: 0; font-size: 15px; color: var(--text-primary); line-height: 1.6; max-width: 720px;">
+              The system above is intentionally restrained — that's what makes the signature moment legible. If everything is special, nothing is. Pick the spot the user will remember (the empty state, the loading moment, the hero, an unexpected hover) and put real craft there. Everywhere else, ship the defaults.
+            </p>
+            <div class="alert alert--warning" style="max-width: 720px;">
+              <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <div class="alert-body">
+                <div class="alert-title">The rule</div>
+                <div class="alert-msg">One signature per project. If a second moment wants in, ask: <em>does this earn its weight, or am I sprinkling creativity?</em></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Three examples -->
+        <div class="lb-subsection">
+          <h3>Three examples — pick one shape per app</h3>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+
+            <!-- Custom empty illustration -->
+            <div class="sig-card">
+              <div class="sig-canvas" style="background:
+                linear-gradient(135deg, color-mix(in oklch, var(--accent) 4%, var(--surface)), color-mix(in oklch, var(--accent-secondary) 4%, var(--surface)));">
+                <!-- A composed scene -->
+                <div style="position: absolute; left: 18%; bottom: 22%; width: 56px; height: 80px; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm);"></div>
+                <div style="position: absolute; left: 40%; bottom: 22%; width: 64px; height: 96px; border-radius: var(--radius-md); background: var(--accent); box-shadow: var(--shadow-md);"></div>
+                <div style="position: absolute; right: 18%; bottom: 22%; width: 56px; height: 60px; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--border);"></div>
+                <div style="position: absolute; top: 22%; right: 24%; width: 18px; height: 18px; border-radius: var(--radius-full); background: var(--color-warning-500);"></div>
+                <div style="position: absolute; top: 32%; left: 30%; width: 32px; height: 32px; border-radius: var(--radius-full); background: var(--accent-secondary); opacity: 0.6;"></div>
+                <div style="position: absolute; left: 12%; right: 12%; bottom: 22%; height: 1px; background: var(--border);"></div>
+              </div>
+              <div style="padding: 16px 18px;">
+                <div style="font-size: 11px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Example A</div>
+                <h4 style="margin: 6px 0 4px; font-size: 16px; font-weight: 600; letter-spacing: -0.012em;">Custom empty-state illustration</h4>
+                <p style="margin: 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55;">A geometric scene unique to the brand. Shows up where the app is empty by design — first project, first invite, first export.</p>
+              </div>
+            </div>
+
+            <!-- Branded loading animation -->
+            <div class="sig-card">
+              <div class="sig-canvas" style="background: var(--surface-sunken); display: flex; align-items: center; justify-content: center;">
+                <svg viewBox="0 0 80 80" width="100" height="100">
+                  <defs>
+                    <linearGradient id="sig-loader" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="var(--accent)"/>
+                      <stop offset="100%" stop-color="var(--accent-secondary)"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="40" cy="40" r="32" fill="none" stroke="var(--border)" stroke-width="4"/>
+                  <circle cx="40" cy="40" r="32" fill="none" stroke="url(#sig-loader)" stroke-width="4" stroke-linecap="round" stroke-dasharray="60 200" transform="rotate(-90 40 40)">
+                    <animateTransform attributeName="transform" type="rotate" from="-90 40 40" to="270 40 40" dur="1.4s" repeatCount="indefinite"/>
+                  </circle>
+                  <circle cx="40" cy="40" r="6" fill="var(--accent)"/>
+                </svg>
+              </div>
+              <div style="padding: 16px 18px;">
+                <div style="font-size: 11px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Example B</div>
+                <h4 style="margin: 6px 0 4px; font-size: 16px; font-weight: 600; letter-spacing: -0.012em;">Branded loading animation</h4>
+                <p style="margin: 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55;">A small custom spinner that uses the gradient. Replaces the default <code class="token-pill">.spinner</code> on the splash and first sync — only there.</p>
+              </div>
+            </div>
+
+            <!-- Unexpected hover reveal -->
+            <div class="sig-card">
+              <div class="sig-canvas sig-hover" style="background: var(--surface-sunken); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                <div class="sig-hover-card" style="position: relative; width: 70%; aspect-ratio: 3/2; border-radius: var(--radius-md); background: var(--accent-gradient); transition: transform var(--duration-base) var(--ease-decelerate), box-shadow var(--duration-base) var(--ease-decelerate); box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 18px; letter-spacing: -0.014em;">
+                  Hover me →
+                  <div class="sig-hover-shine" style="position: absolute; top: 0; left: -40%; width: 30%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transform: skewX(-20deg); transition: left var(--duration-slow) var(--ease-standard);"></div>
+                </div>
+              </div>
+              <div style="padding: 16px 18px;">
+                <div style="font-size: 11px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Example C</div>
+                <h4 style="margin: 6px 0 4px; font-size: 16px; font-weight: 600; letter-spacing: -0.012em;">Unexpected hover reveal</h4>
+                <p style="margin: 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55;">A surprise on the hero card — a parallax tilt, a shine sweep, a gradient that follows the cursor. One element, one motion. Disabled under reduced-motion.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Wrap up -->
+        <div class="specimen" style="margin-top: 24px;">
+          <div class="specimen-body" style="padding: 24px; display: flex; align-items: flex-start; gap: 16px;">
+            <div class="state-glyph is-accent" style="margin: 0; flex-shrink: 0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div>
+              <h3 style="margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.014em;">Lookbook complete.</h3>
+              <p style="margin: 8px 0 0; font-size: 14px; color: var(--text-secondary); line-height: 1.6; max-width: 640px;">
+                Eleven chapters, one contract. The system holds whether you're shipping an admin tool, a marketing site, or a launch announcement — because the bones (tokens, atoms, motion patterns) don't change, only the surface where each one shows up.
+              </p>
+              <div style="display: flex; gap: 6px; margin-top: 16px; flex-wrap: wrap;">
+                <a href="Foundations.html" class="token-pill">Foundations</a>
+                <a href="Atoms.html" class="token-pill">Atoms</a>
+                <a href="Molecules.html" class="token-pill">Molecules</a>
+                <a href="Organisms.html" class="token-pill">Organisms</a>
+                <a href="Auth.html" class="token-pill">Auth</a>
+                <a href="States.html" class="token-pill">States</a>
+                <a href="Personality.html" class="token-pill">Personality</a>
+                <a href="Motion.html" class="token-pill">Motion</a>
+                <a href="DataViz.html" class="token-pill">Data viz</a>
+                <a href="Marketing.html" class="token-pill" style="background: var(--accent-subtle); color: var(--accent); border-color: color-mix(in oklch, var(--accent) 30%, transparent);">Marketing</a>
+                <a href="Guide.html" class="token-pill">Guide</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script>
+  <script>
+    // Signature hover reveal: shine sweep + lift
+    document.querySelectorAll('.sig-hover').forEach(host => {
+      const card = host.querySelector('.sig-hover-card');
+      const shine = host.querySelector('.sig-hover-shine');
+      host.addEventListener('mouseenter', () => {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        card.style.transform = 'translateY(-4px)';
+        card.style.boxShadow = 'var(--shadow-xl)';
+        shine.style.left = '140%';
+      });
+      host.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.boxShadow = 'var(--shadow-md)';
+        shine.style.left = '-40%';
+      });
+    });
+  </script>
+</body>
+</html>

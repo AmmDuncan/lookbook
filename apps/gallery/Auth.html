@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — Auth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: ['class', '[data-theme="dark"]'] };</script>
+  <style>
+    /* Auth frame — fixed height for centered + split layouts */
+    .auth-frame {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--bg);
+      overflow: hidden;
+      height: 600px;
+      position: relative;
+    }
+    .auth-centered {
+      height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 24px;
+      background:
+        radial-gradient(circle at 20% 0%, color-mix(in oklch, var(--accent) 6%, transparent), transparent 50%),
+        radial-gradient(circle at 80% 100%, color-mix(in oklch, var(--accent) 4%, transparent), transparent 50%),
+        var(--bg);
+    }
+    .auth-split { display: grid; grid-template-columns: 1.05fr 1fr; height: 100%; }
+    .auth-split-form {
+      display: flex; align-items: center; justify-content: center;
+      padding: 32px 24px;
+      background: var(--bg);
+    }
+    .auth-split-brand {
+      position: relative;
+      background: var(--surface-sunken);
+      border-left: 1px solid var(--border);
+      padding: 40px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      overflow: hidden;
+    }
+    /* Subtle non-gradient pattern: small dot grid */
+    .auth-split-brand::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image: radial-gradient(var(--border) 1px, transparent 1px);
+      background-size: 16px 16px;
+      mask-image: radial-gradient(ellipse at 70% 30%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at 70% 30%, black 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .auth-split-brand-inner { position: relative; }
+    .brand-quote {
+      font-size: 22px;
+      line-height: 1.35;
+      letter-spacing: -0.018em;
+      color: var(--text-primary);
+      max-width: 320px;
+      margin: 0;
+    }
+    .brand-cite {
+      display: flex; align-items: center; gap: 10px;
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .brand-meta {
+      display: flex; gap: 24px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .brand-meta div { display: flex; flex-direction: column; gap: 2px; }
+    .brand-meta .v { font-size: 18px; font-weight: 600; letter-spacing: -0.014em; }
+    .brand-meta .k { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    .brand-logo {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 600; letter-spacing: -0.012em;
+    }
+    .brand-logo-mark {
+      width: 24px; height: 24px;
+      border-radius: var(--radius-sm);
+      background: var(--text-primary);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .brand-logo-mark > i {
+      width: 8px; height: 8px;
+      background: var(--bg);
+      border-radius: 2px; display:block;
+    }
+
+    @media (max-width: 780px) {
+      .auth-split { grid-template-columns: 1fr; }
+      .auth-split-brand { display: none; }
+    }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <!-- TOP BAR -->
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">auth · v0.1</span>
+      </div>
+      <nav class="lb-page-nav">
+        <a class="lb-page-link" href="Foundations.html">Foundations</a>
+        <a class="lb-page-link" href="Atoms.html">Atoms</a>
+        <a class="lb-page-link" href="Molecules.html">Molecules</a>
+        <a class="lb-page-link" href="Organisms.html">Organisms</a>
+        <a class="lb-page-link" href="Auth.html">Auth</a>
+        <a class="lb-page-link" href="States.html">States</a>
+        <a class="lb-page-link" href="Personality.html">Personality</a>
+        <a class="lb-page-link" href="Motion.html">Motion</a>
+        <a class="lb-page-link" href="DataViz.html">Data viz</a>
+        <a class="lb-page-link" href="Marketing.html">Marketing</a>
+        <a class="lb-page-link" href="Guide.html">Guide</a>
+      </nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#signin">Sign in</a></li>
+        <li><a href="#signup">Sign up</a></li>
+        <li><a href="#forgot">Forgot password</a></li>
+        <li><a href="#otp">OTP / 2FA</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>Auth</h5>
+        <p>Each flow has a centered-card and split-screen variant. Split-screen brand panel uses a calm dot pattern, never a loud gradient.</p>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="lb-main">
+
+      <!-- Intro -->
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 5</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track);">Auth.</h2>
+          <p class="lede">Four flows, two presentations each. Centered card for product chrome; split-screen when there's a story worth telling alongside.</p>
+        </header>
+      </section>
+
+      <!-- SIGN IN -->
+      <section class="lb-section" id="signin">
+        <header>
+          <div class="eyebrow">01 — Sign in</div>
+          <h2>Sign in <a class="anchor" href="#signin">#signin</a></h2>
+          <p class="lede">Email + password, remember me, forgot link, SSO row. Invalid-credentials state shown inline — never silently fail.</p>
+        </header>
+
+        <!-- Centered + Error variant in same row -->
+        <div class="lb-subsection">
+          <h3>Centered card</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+            <!-- Pristine -->
+            <div class="auth-frame">
+              <div class="auth-centered">
+                <form class="auth-card">
+                  <div class="auth-header">
+                    <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                    <h2 class="auth-title" style="margin-top: 6px;">Welcome back</h2>
+                    <p class="auth-subtitle">Sign in to your workspace to continue.</p>
+                  </div>
+                  <div class="sso-row">
+                    <button type="button" class="btn btn--secondary">
+                      <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#4285F4" d="M21.35 11.1H12v3.83h5.36c-.23 1.5-1.66 4.4-5.36 4.4-3.23 0-5.86-2.67-5.86-5.96 0-3.29 2.63-5.96 5.86-5.96 1.83 0 3.06.78 3.76 1.45l2.56-2.47C16.86 4.92 14.7 4 12 4 6.98 4 2.9 8.08 2.9 13.1S6.98 22.2 12 22.2c6.92 0 8.7-5.18 8.7-7.92 0-.46-.05-.91-.12-1.34z"/></svg>
+                      Google
+                    </button>
+                    <button type="button" class="btn btn--secondary">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.7 2.7 1.2 3.4.9.1-.7.4-1.2.7-1.5-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3 0 0 1-.3 3.3 1.2 1-.3 2-.4 3-.4s2 .1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.6 1.5.2 2.7.1 3 .8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5z"/></svg>
+                      GitHub
+                    </button>
+                  </div>
+                  <div class="auth-divider">or</div>
+                  <div class="field">
+                    <label class="field-label" for="si-email">Email</label>
+                    <input id="si-email" class="input" type="email" placeholder="you@company.com" />
+                  </div>
+                  <div class="field">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <label class="field-label" for="si-pass">Password</label>
+                      <a href="#" style="font-size: 12.5px; color: var(--accent); font-weight:500;">Forgot?</a>
+                    </div>
+                    <input id="si-pass" class="input" type="password" placeholder="••••••••" />
+                  </div>
+                  <label style="display:inline-flex; align-items:center; gap:8px; font-size: 13px; color: var(--text-secondary);">
+                    <input type="checkbox" class="checkbox" /> Keep me signed in
+                  </label>
+                  <button type="submit" class="btn btn--primary btn--lg">Sign in</button>
+                  <div class="auth-foot">Don't have an account? <a href="#">Create one</a></div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Error: invalid credentials -->
+            <div class="auth-frame">
+              <div class="auth-centered">
+                <form class="auth-card">
+                  <div class="auth-header">
+                    <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                    <h2 class="auth-title" style="margin-top: 6px;">Welcome back</h2>
+                    <p class="auth-subtitle">Sign in to your workspace to continue.</p>
+                  </div>
+                  <div class="alert alert--danger" style="padding: 10px 12px;">
+                    <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:16px; height:16px;"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                    <div class="alert-body"><div class="alert-title" style="font-size: 13px;">Couldn't sign in</div><div class="alert-msg" style="font-size:12.5px;">That email or password isn't right. <a href="#" style="color: inherit; text-decoration: underline;">Forgot it?</a></div></div>
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="si-email-e">Email</label>
+                    <input id="si-email-e" class="input is-error" aria-invalid="true" type="email" value="andrea@acme.co" />
+                  </div>
+                  <div class="field">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <label class="field-label" for="si-pass-e">Password</label>
+                      <a href="#" style="font-size: 12.5px; color: var(--accent); font-weight:500;">Forgot?</a>
+                    </div>
+                    <input id="si-pass-e" class="input is-error" aria-invalid="true" type="password" value="••••••" />
+                  </div>
+                  <label style="display:inline-flex; align-items:center; gap:8px; font-size: 13px; color: var(--text-secondary);">
+                    <input type="checkbox" class="checkbox" /> Keep me signed in
+                  </label>
+                  <button type="submit" class="btn btn--primary btn--lg">Sign in</button>
+                  <div class="auth-foot">Don't have an account? <a href="#">Create one</a></div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Split-screen -->
+        <div class="lb-subsection">
+          <h3>Split-screen</h3>
+          <div class="auth-frame">
+            <div class="auth-split">
+              <div class="auth-split-form">
+                <form class="auth-card" style="border: 0; box-shadow: none; padding: 0; max-width: 360px; background: transparent;">
+                  <div class="auth-header">
+                    <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                    <h2 class="auth-title" style="margin-top: 6px;">Welcome back</h2>
+                    <p class="auth-subtitle">Sign in to your workspace.</p>
+                  </div>
+                  <div class="field">
+                    <label class="field-label">Email</label>
+                    <input class="input" type="email" placeholder="you@company.com" />
+                  </div>
+                  <div class="field">
+                    <div style="display:flex; justify-content:space-between; align-items:center;"><label class="field-label">Password</label><a href="#" style="font-size: 12.5px; color: var(--accent); font-weight:500;">Forgot?</a></div>
+                    <input class="input" type="password" placeholder="••••••••" />
+                  </div>
+                  <button type="submit" class="btn btn--primary btn--lg">Sign in</button>
+                  <div class="auth-divider">or continue with</div>
+                  <div class="sso-row">
+                    <button type="button" class="btn btn--secondary">Google</button>
+                    <button type="button" class="btn btn--secondary">GitHub</button>
+                  </div>
+                  <div class="auth-foot">Don't have an account? <a href="#">Create one</a></div>
+                </form>
+              </div>
+              <div class="auth-split-brand">
+                <div class="auth-split-brand-inner">
+                  <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                </div>
+                <div class="auth-split-brand-inner">
+                  <blockquote class="brand-quote">"Onboarding new teammates dropped from forty minutes to under five. We didn't expect that."</blockquote>
+                  <div class="brand-cite"><span class="avatar avatar--sm">EH</span><div><div style="color: var(--text-primary); font-weight: 500;">Elena Hahn</div><div>Head of Ops, Northwind</div></div></div>
+                  <div class="brand-meta">
+                    <div><span class="v">24k+</span><span class="k">teams</span></div>
+                    <div><span class="v">99.99%</span><span class="k">uptime</span></div>
+                    <div><span class="v">SOC&nbsp;2</span><span class="k">audited</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- SIGN UP -->
+      <section class="lb-section" id="signup">
+        <header>
+          <div class="eyebrow">02 — Sign up</div>
+          <h2>Sign up <a class="anchor" href="#signup">#signup</a></h2>
+          <p class="lede">Name + email + password with inline validation hints and a 4-bar strength meter. Terms checkbox is required; primary action stays disabled until met.</p>
+        </header>
+
+        <div class="lb-subsection">
+          <h3>Centered card</h3>
+          <div class="auth-frame" style="height: 720px;">
+            <div class="auth-centered">
+              <form class="auth-card" style="max-width: 420px;">
+                <div class="auth-header">
+                  <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                  <h2 class="auth-title" style="margin-top: 6px;">Create your workspace</h2>
+                  <p class="auth-subtitle">Free for 14 days. No credit card.</p>
+                </div>
+                <div class="sso-row">
+                  <button type="button" class="btn btn--secondary">Continue with Google</button>
+                </div>
+                <div class="auth-divider">or with email</div>
+                <div class="field">
+                  <label class="field-label">Full name</label>
+                  <input class="input" placeholder="Andrea Mendez" />
+                </div>
+                <div class="field">
+                  <label class="field-label">Work email <span class="req">*</span></label>
+                  <input class="input" type="email" value="andrea@acme.co" aria-describedby="su-email-ok" />
+                  <span id="su-email-ok" class="field-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Domain looks good.</span>
+                </div>
+                <div class="field">
+                  <label class="field-label">Password</label>
+                  <div class="input-affix">
+                    <input class="input has-trailing" type="password" value="Sunlit-pivot-94!" />
+                    <span class="input-trailing"><button type="button" aria-label="Show password"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></span>
+                  </div>
+                  <div class="strength" data-strength="4">
+                    <div class="strength-bars"><div class="strength-bar"></div><div class="strength-bar"></div><div class="strength-bar"></div><div class="strength-bar"></div></div>
+                    <div class="strength-label"><span>At least 12 characters · one number · one symbol</span><span class="level">Strong</span></div>
+                  </div>
+                </div>
+                <label style="display:flex; align-items:flex-start; gap:8px; font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+                  <input type="checkbox" class="checkbox" checked style="margin-top: 2px;" />
+                  <span>I agree to Acme's <a href="#" style="color: var(--accent);">Terms</a> and <a href="#" style="color: var(--accent);">Privacy policy</a>.</span>
+                </label>
+                <button type="submit" class="btn btn--primary btn--lg">Create workspace</button>
+                <div class="auth-foot">Already have an account? <a href="#">Sign in</a></div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Split-screen — with weak password</h3>
+          <div class="auth-frame" style="height: 700px;">
+            <div class="auth-split">
+              <div class="auth-split-form" style="overflow-y: auto;">
+                <form class="auth-card" style="border: 0; box-shadow: none; padding: 0; max-width: 360px; background: transparent;">
+                  <div class="auth-header">
+                    <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                    <h2 class="auth-title" style="margin-top: 6px;">Create your account</h2>
+                    <p class="auth-subtitle">Start your free trial.</p>
+                  </div>
+                  <div class="field">
+                    <label class="field-label">Full name</label>
+                    <input class="input" value="Andrea Mendez" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label">Email</label>
+                    <input class="input" type="email" value="andrea@acme.co" aria-describedby="su-split-ok" />
+                    <span id="su-split-ok" class="field-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Domain looks good.</span>
+                  </div>
+                  <div class="field">
+                    <label class="field-label">Password</label>
+                    <input class="input" type="password" value="password" />
+                    <div class="strength" data-strength="1">
+                      <div class="strength-bars"><div class="strength-bar"></div><div class="strength-bar"></div><div class="strength-bar"></div><div class="strength-bar"></div></div>
+                      <div class="strength-label"><span>Add length and at least one number</span><span class="level">Weak</span></div>
+                    </div>
+                  </div>
+                  <label style="display:flex; align-items:flex-start; gap:8px; font-size: 13px; color: var(--text-secondary);">
+                    <input type="checkbox" class="checkbox" style="margin-top:2px;" />
+                    <span>I agree to the <a href="#" style="color: var(--accent);">Terms</a>.</span>
+                  </label>
+                  <button type="submit" class="btn btn--primary btn--lg is-disabled" disabled>Create account</button>
+                  <div class="auth-foot">Already have one? <a href="#">Sign in</a></div>
+                </form>
+              </div>
+              <div class="auth-split-brand">
+                <div class="auth-split-brand-inner">
+                  <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                </div>
+                <div class="auth-split-brand-inner">
+                  <h3 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.022em; line-height: 1.2;">Get your team aligned in an afternoon.</h3>
+                  <ul style="margin: 16px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px;">
+                    <li style="display:flex; gap:8px; font-size: 13.5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>Unlimited projects on every plan</li>
+                    <li style="display:flex; gap:8px; font-size: 13.5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>SSO, SCIM, audit log on Business</li>
+                    <li style="display:flex; gap:8px; font-size: 13.5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>Cancel anytime — no usage cliffs</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- FORGOT PASSWORD -->
+      <section class="lb-section" id="forgot">
+        <header>
+          <div class="eyebrow">03 — Forgot password</div>
+          <h2>Forgot password <a class="anchor" href="#forgot">#forgot</a></h2>
+          <p class="lede">One field — the email — and a confirmation state that doesn't reveal whether the account exists.</p>
+        </header>
+
+        <div class="lb-subsection">
+          <h3>Centered — form + confirmation</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+            <!-- Form -->
+            <div class="auth-frame">
+              <div class="auth-centered">
+                <form class="auth-card">
+                  <div class="auth-header">
+                    <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                    <h2 class="auth-title" style="margin-top: 6px;">Reset your password</h2>
+                    <p class="auth-subtitle">Enter the email you signed up with and we'll send a reset link.</p>
+                  </div>
+                  <div class="field">
+                    <label class="field-label">Email</label>
+                    <input class="input" type="email" placeholder="you@company.com" />
+                  </div>
+                  <button type="submit" class="btn btn--primary btn--lg">Send reset link</button>
+                  <div class="auth-foot"><a href="#">← Back to sign in</a></div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Confirmation -->
+            <div class="auth-frame">
+              <div class="auth-centered">
+                <div class="auth-card" style="align-items: center; text-align: center;">
+                  <div class="state-glyph is-success" style="margin: 0 auto;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  </div>
+                  <h2 class="auth-title">Check your inbox</h2>
+                  <p class="auth-subtitle" style="text-align: center;">
+                    If <strong style="color: var(--text-primary); font-weight: 500;">andrea@acme.co</strong> has an Acme account, we've sent a link to reset your password. The link expires in 30 minutes.
+                  </p>
+                  <button class="btn btn--primary btn--lg" style="width: 100%;">Open mail app</button>
+                  <div class="auth-foot">Didn't get it? <a href="#">Resend</a> · <a href="#">Try a different email</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Split-screen — form + confirmation</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="auth-frame">
+            <div class="auth-split">
+              <div class="auth-split-form">
+                <form class="auth-card" style="border: 0; box-shadow: none; padding: 0; max-width: 360px; background: transparent;">
+                  <div class="auth-header">
+                    <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                    <h2 class="auth-title" style="margin-top: 6px;">Reset your password</h2>
+                    <p class="auth-subtitle">We'll email you a link to choose a new one.</p>
+                  </div>
+                  <div class="field">
+                    <label class="field-label">Email</label>
+                    <input class="input" type="email" placeholder="you@company.com" />
+                  </div>
+                  <button type="submit" class="btn btn--primary btn--lg">Send reset link</button>
+                  <div class="auth-foot"><a href="#">← Back to sign in</a></div>
+                </form>
+              </div>
+              <div class="auth-split-brand">
+                <div class="auth-split-brand-inner">
+                  <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                </div>
+                <div class="auth-split-brand-inner">
+                  <h3 style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.022em; line-height: 1.25;">Security you don't have to think about.</h3>
+                  <p style="margin-top: 10px; font-size: 13.5px; color: var(--text-secondary); line-height: 1.6;">Passwords are bcrypt-hashed with per-user salts. Reset links expire in 30 minutes and can only be used once.</p>
+                  <ul style="margin: 14px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px;">
+                    <li style="display:flex; gap:6px; align-items:center; font-size: 12.5px; color: var(--text-muted);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>SOC 2 Type II</li>
+                    <li style="display:flex; gap:6px; align-items:center; font-size: 12.5px; color: var(--text-muted);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>30-min link TTL</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="auth-frame">
+            <div class="auth-split">
+              <div class="auth-split-form">
+                <div class="auth-card" style="border: 0; box-shadow: none; padding: 0; max-width: 360px; background: transparent; text-align: center; align-items: center;">
+                  <div class="state-glyph is-success" style="margin: 0 auto;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  </div>
+                  <h2 class="auth-title" style="text-align: center; margin-top: 6px;">Check your inbox</h2>
+                  <p class="auth-subtitle" style="text-align: center;">If <strong style="color: var(--text-primary); font-weight: 500;">andrea@acme.co</strong> has an Acme account, we've sent a reset link. The link expires in 30 minutes.</p>
+                  <button class="btn btn--primary btn--lg" style="width: 100%;">Open mail app</button>
+                  <div class="auth-foot">Didn't get it? <a href="#">Resend</a></div>
+                </div>
+              </div>
+              <div class="auth-split-brand">
+                <div class="auth-split-brand-inner">
+                  <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                </div>
+                <div class="auth-split-brand-inner">
+                  <h3 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.020em; line-height: 1.25;">Reset links expire in 30 min.</h3>
+                  <p style="margin-top: 8px; font-size: 13px; color: var(--text-secondary); line-height: 1.6;">One-use only. If it expires, request a new one — no penalties, no rate limit for legitimate users.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- OTP / 2FA -->
+      <section class="lb-section" id="otp">
+        <header>
+          <div class="eyebrow">04 — OTP / 2FA</div>
+          <h2>OTP &amp; two-factor <a class="anchor" href="#otp">#otp</a></h2>
+          <p class="lede">Six-digit segmented input with auto-advance. Resend has a cooldown timer; error state clears all cells and refocuses the first.</p>
+        </header>
+
+        <div class="lb-subsection">
+          <h3>Centered — pristine + error</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+            <!-- Pristine -->
+            <div class="auth-frame">
+              <div class="auth-centered">
+                <form class="auth-card" style="align-items: center;">
+                  <div class="auth-header" style="align-items: center; text-align: center;">
+                    <div class="state-glyph is-accent" style="margin: 0 auto;">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <h2 class="auth-title" style="text-align: center;">Verify it's you</h2>
+                    <p class="auth-subtitle" style="text-align: center;">Enter the 6-digit code from your authenticator app.</p>
+                  </div>
+                  <div class="otp" role="group" aria-label="Verification code">
+                    <input class="otp-cell" inputmode="numeric" maxlength="1" value="4" />
+                    <input class="otp-cell" inputmode="numeric" maxlength="1" value="8" />
+                    <input class="otp-cell" inputmode="numeric" maxlength="1" value="2" />
+                    <span class="otp-separator">–</span>
+                    <input class="otp-cell is-focus" inputmode="numeric" maxlength="1" value="" />
+                    <input class="otp-cell" inputmode="numeric" maxlength="1" value="" />
+                    <input class="otp-cell" inputmode="numeric" maxlength="1" value="" />
+                  </div>
+                  <div style="font-size: 12.5px; color: var(--text-muted); text-align: center;">Resend in <strong style="color: var(--text-primary); font-weight: 500; font-variant-numeric: tabular-nums;">00:24</strong></div>
+                  <button type="submit" class="btn btn--primary btn--lg" style="width: 100%;">Verify</button>
+                  <div class="auth-foot"><a href="#">Use a backup code</a></div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Error -->
+            <div class="auth-frame">
+              <div class="auth-centered">
+                <form class="auth-card" style="align-items: center;">
+                  <div class="auth-header" style="align-items: center; text-align: center;">
+                    <div class="state-glyph is-danger" style="margin: 0 auto;">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    </div>
+                    <h2 class="auth-title" style="text-align: center;">That code didn't work</h2>
+                    <p class="auth-subtitle" style="text-align: center;">2 attempts remaining before you'll need to start over.</p>
+                  </div>
+                  <div class="otp" aria-invalid="true" role="group" aria-label="Verification code">
+                    <input class="otp-cell is-focus is-error" inputmode="numeric" maxlength="1" value="" />
+                    <input class="otp-cell is-error" inputmode="numeric" maxlength="1" value="" />
+                    <input class="otp-cell is-error" inputmode="numeric" maxlength="1" value="" />
+                    <span class="otp-separator">–</span>
+                    <input class="otp-cell is-error" inputmode="numeric" maxlength="1" value="" />
+                    <input class="otp-cell is-error" inputmode="numeric" maxlength="1" value="" />
+                    <input class="otp-cell is-error" inputmode="numeric" maxlength="1" value="" />
+                  </div>
+                  <div style="font-size: 12.5px; color: var(--color-danger-600); text-align: center;">Incorrect code. Try again.</div>
+                  <button type="submit" class="btn btn--primary btn--lg" style="width: 100%;">Verify</button>
+                  <div class="auth-foot"><a href="#">Resend code</a></div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-subsection">
+          <h3>Split-screen</h3>
+          <div class="auth-frame">
+            <div class="auth-split">
+              <div class="auth-split-form">
+                <form class="auth-card" style="border: 0; box-shadow: none; padding: 0; max-width: 360px; background: transparent;">
+                  <div class="auth-header">
+                    <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                    <h2 class="auth-title" style="margin-top: 6px;">Two-factor authentication</h2>
+                    <p class="auth-subtitle">We sent a code to ••••8203. It expires in 10 minutes.</p>
+                  </div>
+                  <div class="otp" role="group" aria-label="Verification code">
+                    <input class="otp-cell" inputmode="numeric" maxlength="1" value="4" />
+                    <input class="otp-cell" inputmode="numeric" maxlength="1" value="8" />
+                    <input class="otp-cell" inputmode="numeric" maxlength="1" value="2" />
+                    <span class="otp-separator">–</span>
+                    <input class="otp-cell" inputmode="numeric" maxlength="1" value="5" />
+                    <input class="otp-cell is-focus" inputmode="numeric" maxlength="1" value="" />
+                    <input class="otp-cell" inputmode="numeric" maxlength="1" value="" />
+                  </div>
+                  <div style="font-size: 12.5px; color: var(--text-muted);">Resend in <strong style="color: var(--text-primary); font-weight: 500; font-variant-numeric: tabular-nums;">00:42</strong></div>
+                  <button type="submit" class="btn btn--primary btn--lg">Verify</button>
+                  <div class="auth-foot">Didn't receive it? <a href="#">Resend</a> · <a href="#">Use backup code</a></div>
+                </form>
+              </div>
+              <div class="auth-split-brand">
+                <div class="auth-split-brand-inner">
+                  <div class="brand-logo"><span class="brand-logo-mark"><i></i></span> Acme</div>
+                </div>
+                <div class="auth-split-brand-inner">
+                  <h3 style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.022em; line-height: 1.25;">Two layers, no friction.</h3>
+                  <p style="margin-top: 10px; font-size: 13.5px; color: var(--text-secondary); line-height: 1.6;">Codes auto-advance as you type. Paste a full code into any cell to fill them all.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <section style="padding-top: 32px; border-top: 1px solid var(--border);">
+        <div style="display: flex; align-items: flex-start; gap: 16px;">
+          <div style="width:32px; height:32px; border-radius: var(--radius-md); background: var(--accent-subtle); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h4 class="t-h4">Auth complete.</h4>
+            <p class="t-body text-secondary" style="margin-top: 4px; max-width: 540px;">Continue to <a href="States.html" style="color: var(--accent); font-weight: 500;">States</a> for loading, empty, error, and success patterns.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script>
+</body>
+</html>

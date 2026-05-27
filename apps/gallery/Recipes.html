@@ -1,0 +1,1543 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — Recipes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: ['class', '[data-theme="dark"]'] };</script>
+  <style>
+    /* Recipe card — anatomy + page mock */
+    .recipe {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .recipe-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .recipe-head > div {
+      padding: 16px 20px;
+      border-left: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .recipe-head > div:first-child { border-left: 0; }
+    .recipe-head h4 {
+      margin: 0;
+      font-size: var(--text-overline-size); font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+    .recipe-head ul {
+      margin: 0; padding: 0; list-style: none;
+      display: flex; flex-direction: column; gap: 4px;
+      font-size: var(--text-body-sm-size); color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .recipe-head ul li {
+      display: flex; align-items: baseline; gap: 6px;
+    }
+    .recipe-head ul li::before {
+      content: ""; flex-shrink: 0;
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--text-muted);
+      transform: translateY(-2px);
+    }
+    .recipe-head .use-when {
+      font-size: var(--text-body-sm-size); color: var(--text-primary); font-weight: 500; line-height: 1.5;
+    }
+    .recipe-head .responsive {
+      font-size: var(--text-micro-size); color: var(--text-secondary); line-height: 1.55;
+      padding-top: 8px; margin-top: 4px;
+      border-top: 1px dashed var(--border);
+    }
+    .recipe-mock {
+      position: relative;
+      background: var(--bg);
+      min-height: 580px;
+    }
+    .recipe-foot {
+      padding: 10px 16px;
+      border-top: 1px solid var(--border);
+      background: var(--surface-sunken);
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size); color: var(--text-muted);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    /* Mini app-shell used inside the mock */
+    .mock {
+      display: grid;
+      grid-template-rows: 48px 1fr;
+      min-height: 580px;
+    }
+    .mock-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .mock-topbar .brand { display:inline-flex; align-items:center; gap: 8px; font-weight:600; font-size: var(--text-body-sm-size); letter-spacing:-0.012em; }
+    .mock-topbar .brand .mark { width: 20px; height: 20px; border-radius: var(--radius-sm); background: var(--text-primary); display:flex; align-items:center; justify-content:center; }
+    .mock-topbar .brand .mark > i { width: 6px; height: 6px; background: var(--bg); border-radius: 2px; display:block; }
+
+    .mock-body { display: grid; grid-template-columns: 200px 1fr; min-height: 0; }
+    .mock-sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 12px 8px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .mock-side-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      font-size: var(--text-micro-size);
+      color: var(--text-secondary);
+      cursor: default;
+    }
+    .mock-side-item.is-active { background: var(--accent-subtle); color: var(--accent); font-weight: 500; }
+    .mock-side-item > svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .mock-side-group {
+      padding: 8px 8px 4px;
+      font-size: var(--text-overline-size); font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .mock-main { padding: 20px 24px; overflow: auto; display: flex; flex-direction: column; gap: 18px; }
+
+    .state-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 20px;
+      background: var(--surface-sunken);
+      border-top: 1px solid var(--border);
+    }
+    .state-row > .ministate {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      padding: 14px;
+      display: flex; flex-direction: column; gap: 8px;
+      min-height: 140px;
+    }
+    .state-row > .ministate .label {
+      font-family: var(--font-mono);
+      font-size: var(--text-overline-size); color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+    .state-row > .ministate .preview {
+      flex: 1;
+      background: var(--surface-sunken);
+      border-radius: var(--radius-sm);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 14px;
+      color: var(--text-muted);
+      font-size: var(--text-micro-size);
+      text-align: center;
+      gap: 6px;
+    }
+
+    @media (max-width: 900px) { .recipe-head { grid-template-columns: 1fr; } .recipe-head > div { border-left: 0; border-top: 1px solid var(--border); } .recipe-head > div:first-child { border-top: 0; } }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">recipes · v0.1</span>
+      </div>
+      <nav class="lb-page-nav" aria-label="Chapters"></nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#crud">CRUD list</a></li>
+        <li><a href="#detail">Record detail</a></li>
+        <li><a href="#form">Create / edit form</a></li>
+        <li><a href="#wizard">Multi-step wizard</a></li>
+        <li><a href="#settings">Settings page</a></li>
+        <li><a href="#search">Search &amp; results</a></li>
+        <li><a href="#feed">Feed / timeline</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#checkout">Checkout</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#map">Detail with map</a></li>
+        <li><a href="#kanban">Kanban</a></li>
+        <li><a href="#howto">How to use Recipes</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>Recipes</h5>
+        <p>Page-level compositions. Built only from existing Lookbook atoms / molecules / organisms — no new components, ever.</p>
+      </div>
+    </aside>
+
+    <main class="lb-main">
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 11</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track);">Recipes.</h2>
+          <p class="lede">The layer that stops every feature looking different. Each recipe is a labeled archetype — an ingredients list of existing components, the required states, when to reach for it, and how it adapts on mobile.</p>
+        </header>
+      </section>
+
+      <!-- =================================================================
+           1. CRUD LIST
+           ================================================================= -->
+      <section class="lb-section" id="crud">
+        <header>
+          <div class="eyebrow">Recipe 01</div>
+          <h2>CRUD list <a class="anchor" href="#crud">#crud</a></h2>
+        </header>
+
+        <div class="recipe">
+          <div class="recipe-head">
+            <div>
+              <h4>Ingredients</h4>
+              <ul>
+                <li><code class="token-pill">page-header (compact)</code></li>
+                <li><code class="token-pill">filter-bar</code> + active-filter chips</li>
+                <li><code class="token-pill">data-table</code> w/ sortable headers + row selection</li>
+                <li><code class="token-pill">bulk action bar</code> on selection</li>
+                <li><code class="token-pill">pagination</code></li>
+                <li><code class="token-pill">menu</code> for per-row actions</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Required states</h4>
+              <ul>
+                <li>Loading — table skeleton</li>
+                <li>Empty — first-use illustration + CTA</li>
+                <li>Empty — no search results (clear filters)</li>
+                <li>Error — full table failed (retry)</li>
+                <li>Error — row-level inline error</li>
+                <li>Success — toast after bulk action</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Use when</h4>
+              <div class="use-when">Users browse, filter, and manage a homogeneous collection — projects, members, orders, invoices.</div>
+              <div class="responsive">
+                <strong style="color: var(--text-primary); font-weight: 500;">Mobile:</strong> sidebar → drawer behind a hamburger; table collapses to a card-per-row stack (title + 2–3 key fields + overflow menu); filter chips scroll horizontally.
+              </div>
+            </div>
+          </div>
+
+          <!-- MOCK -->
+          <div class="recipe-mock">
+            <div class="mock">
+              <div class="mock-topbar">
+                <div style="display:flex; align-items:center; gap: 14px;">
+                  <span class="brand"><span class="mark"><i></i></span> Acme</span>
+                  <span class="badge badge--neutral badge--sm">Pro</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div class="search-field" style="width: 220px;"><span class="search-leading"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><input class="input input--sm" placeholder="Search…" /></div>
+                  <span class="avatar avatar--sm">AM</span>
+                </div>
+              </div>
+              <div class="mock-body">
+                <aside class="mock-sidebar">
+                  <div class="mock-side-item is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Projects</div>
+                  <div class="mock-side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Members</div>
+                  <div class="mock-side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Templates</div>
+                  <div class="mock-side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/></svg>Settings</div>
+                </aside>
+                <main class="mock-main">
+                  <header class="page-header" style="padding-bottom: 14px;">
+                    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="#">Workspace</a><svg class="bc-sep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg><span class="bc-current">Projects</span></nav>
+                    <div class="page-header-row">
+                      <div>
+                        <h1 class="page-header-title">Projects</h1>
+                        <p class="page-header-desc">87 projects · 12 active</p>
+                      </div>
+                      <div class="page-header-actions">
+                        <button class="btn btn--ghost btn--sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button>
+                        <button class="btn btn--primary btn--sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>New project</button>
+                      </div>
+                    </div>
+                  </header>
+
+                  <!-- Filter bar -->
+                  <div style="display:flex; align-items:center; gap: 8px; flex-wrap: wrap;">
+                    <button class="chip is-active">Status: Active <button class="chip-x" aria-label="Remove"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></button>
+                    <button class="chip is-active">Owner: me <button class="chip-x" aria-label="Remove"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></button>
+                    <button class="chip">Date</button>
+                    <button class="chip">Label</button>
+                    <div style="margin-left:auto; display:flex; gap: 6px;">
+                      <select class="select select--sm" style="width:auto;"><option>Sort: Updated</option></select>
+                      <button class="btn btn--ghost btn--sm">Clear all</button>
+                    </div>
+                  </div>
+
+                  <!-- Bulk bar -->
+                  <div class="tbl-bulk" style="border-top: 1px solid var(--border);"><span style="font-weight:500;">2 selected</span><span style="opacity:0.6;">·</span><button class="btn btn--link btn--sm" style="font-size: var(--text-micro-size);">Archive</button><button class="btn btn--link btn--sm" style="font-size: var(--text-micro-size);">Move…</button><button class="btn btn--link btn--sm" style="color: var(--color-danger-600); font-size: var(--text-micro-size);">Delete</button></div>
+
+                  <!-- Table -->
+                  <div style="border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: var(--surface);">
+                    <table class="tbl">
+                      <thead><tr>
+                        <th style="width:40px; padding-left:16px;"><input type="checkbox" class="checkbox is-checked" checked /></th>
+                        <th aria-sort="ascending"><button class="tbl-sort">Project<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"/></svg></button></th>
+                        <th>Owner</th><th>Status</th><th class="tbl-numeric">Updated</th><th style="width:40px;"></th>
+                      </tr></thead>
+                      <tbody>
+                        <tr class="is-selected"><td style="padding-left:16px;"><input type="checkbox" class="checkbox is-checked" checked /></td><td><div style="display:flex; gap:10px; align-items:center;"><div style="width:24px; height:24px; border-radius: var(--radius-sm); background: var(--accent-subtle); color: var(--accent); display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div style="font-weight:500;">Onboarding v2</div><div style="font-size: var(--text-caption-size); color: var(--text-muted);">Marketing</div></div></div></td><td><div style="display:flex; align-items:center; gap:6px;"><span class="avatar avatar--xs">AM</span>Andrea M.</div></td><td><span class="badge badge--success"><span class="badge-dot"></span>Live</span></td><td class="tbl-numeric">2h ago</td><td><div class="tbl-actions"><button class="btn btn--ghost btn--xs btn--icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button></div></td></tr>
+                        <tr class="is-selected"><td style="padding-left:16px;"><input type="checkbox" class="checkbox is-checked" checked /></td><td><div style="display:flex; gap:10px; align-items:center;"><div style="width:24px; height:24px; border-radius: var(--radius-sm); background: var(--tint-1-bg); color: var(--tint-1-fg); display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div style="font-weight:500;">Launch plan Q2</div><div style="font-size: var(--text-caption-size); color: var(--text-muted);">Engineering</div></div></div></td><td><div style="display:flex; align-items:center; gap:6px;"><span class="avatar avatar--xs tint-1">JS</span>Jordan S.</div></td><td><span class="badge badge--warning"><span class="badge-dot"></span>Review</span></td><td class="tbl-numeric">Yesterday</td><td></td></tr>
+                        <tr><td style="padding-left:16px;"><input type="checkbox" class="checkbox" /></td><td><div style="display:flex; gap:10px; align-items:center;"><div style="width:24px; height:24px; border-radius: var(--radius-sm); background: var(--tint-2-bg); color: var(--tint-2-fg); display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div style="font-weight:500;">Brand refresh</div><div style="font-size: var(--text-caption-size); color: var(--text-muted);">Design</div></div></div></td><td><div style="display:flex; align-items:center; gap:6px;"><span class="avatar avatar--xs tint-2">RT</span>Robin T.</div></td><td><span class="badge badge--neutral"><span class="badge-dot"></span>Draft</span></td><td class="tbl-numeric">Mar 4</td><td></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size: var(--text-micro-size); color: var(--text-muted);">Showing 1–3 of 87</span>
+                    <nav class="pagination" aria-label="Pagination">
+                      <button class="page-edge is-disabled" disabled>Prev</button>
+                      <button class="page is-active">1</button><button class="page">2</button><button class="page">3</button><span class="ellipsis">…</span><button class="page">29</button>
+                      <button class="page-edge">Next</button>
+                    </nav>
+                  </div>
+                </main>
+              </div>
+            </div>
+
+            <div class="state-row">
+              <div class="ministate"><div class="label">Loading</div><div class="preview"><div class="skeleton skeleton--text" style="width:80%;"></div><div class="skeleton skeleton--text" style="width:60%;"></div><div class="skeleton skeleton--text" style="width:70%;"></div></div></div>
+              <div class="ministate"><div class="label">Empty — first use</div><div class="preview"><div class="state-glyph is-accent" style="margin: 0; width: 32px; height: 32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:14px; height:14px;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>No projects yet<button class="btn btn--primary btn--xs">Create</button></div></div>
+              <div class="ministate"><div class="label">Empty — no results</div><div class="preview"><div class="state-glyph" style="margin: 0; width: 32px; height: 32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px; height:14px;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>No matches for "fnord"<button class="btn btn--ghost btn--xs">Clear filters</button></div></div>
+              <div class="ministate"><div class="label">Error</div><div class="preview"><div class="state-glyph is-danger" style="margin: 0; width: 32px; height: 32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px; height:14px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>Couldn't load<button class="btn btn--secondary btn--xs">Retry</button></div></div>
+            </div>
+          </div>
+
+          <div class="recipe-foot"><span>Recipe · CRUD list</span><span>page-header · filter-bar · data-table · pagination</span></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- =================================================================
+           2. RECORD DETAIL / PROFILE
+           ================================================================= -->
+      <section class="lb-section" id="detail">
+        <header>
+          <div class="eyebrow">Recipe 02</div>
+          <h2>Record detail <a class="anchor" href="#detail">#detail</a></h2>
+        </header>
+
+        <div class="recipe">
+          <div class="recipe-head">
+            <div>
+              <h4>Ingredients</h4>
+              <ul>
+                <li><code class="token-pill">page-header (with tabs)</code> + actions</li>
+                <li><code class="token-pill">KPI row</code> — key facts at a glance</li>
+                <li><code class="token-pill">tabs (underline)</code> sectioned content</li>
+                <li><code class="token-pill">card</code> grid for body</li>
+                <li><code class="token-pill">card</code> for related-items rail</li>
+                <li><code class="token-pill">menu</code> for record-level actions</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Required states</h4>
+              <ul>
+                <li>Loading — KPI + section skeletons</li>
+                <li>Empty — tab with no entries (CTA)</li>
+                <li>Error — section-scoped retry</li>
+                <li>Success — toast on edit</li>
+                <li>Permission — read-only banner if user can't edit</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Use when</h4>
+              <div class="use-when">User opens ONE record from a list — a project, user, order, ticket — and needs facts, related items, and actions in one place.</div>
+              <div class="responsive">
+                <strong style="color: var(--text-primary); font-weight: 500;">Mobile:</strong> related rail stacks below body. KPI row scrolls horizontally OR collapses to a 2-column grid. Tabs become a horizontal scrolling rail.
+              </div>
+            </div>
+          </div>
+
+          <div class="recipe-mock">
+            <div class="mock">
+              <div class="mock-topbar">
+                <span class="brand"><span class="mark"><i></i></span> Acme</span>
+                <span class="avatar avatar--sm">AM</span>
+              </div>
+              <div class="mock-body">
+                <aside class="mock-sidebar">
+                  <div class="mock-side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</div>
+                  <div class="mock-side-item is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Projects</div>
+                  <div class="mock-side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Members</div>
+                </aside>
+                <main class="mock-main">
+                  <!-- Page header with tabs -->
+                  <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <nav class="breadcrumbs"><a href="#">Projects</a><svg class="bc-sep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg><span class="bc-current">Onboarding v2</span></nav>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap: 14px;">
+                      <div style="display:flex; gap: 12px; align-items: center;">
+                        <div style="width:36px; height:36px; border-radius: var(--radius-md); background: var(--accent-subtle); color: var(--accent); display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                        <div>
+                          <h1 style="margin:0; font-size: var(--text-h3-size); font-weight:600; letter-spacing:-0.018em; display:flex; align-items:center; gap: 8px;">Onboarding v2 <span class="badge badge--success badge--sm"><span class="badge-dot"></span>Live</span></h1>
+                          <div style="font-size: var(--text-caption-size); color: var(--text-muted);">Marketing · Updated 2h ago</div>
+                        </div>
+                      </div>
+                      <div style="display:flex; gap:6px;">
+                        <button class="btn btn--ghost btn--sm btn--icon" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+                        <button class="btn btn--secondary btn--sm">Edit</button>
+                        <button class="btn btn--primary btn--sm">Publish</button>
+                      </div>
+                    </div>
+                    <div class="tabs--underline">
+                      <button class="tab is-active">Overview</button>
+                      <button class="tab">Activity <span class="badge badge--accent badge--sm">12</span></button>
+                      <button class="tab">Reviewers</button>
+                      <button class="tab">Settings</button>
+                    </div>
+                  </div>
+
+                  <!-- KPI row -->
+                  <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                    <div class="card"><div class="card-body kpi" style="padding: 12px 14px;"><div class="kpi-label" style="font-size: var(--text-caption-size);">Views</div><div class="kpi-value" style="font-size: var(--text-h3-size);">8,432</div><div class="kpi-delta kpi-delta--up" style="font-size: var(--text-caption-size);">↑ 12%</div></div></div>
+                    <div class="card"><div class="card-body kpi" style="padding: 12px 14px;"><div class="kpi-label" style="font-size: var(--text-caption-size);">Completion</div><div class="kpi-value" style="font-size: var(--text-h3-size);">62%</div><div class="kpi-delta kpi-delta--up" style="font-size: var(--text-caption-size);">↑ 3pt</div></div></div>
+                    <div class="card"><div class="card-body kpi" style="padding: 12px 14px;"><div class="kpi-label" style="font-size: var(--text-caption-size);">Drop-off</div><div class="kpi-value" style="font-size: var(--text-h3-size);">14%</div><div class="kpi-delta kpi-delta--flat" style="font-size: var(--text-caption-size);">→ 0%</div></div></div>
+                    <div class="card"><div class="card-body kpi" style="padding: 12px 14px;"><div class="kpi-label" style="font-size: var(--text-caption-size);">Avg time</div><div class="kpi-value" style="font-size: var(--text-h3-size);">2m 14s</div><div class="kpi-delta kpi-delta--down" style="font-size: var(--text-caption-size);">↓ 8s</div></div></div>
+                  </div>
+
+                  <!-- Body + related rail -->
+                  <div style="display: grid; grid-template-columns: 1fr 240px; gap: 12px;">
+                    <div class="card">
+                      <div class="card-header"><div class="card-title">Overview</div></div>
+                      <div class="card-body" style="display: flex; flex-direction: column; gap: 10px;">
+                        <p style="margin:0; font-size: var(--text-body-sm-size); line-height:1.55; color: var(--text-secondary);">A redesigned first-run experience for new workspaces. Three steps, skippable, mobile-first.</p>
+                        <div style="display:flex; align-items: center; gap: 10px;"><div class="avatar-group"><span class="avatar avatar--sm">AM</span><span class="avatar avatar--sm tint-1">JS</span><span class="avatar avatar--sm tint-2">RT</span></div><span style="font-size: var(--text-micro-size); color: var(--text-muted);">3 collaborators</span></div>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header"><div class="card-title" style="font-size: var(--text-body-size);">Related</div></div>
+                      <div class="card-body" style="display: flex; flex-direction: column; gap: 8px; padding: 12px 14px;">
+                        <a href="#" style="font-size: var(--text-body-sm-size); color: var(--text-primary); display:flex; gap:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Email copy</a>
+                        <a href="#" style="font-size: var(--text-body-sm-size); color: var(--text-primary); display:flex; gap:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Launch plan</a>
+                        <a href="#" style="font-size: var(--text-body-sm-size); color: var(--text-primary); display:flex; gap:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Reviewer notes</a>
+                      </div>
+                    </div>
+                  </div>
+                </main>
+              </div>
+            </div>
+
+            <div class="state-row">
+              <div class="ministate"><div class="label">Loading</div><div class="preview"><div class="skeleton" style="width:80%; height:18px;"></div><div class="skeleton" style="width:60%;"></div></div></div>
+              <div class="ministate"><div class="label">Empty tab</div><div class="preview"><div class="state-glyph" style="margin:0; width:32px; height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px; height:14px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>No activity yet</div></div>
+              <div class="ministate"><div class="label">Section error</div><div class="preview"><div class="state-glyph is-danger" style="margin:0; width:32px; height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px; height:14px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg></div>Chart failed<button class="btn btn--secondary btn--xs">Retry</button></div></div>
+              <div class="ministate"><div class="label">Read-only banner</div><div class="preview"><div style="font-size: var(--text-caption-size); color: var(--text-secondary);">Viewer role — ask an admin to grant edit access.</div></div></div>
+            </div>
+          </div>
+
+          <div class="recipe-foot"><span>Recipe · Record detail</span><span>page-header (tabs) · KPI · card grid · related rail</span></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- =================================================================
+           3. CREATE / EDIT FORM
+           ================================================================= -->
+      <section class="lb-section" id="form">
+        <header>
+          <div class="eyebrow">Recipe 03</div>
+          <h2>Create / edit form <a class="anchor" href="#form">#form</a></h2>
+        </header>
+
+        <div class="recipe">
+          <div class="recipe-head">
+            <div>
+              <h4>Ingredients</h4>
+              <ul>
+                <li><code class="token-pill">page-header (compact)</code></li>
+                <li><code class="token-pill">sectioned form</code> (meta + fields columns)</li>
+                <li><code class="token-pill">field</code> + inline validation + helper</li>
+                <li><code class="token-pill">sticky footer</code> with unsaved-changes counter</li>
+                <li><code class="token-pill">modal (confirmation)</code> for the unsaved-changes guard</li>
+                <li><code class="token-pill">danger zone alert</code> at the bottom</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Required states</h4>
+              <ul>
+                <li>Pristine — no edits, footer disabled</li>
+                <li>Editing — footer shows "N unsaved changes"</li>
+                <li>Saving — primary button → "Saving…"</li>
+                <li>Success — toast + footer resets</li>
+                <li>Error — field-level + server-error banner</li>
+                <li>Leave-page guard — modal blocks navigation</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Use when</h4>
+              <div class="use-when">User creates a new record OR edits an existing one with 3–15 fields across 2–5 logical sections.</div>
+              <div class="responsive">
+                <strong style="color: var(--text-primary); font-weight: 500;">Mobile:</strong> section meta column collapses above its fields (single column). Footer stays sticky. Unsaved-counter moves above the action row. Date pickers go full-width.
+              </div>
+            </div>
+          </div>
+
+          <div class="recipe-mock">
+            <div class="mock">
+              <div class="mock-topbar"><span class="brand"><span class="mark"><i></i></span> Acme</span><span class="avatar avatar--sm">AM</span></div>
+              <div class="mock-body">
+                <aside class="mock-sidebar">
+                  <div class="mock-side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Projects</div>
+                  <div class="mock-side-item is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</div>
+                </aside>
+                <main class="mock-main" style="padding: 0;">
+                  <div style="flex:1; overflow:auto; padding: 18px 24px;">
+                    <nav class="breadcrumbs"><a href="#">Settings</a><svg class="bc-sep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg><span class="bc-current">Workspace</span></nav>
+                    <h1 style="margin:8px 0 4px; font-size: var(--text-h3-size); font-weight:600; letter-spacing:-0.018em;">Workspace settings</h1>
+                    <p style="margin: 0 0 18px; font-size: var(--text-body-sm-size); color: var(--text-muted);">Visible to everyone in your workspace.</p>
+
+                    <div style="display:grid; grid-template-columns: 200px 1fr; gap: 20px; padding: 18px 0; border-top: 1px solid var(--border);">
+                      <div><h4 style="margin: 0; font-size: var(--text-body-sm-size); font-weight: 600;">Identity</h4><p style="margin: 4px 0 0; font-size: var(--text-micro-size); color: var(--text-muted);">Name and avatar.</p></div>
+                      <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div class="field"><label class="field-label">Name</label><input class="input" value="Acme" /></div>
+                        <div class="field"><label class="field-label">URL <span class="req">*</span></label><input class="input is-error" value="acme co" aria-invalid="true" aria-describedby="urlerr" /><span id="urlerr" class="field-error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>Only letters, numbers, hyphens.</span></div>
+                      </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: 200px 1fr; gap: 20px; padding: 18px 0; border-top: 1px solid var(--border);">
+                      <div><h4 style="margin: 0; font-size: var(--text-body-sm-size); font-weight: 600;">Defaults</h4><p style="margin: 4px 0 0; font-size: var(--text-micro-size); color: var(--text-muted);">New content rules.</p></div>
+                      <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div class="field"><label class="field-label">Default visibility</label><select class="select"><option>Workspace</option><option>Public</option></select></div>
+                        <label style="display:inline-flex; align-items:center; gap:8px; font-size: var(--text-body-sm-size);"><input type="checkbox" class="switch" checked />Send weekly digest</label>
+                      </div>
+                    </div>
+
+                    <div class="alert alert--danger" style="margin-top: 14px;">
+                      <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
+                      <div class="alert-body"><div class="alert-title">Delete workspace</div><div class="alert-msg">All projects will be permanently removed.</div></div>
+                    </div>
+                  </div>
+
+                  <!-- Sticky footer -->
+                  <footer style="padding: 12px 24px; border-top: 1px solid var(--border); background: var(--surface); display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-size: var(--text-body-sm-size); color: var(--accent); font-weight: 500;">2 unsaved changes</div>
+                    <div style="display:flex; gap:6px;"><button class="btn btn--ghost btn--sm">Discard</button><button class="btn btn--primary btn--sm">Save changes</button></div>
+                  </footer>
+                </main>
+              </div>
+            </div>
+
+            <div class="state-row">
+              <div class="ministate"><div class="label">Pristine</div><div class="preview"><div style="font-size: var(--text-caption-size);">Footer · "No changes" · Save disabled</div></div></div>
+              <div class="ministate"><div class="label">Saving</div><div class="preview"><button class="btn btn--primary btn--sm is-loading"><span class="btn-spinner"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" opacity="0.25"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><span class="btn-content">Saving…</span></button></div></div>
+              <div class="ministate"><div class="label">Success</div><div class="preview"><div class="toast toast--success" style="width: 100%; padding: 8px 10px;"><div class="toast-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="toast-body"><div class="toast-title" style="font-size: var(--text-caption-size);">Saved</div></div></div></div></div>
+              <div class="ministate"><div class="label">Leave guard</div><div class="preview"><div style="font-size: var(--text-caption-size); color: var(--text-secondary);">Modal blocks nav → "Discard?" / "Keep editing"</div></div></div>
+            </div>
+          </div>
+
+          <div class="recipe-foot"><span>Recipe · Form page</span><span>sectioned form · inline validation · sticky footer · unsaved guard</span></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- =================================================================
+           4. MULTI-STEP WIZARD
+           ================================================================= -->
+      <section class="lb-section" id="wizard">
+        <header>
+          <div class="eyebrow">Recipe 04</div>
+          <h2>Multi-step wizard <a class="anchor" href="#wizard">#wizard</a></h2>
+        </header>
+
+        <div class="recipe">
+          <div class="recipe-head">
+            <div>
+              <h4>Ingredients</h4>
+              <ul>
+                <li><code class="token-pill">stepper bar</code> — numbered, with active + completed</li>
+                <li><code class="token-pill">card</code> — one per step</li>
+                <li><code class="token-pill">field</code> — per-step form</li>
+                <li><code class="token-pill">btn · ghost</code> "Back" · <code class="token-pill">btn · primary</code> "Next"</li>
+                <li><code class="token-pill">review summary list</code> (final step before submit)</li>
+                <li><code class="token-pill">success screen</code> (icon + heading + CTA)</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Required states</h4>
+              <ul>
+                <li>Step 1..N — each step's form + validation</li>
+                <li>Review — read-only summary with "Edit" per group</li>
+                <li>Submitting — primary → "Creating…"</li>
+                <li>Submitted — full-screen success state</li>
+                <li>Error — submit failed, return to last step</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Use when</h4>
+              <div class="use-when">First-time onboarding, big setup forms, or anything where a single page would be overwhelming and a clear sequence reduces cognitive load.</div>
+              <div class="responsive">
+                <strong style="color: var(--text-primary); font-weight: 500;">Mobile:</strong> stepper collapses to "Step 2 of 4" + thin progress bar. Next/Back become a sticky bottom bar.
+              </div>
+            </div>
+          </div>
+
+          <div class="recipe-mock">
+            <div class="mock" style="grid-template-rows: 48px 1fr;">
+              <div class="mock-topbar"><span class="brand"><span class="mark"><i></i></span> Acme</span><a href="#" style="font-size: var(--text-micro-size); color: var(--text-muted);">Save &amp; exit</a></div>
+              <main style="padding: 32px 24px; background: var(--bg); overflow: auto; display:flex; flex-direction:column; align-items: center; gap: 28px;">
+                <!-- Stepper -->
+                <ol style="list-style:none; margin:0; padding:0; display:flex; align-items:center; gap:12px; font-family: var(--font-sans);">
+                  <li style="display:flex; align-items:center; gap:8px;"><div style="width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--text-on-accent); display:flex; align-items:center; justify-content:center; font-size: var(--text-caption-size); font-weight:600;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="font-size: var(--text-body-sm-size); color: var(--text-primary); font-weight:500;">Workspace</span></li>
+                  <li style="width:24px; height:1px; background: var(--border-strong);"></li>
+                  <li style="display:flex; align-items:center; gap:8px;"><div style="width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--text-on-accent); display:flex; align-items:center; justify-content:center; font-size: var(--text-caption-size); font-weight:600;">2</div><span style="font-size: var(--text-body-sm-size); color: var(--text-primary); font-weight:500;">Plan</span></li>
+                  <li style="width:24px; height:1px; background: var(--border);"></li>
+                  <li style="display:flex; align-items:center; gap:8px;"><div style="width: 24px; height: 24px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); display:flex; align-items:center; justify-content:center; font-size: var(--text-caption-size); font-weight:600;">3</div><span style="font-size: var(--text-body-sm-size); color: var(--text-muted);">Invite</span></li>
+                  <li style="width:24px; height:1px; background: var(--border);"></li>
+                  <li style="display:flex; align-items:center; gap:8px;"><div style="width: 24px; height: 24px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); display:flex; align-items:center; justify-content:center; font-size: var(--text-caption-size); font-weight:600;">4</div><span style="font-size: var(--text-body-sm-size); color: var(--text-muted);">Review</span></li>
+                </ol>
+
+                <!-- Step card -->
+                <div class="card" style="max-width: 480px; width: 100%;">
+                  <div class="card-body" style="padding: 28px;">
+                    <div class="t-overline text-muted" style="margin-bottom: 6px;">Step 2 of 4</div>
+                    <h2 style="margin: 0; font-size: var(--text-h3-size); font-weight: 600; letter-spacing:-0.022em;">Choose a plan</h2>
+                    <p style="margin: 6px 0 18px; font-size: var(--text-body-size); color: var(--text-secondary); line-height: 1.55;">You can change this anytime.</p>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                      <label style="display:grid; grid-template-columns: 20px 1fr auto; gap: 10px; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-md); cursor: pointer; align-items: center;"><input type="radio" name="plan" class="radio" /><div><div style="font-size: var(--text-body-sm-size); font-weight: 500;">Free</div><div style="font-size: var(--text-caption-size); color: var(--text-muted);">Up to 3 projects</div></div><div style="font-size: var(--text-body-sm-size); font-weight: 600;">$0</div></label>
+                      <label style="display:grid; grid-template-columns: 20px 1fr auto; gap: 10px; padding: 12px; border: 1px solid var(--accent); border-radius: var(--radius-md); cursor: pointer; align-items: center; background: var(--accent-subtle);"><input type="radio" name="plan" class="radio" checked /><div><div style="font-size: var(--text-body-sm-size); font-weight: 500;">Pro</div><div style="font-size: var(--text-caption-size); color: var(--text-secondary);">Unlimited + analytics</div></div><div style="font-size: var(--text-body-sm-size); font-weight: 600;">$24 / seat</div></label>
+                      <label style="display:grid; grid-template-columns: 20px 1fr auto; gap: 10px; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-md); cursor: pointer; align-items: center;"><input type="radio" name="plan" class="radio" /><div><div style="font-size: var(--text-body-sm-size); font-weight: 500;">Business</div><div style="font-size: var(--text-caption-size); color: var(--text-muted);">SSO, audit log, MSA</div></div><div style="font-size: var(--text-body-sm-size); font-weight: 600;">Talk</div></label>
+                    </div>
+                  </div>
+                  <div class="card-footer" style="background: var(--surface);">
+                    <button class="btn btn--ghost">Back</button>
+                    <button class="btn btn--primary">Continue</button>
+                  </div>
+                </div>
+              </main>
+            </div>
+
+            <div class="state-row">
+              <div class="ministate"><div class="label">Review step</div><div class="preview"><div style="font-size: var(--text-caption-size); line-height:1.5; text-align:left; width:100%;">Workspace: <strong>Acme</strong><br/>Plan: <strong>Pro</strong> · 5 seats<br/>Invites: <strong>3 emails</strong><br/><a href="#" style="color: var(--accent); font-size: var(--text-overline-size);">Edit</a></div></div></div>
+              <div class="ministate"><div class="label">Submitting</div><div class="preview"><button class="btn btn--primary btn--sm is-loading"><span class="btn-spinner"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" opacity="0.25"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><span class="btn-content">Creating…</span></button></div></div>
+              <div class="ministate"><div class="label">Submitted</div><div class="preview"><div class="state-glyph is-success" style="margin:0; width:32px; height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px; height:14px;"><polyline points="20 6 9 17 4 12"/></svg></div>You're all set<button class="btn btn--primary btn--xs">Open workspace</button></div></div>
+              <div class="ministate"><div class="label">Submit failed</div><div class="preview"><div class="state-glyph is-danger" style="margin:0; width:32px; height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px; height:14px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg></div>Couldn't create — try again</div></div>
+            </div>
+          </div>
+
+          <div class="recipe-foot"><span>Recipe · Wizard</span><span>stepper · card · review · success</span></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- =================================================================
+           5. SETTINGS PAGE
+           ================================================================= -->
+      <section class="lb-section" id="settings">
+        <header>
+          <div class="eyebrow">Recipe 05</div>
+          <h2>Settings page <a class="anchor" href="#settings">#settings</a></h2>
+        </header>
+
+        <div class="recipe">
+          <div class="recipe-head">
+            <div>
+              <h4>Ingredients</h4>
+              <ul>
+                <li><code class="token-pill">subnav</code> — grouped, left rail</li>
+                <li><code class="token-pill">card</code> — one per logical group</li>
+                <li><code class="token-pill">switch · checkbox · input · select</code></li>
+                <li>Per-card <code class="token-pill">btn · primary "Save"</code> OR global sticky footer</li>
+                <li><code class="token-pill">alert (danger)</code> for the destructive zone</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Required states</h4>
+              <ul>
+                <li>Default — nothing changed</li>
+                <li>Dirty card — Save button enabled</li>
+                <li>Saving — Save → "Saving…"</li>
+                <li>Saved — Save → ✓ → resets</li>
+                <li>Error — inline banner above the card</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Use when</h4>
+              <div class="use-when">5+ unrelated preferences across distinct surfaces (profile, notifications, billing, security). Per-card save is preferable to a global save — reduces blast radius.</div>
+              <div class="responsive">
+                <strong style="color: var(--text-primary); font-weight: 500;">Mobile:</strong> subnav collapses to a horizontal scrolling tab strip or a dropdown. Each card spans full width.
+              </div>
+            </div>
+          </div>
+
+          <div class="recipe-mock">
+            <div class="mock">
+              <div class="mock-topbar"><span class="brand"><span class="mark"><i></i></span> Acme</span><span class="avatar avatar--sm">AM</span></div>
+              <div class="mock-body" style="grid-template-columns: 200px 200px 1fr;">
+                <aside class="mock-sidebar">
+                  <div class="mock-side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</div>
+                  <div class="mock-side-item is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</div>
+                </aside>
+                <aside style="background: var(--surface); border-right: 1px solid var(--border); padding: 14px 8px;">
+                  <div class="mock-side-group">Workspace</div>
+                  <div class="mock-side-item">General</div>
+                  <div class="mock-side-item is-active">Members</div>
+                  <div class="mock-side-item">Billing</div>
+                  <div class="mock-side-group">Personal</div>
+                  <div class="mock-side-item">Profile</div>
+                  <div class="mock-side-item">Notifications</div>
+                  <div class="mock-side-item">Security</div>
+                </aside>
+                <main class="mock-main">
+                  <div>
+                    <h1 style="margin:0; font-size: var(--text-h3-size); font-weight:600; letter-spacing:-0.018em;">Members</h1>
+                    <p style="margin: 4px 0 0; font-size: var(--text-body-sm-size); color: var(--text-muted);">12 members · 3 pending invites</p>
+                  </div>
+
+                  <!-- Card 1 -->
+                  <div class="card">
+                    <div class="card-header"><div><div class="card-title" style="font-size: var(--text-body-size);">Default role</div><div class="card-subtitle">Role assigned to new invites.</div></div></div>
+                    <div class="card-body"><div class="field"><select class="select"><option>Member</option><option>Admin</option><option>Viewer</option></select></div></div>
+                    <div class="card-footer"><button class="btn btn--primary btn--sm">Save</button></div>
+                  </div>
+
+                  <!-- Card 2 — dirty -->
+                  <div class="card" style="border-color: var(--border-strong); box-shadow: var(--shadow-md);">
+                    <div class="card-header"><div><div class="card-title" style="font-size: var(--text-body-size);">Notifications</div><div class="card-subtitle">Email rules for invites and activity.</div></div><span class="badge badge--accent badge--sm">Edited</span></div>
+                    <div class="card-body" style="display:flex; flex-direction:column; gap:10px;">
+                      <label style="display:inline-flex; align-items:center; gap:10px; font-size: var(--text-body-sm-size);"><input type="checkbox" class="switch" checked />Notify on new invite</label>
+                      <label style="display:inline-flex; align-items:center; gap:10px; font-size: var(--text-body-sm-size);"><input type="checkbox" class="switch" />Weekly digest</label>
+                    </div>
+                    <div class="card-footer"><button class="btn btn--ghost btn--sm">Discard</button><button class="btn btn--primary btn--sm">Save changes</button></div>
+                  </div>
+
+                  <!-- Danger zone -->
+                  <div class="alert alert--danger">
+                    <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
+                    <div class="alert-body"><div class="alert-title">Remove all guest accounts</div><div class="alert-msg">Revokes external links and removes 8 guest users. Cannot be undone.</div><div class="alert-actions"><button class="btn btn--destructive btn--sm">Remove guests</button></div></div>
+                  </div>
+                </main>
+              </div>
+            </div>
+
+            <div class="state-row">
+              <div class="ministate"><div class="label">Per-card save</div><div class="preview"><div style="font-size: var(--text-caption-size); line-height:1.5;">Each card has its own Save button. Reduces blast radius.</div></div></div>
+              <div class="ministate"><div class="label">Save-all footer</div><div class="preview"><div style="font-size: var(--text-caption-size); line-height:1.5;">One sticky footer batches everything. Use when settings are interdependent.</div></div></div>
+              <div class="ministate"><div class="label">Saved indicator</div><div class="preview"><button class="btn btn--secondary btn--sm" disabled><svg viewBox="0 0 24 24" fill="none" stroke="var(--color-success-600)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Saved</button></div></div>
+              <div class="ministate"><div class="label">Card error</div><div class="preview"><div class="alert alert--danger" style="padding: 8px 10px;"><svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg><div class="alert-body"><div class="alert-msg" style="font-size: var(--text-caption-size);">Save failed. Retry.</div></div></div></div></div>
+            </div>
+          </div>
+
+          <div class="recipe-foot"><span>Recipe · Settings</span><span>subnav · grouped cards · per-card vs save-all</span></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- =================================================================
+           6. SEARCH & RESULTS
+           ================================================================= -->
+      <section class="lb-section" id="search">
+        <header>
+          <div class="eyebrow">Recipe 06</div>
+          <h2>Search &amp; results <a class="anchor" href="#search">#search</a></h2>
+        </header>
+        <div class="recipe">
+          <div class="recipe-head">
+            <div>
+              <h4>Ingredients</h4>
+              <ul>
+                <li><code class="token-pill">search-field</code> w/ leading icon + clear</li>
+                <li><code class="token-pill">filter-bar</code> + active-filter chips</li>
+                <li><code class="token-pill">result count</code> + <code class="token-pill">select</code> sort</li>
+                <li><code class="token-pill">card (media-left)</code> for result rows</li>
+                <li><code class="token-pill">pagination</code></li>
+              </ul>
+            </div>
+            <div>
+              <h4>Required states</h4>
+              <ul>
+                <li>Empty query — prompt / recent / popular</li>
+                <li>Loading — list skeleton (3–5 rows)</li>
+                <li>No results — "no matches for X" + clear filters</li>
+                <li>Result count + filtered-by chips above</li>
+                <li>Error — retry on the result region</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Use when</h4>
+              <div class="use-when">User initiates a query against many records — knowledge base, file browser, marketplace, member directory.</div>
+              <div class="responsive">
+                <strong style="color: var(--text-primary); font-weight: 500;">Mobile:</strong> filters move into a bottom-sheet drawer behind a "Filters · 2" button. Sort selector stays in header.
+              </div>
+            </div>
+          </div>
+          <div class="recipe-mock">
+            <div class="mock">
+              <div class="mock-topbar"><span class="brand"><span class="mark"><i></i></span> Acme</span><span class="avatar avatar--sm">AM</span></div>
+              <div class="mock-body">
+                <aside class="mock-sidebar">
+                  <div class="mock-side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</div>
+                  <div class="mock-side-item is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search</div>
+                  <div class="mock-side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Library</div>
+                </aside>
+                <main class="mock-main">
+                  <div class="search-field" style="width: 100%; max-width: 560px;"><span class="search-leading"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><input class="input input--lg" value="onboarding flow" /><button type="button" class="search-clear" aria-label="Clear"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+                  <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <button class="chip is-active">Type: Templates <button class="chip-x"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></button>
+                    <button class="chip">Workspace</button>
+                    <button class="chip">Updated this month</button>
+                    <div style="margin-left:auto; display:flex; gap:6px; align-items:center;">
+                      <span style="font-size: var(--text-micro-size); color: var(--text-muted);">14 results</span>
+                      <select class="select select--sm" style="width:auto;"><option>Sort: Relevance</option></select>
+                    </div>
+                  </div>
+                  <div style="display:flex; flex-direction:column; gap:8px;">
+                    <a href="#" class="card card--interactive" style="text-decoration:none;">
+                      <div style="display:grid; grid-template-columns: 88px 1fr auto; gap: 14px; align-items: center;">
+                        <div style="aspect-ratio: 4/3; background: var(--accent-subtle);"></div>
+                        <div style="padding: 12px 0;">
+                          <div style="display:flex; gap:8px; align-items:center;"><span class="badge badge--accent badge--sm">Template</span><span style="font-size: var(--text-caption-size); color: var(--text-muted); font-family: var(--font-mono);">Marketing · 2d</span></div>
+                          <h4 style="margin: 6px 0 2px; font-size: var(--text-body-size); font-weight: 600;">Onboarding flow — 3 steps</h4>
+                          <p style="margin: 0; font-size: var(--text-micro-size); color: var(--text-secondary); line-height: 1.5;">Drop-in welcome flow with progress, skip, and analytics hooks.</p>
+                        </div>
+                        <div style="padding-right: 14px; font-size: var(--text-caption-size); color: var(--text-muted);">Used 248×</div>
+                      </div>
+                    </a>
+                    <a href="#" class="card card--interactive" style="text-decoration:none;">
+                      <div style="display:grid; grid-template-columns: 88px 1fr auto; gap: 14px; align-items: center;">
+                        <div style="aspect-ratio: 4/3; background: var(--tint-1-bg);"></div>
+                        <div style="padding: 12px 0;">
+                          <div style="display:flex; gap:8px; align-items:center;"><span class="badge badge--neutral badge--sm">Template</span><span style="font-size: var(--text-caption-size); color: var(--text-muted); font-family: var(--font-mono);">Growth · 5d</span></div>
+                          <h4 style="margin: 6px 0 2px; font-size: var(--text-body-size); font-weight: 600;">Email-only onboarding</h4>
+                          <p style="margin: 0; font-size: var(--text-micro-size); color: var(--text-secondary); line-height: 1.5;">Drip series, no in-app modals, for low-touch products.</p>
+                        </div>
+                        <div style="padding-right: 14px; font-size: var(--text-caption-size); color: var(--text-muted);">Used 84×</div>
+                      </div>
+                    </a>
+                    <a href="#" class="card card--interactive" style="text-decoration:none;">
+                      <div style="display:grid; grid-template-columns: 88px 1fr auto; gap: 14px; align-items: center;">
+                        <div style="aspect-ratio: 4/3; background: var(--tint-2-bg);"></div>
+                        <div style="padding: 12px 0;">
+                          <div style="display:flex; gap:8px; align-items:center;"><span class="badge badge--success badge--sm"><span class="badge-dot"></span>Verified</span><span style="font-size: var(--text-caption-size); color: var(--text-muted); font-family: var(--font-mono);">Internal · 1w</span></div>
+                          <h4 style="margin: 6px 0 2px; font-size: var(--text-body-size); font-weight: 600;">Workspace onboarding · pro</h4>
+                          <p style="margin: 0; font-size: var(--text-micro-size); color: var(--text-secondary); line-height: 1.5;">Includes SSO setup and seat assignment.</p>
+                        </div>
+                        <div style="padding-right: 14px; font-size: var(--text-caption-size); color: var(--text-muted);">Used 36×</div>
+                      </div>
+                    </a>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; align-items:center;"><span style="font-size: var(--text-micro-size); color: var(--text-muted);">Showing 1–3 of 14</span><nav class="pagination"><button class="page-edge is-disabled" disabled>Prev</button><button class="page is-active">1</button><button class="page">2</button><button class="page-edge">Next</button></nav></div>
+                </main>
+              </div>
+            </div>
+            <div class="state-row">
+              <div class="ministate"><div class="label">Empty query</div><div class="preview"><div style="font-size: var(--text-caption-size); line-height:1.5;">Show recent + popular until user types.</div></div></div>
+              <div class="ministate"><div class="label">Loading</div><div class="preview"><div class="skeleton" style="width:80%; height:48px;"></div><div class="skeleton" style="width:60%;"></div></div></div>
+              <div class="ministate"><div class="label">No results</div><div class="preview"><div class="state-glyph" style="margin:0; width:32px; height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px; height:14px;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>No matches for "fnord"<button class="btn btn--ghost btn--xs">Clear filters</button></div></div>
+              <div class="ministate"><div class="label">Error</div><div class="preview"><div class="state-glyph is-danger" style="margin:0; width:32px; height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px; height:14px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg></div>Search failed<button class="btn btn--secondary btn--xs">Retry</button></div></div>
+            </div>
+          </div>
+          <div class="recipe-foot"><span>Recipe · Search</span><span>search-field · filter-bar · card (media-left) · pagination</span></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- =================================================================
+           7. FEED / ACTIVITY TIMELINE
+           ================================================================= -->
+      <section class="lb-section" id="feed">
+        <header>
+          <div class="eyebrow">Recipe 07</div>
+          <h2>Feed / activity timeline <a class="anchor" href="#feed">#feed</a></h2>
+        </header>
+        <div class="recipe">
+          <div class="recipe-head">
+            <div>
+              <h4>Ingredients</h4>
+              <ul>
+                <li><code class="token-pill">page-header (compact)</code></li>
+                <li><code class="token-pill">tabs (pill)</code> — All / Mentions / Unread</li>
+                <li>Day-group label rows (sticky)</li>
+                <li><code class="token-pill">card (horizontal)</code> for each event</li>
+                <li><code class="token-pill">btn · ghost</code> "Load more" OR <code class="token-pill">infinite scroll sentinel</code></li>
+              </ul>
+            </div>
+            <div>
+              <h4>Required states</h4>
+              <ul>
+                <li>Loading initial — rows skeleton</li>
+                <li>Loading more — bottom spinner row</li>
+                <li>Empty — first-use illustration + CTA</li>
+                <li>End-of-feed — terminator row</li>
+                <li>Error — retry inline at bottom</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Use when</h4>
+              <div class="use-when">Chronological stream of events the user follows over time — notifications, audit log, project activity, social feed.</div>
+              <div class="responsive">
+                <strong style="color: var(--text-primary); font-weight: 500;">Mobile:</strong> day labels stay sticky. Cards collapse to two-line rows (actor + action verb above, target + time below). Tabs become scrollable.
+              </div>
+            </div>
+          </div>
+          <div class="recipe-mock">
+            <div class="mock">
+              <div class="mock-topbar"><span class="brand"><span class="mark"><i></i></span> Acme</span><span class="avatar avatar--sm">AM</span></div>
+              <div class="mock-body">
+                <aside class="mock-sidebar">
+                  <div class="mock-side-item is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Activity</div>
+                  <div class="mock-side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Projects</div>
+                </aside>
+                <main class="mock-main">
+                  <h1 style="margin:0; font-size: var(--text-h3-size); font-weight: 600; letter-spacing:-0.020em;">Activity</h1>
+                  <div class="tabs--pill"><button class="tab is-active">All</button><button class="tab">Mentions <span class="badge badge--accent badge--sm">3</span></button><button class="tab">Unread</button></div>
+
+                  <div style="position: sticky; top: -20px; background: var(--bg); padding: 8px 0; font-size: var(--text-overline-size); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; border-bottom: 1px solid var(--border);">Today</div>
+
+                  <div class="card" style="border-radius: var(--radius-md);"><div class="card-body" style="padding: 14px; display:flex; gap: 12px;">
+                    <span class="avatar avatar--sm">AM</span>
+                    <div style="flex:1;"><div style="font-size: var(--text-body-sm-size); line-height:1.5;"><strong style="font-weight:500;">Andrea</strong> published <a href="#" style="color: var(--accent); font-weight:500;">Onboarding v2</a></div><div style="font-size: var(--text-caption-size); color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px;">2:14 PM · 2h ago</div></div>
+                    <button class="btn btn--ghost btn--xs btn--icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
+                  </div></div>
+                  <div class="card" style="border-radius: var(--radius-md);"><div class="card-body" style="padding: 14px; display:flex; gap: 12px;">
+                    <span class="avatar avatar--sm tint-1">JS</span>
+                    <div style="flex:1;"><div style="font-size: var(--text-body-sm-size); line-height:1.5;"><strong style="font-weight:500;">Jordan</strong> approved 3 changes on <a href="#" style="color: var(--accent); font-weight:500;">Launch plan</a></div><div style="font-size: var(--text-caption-size); color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px;">11:02 AM · 5h ago</div></div>
+                  </div></div>
+
+                  <div style="position: sticky; top: -20px; background: var(--bg); padding: 8px 0; font-size: var(--text-overline-size); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; border-bottom: 1px solid var(--border);">Yesterday</div>
+
+                  <div class="card" style="border-radius: var(--radius-md);"><div class="card-body" style="padding: 14px; display:flex; gap: 12px;">
+                    <span class="avatar avatar--sm tint-2">RT</span>
+                    <div style="flex:1;"><div style="font-size: var(--text-body-sm-size); line-height:1.5;"><strong style="font-weight:500;">Robin</strong> commented on <a href="#" style="color: var(--accent); font-weight:500;">Brand refresh</a>: "Small note on the empty state…"</div><div style="font-size: var(--text-caption-size); color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px;">4:48 PM</div></div>
+                  </div></div>
+                  <div class="card" style="border-radius: var(--radius-md);"><div class="card-body" style="padding: 14px; display:flex; gap: 12px;">
+                    <span class="avatar avatar--sm tint-3">CW</span>
+                    <div style="flex:1;"><div style="font-size: var(--text-body-sm-size); line-height:1.5;"><strong style="font-weight:500;">Casey</strong> opened an A/B test on <a href="#" style="color: var(--accent); font-weight:500;">Pricing page</a></div><div style="font-size: var(--text-caption-size); color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px;">2:30 PM</div></div>
+                  </div></div>
+
+                  <div style="display:flex; justify-content:center; padding: 8px 0;"><button class="btn btn--ghost btn--sm">Load more</button></div>
+                </main>
+              </div>
+            </div>
+            <div class="state-row">
+              <div class="ministate"><div class="label">Loading initial</div><div class="preview"><div class="skeleton" style="width:90%; height:14px;"></div><div class="skeleton" style="width:70%; height:14px;"></div></div></div>
+              <div class="ministate"><div class="label">Loading more</div><div class="preview"><span class="spinner spinner--md"></span><span style="font-size: var(--text-caption-size);">Loading more…</span></div></div>
+              <div class="ministate"><div class="label">Empty feed</div><div class="preview"><div class="state-glyph is-accent" style="margin:0; width:32px; height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px; height:14px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>Nothing yet — follow a project</div></div>
+              <div class="ministate"><div class="label">End of feed</div><div class="preview"><div style="font-size: var(--text-caption-size); color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 8px; width: 60%;">— that's all —</div></div></div>
+              <div class="ministate"><div class="label">Error · retry inline</div><div class="preview"><div class="state-glyph is-danger" style="margin:0; width:32px; height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px; height:14px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg></div>Couldn't load more<button class="btn btn--secondary btn--xs">Retry</button></div></div>
+            </div>
+          </div>
+          <div class="recipe-foot"><span>Recipe · Feed</span><span>tabs · day groups · horizontal cards · load-more</span></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- =================================================================
+           8. DASHBOARD / OVERVIEW (recipe composition)
+           ================================================================= -->
+      <section class="lb-section" id="dashboard">
+        <header>
+          <div class="eyebrow">Recipe 08</div>
+          <h2>Dashboard <a class="anchor" href="#dashboard">#dashboard</a></h2>
+        </header>
+        <div class="recipe">
+          <div class="recipe-head">
+            <div>
+              <h4>Ingredients</h4>
+              <ul>
+                <li>Reuses any of the 3 <a href="Organisms.html#dashboard" style="color: var(--accent);">dashboard layout alternatives</a> from Organisms</li>
+                <li><code class="token-pill">page-header</code> with date-range tabs (pill)</li>
+                <li><code class="token-pill">KPI row</code> (3–4 metrics, sparklines)</li>
+                <li>Chart area (1–2 charts from <a href="DataViz.html" style="color: var(--accent);">Data viz</a>)</li>
+                <li><code class="token-pill">card</code> activity rail</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Required states</h4>
+              <ul>
+                <li>Loading — page skeleton (KPI + chart blocks)</li>
+                <li>Empty — first-run / no data yet</li>
+                <li>Section error — chart card retry</li>
+                <li>Stale-data banner — when last sync was &gt; 1h ago</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Use when</h4>
+              <div class="use-when">User opens the app and needs a status read in under 3 seconds. One headline metric, supporting context, recent activity.</div>
+              <div class="responsive">
+                <strong style="color: var(--text-primary); font-weight: 500;">Mobile:</strong> KPI row becomes a 2-col grid (or 1-col + horizontal scroll). Charts collapse to full-width, single-column. Activity rail moves below.
+              </div>
+            </div>
+          </div>
+          <div class="recipe-mock">
+            <div class="mock">
+              <div class="mock-topbar"><span class="brand"><span class="mark"><i></i></span> Acme</span><span class="avatar avatar--sm">AM</span></div>
+              <div class="mock-body">
+                <aside class="mock-sidebar"><div class="mock-side-item is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</div></aside>
+                <main class="mock-main">
+                  <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div><h1 style="margin:0; font-size: var(--text-h3-size); font-weight:600; letter-spacing:-0.020em;">Overview</h1><div style="font-size: var(--text-micro-size); color: var(--text-muted); margin-top:4px;">Last 30 days · Synced 2m ago</div></div>
+                    <div style="display:flex; gap:6px;"><div class="tabs--pill"><button class="tab">24h</button><button class="tab is-active">30d</button><button class="tab">90d</button></div><button class="btn btn--secondary btn--sm">Export</button></div>
+                  </div>
+                  <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                    <div class="card"><div class="card-body kpi" style="padding: 12px 14px;"><div class="kpi-label" style="font-size: var(--text-caption-size);">MAU</div><div class="kpi-value" style="font-size: var(--text-h3-size);">24,832</div><div class="kpi-delta kpi-delta--up" style="font-size: var(--text-caption-size);">↑ 12.4%</div></div></div>
+                    <div class="card"><div class="card-body kpi" style="padding: 12px 14px;"><div class="kpi-label" style="font-size: var(--text-caption-size);">Activation</div><div class="kpi-value" style="font-size: var(--text-h3-size);">62.1%</div><div class="kpi-delta kpi-delta--up" style="font-size: var(--text-caption-size);">↑ 3.2pt</div></div></div>
+                    <div class="card"><div class="card-body kpi" style="padding: 12px 14px;"><div class="kpi-label" style="font-size: var(--text-caption-size);">Session</div><div class="kpi-value" style="font-size: var(--text-h3-size);">8m 24s</div><div class="kpi-delta kpi-delta--flat" style="font-size: var(--text-caption-size);">→ 0%</div></div></div>
+                    <div class="card"><div class="card-body kpi" style="padding: 12px 14px;"><div class="kpi-label" style="font-size: var(--text-caption-size);">Churn</div><div class="kpi-value" style="font-size: var(--text-h3-size);">2.8%</div><div class="kpi-delta kpi-delta--down" style="font-size: var(--text-caption-size);">↓ 0.4pt</div></div></div>
+                  </div>
+                  <div style="display:grid; grid-template-columns: 1fr 240px; gap: 12px;">
+                    <div class="card">
+                      <div class="card-header"><div class="card-title" style="font-size: var(--text-body-size);">Daily signups</div><div class="tabs--pill"><button class="tab is-active">Line</button><button class="tab">Bars</button></div></div>
+                      <div class="card-body" style="padding: 12px 14px;">
+                        <svg viewBox="0 0 600 160" preserveAspectRatio="none" width="100%" height="120">
+                          <defs><linearGradient id="d-grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)" stop-opacity="0.20"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+                          <g stroke="var(--border)" stroke-width="1"><line x1="0" y1="40" x2="600" y2="40"/><line x1="0" y1="80" x2="600" y2="80"/><line x1="0" y1="120" x2="600" y2="120"/></g>
+                          <path d="M0,130 L60,118 L120,108 L180,90 L240,98 L300,72 L360,68 L420,52 L480,46 L540,30 L600,22 L600,160 L0,160 Z" fill="url(#d-grad)"/>
+                          <polyline fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="0,130 60,118 120,108 180,90 240,98 300,72 360,68 420,52 480,46 540,30 600,22"/>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header"><div class="card-title" style="font-size: var(--text-body-size);">Activity</div></div>
+                      <div class="card-body" style="padding: 12px 14px; display:flex; flex-direction:column; gap: 10px;">
+                        <div style="display:flex; gap:8px;"><span class="avatar avatar--xs">AM</span><div style="font-size: var(--text-caption-size); line-height: 1.45;"><strong style="font-weight:500;">Andrea</strong> published</div></div>
+                        <div style="display:flex; gap:8px;"><span class="avatar avatar--xs tint-1">JS</span><div style="font-size: var(--text-caption-size); line-height: 1.45;"><strong style="font-weight:500;">Jordan</strong> approved 3</div></div>
+                        <div style="display:flex; gap:8px;"><span class="avatar avatar--xs tint-2">RT</span><div style="font-size: var(--text-caption-size); line-height: 1.45;"><strong style="font-weight:500;">Robin</strong> commented</div></div>
+                      </div>
+                    </div>
+                  </div>
+                </main>
+              </div>
+            </div>
+            <div class="state-row">
+              <div class="ministate"><div class="label">Loading page</div><div class="preview"><div class="skeleton skeleton--heading" style="width:50%;"></div><div class="skeleton" style="width:100%; height:40px;"></div></div></div>
+              <div class="ministate"><div class="label">Empty / first-run</div><div class="preview"><div class="state-glyph is-accent" style="margin:0; width:32px; height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px; height:14px;"><line x1="3" y1="20" x2="21" y2="20"/><line x1="3" y1="20" x2="3" y2="4"/></svg></div>Not enough data yet</div></div>
+              <div class="ministate"><div class="label">Chart error</div><div class="preview"><div class="state-glyph is-danger" style="margin:0; width:32px; height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px; height:14px;"><circle cx="12" cy="12" r="10"/></svg></div>Chart failed</div></div>
+              <div class="ministate"><div class="label">Stale-data banner</div><div class="preview"><div class="alert alert--warning" style="padding: 6px 10px;"><svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div class="alert-body"><div class="alert-msg" style="font-size: var(--text-overline-size);">Last sync 1h ago</div></div></div></div></div>
+            </div>
+          </div>
+          <div class="recipe-foot"><span>Recipe · Dashboard</span><span>composed from Organisms § dashboard alternatives</span></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- =================================================================
+           9. CHECKOUT / BILLING
+           ================================================================= -->
+      <section class="lb-section" id="checkout">
+        <header>
+          <div class="eyebrow">Recipe 09</div>
+          <h2>Checkout / billing <a class="anchor" href="#checkout">#checkout</a></h2>
+        </header>
+        <div class="recipe">
+          <div class="recipe-head">
+            <div>
+              <h4>Ingredients</h4>
+              <ul>
+                <li><code class="token-pill">page-header (compact)</code> with progress dots</li>
+                <li>Line-item list with <code class="token-pill">stepper</code> for quantity</li>
+                <li>Summary <code class="token-pill">card</code> with subtotal / tax / total</li>
+                <li>Payment <code class="token-pill">field</code>s with inline validation</li>
+                <li><code class="token-pill">btn · primary</code> "Pay $X" — labels with the amount</li>
+                <li>Trust strip — SSL · 30-day refund · contact</li>
+              </ul>
+              <div style="margin-top: 8px; font-size: var(--text-caption-size); color: var(--color-warning-600); display: flex; align-items: center; gap: 5px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
+                Needs new component: card-input (PAN / CVC field with mask + brand detection). Use a placeholder Stripe/Lemon Elements mount in the meantime.
+              </div>
+            </div>
+            <div>
+              <h4>Required states</h4>
+              <ul>
+                <li>Empty cart — illustration + back to products</li>
+                <li>Field validation — declined / expired / wrong CVC</li>
+                <li>Processing — primary button → "Charging…"</li>
+                <li>Success / receipt — full page with print + email</li>
+                <li>Charge declined — actionable error + retry path</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Use when</h4>
+              <div class="use-when">User commits money — checkout, plan upgrade, one-time purchase. Keep one screen if possible; never make the user re-enter data after an error.</div>
+              <div class="responsive">
+                <strong style="color: var(--text-primary); font-weight: 500;">Mobile:</strong> summary card moves below the form (or pinned bottom-sheet on tap). Payment fields are full-width. Total stays visible above the Pay button.
+              </div>
+            </div>
+          </div>
+          <div class="recipe-mock">
+            <div class="mock">
+              <div class="mock-topbar"><span class="brand"><span class="mark"><i></i></span> Acme</span><a href="#" style="font-size: var(--text-micro-size); color: var(--text-muted);">← Back to cart</a></div>
+              <main style="padding: 24px 32px; display: grid; grid-template-columns: 1fr 320px; gap: 24px;">
+                <div style="display:flex; flex-direction: column; gap: 18px;">
+                  <h1 style="margin:0; font-size: var(--text-h3-size); font-weight: 600; letter-spacing:-0.020em;">Payment</h1>
+                  <div class="card"><div class="card-body" style="display:flex; flex-direction:column; gap: 12px;">
+                    <h4 style="margin:0; font-size: var(--text-body-sm-size); font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Card details</h4>
+                    <div class="field"><label class="field-label">Card number</label><input class="input" placeholder="1234 1234 1234 1234" value="4242 4242 4242 4242" /></div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                      <div class="field"><label class="field-label">Expiry</label><input class="input" placeholder="MM / YY" value="12 / 28" /></div>
+                      <div class="field"><label class="field-label">CVC</label><input class="input" placeholder="123" value="••• " /></div>
+                    </div>
+                    <div class="field"><label class="field-label">Billing email</label><input class="input" type="email" value="andrea@acme.co" /></div>
+                  </div></div>
+                  <button class="btn btn--primary btn--lg">Pay $248.00</button>
+                  <div style="display: flex; gap: 14px; font-size: var(--text-caption-size); color: var(--text-muted); justify-content: center;">
+                    <span style="display:inline-flex; align-items:center; gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>SSL secure</span>
+                    <span>30-day refund</span>
+                    <span>support@acme.co</span>
+                  </div>
+                </div>
+                <aside class="card" style="align-self: start;">
+                  <div class="card-header"><div class="card-title" style="font-size: var(--text-body-size);">Order summary</div></div>
+                  <div class="card-body" style="display:flex; flex-direction:column; gap: 10px; padding: 14px;">
+                    <div style="display:grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px;"><div><div style="font-size: var(--text-body-sm-size); font-weight:500;">Pro plan · annual</div><div style="font-size: var(--text-caption-size); color: var(--text-muted);">5 seats × $24/mo</div></div><div style="font-family: var(--font-mono); font-variant-numeric: tabular-nums;">$240.00</div></div>
+                    <div style="display:grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; font-size: var(--text-micro-size); color: var(--text-muted);"><span>Tax</span><span style="font-family: var(--font-mono); font-variant-numeric: tabular-nums;">$8.00</span></div>
+                    <div style="display:grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; padding-top: 8px; border-top: 1px solid var(--border); font-size: var(--text-body-size); font-weight: 600;"><span>Total</span><span style="font-family: var(--font-mono); font-variant-numeric: tabular-nums;">$248.00</span></div>
+                  </div>
+                  <div class="card-footer" style="background: var(--surface);"><a href="#" style="font-size: var(--text-caption-size); color: var(--accent); font-weight: 500;">Apply promo code</a></div>
+                </aside>
+              </main>
+            </div>
+            <div class="state-row">
+              <div class="ministate"><div class="label">Card declined</div><div class="preview"><span class="field-error" style="font-size: var(--text-caption-size);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>Declined · try another card</span></div></div>
+              <div class="ministate"><div class="label">Processing</div><div class="preview"><button class="btn btn--primary btn--sm is-loading"><span class="btn-spinner"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" opacity="0.25"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><span class="btn-content">Charging…</span></button></div></div>
+              <div class="ministate"><div class="label">Success / receipt</div><div class="preview"><div class="state-glyph is-success" style="margin:0; width:32px; height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px; height:14px;"><polyline points="20 6 9 17 4 12"/></svg></div>Paid · receipt sent</div></div>
+              <div class="ministate"><div class="label">Empty cart</div><div class="preview"><div style="font-size: var(--text-caption-size);">Cart is empty</div><button class="btn btn--ghost btn--xs">Browse plans</button></div></div>
+            </div>
+          </div>
+          <div class="recipe-foot"><span>Recipe · Checkout</span><span>line items · summary · payment · receipt</span></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- =================================================================
+           10. PRICING / UPGRADE
+           ================================================================= -->
+      <section class="lb-section" id="pricing">
+        <header>
+          <div class="eyebrow">Recipe 10</div>
+          <h2>Pricing / upgrade <a class="anchor" href="#pricing">#pricing</a></h2>
+        </header>
+        <div class="recipe">
+          <div class="recipe-head">
+            <div>
+              <h4>Ingredients</h4>
+              <ul>
+                <li>Hero with <code class="token-pill">--accent-gradient</code> (expressive allowed)</li>
+                <li><code class="token-pill">tabs (pill)</code> — Monthly / Yearly</li>
+                <li>3 pricing <code class="token-pill">card</code>s — Free / Pro / Business</li>
+                <li>Feature comparison <code class="token-pill">data-table</code></li>
+                <li>FAQ — accordion (uses <code class="token-pill">details/summary</code>)</li>
+                <li>CTA banner with <code class="token-pill">--accent-gradient</code></li>
+              </ul>
+            </div>
+            <div>
+              <h4>Required states</h4>
+              <ul>
+                <li>Default — recommended tier highlighted (Pro)</li>
+                <li>Logged-in — show "Your plan: …" + downgrade/upgrade CTAs</li>
+                <li>Trial running — banner with days left</li>
+                <li>Past-due — billing alert + fix CTA</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Use when</h4>
+              <div class="use-when">Public pricing page, in-app upgrade prompt, or "compare plans" surface. This is one of the few places the expressive accent layer is welcome.</div>
+              <div class="responsive">
+                <strong style="color: var(--text-primary); font-weight: 500;">Mobile:</strong> tiles stack. Comparison table becomes a per-tier accordion. CTA banner full-bleed.
+              </div>
+            </div>
+          </div>
+          <div class="recipe-mock">
+            <div class="mock" style="grid-template-rows: 48px 1fr;">
+              <div class="mock-topbar"><span class="brand"><span class="mark"><i></i></span> Acme</span><div style="display:flex; gap:8px;"><button class="btn btn--ghost btn--sm">Sign in</button><button class="btn btn--primary btn--sm">Start free</button></div></div>
+              <main style="background: var(--bg); overflow: auto;">
+                <div style="padding: 40px 24px; background: var(--accent-gradient-soft); text-align: center;">
+                  <h1 style="margin:0; font-size: var(--text-h2-size); font-weight: 700; letter-spacing:-0.030em;">Simple pricing.</h1>
+                  <p style="margin: 6px 0 14px; font-size: var(--text-body-size); color: var(--text-secondary);">Start free. Grow when you're ready.</p>
+                  <div class="tabs--pill" style="display: inline-flex;"><button class="tab is-active">Monthly</button><button class="tab">Yearly · save 20%</button></div>
+                </div>
+                <div style="padding: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                  <div class="card"><div class="card-body" style="padding: 20px; display:flex; flex-direction:column; gap: 10px;">
+                    <div style="font-size: var(--text-overline-size); color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Free</div>
+                    <div style="font-size: var(--text-h2-size); font-weight: 700; letter-spacing:-0.024em;">$0</div>
+                    <button class="btn btn--secondary btn--sm">Get started</button>
+                    <ul style="margin: 0; padding: 0; list-style: none; display:flex; flex-direction:column; gap:6px; font-size: var(--text-micro-size);">
+                      <li style="display:flex; gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" style="margin-top: 4px;"><polyline points="20 6 9 17 4 12"/></svg>3 projects</li>
+                      <li style="display:flex; gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" style="margin-top: 4px;"><polyline points="20 6 9 17 4 12"/></svg>1 seat</li>
+                    </ul>
+                  </div></div>
+                  <div class="card" style="border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); position: relative;">
+                    <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%);"><span class="badge badge--accent is-solid">Most popular</span></div>
+                    <div class="card-body" style="padding: 20px; display:flex; flex-direction:column; gap: 10px;">
+                      <div style="font-size: var(--text-overline-size); color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Pro</div>
+                      <div style="font-size: var(--text-h2-size); font-weight: 700; letter-spacing:-0.024em;">$24<span style="font-size: var(--text-caption-size); color: var(--text-muted); font-weight: 500;">/seat</span></div>
+                      <button class="btn btn--primary btn--sm">Upgrade</button>
+                      <ul style="margin: 0; padding: 0; list-style: none; display:flex; flex-direction:column; gap:6px; font-size: var(--text-micro-size);">
+                        <li style="display:flex; gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" style="margin-top: 4px;"><polyline points="20 6 9 17 4 12"/></svg>Unlimited projects</li>
+                        <li style="display:flex; gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" style="margin-top: 4px;"><polyline points="20 6 9 17 4 12"/></svg>Analytics + cohorts</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="card"><div class="card-body" style="padding: 20px; display:flex; flex-direction:column; gap: 10px;">
+                    <div style="font-size: var(--text-overline-size); color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Business</div>
+                    <div style="font-size: var(--text-h2-size); font-weight: 700; letter-spacing:-0.024em;">Talk</div>
+                    <button class="btn btn--secondary btn--sm">Contact</button>
+                    <ul style="margin: 0; padding: 0; list-style: none; display:flex; flex-direction:column; gap:6px; font-size: var(--text-micro-size);">
+                      <li style="display:flex; gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" style="margin-top: 4px;"><polyline points="20 6 9 17 4 12"/></svg>SSO + SCIM</li>
+                      <li style="display:flex; gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" style="margin-top: 4px;"><polyline points="20 6 9 17 4 12"/></svg>Audit log</li>
+                    </ul>
+                  </div></div>
+                </div>
+                <div style="padding: 0 24px 24px;">
+                  <table class="tbl" style="border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
+                    <thead><tr><th>Feature</th><th class="tbl-numeric">Free</th><th class="tbl-numeric">Pro</th><th class="tbl-numeric">Business</th></tr></thead>
+                    <tbody>
+                      <tr><td>Projects</td><td class="tbl-numeric">3</td><td class="tbl-numeric">Unlimited</td><td class="tbl-numeric">Unlimited</td></tr>
+                      <tr><td>Analytics</td><td class="tbl-numeric" style="color: var(--text-muted);">—</td><td class="tbl-numeric">✓</td><td class="tbl-numeric">✓ + cohorts</td></tr>
+                      <tr><td>SSO / SCIM</td><td class="tbl-numeric" style="color: var(--text-muted);">—</td><td class="tbl-numeric" style="color: var(--text-muted);">—</td><td class="tbl-numeric">✓</td></tr>
+                      <tr><td>Audit log</td><td class="tbl-numeric" style="color: var(--text-muted);">—</td><td class="tbl-numeric" style="color: var(--text-muted);">—</td><td class="tbl-numeric">✓</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- FAQ accordion -->
+                <div style="padding: 24px;">
+                  <h3 style="margin: 0 0 12px; font-size: var(--text-h4-size); line-height: var(--text-h4-lh); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Frequently asked</h3>
+                  <div style="border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: var(--surface);">
+                    <details open style="border-bottom: 1px solid var(--border);">
+                      <summary style="padding: 14px 16px; cursor: pointer; font-size: var(--text-body-sm-size); font-weight: 500; display:flex; justify-content: space-between; align-items: center;">Can I change my plan later?<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+                      <div style="padding: 0 16px 14px; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">Yes. Upgrade any time — prorated. Downgrades take effect at the end of your billing period.</div>
+                    </details>
+                    <details style="border-bottom: 1px solid var(--border);">
+                      <summary style="padding: 14px 16px; cursor: pointer; font-size: var(--text-body-sm-size); font-weight: 500; display:flex; justify-content: space-between; align-items: center;">Do you offer a free trial?<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+                      <div style="padding: 0 16px 14px; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">14 days of Pro. No credit card required. Cancel any time.</div>
+                    </details>
+                    <details>
+                      <summary style="padding: 14px 16px; cursor: pointer; font-size: var(--text-body-sm-size); font-weight: 500; display:flex; justify-content: space-between; align-items: center;">How does seat billing work?<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+                      <div style="padding: 0 16px 14px; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">You're billed monthly for active seats. Removing a seat takes effect at the next billing cycle.</div>
+                    </details>
+                  </div>
+                </div>
+
+                <!-- Closing CTA banner -->
+                <div style="margin: 8px 24px 24px; padding: 28px 24px; background: var(--accent-gradient); color: var(--text-on-accent); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: space-between; gap: 24px;">
+                  <div>
+                    <h3 style="margin: 0; font-size: var(--text-h3-size); line-height: var(--text-h3-lh); font-weight: var(--text-h3-weight); letter-spacing: var(--text-h3-track); color: var(--text-on-accent);">Ready to ship?</h3>
+                    <p style="margin: 4px 0 0; font-size: var(--text-body-sm-size); opacity: 0.85;">Free during beta. No credit card.</p>
+                  </div>
+                  <button class="btn" style="background: var(--text-on-accent); color: var(--accent);">Start free</button>
+                </div>
+              </main>
+            </div>
+            <div class="state-row">
+              <div class="ministate"><div class="label">Logged-in current tier</div><div class="preview"><span class="badge badge--success badge--sm"><span class="badge-dot"></span>Your plan</span><div style="font-size: var(--text-caption-size);">Pro · renews Apr 12</div></div></div>
+              <div class="ministate"><div class="label">Trial running</div><div class="preview"><div class="alert alert--info" style="padding: 6px 10px;"><svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div class="alert-body"><div class="alert-msg" style="font-size: var(--text-overline-size);">5 days left in trial</div></div></div></div></div>
+              <div class="ministate"><div class="label">Past due</div><div class="preview"><div class="alert alert--warning" style="padding: 6px 10px;"><svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg><div class="alert-body"><div class="alert-msg" style="font-size: var(--text-overline-size);">Payment failed · fix card</div></div></div></div></div>
+              <div class="ministate"><div class="label">Yearly toggle</div><div class="preview"><div style="font-size: var(--text-caption-size);">Prices update inline · save 20%</div></div></div>
+            </div>
+          </div>
+          <div class="recipe-foot"><span>Recipe · Pricing</span><span>hero · pricing tiles · comparison · CTA banner</span></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- =================================================================
+           11. DETAIL WITH MAP
+           ================================================================= -->
+      <section class="lb-section" id="map">
+        <header>
+          <div class="eyebrow">Recipe 11</div>
+          <h2>Detail with map <a class="anchor" href="#map">#map</a></h2>
+        </header>
+        <div class="recipe">
+          <div class="recipe-head">
+            <div>
+              <h4>Ingredients</h4>
+              <ul>
+                <li><code class="token-pill">page-header (compact)</code></li>
+                <li>Two-column layout — content + map panel</li>
+                <li>KPI row inline with location facts</li>
+                <li><code class="token-pill">card</code> body sections</li>
+                <li>Map panel placeholder — sticky on scroll</li>
+              </ul>
+              <div style="margin-top: 8px; font-size: var(--text-caption-size); color: var(--color-warning-600); display: flex; align-items: center; gap: 5px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
+                Needs new component: map (Mapbox / Maplibre / Google Maps mount). Token marker pins via <code class="token-pill">--accent</code>; recipe shows the <em>surrounding</em> layout + loading/empty/error.
+              </div>
+            </div>
+            <div>
+              <h4>Required states</h4>
+              <ul>
+                <li>Map loading — skeleton on the map region only</li>
+                <li>Map empty — "no location set" with edit CTA</li>
+                <li>Map error — "could not load map" + reload</li>
+                <li>Offline tiles fallback — show coordinates as text</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Use when</h4>
+              <div class="use-when">A record has a meaningful place — venue, store, asset, delivery. Map is supporting context, not the primary surface.</div>
+              <div class="responsive">
+                <strong style="color: var(--text-primary); font-weight: 500;">Mobile:</strong> map collapses to a fixed-height banner at the top, content below. Sticky behavior off; tap-to-expand to a full-screen view.
+              </div>
+            </div>
+          </div>
+          <div class="recipe-mock">
+            <div class="mock">
+              <div class="mock-topbar"><span class="brand"><span class="mark"><i></i></span> Acme</span><span class="avatar avatar--sm">AM</span></div>
+              <div class="mock-body">
+                <aside class="mock-sidebar"><div class="mock-side-item is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Locations</div></aside>
+                <main class="mock-main" style="padding: 0; display: grid; grid-template-columns: 1fr 1fr; min-height: 0; overflow: hidden;">
+                  <div style="padding: 20px 24px; overflow: auto; display: flex; flex-direction: column; gap: 14px;">
+                    <nav class="breadcrumbs"><a href="#">Locations</a><svg class="bc-sep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg><span class="bc-current">Mission · SF</span></nav>
+                    <h1 style="margin:0; font-size: var(--text-h3-size); font-weight:600; letter-spacing:-0.018em;">Acme Mission <span class="badge badge--success badge--sm"><span class="badge-dot"></span>Open</span></h1>
+                    <div style="font-size: var(--text-body-sm-size); color: var(--text-secondary);">2900 Mission St, San Francisco, CA</div>
+                    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                      <div class="card"><div class="card-body kpi" style="padding: 10px 12px;"><div class="kpi-label" style="font-size: var(--text-overline-size);">Hours</div><div style="font-size: var(--text-body-sm-size); font-weight:500;">9 – 6</div></div></div>
+                      <div class="card"><div class="card-body kpi" style="padding: 10px 12px;"><div class="kpi-label" style="font-size: var(--text-overline-size);">Capacity</div><div style="font-size: var(--text-body-sm-size); font-weight:500;">240</div></div></div>
+                      <div class="card"><div class="card-body kpi" style="padding: 10px 12px;"><div class="kpi-label" style="font-size: var(--text-overline-size);">Manager</div><div style="font-size: var(--text-body-sm-size); font-weight:500;">Andrea M.</div></div></div>
+                    </div>
+                    <div class="card"><div class="card-header"><div class="card-title" style="font-size: var(--text-body-size);">About</div></div><div class="card-body" style="padding: 14px;"><p style="margin:0; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">Flagship location since 2018. Indoor seating for 60, weekend brunch service.</p></div></div>
+                  </div>
+                  <div style="position: relative; background: var(--surface-sunken); border-left: 1px solid var(--border); overflow: hidden;">
+                    <!-- Map placeholder -->
+                    <div style="position: absolute; inset: 0; background-image:
+                      linear-gradient(90deg, var(--border) 1px, transparent 1px),
+                      linear-gradient(var(--border) 1px, transparent 1px);
+                      background-size: 24px 24px, 24px 24px;
+                      opacity: 0.5;"></div>
+                    <div style="position: absolute; left: 30%; top: 60%; width: 60%; height: 4px; background: var(--accent); opacity: 0.5; transform: rotate(-12deg);"></div>
+                    <div style="position: absolute; left: 20%; top: 30%; width: 40%; height: 4px; background: var(--accent); opacity: 0.4; transform: rotate(28deg);"></div>
+                    <!-- Pin -->
+                    <div style="position: absolute; left: 48%; top: 44%; transform: translate(-50%, -100%);">
+                      <svg width="36" height="48" viewBox="0 0 24 32" fill="var(--accent)" stroke="var(--text-on-accent)" stroke-width="1.5"><path d="M12 1c-5 0-9 4-9 9 0 7 9 21 9 21s9-14 9-21c0-5-4-9-9-9z"/><circle cx="12" cy="10" r="3.5" fill="var(--text-on-accent)" stroke="none"/></svg>
+                    </div>
+                    <!-- Attribution -->
+                    <div style="position: absolute; bottom: 8px; left: 8px; font-family: var(--font-mono); font-size: var(--text-overline-size); color: var(--text-muted); background: var(--surface); padding: 2px 6px; border-radius: var(--radius-sm); border: 1px solid var(--border);">Map · placeholder</div>
+                    <!-- Zoom controls -->
+                    <div style="position: absolute; top: 12px; right: 12px; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);">
+                      <button class="btn btn--ghost btn--sm btn--icon" style="border-radius: 0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                      <button class="btn btn--ghost btn--sm btn--icon" style="border-radius: 0; border-top: 1px solid var(--border);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+                    </div>
+                  </div>
+                </main>
+              </div>
+            </div>
+            <div class="state-row">
+              <div class="ministate"><div class="label">Map loading</div><div class="preview"><div class="skeleton" style="width:90%; height:60%;"></div></div></div>
+              <div class="ministate"><div class="label">Map empty</div><div class="preview"><div style="font-size: var(--text-caption-size);">No location set</div><button class="btn btn--ghost btn--xs">Add address</button></div></div>
+              <div class="ministate"><div class="label">Map error</div><div class="preview"><div class="state-glyph is-danger" style="margin:0; width:32px; height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px; height:14px;"><circle cx="12" cy="12" r="10"/></svg></div>Couldn't load map<button class="btn btn--secondary btn--xs">Retry</button></div></div>
+              <div class="ministate"><div class="label">Offline fallback</div><div class="preview"><div style="font-size: var(--text-caption-size); font-family: var(--font-mono);">37.7541° N, 122.4181° W</div></div></div>
+            </div>
+          </div>
+          <div class="recipe-foot"><span>Recipe · Detail with map</span><span>two-column · sticky map panel · needs new map component</span></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- =================================================================
+           12. KANBAN / BOARD
+           ================================================================= -->
+      <section class="lb-section" id="kanban">
+        <header>
+          <div class="eyebrow">Recipe 12</div>
+          <h2>Kanban / board <a class="anchor" href="#kanban">#kanban</a></h2>
+        </header>
+        <div class="recipe">
+          <div class="recipe-head">
+            <div>
+              <h4>Ingredients</h4>
+              <ul>
+                <li><code class="token-pill">page-header (with tabs)</code> for view switcher</li>
+                <li>Columns — header + count badge + add-card button</li>
+                <li><code class="token-pill">card</code> per task (compact)</li>
+                <li>Drag affordance — grip dots on hover</li>
+                <li><code class="token-pill">filter-bar</code> above</li>
+              </ul>
+              <div style="margin-top: 8px; font-size: var(--text-caption-size); color: var(--color-warning-600); display: flex; align-items: center; gap: 5px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
+                Needs new component: dnd-card (drag handle + drop-zone). Wrap any drag library; the visual contract is grip-on-hover + dashed insertion line + ghost preview.
+              </div>
+            </div>
+            <div>
+              <h4>Required states</h4>
+              <ul>
+                <li>Empty column — "Nothing here · add card" placeholder</li>
+                <li>Dragging — ghost card + dashed drop-zone target</li>
+                <li>Adding card — inline input at column top</li>
+                <li>Loading — skeleton cards in each column</li>
+                <li>Saving move — optimistic UI + revert on error</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Use when</h4>
+              <div class="use-when">Workflow with discrete stages and a small-to-medium task volume — issue tracking, content pipelines, hiring funnels. Don't use beyond ~300 cards; switch to list/table.</div>
+              <div class="responsive">
+                <strong style="color: var(--text-primary); font-weight: 500;">Mobile:</strong> columns become a horizontal scroller, one column visible at a time + thumb-friendly scroll snap. Drag UX is rarely worth it on touch; offer tap-to-move instead.
+              </div>
+            </div>
+          </div>
+          <div class="recipe-mock">
+            <div class="mock">
+              <div class="mock-topbar"><span class="brand"><span class="mark"><i></i></span> Acme</span><span class="avatar avatar--sm">AM</span></div>
+              <div class="mock-body">
+                <aside class="mock-sidebar"><div class="mock-side-item is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="12" rx="1"/></svg>Board</div></aside>
+                <main class="mock-main" style="padding: 0;">
+                  <div style="padding: 16px 24px 12px; display: flex; justify-content: space-between; align-items: center; gap: 14px;">
+                    <div><h1 style="margin:0; font-size: var(--text-h3-size); font-weight:600;">Sprint 24</h1><div style="font-size: var(--text-micro-size); color: var(--text-muted);">14 cards · 3 in review</div></div>
+                    <div style="display:flex; gap: 6px;"><div class="tabs--pill"><button class="tab">Grid</button><button class="tab is-active">Board</button><button class="tab">Calendar</button></div><button class="btn btn--primary btn--sm">New task</button></div>
+                  </div>
+                  <div style="padding: 0 24px 12px; display:flex; gap: 8px; align-items:center;">
+                    <button class="chip is-active">Sprint: 24 <button class="chip-x"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></button>
+                    <button class="chip">Assignee</button>
+                    <button class="chip">Label</button>
+                  </div>
+                  <div style="padding: 0 16px 16px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; height: 100%; overflow-y: auto;">
+                    <!-- Column 1 -->
+                    <div style="background: var(--surface-sunken); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 320px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center;"><span style="font-size: var(--text-micro-size); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted);">Backlog</span><span class="badge badge--neutral badge--sm">5</span></div>
+                      <div class="card" style="border-radius: var(--radius-sm); background: var(--surface);"><div class="card-body" style="padding: 10px 12px;"><div style="font-size: var(--text-micro-size); font-weight: 500;">Set up audit log</div><div style="display: flex; align-items: center; gap: 6px; margin-top: 6px;"><span class="badge badge--neutral badge--sm">infra</span><span style="margin-left: auto; font-size: var(--text-overline-size); color: var(--text-muted);">3pt</span></div></div></div>
+                      <div class="card" style="border-radius: var(--radius-sm); background: var(--surface);"><div class="card-body" style="padding: 10px 12px;"><div style="font-size: var(--text-micro-size); font-weight: 500;">Email digest copy</div><div style="display: flex; align-items: center; gap: 6px; margin-top: 6px;"><span class="badge badge--accent badge--sm">copy</span><span class="avatar avatar--xs" style="margin-left: auto;">AM</span></div></div></div>
+                      <button class="btn btn--ghost btn--sm" style="justify-content:flex-start;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add card</button>
+                    </div>
+                    <!-- Column 2 -->
+                    <div style="background: var(--surface-sunken); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 320px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center;"><span style="font-size: var(--text-micro-size); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted);">In progress</span><span class="badge badge--accent badge--sm">3</span></div>
+                      <div class="card" style="border-radius: var(--radius-sm); background: var(--surface); border-color: var(--accent); box-shadow: var(--shadow-md);"><div class="card-body" style="padding: 10px 12px;"><div style="font-size: var(--text-micro-size); font-weight: 500;">Onboarding v2 — draft</div><div style="display: flex; align-items: center; gap: 6px; margin-top: 6px;"><span class="badge badge--warning badge--sm">review</span><span class="avatar avatar--xs" style="margin-left: auto;">AM</span></div></div></div>
+                      <!-- Dashed drop-zone -->
+                      <div style="border: 2px dashed var(--accent); border-radius: var(--radius-sm); height: 56px; background: var(--accent-subtle);"></div>
+                      <div class="card" style="border-radius: var(--radius-sm); background: var(--surface);"><div class="card-body" style="padding: 10px 12px;"><div style="font-size: var(--text-micro-size); font-weight: 500;">Pricing A/B variant</div><div style="display: flex; align-items: center; gap: 6px; margin-top: 6px;"><span class="badge badge--neutral badge--sm">growth</span><span class="avatar avatar--xs tint-3" style="margin-left: auto;">CW</span></div></div></div>
+                    </div>
+                    <!-- Column 3 -->
+                    <div style="background: var(--surface-sunken); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 320px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center;"><span style="font-size: var(--text-micro-size); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted);">Review</span><span class="badge badge--warning badge--sm">3</span></div>
+                      <div class="card" style="border-radius: var(--radius-sm); background: var(--surface);"><div class="card-body" style="padding: 10px 12px;"><div style="font-size: var(--text-micro-size); font-weight: 500;">Launch plan Q2</div><div style="display: flex; align-items: center; gap: 6px; margin-top: 6px;"><span class="avatar avatar--xs tint-1" style="margin-left: auto;">JS</span></div></div></div>
+                    </div>
+                    <!-- Empty column -->
+                    <div style="background: var(--surface-sunken); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 320px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center;"><span style="font-size: var(--text-micro-size); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted);">Done</span><span class="badge badge--success badge--sm">0</span></div>
+                      <div style="flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; padding: 14px; color: var(--text-muted); font-size: var(--text-caption-size); line-height: 1.5;">Nothing here yet.<br/>Drop cards here when complete.</div>
+                    </div>
+                  </div>
+                </main>
+              </div>
+            </div>
+            <div class="state-row">
+              <div class="ministate"><div class="label">Dragging</div><div class="preview"><div style="border: 2px dashed var(--accent); width: 100%; height: 28px; border-radius: var(--radius-sm); background: var(--accent-subtle);"></div></div></div>
+              <div class="ministate"><div class="label">Add inline</div><div class="preview"><input class="input input--sm" placeholder="Card title…" style="width: 100%;" /></div></div>
+              <div class="ministate"><div class="label">Loading column</div><div class="preview"><div class="skeleton" style="width: 100%; height: 36px;"></div><div class="skeleton" style="width: 100%; height: 36px;"></div></div></div>
+              <div class="ministate"><div class="label">Move error</div><div class="preview"><div class="alert alert--danger" style="padding: 6px 10px;"><svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"/></svg><div class="alert-body"><div class="alert-msg" style="font-size: var(--text-overline-size);">Couldn't move · reverted</div></div></div></div></div>
+            </div>
+          </div>
+          <div class="recipe-foot"><span>Recipe · Kanban</span><span>columns · cards · drop-zones · needs new dnd-card</span></div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- =================================================================
+           HOW TO USE RECIPES (closing note)
+           ================================================================= -->
+      <section class="lb-section" id="howto">
+        <header>
+          <div class="eyebrow">For agents</div>
+          <h2>How to use Recipes <a class="anchor" href="#howto">#howto</a></h2>
+        </header>
+        <div class="specimen">
+          <div class="specimen-body" style="padding: 0;">
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-bottom: 1px solid var(--border);">
+              <div style="padding: 20px 22px; border-left: 1px solid var(--border);">
+                <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 8px;">
+                  <span style="width: 24px; height: 24px; border-radius: var(--radius-full); background: var(--accent); color: var(--text-on-accent); display:inline-flex; align-items:center; justify-content:center; font-size: var(--text-caption-size); font-weight: 600;">1</span>
+                  <h4 style="margin: 0; font-size: var(--text-body-sm-size); font-weight: 600;">Pick the recipe</h4>
+                </div>
+                <p style="margin: 0; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">Match the task to a recipe. If two seem to fit, pick the one with fewer ingredients — restraint is the brand.</p>
+              </div>
+              <div style="padding: 20px 22px; border-left: 1px solid var(--border);">
+                <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 8px;">
+                  <span style="width: 24px; height: 24px; border-radius: var(--radius-full); background: var(--accent); color: var(--text-on-accent); display:inline-flex; align-items:center; justify-content:center; font-size: var(--text-caption-size); font-weight: 600;">2</span>
+                  <h4 style="margin: 0; font-size: var(--text-body-sm-size); font-weight: 600;">Compose from named parts</h4>
+                </div>
+                <p style="margin: 0; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">Use only the ingredients listed. If something's missing, surface a "needs new component" callout instead of improvising.</p>
+              </div>
+              <div style="padding: 20px 22px; border-left: 1px solid var(--border);">
+                <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 8px;">
+                  <span style="width: 24px; height: 24px; border-radius: var(--radius-full); background: var(--accent); color: var(--text-on-accent); display:inline-flex; align-items:center; justify-content:center; font-size: var(--text-caption-size); font-weight: 600;">3</span>
+                  <h4 style="margin: 0; font-size: var(--text-body-sm-size); font-weight: 600;">Ship every listed state</h4>
+                </div>
+                <p style="margin: 0; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">Empty, loading, error, success — required, not optional. A page without its states is a draft, not a feature.</p>
+              </div>
+              <div style="padding: 20px 22px; border-left: 1px solid var(--border);">
+                <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 8px;">
+                  <span style="width: 24px; height: 24px; border-radius: var(--radius-full); background: var(--accent); color: var(--text-on-accent); display:inline-flex; align-items:center; justify-content:center; font-size: var(--text-caption-size); font-weight: 600;">4</span>
+                  <h4 style="margin: 0; font-size: var(--text-body-sm-size); font-weight: 600;">Re-skin via tokens only</h4>
+                </div>
+                <p style="margin: 0; font-size: var(--text-body-sm-size); color: var(--text-secondary); line-height: 1.55;">Every visual difference between projects comes from <code class="token-pill">tokens.css</code>. Never restyle a component inline.</p>
+              </div>
+            </div>
+            <div style="padding: 18px 22px; display: flex; align-items: center; gap: 12px;">
+              <div class="state-glyph is-accent" style="width: 32px; height: 32px; margin: 0; flex-shrink: 0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:14px; height:14px;"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div style="font-size: var(--text-body-sm-size); color: var(--text-primary); line-height: 1.55;">
+                The recipe is the contract. The tokens are the skin. Stay inside both and your work will feel like it belongs to Lookbook.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <section style="padding-top: 32px; border-top: 1px solid var(--border);">
+        <div style="display:flex; align-items:flex-start; gap: 16px;">
+          <div style="width:32px; height:32px; border-radius: var(--radius-md); background: var(--accent-subtle); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h4 class="t-h4">Core recipes complete.</h4>
+            <p class="t-body text-secondary" style="margin-top: 4px; max-width: 540px;">CRUD list · Record detail · Form page · Wizard · Settings. Send the extended archetypes whenever you're ready.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script>
+</body>
+</html>

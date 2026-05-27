@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — Motion language</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: ['class', '[data-theme="dark"]'] };</script>
+  <style>
+    /* Demo stage */
+    .stage {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+      position: relative;
+      display: flex; flex-direction: column;
+    }
+    .stage-window {
+      position: relative;
+      flex: 1;
+      min-height: 200px;
+      background: var(--surface-sunken);
+      overflow: hidden;
+    }
+    .stage-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .stage-foot .tokens { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    /* Route transition */
+    .pages { position: absolute; inset: 0; }
+    .page-card {
+      position: absolute; inset: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .page-card.is-out { animation: route-exit var(--duration-base) var(--ease-accelerate) forwards; }
+    .page-card.is-in  { animation: route-enter var(--duration-base) var(--ease-decelerate) forwards; }
+    @keyframes route-exit  { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-12px); } }
+    @keyframes route-enter { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* Staggered list */
+    .stagger-item {
+      opacity: 0; transform: translateY(8px);
+    }
+    .stagger.is-playing .stagger-item {
+      animation: stagger-in var(--duration-base) var(--ease-decelerate) forwards;
+    }
+    @keyframes stagger-in { to { opacity: 1; transform: translateY(0); } }
+
+    /* Skeleton cross-fade */
+    .xfade-host { position: relative; }
+    .xfade-host .xfade-skel,
+    .xfade-host .xfade-content { transition: opacity var(--duration-slow) var(--ease-standard); }
+    .xfade-host .xfade-content { opacity: 0; }
+    .xfade-host.is-loaded .xfade-skel { opacity: 0; pointer-events: none; }
+    .xfade-host.is-loaded .xfade-content { opacity: 1; }
+
+    /* Count-up — JS driven via CSS variable */
+    .countup { font-variant-numeric: tabular-nums; font-weight: 600; letter-spacing: -0.022em; }
+
+    /* Chart draw-in: animate path stroke-dashoffset */
+    .draw path.line,
+    .draw polyline.line {
+      stroke-dasharray: 1200;
+      stroke-dashoffset: 1200;
+    }
+    .draw.is-playing path.line,
+    .draw.is-playing polyline.line {
+      animation: draw var(--duration-slower) var(--ease-decelerate) forwards;
+    }
+    .draw .bar { transform-origin: bottom center; transform: scaleY(0); }
+    .draw.is-playing .bar { animation: bar-grow var(--duration-slow) var(--ease-decelerate) forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes bar-grow { to { transform: scaleY(1); } }
+
+    /* Scroll-triggered reveal */
+    .reveal {
+      opacity: 0; transform: translateY(14px);
+      transition: opacity var(--duration-slow) var(--ease-decelerate),
+                  transform var(--duration-slow) var(--ease-decelerate);
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* Overlay enter/exit */
+    .ov-host { position: relative; }
+    .ov-scrim {
+      position: absolute; inset: 0;
+      background: color-mix(in oklch, var(--text-primary) 30%, transparent);
+      opacity: 0; pointer-events: none;
+      transition: opacity var(--duration-base) var(--ease-standard);
+    }
+    .ov-host.is-open .ov-scrim { opacity: 1; }
+    .ov-modal {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, calc(-50% + 8px));
+      opacity: 0;
+      width: min(320px, calc(100% - 32px));
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); box-shadow: var(--shadow-xl);
+      padding: 16px;
+      transition: opacity var(--duration-base) var(--ease-accelerate),
+                  transform var(--duration-base) var(--ease-accelerate);
+    }
+    .ov-host.is-open .ov-modal {
+      opacity: 1; transform: translate(-50%, -50%);
+      transition-timing-function: var(--ease-decelerate);
+    }
+    .ov-drawer {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 60%; background: var(--surface);
+      border-left: 1px solid var(--border);
+      transform: translateX(100%);
+      transition: transform var(--duration-base) var(--ease-accelerate);
+      padding: 16px;
+    }
+    .ov-host.is-open .ov-drawer {
+      transform: translateX(0);
+      transition-timing-function: var(--ease-decelerate);
+    }
+    .ov-toast {
+      position: absolute; right: 16px; bottom: 16px;
+      width: 240px;
+      transform: translateY(20px); opacity: 0;
+      transition: opacity var(--duration-base) var(--ease-accelerate),
+                  transform var(--duration-base) var(--ease-accelerate);
+    }
+    .ov-host.is-open .ov-toast {
+      transform: translateY(0); opacity: 1;
+      transition-timing-function: var(--ease-decelerate);
+    }
+    .ov-pop {
+      position: absolute;
+      transform: scale(0.96) translateY(-4px); opacity: 0;
+      transform-origin: top left;
+      transition: opacity var(--duration-fast) var(--ease-accelerate),
+                  transform var(--duration-fast) var(--ease-accelerate);
+    }
+    .ov-host.is-open .ov-pop {
+      transform: scale(1) translateY(0); opacity: 1;
+      transition-timing-function: var(--ease-decelerate);
+    }
+
+    /* Reduced motion: replace with instant state change, never strip the affordance. */
+    @media (prefers-reduced-motion: reduce) {
+      .page-card.is-in, .page-card.is-out,
+      .stagger.is-playing .stagger-item,
+      .draw.is-playing path.line, .draw.is-playing polyline.line, .draw.is-playing .bar,
+      .reveal, .ov-modal, .ov-drawer, .ov-toast, .ov-pop, .ov-scrim,
+      .xfade-host .xfade-skel, .xfade-host .xfade-content {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        stroke-dasharray: none !important;
+        stroke-dashoffset: 0 !important;
+        opacity: 1 !important;
+      }
+      .reveal { opacity: 1 !important; }
+      .xfade-host .xfade-skel { display: none; }
+    }
+
+    .replay-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-sunken);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-family: var(--font-mono);
+      cursor: pointer;
+    }
+    .replay-btn:hover { color: var(--text-primary); background: var(--surface); }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">motion · v0.1</span>
+      </div>
+      <nav class="lb-page-nav">
+        <a class="lb-page-link" href="Foundations.html">Foundations</a>
+        <a class="lb-page-link" href="Atoms.html">Atoms</a>
+        <a class="lb-page-link" href="Molecules.html">Molecules</a>
+        <a class="lb-page-link" href="Organisms.html">Organisms</a>
+        <a class="lb-page-link" href="Personality.html">Personality</a>
+        <a class="lb-page-link" href="Motion.html">Motion</a>
+        <a class="lb-page-link" href="DataViz.html">Data viz</a>
+        <a class="lb-page-link" href="Marketing.html">Marketing</a>
+        <a class="lb-page-link" href="Guide.html">Guide</a>
+      </nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#route">Route transition</a></li>
+        <li><a href="#stagger">Staggered entrance</a></li>
+        <li><a href="#xfade">Skeleton → content</a></li>
+        <li><a href="#countup">KPI count-up</a></li>
+        <li><a href="#draw">Chart draw-in</a></li>
+        <li><a href="#reveal">Scroll reveal</a></li>
+        <li><a href="#overlay">Overlay curves</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>Motion language</h5>
+        <p>Named patterns, all built on <code style="font-family: var(--font-mono);">--duration-*</code> + <code style="font-family: var(--font-mono);">--ease-*</code>. Every animation respects prefers-reduced-motion.</p>
+      </div>
+    </aside>
+
+    <main class="lb-main">
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 9</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track);">Motion language.</h2>
+          <p class="lede">Seven named patterns. Built from the motion tokens — never one-offs. Each has a token recipe and a reduced-motion fallback. Click <span class="replay-btn" style="display:inline-flex;">↻ replay</span> on any demo.</p>
+        </header>
+      </section>
+
+      <!-- 1 ROUTE -->
+      <section class="lb-section" id="route">
+        <header>
+          <div class="eyebrow">01 — Route transition</div>
+          <h2>Page enter / exit <a class="anchor" href="#route">#route</a></h2>
+          <p class="lede">Outgoing page slides left + fades using <em>accelerate</em>. Incoming page slides in from the right + fades using <em>decelerate</em>. Crisp in both directions; never crossfade only.</p>
+        </header>
+        <div class="stage" data-demo="route">
+          <div class="stage-window pages" id="route-pages" style="min-height: 280px;">
+            <div class="page-card is-active" data-page="a">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 10px;">
+                <div class="t-overline text-muted">/projects</div>
+                <span class="badge badge--neutral badge--sm">3 items</span>
+              </div>
+              <h3 style="margin: 0 0 10px; font-size: 18px; font-weight: 600; letter-spacing: -0.014em;">Projects</h3>
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <div style="display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface);">
+                  <div style="width: 22px; height: 22px; border-radius: var(--radius-sm); background: var(--accent-subtle); color: var(--accent); display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <span style="font-size: 13px; font-weight: 500;">Onboarding v2</span>
+                  <span class="badge badge--success badge--sm"><span class="badge-dot"></span>Live</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface);">
+                  <div style="width: 22px; height: 22px; border-radius: var(--radius-sm); background: oklch(0.94 0.06 65); color: oklch(0.42 0.10 65); display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <span style="font-size: 13px; font-weight: 500;">Launch plan Q2</span>
+                  <span class="badge badge--warning badge--sm"><span class="badge-dot"></span>Review</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface);">
+                  <div style="width: 22px; height: 22px; border-radius: var(--radius-sm); background: oklch(0.94 0.06 155); color: oklch(0.40 0.10 155); display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <span style="font-size: 13px; font-weight: 500;">Brand refresh</span>
+                  <span class="badge badge--neutral badge--sm"><span class="badge-dot"></span>Draft</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="stage-foot">
+            <div class="tokens">
+              <span class="token-pill">--duration-base · 200ms</span>
+              <span class="token-pill">--ease-accelerate ↔ --ease-decelerate</span>
+              <span class="token-pill">translateX(±12) + opacity</span>
+            </div>
+            <button class="replay-btn" data-replay="route">↻ swap pages</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 STAGGER -->
+      <section class="lb-section" id="stagger">
+        <header>
+          <div class="eyebrow">02 — Staggered entrance</div>
+          <h2>List / grid stagger <a class="anchor" href="#stagger">#stagger</a></h2>
+          <p class="lede">Each item fades + slides up. Delay between items: <strong>40 ms</strong> (via <code class="token-pill">--duration-stagger</code>). The same pattern — named <em>card-grid stagger</em> — works for grids; cap at 8 items, past that fade the whole block instead.</p>
+        </header>
+        <div class="stage" data-demo="stagger">
+          <div class="stage-window" style="padding: 20px;">
+            <div class="stagger is-playing" id="stagger-list" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+              <div class="stagger-item card"><div class="card-body" style="padding: 12px;"><div style="font-size:13px; font-weight:600;">Onboarding</div><div style="font-size:11px; color: var(--text-muted);">Live</div></div></div>
+              <div class="stagger-item card"><div class="card-body" style="padding: 12px;"><div style="font-size:13px; font-weight:600;">Launch Q2</div><div style="font-size:11px; color: var(--text-muted);">Review</div></div></div>
+              <div class="stagger-item card"><div class="card-body" style="padding: 12px;"><div style="font-size:13px; font-weight:600;">Brand</div><div style="font-size:11px; color: var(--text-muted);">Draft</div></div></div>
+              <div class="stagger-item card"><div class="card-body" style="padding: 12px;"><div style="font-size:13px; font-weight:600;">Pricing</div><div style="font-size:11px; color: var(--text-muted);">Live</div></div></div>
+              <div class="stagger-item card"><div class="card-body" style="padding: 12px;"><div style="font-size:13px; font-weight:600;">Docs</div><div style="font-size:11px; color: var(--text-muted);">Planning</div></div></div>
+              <div class="stagger-item card"><div class="card-body" style="padding: 12px;"><div style="font-size:13px; font-weight:600;">Mobile</div><div style="font-size:11px; color: var(--text-muted);">Live</div></div></div>
+              <div class="stagger-item card"><div class="card-body" style="padding: 12px;"><div style="font-size:13px; font-weight:600;">SSO</div><div style="font-size:11px; color: var(--text-muted);">Review</div></div></div>
+              <div class="stagger-item card"><div class="card-body" style="padding: 12px;"><div style="font-size:13px; font-weight:600;">Audit log</div><div style="font-size:11px; color: var(--text-muted);">Draft</div></div></div>
+            </div>
+          </div>
+          <div class="stage-foot">
+            <div class="tokens">
+              <span class="token-pill">--duration-base · 200ms each</span>
+              <span class="token-pill">--ease-decelerate</span>
+              <span class="token-pill">delay: i × 40ms</span>
+            </div>
+            <button class="replay-btn" data-replay="stagger">↻ replay</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 X-FADE -->
+      <section class="lb-section" id="xfade">
+        <header>
+          <div class="eyebrow">03 — Skeleton → content</div>
+          <h2>Cross-fade on load <a class="anchor" href="#xfade">#xfade</a></h2>
+          <p class="lede">Skeleton fades out as the real content fades in over <em>320 ms</em>. Same shape on both — the eye stays put.</p>
+        </header>
+        <div class="stage" data-demo="xfade">
+          <div class="stage-window" style="padding: 20px;">
+            <div class="xfade-host" id="xfade-host" style="position: relative; height: 160px;">
+              <div class="xfade-skel" style="position: absolute; inset: 0; display: flex; flex-direction: column; gap: 8px;">
+                <div class="skeleton skeleton--heading" style="width: 40%;"></div>
+                <div class="skeleton skeleton--text" style="width: 90%;"></div>
+                <div class="skeleton skeleton--text" style="width: 70%;"></div>
+                <div class="skeleton" style="width: 100%; height: 60px; margin-top: 8px;"></div>
+              </div>
+              <div class="xfade-content" style="position: absolute; inset: 0; display: flex; flex-direction: column; gap: 8px;">
+                <h3 style="margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.014em;">Onboarding v2</h3>
+                <p style="margin: 0; font-size: 13.5px; color: var(--text-secondary); line-height: 1.55;">A redesigned first-run experience for new workspaces. Shipping March 28 across web and mobile.</p>
+                <div style="height: 60px; border-radius: var(--radius-md); background: var(--accent-subtle); border: 1px solid color-mix(in oklch, var(--accent) 25%, transparent); margin-top: 4px;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="stage-foot">
+            <div class="tokens">
+              <span class="token-pill">--duration-slow · 320ms</span>
+              <span class="token-pill">--ease-standard</span>
+              <span class="token-pill">opacity-only cross-fade</span>
+            </div>
+            <button class="replay-btn" data-replay="xfade">↻ reload</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 COUNT-UP -->
+      <section class="lb-section" id="countup">
+        <header>
+          <div class="eyebrow">04 — KPI count-up</div>
+          <h2>Number animates to value <a class="anchor" href="#countup">#countup</a></h2>
+          <p class="lede">Numbers count up over <em>~800 ms</em> with a soft <em>decelerate</em> curve. Skips entirely under reduced-motion — final value is what matters.</p>
+        </header>
+        <div class="stage" data-demo="countup">
+          <div class="stage-window" style="padding: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+            <div class="card"><div class="card-body kpi">
+              <div class="kpi-label">MAU</div>
+              <div class="kpi-value countup" data-to="24832" data-prefix="" data-suffix="">0</div>
+              <div class="kpi-delta kpi-delta--up">↑ 12.4%</div>
+            </div></div>
+            <div class="card"><div class="card-body kpi">
+              <div class="kpi-label">Activation</div>
+              <div class="kpi-value countup" data-to="62.1" data-suffix="%" data-decimals="1">0%</div>
+              <div class="kpi-delta kpi-delta--up">↑ 3.2 pts</div>
+            </div></div>
+            <div class="card"><div class="card-body kpi">
+              <div class="kpi-label">Revenue</div>
+              <div class="kpi-value countup" data-to="248932" data-prefix="$">$0</div>
+              <div class="kpi-delta kpi-delta--up">↑ 18.2%</div>
+            </div></div>
+          </div>
+          <div class="stage-foot">
+            <div class="tokens">
+              <span class="token-pill">~800ms · --ease-decelerate</span>
+              <span class="token-pill">tabular-nums</span>
+              <span class="token-pill">reduced-motion → instant</span>
+            </div>
+            <button class="replay-btn" data-replay="countup">↻ count</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 CHART DRAW-IN -->
+      <section class="lb-section" id="draw">
+        <header>
+          <div class="eyebrow">05 — Chart draw-in</div>
+          <h2>Lines and bars animate in <a class="anchor" href="#draw">#draw</a></h2>
+          <p class="lede">Line charts draw via <em>stroke-dashoffset</em> over <em>900 ms</em>. Bars grow via <em>scaleY</em> over <em>700 ms</em>. Skipped under reduced-motion — show final state immediately.</p>
+        </header>
+        <div class="stage" data-demo="draw">
+          <div class="stage-window" style="padding: 24px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px;">
+            <div class="card"><div class="card-body" style="padding: 16px;">
+              <div style="font-size: 12.5px; color: var(--text-muted); font-weight: 500; margin-bottom: 8px;">Daily signups</div>
+              <svg class="draw is-playing" id="draw-line" viewBox="0 0 600 160" preserveAspectRatio="none" width="100%" height="120">
+                <g stroke="var(--chart-grid)" stroke-width="1">
+                  <line x1="0" y1="40" x2="600" y2="40"/>
+                  <line x1="0" y1="80" x2="600" y2="80"/>
+                  <line x1="0" y1="120" x2="600" y2="120"/>
+                </g>
+                <polyline class="line" fill="none" stroke="var(--chart-1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="0,130 60,118 120,108 180,90 240,98 300,72 360,68 420,52 480,46 540,30 600,22"/>
+              </svg>
+            </div></div>
+            <div class="card"><div class="card-body" style="padding: 16px;">
+              <div style="font-size: 12.5px; color: var(--text-muted); font-weight: 500; margin-bottom: 8px;">By plan</div>
+              <svg class="draw is-playing" id="draw-bar" viewBox="0 0 300 160" width="100%" height="120">
+                <g stroke="var(--chart-grid)" stroke-width="1">
+                  <line x1="0" y1="40" x2="300" y2="40"/>
+                  <line x1="0" y1="80" x2="300" y2="80"/>
+                  <line x1="0" y1="120" x2="300" y2="120"/>
+                </g>
+                <rect class="bar" x="20"  y="60"  width="40" height="80"  fill="var(--chart-1)" rx="2"/>
+                <rect class="bar" x="80"  y="36"  width="40" height="104" fill="var(--chart-1)" rx="2"/>
+                <rect class="bar" x="140" y="84"  width="40" height="56"  fill="var(--chart-1)" rx="2"/>
+                <rect class="bar" x="200" y="50"  width="40" height="90"  fill="var(--chart-1)" rx="2"/>
+                <rect class="bar" x="260" y="22"  width="40" height="118" fill="var(--chart-1)" rx="2"/>
+              </svg>
+            </div></div>
+          </div>
+          <div class="stage-foot">
+            <div class="tokens">
+              <span class="token-pill">line · 900ms · --ease-decelerate</span>
+              <span class="token-pill">bar · 700ms scaleY</span>
+              <span class="token-pill">play once on mount</span>
+            </div>
+            <button class="replay-btn" data-replay="draw">↻ draw</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6 SCROLL REVEAL -->
+      <section class="lb-section" id="reveal">
+        <header>
+          <div class="eyebrow">06 — Scroll-triggered reveal</div>
+          <h2>Sections fade as they enter <a class="anchor" href="#reveal">#reveal</a></h2>
+          <p class="lede">IntersectionObserver flags each section. Once visible: <em>fade + 14 px slide-up</em> over <em>320 ms</em>. Plays once per section — never on every scroll.</p>
+        </header>
+        <div class="stage" data-demo="reveal">
+          <div class="stage-window" id="reveal-host" style="height: 260px; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 16px;">
+            <div class="reveal card"><div class="card-body"><div style="font-size: 13px; font-weight: 600;">Section A</div><div style="font-size: 12.5px; color: var(--text-secondary);">Scroll this panel to see each section fade in once.</div></div></div>
+            <div class="reveal card"><div class="card-body"><div style="font-size: 13px; font-weight: 600;">Section B</div><div style="font-size: 12.5px; color: var(--text-secondary);">Reveals trigger once and stay.</div></div></div>
+            <div class="reveal card"><div class="card-body"><div style="font-size: 13px; font-weight: 600;">Section C</div><div style="font-size: 12.5px; color: var(--text-secondary);">No "scroll-jacking", no re-fade.</div></div></div>
+            <div class="reveal card"><div class="card-body"><div style="font-size: 13px; font-weight: 600;">Section D</div><div style="font-size: 12.5px; color: var(--text-secondary);">Use sparingly — heroes and key sections only.</div></div></div>
+            <div class="reveal card"><div class="card-body"><div style="font-size: 13px; font-weight: 600;">Section E</div><div style="font-size: 12.5px; color: var(--text-secondary);">Reduced-motion → instant render.</div></div></div>
+          </div>
+          <div class="stage-foot">
+            <div class="tokens">
+              <span class="token-pill">--duration-slow · 320ms</span>
+              <span class="token-pill">--ease-decelerate</span>
+              <span class="token-pill">opacity + translateY(14)</span>
+            </div>
+            <button class="replay-btn" data-replay="reveal">↻ reset</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 OVERLAY CURVES -->
+      <section class="lb-section" id="overlay">
+        <header>
+          <div class="eyebrow">07 — Overlay enter / exit</div>
+          <h2>One curve for every overlay <a class="anchor" href="#overlay">#overlay</a></h2>
+          <p class="lede">Modal, drawer, toast, dropdown — enter on <em>decelerate</em>, exit on <em>accelerate</em>. The asymmetry reads natural: things arrive softly, leave snappy. Scrim fades with <em>standard</em> in parallel.</p>
+        </header>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+          <!-- Modal -->
+          <div class="stage" data-demo="ov-modal">
+            <div class="stage-window ov-host" style="height: 200px;">
+              <div class="ov-scrim"></div>
+              <div class="ov-modal">
+                <div style="font-size: 14px; font-weight: 600;">Modal</div>
+                <div style="font-size: 12.5px; color: var(--text-secondary); margin-top: 4px;">scrim fade + content scale-up</div>
+              </div>
+            </div>
+            <div class="stage-foot">
+              <div class="tokens"><span class="token-pill">opacity + translateY(8 → 0)</span></div>
+              <button class="replay-btn" data-replay="ov-modal">↻ toggle</button>
+            </div>
+          </div>
+
+          <!-- Drawer -->
+          <div class="stage" data-demo="ov-drawer">
+            <div class="stage-window ov-host" style="height: 200px;">
+              <div class="ov-scrim"></div>
+              <div class="ov-drawer">
+                <div style="font-size: 14px; font-weight: 600;">Drawer</div>
+                <div style="font-size: 12.5px; color: var(--text-secondary); margin-top: 4px;">slides from edge</div>
+              </div>
+            </div>
+            <div class="stage-foot">
+              <div class="tokens"><span class="token-pill">translateX(100% → 0)</span></div>
+              <button class="replay-btn" data-replay="ov-drawer">↻ toggle</button>
+            </div>
+          </div>
+
+          <!-- Toast -->
+          <div class="stage" data-demo="ov-toast">
+            <div class="stage-window ov-host" style="height: 200px;">
+              <div class="ov-toast toast toast--success" style="position: absolute;">
+                <div class="toast-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="toast-body">
+                  <div class="toast-title">Saved</div>
+                  <div class="toast-msg">All changes synced.</div>
+                </div>
+              </div>
+            </div>
+            <div class="stage-foot">
+              <div class="tokens"><span class="token-pill">translateY(20 → 0) + opacity</span></div>
+              <button class="replay-btn" data-replay="ov-toast">↻ pop</button>
+            </div>
+          </div>
+
+          <!-- Dropdown -->
+          <div class="stage" data-demo="ov-pop">
+            <div class="stage-window ov-host" style="height: 200px;">
+              <div style="padding: 16px;">
+                <button class="btn btn--secondary btn--sm" style="pointer-events:none;">Actions ▾</button>
+              </div>
+              <div class="ov-pop menu" style="top: 56px; left: 16px; min-width: 160px;">
+                <button class="menu-item">Rename</button>
+                <button class="menu-item">Duplicate</button>
+                <button class="menu-item">Share</button>
+              </div>
+            </div>
+            <div class="stage-foot">
+              <div class="tokens"><span class="token-pill">scale(0.96 → 1) + opacity · --duration-fast</span></div>
+              <button class="replay-btn" data-replay="ov-pop">↻ toggle</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Reduced motion -->
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">∞ — Reduced motion</div>
+          <h2>The fallback contract <a class="anchor" href="#">#reduced</a></h2>
+          <p class="lede">Under <code class="token-pill">@media (prefers-reduced-motion: reduce)</code>, every animation above resolves to its <em>final state instantly</em>. The affordance stays — the motion goes. Test it: toggle reduced motion in your OS, every demo on this page lands in its final frame.</p>
+        </header>
+        <div class="specimen">
+          <div class="specimen-body" style="display: flex; align-items: flex-start; gap: 14px; padding: 20px;">
+            <div class="state-glyph is-info" style="width: 40px; height: 40px; margin: 0; flex-shrink: 0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 600;">Replace motion with state, never strip the affordance.</div>
+              <p style="margin: 4px 0 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55; max-width: 640px;">A user with vestibular sensitivity still needs to know the modal opened, the toast appeared, the number changed. Render the final frame on the same beat — just without the in-between.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script>
+  <script>
+    // Helpers — read motion durations from CSS tokens so tuning happens centrally.
+    const ms = (varName, fallback) => {
+      const v = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+      if (!v) return fallback;
+      if (v.endsWith('ms')) return parseFloat(v);
+      if (v.endsWith('s'))  return parseFloat(v) * 1000;
+      return parseFloat(v) || fallback;
+    };
+    const D_FAST  = ms('--duration-fast', 120);
+    const D_BASE  = ms('--duration-base', 200);
+    const D_SLOW  = ms('--duration-slow', 320);
+    const D_SLOWER= ms('--duration-slower', 900);
+    const D_STAG  = ms('--duration-stagger', 40);
+    const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const replay = (key) => {
+      const fns = {
+        route: () => {
+          const host = document.getElementById('route-pages');
+          const active = host.querySelector('.page-card.is-active');
+          const onA = active.dataset.page === 'a';
+          const incoming = document.createElement('div');
+          incoming.className = 'page-card is-in is-active';
+          incoming.dataset.page = onA ? 'b' : 'a';
+          if (onA) {
+            incoming.innerHTML = `
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 10px;">
+                <div class="t-overline text-muted">/projects / onboarding-v2</div>
+                <span class="badge badge--success badge--sm"><span class="badge-dot"></span>Live</span>
+              </div>
+              <h3 style="margin: 0 0 6px; font-size: 18px; font-weight: 600; letter-spacing: -0.014em;">Onboarding v2</h3>
+              <p style="margin: 0 0 12px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.5;">A redesigned first-run experience. Shipping March 28 across web and mobile.</p>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn--secondary btn--sm">Edit</button>
+                <button class="btn btn--primary btn--sm">Publish</button>
+              </div>`;
+          } else {
+            incoming.innerHTML = `
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 10px;">
+                <div class="t-overline text-muted">/projects</div>
+                <span class="badge badge--neutral badge--sm">3 items</span>
+              </div>
+              <h3 style="margin: 0 0 10px; font-size: 18px; font-weight: 600; letter-spacing: -0.014em;">Projects</h3>
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <div style="display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface);">
+                  <div style="width: 22px; height: 22px; border-radius: var(--radius-sm); background: var(--accent-subtle); color: var(--accent); display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <span style="font-size: 13px; font-weight: 500;">Onboarding v2</span>
+                  <span class="badge badge--success badge--sm"><span class="badge-dot"></span>Live</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface);">
+                  <div style="width: 22px; height: 22px; border-radius: var(--radius-sm); background: oklch(0.94 0.06 65); color: oklch(0.42 0.10 65); display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <span style="font-size: 13px; font-weight: 500;">Launch plan Q2</span>
+                  <span class="badge badge--warning badge--sm"><span class="badge-dot"></span>Review</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface);">
+                  <div style="width: 22px; height: 22px; border-radius: var(--radius-sm); background: oklch(0.94 0.06 155); color: oklch(0.40 0.10 155); display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <span style="font-size: 13px; font-weight: 500;">Brand refresh</span>
+                  <span class="badge badge--neutral badge--sm"><span class="badge-dot"></span>Draft</span>
+                </div>
+              </div>`;
+          }
+          active.classList.add('is-out');
+          host.appendChild(incoming);
+          setTimeout(() => active.remove(), D_BASE + 40);
+        },
+        stagger: () => {
+          const stagger = document.getElementById('stagger-list');
+          stagger.classList.remove('is-playing');
+          void stagger.offsetWidth;
+          stagger.querySelectorAll('.stagger-item').forEach((el, i) => {
+            el.style.animationDelay = (i * D_STAG) + 'ms';
+          });
+          stagger.classList.add('is-playing');
+        },
+        xfade: () => {
+          const h = document.getElementById('xfade-host');
+          h.classList.remove('is-loaded');
+          setTimeout(() => h.classList.add('is-loaded'), Math.max(700, D_SLOWER - 200));
+        },
+        countup: () => {
+          document.querySelectorAll('.countup').forEach(el => {
+            const to = parseFloat(el.dataset.to);
+            const decimals = parseInt(el.dataset.decimals || '0', 10);
+            const prefix = el.dataset.prefix || '';
+            const suffix = el.dataset.suffix || '';
+            const start = performance.now();
+            const dur = D_SLOWER - 100; // ~800ms
+            if (reducedMotion()) {
+              el.textContent = prefix + to.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + suffix;
+              return;
+            }
+            const tick = (now) => {
+              const t = Math.min(1, (now - start) / dur);
+              const eased = 1 - Math.pow(1 - t, 3);
+              const v = to * eased;
+              el.textContent = prefix + v.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + suffix;
+              if (t < 1) requestAnimationFrame(tick);
+              else el.textContent = prefix + to.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + suffix;
+            };
+            requestAnimationFrame(tick);
+          });
+        },
+        draw: () => {
+          ['draw-line', 'draw-bar'].forEach(id => {
+            const el = document.getElementById(id);
+            el.classList.remove('is-playing');
+            void el.getBoundingClientRect();
+            el.querySelectorAll('.bar').forEach((b, i) => b.style.animationDelay = (i * (D_STAG + 20)) + 'ms');
+            el.classList.add('is-playing');
+          });
+        },
+        reveal: () => {
+          const host = document.getElementById('reveal-host');
+          host.scrollTop = 0;
+          host.querySelectorAll('.reveal').forEach(r => r.classList.remove('is-visible'));
+          // re-observe
+          requestAnimationFrame(initReveal);
+        },
+        'ov-modal':  () => toggleOverlay('ov-modal'),
+        'ov-drawer': () => toggleOverlay('ov-drawer'),
+        'ov-toast':  () => toggleOverlay('ov-toast'),
+        'ov-pop':    () => toggleOverlay('ov-pop'),
+      };
+      fns[key] && fns[key]();
+    };
+
+    const toggleOverlay = (demo) => {
+      const stage = document.querySelector(`[data-demo="${demo}"] .ov-host`);
+      if (!stage) return;
+      stage.classList.toggle('is-open');
+    };
+
+    document.querySelectorAll('[data-replay]').forEach(btn => {
+      btn.addEventListener('click', () => replay(btn.dataset.replay));
+    });
+
+    // Auto-trigger overlay demos to show open state on first paint
+    ['ov-modal','ov-drawer','ov-toast','ov-pop'].forEach((k, i) => {
+      setTimeout(() => toggleOverlay(k), 200 + i * 150);
+    });
+
+    // Mark page A as active for the route demo
+    document.querySelectorAll('#route-pages .page-card').forEach(c => c.classList.add('is-active'));
+
+    // Stagger initial delay
+    document.querySelectorAll('#stagger-list .stagger-item').forEach((el, i) => {
+      el.style.animationDelay = (i * D_STAG) + 'ms';
+    });
+
+    // X-fade initial state
+    requestAnimationFrame(() => setTimeout(() => document.getElementById('xfade-host').classList.add('is-loaded'), 700));
+
+    // Initial count-up
+    setTimeout(() => replay('countup'), 300);
+
+    // Reveal observer
+    let revealObserver;
+    function initReveal() {
+      const host = document.getElementById('reveal-host');
+      if (!host) return;
+      if (revealObserver) revealObserver.disconnect();
+      revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            revealObserver.unobserve(e.target);
+          }
+        });
+      }, { root: host, rootMargin: '0px 0px -20% 0px', threshold: 0.1 });
+      host.querySelectorAll('.reveal').forEach(r => revealObserver.observe(r));
+    }
+    initReveal();
+  </script>
+</body>
+</html>

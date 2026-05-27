@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookbook — States</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lookbook.css" />
+  <link rel="stylesheet" href="components.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: ['class', '[data-theme="dark"]'] };</script>
+  <style>
+    .frame {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--bg);
+      overflow: hidden;
+    }
+    .frame-caption {
+      padding: 10px 14px;
+      border-top: 1px solid var(--border);
+      background: var(--surface-sunken);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .full-page-frame {
+      min-height: 540px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 32px;
+      position: relative;
+      background:
+        radial-gradient(circle at 30% 20%, color-mix(in oklch, var(--accent) 5%, transparent), transparent 50%),
+        var(--bg);
+    }
+    .full-page-frame .corner-brand {
+      position: absolute;
+      top: 18px; left: 22px;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 600; letter-spacing: -0.012em;
+    }
+    .full-page-frame .corner-brand .mark {
+      width: 22px; height: 22px;
+      border-radius: var(--radius-sm);
+      background: var(--text-primary);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .full-page-frame .corner-brand .mark > i {
+      width: 7px; height: 7px;
+      background: var(--bg);
+      border-radius: 2px; display: block;
+    }
+    .err-code {
+      font-family: var(--font-mono);
+      font-size: var(--text-errcode-size);
+      font-weight: var(--text-errcode-weight);
+      letter-spacing: var(--text-errcode-track);
+      line-height: var(--text-errcode-lh);
+      color: var(--text-primary);
+      opacity: 0.92;
+    }
+
+    /* Skeleton card preset used a few places */
+    .sk-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      padding: 16px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+  </style>
+</head>
+<body class="bg-bg text-primary font-sans antialiased">
+
+  <!-- TOP BAR -->
+  <header class="lb-topbar">
+    <div class="lb-topbar-inner">
+      <div class="lb-brand">
+        <div class="lb-logo-mark"><i></i></div>
+        <span style="font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); letter-spacing: var(--text-h4-track);">Lookbook</span>
+        <span class="token-pill">states · v0.1</span>
+      </div>
+      <nav class="lb-page-nav">
+        <a class="lb-page-link" href="Foundations.html">Foundations</a>
+        <a class="lb-page-link" href="Atoms.html">Atoms</a>
+        <a class="lb-page-link" href="Molecules.html">Molecules</a>
+        <a class="lb-page-link" href="Organisms.html">Organisms</a>
+        <a class="lb-page-link" href="Auth.html">Auth</a>
+        <a class="lb-page-link" href="States.html">States</a>
+        <a class="lb-page-link" href="Personality.html">Personality</a>
+        <a class="lb-page-link" href="Motion.html">Motion</a>
+        <a class="lb-page-link" href="DataViz.html">Data viz</a>
+        <a class="lb-page-link" href="Marketing.html">Marketing</a>
+        <a class="lb-page-link" href="Guide.html">Guide</a>
+      </nav>
+      <div class="lb-theme-toggle" role="tablist" aria-label="Theme">
+        <button type="button" data-theme-btn="light" class="lb-theme-btn" aria-pressed="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Light
+        </button>
+        <button type="button" data-theme-btn="dark" class="lb-theme-btn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="lb-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="lb-sidebar">
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#loading">Loading</a></li>
+        <li><a href="#empty">Empty</a></li>
+        <li><a href="#error">Error</a></li>
+        <li><a href="#success">Success</a></li>
+      </ul>
+      <div class="lb-sidebar-note">
+        <h5>States</h5>
+        <p>The states agents forget. Every async surface should ship loading, empty, error, and success — not just the happy path.</p>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="lb-main">
+
+      <!-- Intro -->
+      <section class="lb-section">
+        <header>
+          <div class="eyebrow">Lookbook · Chapter 6</div>
+          <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track);">States.</h2>
+          <p class="lede">Loading, empty, error, and success — the four states every async surface owes the user. Treat them as first-class screens, not afterthoughts.</p>
+        </header>
+      </section>
+
+      <!-- LOADING -->
+      <section class="lb-section" id="loading">
+        <header>
+          <div class="eyebrow">01 — Loading</div>
+          <h2>Loading <a class="anchor" href="#loading">#loading</a></h2>
+          <p class="lede">Use a spinner under 1 s, a skeleton when shape is known and timing is uncertain, a section loader when the surface is bounded. Show progress when you can measure it.</p>
+        </header>
+
+        <!-- Page skeleton -->
+        <div class="lb-subsection">
+          <h3>Page skeleton</h3>
+          <div class="frame">
+            <div style="padding: 28px; background: var(--bg);">
+              <!-- breadcrumb-ish -->
+              <div style="display:flex; gap:8px; align-items:center;">
+                <div class="skeleton" style="width:60px; height:12px;"></div>
+                <div class="skeleton" style="width:8px; height:8px; border-radius: var(--radius-full);"></div>
+                <div class="skeleton" style="width:90px; height:12px;"></div>
+              </div>
+              <!-- title -->
+              <div class="skeleton skeleton--heading" style="width: 40%; height: 28px; margin-top: 16px;"></div>
+              <div class="skeleton" style="width: 65%; height: 14px; margin-top: 10px;"></div>
+              <!-- KPI row -->
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 24px;">
+                <div class="sk-card"><div class="skeleton" style="width: 45%; height: 12px;"></div><div class="skeleton" style="width: 70%; height: 22px;"></div><div class="skeleton" style="width: 50%; height: 10px;"></div></div>
+                <div class="sk-card"><div class="skeleton" style="width: 45%; height: 12px;"></div><div class="skeleton" style="width: 60%; height: 22px;"></div><div class="skeleton" style="width: 40%; height: 10px;"></div></div>
+                <div class="sk-card"><div class="skeleton" style="width: 45%; height: 12px;"></div><div class="skeleton" style="width: 75%; height: 22px;"></div><div class="skeleton" style="width: 55%; height: 10px;"></div></div>
+                <div class="sk-card"><div class="skeleton" style="width: 45%; height: 12px;"></div><div class="skeleton" style="width: 50%; height: 22px;"></div><div class="skeleton" style="width: 45%; height: 10px;"></div></div>
+              </div>
+              <!-- main + side -->
+              <div style="display: grid; grid-template-columns: 1fr 240px; gap: 12px; margin-top: 16px;">
+                <div class="sk-card" style="min-height: 200px;">
+                  <div class="skeleton" style="width: 30%; height: 14px;"></div>
+                  <div class="skeleton" style="width: 100%; height: 120px; margin-top: 6px;"></div>
+                </div>
+                <div class="sk-card" style="min-height: 200px;">
+                  <div class="skeleton" style="width: 55%; height: 14px;"></div>
+                  <div class="skeleton" style="width: 100%; height: 10px;"></div>
+                  <div class="skeleton" style="width: 85%; height: 10px;"></div>
+                  <div class="skeleton" style="width: 70%; height: 10px;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="frame-caption">First-paint shape. Match real layout — don't load a generic gray block.</div>
+          </div>
+        </div>
+
+        <!-- Card skeleton + Section loader + Inline button spinner -->
+        <div class="lb-subsection">
+          <h3>Card · Section · Inline button</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+
+            <!-- Card skeleton -->
+            <div class="frame">
+              <div style="padding: 24px; background: var(--bg);">
+                <div class="sk-card" style="padding: 18px;">
+                  <div style="display: flex; gap: 12px; align-items: center;">
+                    <div class="skeleton skeleton--avatar"></div>
+                    <div style="flex:1;">
+                      <div class="skeleton" style="width: 50%; height: 13px;"></div>
+                      <div class="skeleton" style="width: 35%; height: 10px; margin-top: 6px;"></div>
+                    </div>
+                  </div>
+                  <div class="skeleton" style="width: 100%; height: 110px; margin-top: 10px;"></div>
+                  <div style="display:flex; justify-content:space-between; margin-top:8px;">
+                    <div class="skeleton" style="width: 30%; height: 12px;"></div>
+                    <div class="skeleton" style="width: 80px; height: 28px;"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="frame-caption">Card skeleton</div>
+            </div>
+
+            <!-- Section loader -->
+            <div class="frame">
+              <div style="padding: 24px; background: var(--bg);">
+                <div class="card">
+                  <div class="card-header"><div class="card-title">Recent activity</div></div>
+                  <div class="card-body" style="display:flex; flex-direction:column; align-items:center; gap:10px; padding: 48px 16px;">
+                    <span class="spinner spinner--md"></span>
+                    <span style="font-size: 13px; color: var(--text-muted);">Loading activity…</span>
+                  </div>
+                </div>
+              </div>
+              <div class="frame-caption">Bounded section loader</div>
+            </div>
+
+            <!-- Inline button -->
+            <div class="frame">
+              <div style="padding: 36px 24px; background: var(--bg); display:flex; flex-direction: column; gap: 14px; align-items: center;">
+                <button class="btn btn--primary is-loading"><span class="btn-spinner"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" opacity="0.25"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><span class="btn-content">Saving…</span></button>
+                <button class="btn btn--secondary is-loading"><span class="btn-spinner"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" opacity="0.25"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><span class="btn-content">Fetching…</span></button>
+                <button class="btn btn--ghost is-loading"><span class="btn-spinner"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" opacity="0.25"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span><span class="btn-content">Connecting…</span></button>
+              </div>
+              <div class="frame-caption">Inline button spinner — label stays visible</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table skeleton -->
+        <div class="lb-subsection">
+          <h3>Table skeleton</h3>
+          <div class="frame">
+            <div style="background: var(--bg);">
+              <div style="display: grid; grid-template-columns: 40px 1.4fr 1fr 100px 80px; gap: 14px; padding: 12px 16px; background: var(--surface-sunken); border-bottom: 1px solid var(--border);">
+                <div></div>
+                <div class="skeleton" style="width: 60px; height: 10px;"></div>
+                <div class="skeleton" style="width: 50px; height: 10px;"></div>
+                <div class="skeleton" style="width: 50px; height: 10px;"></div>
+                <div class="skeleton" style="width: 50px; height: 10px;"></div>
+              </div>
+              <div style="display: grid; grid-template-columns: 40px 1.4fr 1fr 100px 80px; gap: 14px; padding: 14px 16px; border-bottom: 1px solid var(--border); align-items: center;">
+                <div class="skeleton" style="width: 14px; height: 14px;"></div>
+                <div style="display: flex; gap: 10px; align-items: center;"><div class="skeleton" style="width: 28px; height: 28px; border-radius: var(--radius-sm);"></div><div style="flex: 1;"><div class="skeleton" style="width: 65%; height: 12px;"></div><div class="skeleton" style="width: 40%; height: 10px; margin-top: 6px;"></div></div></div>
+                <div class="skeleton" style="width: 80%; height: 13px;"></div>
+                <div class="skeleton" style="width: 60px; height: 18px; border-radius: var(--radius-full);"></div>
+                <div class="skeleton" style="width: 50px; height: 12px; margin-left: auto;"></div>
+              </div>
+              <div style="display: grid; grid-template-columns: 40px 1.4fr 1fr 100px 80px; gap: 14px; padding: 14px 16px; border-bottom: 1px solid var(--border); align-items: center;">
+                <div class="skeleton" style="width: 14px; height: 14px;"></div>
+                <div style="display: flex; gap: 10px; align-items: center;"><div class="skeleton" style="width: 28px; height: 28px; border-radius: var(--radius-sm);"></div><div style="flex: 1;"><div class="skeleton" style="width: 55%; height: 12px;"></div><div class="skeleton" style="width: 35%; height: 10px; margin-top: 6px;"></div></div></div>
+                <div class="skeleton" style="width: 70%; height: 13px;"></div>
+                <div class="skeleton" style="width: 70px; height: 18px; border-radius: var(--radius-full);"></div>
+                <div class="skeleton" style="width: 50px; height: 12px; margin-left: auto;"></div>
+              </div>
+              <div style="display: grid; grid-template-columns: 40px 1.4fr 1fr 100px 80px; gap: 14px; padding: 14px 16px; align-items: center;">
+                <div class="skeleton" style="width: 14px; height: 14px;"></div>
+                <div style="display: flex; gap: 10px; align-items: center;"><div class="skeleton" style="width: 28px; height: 28px; border-radius: var(--radius-sm);"></div><div style="flex: 1;"><div class="skeleton" style="width: 50%; height: 12px;"></div><div class="skeleton" style="width: 30%; height: 10px; margin-top: 6px;"></div></div></div>
+                <div class="skeleton" style="width: 75%; height: 13px;"></div>
+                <div class="skeleton" style="width: 50px; height: 18px; border-radius: var(--radius-full);"></div>
+                <div class="skeleton" style="width: 50px; height: 12px; margin-left: auto;"></div>
+              </div>
+            </div>
+            <div class="frame-caption">Match real column widths · same header chrome · 3–5 rows enough</div>
+          </div>
+        </div>
+
+        <!-- Progress — linear + circular -->
+        <div class="lb-subsection">
+          <h3>Progress <span class="token-pill">determinate · when you can measure it</span></h3>
+          <div class="frame">
+            <div style="padding: 24px; background: var(--bg); display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+              <div style="display: flex; flex-direction: column; gap: 14px;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size: 12.5px; color: var(--text-secondary);"><span>Uploading project.zip</span><span style="font-variant-numeric: tabular-nums; color: var(--text-primary); font-weight: 500;">64%</span></div>
+                  <div class="progress" style="margin-top: 6px;"><div class="progress-fill" style="width: 64%;"></div></div>
+                  <div class="progress-meta"><span>5.4 MB of 8.4 MB</span><span>2 min remaining</span></div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size: 12.5px; color: var(--text-secondary);"><span>Migrating records</span><span style="font-variant-numeric: tabular-nums; color: var(--color-success-600); font-weight: 500;">100%</span></div>
+                  <div class="progress progress--sm" style="margin-top: 6px;"><div class="progress-fill" style="width: 100%; background: var(--color-success-600);"></div></div>
+                  <div class="progress-meta"><span>1,248 of 1,248</span><span>Done</span></div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 24px; align-items: center; justify-content: center;">
+                <div class="progress-ring" style="--pct: 64;">
+                  <svg viewBox="0 0 48 48"><circle class="ring-track" cx="24" cy="24" r="21"/><circle class="ring-fill" cx="24" cy="24" r="21"/></svg>
+                  <div style="display: flex; flex-direction: column; gap: 2px;">
+                    <span class="ring-label">64%</span>
+                    <span style="font-size: 11.5px; color: var(--text-muted);">Uploading</span>
+                  </div>
+                </div>
+                <div class="progress-ring" style="--pct: 28;">
+                  <svg viewBox="0 0 48 48"><circle class="ring-track" cx="24" cy="24" r="21"/><circle class="ring-fill" cx="24" cy="24" r="21"/></svg>
+                  <div style="display: flex; flex-direction: column; gap: 2px;">
+                    <span class="ring-label">28%</span>
+                    <span style="font-size: 11.5px; color: var(--text-muted);">Indexing</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="frame-caption">Linear bar with metadata · circular ring for compact placements (chips, avatars)</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- EMPTY -->
+      <section class="lb-section" id="empty">
+        <header>
+          <div class="eyebrow">02 — Empty</div>
+          <h2>Empty <a class="anchor" href="#empty">#empty</a></h2>
+          <p class="lede">Three flavors: <em>first-use</em> guides into a primary action, <em>no-results</em> offers an escape (clear filters), <em>no-permission</em> explains the wall without scolding.</p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+
+          <!-- First use -->
+          <div class="frame">
+            <div style="padding: 8px; background: var(--bg);">
+              <div class="state" style="padding-top: 28px;">
+                <!-- Spot illustration — composed geometry, not a glyph badge -->
+                <div style="position: relative; width: 200px; height: 130px; margin-bottom: 4px;">
+                  <div style="position: absolute; left: 8%; right: 8%; bottom: 14px; height: 1px; background: var(--border);"></div>
+                  <div style="position: absolute; left: 12%; bottom: 14px; width: 40px; height: 56px; border-radius: var(--radius-sm); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm);"></div>
+                  <div style="position: absolute; left: 36%; bottom: 14px; width: 54px; height: 88px; border-radius: var(--radius-md); background: var(--accent-subtle); border: 1px solid color-mix(in oklch, var(--accent) 30%, transparent);">
+                    <div style="position: absolute; top: 14px; left: 10px; right: 10px; height: 4px; border-radius: 2px; background: var(--accent); opacity: 0.6;"></div>
+                    <div style="position: absolute; top: 24px; left: 10px; width: 60%; height: 3px; border-radius: 2px; background: var(--accent); opacity: 0.4;"></div>
+                  </div>
+                  <div style="position: absolute; right: 14%; bottom: 14px; width: 46px; height: 46px; border-radius: var(--radius-full); background: var(--accent); box-shadow: var(--shadow-md);"></div>
+                  <div style="position: absolute; right: 4%; top: 18%; width: 12px; height: 12px; border-radius: var(--radius-full); background: var(--color-warning-500);"></div>
+                  <div style="position: absolute; left: 22%; top: 22%; width: 20px; height: 20px; border-radius: var(--radius-full); background: var(--surface); border: 1px solid var(--border);"></div>
+                </div>
+                <h4 class="state-title">Create your first project</h4>
+                <p class="state-msg">Projects organize files, conversations, and reviews. Make one to invite teammates and share work.</p>
+                <div class="state-actions">
+                  <button class="btn btn--ghost">Watch tour (2m)</button>
+                  <button class="btn btn--primary">New project</button>
+                </div>
+              </div>
+            </div>
+            <div class="frame-caption">First-use — spot illustration · heading · text · primary CTA</div>
+          </div>
+
+          <!-- No search results -->
+          <div class="frame">
+            <div style="padding: 8px; background: var(--bg);">
+              <div class="state">
+                <div class="state-glyph">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
+                <h4 class="state-title">No results for "fnordling"</h4>
+                <p class="state-msg">Try a shorter query, check spelling, or remove some filters.</p>
+                <div class="state-actions">
+                  <button class="btn btn--ghost">Clear filters</button>
+                  <button class="btn btn--secondary">Search all workspaces</button>
+                </div>
+              </div>
+            </div>
+            <div class="frame-caption">No-search-results — escape hatch, not a dead end</div>
+          </div>
+
+          <!-- No permission -->
+          <div class="frame">
+            <div style="padding: 8px; background: var(--bg);">
+              <div class="state">
+                <div class="state-glyph">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+                <h4 class="state-title">You don't have access</h4>
+                <p class="state-msg">This space is private to the Engineering group. Ask an admin to add you — Andrea M. or Jordan S. can.</p>
+                <div class="state-actions">
+                  <button class="btn btn--ghost">Go to inbox</button>
+                  <button class="btn btn--primary">Request access</button>
+                </div>
+              </div>
+            </div>
+            <div class="frame-caption">No-permission — explain, don't scold</div>
+          </div>
+        </div>
+
+        <!-- Illustration treatments -->
+        <div class="lb-subsection" style="margin-top: 24px;">
+          <h3>Illustration treatments <span class="token-pill">three ways to dress the same empty state</span></h3>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+
+            <!-- (a) Glyph badge -->
+            <div class="frame">
+              <div style="padding: 8px; background: var(--bg);">
+                <div class="state">
+                  <div class="state-glyph is-accent">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                  </div>
+                  <h4 class="state-title">No projects yet</h4>
+                  <p class="state-msg">Create your first to invite the team.</p>
+                  <div class="state-actions">
+                    <button class="btn btn--primary btn--sm">New project</button>
+                  </div>
+                </div>
+              </div>
+              <div class="frame-caption">(a) Glyph badge — use when: ambient empty states, dense lists, search empty</div>
+            </div>
+
+            <!-- (b) Abstract scene -->
+            <div class="frame">
+              <div style="padding: 8px; background: var(--bg);">
+                <div class="state" style="padding-top: 28px;">
+                  <div style="position: relative; width: 180px; height: 120px; margin-bottom: 4px;">
+                    <!-- floor line -->
+                    <div style="position: absolute; left: 8%; right: 8%; bottom: 14px; height: 1px; background: var(--border);"></div>
+                    <!-- shapes -->
+                    <div style="position: absolute; left: 14%; bottom: 14px; width: 36px; height: 56px; border-radius: var(--radius-sm); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm);"></div>
+                    <div style="position: absolute; left: 36%; bottom: 14px; width: 52px; height: 80px; border-radius: var(--radius-md); background: var(--accent-subtle); border: 1px solid color-mix(in oklch, var(--accent) 35%, transparent);"></div>
+                    <div style="position: absolute; left: 60%; bottom: 14px; width: 44px; height: 44px; border-radius: var(--radius-full); background: var(--accent); box-shadow: var(--shadow-md);"></div>
+                    <!-- floating dot -->
+                    <div style="position: absolute; left: 78%; top: 18%; width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--color-warning-500);"></div>
+                  </div>
+                  <h4 class="state-title">No projects yet</h4>
+                  <p class="state-msg">Create your first to invite the team.</p>
+                  <div class="state-actions">
+                    <button class="btn btn--primary btn--sm">New project</button>
+                  </div>
+                </div>
+              </div>
+              <div class="frame-caption">(b) Abstract scene — use when: first-use, brand moments, onboarding milestones</div>
+            </div>
+
+            <!-- (c) Pattern background -->
+            <div class="frame">
+              <div style="position: relative; padding: 8px; background: var(--bg); overflow: hidden;">
+                <!-- Pattern, masked to fade -->
+                <div style="position: absolute; inset: 0; background-image:
+                  radial-gradient(var(--border) 1px, transparent 1px);
+                  background-size: 16px 16px;
+                  mask-image: radial-gradient(ellipse at 50% 30%, black 0%, transparent 75%);
+                  -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black 0%, transparent 75%);"></div>
+                <div class="state" style="position: relative;">
+                  <div class="state-glyph is-accent" style="background: var(--surface); box-shadow: var(--shadow-md);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                  </div>
+                  <h4 class="state-title">No projects yet</h4>
+                  <p class="state-msg">Create your first to invite the team.</p>
+                  <div class="state-actions">
+                    <button class="btn btn--primary btn--sm">New project</button>
+                  </div>
+                </div>
+              </div>
+              <div class="frame-caption">(c) Pattern background — use when: promo / marketing surfaces, premium-feel empty states</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ERROR -->
+      <section class="lb-section" id="error">
+        <header>
+          <div class="eyebrow">03 — Error</div>
+          <h2>Error <a class="anchor" href="#error">#error</a></h2>
+          <p class="lede">Inline for form fields. Section banner with retry when one block fails. Full-page for unrecoverable URLs (404) or server failures (500). Persistent offline banner pinned to the top.</p>
+        </header>
+
+        <!-- Inline form error + section error -->
+        <div class="lb-subsection">
+          <h3>Inline · Section</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+            <!-- Inline form error -->
+            <div class="frame">
+              <div style="padding: 24px; background: var(--bg);">
+                <form style="display:flex; flex-direction:column; gap: 14px; max-width: 320px;">
+                  <div class="field">
+                    <label class="field-label">Email <span class="req">*</span></label>
+                    <input class="input is-error" value="andrea@acme" aria-invalid="true" aria-describedby="ie-err" />
+                    <span id="ie-err" class="field-error">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                      That doesn't look like a valid email.
+                    </span>
+                  </div>
+                  <div class="field">
+                    <label class="field-label">Workspace URL <span class="req">*</span></label>
+                    <input class="input is-error" value="acme co" aria-invalid="true" aria-describedby="ie-err-2" />
+                    <span id="ie-err-2" class="field-error">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                      Only letters, numbers, and hyphens are allowed.
+                    </span>
+                  </div>
+                  <button class="btn btn--primary">Continue</button>
+                </form>
+              </div>
+              <div class="frame-caption">Field-level — bound to the input via aria-describedby</div>
+            </div>
+
+            <!-- Section error with retry -->
+            <div class="frame">
+              <div style="padding: 24px; background: var(--bg);">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Daily signups</div>
+                    <span style="font-size: 12.5px; color: var(--color-danger-600); display: inline-flex; align-items: center; gap: 5px;">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                      Failed
+                    </span>
+                  </div>
+                  <div class="card-body" style="padding: 32px 16px;">
+                    <div class="state" style="padding: 0;">
+                      <div class="state-glyph is-danger" style="width:44px; height:44px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:20px; height:20px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                      </div>
+                      <div style="font-size: 14px; font-weight: 600;">Couldn't load chart data</div>
+                      <div style="font-size: 13px; color: var(--text-secondary);">Other dashboard sections are unaffected.</div>
+                      <button class="btn btn--secondary btn--sm">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                        Retry
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="frame-caption">Section error — bounded; the rest of the page still works</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Offline banner -->
+        <div class="lb-subsection">
+          <h3>Offline banner</h3>
+          <div class="frame">
+            <div style="background: var(--bg);">
+              <div style="background: var(--warning-bg); color: var(--warning-fg); padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid color-mix(in oklch, var(--warning-fg) 25%, transparent); font-size: 13px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/><path d="M10.71 5.05A16 16 0 0 1 22.58 9"/><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+                  <span><strong style="font-weight:600;">You're offline.</strong> Changes are saved locally and will sync when you reconnect.</span>
+                </div>
+                <div style="display:flex; align-items: center; gap: 8px;">
+                  <span style="font-family: var(--font-mono); font-size: 11.5px; opacity: 0.7;">Retrying in 12s…</span>
+                  <button class="btn btn--ghost btn--sm" style="color: inherit;">Retry now</button>
+                </div>
+              </div>
+              <!-- some background content showing the banner is non-blocking -->
+              <div style="padding: 24px;">
+                <div style="font-size: 18px; font-weight: 600; letter-spacing: -0.014em;">Onboarding v2 — copy</div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Edited just now · locally cached</div>
+                <div style="margin-top: 14px; height: 80px; border-radius: var(--radius-md); background: var(--surface-sunken); border: 1px dashed var(--border);"></div>
+              </div>
+            </div>
+            <div class="frame-caption">Pinned at top — non-blocking, reassuring. Self-retries.</div>
+          </div>
+        </div>
+
+        <!-- Full-page 404 + 500 -->
+        <div class="lb-subsection">
+          <h3>Full-page — 404 + 500</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+            <!-- 404 -->
+            <div class="frame">
+              <div class="full-page-frame">
+                <div class="corner-brand"><span class="mark"><i></i></span> Acme</div>
+                <div class="state" style="padding: 24px;">
+                  <div class="err-code">404</div>
+                  <h2 class="state-title" style="font-size: 22px; letter-spacing: -0.018em;">We can't find that page</h2>
+                  <p class="state-msg">The link you followed may be broken, or the page may have been moved.</p>
+                  <div class="state-actions">
+                    <button class="btn btn--ghost">Go back</button>
+                    <a href="#" class="btn btn--primary">Back to dashboard</a>
+                  </div>
+                </div>
+              </div>
+              <div class="frame-caption">404 — unknown URL</div>
+            </div>
+
+            <!-- 500 -->
+            <div class="frame">
+              <div class="full-page-frame">
+                <div class="corner-brand"><span class="mark"><i></i></span> Acme</div>
+                <div class="state" style="padding: 24px;">
+                  <div class="err-code" style="color: var(--color-danger-600);">500</div>
+                  <h2 class="state-title" style="font-size: 22px; letter-spacing: -0.018em;">Something broke on our end</h2>
+                  <p class="state-msg">We've been notified and are looking into it. Try again in a moment — your work is safe.</p>
+                  <div class="state-actions">
+                    <button class="btn btn--ghost">Check status</button>
+                    <button class="btn btn--primary">Try again</button>
+                  </div>
+                  <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-top: 18px;">trace · 7f3a2c9e</div>
+                </div>
+              </div>
+              <div class="frame-caption">500 — server error · trace ID for support</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- SUCCESS -->
+      <section class="lb-section" id="success">
+        <header>
+          <div class="eyebrow">04 — Success</div>
+          <h2>Success <a class="anchor" href="#success">#success</a></h2>
+          <p class="lede">Confirm with an icon, a clear title, a short message, and a next-step. Never leave the user staring at an empty page wondering what just happened.</p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+          <!-- Post-action success — centered -->
+          <div class="frame">
+            <div class="full-page-frame">
+              <div class="corner-brand"><span class="mark"><i></i></span> Acme</div>
+              <div class="state" style="padding: 24px;">
+                <div class="state-glyph is-success" style="width: 64px; height: 64px;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <h2 class="state-title" style="font-size: 22px; letter-spacing: -0.018em;">You're all set, Andrea</h2>
+                <p class="state-msg">Your workspace <strong style="color: var(--text-primary); font-weight: 500;">Acme</strong> is ready. We sent a confirmation to andrea@acme.co.</p>
+                <div class="state-actions">
+                  <button class="btn btn--ghost">Invite teammates</button>
+                  <button class="btn btn--primary">Open workspace</button>
+                </div>
+                <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 10px;">Free trial · 14 days · no credit card</div>
+              </div>
+            </div>
+            <div class="frame-caption">Post-action success — icon, message, single next-step</div>
+          </div>
+
+          <!-- Compact success card -->
+          <div class="frame">
+            <div style="padding: 32px 24px; min-height: 540px; display: flex; align-items: center; justify-content: center; background: var(--bg);">
+              <div class="card" style="max-width: 380px; width: 100%;">
+                <div class="card-body" style="display: flex; gap: 14px;">
+                  <div class="state-glyph is-success" style="width: 40px; height: 40px; flex-shrink: 0; margin: 0;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div style="min-width: 0;">
+                    <div style="font-size: 15px; font-weight: 600; letter-spacing: -0.012em;">Payment confirmed</div>
+                    <p style="margin: 4px 0 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55;">Your Business plan is active through Apr&nbsp;28. A receipt is on its way.</p>
+                    <div style="display:flex; gap:6px; margin-top: 12px;">
+                      <button class="btn btn--ghost btn--sm">View receipt</button>
+                      <button class="btn btn--primary btn--sm">Manage seats</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="frame-caption">In-flow success card — same pattern, smaller scale</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <section style="padding-top: 32px; border-top: 1px solid var(--border);">
+        <div style="display: flex; align-items: flex-start; gap: 16px;">
+          <div style="width:32px; height:32px; border-radius: var(--radius-md); background: var(--accent-subtle); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h4 class="t-h4">States complete.</h4>
+            <p class="t-body text-secondary" style="margin-top: 4px; max-width: 540px;">
+              Chapters 1–6 in the books — Foundations, Atoms, Molecules, Organisms, Auth, States.
+              Ready for the final chapter: Personality + Guide.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="chrome.js"></script>
+</body>
+</html>

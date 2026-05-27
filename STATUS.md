@@ -40,6 +40,10 @@ Built + verified in the playground:
 | Tooltip | Reka `Tooltip*` | built (hover) |
 | Dialog / Modal | Reka `Dialog*` | ✓ scrim + centered + header/body/footer |
 | DropdownMenu | Reka `DropdownMenu*` | ✓ items, shortcut, separator, destructive |
+| Combobox | Reka `Combobox*` | ✓ client + **server-search** (focus-clears-search, loading, seen-map) |
+| OverflowScroll | native + `useHoldRepeat` | ✓ scroll arrows (h/v/both), fade edges, press-hold |
+
+**Composables:** `useServerSearch(fetcher)` (debounced + seen-map + `optionsFor(selected)`), `useHoldRepeat` (press-and-hold). DVLA patterns from v2 (`useSearchableUsers`/`OverflowScroll`) distilled into reusable, framework-light form.
 
 Styling note: live overlay positioning lives in `ui-vue/src/overlays.css` (the gallery's
 `components.css` styles overlays as in-frame demos; `styles.css` aggregates both).
@@ -47,7 +51,7 @@ Styling note: live overlay positioning lives in `ui-vue/src/overlays.css` (the g
 ## Pending
 
 ### `@lookbook/ui-vue` molecules — remaining
-Drawer (Reka Dialog, side) · Toast (Reka Toast + a `useToast` composable) · Combobox/rich-select (Reka Combobox) · Popover (Reka Popover) · Accordion · Field wrapper (label+helper+error).
+Drawer (Reka Dialog, side) · Toast (Reka Toast + a `useToast` composable) · MultiCombobox (Reka Popover + chips, multi-select) · Popover (Reka Popover) · Accordion · Field wrapper (label+helper+error).
 
 ### Organisms — LATER
 App shell (sidebar + topbar), data table, page header, filter bar — bigger; build after molecules.

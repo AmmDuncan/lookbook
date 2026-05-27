@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import {
   Alert, Avatar, Badge, Button, Card, CardBody, CardFooter, CardHeader,
-  Checkbox, Dialog, DropdownMenu, Input, Radio, Select, Skeleton, Spinner,
-  Stepper, Switch, Tabs, Textarea, Tooltip,
+  Checkbox, Combobox, Dialog, DropdownMenu, Input, OverflowScroll, Radio,
+  Select, Skeleton, Spinner, Stepper, Switch, Tabs, Textarea, Tooltip,
+  useServerSearch,
 } from '@lookbook/ui-vue'
 // Brand skin loaded as raw CSS so we can toggle it to prove the re-skin contract.
 import dvlaSkin from '@lookbook/tokens/skins/dvla-self-service.css?raw'
@@ -39,6 +40,31 @@ const menuItems = [
   { type: 'separator' as const },
   { label: 'Delete', destructive: true },
 ]
+
+// Combobox — client-side (small bounded list)
+const region = ref('')
+const regions = [
+  { value: 'ga', label: 'Greater Accra' }, { value: 'as', label: 'Ashanti' },
+  { value: 'we', label: 'Western' }, { value: 'ea', label: 'Eastern' },
+  { value: 'ce', label: 'Central' }, { value: 'vo', label: 'Volta' },
+  { value: 'no', label: 'Northern' }, { value: 'up', label: 'Upper East' },
+]
+
+// Combobox — server-side (mock debounced API over a long list)
+const officerId = ref<string | number | null>(null)
+const ALL = Array.from({ length: 240 }, (_, i) => ({
+  value: `u${i}`,
+  label: `Officer ${String(i + 1).padStart(3, '0')} · ${['Accra', 'Kumasi', 'Tamale', 'Takoradi'][i % 4]}`,
+}))
+const mockApi = (q: string) =>
+  new Promise<typeof ALL>((res) => {
+    setTimeout(() => {
+      const needle = q.trim().toLowerCase()
+      res((needle ? ALL.filter((o) => o.label.toLowerCase().includes(needle)) : ALL).slice(0, 25))
+    }, 450) // simulate network — proves debounce + loading
+  })
+const officerSearch = useServerSearch(mockApi)
+const officerOptions = officerSearch.optionsFor(officerId)
 </script>
 
 <template>
@@ -172,6 +198,44 @@ const menuItems = [
           </template>
         </Dialog>
       </div>
+    </section>
+
+    <section class="pg-section">
+      <h2>Combobox &amp; OverflowScroll</h2>
+      <p>Long list → Combobox (focus clears search, full list shows) · server search (debounced + loading + seen-map) · scroll-arrow overflow</p>
+      <div class="pg-grid">
+        <div class="pg-field">
+          <span class="pg-label">client</span>
+          <Combobox v-model="region" :options="regions" placeholder="Find a region…" />
+        </div>
+        <div class="pg-field">
+          <span class="pg-label">server</span>
+          <Combobox
+            v-model="officerId"
+            v-model:search-term="officerSearch.search.value"
+            :options="officerOptions"
+            :loading="officerSearch.isFetching.value"
+            server-side
+            placeholder="Search 240 officers…"
+          />
+        </div>
+      </div>
+
+      <p style="margin-top: 24px">Horizontal overflow — hold the arrows to scroll:</p>
+      <OverflowScroll edge-indicator="fade">
+        <div style="display: flex; gap: 12px; padding: 4px">
+          <Card v-for="n in 14" :key="n" style="min-width: 180px"><CardBody>Service tile #{{ n }}</CardBody></Card>
+        </div>
+      </OverflowScroll>
+
+      <p style="margin-top: 24px">Vertical overflow (max-height) — arrows on the right edge:</p>
+      <Card style="max-width: 360px">
+        <OverflowScroll direction="vertical" max-height="180px" edge-indicator="fade">
+          <ol style="margin: 0; padding: 8px 16px; list-style: none">
+            <li v-for="n in 16" :key="n" style="padding: 8px 0; border-bottom: 1px solid var(--border)">Branch {{ n }} — Accra Region</li>
+          </ol>
+        </OverflowScroll>
+      </Card>
     </section>
 
     <section class="pg-section">

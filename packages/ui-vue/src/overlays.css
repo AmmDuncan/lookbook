@@ -42,6 +42,21 @@
 .menu-item[data-state="checked"] { color: var(--accent); }
 .menu-item[data-disabled] { opacity: 0.4; pointer-events: none; }
 
+/* Combobox — dropdown matches trigger width; loading + empty rows */
+.lb-combobox-content {
+  min-width: var(--reka-combobox-trigger-width, 220px);
+  max-height: var(--reka-combobox-content-available-height, 320px);
+}
+.lb-combobox-loading {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; border-bottom: 1px solid var(--border);
+  font-size: var(--text-caption-size); color: var(--text-muted);
+}
+.lb-combobox-empty {
+  padding: 12px 10px; text-align: center;
+  font-size: var(--text-body-sm-size); color: var(--text-muted);
+}
+
 /* Drawer (when added) — fixed full-height panel */
 .lb-drawer-scrim { position: fixed; inset: 0; background: color-mix(in oklch, var(--text-primary) 45%, transparent); z-index: var(--z-overlay); }
 .lb-drawer-content { position: fixed; top: 0; right: 0; bottom: 0; z-index: var(--z-modal); }

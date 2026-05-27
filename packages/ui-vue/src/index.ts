@@ -34,5 +34,12 @@ export { default as Tooltip } from './components/Tooltip.vue'
 export { default as Dialog } from './components/Dialog.vue'
 export { default as DropdownMenu } from './components/DropdownMenu.vue'
 export type { MenuEntry } from './types'
+export { default as Combobox } from './components/Combobox.vue'
+export { default as OverflowScroll } from './components/OverflowScroll.vue'
 
-// Pending (Reka-backed): Drawer, Toast, Combobox, Accordion, Popover
+// Composables
+export { useServerSearch } from './composables/useServerSearch'
+export type { SearchOption } from './composables/useServerSearch'
+export { useHoldRepeat } from './composables/useHoldRepeat'
+
+// Pending (Reka-backed): Drawer, Toast, MultiCombobox, Accordion, Popover

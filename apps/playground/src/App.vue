@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import {
-  Avatar, Badge, Button, Card, CardBody, CardFooter, CardHeader,
-  Checkbox, Input, Radio, Select, Skeleton, Spinner, Stepper, Switch, Textarea,
+  Alert, Avatar, Badge, Button, Card, CardBody, CardFooter, CardHeader,
+  Checkbox, Dialog, DropdownMenu, Input, Radio, Select, Skeleton, Spinner,
+  Stepper, Switch, Tabs, Textarea, Tooltip,
 } from '@lookbook/ui-vue'
 // Brand skin loaded as raw CSS so we can toggle it to prove the re-skin contract.
 import dvlaSkin from '@lookbook/tokens/skins/dvla-self-service.css?raw'
@@ -30,6 +31,14 @@ const checked = ref(true)
 const picked = ref('a')
 const on = ref(true)
 const qty = ref(2)
+const tab = ref('phone')
+const dialogOpen = ref(false)
+const menuItems = [
+  { label: 'Edit' },
+  { label: 'Duplicate', shortcut: '⌘D' },
+  { type: 'separator' as const },
+  { label: 'Delete', destructive: true },
+]
 </script>
 
 <template>
@@ -131,6 +140,37 @@ const qty = ref(2)
           <CardBody>Body content sits between header and footer.</CardBody>
           <CardFooter><Button variant="ghost" size="sm">Cancel</Button><Button size="sm">Save</Button></CardFooter>
         </Card>
+      </div>
+    </section>
+
+    <section class="pg-section">
+      <h2>Molecules</h2>
+      <p>Tabs (Reka) · Alert · Tooltip · Dialog · Dropdown — behavior from Reka, styled to spec</p>
+      <div class="pg-row">
+        <Tabs v-model="tab" :items="[{ value: 'phone', label: 'Phone' }, { value: 'email', label: 'Email' }, { value: 'gov', label: 'Gov ID', disabled: true }]" />
+        <Tabs v-model="tab" variant="underline" :items="[{ value: 'phone', label: 'Summary' }, { value: 'email', label: 'Payment' }]" />
+      </div>
+      <div class="pg-row" style="flex-direction: column; align-items: stretch; max-width: 520px">
+        <Alert variant="success" title="Payment recorded" dismissible>The receipt is ready to print.</Alert>
+        <Alert variant="warning" title="Invoice expiring soon">Regenerate before it lapses.</Alert>
+        <Alert variant="danger" title="Verification failed">Check the licence number and retry.</Alert>
+        <Alert variant="info">An OTP will be sent to your registered number.</Alert>
+      </div>
+      <div class="pg-row">
+        <Tooltip text="Tooltip via Reka — positioned + accessible" side="top">
+          <Button variant="secondary">Hover for tooltip</Button>
+        </Tooltip>
+        <DropdownMenu :items="menuItems">
+          <Button variant="secondary">Actions ▾</Button>
+        </DropdownMenu>
+        <Button @click="dialogOpen = true">Open dialog</Button>
+        <Dialog v-model:open="dialogOpen" title="Generate invoice?" description="This creates an invoice for the selected service.">
+          <p style="margin: 0; color: var(--text-secondary)">The customer will be billed the listed amount. You can record payment afterward.</p>
+          <template #footer>
+            <Button variant="ghost" size="sm" @click="dialogOpen = false">Cancel</Button>
+            <Button size="sm" @click="dialogOpen = false">Generate</Button>
+          </template>
+        </Dialog>
       </div>
     </section>
 

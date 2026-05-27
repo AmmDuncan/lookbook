@@ -28,7 +28,8 @@ cp "$WORK"/components.css "$WORK"/lookbook.css "$WORK"/chrome.js "$GALLERY"/ 2>/
 cp "$WORK"/tokens.css "$TOKENS"/tokens.css
 
 # components.css is the component-layer spec — it also styles @lookbook/ui-vue.
-cp "$WORK"/components.css "$ROOT"/packages/ui-vue/src/styles.css
+# (ui-vue/src/styles.css aggregates this + overlays.css; don't overwrite it.)
+cp "$WORK"/components.css "$ROOT"/packages/ui-vue/src/components.css
 
 echo "Synced gallery + tokens from: $SRC"
 ls "$GALLERY" | grep '\.html$' | sed 's/^/  /'

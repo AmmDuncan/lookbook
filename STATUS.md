@@ -30,11 +30,24 @@ Built on the spec's `components.css` (shipped as `styles.css`) + typed Vue SFCs.
 ### Playground — `apps/playground`
 Vite + Vue gallery of every atom with light/dark + DVLA-skin toggles. `pnpm --filter @lookbook/playground dev` (or `preview`).
 
+### `@lookbook/ui-vue` molecules — core done (Reka-backed)
+Built + verified in the playground:
+
+| Molecule | Backing | Verified |
+|---|---|---|
+| Alert / inline-banner | native | ✓ 4 variants, dismissible |
+| Tabs (pill + underline) | Reka `Tabs*` | ✓ active/disabled, keyboard |
+| Tooltip | Reka `Tooltip*` | built (hover) |
+| Dialog / Modal | Reka `Dialog*` | ✓ scrim + centered + header/body/footer |
+| DropdownMenu | Reka `DropdownMenu*` | ✓ items, shortcut, separator, destructive |
+
+Styling note: live overlay positioning lives in `ui-vue/src/overlays.css` (the gallery's
+`components.css` styles overlays as in-frame demos; `styles.css` aggregates both).
+
 ## Pending
 
-### `@lookbook/ui-vue` molecules (Reka-backed) — NEXT
-Priority order (driven by self-service needs — see `BRIDGE-self-service.md`):
-Tabs (pill + underline) · Alert/inline-banner · Tooltip · Dropdown menu · Dialog/Modal · Drawer · Toast · Combobox/rich-select · Accordion.
+### `@lookbook/ui-vue` molecules — remaining
+Drawer (Reka Dialog, side) · Toast (Reka Toast + a `useToast` composable) · Combobox/rich-select (Reka Combobox) · Popover (Reka Popover) · Accordion · Field wrapper (label+helper+error).
 
 ### Organisms — LATER
 App shell (sidebar + topbar), data table, page header, filter bar — bigger; build after molecules.

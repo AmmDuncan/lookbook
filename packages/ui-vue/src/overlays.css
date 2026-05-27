@@ -1,0 +1,36 @@
+/* ============================================================
+   ui-vue overlay positioning
+   The gallery's components.css styles the LOOK of overlays as
+   in-frame demos (e.g. .modal-overlay is position:relative). Live
+   Reka-portaled overlays need real fixed positioning + stacking.
+   These rules add only that — the visual classes (.modal, .menu,
+   .tooltip) still come from components.css.
+   ============================================================ */
+
+/* Dialog — Reka portals Overlay + Content as siblings */
+.lb-scrim {
+  position: fixed;
+  inset: 0;
+  background: color-mix(in oklch, var(--text-primary) 45%, transparent);
+  z-index: var(--z-overlay);
+}
+.lb-dialog-content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-modal);
+  width: calc(100% - 32px);
+  max-height: 85vh;
+  overflow: auto;
+}
+
+/* Dropdown menu + tooltip + popover — Reka positions the wrapper;
+   we only ensure they stack above page chrome. */
+.menu { z-index: var(--z-dropdown); }
+.tooltip { z-index: var(--z-overlay); }
+.popover { z-index: var(--z-dropdown); }
+
+/* Drawer (when added) — fixed full-height panel */
+.lb-drawer-scrim { position: fixed; inset: 0; background: color-mix(in oklch, var(--text-primary) 45%, transparent); z-index: var(--z-overlay); }
+.lb-drawer-content { position: fixed; top: 0; right: 0; bottom: 0; z-index: var(--z-modal); }

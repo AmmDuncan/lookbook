@@ -27,4 +27,12 @@ export { default as CardFooter } from './components/CardFooter.vue'
 export { default as Spinner } from './components/Spinner.vue'
 export { default as Skeleton } from './components/Skeleton.vue'
 
-// Molecules (Reka-backed) — added next: Tabs, Alert, Tooltip, Dropdown, Dialog, Toast, Combobox
+// Molecules
+export { default as Alert } from './components/Alert.vue'
+export { default as Tabs } from './components/Tabs.vue'
+export { default as Tooltip } from './components/Tooltip.vue'
+export { default as Dialog } from './components/Dialog.vue'
+export { default as DropdownMenu } from './components/DropdownMenu.vue'
+export type { MenuEntry } from './types'
+
+// Pending (Reka-backed): Drawer, Toast, Combobox, Accordion, Popover

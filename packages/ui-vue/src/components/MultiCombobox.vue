@@ -2,7 +2,7 @@
 import {
   ComboboxAnchor, ComboboxContent, ComboboxEmpty, ComboboxInput,
   ComboboxItem, ComboboxItemIndicator, ComboboxPortal, ComboboxRoot,
-  ComboboxTrigger, ComboboxViewport,
+  ComboboxViewport,
 } from 'reka-ui'
 import { computed, ref, watch } from 'vue'
 
@@ -53,14 +53,15 @@ watch(open, (isOpen) => {
   if (!isOpen && searchTerm.value) searchTerm.value = ''
 })
 
-const anchorClass = computed(() => [
-  'input-affix lb-multi-anchor', `lb-multi-anchor--${props.size}`,
+const triggerClass = computed(() => [
+  'multicombo', `multicombo--${props.size}`,
   { 'is-error': props.error, 'is-disabled': props.disabled },
 ])
 </script>
 
 <template>
   <ComboboxRoot
+    class="combobox"
     :model-value="selected"
     :open="open"
     multiple
@@ -69,55 +70,46 @@ const anchorClass = computed(() => [
     @update:model-value="(v) => (model = (v as Value[]))"
     @update:open="(v) => (open = v)"
   >
-    <ComboboxAnchor :class="anchorClass">
+    <ComboboxAnchor :class="triggerClass">
       <button
         v-for="v in selected"
         :key="String(v)"
         type="button"
-        class="chip is-active lb-multi-chip"
+        class="chip chip--token"
         @click.stop="removeChip(v)"
       >
         {{ labelFor(v) }}
         <span class="chip-x" aria-label="Remove">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" /></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" /></svg>
         </span>
       </button>
       <ComboboxInput
         v-model:search-term="searchTerm"
-        class="lb-multi-input"
         :placeholder="selected.length ? '' : placeholder"
         :aria-invalid="error || undefined"
         @focus="onFocus"
       />
-      <span class="input-trailing">
-        <span v-if="loading" class="spinner spinner--sm" aria-label="Searching" />
-        <ComboboxTrigger v-else style="background: transparent; border: 0; cursor: pointer; color: var(--text-muted)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9" /></svg>
-        </ComboboxTrigger>
-      </span>
     </ComboboxAnchor>
     <ComboboxPortal>
-      <ComboboxContent class="menu lb-combobox-content" position="popper" :side-offset="6">
-        <div v-if="loading" class="lb-combobox-loading">
+      <ComboboxContent class="combobox-popover" position="popper" :side-offset="4">
+        <div v-if="loading" class="combobox-row combobox-row--loading">
           <span class="spinner spinner--xs" /> Searching…
         </div>
-        <ComboboxViewport class="lb-combobox-viewport">
+        <ComboboxViewport class="combobox-list">
           <ComboboxItem
             v-for="opt in options"
             :key="String(opt.value)"
             :value="opt.value"
             :disabled="opt.disabled"
-            :class="['menu-item lb-multi-item', { 'is-disabled': opt.disabled }]"
+            :class="['menu-item', { 'is-disabled': opt.disabled }]"
           >
-            <span class="lb-multi-check">
-              <ComboboxItemIndicator>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12" /></svg>
-              </ComboboxItemIndicator>
-            </span>
             <slot name="option" :opt="opt">{{ opt.displayLabel ?? opt.label }}</slot>
+            <ComboboxItemIndicator class="combobox-check">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+            </ComboboxItemIndicator>
           </ComboboxItem>
         </ComboboxViewport>
-        <ComboboxEmpty v-if="!loading" class="lb-combobox-empty">{{ emptyText }}</ComboboxEmpty>
+        <ComboboxEmpty v-if="!loading" class="combobox-row combobox-row--empty">{{ emptyText }}</ComboboxEmpty>
       </ComboboxContent>
     </ComboboxPortal>
   </ComboboxRoot>

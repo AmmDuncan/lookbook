@@ -5,33 +5,26 @@ import { computed, ref } from 'vue'
 import { useHoldRepeat } from '../composables/useHoldRepeat'
 
 type Direction = 'horizontal' | 'vertical' | 'both'
-type Edge = 'none' | 'fade' | 'border'
-type VPlacement = 'start' | 'center' | 'end'
+type Edge = 'fade' | 'border' | 'none'
 
 const props = withDefaults(
   defineProps<{
     direction?: Direction
-    /** px number, or a percentage string of the viewport (e.g. '50%'). */
-    scrollAmount?: number | string
-    maxHeight?: string
-    minHeight?: string
-    showArrows?: boolean
+    /** Edge treatment: gradient fade (default), hairline border, or none. */
     edgeIndicator?: Edge
+    /** px-per-step, or a percentage string of the viewport (e.g. '50%'). */
+    scrollAmount?: number | string
+    /** Caps the track height for vertical / both (maps to --overflow-max-h). */
+    maxHeight?: string
+    showArrows?: boolean
+    /** Match the fade to a tinted container (default: the surface colour). */
     fadeColor?: string
+    /** Fade band thickness in px. */
     fadeSize?: number
-    overscroll?: 'auto' | 'contain'
-    buttonSize?: number
-    iconSize?: number
-    arrowOffset?: number
-    /** Cross-axis placement of the up/down arrows (vertical mode). */
-    verticalArrowsPlacement?: VPlacement
+    /** Arrow button diameter in px. */
+    arrowSize?: number
   }>(),
-  {
-    direction: 'horizontal', scrollAmount: '50%', showArrows: true,
-    edgeIndicator: 'none', fadeColor: 'var(--bg)', fadeSize: 24,
-    overscroll: 'auto', buttonSize: 32, iconSize: 16, arrowOffset: 6,
-    verticalArrowsPlacement: 'end',
-  },
+  { direction: 'horizontal', edgeIndicator: 'fade', scrollAmount: '50%', showArrows: true },
 )
 
 const scrollEl = ref<HTMLElement | null>(null)
@@ -54,12 +47,12 @@ function update() {
 
 function resolveAmount(axis: 'h' | 'v'): number {
   const raw = props.scrollAmount
+  const el = scrollEl.value
   if (typeof raw === 'number') return raw
   const m = /^(-?\d+(?:\.\d+)?)%$/.exec(raw.trim())
-  const el = scrollEl.value
   if (!m || !el) return 200
-  const frac = Number(m[1]) / 100
-  return Math.round((axis === 'h' ? el.clientWidth : el.clientHeight) * frac)
+  const extent = axis === 'h' ? el.clientWidth : el.clientHeight
+  return Math.round(extent * (Number(m[1]) / 100))
 }
 
 function step(axis: 'h' | 'v', dir: 1 | -1) {
@@ -76,79 +69,51 @@ const holdDown = useHoldRepeat(() => step('v', 1), { canContinue: () => canDown.
 
 useResizeObserver(scrollEl, update)
 
-const scrollStyle = computed(() => ({
-  maxHeight: props.maxHeight,
-  minHeight: props.minHeight,
-  overscrollBehavior: props.overscroll,
-  overflowX: isH.value ? 'auto' : 'hidden',
-  overflowY: isV.value ? 'auto' : 'hidden',
-}))
-const btnStyle = computed(() => ({ width: `${props.buttonSize}px`, height: `${props.buttonSize}px` }))
-const vCross = computed(() => ({
-  start: { left: `${props.arrowOffset}px` },
-  center: { left: '50%', transform: 'translateX(-50%)' },
-  end: { right: `${props.arrowOffset}px` },
-}[props.verticalArrowsPlacement]))
-
-defineExpose({ scrollEl, update })
+const variant = computed(() => {
+  if (props.direction === 'both') return 'overflow--both'
+  return isH.value ? 'overflow--h' : 'overflow--v'
+})
+const wrapClass = computed(() => [
+  'overflow', variant.value,
+  { 'overflow--border': props.edgeIndicator === 'border', 'overflow--none': props.edgeIndicator === 'none' },
+])
+const wrapStyle = computed(() => {
+  const s: Record<string, string> = {}
+  if (props.maxHeight) s['--overflow-max-h'] = props.maxHeight
+  if (props.fadeColor) s['--overflow-fade-color'] = props.fadeColor
+  if (props.fadeSize != null) s['--overflow-fade-size'] = `${props.fadeSize}px`
+  if (props.arrowSize != null) s['--overflow-arrow-size'] = `${props.arrowSize}px`
+  return s
+})
+const showFades = computed(() => props.edgeIndicator === 'fade')
 </script>
 
 <template>
-  <div class="lb-ofs">
-    <div ref="scrollEl" class="lb-ofs-scroll" :style="scrollStyle" @scroll="update">
+  <div :class="wrapClass" :style="wrapStyle">
+    <div ref="scrollEl" class="overflow-track" @scroll.passive="update">
       <slot />
     </div>
 
-    <template v-if="edgeIndicator === 'fade'">
-      <div v-if="canLeft || canUp" class="lb-ofs-fade" :style="isV ? { top: 0, left: 0, right: 0, height: `${fadeSize}px`, background: `linear-gradient(${fadeColor}, transparent)` } : { top: 0, bottom: 0, left: 0, width: `${fadeSize}px`, background: `linear-gradient(90deg, ${fadeColor}, transparent)` }" />
-      <div v-if="canRight || canDown" class="lb-ofs-fade" :style="isV ? { bottom: 0, left: 0, right: 0, height: `${fadeSize}px`, background: `linear-gradient(transparent, ${fadeColor})` } : { top: 0, bottom: 0, right: 0, width: `${fadeSize}px`, background: `linear-gradient(90deg, transparent, ${fadeColor})` }" />
+    <template v-if="showFades">
+      <div v-if="isH" class="overflow-fade overflow-fade-left" :style="{ opacity: canLeft ? 1 : 0 }" />
+      <div v-if="isH" class="overflow-fade overflow-fade-right" :style="{ opacity: canRight ? 1 : 0 }" />
+      <div v-if="isV" class="overflow-fade overflow-fade-top" :style="{ opacity: canUp ? 1 : 0 }" />
+      <div v-if="isV" class="overflow-fade overflow-fade-bottom" :style="{ opacity: canDown ? 1 : 0 }" />
     </template>
 
     <template v-if="showArrows">
-      <button v-if="canLeft" class="lb-ofs-arrow" :style="{ ...btnStyle, left: `${arrowOffset}px`, top: '50%', transform: 'translateY(-50%)' }" aria-label="Scroll left" v-bind="holdLeft">
-        <svg :width="iconSize" :height="iconSize" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+      <button v-if="isH" class="overflow-arrow overflow-arrow-left" :class="{ 'is-disabled': !canLeft }" aria-label="Scroll left" v-bind="holdLeft">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
       </button>
-      <button v-if="canRight" class="lb-ofs-arrow" :style="{ ...btnStyle, right: `${arrowOffset}px`, top: '50%', transform: 'translateY(-50%)' }" aria-label="Scroll right" v-bind="holdRight">
-        <svg :width="iconSize" :height="iconSize" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+      <button v-if="isH" class="overflow-arrow overflow-arrow-right" :class="{ 'is-disabled': !canRight }" aria-label="Scroll right" v-bind="holdRight">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
       </button>
-      <button v-if="canUp" class="lb-ofs-arrow" :style="{ ...btnStyle, top: `${arrowOffset}px`, ...vCross }" aria-label="Scroll up" v-bind="holdUp">
-        <svg :width="iconSize" :height="iconSize" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15" /></svg>
+      <button v-if="isV" class="overflow-arrow overflow-arrow-up" :class="{ 'is-disabled': !canUp }" aria-label="Scroll up" v-bind="holdUp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15" /></svg>
       </button>
-      <button v-if="canDown" class="lb-ofs-arrow" :style="{ ...btnStyle, bottom: `${arrowOffset}px`, ...vCross }" aria-label="Scroll down" v-bind="holdDown">
-        <svg :width="iconSize" :height="iconSize" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+      <button v-if="isV" class="overflow-arrow overflow-arrow-down" :class="{ 'is-disabled': !canDown }" aria-label="Scroll down" v-bind="holdDown">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
       </button>
     </template>
   </div>
 </template>
-
-<style scoped>
-.lb-ofs { position: relative; }
-.lb-ofs-scroll { scrollbar-width: none; }
-.lb-ofs-scroll::-webkit-scrollbar { display: none; }
-.lb-ofs-fade { position: absolute; pointer-events: none; z-index: 10; }
-.lb-ofs-arrow {
-  position: absolute;
-  z-index: 20;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-full);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  cursor: pointer;
-  box-shadow: var(--shadow-md);
-  transition: color var(--duration-fast) var(--ease-standard),
-    background-color var(--duration-fast) var(--ease-standard),
-    border-color var(--duration-fast) var(--ease-standard);
-}
-.lb-ofs-arrow:hover {
-  color: var(--text-primary);
-  background: var(--surface-sunken);
-  border-color: var(--border-strong);
-}
-.lb-ofs-arrow:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px color-mix(in oklch, var(--focus-ring) 22%, transparent);
-}
-</style>

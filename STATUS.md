@@ -59,8 +59,13 @@ Styling note: live overlay positioning lives in `ui-vue/src/overlays.css` (the g
 ### `@lookbook/ui-vue` molecules — DONE
 All molecules built (see table above). Batch 2 (Drawer, Toast, MultiCombobox, Popover, Accordion, Field) browser-verified across light, dark, and DVLA skin.
 
-### Gallery specimens still missing
-Combobox / MultiCombobox / OverflowScroll have no visual specimen yet, and Accordion's styling lives in `overlays.css` (no spec block). A Claude Design prompt to add a "Lists & selection" subsection (+ Accordion) is queued; ingest the export with `scripts/sync-gallery.sh`, then promote `.lb-accordion*` into `components.css`.
+### Gallery specimens — Lists & selection LANDED
+Synced the Remix export: Molecules now has Combobox / MultiCombobox / OverflowScroll specimens. ui-vue Combobox/MultiCombobox/OverflowScroll were **re-pointed onto the gallery's official classes** (`.combobox-popover`/`.combobox-list`/`.combobox-row`/`.combobox-check`, `.multicombo`/`.chip--token`, `.overflow`/`.overflow-track`/`.overflow-arrow`) — implementation == spec, no more `.lb-*` forks (overlays.css keeps only the Reka popover width/height shim).
+
+**Pending round-trip:** OverflowScroll's component outgrew the spec, so `.overflow*` in components.css was hand-extended (`.overflow--both`, `--overflow-fade-size/-color`, `--overflow-arrow-size`). A Claude Design prompt (`gallery-overflow-upgrade.txt`) is queued to make that canonical — until it's pasted + re-synced, a `sync-gallery.sh` would overwrite the hand edit.
+
+### Accordion
+Styling still lives in `overlays.css` (`.lb-accordion*`) — the export didn't add an Accordion specimen. Promote into `components.css` once the gallery ships one.
 
 ### Organisms — NEXT
 App shell (sidebar + topbar), data table, page header, filter bar — bigger; build after molecules.

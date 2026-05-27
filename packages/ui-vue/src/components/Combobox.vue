@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import {
   ComboboxAnchor, ComboboxContent, ComboboxEmpty, ComboboxInput,
-  ComboboxItem, ComboboxPortal, ComboboxRoot, ComboboxTrigger, ComboboxViewport,
+  ComboboxItem, ComboboxItemIndicator, ComboboxPortal, ComboboxRoot,
+  ComboboxTrigger, ComboboxViewport,
 } from 'reka-ui'
 import { computed, ref, watch } from 'vue'
 
@@ -57,6 +58,7 @@ const inputClass = computed(() => ['input', `input--${props.size}`, 'has-trailin
 
 <template>
   <ComboboxRoot
+    class="combobox"
     :model-value="model"
     :open="open"
     :ignore-filter="serverSide"
@@ -84,11 +86,11 @@ const inputClass = computed(() => ['input', `input--${props.size}`, 'has-trailin
       </span>
     </ComboboxAnchor>
     <ComboboxPortal>
-      <ComboboxContent class="menu lb-combobox-content" position="popper" :side-offset="6">
-        <div v-if="loading" class="lb-combobox-loading">
+      <ComboboxContent class="combobox-popover" position="popper" :side-offset="4">
+        <div v-if="loading" class="combobox-row combobox-row--loading">
           <span class="spinner spinner--xs" /> Searching…
         </div>
-        <ComboboxViewport class="lb-combobox-viewport">
+        <ComboboxViewport class="combobox-list">
           <ComboboxItem
             v-for="opt in options"
             :key="String(opt.value)"
@@ -97,9 +99,12 @@ const inputClass = computed(() => ['input', `input--${props.size}`, 'has-trailin
             :class="['menu-item', { 'is-disabled': opt.disabled }]"
           >
             <slot name="option" :opt="opt">{{ opt.displayLabel ?? opt.label }}</slot>
+            <ComboboxItemIndicator class="combobox-check">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+            </ComboboxItemIndicator>
           </ComboboxItem>
         </ComboboxViewport>
-        <ComboboxEmpty v-if="!loading" class="lb-combobox-empty">{{ emptyText }}</ComboboxEmpty>
+        <ComboboxEmpty v-if="!loading" class="combobox-row combobox-row--empty">{{ emptyText }}</ComboboxEmpty>
       </ComboboxContent>
     </ComboboxPortal>
   </ComboboxRoot>

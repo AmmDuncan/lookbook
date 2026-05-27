@@ -1710,25 +1710,30 @@
   padding: 2px;
 }
 
-/* Edge fades — gradient over the scroll axis. */
-.overflow--h .overflow-fade {
-  position: absolute; top: 0; bottom: 0;
-  width: 48px;
+/* Both axes — 2-D pannable region (grids, wide+tall tables, canvases).
+   The content owns its own layout; the track just scrolls in both directions
+   and the wrapper shows all four fades/arrows. */
+.overflow--both .overflow-track {
+  overflow: auto;
+  max-height: var(--overflow-max-h, 360px);
+  padding: 2px;
+}
+
+/* Edge fades — gradient over the scroll axis. Size + colour are tunable per
+   instance via --overflow-fade-size / --overflow-fade-color (default the
+   surface the strip sits on), so a strip on a tinted panel can match it. */
+.overflow-fade {
+  position: absolute;
   pointer-events: none;
   z-index: 1;
   transition: opacity var(--duration-fast) var(--ease-standard);
 }
-.overflow--h .overflow-fade-left  { left: 0;  background: linear-gradient(90deg,  var(--surface), color-mix(in oklch, var(--surface) 50%, transparent), transparent); }
-.overflow--h .overflow-fade-right { right: 0; background: linear-gradient(270deg, var(--surface), color-mix(in oklch, var(--surface) 50%, transparent), transparent); }
-.overflow--v .overflow-fade {
-  position: absolute; left: 0; right: 0;
-  height: 36px;
-  pointer-events: none;
-  z-index: 1;
-  transition: opacity var(--duration-fast) var(--ease-standard);
-}
-.overflow--v .overflow-fade-top    { top: 0;    background: linear-gradient(180deg, var(--surface), color-mix(in oklch, var(--surface) 50%, transparent), transparent); }
-.overflow--v .overflow-fade-bottom { bottom: 0; background: linear-gradient(0deg,   var(--surface), color-mix(in oklch, var(--surface) 50%, transparent), transparent); }
+.overflow-fade-left, .overflow-fade-right { top: 0; bottom: 0; width: var(--overflow-fade-size, 48px); }
+.overflow-fade-top, .overflow-fade-bottom { left: 0; right: 0; height: var(--overflow-fade-size, 36px); }
+.overflow-fade-left   { left: 0;  background: linear-gradient(90deg,  var(--overflow-fade-color, var(--surface)), color-mix(in oklch, var(--overflow-fade-color, var(--surface)) 50%, transparent), transparent); }
+.overflow-fade-right  { right: 0; background: linear-gradient(270deg, var(--overflow-fade-color, var(--surface)), color-mix(in oklch, var(--overflow-fade-color, var(--surface)) 50%, transparent), transparent); }
+.overflow-fade-top    { top: 0;    background: linear-gradient(180deg, var(--overflow-fade-color, var(--surface)), color-mix(in oklch, var(--overflow-fade-color, var(--surface)) 50%, transparent), transparent); }
+.overflow-fade-bottom { bottom: 0; background: linear-gradient(0deg,   var(--overflow-fade-color, var(--surface)), color-mix(in oklch, var(--overflow-fade-color, var(--surface)) 50%, transparent), transparent); }
 
 /* Hairline-edge variant — replaces the fade with a 1px line.
    For surfaces where the bg can't be matched cleanly. */
@@ -1748,7 +1753,7 @@
 /* Arrow buttons — pressable, sit on top of the fade. */
 .overflow-arrow {
   position: absolute;
-  width: 28px; height: 28px;
+  width: var(--overflow-arrow-size, 28px); height: var(--overflow-arrow-size, 28px);
   display: inline-flex; align-items: center; justify-content: center;
   background: var(--surface-raised);
   border: 1px solid var(--border);
@@ -1767,12 +1772,13 @@
 .overflow-arrow.is-disabled { opacity: 0; pointer-events: none; }
 .overflow-arrow svg { width: 14px; height: 14px; }
 
-/* Horizontal arrow positions */
-.overflow--h .overflow-arrow-left  { left:  6px; top: 50%; transform: translateY(-50%); }
-.overflow--h .overflow-arrow-right { right: 6px; top: 50%; transform: translateY(-50%); }
-/* Vertical arrow positions — top-right and bottom-right edges */
-.overflow--v .overflow-arrow-up   { top:    4px; right: 4px; }
-.overflow--v .overflow-arrow-down { bottom: 4px; right: 4px; }
+/* Horizontal arrow positions (also the left/right pair in both-axis mode) */
+.overflow--h .overflow-arrow-left,  .overflow--both .overflow-arrow-left  { left:  6px; top: 50%; transform: translateY(-50%); }
+.overflow--h .overflow-arrow-right, .overflow--both .overflow-arrow-right { right: 6px; top: 50%; transform: translateY(-50%); }
+/* Vertical arrow positions — top-right and bottom-right edges (also the
+   up/down pair in both-axis mode) */
+.overflow--v .overflow-arrow-up,   .overflow--both .overflow-arrow-up   { top:    4px; right: 4px; }
+.overflow--v .overflow-arrow-down, .overflow--both .overflow-arrow-down { bottom: 4px; right: 4px; }
 
 /* On coarse pointers (touch), hide arrows — native momentum scroll suffices. */
 @media (pointer: coarse) {

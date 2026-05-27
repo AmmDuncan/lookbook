@@ -86,6 +86,10 @@
         <li><a href="#modals">Modal · Dialog</a></li>
         <li><a href="#drawer">Drawer</a></li>
         <li><a href="#palette">Command palette</a></li>
+        <li style="list-style: none; padding: 14px 10px 4px; font-family: var(--font-mono); font-size: var(--text-overline-size); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted);">Lists &amp; selection</li>
+        <li><a href="#combobox">Combobox</a></li>
+        <li><a href="#multicombo">Multi-combobox</a></li>
+        <li><a href="#overflow">Overflow scroll</a></li>
       </ul>
       <div class="lb-sidebar-note">
         <h5>Molecules</h5>
@@ -101,7 +105,7 @@
         <header>
           <div class="eyebrow">Lookbook · Chapter 03</div>
           <h2 style="font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-track);">Molecules.</h2>
-          <p class="lede">Atoms wired together. Form field with validation, dropdowns, tooltips, popovers, toasts, banners, tabs, breadcrumbs, pagination, modal, drawer, command palette.</p>
+          <p class="lede">Atoms wired together. Form field with validation, dropdowns, tooltips, popovers, toasts, banners, tabs, breadcrumbs, pagination, modal, drawer, command palette — plus the searchable list primitives the system has been quietly assuming.</p>
         </header>
       </section>
 
@@ -841,6 +845,544 @@
         </div>
       </section>
 
+      <hr class="rule" />
+
+      <!-- ====================================================
+           LISTS & SELECTION — section header
+           ==================================================== -->
+      <section class="lb-section" id="lists-selection">
+        <header>
+          <div class="eyebrow">Lists &amp; selection</div>
+          <h2>For lists too long for a Select <a class="anchor" href="#lists-selection">#lists-selection</a></h2>
+          <p class="lede">Three primitives the system has been quietly assuming. Combobox covers <em>long</em> single-select lists; MultiCombobox covers multi-select; OverflowScroll wraps rows / tile strips that need to scroll inside a fixed container. Pick the right one and the page stops growing scrollbars and stale "Select" controls.</p>
+        </header>
+
+        <div class="specimen">
+          <div class="specimen-body" style="padding: 0;">
+            <div class="rules-grid" style="border: 0; border-radius: 0;">
+              <div class="rules-row">
+                <div class="rules-name">Select<span class="sub">small, bounded set</span></div>
+                <div class="rules-when"><strong>Use</strong> for regions, statuses, year ranges — anything that fits on one screen and never grows.</div>
+                <div class="rules-avoid"><strong>Avoid</strong> when the list could ever exceed ~30 items, or when the answer is "we'll keep adding to it."</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">Combobox<span class="sub">long or growing single-select</span></div>
+                <div class="rules-when"><strong>Use</strong> when the list grows over time — users, vehicles, businesses, officers. Search-filter on a popover list.</div>
+                <div class="rules-avoid"><strong>Avoid</strong> shipping client-side filtering against <code class="token-pill">page_size: 100</code> — paginate properly (see <em>server-search mode</em>).</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">MultiCombobox<span class="sub">multi-select with chips</span></div>
+                <div class="rules-when"><strong>Use</strong> when users need several from a list — tags, attendees, recipients. Chips render inside the field.</div>
+                <div class="rules-avoid"><strong>Avoid</strong> for binary state (use checkboxes) or for &lt; 6 options on one screen (use a checkbox group).</div>
+              </div>
+              <div class="rules-row">
+                <div class="rules-name">OverflowScroll<span class="sub">capped lists · tile strips</span></div>
+                <div class="rules-when"><strong>Use</strong> for horizontal tile strips and capped-height lists in cards. Press-and-hold arrows + fading edges.</div>
+                <div class="rules-avoid"><strong>Avoid</strong> raw <code class="token-pill">overflow:auto</code> — the user can't see there's more, and the scroll-thumb pops in late.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ====================================================
+           13 — COMBOBOX
+           ==================================================== -->
+      <section class="lb-section" id="combobox">
+        <header>
+          <div class="eyebrow">13 — Combobox</div>
+          <h2>Combobox <a class="anchor" href="#combobox">#combobox</a></h2>
+          <p class="lede">Single-select picker for long or growing lists. Text input filters an option list in a popover. The trigger reuses <code class="token-pill">.input</code> + <code class="token-pill">.input-affix</code>; the panel reuses <code class="token-pill">.menu</code>. Three reserved row types: <em>loading</em>, <em>empty</em>, <em>error</em>.</p>
+        </header>
+
+        <!-- Sizes + selected + error + disabled -->
+        <div class="lb-subsection">
+          <h3>Trigger states <span class="token-pill">sm / md / lg + selected / error / disabled</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; flex-direction: column; gap: 16px; max-width: 480px;">
+
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">sm · empty</div>
+                <div class="input-affix">
+                  <span class="input-leading"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                  <input class="input input--sm has-trailing" placeholder="Search businesses…" />
+                  <span class="input-trailing" style="pointer-events: none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                </div>
+              </div>
+
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">md · empty (default size)</div>
+                <div class="input-affix">
+                  <span class="input-leading"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                  <input class="input has-trailing" placeholder="Search businesses…" />
+                  <span class="input-trailing" style="pointer-events: none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                </div>
+              </div>
+
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">lg · empty</div>
+                <div class="input-affix">
+                  <span class="input-leading"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                  <input class="input input--lg has-trailing" placeholder="Search businesses…" />
+                  <span class="input-trailing" style="pointer-events: none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                </div>
+              </div>
+
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">selected (closed) — the chosen <strong>label</strong>, never the raw value</div>
+                <div class="input-affix">
+                  <span class="input-leading"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                  <input class="input has-trailing" value="Acme Holdings Ltd." />
+                  <span class="input-trailing" style="pointer-events: none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="field-label">Business <span class="req">*</span></label>
+                <div class="input-affix">
+                  <span class="input-leading"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                  <input class="input has-trailing is-error" aria-invalid="true" placeholder="Search businesses…" />
+                  <span class="input-trailing" style="pointer-events: none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                </div>
+                <span class="field-error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Pick a business to continue.</span>
+              </div>
+
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">disabled</div>
+                <div class="input-affix">
+                  <span class="input-leading"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                  <input class="input has-trailing is-disabled" disabled placeholder="Search businesses…" />
+                  <span class="input-trailing" style="pointer-events: none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                </div>
+              </div>
+
+            </div>
+            <div class="specimen-caption">Sizes <code class="token-pill">sm / md / lg</code> share the height scale with Input, Select, and Button — same row alignment.</div>
+          </div>
+        </div>
+
+        <!-- Open: full list + filtered -->
+        <div class="lb-subsection">
+          <h3>Open — full list vs typed query <span class="token-pill">substring emphasis</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: flex-start;">
+
+              <!-- Open with FULL list -->
+              <div class="combobox" style="max-width: 320px;">
+                <div class="label-row" style="margin-bottom: 6px;">open · full list</div>
+                <div class="input-affix">
+                  <span class="input-leading"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                  <input class="input has-trailing is-focus" placeholder="Search businesses…" />
+                  <span class="input-trailing" style="pointer-events: none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></span>
+                </div>
+                <div class="combobox-popover" style="margin-top: 4px;">
+                  <div class="combobox-list">
+                    <button class="menu-item">Acme Holdings Ltd.</button>
+                    <button class="menu-item is-active" aria-selected="true">Anchor Engineering<span class="combobox-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></button>
+                    <button class="menu-item">Beacon Logistics</button>
+                    <button class="menu-item">Cascade Materials</button>
+                    <button class="menu-item">Delta Bridge Co.</button>
+                    <button class="menu-item">Evergreen Trust</button>
+                    <button class="menu-item">Fenway Capital</button>
+                  </div>
+                </div>
+                <p class="t-body-sm text-secondary" style="margin-top: 10px; line-height: 1.5;">
+                  <strong style="color: var(--text-primary); font-weight: 500;">On open, the search field clears</strong> so the full list shows — never pre-filtered to the current selection's label. Selected option keeps its check mark.
+                </p>
+              </div>
+
+              <!-- Open with TYPED query -->
+              <div class="combobox" style="max-width: 320px;">
+                <div class="label-row" style="margin-bottom: 6px;">open · typed "Acc"</div>
+                <div class="input-affix">
+                  <span class="input-leading"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                  <input class="input has-trailing is-focus" value="Acc" />
+                  <span class="input-trailing"><button type="button" aria-label="Clear" style="background:transparent; border:0; cursor:pointer; color: var(--text-muted); padding: 4px; border-radius: var(--radius-sm); display: inline-flex;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></span>
+                </div>
+                <div class="combobox-popover" style="margin-top: 4px;">
+                  <div class="combobox-list">
+                    <button class="menu-item is-active" aria-selected="true"><span><span class="combobox-match">Acc</span>enture &amp; Partners</span><span class="combobox-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></button>
+                    <button class="menu-item"><span><span class="combobox-match">Acc</span>ord Manufacturing</span></button>
+                    <button class="menu-item"><span><span class="combobox-match">Acc</span>ress Capital Group</span></button>
+                  </div>
+                </div>
+                <p class="t-body-sm text-secondary" style="margin-top: 10px; line-height: 1.5;">
+                  <strong style="color: var(--text-primary); font-weight: 500;">Matching substring emphasized</strong> via <code class="token-pill">.combobox-match</code>. Trailing chevron becomes a clear-X while the field has a value.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Special rows: loading / empty / error -->
+        <div class="lb-subsection">
+          <h3>Special rows <span class="token-pill">loading · empty · error</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: flex-start;">
+
+              <!-- Server-search loading -->
+              <div class="combobox">
+                <div class="label-row" style="margin-bottom: 6px;">server-search · loading</div>
+                <div class="input-affix">
+                  <span class="input-leading"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                  <input class="input has-trailing is-focus" value="anch" />
+                  <span class="input-trailing"><span class="spinner spinner--sm"></span></span>
+                </div>
+                <div class="combobox-popover" style="margin-top: 4px;">
+                  <div class="combobox-row combobox-row--loading">
+                    <span class="spinner spinner--xs"></span>
+                    Searching…
+                  </div>
+                  <div class="combobox-list">
+                    <button class="menu-item" style="opacity: 0.5;"><span><span class="combobox-match">Anch</span>or Engineering</span></button>
+                    <button class="menu-item" style="opacity: 0.5;"><span><span class="combobox-match">Anch</span>or Real Estate Trust</span></button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Empty -->
+              <div class="combobox">
+                <div class="label-row" style="margin-bottom: 6px;">empty result</div>
+                <div class="input-affix">
+                  <span class="input-leading"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                  <input class="input has-trailing is-focus" value="qzqzqz" />
+                  <span class="input-trailing"><button type="button" aria-label="Clear" style="background:transparent; border:0; cursor:pointer; color: var(--text-muted); padding: 4px; border-radius: var(--radius-sm); display: inline-flex;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></span>
+                </div>
+                <div class="combobox-popover" style="margin-top: 4px;">
+                  <div class="combobox-row combobox-row--empty">No matches.</div>
+                </div>
+              </div>
+
+              <!-- Error -->
+              <div class="combobox">
+                <div class="label-row" style="margin-bottom: 6px;">error</div>
+                <div class="input-affix">
+                  <span class="input-leading"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                  <input class="input has-trailing is-focus" value="anch" />
+                  <span class="input-trailing" style="pointer-events: none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></span>
+                </div>
+                <div class="combobox-popover" style="margin-top: 4px;">
+                  <div class="combobox-row combobox-row--error">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    Couldn't load results. <a href="#" style="color: var(--accent); text-decoration: underline;">Retry</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="specimen-caption">Loading row pins to the top while a <strong style="color: var(--text-primary); font-weight: 500;">300 ms debounced</strong> request is in flight; previous results stay visible at reduced opacity. Empty and error rows replace the list entirely.</div>
+          </div>
+        </div>
+
+        <!-- Anatomy + decision rule -->
+        <div class="specimen">
+          <div class="specimen-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div>
+              <div class="t-overline text-muted" style="margin-bottom: 8px;">Anatomy</div>
+              <p style="margin: 0; font-size: var(--text-body-size); line-height: 1.55; color: var(--text-secondary);">
+                <code class="token-pill">.input</code> + <code class="token-pill">.input-affix</code> (trigger) → <code class="token-pill">.combobox-popover</code> (panel reusing <code class="token-pill">.menu</code> tokens) → reserved rows: <code class="token-pill">.combobox-row--loading</code>, <code class="token-pill">.combobox-row--empty</code>, <code class="token-pill">.combobox-row--error</code>. Substring match: <code class="token-pill">.combobox-match</code>. Selected check: <code class="token-pill">.combobox-check</code>.
+              </p>
+            </div>
+            <div>
+              <div class="t-overline text-muted" style="margin-bottom: 8px;">Server-search rule</div>
+              <p style="margin: 0; font-size: var(--text-body-size); line-height: 1.55; color: var(--text-secondary);">
+                Backend-paginated lists <strong style="color: var(--text-primary); font-weight: 500;">must</strong> use server-side search (300 ms debounce + a seen-map keyed by id, so the selected row keeps its label after it scrolls out of the current batch). Don't ship client-side filter over <code class="token-pill">page_size: 100</code> as a shortcut.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ====================================================
+           14 — MULTI-COMBOBOX
+           ==================================================== -->
+      <section class="lb-section" id="multicombo">
+        <header>
+          <div class="eyebrow">14 — Multi-combobox</div>
+          <h2>Multi-combobox <a class="anchor" href="#multicombo">#multicombo</a></h2>
+          <p class="lede">Same family as Combobox — multi-select. Selected values render as removable chips <em>inside</em> the field; search input flows after the chips and stays put across opens so you can keep picking. Same loading / empty / error rows; same seen-map rule for server-paginated lists.</p>
+        </header>
+
+        <!-- Filled + open -->
+        <div class="lb-subsection">
+          <h3>Field with chips + open popover <span class="token-pill">checkmarks indicate selected</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: flex-start;">
+
+              <!-- Filled, closed -->
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">selected · closed</div>
+                <label class="multicombo">
+                  <span class="badge chip--token">Engineering<button class="chip-x" type="button" aria-label="Remove Engineering"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></span>
+                  <span class="badge chip--token">Design<button class="chip-x" type="button" aria-label="Remove Design"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></span>
+                  <span class="badge chip--token">Operations<button class="chip-x" type="button" aria-label="Remove Operations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></span>
+                  <input placeholder="Add team…" />
+                </label>
+                <p class="t-body-sm text-secondary" style="margin-top: 10px; line-height: 1.5;">Chips are <code class="token-pill">.chip--token</code> — flat surface-sunken background; X-button reuses <code class="token-pill">.chip-x</code>.</p>
+              </div>
+
+              <!-- Filled, open with checkmarks -->
+              <div class="combobox">
+                <div class="label-row" style="margin-bottom: 6px;">selected · open</div>
+                <label class="multicombo is-focus">
+                  <span class="badge chip--token">Engineering<button class="chip-x" type="button" aria-label="Remove Engineering"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></span>
+                  <span class="badge chip--token">Design<button class="chip-x" type="button" aria-label="Remove Design"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></span>
+                  <input value="op" placeholder="Add team…" />
+                </label>
+                <div class="combobox-popover" style="margin-top: 4px;">
+                  <div class="combobox-list">
+                    <button class="menu-item">
+                      <input type="checkbox" class="checkbox" checked tabindex="-1" style="pointer-events: none;" />
+                      <span><span class="combobox-match">Op</span>erations</span>
+                    </button>
+                    <button class="menu-item">
+                      <input type="checkbox" class="checkbox" tabindex="-1" style="pointer-events: none;" />
+                      <span><span class="combobox-match">Op</span>en source program</span>
+                    </button>
+                    <button class="menu-item">
+                      <input type="checkbox" class="checkbox" tabindex="-1" style="pointer-events: none;" />
+                      <span><span class="combobox-match">Op</span>portunity desk</span>
+                    </button>
+                  </div>
+                </div>
+                <p class="t-body-sm text-secondary" style="margin-top: 10px; line-height: 1.5;"><strong style="color: var(--text-primary); font-weight: 500;">Search clears on close</strong> (not on open) — because you keep selecting across multiple opens. Toggle a row without closing the panel.</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Other states -->
+        <div class="lb-subsection">
+          <h3>States <span class="token-pill">empty · loading · error · disabled</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; align-items: flex-start;">
+
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">empty</div>
+                <label class="multicombo">
+                  <input placeholder="Add tags…" />
+                </label>
+              </div>
+
+              <div class="combobox">
+                <div class="label-row" style="margin-bottom: 6px;">server-search · loading</div>
+                <label class="multicombo is-focus">
+                  <span class="badge chip--token">Q1 launch<button class="chip-x" type="button" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></span>
+                  <input value="onb" />
+                </label>
+                <div class="combobox-popover" style="margin-top: 4px;">
+                  <div class="combobox-row combobox-row--loading"><span class="spinner spinner--xs"></span> Searching…</div>
+                  <div class="combobox-list">
+                    <button class="menu-item" style="opacity: 0.5;">
+                      <input type="checkbox" class="checkbox" tabindex="-1" style="pointer-events: none;" />
+                      <span><span class="combobox-match">Onb</span>oarding</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="field-label">Recipients <span class="req">*</span></label>
+                <label class="multicombo is-error" aria-invalid="true">
+                  <input placeholder="Add recipients…" />
+                </label>
+                <span class="field-error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Pick at least one recipient.</span>
+              </div>
+
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">disabled</div>
+                <label class="multicombo is-disabled">
+                  <span class="badge chip--token" style="opacity: 0.7;">Acme<button class="chip-x" type="button" aria-label="Remove" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></span>
+                  <input placeholder="Add…" disabled />
+                </label>
+              </div>
+
+            </div>
+            <div class="specimen-caption">Seen-map applies here too — chips for items not in the current results batch don't go blank when a search narrows down the panel.</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ====================================================
+           15 — OVERFLOW SCROLL
+           ==================================================== -->
+      <section class="lb-section" id="overflow">
+        <header>
+          <div class="eyebrow">15 — Overflow scroll</div>
+          <h2>OverflowScroll <a class="anchor" href="#overflow">#overflow</a></h2>
+          <p class="lede">The sanctioned wrapper for rows / tile strips that overflow. Press-and-hold scroll arrows + edge indicators replace a bare <code class="token-pill">overflow: auto</code>. Arrows hide on coarse pointers — native momentum scroll is enough on touch.</p>
+        </header>
+
+        <!-- Horizontal — three scroll positions -->
+        <div class="lb-subsection">
+          <h3>Horizontal tile strip <span class="token-pill">scrolled-start · middle · end</span></h3>
+
+          <div class="specimen">
+            <div class="specimen-body" style="display: flex; flex-direction: column; gap: 20px;">
+
+              <!-- At start: right arrow + right fade only -->
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">scrolled to start — right arrow + right fade</div>
+                <div class="overflow overflow--h" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+                  <div class="overflow-track" style="padding: 12px;">
+                    <div class="card" style="flex: 0 0 180px;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 01</div><p class="card-subtitle">12 Main St</p></div></div>
+                    <div class="card" style="flex: 0 0 180px;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 02</div><p class="card-subtitle">218 Oak Ave</p></div></div>
+                    <div class="card" style="flex: 0 0 180px;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 03</div><p class="card-subtitle">990 Lake Rd</p></div></div>
+                    <div class="card" style="flex: 0 0 180px;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 04</div><p class="card-subtitle">14 Pine Ct</p></div></div>
+                    <div class="card" style="flex: 0 0 180px;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 05</div><p class="card-subtitle">771 River Blvd</p></div></div>
+                    <div class="card" style="flex: 0 0 180px;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 06</div><p class="card-subtitle">320 Hill Way</p></div></div>
+                  </div>
+                  <span class="overflow-fade overflow-fade-left" style="opacity: 0;"></span>
+                  <span class="overflow-fade overflow-fade-right"></span>
+                  <button class="overflow-arrow overflow-arrow-left is-disabled" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+                  <button class="overflow-arrow overflow-arrow-right" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+                </div>
+              </div>
+
+              <!-- Middle: both arrows + both fades -->
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">scrolled to middle — both arrows + both fades</div>
+                <div class="overflow overflow--h" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+                  <div class="overflow-track" style="padding: 12px; scroll-padding-left: 240px;">
+                    <div class="card" style="flex: 0 0 180px; opacity: 0.35;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 01</div><p class="card-subtitle">12 Main St</p></div></div>
+                    <div class="card" style="flex: 0 0 180px; opacity: 0.6;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 02</div><p class="card-subtitle">218 Oak Ave</p></div></div>
+                    <div class="card" style="flex: 0 0 180px;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 03</div><p class="card-subtitle">990 Lake Rd</p></div></div>
+                    <div class="card" style="flex: 0 0 180px;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 04</div><p class="card-subtitle">14 Pine Ct</p></div></div>
+                    <div class="card" style="flex: 0 0 180px;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 05</div><p class="card-subtitle">771 River Blvd</p></div></div>
+                    <div class="card" style="flex: 0 0 180px;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 06</div><p class="card-subtitle">320 Hill Way</p></div></div>
+                  </div>
+                  <span class="overflow-fade overflow-fade-left"></span>
+                  <span class="overflow-fade overflow-fade-right"></span>
+                  <button class="overflow-arrow overflow-arrow-left" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+                  <button class="overflow-arrow overflow-arrow-right" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+                </div>
+              </div>
+
+              <!-- End: left arrow + left fade only -->
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">scrolled to end — left arrow + left fade</div>
+                <div class="overflow overflow--h" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+                  <div class="overflow-track" style="padding: 12px;">
+                    <div class="card" style="flex: 0 0 180px; opacity: 0.35;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 03</div><p class="card-subtitle">990 Lake Rd</p></div></div>
+                    <div class="card" style="flex: 0 0 180px; opacity: 0.6;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 04</div><p class="card-subtitle">14 Pine Ct</p></div></div>
+                    <div class="card" style="flex: 0 0 180px;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 05</div><p class="card-subtitle">771 River Blvd</p></div></div>
+                    <div class="card" style="flex: 0 0 180px;"><div class="card-body" style="padding: 12px 14px;"><div class="card-title" style="font-size: 14px;">Branch · 06</div><p class="card-subtitle">320 Hill Way</p></div></div>
+                  </div>
+                  <span class="overflow-fade overflow-fade-left"></span>
+                  <span class="overflow-fade overflow-fade-right" style="opacity: 0;"></span>
+                  <button class="overflow-arrow overflow-arrow-left" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+                  <button class="overflow-arrow overflow-arrow-right is-disabled" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+                </div>
+              </div>
+
+            </div>
+            <div class="specimen-caption">Fades + arrows tell the user there's more on either side without forcing them to discover the scroll. Press-and-hold arrows scroll continuously; tap-to-page is also fine if you prefer.</div>
+          </div>
+        </div>
+
+        <!-- Vertical capped list -->
+        <div class="lb-subsection">
+          <h3>Vertical capped list <span class="token-pill">--overflow-max-h · 180px</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: flex-start;">
+
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">scrolled into the middle of the list</div>
+                <div class="card" style="overflow: visible;">
+                  <div class="card-header"><span class="card-title" style="font-size: 14px;">Branches</span><span class="badge badge--neutral badge--sm">23</span></div>
+                  <div class="overflow overflow--v" style="--overflow-max-h: 180px; background: var(--surface);">
+                    <div class="overflow-track">
+                      <div style="padding: 8px 14px; opacity: 0.4; font-size: 13px;">London — 12 Main St</div>
+                      <div style="padding: 8px 14px; opacity: 0.7; font-size: 13px;">Manchester — 218 Oak Ave</div>
+                      <div style="padding: 8px 14px; font-size: 13px;">Bristol — 990 Lake Rd</div>
+                      <div style="padding: 8px 14px; font-size: 13px;">Edinburgh — 14 Pine Ct</div>
+                      <div style="padding: 8px 14px; font-size: 13px;">Cardiff — 771 River Blvd</div>
+                      <div style="padding: 8px 14px; font-size: 13px;">Belfast — 320 Hill Way</div>
+                      <div style="padding: 8px 14px; opacity: 0.7; font-size: 13px;">Glasgow — 5 Park Ln</div>
+                      <div style="padding: 8px 14px; opacity: 0.4; font-size: 13px;">Leeds — 88 South St</div>
+                    </div>
+                    <span class="overflow-fade overflow-fade-top"></span>
+                    <span class="overflow-fade overflow-fade-bottom"></span>
+                    <button class="overflow-arrow overflow-arrow-up" aria-label="Scroll up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+                    <button class="overflow-arrow overflow-arrow-down" aria-label="Scroll down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">at the top — no top fade, no up-arrow</div>
+                <div class="card" style="overflow: visible;">
+                  <div class="card-header"><span class="card-title" style="font-size: 14px;">Branches</span><span class="badge badge--neutral badge--sm">23</span></div>
+                  <div class="overflow overflow--v" style="--overflow-max-h: 180px; background: var(--surface);">
+                    <div class="overflow-track">
+                      <div style="padding: 8px 14px; font-size: 13px;">London — 12 Main St</div>
+                      <div style="padding: 8px 14px; font-size: 13px;">Manchester — 218 Oak Ave</div>
+                      <div style="padding: 8px 14px; font-size: 13px;">Bristol — 990 Lake Rd</div>
+                      <div style="padding: 8px 14px; font-size: 13px;">Edinburgh — 14 Pine Ct</div>
+                      <div style="padding: 8px 14px; opacity: 0.7; font-size: 13px;">Cardiff — 771 River Blvd</div>
+                      <div style="padding: 8px 14px; opacity: 0.4; font-size: 13px;">Belfast — 320 Hill Way</div>
+                    </div>
+                    <span class="overflow-fade overflow-fade-top" style="opacity: 0;"></span>
+                    <span class="overflow-fade overflow-fade-bottom"></span>
+                    <button class="overflow-arrow overflow-arrow-up is-disabled" aria-label="Scroll up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+                    <button class="overflow-arrow overflow-arrow-down" aria-label="Scroll down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Edge variants -->
+        <div class="lb-subsection">
+          <h3>Edge indicators <span class="token-pill">fade · border · none</span></h3>
+          <div class="specimen">
+            <div class="specimen-body" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">fade — gradient mask</div>
+                <div class="overflow overflow--h" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+                  <div class="overflow-track" style="padding: 10px;">
+                    <span class="chip">London</span><span class="chip is-active">Manchester</span><span class="chip">Bristol</span><span class="chip">Edinburgh</span><span class="chip">Cardiff</span><span class="chip">Belfast</span>
+                  </div>
+                  <span class="overflow-fade overflow-fade-left" style="opacity: 0;"></span>
+                  <span class="overflow-fade overflow-fade-right"></span>
+                </div>
+              </div>
+
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">border — hairline rule</div>
+                <div class="overflow overflow--h overflow--border" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+                  <div class="overflow-track" style="padding: 10px;">
+                    <span class="chip">London</span><span class="chip is-active">Manchester</span><span class="chip">Bristol</span><span class="chip">Edinburgh</span><span class="chip">Cardiff</span><span class="chip">Belfast</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="label-row" style="margin-bottom: 6px;">none — bare scroll</div>
+                <div class="overflow overflow--h overflow--none" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+                  <div class="overflow-track" style="padding: 10px;">
+                    <span class="chip">London</span><span class="chip is-active">Manchester</span><span class="chip">Bristol</span><span class="chip">Edinburgh</span><span class="chip">Cardiff</span><span class="chip">Belfast</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="specimen-caption"><strong style="color: var(--text-primary); font-weight: 500;">Fade</strong> is the default — matches a single surface cleanly. <strong style="color: var(--text-primary); font-weight: 500;">Border</strong> is for surfaces where the bg can't be matched (e.g. over a hero photo). <strong style="color: var(--text-primary); font-weight: 500;">None</strong> only when the parent already conveys the boundary.</div>
+          </div>
+        </div>
+      </section>
+
       <!-- Footer -->
       <section style="padding-top: 32px; border-top: 1px solid var(--border);">
         <div style="display: flex; align-items: flex-start; gap: 16px;">
@@ -859,5 +1401,6 @@
     </main>
   </div>
 
-  <script src="chrome.js"></script></body>
+  <script src="chrome.js"></script>
+</body>
 </html>

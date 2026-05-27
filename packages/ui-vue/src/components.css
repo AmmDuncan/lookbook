@@ -1514,3 +1514,267 @@
 .page-header-title { font-size: 24px; font-weight: 600; letter-spacing: -0.022em; line-height: 1.2; margin: 0; }
 .page-header-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.55; margin: 0; max-width: 640px; }
 .page-header-actions { display: flex; gap: 8px; }
+
+/* ============================================================
+   30. COMBOBOX & MULTI-COMBOBOX
+   Searchable single/multi pickers for long or growing lists.
+   The trigger reuses .input + .input-affix (single) or a chips-
+   in-field wrapper (.multicombo) for multi. The dropped panel
+   reuses .menu styling with three reserved row types:
+   loading, empty, error. Substring matches highlight with
+   .combobox-match.
+   ============================================================ */
+.combobox {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Panel — drops under the trigger. */
+.combobox-popover {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 4px;
+  width: 100%;
+  min-width: 240px;
+  max-height: 280px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.combobox-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex; flex-direction: column;
+  gap: 1px;
+  scroll-padding: 4px;
+}
+.combobox-list .menu-item .menu-icon { color: var(--text-muted); }
+
+/* Substring emphasis on a matched option label. */
+.combobox-match {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.menu-item.is-active .combobox-match,
+.menu-item[aria-selected="true"] .combobox-match { color: var(--accent); }
+
+/* The trailing checkmark on the selected option. */
+.combobox-check {
+  margin-left: auto;
+  color: var(--accent);
+  display: inline-flex;
+}
+
+/* Special rows that aren't options. */
+.combobox-row {
+  display: flex; align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  font-size: var(--text-body-sm-size);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+}
+.combobox-row--loading {
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  margin: -4px -4px 4px;
+  padding: 8px 14px;
+  background: var(--surface-sunken);
+}
+.combobox-row--empty {
+  justify-content: center;
+  padding: 22px 10px;
+}
+.combobox-row--error { color: var(--color-danger-600); }
+
+/* === MULTI-COMBOBOX trigger (chips-in-field) === */
+.multicombo {
+  --ctrl-h:      var(--size-md-h);
+  --ctrl-px:     var(--size-md-px);
+  --ctrl-fs:     var(--size-md-fs);
+  --ctrl-radius: var(--size-md-radius);
+
+  width: 100%;
+  min-height: var(--ctrl-h);
+  font-family: inherit;
+  font-size: var(--ctrl-fs);
+  color: var(--text-primary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--ctrl-radius);
+  padding: 4px 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  cursor: text;
+  transition:
+    border-color var(--duration-fast) var(--ease-standard),
+    box-shadow   var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard);
+}
+.multicombo--sm { --ctrl-h: var(--size-sm-h); --ctrl-fs: var(--size-sm-fs); --ctrl-radius: var(--size-sm-radius); padding: 3px 5px; }
+.multicombo--lg { --ctrl-h: var(--size-lg-h); --ctrl-fs: var(--size-lg-fs); --ctrl-radius: var(--size-lg-radius); padding: 6px 8px; }
+
+.multicombo:hover { border-color: var(--border-strong); }
+.multicombo:focus-within,
+.multicombo.is-focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--focus-ring) 22%, transparent);
+}
+.multicombo[aria-invalid="true"],
+.multicombo.is-error { border-color: var(--color-danger-500); }
+.multicombo[aria-invalid="true"]:focus-within,
+.multicombo.is-error.is-focus {
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-danger-500) 22%, transparent);
+}
+.multicombo.is-disabled,
+.multicombo:has(input:disabled) {
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* The inline search input inside the multicombo. */
+.multicombo input {
+  flex: 1; min-width: 80px;
+  border: 0;
+  background: transparent;
+  padding: 0 4px;
+  height: calc(var(--ctrl-h) - 12px);
+  font-family: inherit;
+  font-size: var(--ctrl-fs);
+  color: var(--text-primary);
+}
+.multicombo input::placeholder { color: var(--text-muted); }
+.multicombo input:focus { outline: none; }
+
+/* Selected tokens — chip-sized to sit inside the field. */
+.chip--token {
+  --chip-h:  22px;
+  --chip-px: 8px;
+  --chip-fs: 12px;
+  background: var(--surface-sunken);
+  border-color: var(--border);
+  color: var(--text-primary);
+  cursor: default;
+}
+.chip--token .chip-x { width: 14px; height: 14px; cursor: pointer; }
+.chip--token .chip-x svg { width: 10px; height: 10px; }
+
+/* ============================================================
+   31. OVERFLOW SCROLL
+   The sanctioned wrapper for lists/rows that overflow.
+   Adds press-and-hold scroll arrows + edge indicators.
+   Use instead of bare overflow:auto for horizontal tile strips
+   and capped-height lists. Arrows hide on coarse pointers.
+   ============================================================ */
+.overflow {
+  position: relative;
+  isolation: isolate;
+  /* min-width:0 lets the wrapper actually scroll inside flex/grid parents
+     instead of expanding to its intrinsic content width. */
+  min-width: 0;
+}
+.overflow-track {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+.overflow-track::-webkit-scrollbar { width: 6px; height: 6px; }
+.overflow-track::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-full);
+}
+.overflow-track::-webkit-scrollbar-track { background: transparent; }
+
+/* Horizontal variant — strips of tiles. */
+.overflow--h .overflow-track {
+  display: flex;
+  gap: var(--space-3);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  padding: 2px 0;
+}
+
+/* Vertical variant — capped-height lists. */
+.overflow--v .overflow-track {
+  display: flex; flex-direction: column;
+  gap: var(--space-2);
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: var(--overflow-max-h, 180px);
+  padding: 2px;
+}
+
+/* Edge fades — gradient over the scroll axis. */
+.overflow--h .overflow-fade {
+  position: absolute; top: 0; bottom: 0;
+  width: 48px;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+.overflow--h .overflow-fade-left  { left: 0;  background: linear-gradient(90deg,  var(--surface), color-mix(in oklch, var(--surface) 50%, transparent), transparent); }
+.overflow--h .overflow-fade-right { right: 0; background: linear-gradient(270deg, var(--surface), color-mix(in oklch, var(--surface) 50%, transparent), transparent); }
+.overflow--v .overflow-fade {
+  position: absolute; left: 0; right: 0;
+  height: 36px;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+.overflow--v .overflow-fade-top    { top: 0;    background: linear-gradient(180deg, var(--surface), color-mix(in oklch, var(--surface) 50%, transparent), transparent); }
+.overflow--v .overflow-fade-bottom { bottom: 0; background: linear-gradient(0deg,   var(--surface), color-mix(in oklch, var(--surface) 50%, transparent), transparent); }
+
+/* Hairline-edge variant — replaces the fade with a 1px line.
+   For surfaces where the bg can't be matched cleanly. */
+.overflow--border .overflow-fade { display: none; }
+.overflow--border.overflow--h::before,
+.overflow--border.overflow--h::after { content: ""; position: absolute; top: 0; bottom: 0; width: 1px; background: var(--border); z-index: 1; }
+.overflow--border.overflow--h::before { left: 0; }
+.overflow--border.overflow--h::after  { right: 0; }
+.overflow--border.overflow--v::before,
+.overflow--border.overflow--v::after { content: ""; position: absolute; left: 0; right: 0; height: 1px; background: var(--border); z-index: 1; }
+.overflow--border.overflow--v::before { top: 0; }
+.overflow--border.overflow--v::after  { bottom: 0; }
+
+/* No-indicator variant — native scroll only. */
+.overflow--none .overflow-fade { display: none; }
+
+/* Arrow buttons — pressable, sit on top of the fade. */
+.overflow-arrow {
+  position: absolute;
+  width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  z-index: 2;
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard),
+    opacity var(--duration-fast) var(--ease-standard);
+}
+.overflow-arrow:hover { background: var(--surface); color: var(--text-primary); border-color: var(--border-strong); }
+.overflow-arrow:disabled,
+.overflow-arrow.is-disabled { opacity: 0; pointer-events: none; }
+.overflow-arrow svg { width: 14px; height: 14px; }
+
+/* Horizontal arrow positions */
+.overflow--h .overflow-arrow-left  { left:  6px; top: 50%; transform: translateY(-50%); }
+.overflow--h .overflow-arrow-right { right: 6px; top: 50%; transform: translateY(-50%); }
+/* Vertical arrow positions — top-right and bottom-right edges */
+.overflow--v .overflow-arrow-up   { top:    4px; right: 4px; }
+.overflow--v .overflow-arrow-down { bottom: 4px; right: 4px; }
+
+/* On coarse pointers (touch), hide arrows — native momentum scroll suffices. */
+@media (pointer: coarse) {
+  .overflow-arrow { display: none; }
+}

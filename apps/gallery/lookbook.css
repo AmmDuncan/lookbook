@@ -374,6 +374,42 @@
 /* ---- Rule between section blocks ---- */
 hr.rule { border: 0; border-top: 1px solid var(--border); margin: 0; }
 
+/* ---- Rules table (used across chapters for use/avoid grids) ---- */
+.rules-grid {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  overflow: hidden;
+}
+.rules-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-top: 1px solid var(--border);
+  align-items: start;
+}
+.rules-row:first-of-type { border-top: 0; }
+.rules-name { font-size: var(--text-body-sm-size); font-weight: 600; color: var(--text-primary); }
+.rules-name .sub {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-overline-size);
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.rules-when, .rules-avoid {
+  font-size: var(--text-body-sm-size);
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.rules-when strong, .rules-avoid strong { color: var(--text-primary); font-weight: 500; }
+@media (max-width: 900px) {
+  .rules-row { grid-template-columns: 1fr; }
+}
+
 /* ---- Anchor links: keyboard-only ring ---- */
 :focus-visible {
   outline: 2px solid var(--focus-ring);

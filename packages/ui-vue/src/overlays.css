@@ -31,6 +31,17 @@
 .tooltip { z-index: var(--z-overlay); }
 .popover { z-index: var(--z-dropdown); }
 
+/* Reka Select — trigger is a button styled as .select; dropdown reuses .menu.
+   Map Reka's data-attributes onto the spec's menu-item states. */
+.lb-select-content {
+  min-width: var(--reka-select-trigger-width);
+  max-height: var(--reka-select-content-available-height);
+}
+.select [data-placeholder] { color: var(--text-muted); }
+.menu-item[data-highlighted] { outline: none; background: var(--surface-sunken); }
+.menu-item[data-state="checked"] { color: var(--accent); }
+.menu-item[data-disabled] { opacity: 0.4; pointer-events: none; }
+
 /* Drawer (when added) — fixed full-height panel */
 .lb-drawer-scrim { position: fixed; inset: 0; background: color-mix(in oklch, var(--text-primary) 45%, transparent); z-index: var(--z-overlay); }
 .lb-drawer-content { position: fixed; top: 0; right: 0; bottom: 0; z-index: var(--z-modal); }

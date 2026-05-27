@@ -87,7 +87,7 @@ const menuItems = [
             </template>
           </Input>
         </div>
-        <div class="pg-field"><span class="pg-label">select</span><Select v-model="picked"><option value="a">Option A</option><option value="b">Option B</option></Select></div>
+        <div class="pg-field"><span class="pg-label">select</span><Select v-model="picked" :options="[{ value: 'a', label: 'Option A' }, { value: 'b', label: 'Option B' }, { value: 'c', label: 'Option C' }]" /></div>
         <div class="pg-field"><span class="pg-label">textarea</span><Textarea v-model="text" /></div>
       </div>
       <div class="pg-row" style="margin-top: 16px">

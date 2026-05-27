@@ -1,6 +1,6 @@
 import '@lookbook/tokens/tokens.css'
 import '@lookbook/ui-vue/styles.css'
-import './playground.css'
+import './showcase.css'
 
 import { createApp } from 'vue'
 

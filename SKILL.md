@@ -18,6 +18,7 @@ description: Use when designing, building, OR EXPLORING any web-app UI — pages
 **Two checks the pass must always run explicitly — they get skipped silently otherwise:**
 - **Color-as-text contrast.** Compute (don't eyeball) the contrast of every non-neutral text color and every semantic status label against the surface it actually sits on, including tints (F15, F54, F55). Fill-valid ≠ text-valid; same-hue text-on-tint is the default failure.
 - **Responsive + touch.** A desktop-only mockup cannot prove F50–F53. Either build a mobile frame or *state the breakpoint behavior* (what reflows, what stacks) in narration, and run an explicit coarse-pointer F52 check — every interactive target ≥44px.
+- **Alignment spine.** List every section's content width and trace its left/right edge down the page (F74). Widths must reduce to ≤3 sanctioned measures on one shared axis; narrower sections nest inside the wider container, not off to the side. This one hides from the contrast/AP/copy sweeps — each section looks fine alone while the page reads as assembled. Run it explicitly.
 
 A template for the project file lives at `personality.template.md` in this skill — copy and fill in for new projects.
 

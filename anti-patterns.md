@@ -66,9 +66,10 @@ Cite these by ID (`AP1`, `AP2`, …) in the verification narration, the same way
 *Why it reads as AI:* The default marketing skeleton with no editorial sequencing. Every band has the same shape, so the page has no pacing.
 *Instead:* Vary band rhythm — full-bleed next to contained, dense next to sparse, a band that breaks the grid. Pacing is composition (F26 density should *change* across a marketing page).
 
----
-
-## Typography
+**AP21. Wandering content edges — every section invents its own width.**
+*Tell:* The hero content is 760px and left-flush, the feature section is 1120px centered, the quote is 840px centered. Scroll down and the content's left edge hops inward and outward; nothing lines up on a shared axis.
+*Why it reads as AI:* It's the *cumulative* face of a broken alignment spine (F74). Each section was generated in isolation with its own "sensible" max-width, so the page has no shared measure — the hallmark of stacked fragments rather than one designed layout. Every section can look fine alone and the page still reads as assembled. (The tell is *arbitrary, unrelated* widths off different axes — not simply having more than one width; a narrow prose block nested inside the wide container is correct.)
+*Instead:* Draw section widths from a small defined set (≤3) on one shared axis (F74). Full-bleed backgrounds span edge to edge but their inner content returns to the set; narrower measures align to the default container's edge or center, not their own.
 
 **AP10. Inter / Geist / system-sans and nothing else, untreated.**
 *Tell:* Default sans at default tracking and weight, no display face, no optical adjustment, no character.

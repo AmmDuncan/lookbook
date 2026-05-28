@@ -13,17 +13,7 @@ description: Use when designing, building, OR EXPLORING any web-app UI — pages
 
 **If the project has a `personality.md`** (at project root or `design/personality.md`), load it too. It lists declared deviations from the fundamentals + the project's signature move. Anything not declared there must follow the floor.
 
-**After the design is built**, run a verification pass. It starts with looking, then checks rules.
-
-**Sweep 0 — RENDER AND LOOK (do this first, every time, no exceptions).** Render the design to actual pixels and *view the image* — do not audit from your own HTML. Save the markup to a standalone file and screenshot it headless:
-```
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu \
-  --hide-scrollbars --force-device-scale-factor=1 --window-size=1280,3700 \
-  --virtual-time-budget=5000 --screenshot=out.png "file:///abs/path/to/page.html"
-```
-then `Read` the PNG and critique what you actually see: Does it look *made by a human who ships software*, or text-on-paper? Is it flat — no depth, no product imagery, no craft? Are sections spacious or just *empty*? Does anything read as accidental (clipped texture, floating content)? Is it the generic AI-SaaS skeleton? **Rules cannot see flatness, balance, emptiness, or "AI feel" — only your eyes on the rendered image can.** This sweep is non-negotiable: it is the one that catches what every rule-based sweep below misses. Re-render after each fix and look again.
-
-Then the rule sweeps. First, fundamentals: walk the rules that have a `Check:` line, confirm the rendered output complies, and flag violations. A violation must be either fixed or moved to `personality.md` with a justification — undeclared deviations are not a choice. Second, load `anti-patterns.md` and run the "looks like AI" sweep: count the tells (`AP1`…), report the IDs in narration, and rework until under 3. Fundamentals catch broken rules; anti-patterns catch a technically-correct-but-generic result.
+**After the design is built**, run a verification pass in two sweeps. First, fundamentals: walk the rules that have a `Check:` line, confirm the rendered output complies, and flag violations. A violation must be either fixed or moved to `personality.md` with a justification — undeclared deviations are not a choice. Second, load `anti-patterns.md` and run the "looks like AI" sweep: count the tells (`AP1`…), report the IDs in narration, and rework until under 3. Fundamentals catch broken rules; anti-patterns catch a technically-correct-but-generic result.
 
 **Two checks the pass must always run explicitly — they get skipped silently otherwise:**
 - **Color-as-text contrast.** Compute (don't eyeball) the contrast of every non-neutral text color and every semantic status label against the surface it actually sits on, including tints (F15, F54, F55). Fill-valid ≠ text-valid; same-hue text-on-tint is the default failure.

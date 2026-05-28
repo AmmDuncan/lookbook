@@ -1,9 +1,23 @@
 ---
 name: lookbook
-description: Use when designing, building, OR EXPLORING any web-app UI — pages, components, layouts, forms, dashboards, detail/list pages, auth, styling/composing a screen, AND mockup/design exploration (easel pushes, brainstorming visual companion, Claude Design prompts, static HTML mockups, Figma explorations, "show me N directions"). Establishes the Lookbook design system (tokens, component specs, page recipes, composition grammar) so every screen AND every exploratory mockup is consistent, on-brand, accessible, and never generic-AI. Trigger for any frontend/UI work or visual exploration, not just final builds.
+description: Use when designing, building, OR EXPLORING any web-app UI — pages, components, layouts, forms, dashboards, detail/list pages, auth, styling/composing a screen, AND mockup/design exploration (easel pushes, brainstorming visual companion, Claude Design prompts, static HTML mockups, Figma explorations, "show me N directions"). Establishes the Lookbook design system (tokens, component specs, page recipes, composition grammar) so every screen AND every exploratory mockup is consistent, on-brand, accessible, and never generic-AI. Trigger for any frontend/UI work or visual exploration, not just final builds. Lookbook is design intelligence, not just a component library: use it EVEN when the project keeps its own components and never imports Lookbook — it guides the design and styling, and the project's components can be brought to match afterward. Applies to designing flows inside an already-established app, not only new projects or full redesigns.
 ---
 
 # Lookbook — the UI design mastermind
+
+## Read this first — every time
+
+**Before any UI work** (design, mockup, code, exploration), load `fundamentals.md` from this skill directory. It is the hard floor — measurable rules with concrete numbers, cited by ID (`F1`, `F2`, …). Keep the rule IDs in mind while designing and cite them in narration when applying or evaluating choices ("body 16px/1.55 [F3]; section padding 96px [F11]; one accent at 5 instances max [F17]").
+
+**Once the page archetype is identified** (per the composing-a-page protocol below), additionally load `patterns/<archetype>.md` if it exists. Patterns inherit from fundamentals and add surface-specific calibrations.
+
+**If the project has a `personality.md`** (at project root or `design/personality.md`), load it too. It lists declared deviations from the fundamentals + the project's signature move. Anything not declared there must follow the floor.
+
+**After the design is built**, run a verification pass in two sweeps. First, fundamentals: walk the rules that have a `Check:` line, confirm the rendered output complies, and flag violations. A violation must be either fixed or moved to `personality.md` with a justification — undeclared deviations are not a choice. Second, load `anti-patterns.md` and run the "looks like AI" sweep: count the tells (`AP1`…), report the IDs in narration, and rework until under 3. Fundamentals catch broken rules; anti-patterns catch a technically-correct-but-generic result.
+
+A template for the project file lives at `personality.template.md` in this skill — copy and fill in for new projects.
+
+---
 
 Lookbook is the design system every UI is built from. Four layers:
 
@@ -13,6 +27,25 @@ Lookbook is the design system every UI is built from. Four layers:
 4. **Composition grammar** — how to lay out a blank page (grid, regions, reflow).
 
 The **gallery** (`apps/gallery`, the Claude Design export) is the canonical *visual* spec. This file is how to *use* it. When in doubt, open the relevant gallery chapter and match it.
+
+---
+
+## Lookbook is design intelligence, not (just) a component library
+
+**Do not read this skill as "only for new projects, full re-skins, or apps that import `@lookbook/ui-*`."** Lookbook is bigger than its components — it is *how to design good, on-system, non-generic UI*: the tokens, the recipes, the composition grammar, the component **specs and styling**, the banned-tells list. All of that applies **even when not a single Lookbook component ships in the project.**
+
+There are **two modes of adoption**, and both are first-class. Pick per task; you do not need permission to use Mode B.
+
+**Mode A — Lookbook as a dependency.** Install `@lookbook/tokens` + `@lookbook/ui-*`; its primitives literally power the app. Best for greenfield, or a full re-skin where you're replacing the component layer. The "Using components" / "Per-project setup" sections below assume this mode.
+
+**Mode B — Lookbook as a design guide (the common case for established apps).** The project keeps using **its own existing components** (`components/ui/`, legacy primitives, whatever's there). Lookbook never gets imported. Instead you *borrow its visual language* — token values, spacing/radius/shadow scale, type hierarchy, the recipe for the archetype, the composition directions, the component **styling specs** (what a good Field / Card / Badge / Tabs *looks and behaves like*) — and design the screen or flow to that standard. This is fully legitimate. A great design guided by Lookbook, built on the project's own components, is a *success*, not a compromise.
+
+**The Mode-B workflow (design-first, adopt-on-demand):**
+1. **Design with Lookbook guidance** — brainstorm / mock up the screen or flow (easel, visual companion, static HTML, Figma) using Lookbook's tokens, recipes, and component *styling*, exactly as if it were on-system. The mockup is the target.
+2. **Build it on the project's own components** — implement using whatever primitives the app already has. Match the Lookbook-guided design: the spacing, radius, states, hierarchy, the calm/dense rhythm. You're translating the visual language onto existing parts, not swapping the parts.
+3. **Then optionally evolve the project's components toward the design** — once a screen is designed to Lookbook's standard, you *may* choose to bring the app's shared components up to match (adopt the field fill, the chip treatment, the focus ring, the empty/error states). Incremental and opt-in — make the project's components match the generated design when it's worth it, not as a precondition.
+
+**The point:** designing a new flow *inside an already-established app* is squarely in scope. Lookbook guides the decisions and the styling; the components can stay the project's own. Never decline or downgrade the guidance just because the app won't import Lookbook.
 
 ---
 
@@ -55,22 +88,25 @@ Raw Tailwind default colors (`bg-emerald-500`, `text-rose-100`, `bg-amber-300/20
 
 ## Using components
 
-1. **Check for an existing primitive** in the project's `components/ui/` (Vue) or `@lookbook/ui-*`.
-2. **If it exists** — use it, and verify it matches the gallery spec (variants, sizes, states). If it drifts, fix the primitive, don't fork it.
-3. **If it doesn't exist** — build it to the gallery spec in the shared UI package. **Never one-off it inline.**
-4. Every interactive atom ships all states; every data view ships **loading + empty + error (+ success)** — not optional.
+This is the **Mode A** path (importing Lookbook). In **Mode B**, swap "the shared UI package / `@lookbook/ui-*`" for "the project's own component layer" throughout — the gallery spec is still the standard you build/style *to*, you're just building it on the app's own primitives.
+
+1. **Check for an existing primitive** — in the project's own `components/ui/` (or wherever its primitives live), then `@lookbook/ui-*` if imported.
+2. **If it exists** — use it, and verify it matches the gallery spec (variants, sizes, states). If it drifts, fix the primitive, don't fork it. In Mode B, "fix the primitive" means bring the *project's* component up to the Lookbook styling spec.
+3. **If it doesn't exist** — build it to the gallery spec (in the shared UI package for Mode A, or as a proper project component for Mode B). **Never one-off it inline.**
+4. Every interactive atom ships all states; every data view ships **loading + empty + error (+ success)** — not optional. This is design-system law in *both* modes.
 
 ---
 
 ## Composing a page — the protocol
 
-When building or redesigning a screen:
+When building, redesigning, OR adding a new screen/flow inside an existing app (any mode — even when you'll build on the project's own components):
 
 0. **Frame it** — for a new product/site, start at gallery → **Approach** (strategy) and **SiteArchetypes** (what *kind* of site/app this is); pull the brand from **Identity** + **Imagery**.
 1. **Identify the page archetype** (gallery → **Recipes**): CRUD list · record detail/profile · create/edit form · wizard/onboarding · settings · search & results · feed/activity · dashboard · checkout/billing · pricing · detail-with-map · kanban.
 2. **Pull the recipe** — its Ingredients (which components), Required states, and responsive note.
 3. **Generate 2–3 composition directions** using the Layout grammar (gallery → **Layout**) and the **Variation** chapter (the sanctioned ways to diverge). Vary **primary/secondary emphasis**, the **region split**, and the **section rhythm** — *never* the design language. For a new or important surface, render all directions and let the human choose. (This is what makes pages feel distinct while staying consistent — see **Variation**.)
-4. **Build the chosen direction** from Lookbook primitives + tokens, with all required states.
+4. **Build the chosen direction** from Lookbook primitives + tokens, with all required states. Cite fundamental rule IDs (`F<n>`) in narration as decisions are made — body size, spacing, hierarchy, accent placement — so the application is auditable.
+5. **Verify against `fundamentals.md`** — walk the `Check:` lines for measurable rules, confirm the rendered output complies, and flag any violation. A violation must be either fixed or declared in `personality.md` with a justification. Undeclared deviations are not a choice — they are bugs.
 
 ### How to make 3 directions (without breaking consistency)
 Same components, same tokens. Only vary:

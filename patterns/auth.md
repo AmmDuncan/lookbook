@@ -35,11 +35,11 @@ New. *Why:* the OTP UI is the moment that earns the trust; well-built OTP feels 
 **P-A-08. Errors land *under the field*, not as toasts.** Server errors ("Invalid credentials") above the CTA, same color/size as field errors, with a leading icon.
 Refines: P-F-06. *Why:* the user's eye is on the form; errors need to be where the eye is.
 
-**P-A-09. SSO buttons (Google / Apple / etc.) above the email field, full-width, brand-correct logos, neutral chrome.** "Or" divider between SSO cluster and email/password.
-New. *Why:* if SSO is the right answer for the user, putting it first saves them typing; "Or" makes it skippable.
+**P-A-09. SSO buttons full-width, brand-correct logos, neutral chrome, separated by an "Or" divider. Placement is contextual: above email when SSO is the preferred path; below the primary when email is primary.** Both are real and good.
+New. *Why:* if SSO is the answer for most users, putting it first saves typing (Webflow); if email/password is primary, SSO sits below as the alternative (TheyDo, HubSpot — `evidence/auth.md`). Don't mandate above. A **Remember-me** checkbox is a common optional element in the email/password row.
 
-**P-A-10. Background may use texture from F35 families — atmospheric light, paper grain, geometric devices.** One only. Texture is *behind* the card, not on it.
-Refines: F37. *Why:* auth backplate is the prime negative-space texture surface.
+**P-A-10. Backplate texture is OPTIONAL.** Plain white/off-white is common and fine (TheyDo, HubSpot, Webflow). When you do dress it: one F35 texture *behind* the card, OR a split-screen brand panel beside it (Remote) — the richer alternative when there's a real brand visual to show.
+Refines: F37. *Why:* auth is a clean-competence surface; texture is a nice-to-have, not a requirement — don't add it just to fill space (F35/F49).
 
 **P-A-11. Brand mark (logo) sits above the card, centered, ~32px tall.** Not inside the card.
 New. *Why:* the logo is context, not content.
@@ -68,4 +68,4 @@ New. *Why:* mistyped passwords are the #1 login failure; the toggle is a 30-seco
 - Auth card with shadow + border + ring + gradient backplate. Pick one elevation move.
 
 ## Sources
-Wroblewski (*Mobile First*, *Web Form Design*) · Lookbook gallery → Auth + Recipes · canonical observable examples: Stripe, Linear, Notion, Vercel, Arc auth flows · DVLA self-service in-progress login refresh (direction A: desktop split + M1 mobile cap — see [[project_self_service_lookbook_refresh]]).
+Wroblewski (*Mobile First*, *Web Form Design*) · Lookbook gallery → Auth + Recipes · canonical observable examples: Stripe, Linear, Notion, Vercel, Arc auth flows · DVLA self-service in-progress login refresh (direction A: desktop split + M1 mobile cap — see [[project_self_service_lookbook_refresh]]) · **Mobbin reference study (TheyDo, Remote, HubSpot, Webflow) → `evidence/auth.md`** (centered-OR-split first-class, SSO placement contextual, texture optional, remember-me).

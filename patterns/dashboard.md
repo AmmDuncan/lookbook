@@ -26,8 +26,8 @@ New. *Why:* 4-up is the cognitive limit for parallel KPIs; 5+ stops being scanna
 **P-D-05. Charts get ≥240px height (desktop). Below that, axes and trend become illegible.**
 New. Exception: a single sparkline inside a tile.
 
-**P-D-06. One accent color across the whole dashboard (F17 enforced strictly).** Status colors (success / warning / danger) only on the values they describe — never on chrome or accent placements.
-Refines: F17. *Why:* dashboards accumulate color through charts; the chrome must stay neutral or the page becomes a quilt.
+**P-D-06. Near-monochrome is the norm. Accent appears in ~1–3 places total — often just the single primary action — and status/data colors only on the values they describe.** Never accent on chrome.
+Refines: F17 (tighter than the ≤5 floor). *Why:* dashboards accumulate color through charts and status; the chrome must stay neutral or the page becomes a quilt. Evidence: real analytics products run near-monochrome — Gumroad uses *zero* accent (black/white/cream); TheyDo/Apollo confine color to one primary button + status pills (`evidence/dashboard.md`). When in doubt, take color *out*.
 
 **P-D-07. No decorative texture (F36 enforced strictly).** Grain, gradients-as-background, pattern fills — all out. Chart fills are the only "texture," and they come from neutrals + accent at low opacity.
 Refines: F36.
@@ -42,11 +42,12 @@ New. *Why:* Tufte — small multiples beat dashboards-of-singles for comparison.
 New.
 
 ## Composition defaults
-- **Hero row** of 3–4 KPI tiles, full bleed.
+- **App shell: a persistent left sidebar (grouped nav), not a top nav bar.** Evidence: 4/4 real analytics products use a left rail (TheyDo, Mixpanel, Apollo, Gumroad — see `evidence/dashboard.md`). A pinned trial/account card at the sidebar bottom is a common real pattern.
+- **The main surface is often a table or chart+table, not a KPI-tile row.** Table-led and chart-over-table are first-class; a 3–4 tile hero is *one* option, not the default. Lead with whatever answers "what changed?" fastest.
 - **Body** is a 12-col grid; charts span 4, 6, or 12. Never odd spans (5, 7) — they look like accidents.
-- **Filter bar** sticky above the hero OR a `1fr/280px` right rail for filter-heavy dashboards.
-- **No tabs in a dashboard hero.** If you need tabs you have two dashboards — split them.
-- **Breadcrumb / scope** (date range, segment) always visible — a dashboard without scope context is a number salad.
+- **Filter / scope** lives in a left filter rail, a right `~280px` rail, OR a sticky top scope bar — all three are real (Apollo uses a *left* filter rail). Filter-heavy → a dedicated rail.
+- **Tabs are fine to switch report views/categories** (Overview · Reports · Goals — Apollo does this well). The real tell is cramming *unrelated KPIs* into one hero; that's two dashboards. Ban the number-salad, not the tabs.
+- **Scope** (date range, segment) always visible — a dashboard without scope context is a number salad.
 
 ## Forbidden moves
 - Pie charts with >4 slices. Use a bar.
@@ -57,4 +58,4 @@ New.
 - Hero "highlight" callout *and* the same value in a KPI tile = duplicate signal; pick one.
 
 ## Sources
-Tufte (*Visual Display*, *Envisioning Information*) · Few (*Information Dashboard Design*) · Lookbook gallery → Recipes (Dashboard) · DVLA `/performance-metrics` (KpiTile heights, breakdown overflow patterns — battle-tested).
+Tufte (*Visual Display*, *Envisioning Information*) · Few (*Information Dashboard Design*) · Lookbook gallery → Recipes (Dashboard) · DVLA `/performance-metrics` (KpiTile heights, breakdown overflow patterns — battle-tested) · **Mobbin reference study (TheyDo, Mixpanel, Apollo, Gumroad) → `evidence/dashboard.md`** (left-shell, near-monochrome, table-led, tabs-OK calibrations).

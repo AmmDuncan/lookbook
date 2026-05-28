@@ -46,8 +46,17 @@ Refines: F5.
 **P-M-12. Hero on first paint takes ~80% of viewport on desktop, full viewport on mobile.** Below the fold should be visible enough to suggest scroll but not consumed in the hero.
 New.
 
+**P-M-13. The hero SHOWS the product — a real screenshot, fanned app screens, a device frame, or a feature/integration cluster — with depth (shadow/layering).** Not optional. A text-only hero is the #1 AI-marketing tell (ties AP22).
+New. *Why:* all 4 reference landings show the product in the hero (Fireflies, Fibery, Dovetail, Visitors — `evidence/marketing.md`). Telling-instead-of-showing is what reads as generated.
+
+**P-M-14. Hero alignment is contextual: centered (one strong screenshot below) OR left-text / right-product-visual (multiple screens or an integration story).** Both first-class. Dark hero is a valid option alongside the pure-white deviation (P-M-04).
+New. *Why:* the composition flexes to what's being shown; the constant is *show the product*.
+
+**P-M-15. Trust markers sit near the hero CTA, not only in a later section** — a rating chip, a curated logo wall, or "no credit card required" microcopy directly under the CTA cluster.
+New. *Why:* the skeptical reader needs proof at the decision point (Fireflies rating + compliance, Dovetail logo wall, Visitors "no card").
+
 ## Composition defaults
-- **Hero**: eyebrow → headline → deck → CTA cluster → optional inline product visual (right side or below).
+- **Hero**: eyebrow → headline → deck → CTA cluster → **trust markers** → **product visual** (right side or below, with depth). The product visual and trust markers are required, not optional (P-M-13/15).
 - **Section rhythm**: ~5 sections — hero, "what it is" (feature triplet or split), "how it works" (steps or product shots), "social proof" (quote or logo wall), CTA + footer.
 - **Footer**: dark or neutral; sitemap + legal + brand mark.
 - **Sticky nav** on long pages; compact, blurred backdrop when scrolled past the hero.
@@ -64,4 +73,4 @@ New.
 - "Generic SaaS hero" — laptop on a 3D pedestal, blob background, gradient text. Avoid the trifecta.
 
 ## Sources
-Refactoring UI (Wathan & Schoger) · Lookbook gallery → Marketing + SiteArchetypes + Identity · canonical observable examples: Linear, Stripe, Vercel, Arc, Apple product pages.
+Refactoring UI (Wathan & Schoger) · Lookbook gallery → Marketing + SiteArchetypes + Identity · canonical observable examples: Linear, Stripe, Vercel, Arc, Apple product pages · **Mobbin reference study (Fireflies, Fibery, Dovetail, Visitors) → `evidence/marketing.md`** (hero-shows-product, contextual alignment, trust-near-CTA, dark hero).

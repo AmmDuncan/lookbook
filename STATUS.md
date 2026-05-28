@@ -1,6 +1,25 @@
 # Lookbook — build status
 
-_Last updated: 2026-05-27 (overnight autonomous run)_
+_Last updated: 2026-05-28 (design-brain track: battle-tested to v1-ready)_
+
+## Design brain — V1 READY (the agent-facing design intelligence)
+
+The reasoning layer that makes AI-built UI not look AI-built. Separate from the component/gallery track below. Loaded by `SKILL.md`'s "Read first" protocol.
+
+- **`fundamentals.md`** — **F1–F73**, the hard floor with concrete numbers + `Check:` lines, cited by ID. Sections: Typography · Spacing · Hierarchy · Color (incl. F54 fill≠text, F55 status-on-tint, F66 on-color) · Alignment · Density · **Responsive (F50–53)** · Motion · Texture · Iconography · Imagery · **Data visualization (F56–65)** · **Copy & microcopy (F67–73)** · Finishing · **conflict-precedence ladder**.
+- **`anti-patterns.md`** — **AP1–20**, the "looks like AI" tells (second verification sweep). Surface-scoped notes on AP5 (steps) + AP20 (dashboards).
+- **`patterns/`** — dashboard · form · marketing · auth (P-D/P-F/P-M/P-A calibrations).
+- **`personality.template.md`** — per-project deviations + signature move.
+- **Verification pass** (in SKILL.md): two sweeps + mandatory computed-contrast and responsive/touch checks.
+
+**Battle-tested (5 tests, fictional "Mason" universe, sandbox `~/work/sandbox/lookbook-battle-test*`):**
+1. Marketing landing (test #1) — caught a real WCAG CTA bug; exposed the responsive gap.
+2. Dashboard (Mason Console) — exposed: no data-viz floor, status-tint + fill-vs-text contrast gaps → added F54/55, F56–65.
+3. Form (audit setup) — exposed: no copy floor + recurring white-on-accent CTA → added F66, F67–73.
+4. Marketing re-audit — **convergence #1**: 0 shippable violations, 0 new rules. F66 closed the recurring bug.
+5. Auth sign-in — **convergence #2**: 0 shippable violations, 0 new rules.
+
+Two consecutive clean archetypes = convergence bar met. **Brain is v1-ready.** Remaining (optional polish, not blocking): extracted standalone checklist; `lookbook:calibrate` (Mobbin evidence loop to refine the v1 numbers); more archetypes (detail/settings/pricing) on demand.
 
 ## Done & browser-verified
 

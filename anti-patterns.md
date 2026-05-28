@@ -139,11 +139,17 @@ Cite these by ID (`AP1`, `AP2`, …) in the verification narration, the same way
 *Instead:* Make one deliberate, defensible bold move — the signature move from `personality.md`. One element that commits. Safe-everywhere is the meta-tell that contains all the others.
 *Surface scope:* This tell applies to **expressive surfaces** — marketing, hero, landing, brand moments — where restraint reads as timidity. It does **not** bite on scan-first product surfaces (dashboards, data tables, settings), where restraint *is* the goal (familiarity beats novelty; see `patterns/dashboard.md`). On those surfaces, the signature move is the one allowed flourish, not a per-region demand. Don't flag AP20 on a dashboard for being calm.
 
+**AP22. Tells instead of shows — all text, no craft.**
+*Tell:* The page *describes* the product in prose — hero headline, feature paragraphs, three text steps, a quote — with little or no product imagery, depth, iconography, or texture. Flat type blocks on a flat background. The canonical AI-SaaS skeleton, and "spacious" sections that are actually just *empty*.
+*Why it reads as AI:* A human who ships software *shows* the software — real UI in a frame, an annotated screenshot, a diagram of how it works, a code/diff, a data viz, depth and layering. Generation defaults to *describing* because describing is just more text. The result passes every rule and still screams "generated." It's the cumulative face of P-M-07 (imagery is product-true), F49 (imagery does a job), and AP20 (no opinion).
+*Instead:* Show the product. At least one substantial visual that *is* the explanation, not text about it. Add craft — depth, one real texture device with intent, iconography with weight. Spacious ≠ empty: fill the room with something worth seeing.
+*Detect:* You can only catch this by **rendering and looking** (SKILL.md Sweep 0). It is invisible to every rule check — each element is individually fine; the page is flat. (Battle-tested: a fully rule-compliant Mason landing read as "text on paper, screams AI" — caught only once the rendered screenshot was actually viewed.)
+
 ---
 
 ## How to use this file
 
-- **Run it as the second verification pass**, after the fundamentals `Check:` sweep. Fundamentals catch broken rules; anti-patterns catch a technically-correct-but-generic result.
+- **Run it after Sweep 0 (render-and-look, see SKILL.md) and the fundamentals `Check:` sweep.** Sweep 0 catches flatness/emptiness/"AI feel" by eye; fundamentals catch broken rules; anti-patterns catch a technically-correct-but-generic result. AP22 in particular is only visible once you've actually looked at the rendered image.
 - **Count the tells.** 0 ideal, 1–2 acceptable, 3+ means rework. Report the count and the IDs in narration: *"Anti-pattern pass: 2 tells — AP5 (three equal feature cards), AP10 (untreated Inter). Under threshold; flagging AP5 as the one to revisit."*
 - **AP20 is the meta-tell.** If a design trips nothing specific but still feels generated, it's AP20 — the absence of any opinion. The fix is the signature move, not another safe tweak.
 - **Cross-references:** many anti-patterns are the *cumulative* face of a fundamental (AP8↔F12, AP13↔F46, AP18↔F16). The fundamental is the floor; the anti-pattern is what failing it looks like in the wild even when the number technically passes.

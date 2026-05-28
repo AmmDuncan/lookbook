@@ -110,6 +110,10 @@ These numbers are a v1 starting set, grounded in classical sources and Lookbook'
 *Why:* A status tint and its same-hue text are close in luminance by construction, so tinted pills near-universally miss 4.5:1 even though they look fine. This is one of the most common shipped a11y bugs.
 *Check:* Status label text contrast ≥4.5:1 measured against its pill/chip fill, not against the page.
 
+**F66. Every filled control (button, selected chip, badge) pairs its fill with a label color that passes F15 against that fill. The accent must define a tonal step dark enough to carry white text — or the control uses dark ink on a light accent.** Don't assume the brand accent works as a button fill with white text; verify it.
+*Why:* White-on-accent is the single most-shipped contrast bug. A mid-tone accent picked for vibrancy carries white text at only ~3:1 — it needs a 600/700 step for white-text fills, or dark ink on the light tint. (Battle-tested *twice*: the same white-on-`#d97742` CTA failed at 3.15:1 in two separate tests, even after F54/F55 existed — because the failing pair is *neutral text on a non-neutral fill*, which those rules don't cover.)
+*Check:* Every filled control's label contrast ≥4.5:1 against its fill (≥3:1 only if the label is genuinely WCAG-large: ≥18.66px, or ≥24px regular).
+
 ---
 
 ## Alignment
@@ -309,6 +313,34 @@ Charts are not decoration — they're arguments made in ink. These rules come fr
 
 **F65. Sparklines are word-scale graphics: no axis, no gridlines, one hue, at most one end-marker, sized to sit inline with text.**
 *Why:* Tufte's sparkline — a datawords device for trend-at-a-glance inside a sentence or a KPI tile. Adding axes or a legend defeats the form. (The one P-D-05 exception to the ≥240px chart-height rule.)
+
+---
+
+## Copy & microcopy
+
+The words are part of the design. A form, an error, an empty state, a button — their copy carries as much load as their layout. These rules come from Nielsen Norman Group, Jarrett & Gaffney (*Forms that Work*), and the established voice-and-tone canon (Apple HIG, Mailchimp). They govern *what the text says*, where the rest of the file governs how it looks.
+
+**F67. Sentence case for all UI text — labels, buttons, headings, menu items, table headers.** Not Title Case. ALL CAPS only for short eyebrows/overlines (≤1 line, with the F7 tracking).
+*Why:* Sentence case reads measurably faster and is the modern default; Title-Casing every label is a dated tell. Reserve caps for the one typographic accent role.
+*Check:* No multi-word UI string is Title-Cased; caps appear only on tracked eyebrows.
+
+**F68. Buttons name the action with a verb — the label completes "I want to ___".** "Create audit", "Send invite", "Delete project" — never "Submit", "OK", "Yes", "Confirm" alone.
+*Why:* A button labeled with its outcome removes the "what happens if I click this?" hesitation. Generic labels force the user to predict.
+
+**F69. Error messages say what went wrong AND how to fix it, in plain language — no codes, no blame.** "Enter an email like name@company.com", not "Invalid input" or "Error 422".
+*Why:* An error that only names the problem leaves the user stuck; the recovery path is the entire point of the message. (Battle-tested: a form's "Enter a valid https URL" names the problem but not the fix — the kind of copy nothing in the brain flagged before this rule.)
+
+**F70. Cut filler. Help text earns its place by adding what the label can't carry — it never restates the label.** Drop "Please", "Kindly", "In order to", "Note that". A label "Repository URL" needs no helper reading "Enter the repository URL."
+*Why:* Every redundant word is attention tax (P-F surface intent). Concise copy is read; padded copy is skipped.
+
+**F71. One voice: address the user as "you", refer to the product as "we" or by name — and never mix.** Not "my account" in one place and "your account" in another.
+*Why:* Pronoun drift makes a product feel assembled by committee. Consistency is a trust signal.
+
+**F72. Numbers, dates, currency are human-readable and localized: thousands separators, currency symbol/unit, relative time where it aids scanning.** "1,284", "GH₵ 920.70", "2 days ago" — not "1284", "920.7", a raw timestamp.
+*Why:* Raw machine values force the reader to parse; formatted values are read at a glance. (Pairs with F24 tabular alignment and F63 chart units.)
+
+**F73. Tone matches the moment, and no jargon ever. Calm and factual in errors and destructive confirmations; warmer in empty states and success. Never jokey in an error; never expose system vocabulary** ("null", "param", "exception", DB field names) to the user.
+*Why:* Tone is contextual trust — a quip in a payment failure reads as the product not taking the user's problem seriously. Jargon leaks the implementation and excludes the non-technical reader.
 
 ---
 

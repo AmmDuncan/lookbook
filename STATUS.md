@@ -2,12 +2,16 @@
 
 _Last updated: 2026-05-28 (design-brain track: battle-tested to v1-ready)_
 
-## Design brain — V1 READY (the agent-facing design intelligence)
+## Design brain — V1 CANDIDATE (convergence reopened 2026-05-28)
+
+> **Convergence was claimed prematurely.** After the "v1-ready" call, the user caught a real alignment miss by eye (marketing page used 3 unrelated section widths + left-flush hero vs centered sections) that ALL my self-audit sweeps passed over → added **F74** (section-width consistency / shared alignment axis) + **AP21** + a 3rd always-run verification check (alignment-spine trace). **Lesson: my self-audit has visual/compositional blind spots; "ready" must be gated on human visual review, not self-audit alone.** Re-establishing convergence needs fresh clean passes with the upgraded method + a human pass over the mockups.
+
+### the agent-facing design intelligence
 
 The reasoning layer that makes AI-built UI not look AI-built. Separate from the component/gallery track below. Loaded by `SKILL.md`'s "Read first" protocol.
 
-- **`fundamentals.md`** — **F1–F73**, the hard floor with concrete numbers + `Check:` lines, cited by ID. Sections: Typography · Spacing · Hierarchy · Color (incl. F54 fill≠text, F55 status-on-tint, F66 on-color) · Alignment · Density · **Responsive (F50–53)** · Motion · Texture · Iconography · Imagery · **Data visualization (F56–65)** · **Copy & microcopy (F67–73)** · Finishing · **conflict-precedence ladder**.
-- **`anti-patterns.md`** — **AP1–20**, the "looks like AI" tells (second verification sweep). Surface-scoped notes on AP5 (steps) + AP20 (dashboards).
+- **`fundamentals.md`** — **F1–F74**, the hard floor with concrete numbers + `Check:` lines, cited by ID. Sections: Typography · Spacing · Hierarchy · Color (incl. F54 fill≠text, F55 status-on-tint, F66 on-color) · Alignment (incl. **F74 section-width consistency**) · Density · **Responsive (F50–53)** · Motion · Texture · Iconography · Imagery · **Data visualization (F56–65)** · **Copy & microcopy (F67–73)** · Finishing · **conflict-precedence ladder**.
+- **`anti-patterns.md`** — **AP1–21**, the "looks like AI" tells (second verification sweep). Surface-scoped notes on AP5 (steps) + AP20 (dashboards); AP21 = wandering content edges.
 - **`patterns/`** — dashboard · form · marketing · auth (P-D/P-F/P-M/P-A calibrations).
 - **`personality.template.md`** — per-project deviations + signature move.
 - **Verification pass** (in SKILL.md): two sweeps + mandatory computed-contrast and responsive/touch checks.

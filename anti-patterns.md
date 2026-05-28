@@ -135,6 +135,7 @@ Cite these by ID (`AP1`, `AP2`, …) in the verification narration, the same way
 *Tell:* No element breaks the grid, no intentional asymmetry, no single bold move, nothing that a committee would flag. Immaculate and forgettable.
 *Why it reads as AI:* The model regresses to the mean at every decision. The *absence* of any risk is itself the tell — real design has at least one opinion.
 *Instead:* Make one deliberate, defensible bold move — the signature move from `personality.md`. One element that commits. Safe-everywhere is the meta-tell that contains all the others.
+*Surface scope:* This tell applies to **expressive surfaces** — marketing, hero, landing, brand moments — where restraint reads as timidity. It does **not** bite on scan-first product surfaces (dashboards, data tables, settings), where restraint *is* the goal (familiarity beats novelty; see `patterns/dashboard.md`). On those surfaces, the signature move is the one allowed flourish, not a per-region demand. Don't flag AP20 on a dashboard for being calm.
 
 ---
 

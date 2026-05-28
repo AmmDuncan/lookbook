@@ -15,6 +15,10 @@ description: Use when designing, building, OR EXPLORING any web-app UI — pages
 
 **After the design is built**, run a verification pass in two sweeps. First, fundamentals: walk the rules that have a `Check:` line, confirm the rendered output complies, and flag violations. A violation must be either fixed or moved to `personality.md` with a justification — undeclared deviations are not a choice. Second, load `anti-patterns.md` and run the "looks like AI" sweep: count the tells (`AP1`…), report the IDs in narration, and rework until under 3. Fundamentals catch broken rules; anti-patterns catch a technically-correct-but-generic result.
 
+**Two checks the pass must always run explicitly — they get skipped silently otherwise:**
+- **Color-as-text contrast.** Compute (don't eyeball) the contrast of every non-neutral text color and every semantic status label against the surface it actually sits on, including tints (F15, F54, F55). Fill-valid ≠ text-valid; same-hue text-on-tint is the default failure.
+- **Responsive + touch.** A desktop-only mockup cannot prove F50–F53. Either build a mobile frame or *state the breakpoint behavior* (what reflows, what stacks) in narration, and run an explicit coarse-pointer F52 check — every interactive target ≥44px.
+
 A template for the project file lives at `personality.template.md` in this skill — copy and fill in for new projects.
 
 ---

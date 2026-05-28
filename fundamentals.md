@@ -102,6 +102,14 @@ These numbers are a v1 starting set, grounded in classical sources and Lookbook'
 **F21. Borders ≤ 1px, low-contrast (neutral-200 range). Heavy or dark borders are a tell.**
 *Why:* Borders should hint, not shout. A heavy border means the spacing or background isn't doing its job.
 
+**F54. A fill color is not automatically a text color. Re-run F15 whenever a non-neutral (accent, brand, or semantic hue) is used for text or a meaning-bearing icon.** UI-component/graphic contrast (≥3:1) and text contrast (≥4.5:1) are different thresholds — a hue picked to read well as a fill routinely lands near 3:1 as text.
+*Why:* Accent and brand hues are chosen for saturation and presence in fills; reused for type they silently fail F15. (Battle-tested: accent `#d97742` = 3.15:1 as text, green `#1f9d57` = 3.49:1 as text — both fine as fills, both failing as text.)
+*Check:* Every non-neutral text or meaningful-icon color resolves to ≥4.5:1 against its background.
+
+**F55. Semantic status colors must pass F15 against the surface they sit on — including their own tint.** A green label on a light-green pill, amber on amber, red on red must each clear 4.5:1. Darken the text or deepen the tint until it does; same-hue text-on-tint is the default failure mode.
+*Why:* A status tint and its same-hue text are close in luminance by construction, so tinted pills near-universally miss 4.5:1 even though they look fine. This is one of the most common shipped a11y bugs.
+*Check:* Status label text contrast ≥4.5:1 measured against its pill/chip fill, not against the page.
+
 ---
 
 ## Alignment
@@ -261,6 +269,49 @@ Justifiable jobs: hero / product shot · feature illustration · empty-state mas
 
 ---
 
+## Data visualization
+
+Charts are not decoration — they're arguments made in ink. These rules come from Tufte (*The Visual Display of Quantitative Information*), Cleveland (graphical perception), and Few (*Show Me the Numbers*). They're the floor; `patterns/dashboard.md` (P-D-05/09/10) calibrates them per surface.
+
+**F56. Maximize data-ink; erase chartjunk. Every mark must encode data or essential scaffolding — nothing else.** No 3D, no drop shadows on data marks, no decorative fills, no moiré, no redundant gridlines, no background images behind a plot.
+*Why:* Tufte's data-ink ratio — ink spent on decoration is ink stolen from the data. Chartjunk lowers comprehension, never raises it.
+*Check:* For every non-data mark (gridline, frame, fill), name its job. If it isn't axis, scale, or label, delete it.
+
+**F57. Bars start at a zero baseline — always. A line or area chart showing *change* may use a non-zero baseline, but only if the axis is labeled so the truncation is visible.**
+*Why:* A bar's meaning *is* its length; truncating the axis lies about the ratio between bars. A line encodes slope/trend, so a zoomed baseline is honest *if disclosed*.
+*Check:* Bar value-axis minimum = 0. Any non-zero line/area baseline has a labeled axis showing it.
+
+**F58. Rank by magnitude. Categories with no inherent order (not time, not a named sequence, not a scale) sort by value, descending.** Natural-order categories (months, sizes, stages) keep their order.
+*Why:* An unordered bar chart left unsorted forces the eye to do the ranking the chart should have done. (Battle-tested: a "tells by category" bar chart left Component above Typography despite being shorter — a slip nothing else caught.)
+*Check:* Unordered categorical bars are monotonic in length.
+
+**F59. Axis ticks sit at uniform, "nice" intervals — multiples of 1, 2, or 5 × 10ⁿ. Never uneven or arbitrary steps.**
+*Why:* Non-uniform ticks (90·87·85·82·80) distort the mental spacing between values and read as careless. Uniform ticks let the eye interpolate linearly.
+*Check:* Consecutive axis tick deltas are equal and "nice."
+
+**F60. Encode quantity by position and length first, area and angle last. Bar / line / dot for precise comparison; pie only for ≤4 parts of a whole; never bubble-area or angle for values that must be compared exactly.**
+*Why:* Cleveland's ranking of graphical perception — humans judge position far more accurately than area or angle. A pie with 6 slices is unreadable; a bar of the same data is trivial.
+
+**F61. Color in a chart encodes data *type*, not decoration. Categorical → distinct hues (≤6, then group into "other"). Sequential → one hue, light→dark. Diverging → two hues around a meaningful midpoint.** Never rainbow a sequential measure; never spend the brand accent on a single category's meaning.
+*Why:* Color misused in charts reads as noise and breaks F17 silently — six "category" hues are six accent violations. The encoding must match the data's structure or it misleads.
+*Check:* Number of distinct data hues ≤6; a sequential/quantitative measure uses a single-hue ramp.
+
+**F62. Direct-label the data when series ≤ ~4; reach for a legend only when direct labels would collide.**
+*Why:* A legend forces a round-trip — eye to key, back to line, match the color, repeat. A label on the line itself is read once. Legends are a last resort, not a default.
+
+**F63. Every chart states scope and units: what is measured, over what period or population, in what unit.** "Revenue (GH₵), last 30 days, all branches" — not "Revenue."
+*Why:* A number without scope is unreadable; the reader fills the gap with a wrong assumption. (Generalizes P-D-10 from the dashboard pattern to the floor.)
+*Check:* Each chart has a one-line scope/unit caption.
+
+**F64. Gridlines are scaffolding, not content: ≤1px, low-contrast neutral, behind the data — or dropped entirely in favor of direct point labels. Axis *labels*, however, carry meaning and still meet F15.**
+*Why:* Heavy gridlines compete with the data line they're meant to support (F56). But muting the *labels* to match the gridlines is the opposite error — axis numbers are meaningful secondary text, not decoration. (Battle-tested: axis labels at `#9a938a` = 3.04:1 failed F15.)
+*Check:* Gridline contrast is low; axis-label text contrast ≥4.5:1 (F15).
+
+**F65. Sparklines are word-scale graphics: no axis, no gridlines, one hue, at most one end-marker, sized to sit inline with text.**
+*Why:* Tufte's sparkline — a datawords device for trend-at-a-glance inside a sentence or a KPI tile. Adding axes or a legend defeats the form. (The one P-D-05 exception to the ≥240px chart-height rule.)
+
+---
+
 ## Finishing
 
 **F32. Every interactive atom ships: rest, hover, focus-visible, active, disabled. Missing any state = unfinished.**
@@ -305,7 +356,7 @@ Dodging an `AP` tell, and personal taste. Lowest tier: you may **not** break a h
 
 - **At the start of any UI task** — read this file in full. Keep rule IDs in mind while designing.
 - **In narration** — cite rule IDs when applying or evaluating decisions: *"body 16px/1.55 [F3], section padding 96px [F11], primary action only on the right rail [F16]."* This makes the application auditable.
-- **Post-design verification** — run through the `Check:` lines for measurable rules. Flag violations, or declare them in `personality.md` with reason. Then run the second sweep against `anti-patterns.md` — count the "looks like AI" tells and rework until under 3.
+- **Post-design verification** — run through the `Check:` lines for measurable rules. Flag violations, or declare them in `personality.md` with reason. Then run the second sweep against `anti-patterns.md` — count the "looks like AI" tells and rework until under 3. Two checks always run explicitly, because they get skipped otherwise: (1) **compute** the contrast of every non-neutral text color and every status label against the surface it sits on, tints included (F15/F54/F55); (2) **state the responsive reflow** and run a coarse-pointer touch-target check (F50–F53), since a desktop-only frame can't prove them.
 - **Project personality** — the project's `personality.md` lists declared deviations (e.g. `F20: page background pure white because brand spec`) plus the signature move (one pick from gallery → Variation). Both are intentional, both are bounded.
 - **When two rules disagree** — resolve top-down by the precedence tiers above. Accessibility never yields; declared deviations override only the rule they name; you never break a higher tier to satisfy a lower one. Name the tiers in narration when a conflict is resolved.
 

@@ -2,9 +2,19 @@
 
 _Last updated: 2026-05-28 (design-brain track: battle-tested to v1-ready)_
 
-## Design brain — V1 CANDIDATE (convergence reopened 2026-05-28)
+## Design brain — V1 COMPLETE (Mobbin-calibrated + render-loop, 2026-05-28)
 
-> **Convergence was claimed prematurely.** After the "v1-ready" call, the user caught a real alignment miss by eye (marketing page used 3 unrelated section widths + left-flush hero vs centered sections) that ALL my self-audit sweeps passed over → added **F74** (section-width consistency / shared alignment axis) + **AP21** + a 3rd always-run verification check (alignment-spine trace). **Lesson: my self-audit has visual/compositional blind spots; "ready" must be gated on human visual review, not self-audit alone.** Re-establishing convergence needs fresh clean passes with the upgraded method + a human pass over the mockups.
+> **North star:** ship genuinely GOOD designs (and *dynamic* ones — generate the right composition per context), not merely "not AI-looking."
+>
+> **What completes it:** all 4 core archetypes calibrated against real shipped screens (Mobbin study → rule-application reading → `evidence/<arch>.md` → pattern edits), each rebuilt and **verified by looking at rendered pixels** (the render-and-look loop — a LOCAL refinement practice, not shipped). Reading *how rules are applied* in real products found rules that were wrong/too-strict (e.g. dashboard "no tabs", form "top labels only", auth "SSO above") → all made **contextual**, which is what makes the brain generate *dynamically* rather than stamp a template.
+>
+> **Calibration receipts:** `evidence/dashboard.md` (left-shell, near-mono, table-led, tabs-OK) · `evidence/form.md` (entry-vs-settings, contextual labels, destructive section) · `evidence/auth.md` (centered-OR-split, SSO contextual, texture optional) · `evidence/marketing.md` (hero-shows-product, trust-near-CTA).
+>
+> **Verified-by-eye mockups** (sandbox `~/work/sandbox/` + `$JOB/tmp`): dashboard (table-led), settings form (sectioned), split-screen auth, marketing (show-don't-tell). All structurally distinct, one vocabulary = dynamic generation demonstrated.
+>
+> **`CHECKLIST.md`** — standalone runnable verification pass (look → measurable → completeness → AP sweep → pattern fit → deviations).
+>
+> **Earlier blind-spot lesson (kept):** self-audit alone missed contrast-wording, alignment (F74/AP21), whitespace, and "text on paper" (AP22) — all caught only by rendering + looking, or by user review. "Ready" stays gated on viewing pixels + human review, never code-audit alone.
 
 ### the agent-facing design intelligence
 

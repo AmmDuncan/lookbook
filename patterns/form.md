@@ -11,8 +11,8 @@ A surface where the user gives the system structured data. Success = the user fi
 
 ## Calibrations
 
-**P-F-01. Labels above fields by default, left-aligned, weight 500, size 13–14px.**
-Refines: F23. *Why:* Wroblewski — top-aligned labels read fastest and translate to mobile without reflow. Inline (placeholder-as-label) is forbidden — it disappears the moment the user types.
+**P-F-01. Label placement is contextual. Fast-entry forms (signup, checkout, create) → labels above. Settings/preferences forms → label-left / control-right rows are equally valid.** Weight 500, size 13–14px either way.
+Refines: F23. *Why:* Wroblewski — top labels read fastest for *data entry*, and reflow to mobile cleanly. But settings forms are scan-and-occasionally-edit, not fast entry, so the label-left two-column row (Supabase, Gorgias — `evidence/form.md`) is a real, good pattern there. Inline (placeholder-as-label) is forbidden in both — it disappears the moment the user types.
 
 **P-F-02. Field height 44–48px desktop, 48px mobile (matches touch-target F-rule).**
 Refines: F27. *Why:* 48px is the iOS/Material touch minimum; smaller fields force the user to aim.
@@ -23,8 +23,8 @@ Refines: F20, F21. *Why:* eliminates the heavy-border tell.
 **P-F-04. One primary action per form. Secondary actions (Cancel, Back) are ghost/text, never equal-weight.**
 Refines: F16. *Why:* two equal-weight buttons make the user think.
 
-**P-F-05. Primary action sits at the bottom-right of the form on desktop; full-width sticky at the bottom on mobile.**
-New. *Why:* visual flow ends where action begins. Mobile sticky keeps it reachable as the form scrolls.
+**P-F-05. Primary action placement is contextual. Wide/card forms → bottom-right. Single-column forms → left-aligned under the last field (common, real). Mobile → full-width sticky bottom.**
+New. *Why:* visual flow ends where action begins; in a single column the flow ends at the left margin, so bottom-left under the field reads naturally (Babbel, SuperHi — `evidence/form.md`). Bottom-right is for the wider/card layout. Mobile sticky keeps it reachable as the form scrolls.
 
 **P-F-06. Error messages live *under the field*, in danger color, size 12–13px, with a leading icon.** Never as a toast for field-level errors. Never red borders without a message.
 New. *Why:* error placement is the difference between a 30-second fix and a 5-minute hunt.
@@ -47,6 +47,11 @@ New.
 **P-F-12. Single-column layout by default.** Two columns only when (a) the two fields are conceptually a pair (first / last name, city / postcode), AND (b) both fields are short.
 Refines: F22. *Why:* multi-column forms break the F-pattern eye scan; users miss fields.
 
+## Two form contexts (pick by purpose — this is the dynamic-generation branch)
+- **Entry form** (signup, checkout, create-X): a **centered card**, single column, **top labels**, primary **bottom-right** (full-width sticky on mobile). Optimized for fast, confident completion.
+- **Settings / preferences form**: lives in the **left-sidebar app shell** (same shell as the dashboard), **sectioned** (Account / Profile / Theme…), **label-left rows OR top labels**, save **per-section or bottom-left**, the full control vocabulary (text, radio, segmented, toggle+description). Optimized for scan-and-occasionally-edit.
+- **Destructive actions** (Delete account, Reset all) get their **own separated section**, visually distinct, away from the save action — never adjacent to Save.
+
 ## Composition defaults
 - **Form card** with off-page-bg backplate, internal padding 24–32px desktop, 20–24px mobile.
 - **Section breaks** with heading + short helper text + 32–48px gap before next section.
@@ -66,4 +71,4 @@ Refines: F22. *Why:* multi-column forms break the F-pattern eye scan; users miss
 - Multi-column on small screens.
 
 ## Sources
-Wroblewski (*Web Form Design*, *Mobile First*) · Jarrett & Gaffney (*Forms that Work*) · Lookbook gallery → Atoms (Field, Combobox, Select) + Molecules · DVLA AddVehicleServiceModal + native-`<select>` ban + server-search composables (battle-tested).
+Wroblewski (*Web Form Design*, *Mobile First*) · Jarrett & Gaffney (*Forms that Work*) · Lookbook gallery → Atoms (Field, Combobox, Select) + Molecules · DVLA AddVehicleServiceModal + native-`<select>` ban + server-search composables (battle-tested) · **Mobbin reference study (Supabase, Babbel, Gorgias, SuperHi) → `evidence/form.md`** (contextual labels/placement, entry-vs-settings split, destructive section).

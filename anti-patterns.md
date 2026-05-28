@@ -44,6 +44,7 @@ Cite these by ID (`AP1`, `AP2`, …) in the verification narration, the same way
 *Tell:* A row of exactly three (sometimes four) identical cards — icon on top, bold title, two lines of gray body — all equal size, equal weight.
 *Why it reads as AI:* It's the default "features section." Equal sizing means no editorial point of view — the design refused to say which feature matters most.
 *Instead:* Vary the composition. One large + two small (bento), an asymmetric grid, alternating left/right rows, or a single hero feature with the rest as a list. Let importance show in size (F13).
+*Not this tell:* Ordered/numbered process steps (01·02·03) are *sequential peers* — equal treatment is correct, the same way KPI tiles or small multiples are peers. The tell is equal-weight *features* refusing to rank, not equal-weight *steps* that are genuinely parallel.
 
 **AP6. Centered everything.**
 *Tell:* Every section is center-aligned: centered eyebrow, centered heading, centered deck, centered single-column body, all the way down.

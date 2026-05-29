@@ -143,10 +143,10 @@ When building, redesigning, OR adding a new screen/flow inside an existing app (
 0. **Frame it** — for a new product/site, *a new flow in an existing app*, OR *a redesign*, **start with the Frame-it intake (`patterns/approach.md` P-AP-11): ASK the user the framing inputs through structured multiple-choice — personality · accent/brand · theme · platform · scope — adapting the set to the situation (new / in-app-flow / redesign), and lead each question with a recommended option. Never guess the dials.** Then run the rest of `patterns/approach.md` (job → archetype → density → the six dials → one signature *on expressive surfaces only*); for site-level shape load `patterns/site-archetypes.md` (shell choice + the cross-page invariants; gallery → **SiteArchetypes** for specimens); derive the brand token system with `patterns/identity.md` (gallery → **Identity** + **Imagery** for specimens).
 1. **Identify the page archetype** (gallery → **Recipes**): CRUD list · record detail/profile · create/edit form · wizard/onboarding · settings · search & results · feed/activity · dashboard · checkout/billing · pricing · detail-with-map · kanban.
 2. **Pull the recipe** — its Ingredients (which components), Required states, and responsive note.
-3. **Generate 2–3 composition directions** using `patterns/layout.md` (the composition grammar; specimens in gallery → **Layout**). Vary **primary/secondary emphasis**, the **region split**, and the **section rhythm** — *never* the design language. This is where variety comes from: distinct *compositions* of one clean system, not decoration bolted on. For a new or important surface, render all directions and let the human choose. (On expressive surfaces an optional single signature move may distinguish a direction — gallery → **Variation**; on functional surfaces, none.)
+3. **Generate 2–3 composition directions** using `patterns/layout.md` (the composition grammar; specimens in gallery → **Layout**). Vary **primary/secondary emphasis**, the **region split**, and the **section rhythm** — *never* the design language. This is where variety comes from: distinct *compositions* of one clean system, not decoration bolted on. For a new or important surface, render all directions and let the human choose — **presented in the user's chosen view surface, not as a bare path** (see *Presenting directions* below). (On expressive surfaces an optional single signature move may distinguish a direction — gallery → **Variation**; on functional surfaces, none.)
 4. **Build the chosen direction** from Lookbook primitives + tokens, with all required states. Cite fundamental rule IDs (`F<n>`) in narration as decisions are made — body size, spacing, hierarchy, accent placement — so the application is auditable.
 5. **Verify against `fundamentals.md`** — walk the `Check:` lines for measurable rules, confirm the rendered output complies, and flag any violation. A violation must be either fixed or declared in `personality.md` with a justification. Undeclared deviations are not a choice — they are bugs.
-6. **Present and pull reaction — the Review intake** (the bookend to the Frame-it intake, step 0). After presenting a finished render — or the 2–3 directions — to the user, **don't lock the design on your own eye.** Your self-grade has a taste ceiling (it routinely fails to see its own flatness); the user's eye is the authority. ASK for structured reaction through the host's question UI, then feed it into a revise cycle. See **The Review intake** below.
+6. **Present and pull reaction — the Review intake** (the bookend to the Frame-it intake, step 0). First **present the render(s) in the user's chosen view surface** — ask once per session how they want to see directions (browser / easel / screenshots / running app), then reuse it; never just hand over a file path (see **Presenting directions** below). Then, **don't lock the design on your own eye.** Your self-grade has a taste ceiling (it routinely fails to see its own flatness); the user's eye is the authority. ASK for structured reaction through the host's question UI, then feed it into a revise cycle. See **The Review intake** below.
 
 ### How to make 3 directions (without breaking consistency)
 Same components, same tokens. Only vary:
@@ -155,6 +155,17 @@ Same components, same tokens. Only vary:
 - **Rhythm/density** — airy vs. compact section spacing.
 
 Directions are "different arrangements of the same kit," not different design languages.
+
+### Presenting directions — let the user pick the view surface (once per session)
+
+A generated direction is worthless to the user as a bare file path. **Before pulling reaction, present the renders in a surface the user chose — and let them choose.** The first time you present in a session, offer the surfaces you can actually use (a capability ladder — lead with the highest-fidelity available) through the host's structured choice, let the user pick, then **reuse that pick for the rest of the session** (they can override anytime). Don't silently default to one, and never hand over a path and stop.
+
+- **Open the HTML in a browser** — the live, interactive page at real responsive width (the OS "open" command, the user's browser tool, or a dev-server URL). Highest fidelity for a static mockup; the user can resize and click. *Usually the recommended lead.*
+- **A mockup / presentation surface** — push to easel or the brainstorming visual companion as a *labeled* gallery (best for N-up comparison and presentation framing), when one is available.
+- **Rendered screenshots** — the 3-width PNGs from Step 0, shown inline if the chat surface renders images, else as file paths. Quick and shareable, but static.
+- **The running app** — for an in-app flow, the live dev-server URL at the route.
+
+Whichever surface, **label each direction** (A / B / C + its one-line emphasis) so the choice is legible. The Step-0 renders are the artifacts; this is how the user *views* them — it precedes the Review intake's reaction pull.
 
 ### The Review intake — show → react → revise
 
@@ -195,7 +206,7 @@ This skill applies to *exploration*, not just final builds. When producing mocku
 
 - Pull `@lookbook/tokens` (or inline the token `:root` block) into the mockup; use token colors/spacing/type, not ad-hoc values.
 - Reuse the component specs (Badge, Tabs, cards, etc.) and the recipe archetypes.
-- When asked for **"N directions"**, generate them with the composition-directions method (vary emphasis / split / rhythm, never the design language) — so every direction is consistent and brand-true, and only the layout differs.
+- When asked for **"N directions"**, generate them with the composition-directions method (vary emphasis / split / rhythm, never the design language) — so every direction is consistent and brand-true, and only the layout differs. **Present them in the user's chosen view surface** (ask once per session — browser / easel / screenshots / running app), each direction labeled; never just hand over a file path (see *Presenting directions*).
 
 ## When an external source is named (a public site, Dribbble, Figma…)
 

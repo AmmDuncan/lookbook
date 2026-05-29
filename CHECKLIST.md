@@ -16,7 +16,7 @@ The standalone, runnable verification pass. Run top to bottom after building any
 - [ ] **Spacing** every value = n × base unit (F8); section padding in the surface's band (F11 / pattern)
 - [ ] **Alignment spine**: section content widths reduce to ≤3 measures on one axis; edges line up down the page (F74)
 - [ ] **Accent budget**: count accent instances — within the surface's limit (F17; dashboards near-mono, P-D-06)
-- [ ] **Responsive**: mobile reflow stated or built (F50–F53); every touch target ≥44px under coarse pointer (F52)
+- [ ] **Responsive**: **rendered at three widths and looked at** — desktop ~1280 / tablet ~768 / mobile ~390 (not just stated) — reflow holds at each, content parity kept, no nav/toolbar overflow, no direct N-col→1-col jump (F50–F53, `patterns/mobile.md`); every touch target ≥44px under coarse pointer (F52)
 - [ ] **Numerics** tabular + right-aligned in tables (F24)
 
 ## 2 · Completeness (states & copy)

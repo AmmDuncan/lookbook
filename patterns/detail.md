@@ -49,6 +49,9 @@ Refines: F33. *Why:* a detail page is many async regions, not one. The record ca
 **P-DT-11. Hierarchy is not flat: identity > primary content > rail/secondary facts. No more than three weight/size levels per region (F14).** The title dominates; section headings are one step down; field labels are muted support. Resist giving every field equal visual weight.
 Refines: F13, F14. *Why:* the failure mode is a wall of equal-weight key-value rows where nothing leads (the detail-page face of AP8/AP20). The identity and the one fact that matters most (status, balance due, assignee) must out-rank the long tail of fields.
 
+## Container — page vs overlay (defer to `patterns/containers.md`, P-CN)
+A record opened from a list can be its **own page/route** (deep-linkable, refresh-safe — the default for a record the user focuses on, P-CN-05/06) or a **slideover** for a quick peek/edit while the list stays visible, esp. rapid triage down rows (P-CN-03/04). When a peek must also be shareable, use a **routable overlay** — `?item=<id>` on the list route renders the record as a slideover (P-CN-07). Inline single-field edits (P-DT-09) need no container at all.
+
 ## Composition defaults
 - **App shell**: the same left-sidebar shell as the dashboard/settings (the detail page is reached *from* a list inside the app), not a bare page. Breadcrumb (`People / Sam Lee`) sits at the top of the content area.
 - **Header band**: breadcrumb → identity row (avatar + title + status pill + top-right primary/overflow) → key-meta strip → tab bar (if tabbed). This band is the page's anchor; it may stick on long scrolls.

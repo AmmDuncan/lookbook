@@ -47,6 +47,9 @@ New.
 **P-F-12. Single-column layout by default.** Two columns only when (a) the two fields are conceptually a pair (first / last name, city / postcode), AND (b) both fields are short.
 Refines: F22. *Why:* multi-column forms break the F-pattern eye scan; users miss fields.
 
+## Container — page vs overlay (defer to `patterns/containers.md`, P-CN)
+Whether this form opens as a **modal**, a **slideover/drawer**, or its **own page/route** is the container decision owned by `patterns/containers.md`. Short create/edit (≤ ~5 fields, resolve-now) → modal (P-CN-01); medium quick-edit beside a live list, esp. rapid-repeat down rows → slideover (P-CN-03/04); long/multi-step/deep-linkable/refresh-safe → page, step-in-URL (P-CN-05/06). The entry-vs-settings split below is *which form shape*; P-CN is *which container holds it*.
+
 ## Two form contexts (pick by purpose — this is the dynamic-generation branch)
 - **Entry form** (signup, checkout, create-X): a **centered card**, single column, **top labels**, primary **bottom-right** (full-width sticky on mobile). Optimized for fast, confident completion.
 - **Settings / preferences form**: lives in the **left-sidebar app shell** (same shell as the dashboard), **sectioned** (Account / Profile / Theme…), **label-left rows OR top labels**, save **per-section or bottom-left**, the full control vocabulary (text, radio, segmented, toggle+description). Optimized for scan-and-occasionally-edit.

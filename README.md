@@ -1,6 +1,8 @@
 # Lookbook
 
-The design-system mastermind that backs all web-app UI work — **brain + gallery + tokens, bring-your-own-components**. Fundamentals + per-surface patterns + page recipes + composition grammar + the token contract + the visual spec, so any stack ships UI that's consistent, on-brand, accessible, and never generic-AI. Lookbook is the layer that makes *any* component library produce good UI — not another component library.
+**Lookbook is a design brain** — an agent-facing reasoning layer that makes AI-built UI *genuinely good*. Point any coding agent at it and the UI it designs comes out considered, on-brand, accessible, and not generic-AI. It is design **intelligence**, not a component library: timeless fundamentals, per-surface patterns, page recipes, a composition grammar, an anti-pattern ("looks-like-AI") sweep, and a render-and-look verification loop — applied on whatever stack you already use.
+
+It works by **asking before it designs and after it presents**: a *Frame-it intake* pulls your direction (personality, accent, density, platform) up front, and a *Review intake* pulls your reaction afterward and revises on it — so the result converges on your eye, not the model's. (A token contract and a visual gallery ship alongside as supporting reference — but the brain is the point.)
 
 ## Getting started
 
@@ -29,31 +31,36 @@ cd ~/work/tools/lookbook   # work from inside the repo, or reference its path
 
 You should get an intake question or two, then a rendered mockup that cites `F`/`P-` rule IDs and clears the contrast gate.
 
-## Layout
+## What's in it (the brain first)
 
 ```
 lookbook/
-├── packages/
-│   └── tokens/        # @lookbook/tokens — CSS custom properties. The ONE shipped package, shared verbatim by ALL projects.
-├── apps/
-│   └── gallery/       # the canonical visual spec (Claude Design export)
-├── fundamentals.md    # F-rules: timeless design fundamentals, cited by ID
-├── patterns/          # per-archetype + cross-cutting calibrations (dashboard, form, motion, mobile, …)
+├── SKILL.md           # ⭐ the entry point — how an agent USES the brain (read first)
+├── AGENTS.md          # auto-onboarding for Codex & agent CLIs → points at SKILL.md
+├── fundamentals.md    # F-rules — timeless design fundamentals, cited by ID
+├── patterns/          # per-surface + cross-cutting calibrations: dashboard · form · auth ·
+│                      #   marketing · detail · list · states · motion · mobile · accessibility ·
+│                      #   identity · approach (the Frame-it + Review intakes) · …
 ├── anti-patterns.md   # the generic-AI "tells" sweep
 ├── CHECKLIST.md       # the runnable verification pass
-├── SKILL.md           # the agent brain — how to USE Lookbook
-└── scripts/
-    ├── sync-gallery.sh
-    └── contrast.mjs   # zero-dep WCAG contrast gate
+├── scripts/
+│   ├── contrast.mjs   # zero-dep WCAG contrast gate — the brain's one hard gate
+│   └── calibrate.*    # maintainer-only: refine the brain against real products
+├── apps/gallery/      # the canonical VISUAL spec (human reference)
+└── packages/tokens/   # a token contract to copy/reference (supporting — not required to use the brain)
 ```
 
-> **Components are bring-your-own.** Lookbook does not ship a component package — it ships the tokens, the gallery specs (what each primitive looks/behaves like), and the brain. You build the primitives on your own stack to those specs, or vendor a reference implementation. (The former `@lookbook/ui-vue` Vue primitives were vendored into the one app that used them; see `BRIDGE-self-service.md`.)
+**Bring your own components.** Lookbook guides the *design*; you keep your own primitives (it never gets imported as a dependency). It makes whatever component layer you already have produce good UI.
 
-## How it's used
+## How it works
 
-- **Tokens** are dropped into every project (`import "@lookbook/tokens/tokens.css"`) and re-skinned per project by overriding `:root` vars.
-- **Components** are the project's own, built/vendored to the gallery spec and kept in sync with it — never a Lookbook dependency.
-- **Agents** load `SKILL.md` — it encodes the token contract, the design fundamentals + patterns, the use-or-build rule, the page-composition protocol ("converge on vocabulary, diverge on composition → generate 3 directions"), the render-and-look verification pass, and points at the gallery as the visual source of truth.
+An agent loads **`SKILL.md`** and follows it:
+
+1. **Frame-it intake** — for a new surface or redesign, it asks you the framing inputs first (personality · accent · theme · platform · scope). Never guesses the dials.
+2. **Pattern + directions** — pulls the relevant `patterns/<archetype>.md`, generates 2–3 composition directions of one clean system (*converge on vocabulary, diverge on composition*).
+3. **Render and look** — builds an HTML mockup and **renders it**, because rules can't see flatness — only looking at the pixels can.
+4. **Verify** — walks the `fundamentals.md` `Check:` lines, counts anti-pattern tells, and runs the `contrast.mjs` gate (a hard, blocking check).
+5. **Review intake** — presents the result and asks what you'd change (incl. "does any part feel flat?"), then revises on your reaction — so the design lands on *your* eye, not the model's.
 
 ## Refreshing the gallery
 

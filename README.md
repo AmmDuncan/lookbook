@@ -2,6 +2,33 @@
 
 The design-system mastermind that backs all web-app UI work — **brain + gallery + tokens, bring-your-own-components**. Fundamentals + per-surface patterns + page recipes + composition grammar + the token contract + the visual spec, so any stack ships UI that's consistent, on-brand, accessible, and never generic-AI. Lookbook is the layer that makes *any* component library produce good UI — not another component library.
 
+## Getting started
+
+The brain is plain markdown — any agent that can read files can use it. Clone it once, then point your tool at it.
+
+```bash
+git clone <repo-url> ~/work/tools/lookbook   # or anywhere you like
+```
+
+**Claude Code** (auto-triggers as a skill):
+```bash
+ln -s ~/work/tools/lookbook ~/.claude/skills/lookbook
+```
+Restart Claude Code. Now any UI request ("design a settings page", "build this dashboard", "show me 3 directions") loads the brain automatically — it reads `SKILL.md`, the relevant pattern, runs the render-and-look loop, and verifies. Confirm with `/skills` (you should see **lookbook**).
+
+**Codex** (and other agent CLIs that read `AGENTS.md`):
+```bash
+cd ~/work/tools/lookbook   # work from inside the repo, or reference its path
+```
+`AGENTS.md` at the repo root onboards the agent automatically — it reads `SKILL.md` before any UI work. If your tool doesn't auto-read `AGENTS.md`, tell it once: *"Read `SKILL.md` in this repo and follow it for the UI work below."*
+
+**Any other agent / model:** one instruction — *"Read `SKILL.md` first, then `fundamentals.md`, then the relevant `patterns/<archetype>.md`; build the screen as an HTML file, render it (headless Chrome) and look at the pixels, iterate to genuinely-good, then verify with `CHECKLIST.md` and `scripts/contrast.mjs`."*
+
+**Smoke test** (paste into any of the above):
+> Using the Lookbook brain in this repo, design a pricing page for a small SaaS. Run the Frame-it intake first, then build an HTML mockup, render and look, and verify.
+
+You should get an intake question or two, then a rendered mockup that cites `F`/`P-` rule IDs and clears the contrast gate.
+
 ## Layout
 
 ```

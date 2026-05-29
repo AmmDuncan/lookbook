@@ -1,6 +1,6 @@
 # Evidence — Detail / Record / Profile (P-DT calibration)
 
-Method: studied 11 real web detail/record/profile pages on Mobbin across five domains (CRM contact, auth user, product analytics user, e-commerce order, issue/ticket), read by **(a) craft to learn** and **(b) how the rules are applied** — where reality confirms a rule, calibrates a number, or breaks a rule (→ rule is wrong/too strict/needs scope). Reading reality is what catches the over-strict guess; the strongest calibrations below are rules that real screens *bent*.
+Method: studied 11 real web detail/record/profile pages across five domains (CRM contact, auth user, product analytics user, e-commerce order, issue/ticket), read by **(a) craft to learn** and **(b) how the rules are applied** — where reality confirms a rule, calibrates a number, or breaks a rule (→ rule is wrong/too strict/needs scope). Reading reality is what catches the over-strict guess; the strongest calibrations below are rules that real screens *bent*.
 
 Screens: Customer.io (Person/Activity), WorkOS (User profile), HubSpot (Contact — Overview + Activities), Amplitude (User profile/Activity), Apollo (Contact/Company insights), Salesforce (Contact), folk (Person/Notes), Shopify (Order — 3 views: timeline, summary, full record), Linear (Issue), Intercom (Help Desk ticket), Gorgias (ticket). 2026-05-29.
 

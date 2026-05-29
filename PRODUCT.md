@@ -10,7 +10,7 @@ A drop-in "design brain" for AI coding agents (Claude Code, Cursor, Continue, Ai
 2. **Patterns** — `patterns/<surface>.md`, per-archetype calibrations (dashboard, form, marketing, auth, ...).
 3. **Personality** — `personality.md` per project, declared deviations + signature move, so 1000 customers don't ship 1000 identical sites.
 4. **Verification pass** — every UI checks against measurable rules; flags violations or moves them to personality.md.
-5. **Calibration loop** (planned) — `lookbook:calibrate` command that pulls Mobbin references for a rule, measures, and updates the numbers with evidence. Keeps the rules fresh as fashion shifts while fundamentals stay timeless.
+5. **Calibration loop** (planned) — `lookbook:calibrate` command that pulls real-product references for a rule, measures, and updates the numbers with evidence. Keeps the rules fresh as fashion shifts while fundamentals stay timeless.
 
 ## Battle test result (2026-05-28)
 Built a fictional Mason landing page from scratch using the system. Verification pass caught:

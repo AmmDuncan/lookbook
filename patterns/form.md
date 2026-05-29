@@ -74,4 +74,4 @@ Whether this form opens as a **modal**, a **slideover/drawer**, or its **own pag
 - Multi-column on small screens.
 
 ## Sources
-Wroblewski (*Web Form Design*, *Mobile First*) · Jarrett & Gaffney (*Forms that Work*) · Lookbook gallery → Atoms (Field, Combobox, Select) + Molecules · DVLA AddVehicleServiceModal + native-`<select>` ban + server-search composables (battle-tested) · **Mobbin reference study (Supabase, Babbel, Gorgias, SuperHi) → `evidence/form.md`** (contextual labels/placement, entry-vs-settings split, destructive section).
+Wroblewski (*Web Form Design*, *Mobile First*) · Jarrett & Gaffney (*Forms that Work*) · Lookbook gallery → Atoms (Field, Combobox, Select) + Molecules · DVLA AddVehicleServiceModal + native-`<select>` ban + server-search composables (battle-tested) · **Reference study of real public products (Supabase, Babbel, Gorgias, SuperHi) → `evidence/form.md`** (contextual labels/placement, entry-vs-settings split, destructive section).

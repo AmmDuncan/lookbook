@@ -58,4 +58,4 @@ New.
 - Hero "highlight" callout *and* the same value in a KPI tile = duplicate signal; pick one.
 
 ## Sources
-Tufte (*Visual Display*, *Envisioning Information*) · Few (*Information Dashboard Design*) · Lookbook gallery → Recipes (Dashboard) · DVLA `/performance-metrics` (KpiTile heights, breakdown overflow patterns — battle-tested) · **Mobbin reference study (TheyDo, Mixpanel, Apollo, Gumroad) → `evidence/dashboard.md`** (left-shell, near-monochrome, table-led, tabs-OK calibrations).
+Tufte (*Visual Display*, *Envisioning Information*) · Few (*Information Dashboard Design*) · Lookbook gallery → Recipes (Dashboard) · DVLA `/performance-metrics` (KpiTile heights, breakdown overflow patterns — battle-tested) · **Reference study of real public products (TheyDo, Mixpanel, Apollo, Gumroad) → `evidence/dashboard.md`** (left-shell, near-monochrome, table-led, tabs-OK calibrations).

@@ -1,6 +1,6 @@
 # Evidence — Auth (P-A calibration)
 
-Studied 4 real web login screens on Mobbin by **rule-application + what's contextual**. Screens: TheyDo, Remote, HubSpot, Webflow. 2026-05-28.
+Studied 4 real web login screens by **rule-application + what's contextual**. Screens: TheyDo, Remote, HubSpot, Webflow. 2026-05-28.
 
 ## Rule-application reading
 

@@ -1,6 +1,6 @@
 # Evidence — Empty States & Error Pages (P-ES calibration)
 
-Method: studied 15 real web empty/error screens on Mobbin across the five moments that products most often ship cheaply (first-run empty, filtered/no-results, genuine error, 404, offline). Read by **(a) craft to learn** and **(b) how the rules apply** — where reality confirms a rule, calibrates a number, or shows the rule needs *scope*. The strongest calibration here is a *scope* catch: tone (F73) is not constant across the types — jokiness is fine on a 404/offline and forbidden in a real error, and reality drew that line cleanly. 2026-05-29.
+Method: studied 15 real web empty/error screens across the five moments that products most often ship cheaply (first-run empty, filtered/no-results, genuine error, 404, offline). Read by **(a) craft to learn** and **(b) how the rules apply** — where reality confirms a rule, calibrates a number, or shows the rule needs *scope*. The strongest calibration here is a *scope* catch: tone (F73) is not constant across the types — jokiness is fine on a 404/offline and forbidden in a real error, and reality drew that line cleanly. 2026-05-29.
 
 Screens, by moment:
 - **First-run / onboarding**: Tally (Forms — "No forms yet"), Aboard (Onboarding — "No onboardees"), Typeform (Workspace — "Come on in, jane"), Kajabi (Assessments — "Create your first assessment").

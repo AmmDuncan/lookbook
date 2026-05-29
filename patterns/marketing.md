@@ -73,4 +73,4 @@ New. *Why:* the skeptical reader needs proof at the decision point (Fireflies ra
 - "Generic SaaS hero" — laptop on a 3D pedestal, blob background, gradient text. Avoid the trifecta.
 
 ## Sources
-Refactoring UI (Wathan & Schoger) · Lookbook gallery → Marketing + SiteArchetypes + Identity · canonical observable examples: Linear, Stripe, Vercel, Arc, Apple product pages · **Mobbin reference study (Fireflies, Fibery, Dovetail, Visitors) → `evidence/marketing.md`** (hero-shows-product, contextual alignment, trust-near-CTA, dark hero).
+Refactoring UI (Wathan & Schoger) · Lookbook gallery → Marketing + SiteArchetypes + Identity · canonical observable examples: Linear, Stripe, Vercel, Arc, Apple product pages · **Reference study of real public products (Fireflies, Fibery, Dovetail, Visitors) → `evidence/marketing.md`** (hero-shows-product, contextual alignment, trust-near-CTA, dark hero).

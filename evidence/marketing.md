@@ -1,6 +1,6 @@
 # Evidence — Marketing (P-M calibration)
 
-Studied 4 real SaaS landing heroes on Mobbin. Screens: Fireflies, Fibery, Dovetail, Visitors. 2026-05-28.
+Studied 4 real SaaS landing heroes. Screens: Fireflies, Fibery, Dovetail, Visitors. 2026-05-28.
 
 ## Rule-application reading
 

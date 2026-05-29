@@ -17,7 +17,7 @@ One file per fundamental rule (`F3.md`, `F11.md`, …) or pattern calibration. E
 
 - Bringhurst, *Elements of Typographic Style* — <relevant page/section>
 - Müller-Brockmann, *Grid Systems* — <…>
-- Mobbin reference set (<surface category>, n=<count>, pulled <date>):
+- Reference set (<surface category>, n=<count>, pulled <date>):
   - <screen URL or id> — measured: <key value>
   - …
 
@@ -41,6 +41,6 @@ One file per fundamental rule (`F3.md`, `F11.md`, …) or pattern calibration. E
 ## How files get created
 
 - **v1 (now)** — rules in `fundamentals.md` are based on classical sources + Lookbook's existing tokens. Evidence files don't exist yet; that's fine.
-- **Future** — `lookbook:calibrate F<n>` pulls Mobbin references for the relevant surface, measures the rule's variable, and writes/updates `evidence/F<n>.md` with the receipts + a proposed new rule value. The user approves or edits.
+- **Future** — `lookbook:calibrate F<n>` pulls real-product references for the relevant surface, measures the rule's variable, and writes/updates `evidence/F<n>.md` with the receipts + a proposed new rule value. The user approves or edits.
 
 Evidence is append-only history; rules are the current state. The two stay in sync via the calibrate command.

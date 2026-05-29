@@ -11,11 +11,11 @@ Lookbook is repositioned as **brain + gallery + tokens, bring-your-own-component
 - The component **specs** (gallery `Atoms`/`Molecules`/`States` chapters + styling rules) remain the standard to build/vendor primitives against. See `BRIDGE-self-service.md`.
 - The `@lookbook/ui-vue` build status below is **superseded** — kept as a historical record of what was built before the demotion.
 
-## Design brain — V1 COMPLETE (Mobbin-calibrated + render-loop, 2026-05-28)
+## Design brain — V1 COMPLETE (reference-calibrated + render-loop, 2026-05-28)
 
 > **North star:** ship genuinely GOOD designs (and *dynamic* ones — generate the right composition per context), not merely "not AI-looking."
 >
-> **What completes it:** all 4 core archetypes calibrated against real shipped screens (Mobbin study → rule-application reading → `evidence/<arch>.md` → pattern edits), each rebuilt and **verified by looking at rendered pixels** (the render-and-look loop — a LOCAL refinement practice, not shipped). Reading *how rules are applied* in real products found rules that were wrong/too-strict (e.g. dashboard "no tabs", form "top labels only", auth "SSO above") → all made **contextual**, which is what makes the brain generate *dynamically* rather than stamp a template.
+> **What completes it:** all 4 core archetypes calibrated against real shipped screens (reference study → rule-application reading → `evidence/<arch>.md` → pattern edits), each rebuilt and **verified by looking at rendered pixels** (the render-and-look loop — a LOCAL refinement practice, not shipped). Reading *how rules are applied* in real products found rules that were wrong/too-strict (e.g. dashboard "no tabs", form "top labels only", auth "SSO above") → all made **contextual**, which is what makes the brain generate *dynamically* rather than stamp a template.
 >
 > **Calibration receipts:** `evidence/dashboard.md` (left-shell, near-mono, table-led, tabs-OK) · `evidence/form.md` (entry-vs-settings, contextual labels, destructive section) · `evidence/auth.md` (centered-OR-split, SSO contextual, texture optional) · `evidence/marketing.md` (hero-shows-product, trust-near-CTA).
 >
@@ -42,7 +42,7 @@ The reasoning layer that makes AI-built UI not look AI-built. Separate from the 
 4. Marketing re-audit — **convergence #1**: 0 shippable violations, 0 new rules. F66 closed the recurring bug.
 5. Auth sign-in — **convergence #2**: 0 shippable violations, 0 new rules.
 
-Two consecutive clean archetypes = convergence bar met. **Brain is v1-ready.** Remaining (optional polish, not blocking): extracted standalone checklist; `lookbook:calibrate` (Mobbin evidence loop to refine the v1 numbers); more archetypes (detail/settings/pricing) on demand.
+Two consecutive clean archetypes = convergence bar met. **Brain is v1-ready.** Remaining (optional polish, not blocking): extracted standalone checklist; `lookbook:calibrate` (reference evidence loop to refine the v1 numbers); more archetypes (detail/settings/pricing) on demand.
 
 ## Done & browser-verified
 

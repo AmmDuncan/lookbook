@@ -1,6 +1,6 @@
 # Evidence — Feed / Activity stream (P-FA calibration)
 
-Method: studied 16 real web feed/stream screens on Mobbin across the four sub-genres the
+Method: studied 16 real web feed/stream screens across the four sub-genres the
 pattern must cover — **social/project activity**, **notifications inbox**, **audit/security
 log**, **changelog/release notes** — read by **(a) craft to learn** and **(b) how the rules
 are applied**: where reality confirms a rule, calibrates a number, or breaks it (→ rule is
@@ -16,7 +16,7 @@ Screens (2026-05-29):
 
 | Rule | What real feeds do | Verdict |
 |---|---|---|
-| Item-row anatomy (P-FA-01) | every screen = **actor/avatar + verb + object + timestamp**, optional preview/action: Notion "You edited Arthur Burr · 24 min ago" + image; Twitch "janesmith1995 changed Game/Category to Overwatch 2 · 6 min ago"; GitHub "jdoemobbin uninstalled the BackHub integration · 1 min ago"; PlanetScale "samlee… Created main-… in content-mobbin" | **CONFIRM + CALIBRATE → P-FA-01**: the actor→verb→object→time quad is universal across all 4 sub-genres. The object is the only varying slot; everything else is fixed grammar. |
+| Item-row anatomy (P-FA-01) | every screen = **actor/avatar + verb + object + timestamp**, optional preview/action: Notion "You edited Arthur Burr · 24 min ago" + image; Twitch "janesmith1995 changed Game/Category to Overwatch 2 · 6 min ago"; GitHub "jdoe uninstalled the BackHub integration · 1 min ago"; PlanetScale "samlee… Created main-… in content-main" | **CONFIRM + CALIBRATE → P-FA-01**: the actor→verb→object→time quad is universal across all 4 sub-genres. The object is the only varying slot; everything else is fixed grammar. |
 | Type cue, not decoration (P-FA-02) | Sketch labels each row **Star / Asset**; Webflow tags **Update / Feature**; PlanetScale/GitHub carry **monospace event-type codes** (`branch_password.created`, `integration_installation.destroy`); Airbnb prefixes "Listing Activity / Task" | **CALIBRATE → P-FA-02 (F19/F44)**: mixed item types are encoded by a **consistent leading icon/label/colored code**, never by ad-hoc per-row styling. Audit logs lean on the mono event-type string as the canonical machine-readable type. |
 | Date grouping vs relative time (P-FA-03) | **Grouped**: Basecamp "Today" header, Airbnb "19 JUN 2023" header, Gemini per-date blocks. **Relative**: Notion/Twitch/Todoist "X ago", GitHub "1 minute ago". **Both**: Webflow "3 months ago — October 15, 2022 at 02:23am"; Airbnb relative-feel + 6:39 PM column | **CALIBRATE → P-FA-03 (F72)**: recent streams use relative time; long/grouped streams add **date-group headers** (Today / Yesterday / earlier). Audit logs use **absolute** timestamps (compliance needs the exact instant). Webflow's relative-plus-absolute is the gold standard for a public changelog. |
 | Read/unread + dismiss (P-FA-04) | Todoist: **unread left-border + dot**, hover "×"/dismiss target, **"Mark all as read"**; Sketch: **Unread(2)/Read tabs** + "Mark all as read"; Zeplin: per-row "Mark as Read" + selected outline | **CALIBRATE → P-FA-04**: notification feeds get an unread affordance (dot/left-border/tint) + a bulk "mark all read" + per-item dismiss/mark-read. Audit logs and changelogs are read-only — **no** read/unread (calibrates the rule's scope). |

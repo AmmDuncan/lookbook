@@ -148,7 +148,7 @@ This skill applies to *exploration*, not just final builds. When producing mocku
 - Reuse the component specs (Badge, Tabs, cards, etc.) and the recipe archetypes.
 - When asked for **"N directions"**, generate them with the composition-directions method (vary emphasis / split / rhythm, never the design language) — so every direction is consistent and brand-true, and only the layout differs.
 
-## When an external source is named (Mobbin, a site, Dribbble, Figma…)
+## When an external source is named (a public site, Dribbble, Figma…)
 
 Lookbook does **not** auto-override an explicitly requested source, and does not silently stay out either. **Ask the user which mode** (use AskUserQuestion), then proceed:
 

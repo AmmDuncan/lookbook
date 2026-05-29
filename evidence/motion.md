@@ -1,9 +1,9 @@
 # Evidence — Motion (P-MT calibration)
 
 ## Why this evidence file is different (read first)
-The other patterns (detail, marketing, dashboard, auth…) are **Mobbin-calibrated**: I studied real still screenshots and read *how the rules are applied* to confirm/calibrate/break each calibration. **Motion cannot be calibrated that way.** A still screenshot captures zero frames of an animation — you cannot read a duration, an easing curve, a stagger step, or a reduced-motion fallback from a single image. Watching app recordings would help but isn't reproducible the way a captured screenshot is, and it still wouldn't yield the *numbers* (ms, beziers) the pattern needs.
+The other patterns (detail, marketing, dashboard, auth…) are **reference-calibrated**: I studied real still screenshots and read *how the rules are applied* to confirm/calibrate/break each calibration. **Motion cannot be calibrated that way.** A still screenshot captures zero frames of an animation — you cannot read a duration, an easing curve, a stagger step, or a reduced-motion fallback from a single image. Watching app recordings would help but isn't reproducible the way a captured screenshot is, and it still wouldn't yield the *numbers* (ms, beziers) the pattern needs.
 
-So motion is calibrated from the **established motion-design canon** — the same body of work the platform vendors and the WCAG group codified — and the timing psychophysics already baked into `fundamentals.md` F29. The receipts here are **principles + token tables from authoritative sources**, not screenshots. This is stated plainly so a future reader doesn't go looking for a Mobbin study that can't exist.
+So motion is calibrated from the **established motion-design canon** — the same body of work the platform vendors and the WCAG group codified — and the timing psychophysics already baked into `fundamentals.md` F29. The receipts here are **principles + token tables from authoritative sources**, not screenshots. This is stated plainly so a future reader doesn't go looking for a reference study that can't exist.
 
 ## Calibration sources
 

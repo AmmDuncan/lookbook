@@ -68,4 +68,4 @@ New. *Why:* mistyped passwords are the #1 login failure; the toggle is a 30-seco
 - Auth card with shadow + border + ring + gradient backplate. Pick one elevation move.
 
 ## Sources
-Wroblewski (*Mobile First*, *Web Form Design*) · Lookbook gallery → Auth + Recipes · canonical observable examples: Stripe, Linear, Notion, Vercel, Arc auth flows · DVLA self-service in-progress login refresh (direction A: desktop split + M1 mobile cap — see [[project_self_service_lookbook_refresh]]) · **Mobbin reference study (TheyDo, Remote, HubSpot, Webflow) → `evidence/auth.md`** (centered-OR-split first-class, SSO placement contextual, texture optional, remember-me).
+Wroblewski (*Mobile First*, *Web Form Design*) · Lookbook gallery → Auth + Recipes · canonical observable examples: Stripe, Linear, Notion, Vercel, Arc auth flows · DVLA self-service in-progress login refresh (direction A: desktop split + M1 mobile cap — see [[project_self_service_lookbook_refresh]]) · **Reference study of real public products (TheyDo, Remote, HubSpot, Webflow) → `evidence/auth.md`** (centered-OR-split first-class, SSO placement contextual, texture optional, remember-me).

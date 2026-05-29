@@ -1,6 +1,6 @@
 # Evidence — Form (P-F calibration)
 
-Studied 4 real web forms on Mobbin, read by **how rules are applied** + **what's contextual** (the dynamic-generation question: which context picks which choice?). Screens: Supabase (Preferences), Babbel (Profile), Gorgias (Settings), SuperHi (Account). 2026-05-28.
+Studied 4 real web forms, read by **how rules are applied** + **what's contextual** (the dynamic-generation question: which context picks which choice?). Screens: Supabase (Preferences), Babbel (Profile), Gorgias (Settings), SuperHi (Account). 2026-05-28.
 
 ## Rule-application reading — the key finding is that form choices are CONTEXTUAL
 

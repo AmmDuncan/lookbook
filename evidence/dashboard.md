@@ -1,6 +1,6 @@
 # Evidence — Dashboard (P-D calibration)
 
-Method: studied 4 real web analytics dashboards on Mobbin, read by **(a) craft to learn** and **(b) how the rules are applied** — where reality confirms a rule, calibrates a number, or breaks a rule (→ rule is wrong/too strict/needs scope).
+Method: studied 4 real web analytics dashboards, read by **(a) craft to learn** and **(b) how the rules are applied** — where reality confirms a rule, calibrates a number, or breaks a rule (→ rule is wrong/too strict/needs scope).
 
 Screens: TheyDo (Metrics), Mixpanel, Apollo (Analytics/Goals), Gumroad (Analytics). 2026-05-28.
 

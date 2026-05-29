@@ -122,6 +122,7 @@ When building, redesigning, OR adding a new screen/flow inside an existing app (
 3. **Generate 2–3 composition directions** using `patterns/layout.md` (the composition grammar; specimens in gallery → **Layout**). Vary **primary/secondary emphasis**, the **region split**, and the **section rhythm** — *never* the design language. This is where variety comes from: distinct *compositions* of one clean system, not decoration bolted on. For a new or important surface, render all directions and let the human choose. (On expressive surfaces an optional single signature move may distinguish a direction — gallery → **Variation**; on functional surfaces, none.)
 4. **Build the chosen direction** from Lookbook primitives + tokens, with all required states. Cite fundamental rule IDs (`F<n>`) in narration as decisions are made — body size, spacing, hierarchy, accent placement — so the application is auditable.
 5. **Verify against `fundamentals.md`** — walk the `Check:` lines for measurable rules, confirm the rendered output complies, and flag any violation. A violation must be either fixed or declared in `personality.md` with a justification. Undeclared deviations are not a choice — they are bugs.
+6. **Present and pull reaction — the Review intake** (the bookend to the Frame-it intake, step 0). After presenting a finished render — or the 2–3 directions — to the user, **don't lock the design on your own eye.** Your self-grade has a taste ceiling (it routinely fails to see its own flatness); the user's eye is the authority. ASK for structured reaction through the host's question UI, then feed it into a revise cycle. See **The Review intake** below.
 
 ### How to make 3 directions (without breaking consistency)
 Same components, same tokens. Only vary:
@@ -130,6 +131,27 @@ Same components, same tokens. Only vary:
 - **Rhythm/density** — airy vs. compact section spacing.
 
 Directions are "different arrangements of the same kit," not different design languages.
+
+### The Review intake — show → react → revise
+
+The closing half of the human eye-gate, and the mirror of the Frame-it intake: the intake pulls *direction* before composing; this pulls *reaction* after presenting. It exists because the design must converge on the **user's** judgment, not the builder's — a model's "I'd ship it" has a taste ceiling and a flatness blind spot, so the user's eye is the authority, and you capture it deliberately instead of waiting for free-form "make it better."
+
+After presenting any non-trivial UI (a finished screen, or N directions), pull reaction through the host's **structured multiple-choice** UI — give the user *options to react to*, never an open "thoughts?" (hard to answer well). Keep it light: one gut-check, drill in only if they want changes.
+
+- **Gut check (always):** *"How does this land?"* → **Ship it · Close — small tweaks · Needs real work · Wrong direction.** If "ship it," stop — don't fish for problems.
+- **What to change (only if not ship-it):** multi-select over the levers you can actually act on — **accent / color · density (too tight / too airy) · type & personality · a specific region (hero / chart / table / nav / …) · "it feels flat or boring" · hierarchy / what's emphasized · copy & tone.** Deliberately offer **"feels flat or boring"** — that is the *user-perceivable* signal for the one thing rules and a model's self-grade routinely miss (the dryness blind spot); here the user is the detector the brain can't be.
+- **Direction picker (if 2–3 were shown):** which is closest, and what to borrow from the others.
+
+Then **map each reaction to the lever that owns it and re-enter the loop:**
+- color/accent → `patterns/identity.md` (P-ID dials; re-verify on-color, F66)
+- density → `F26` / `patterns/approach.md` P-AP-03
+- type / personality → identity dials / `F1`
+- a specific region → composition variants (P-AP-10) / `patterns/layout.md`
+- **flat / boring → a depth pass** — *not decoration* (AP20/AP23/AP24 still hold). The teachable craft moves: one bolder compositional anchor (e.g. a dark rail, an asymmetric hero), show a *relationship* in the data viz instead of a lone trend, give the key numbers type-character, add a genuine secondary view (a breakdown panel) rather than one chart. Make it *designed*, not ornamented.
+- hierarchy / emphasis → P-AP-10
+- copy & tone → `F67`–`F69`
+
+**Revise → re-render and LOOK → re-present → re-ask the gut check**, until "ship it." Record what changed against the readout (P-AP-09). The Frame-it intake (before) and the Review intake (after) bookend the work with the user's eye.
 
 ---
 

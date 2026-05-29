@@ -57,7 +57,7 @@ These numbers are a v1 starting set, grounded in classical sources and Lookbook'
 **F10. Component inner padding ≥ space-3 (12px) on all sides. Never crowd the edges.**
 *Why:* Content needs breathing room from its container; flush-to-edge reads as broken.
 
-**F11. Section padding (vertical between major page regions): 64–128px desktop, 32–64px mobile.**
+**F11. Section padding (vertical between major page regions): 64–128px desktop, 32–64px mobile.** This is a page / marketing-region number — data-dense surfaces (dashboard, settings, tables) do NOT use it for inter-region gaps; they follow their compact density band (~24–32px). On marketing, ~96–128px is the working section-to-section range and ~160px is reserved for hero/CTA bookends. _(Scope clarified 2026-05-29 — both the dashboard and marketing calibration passes flagged F11 being misread as a universal gap.)_
 *Why:* Sections need to feel like sections. Less than this reads as one continuous blob.
 *Check:* Major region top/bottom padding in range.
 
@@ -130,7 +130,7 @@ These numbers are a v1 starting set, grounded in classical sources and Lookbook'
 **F25. Optical alignment overrides mathematical when they conflict. (Icon optical centers; round letters extending past the cap-line.)**
 *Why:* What's mathematically centered often looks off-center because human perception weights mass, not bounding boxes.
 
-**F74. Section content widths come from a small, defined set of measures — not an arbitrary per-section number — and all share ONE alignment axis (a common centered container, or a common left edge).** A page needs at most two or three sanctioned widths: a default container (~1080–1200px) and a narrow prose/focal measure (~60–75ch, F5). Every section uses one of those; narrower measures **nest inside and align to** the default container's edge or center. Full-bleed backgrounds span edge to edge, but their inner content returns to the same set. Don't mix left-flush and centered strategies down the page.
+**F74. Section content widths come from a small, defined set of measures — not an arbitrary per-section number — and all share ONE alignment axis (a common centered container, or a common left edge).** A page needs at most two or three sanctioned widths: a default container (~1080–1280px) and a narrow prose/focal measure (~60–75ch, F5). Every section uses one of those; narrower measures **nest inside and align to** the default container's edge or center. Full-bleed backgrounds span edge to edge, but their inner content returns to the same set. Don't mix left-flush and centered strategies down the page.
 *Why:* Consistency — not uniformity — is the goal. Two or three related widths on a shared axis read as a system; the page feels designed. *Arbitrary* per-section widths (760, then 1120, then 840) and flip-flopping between left-flush and centered make the content edges wander, which the eye reads as "assembled, not designed." It's fine for a prose section to be narrower than a feature grid — it is **not** fine for each to invent its own width off its own axis. (Battle-tested: my own marketing page used three unrelated widths and a left-flush hero against centered sections — a real alignment break the contrast/AP/copy sweeps all passed over.)
 *Check:* List every section's content width — they reduce to ≤3 sanctioned measures, all on one axis. Trace the left (and right) content edge down the page: narrower sections sit *inside* the wider ones and align to a shared edge/center, never off to the side.
 

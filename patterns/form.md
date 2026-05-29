@@ -14,8 +14,8 @@ A surface where the user gives the system structured data. Success = the user fi
 **P-F-01. Label placement is contextual. Fast-entry forms (signup, checkout, create) → labels above. Settings/preferences forms → label-left / control-right rows are equally valid.** Weight 500, size 13–14px either way.
 Refines: F23. *Why:* Wroblewski — top labels read fastest for *data entry*, and reflow to mobile cleanly. But settings forms are scan-and-occasionally-edit, not fast entry, so the label-left two-column row (Supabase, Gorgias — `evidence/form.md`) is a real, good pattern there. Inline (placeholder-as-label) is forbidden in both — it disappears the moment the user types.
 
-**P-F-02. Field height 44–48px desktop, 48px mobile (matches touch-target F-rule).**
-Refines: F27. *Why:* 48px is the iOS/Material touch minimum; smaller fields force the user to aim.
+**P-F-02. Field height 38–44px desktop (40px sweet spot — match the primary button for rhythm); 44–48px on mobile / coarse pointer.**
+Refines: F27, F52. *Why:* 44–48px is the *touch* target (iOS/Material), correct on mobile — but applying it to desktop reads chunky. _(Calibrated 2026-05-29: real desktop fields cluster ~38–42px; common design-system default is 40px. The old 44–48 desktop figure was the touch number misapplied.)_
 
 **P-F-03. Field background ≠ page background.** Off-page-bg fields read as inputs without a heavy border. If the page is `#fafafa`, fields are `#fff` (or token equivalent in dark mode).
 Refines: F20, F21. *Why:* eliminates the heavy-border tell.
@@ -23,7 +23,7 @@ Refines: F20, F21. *Why:* eliminates the heavy-border tell.
 **P-F-04. One primary action per form. Secondary actions (Cancel, Back) are ghost/text, never equal-weight.**
 Refines: F16. *Why:* two equal-weight buttons make the user think.
 
-**P-F-05. Primary action placement is contextual. Wide/card forms → bottom-right. Single-column forms → left-aligned under the last field (common, real). Mobile → full-width sticky bottom.**
+**P-F-05. Primary action placement is contextual. Entry cards (signup / checkout / create) → full-width primary at the card bottom (the dominant live pattern — desktop AND mobile, not just a mobile sticky). Settings → bottom-right Save, OR per-section Save (each editable section owns its own button — the modern norm). Single-column forms → left-aligned under the last field. Mobile → full-width.** _(Calibrated 2026-05-29: 7/8 live entry forms use a full-width primary, not bottom-right/left; settings increasingly use per-section Save.)_
 New. *Why:* visual flow ends where action begins; in a single column the flow ends at the left margin, so bottom-left under the field reads naturally (Babbel, SuperHi — `evidence/form.md`). Bottom-right is for the wider/card layout. Mobile sticky keeps it reachable as the form scrolls.
 
 **P-F-06. Error messages live *under the field*, in danger color, size 12–13px, with a leading icon.** Never as a toast for field-level errors. Never red borders without a message.

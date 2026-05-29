@@ -11,10 +11,10 @@ A surface that convinces, not a surface that operates. The reader is undecided, 
 
 ## Calibrations
 
-**P-M-01. Hero headline 56–96px desktop, 36–48px mobile; weight 500–600; line-height 1.05–1.1; tracking −0.025 to −0.03em.**
-Refines: F4, F7. *Why:* the headline is the entire first impression. Below 56px it reads as a section header, not a hero.
+**P-M-01. Hero headline 44–96px desktop, 36–48px mobile; weight 500–600; line-height 1.05–1.1; tracking −0.025 to −0.03em.** The 44px floor applies ONLY to a centered hero with a dominant product visual below (composition carries the impact); a left/right-aligned hero keeps the 56px floor.
+Refines: F4, F7. *Why:* the headline is the entire first impression. _(Calibrated 2026-05-29: excellent centered heroes with a big visual run ~40–44px — the 56px floor was too strict for that composition, but still holds when the headline is doing the heavy lifting alone.)_
 
-**P-M-02. Sub-headline (eyebrow OR deck): eyebrow 13px uppercase tracked +0.12em; deck 20–24px regular-weight line-height 1.5.**
+**P-M-02. Sub-headline (eyebrow OR deck): eyebrow 13px uppercase tracked +0.12em; deck 18–24px regular-weight line-height 1.5.**
 Refines: F7. *Why:* the deck explains what the headline asserts; both can't be the same weight class.
 
 **P-M-03. One primary CTA in the hero. Secondary "Learn more" allowed as ghost/text.**
@@ -49,7 +49,7 @@ New.
 **P-M-13. The hero SHOWS the product — a real screenshot, fanned app screens, a device frame, or a feature/integration cluster — with depth (shadow/layering).** Not optional. A text-only hero is the #1 AI-marketing tell (ties AP22).
 New. *Why:* all 4 reference landings show the product in the hero (Fireflies, Fibery, Dovetail, Visitors — `evidence/marketing.md`). Telling-instead-of-showing is what reads as generated.
 
-**P-M-14. Hero alignment is contextual: centered (one strong screenshot below) OR left-text / right-product-visual (multiple screens or an integration story).** Both first-class. Dark hero is a valid option alongside the pure-white deviation (P-M-04).
+**P-M-14. Hero alignment is contextual — centered with a dominant product visual below is the DEFAULT (the most common live pattern); reach for left-text / right-product-visual when there are multiple screens or an integration story to show.** Both first-class. Dark hero is a valid option alongside the pure-white deviation (P-M-04). _(Calibrated 2026-05-29: at n=12, ~8 are centered-with-visual — the earlier 50/50 read shifts to centered-dominant.)_
 New. *Why:* the composition flexes to what's being shown; the constant is *show the product*.
 
 **P-M-15. Trust markers sit near the hero CTA, not only in a later section** — a rating chip, a curated logo wall, or "no credit card required" microcopy directly under the CTA cluster.

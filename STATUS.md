@@ -13,6 +13,22 @@ Four candidate brain files authored by blind sub-agents, then each put through a
 
 Also fixed dangling references to the dropped `variation.md` brain file in `approach.md` (P-AP-06) and `identity.md` (P-AP-06/P-ID-08 now point at `personality.template.md`); the gallery `Variation.html` chapter still exists and its `gallery → Variation` references stay valid. **Coverage now ~13 archetypes + 5 cross-cutting** (states / motion / mobile / containers / accessibility) + the approach/layout/identity/site-archetypes framing files. Method confirmed again: **more rules ≠ better** — the battle test caught one nerf (P-ID-09) and one neutral (P-SA), both corrected before ship.
 
+## 2026-05-29 — First live-UI calibration pass (dashboard · form · marketing)
+
+Ran `lookbook:calibrate` for real — three parallel passes, each studying ~12–20 real shipped products and classifying every rule VALIDATE / CALIBRATE / TOO-STRICT. **All three were healthy refine-don't-add results: number/branch tweaks only, ZERO new rules adopted.** Evidence appended (dated Run-2 sections) to `evidence/{dashboard,form,marketing}.md` (source phrased generically). Applied + render-gated (`$JOB/tmp/calibrate/verify.png` — 40px fields · 6-KPI row · 44px centered hero all confirmed good):
+
+- **P-D-04** — max 4 KPI tiles → **4–6** (4 ideal, 6 ceiling; ≥7 compacts to a list). Real dashboards cluster 4–6.
+- **P-F-02** — field height 44–48 desktop → **38–44 (40 sweet spot)**; 44–48 is the *touch* number, mobile-only. De-chunks generated forms (our own mockups had used the chunky 44px).
+- **P-F-05** — added the missing real branches: **entry cards → full-width primary** (7/8 live forms), **settings → per-section Save**.
+- **P-M-01** — hero floor 56 → **44 when centered with a dominant visual below** (composition carries it); 56 kept for left/right heroes.
+- **P-M-14** — recalibrated: **centered-with-visual-below is the default** (~8/12), not the old 50/50.
+- **P-M-02** — deck floor 20 → **18**.
+- **F74** — default container ceiling note 1200 → **1280** (the ≤3-widths/single-axis rule itself validated).
+- **F11** — added a **scope clause** (it's a page/marketing-region number, NOT the dashboard/settings inter-region gap which is ~24–32px) — both passes flagged this confusion.
+- **Validated, no change:** F2/F3/F8/F16/F17/F24/F26/F27/F32/F34 and most P-D/P-F/P-M rules — the numbers were largely already grounded. P-M-13 (hero-shows-product) validated 12/12.
+
+**Parked from this pass (NOT adopted — refine-don't-add):** a floating/embedded-label form variant (battle-test candidate before any P-F-01 sub-clause); minor wording-clarity adds (label→field 6–8px gap, P-D-10 Check tighten, gradient-on-product-frame ≠ banned-bg note, "hero is a display step above the F2 ratio" note).
+
 ## 2026-05-29 — Review intake (show → react → revise)
 
 Added the **post-present feedback loop** to `SKILL.md` (composition protocol step 6 + a dedicated "The Review intake" section), cross-referenced from `approach.md` P-AP-11 as its mirror. After presenting a finished render (or N directions), pull **structured reaction** via the host's multiple-choice UI — a gut-check (Ship it · small tweaks · needs work · wrong direction), then, only if not ship-it, a multi-select of the levers you can act on (accent · density · type/personality · a specific region · **"feels flat or boring"** · hierarchy · copy). Each reaction maps to its owning lever (color→P-ID, density→F26/P-AP-03, flat→a depth pass of teachable craft moves, region→P-AP-10/layout, …) and re-enters revise→re-render→re-present→re-ask, until "ship it." Rationale: the model's self-grade has a taste ceiling + flatness blind spot (proven this session — the P-ID-09 nerf and "Opus is strongest" were both the user's eye correcting the model's), so the design must converge on the **user's** eye, not the builder's. Frame-it intake (before) + Review intake (after) bookend the work. The "feels flat/boring" option deliberately makes the user the dryness detector the brain can't be.

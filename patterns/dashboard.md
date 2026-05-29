@@ -20,7 +20,7 @@ Refines: F4. *Why:* the value is the headline; below 28px it stops feeling like 
 **P-D-03. Tile-to-tile gap is one token (16 OR 24, never both in the same grid).**
 Refines: F12. *Why:* tiles are peers; equal gap, not hierarchical.
 
-**P-D-04. Maximum 4 KPI tiles in the hero row (desktop); 2 per row mobile. More = compact into a list.**
+**P-D-04. 4–6 KPI tiles in the hero row (desktop) — 4 ideal, 6 the ceiling; 2 per row mobile. ≥7 = compact into a list.** _(Calibrated 2026-05-29: real dashboards cluster at 4–6, e.g. a 6-up 3×2 grid; the old hard "4" was too strict — the scan-breakdown trigger is ≥7.)_
 New. *Why:* 4-up is the cognitive limit for parallel KPIs; 5+ stops being scannable.
 
 **P-D-05. Charts get ≥240px height (desktop). Below that, axes and trend become illegible.**

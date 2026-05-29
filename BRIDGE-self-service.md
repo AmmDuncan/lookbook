@@ -1,6 +1,8 @@
 # Bridge analysis — DVLA Self-Service → Lookbook
 
-How the self-service redesign (`dvla-self-service-worktrees/self-service-design-refresh`, branch `feat/self-service-design-refresh`) maps onto Lookbook, and the plan to adopt it. **Read-only analysis — the worktree was not modified.**
+How the self-service redesign (`dvla-self-service-worktrees/self-service-design-refresh`, branch `feat/self-service-design-refresh`) maps onto Lookbook.
+
+> **STATUS 2026-05-29 — VENDORED, not a dependency.** Self-service no longer aliases `@lookbook/ui-vue` from this monorepo. The Vue primitives it used were **copied into the app** at `lib/lookbook-ui/` (with `tokens.css` → `assets/css/lookbook-tokens.css`), the 11 import sites repointed to `~/lib/lookbook-ui`, and the `existsSync`/alias/transpile machinery removed from its `nuxt.config.ts` (this also fixed a build that would have failed on Netlify when the local monorepo path was absent). Self-service production build verified green. Going forward self-service **owns** those components; Lookbook's gallery specs remain the standard to keep them in sync with. The original analysis below is retained for context.
 
 ## Headline
 

@@ -1,5 +1,0 @@
-/* Public stylesheet for @lookbook/ui-vue.
-   - components.css : the spec's component layer (synced from the gallery)
-   - overlays.css   : live overlay positioning Reka needs (gallery omits it) */
-@import './components.css';
-@import './overlays.css';

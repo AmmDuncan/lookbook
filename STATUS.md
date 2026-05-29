@@ -1,6 +1,15 @@
 # Lookbook — build status
 
-_Last updated: 2026-05-28 (design-brain track: battle-tested to v1-ready)_
+_Last updated: 2026-05-29 (components demoted — Lookbook is now brain + gallery + tokens, BYO components)_
+
+## 2026-05-29 — Component package demoted & removed
+
+Lookbook is repositioned as **brain + gallery + tokens, bring-your-own-components** — the layer that makes any component library produce good UI, not another Vue lib. Every design win on the design-brain track was achieved with **zero component imports** (Mode B), proving the brain stands on its own.
+
+- **`@lookbook/ui-vue` (Vue primitives) and `apps/playground` (their demo) were removed** from this repo. The components were **vendored** into the one app that used them — DVLA self-service (`feat/self-service-design-refresh`), now living at `lib/lookbook-ui/` there with the lookbook alias dropped from its `nuxt.config.ts` (also fixed a broken Netlify fallback). The batch-2 molecule work was committed first (`3baedaf`) so it's preserved in history.
+- **`@lookbook/tokens` stays** — the framework-agnostic convergence contract, the one shipped package.
+- The component **specs** (gallery `Atoms`/`Molecules`/`States` chapters + styling rules) remain the standard to build/vendor primitives against. See `BRIDGE-self-service.md`.
+- The `@lookbook/ui-vue` build status below is **superseded** — kept as a historical record of what was built before the demotion.
 
 ## Design brain — V1 COMPLETE (Mobbin-calibrated + render-loop, 2026-05-28)
 
@@ -45,7 +54,7 @@ Foundations · Atoms · Molecules · Organisms · Auth · States · Motion · Da
 - `src/tokens.css` — the contract (OKLCH ramps, semantic light/dark roles, size scale, status, tints, hero-only gradient, motion).
 - `skins/dvla-self-service.css` — example skin mapping the contract onto the DVLA-green brand.
 
-### `@lookbook/ui-vue` — ATOMS done (Reka pattern)
+### `@lookbook/ui-vue` — ATOMS done (Reka pattern) — ⚠️ SUPERSEDED (package removed 2026-05-29, vendored into DVLA self-service)
 Built on the spec's `components.css` (shipped as `styles.css`) + typed Vue SFCs. All **browser-verified** in the playground across default-light, default-dark, and the DVLA skin (see `/tmp/lookbook-shots/`, or run the playground):
 
 | Atom | Notes |

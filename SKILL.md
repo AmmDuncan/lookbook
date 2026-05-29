@@ -33,8 +33,8 @@ A template for the project file lives at `personality.template.md` in this skill
 
 Lookbook is the design system every UI is built from. Four layers:
 
-1. **Tokens** (`@lookbook/tokens`) — the contract. CSS custom properties for color, spacing, radius, shadow, type, motion, sizing, status, tints. The single source of truth.
-2. **Components** (`@lookbook/ui-vue`, future `ui-react`) — primitives implementing the specs, per framework, built once.
+1. **Tokens** (`@lookbook/tokens`) — the contract, and the **one shipped package**. CSS custom properties for color, spacing, radius, shadow, type, motion, sizing, status, tints. The single source of truth.
+2. **Component specs** — the gallery + styling rules define what each primitive *looks and behaves like* (variants, sizes, states). Lookbook is **not** a component library you install — you build the primitives on your own stack (or vendor a reference implementation) to match these specs.
 3. **Recipes** — sanctioned page-level compositions per archetype.
 4. **Composition grammar** — how to lay out a blank page (grid, regions, reflow).
 
@@ -48,7 +48,7 @@ The **gallery** (`apps/gallery`, the Claude Design export) is the canonical *vis
 
 There are **two modes of adoption**, and both are first-class. Pick per task; you do not need permission to use Mode B.
 
-**Mode A — Lookbook as a dependency.** Install `@lookbook/tokens` + `@lookbook/ui-*`; its primitives literally power the app. Best for greenfield, or a full re-skin where you're replacing the component layer. The "Using components" / "Per-project setup" sections below assume this mode.
+**Mode A — adopt Lookbook's layers directly.** Install `@lookbook/tokens` (the one shipped package) and build — or vendor a reference implementation — the primitives to the gallery specs so they literally power the app. Best for greenfield, or a full re-skin where you're (re)building the component layer. The "Using components" / "Per-project setup" sections below assume this mode. (There is no component package to `npm install` — Lookbook ships the tokens, the specs, and the brain; the primitives are yours.)
 
 **Mode B — Lookbook as a design guide (the common case for established apps).** The project keeps using **its own existing components** (`components/ui/`, legacy primitives, whatever's there). Lookbook never gets imported. Instead you *borrow its visual language* — token values, spacing/radius/shadow scale, type hierarchy, the recipe for the archetype, the composition directions, the component **styling specs** (what a good Field / Card / Badge / Tabs *looks and behaves like*) — and design the screen or flow to that standard. This is fully legitimate. A great design guided by Lookbook, built on the project's own components, is a *success*, not a compromise.
 
@@ -100,9 +100,9 @@ Raw Tailwind default colors (`bg-emerald-500`, `text-rose-100`, `bg-amber-300/20
 
 ## Using components
 
-This is the **Mode A** path (importing Lookbook). In **Mode B**, swap "the shared UI package / `@lookbook/ui-*`" for "the project's own component layer" throughout — the gallery spec is still the standard you build/style *to*, you're just building it on the app's own primitives.
+This is the **Mode A** path (primitives built/vendored to Lookbook's specs). In **Mode B**, swap "the project's spec-built primitives" for "the project's own existing component layer" throughout — the gallery spec is still the standard you build/style *to*, you're just building it on the app's own primitives.
 
-1. **Check for an existing primitive** — in the project's own `components/ui/` (or wherever its primitives live), then `@lookbook/ui-*` if imported.
+1. **Check for an existing primitive** — in the project's own `components/ui/` (or wherever its primitives live), including any vendored from Lookbook's specs.
 2. **If it exists** — use it, and verify it matches the gallery spec (variants, sizes, states). If it drifts, fix the primitive, don't fork it. In Mode B, "fix the primitive" means bring the *project's* component up to the Lookbook styling spec.
 3. **If it doesn't exist** — build it to the gallery spec (in the shared UI package for Mode A, or as a proper project component for Mode B). **Never one-off it inline.**
 4. Every interactive atom ships all states; every data view ships **loading + empty + error (+ success)** — not optional. This is design-system law in *both* modes.
@@ -167,12 +167,12 @@ Visible `focus-visible` rings · 4.5:1 text contrast · ≥44px touch targets (t
 ## Per-project setup (the bridge)
 
 ```ts
-import "@lookbook/tokens/tokens.css";   // shared contract
-// + install @lookbook/ui-vue (or ui-react)
+import "@lookbook/tokens/tokens.css";   // shared contract — the one installable package
+// build (or vendor) the primitives to the gallery specs; there is no component package
 ```
 - Point Tailwind theme at the CSS vars (see `@lookbook/tokens` README).
 - Override skin tokens in the app's `:root`.
-- `tokens.css` is shared **verbatim**; components are per-framework, **built once, reused**.
+- `tokens.css` is shared **verbatim**; the primitives are the project's own, **built/vendored to the gallery spec** and kept in sync with it.
 
 ---
 

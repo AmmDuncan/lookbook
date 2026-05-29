@@ -1,0 +1,66 @@
+# Pattern: Checkout / Billing
+
+**Inherits:** all of `fundamentals.md` AND `patterns/form.md` (P-F) unless overridden below.
+**Cite as:** `P-CO-<nn>`.
+
+## Surface intent
+The conversion-critical money surface — the user is about to hand over a card. It is a high-stakes form (inherits every P-F field/label/primary/validation rule, plus the destructive-separation discipline), but the stakes raise the bar on three things P-F treats as merely good practice: **every cost must be visible before the click** (no surprises), **exactly one action** must be unmistakable, and **trust** must be earned at the point of payment. Success = the user pays without hesitation, second-guessing, or a hunt for the total. A confused user on a checkout doesn't file a support ticket — they abandon the cart. Speed matters, but confidence matters more: the user has to *believe* the number and *trust* the button.
+
+## Density band
+**Medium (F26), inherited from P-F.** Field height 44–48px (P-F-02); inner padding 12–16px; field gap 16–20px; section gap 32–48px. The order-summary ledger is the one denser region — its rows sit 28–36px so the cost lines read as a tight tabular block, not a spaced-out list. Texture: **none** (F36 medium band; money surface — nothing competes with the numbers and the button).
+
+## Calibrations
+
+**P-CO-01. Layout is contextual — this is the dynamic-generation branch. Default is two columns: the form (contact → shipping → payment) on the left/main, a sticky order-summary rail (~320–400px) on the right. Pick the variant by the order's size and the purchase's complexity:**
+- **Two-column, form + sticky order-summary (default).** Form steps stacked on the left; the summary rail stays visible (sticky) as the form scrolls so the total never leaves the screen. *Use when* the cart has a handful of line items and the purchase is one page (adidas, Blue Apron, Mailchimp, HODINKEE — `evidence/checkout.md`).
+- **Single-column, summary inline.** No rail; form then a summary block then the action. *Use when* the cart is tiny (1–2 items) or the viewport is narrow — and on mobile **always** (F50; Dollar Shave Club).
+- **Stepped flow** (own header stepper: Info → Shipping → Payment → Review). *Use when* the purchase is long or compliance-heavy (many fields, tax/exemption, licensing). The summary may collapse to a header line on each step but the **total stays visible** even collapsed (Squarespace, Zoom, Apple "Show Order Summary: S$140.25").
+Refines: P-F two-context split, P-DT-03 column count. *Why:* layout tracks the order's information mass and the flow's length, not a fixed template — a one-item cart in a four-step shell reads as friction; a 30-field licensing purchase on one page reads as a wall. The variation IS the dynamism.
+
+**P-CO-02. The order summary is a line-item ledger, not prose: line items (name + qty + price) → Subtotal → Shipping → Discount → Tax → Total, every amount right-aligned and decimal-aligned (F24, tabular-nums). The Total is set apart — bolder, larger, with a hairline above it. Every cost is shown here, before the click; nothing is revealed only at the final step.**
+Refines: F24, F72. *Why:* the summary is the user's contract with the price. Right-aligned decimals let the eye compare magnitudes down the column (HODINKEE $5,250.00, Mailchimp, DSC); the set-apart Total answers "what will I pay?" in one glance. Discounts read as a distinct negative line (adidas −$2.25, Blue Apron −$44.99). Hiding shipping or tax until the last line is the cart-abandonment tell (Forbidden moves).
+- **Edit affordance:** each completed section / the cart carries an inline "Edit"/"Change" link back to it (adidas, Squarespace, Mailchimp, Blue Apron) — the user fixes one line without restarting.
+- **Charged-now vs recurring:** subscription checkouts make the amount charged **today** the headline and state the recurring amount explicitly and separately ("Due today $0" vs "$172.22/mo" — Pipedrive, Mailchimp, Squarespace). A single ambiguous "Total" on a recurring purchase is a hidden-fee tell in disguise.
+
+**P-CO-03. Payment fields are one tight, autofill-friendly group: card number (full-width, with a lock glyph and accepted-card marks), then expiry + CVV on one short row. Validate on blur with a positive ✓ on valid (P-F-07); errors under the field (P-F-06, F69). Wire `autocomplete="cc-number / cc-exp / cc-csc"` so the browser/password-manager autofill works.**
+Refines: P-F-06, P-F-07, P-F-12. *Why:* the card trio is conceptually a pair-plus (P-F-12 allows the multi-column row because expiry + CVV are short and conceptually one unit). Autofill is the single biggest friction reducer on the surface — break it and you tax every user. Inline ✓ (Tripadvisor, ClassPass) gives confidence mid-entry on the highest-stakes form. The lock glyph, accepted-card marks (Visa/MC/Amex), and processor mark ("Powered by Stripe") sit **in** the field group, not scattered.
+- **Billing = shipping:** a single "Billing address same as shipping" checkbox collapses the entire billing-address block (Nike, HODINKEE, adidas) — the highest-value field reduction available; default it checked.
+
+**P-CO-04. ONE primary action that names the outcome AND shows the amount, reachable without scrolling. "Pay GH₵ 240.00", "Place order — GH₵ 240.00", "Complete order" — never "Submit", "Continue" alone, never two equal CTAs. Secondary actions (Back, Cancel) are ghost/text (P-F-04).**
+Refines: F16, F68, F72, P-F-04, P-F-05. *Why:* on the surface where the click charges money, the button must remove all doubt about *what happens* and *how much* (F68 + F72). Two equal buttons here is the most expensive AP18 on the whole product. Placement is calibrated past P-F-05: the action lives **with the total** — at the top or bottom of the sticky summary rail, or pinned — so it's reachable without scrolling a long form (Walmart "Place order for $6.53" at the top of the summary card; Mailchimp Pay-now in the rail). On mobile the summary collapses to a sticky total bar carrying the button (P-CO-08).
+
+**P-CO-05. Trust marks cluster at the point of payment and do a job — they are functional reassurance, not decoration (F35/F49 applied to trust): a lock glyph on the card field, accepted-card marks by the card input, an encryption/processor note near the button ("🔒 SSL encrypted payment", "Powered by Stripe"), a guarantee where it's real ("30-day money-back").**
+New (refines F35, F49, F19). *Why:* the user decides whether to trust the form in the second before clicking pay; the reassurance must be *there*, at the button — not a row of badges in the footer. But trust marks obey F19/F49: a security mark means *secure*; don't scatter seals as decoration or invent a guarantee that isn't real (Squarespace SSL note, DSC Norton/BBB at the button, lock glyphs in card fields — all `evidence/checkout.md`).
+
+**P-CO-06. Stepped flows name where you are and keep the total visible. A stepper (Info → Shipping → Payment → Review) is for long/compliance-heavy purchases; each step shows progress and the total stays on screen — collapsed to a header line is fine ("Show order summary: S$140.25"), hidden entirely is not.**
+Refines: P-F-09 (sections → stepper at volume). *Why:* a long checkout split into named steps lowers the per-screen load (P-F-09), but the user's anchor — the amount they'll pay — must survive every step. Apple collapses the line items but keeps the total in the toggle; that's the rule. A stepped flow that drops the total between steps makes the user distrust the final number.
+
+**P-CO-07. Ship the full state set — and on this surface the **processing / disabled-while-submitting** state and a **calm payment-failure error path** are mandatory, not optional. While the charge is in flight the primary action is disabled + shows a spinner/"Processing…"; a declined card returns a calm, plain-language, actionable message (F69, F73) inline near the payment — never a toast that vanishes, never a raw gateway code, never jokey.**
+Refines: F32, F33, F69, F73. *Why:* the pay action is the one place a double-submit double-charges — disabling while submitting is a correctness requirement, not polish. And payment failure is the most fraught moment in the product: "Your card was declined. Check the number and expiry, or try another card." — not "Error 402" and never a quip (F73 demands calm in money failures). These are precisely the states generation skips (AP19), and the costliest to skip here.
+
+**P-CO-08. Mobile reflow: the summary collapses to a sticky bottom total bar carrying the primary action; the line-item breakdown is one tap away (expand/"View order"). The form is single-column; the card trio stays grouped. Nothing in the summary is dropped (F50).**
+Refines: F50, P-F-05. *Why:* on a phone the right rail can't stay beside the form, but the total and the pay button must stay reachable — a sticky bottom bar showing "Total GH₵ 240.00 · Pay" is the standard reflow. The breakdown collapses (tap to expand) but is never removed; hiding it would breach F50 and erode trust (the user can't verify the number they're paying).
+
+## Composition defaults
+- **App/checkout shell**: a focused checkout chrome (logo + step indicator if stepped + a "secure checkout" cue), not the full product nav — the page's job is to finish the purchase, so navigation away is deliberately reduced.
+- **Form column**: single column, top labels (P-F-01 entry context), sectioned Contact / Shipping / Payment with headings (P-F-09), section gap 32–48px. Card trio grouped (P-CO-03).
+- **Order-summary rail**: ~320–400px, sticky; line-item ledger → totals ledger → Total set apart → primary action with amount → trust marks. On mobile becomes the sticky bottom total bar (P-CO-08).
+- **Edit affordances** on every completed section and the cart (P-CO-02).
+- **Promo/gift-code** field is a single inline input + Apply, inside the summary (adidas, DSC) — never a step of its own.
+- **Disclosure**: terms that affect the charge (recurring, trial-end, refund policy) sit *above* the button in plain language (F73), never buried below it.
+
+## Forbidden moves
+- **Hidden fees revealed at the last step** — shipping/tax/service charge appearing only after the user commits. Every cost is in the summary from the start (P-CO-02).
+- **Two equal-weight CTAs** ("Pay" and "Continue shopping" both filled) — the most expensive AP18 (P-CO-04).
+- **The total or the pay button below the fold on a long form** — unreachable without scrolling (P-CO-04).
+- **Jokey or blaming payment-error copy**, raw gateway codes ("Error 402", "txn_declined") — calm + actionable only (P-CO-07, F73).
+- **No processing/disabled state** — the pay button stays live during the charge, inviting a double-submit double-charge (P-CO-07).
+- **Summary hidden on mobile** instead of collapsing to a sticky total bar — the user can't verify what they're paying (P-CO-08, F50).
+- **Placeholder-as-label on card fields** (P-F forbidden; doubly bad here — the user loses the field meaning mid-card-entry).
+- **Trust badges as footer decoration** divorced from the pay action, or invented guarantees (P-CO-05, F19).
+- **Native `<select>` for country/state on paginated data** (P-F-10).
+- **A promo-code step of its own** that interrupts the flow — it's an inline field in the summary.
+
+## Sources
+Wroblewski (*Web Form Design*) · Jarrett & Gaffney (*Forms that Work*) · Baymard Institute (checkout usability — cost transparency, single-CTA, autofill) · NN/g (e-commerce checkout) · Lookbook `patterns/form.md` (inherited) + gallery Atoms (Field, Input, Button, Combobox) · DVLA invoice/receipt billed-party + walk-in sale-create flows (battle-tested money surfaces) · **Mobbin reference study (Nike, Apple, HODINKEE, Zoom, Dollar Shave Club, Blue Apron, adidas, Walmart, Rows, Tripadvisor, ClassPass, Fresha, Squarespace, Pipedrive, Mailchimp) → `evidence/checkout.md`** (2-col form+sticky-summary default, line-item ledger with set-apart total, card-trio grouping + autofill + trust marks in-group, ONE CTA naming outcome+amount reachable-without-scroll, charged-now-vs-recurring split, stepped flow keeps total visible, processing/decline states mandatory, mobile sticky total bar).
+</content>

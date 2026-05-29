@@ -1,6 +1,19 @@
 # Lookbook — build status
 
-_Last updated: 2026-05-29 (components demoted — Lookbook is now brain + gallery + tokens, BYO components)_
+_Last updated: 2026-05-29 (deepen pass #2 — states / accessibility / identity / site-archetypes, battle-tested)_
+
+## 2026-05-29 — Deepen pass #2 (battle-tested)
+
+Four candidate brain files authored by blind sub-agents, then each put through a **baseline-vs-deepened battle test** (a blind agent designs one brief on the current brain vs the brain + the new file; renders judged help/neutral/nerf, gated by the user's eye — never self-grade). Outcomes:
+
+- **`patterns/states.md` (P-ST-01..12)** — the unhappy-path / state-machine pattern (loading-skeleton-vs-spinner, error scope, partial failure, optimistic+rollback, stale-while-revalidate, offline, success ceremony, a11y announce) + the empty≠error≠loading truth-split. Battle: **HELP (clear)** — deepened arm designed the full state set; baseline did only filtered-empty. **Shipped.**
+- **`patterns/accessibility.md` (P-AY-01..12)** — the non-color a11y floor (names, native elements, focus order/ring, landmarks, dialog contract, error association, live regions, target size, skip link, reduced-motion). Battle = **markup diff** (deterministic, not render): **HELP (modest)** — closed page-level gaps (skip link, async live region) on a baseline already strong from form/containers. **Shipped.** Wired into SKILL's always-run checks.
+- **`patterns/identity.md` (P-ID-01..09)** — brand → token-system derivation (accent ramp + F66 on-color, one-accent, type pairing, the four tactile dials, motion register, the one signature, and the **P-ID-09 guardrail**). Battle flagged the first P-ID-09 ("functional surfaces = ZERO decorative identity") as a **NERF** — it stripped a legitimate brand-hero moment, making a Pulse billing panel blander than the no-identity baseline. **P-ID-09 softened**: scan-first *body* = zero decoration; the one expressive element (hero/showcase) may carry a single restrained, removable brand moment; a no-hero surface (warehouse dashboard) still gets zero. Re-rendered to confirm the carve-out doesn't reopen the Variation drift. **Shipped (softened).**
+- **`patterns/site-archetypes.md` (P-SA-01..03)** — multi-page composition. Battle was **NEUTRAL for the brief** (F74 + layout.md already deliver cross-page coherence within one shell; a 2-page marketing test didn't stress shell-choice / supporting-pages). **Trimmed from 6 rules to 3** — kept shell choice (P-SA-01), the cross-page axis F74 can't see (P-SA-02), and the supporting-pages test (P-SA-03); dropped the nav-model / persistent-contextual-chrome / entry-exit rules as `layout.md`/IA/`containers.md` restatements. **Shipped (lean).**
+
+Also fixed dangling references to the dropped `variation.md` brain file in `approach.md` (P-AP-06) and `identity.md` (P-AP-06/P-ID-08 now point at `personality.template.md`); the gallery `Variation.html` chapter still exists and its `gallery → Variation` references stay valid. **Coverage now ~13 archetypes + 5 cross-cutting** (states / motion / mobile / containers / accessibility) + the approach/layout/identity/site-archetypes framing files. Method confirmed again: **more rules ≠ better** — the battle test caught one nerf (P-ID-09) and one neutral (P-SA), both corrected before ship.
+
+_Earlier status (components demoted, V1, gallery, tokens) below — unchanged._
 
 ## 2026-05-29 — Component package demoted & removed
 

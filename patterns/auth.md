@@ -11,8 +11,8 @@ Login, signup, OTP, password recovery, and the moments around them. The user is 
 
 ## Calibrations
 
-**P-A-01. Centered auth card, max-width 380–440px, on a sparse backplate.**
-New. *Why:* a wider card looks like a form, not a moment. Narrower feels cramped on desktop.
+**P-A-01. Centered auth column, max-width 380–440px, on a sparse backplate — with OR without card chrome; both first-class.**
+New. *Why:* a wider column looks like a form, not a moment; narrower feels cramped on desktop. ~1/3 of excellent shipped auth has **no card** — the form floats centered, hierarchy carried by spacing + the one CTA (Duolingo, Codecademy, Asana, Linktree, Mistral, Brilliant — live-UI calibration); the card is one good option, not a mandate. The width band holds either way.
 
 **P-A-02. Card padding 32–40px desktop, 24–28px mobile.**
 Refines: F10. *Why:* the card *is* the page — it can afford the room.
@@ -29,8 +29,8 @@ Refines: F16, P-F-04. *Why:* full-width inside a 400px card centers attention wi
 **P-A-06. Secondary actions ("Forgot password?", "Don't have an account?") are *text links*, not ghost buttons.** Placed: forgot-password inline right of the password label; sign-up prompt below the CTA.
 Refines: F16. *Why:* button visual weight competes; links don't.
 
-**P-A-07. OTP inputs: 6 separate boxes, 48–56px tall, 40–48px wide, monospace tabular numerals, auto-advance on type, auto-submit on completion.**
-New. *Why:* the OTP UI is the moment that earns the trust; well-built OTP feels native, fumbled OTP makes the user reach for the password.
+**P-A-07. OTP inputs: 6 separate boxes, ~40–48px tall, ~36–44px wide, monospace tabular numerals, auto-advance on type. Auto-submit on completion is the default but not mandatory — an explicit "Verify"/"Continue" button is a valid common choice (Walmart, Asana, Stripe).**
+New. *Why:* the OTP UI is the moment that earns the trust; well-built OTP feels native, fumbled OTP makes the user reach for the password. (Live-UI calibration: real OTP boxes measure smaller than the old 48–56px band; many ship an explicit Verify rather than auto-submitting.)
 
 **P-A-08. Errors land *under the field*, not as toasts.** Server errors ("Invalid credentials") above the CTA, same color/size as field errors, with a leading icon.
 Refines: P-F-06. *Why:* the user's eye is on the form; errors need to be where the eye is.

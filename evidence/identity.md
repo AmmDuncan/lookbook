@@ -33,5 +33,3 @@ Monarch, Sprig, Graphite, Framer and Lovable could be assembled from one compone
 6. **Motion character is a dial too** — cross-ref motion.md, derived from the same adjective (P-ID-07).
 7. **One signature, expressive surfaces only, removable** — cross-ref P-AP-07 / personality.template.md (P-ID-08).
 8. **Functional surfaces get zero decorative identity** — the dropped-Variation guardrail, restated (P-ID-09).
-</content>
-</invoke>

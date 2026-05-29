@@ -104,7 +104,7 @@ These numbers are a v1 starting set, grounded in classical sources and Lookbook'
 
 **F54. A fill color is not automatically a text color. Re-run F15 whenever a non-neutral (accent, brand, or semantic hue) is used for text or a meaning-bearing icon.** UI-component/graphic contrast (≥3:1) and text contrast (≥4.5:1) are different thresholds — a hue picked to read well as a fill routinely lands near 3:1 as text.
 *Why:* Accent and brand hues are chosen for saturation and presence in fills; reused for type they silently fail F15. (Battle-tested: accent `#d97742` = 3.15:1 as text, green `#1f9d57` = 3.49:1 as text — both fine as fills, both failing as text.)
-*Check:* Every non-neutral text or meaningful-icon color resolves to ≥4.5:1 against its background.
+*Check:* Every non-neutral text or meaningful-icon color resolves to ≥4.5:1 against its background. Run it — don't eyeball: `node scripts/contrast.mjs "<fg>:<bg>:<label>" …` (exits non-zero on any failure).
 
 **F55. Semantic status colors must pass F15 against the surface they sit on — including their own tint.** A green label on a light-green pill, amber on amber, red on red must each clear 4.5:1. Darken the text or deepen the tint until it does; same-hue text-on-tint is the default failure mode.
 *Why:* A status tint and its same-hue text are close in luminance by construction, so tinted pills near-universally miss 4.5:1 even though they look fine. This is one of the most common shipped a11y bugs.

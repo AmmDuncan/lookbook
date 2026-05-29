@@ -3,7 +3,7 @@
 The standalone, runnable verification pass. Run top to bottom after building any surface. Each line is pass/fail or a number to fill in — no hand-waving. Cite IDs in narration.
 
 ## 0 · Look at it first
-- [ ] **Viewed the rendered design** (the actual pixels, not the markup). Everything below assumes you have looked.
+- [ ] **Viewed the rendered design** (the actual pixels, not the markup) — rendered via the project's app + your browser tool, a headless screenshot of the file, or a mockup surface; ask which is available if unsure (SKILL.md "Step 0"). Re-render after each fix. Everything below assumes you have looked.
 - [ ] **Is it genuinely good / would I ship it?** (the north star — not "does it avoid the tells")
 - [ ] Reads as *made by someone who ships software*, not text-on-paper (AP22)
 - [ ] Shows substance/craft/depth where the surface calls for it — not flat
@@ -11,7 +11,7 @@ The standalone, runnable verification pass. Run top to bottom after building any
 - [ ] Nothing reads as accidental (clipped texture, floating content, mis-wrapped headline)
 
 ## 1 · Measurable (compute, don't eyeball)
-- [ ] **Contrast**: every non-neutral text colour and every status label ≥4.5:1 against the surface it sits on, tints included (F15, F54, F55, F66). Filled controls' labels ≥4.5:1 on their fill (F66).
+- [ ] **Contrast** — *run the checker, don't eyeball.* Collect every non-neutral text/surface pair, every status label on its tint, and every filled control's label on its fill, then run them through `node scripts/contrast.mjs "<fg>:<bg>:<label>" …` and **paste the table** (add `:large` to a pair for ≥18.66px-bold / ≥24px text, which only needs 3:1). Every pair must clear its bar (F15, F54, F55, F66). The tool exits non-zero on any failure — treat that as a blocking gate.
 - [ ] **Type** on the modular scale (F2); body 15–17px / lh 1.5–1.6 (F3); ≤2 families, ≤4 weights (F1, F6)
 - [ ] **Spacing** every value = n × base unit (F8); section padding in the surface's band (F11 / pattern)
 - [ ] **Alignment spine**: section content widths reduce to ≤3 measures on one axis; edges line up down the page (F74)

@@ -13,10 +13,17 @@ description: Use when designing, building, OR EXPLORING any web-app UI — pages
 
 **If the project has a `personality.md`** (at project root or `design/personality.md`), load it too. It lists declared deviations from the fundamentals + the project's signature move. Anything not declared there must follow the floor.
 
+**Step 0 — render it and LOOK at the pixels (before any sweep).** Rules can't see flatness, a mis-wrapped headline, a clipped texture, or "text-on-paper" emptiness (AP22) — only your eyes on the *rendered* output can. Never verify from the markup. *How* you render depends on the environment, so don't assume — **ask the user once which they have, then reuse that choice for the session:**
+1. **The project's running app** — its dev server + whatever browser tool the user has (Claude-in-Chrome, agent-browser, Playwright, or a manual screenshot they paste). Highest fidelity; use for real in-app screens.
+2. **A headless screenshot of a static file** — for standalone mockups/HTML: any installed Chrome/Chromium in headless screenshot mode, or an equivalent renderer.
+3. **A mockup surface** — easel or the brainstorming visual companion render pushed HTML you can then view.
+
+If none is obvious, ask which is available rather than guessing. Then look, critique against the north star (*is it genuinely good?* — not merely rule-passing), fix, and **re-render after each fix** until it holds. This look-fix-look loop is where craft becomes legible; the sweeps below only catch what rules can express.
+
 **After the design is built**, run a verification pass in two sweeps. First, fundamentals: walk the rules that have a `Check:` line, confirm the rendered output complies, and flag violations. A violation must be either fixed or moved to `personality.md` with a justification — undeclared deviations are not a choice. Second, load `anti-patterns.md` and run the "looks like AI" sweep: count the tells (`AP1`…), report the IDs in narration, and rework until under 3. Fundamentals catch broken rules; anti-patterns catch a technically-correct-but-generic result.
 
 **Two checks the pass must always run explicitly — they get skipped silently otherwise:**
-- **Color-as-text contrast.** Compute (don't eyeball) the contrast of every non-neutral text color and every semantic status label against the surface it actually sits on, including tints (F15, F54, F55). Fill-valid ≠ text-valid; same-hue text-on-tint is the default failure.
+- **Color-as-text contrast.** Run the checker, don't eyeball: `node scripts/contrast.mjs "<fg>:<bg>:<label>" …` on every non-neutral text/surface pair, every status label on its tint, and every filled control's label on its fill (F15, F54, F55, F66). It exits non-zero on any failure — a blocking gate; paste the table into the verification. Fill-valid ≠ text-valid; same-hue text-on-tint is the default failure.
 - **Responsive + touch.** A desktop-only mockup cannot prove F50–F53. Either build a mobile frame or *state the breakpoint behavior* (what reflows, what stacks) in narration, and run an explicit coarse-pointer F52 check — every interactive target ≥44px.
 - **Alignment spine.** List every section's content width and trace its left/right edge down the page (F74). Widths must reduce to ≤3 sanctioned measures on one shared axis; narrower sections nest inside the wider container, not off to the side. This one hides from the contrast/AP/copy sweeps — each section looks fine alone while the page reads as assembled. Run it explicitly.
 

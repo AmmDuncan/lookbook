@@ -41,5 +41,5 @@ This syncs the section HTML/CSS into `apps/gallery` and the shared `tokens.css` 
 ## View the gallery
 
 ```bash
-pnpm gallery   # serves apps/gallery at http://localhost:4444
+npm run gallery   # serves apps/gallery at http://localhost:4444 (static HTML, no build)
 ```

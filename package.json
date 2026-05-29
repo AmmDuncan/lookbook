@@ -2,14 +2,9 @@
   "name": "lookbook",
   "version": "0.1.0",
   "private": true,
-  "description": "Lookbook — the design-system mastermind: tokens, component specs, page recipes, and composition grammar that back all web-app UI work.",
-  "packageManager": "pnpm@8.12.1",
+  "description": "Lookbook — the design brain: fundamentals, per-surface patterns, anti-patterns, the token contract, and the gallery visual spec that back all web-app UI work.",
   "scripts": {
-    "gallery": "pnpm --filter @lookbook/gallery serve",
+    "gallery": "python3 -m http.server 4444 --directory apps/gallery",
     "sync-gallery": "bash scripts/sync-gallery.sh"
-  },
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ]
+  }
 }

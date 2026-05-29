@@ -1,9 +1,0 @@
-{
-  "name": "@lookbook/gallery",
-  "version": "0.1.0",
-  "private": true,
-  "description": "The Lookbook gallery — the canonical visual spec (Claude Design export). Static HTML; the source of truth every primitive is checked against.",
-  "scripts": {
-    "serve": "python3 -m http.server 4444"
-  }
-}

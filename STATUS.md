@@ -13,6 +13,10 @@ Four candidate brain files authored by blind sub-agents, then each put through a
 
 Also fixed dangling references to the dropped `variation.md` brain file in `approach.md` (P-AP-06) and `identity.md` (P-AP-06/P-ID-08 now point at `personality.template.md`); the gallery `Variation.html` chapter still exists and its `gallery → Variation` references stay valid. **Coverage now ~13 archetypes + 5 cross-cutting** (states / motion / mobile / containers / accessibility) + the approach/layout/identity/site-archetypes framing files. Method confirmed again: **more rules ≠ better** — the battle test caught one nerf (P-ID-09) and one neutral (P-SA), both corrected before ship.
 
+## 2026-05-29 — Frame-it intake (P-AP-11)
+
+Formalized the design-intake interview into `patterns/approach.md` as **P-AP-11** and wired it into `SKILL.md`'s Frame-it step: before composing a new surface OR a redesign, ASK the user the framing inputs through the host's structured multiple-choice UI (personality · accent/brand · theme · platform · scope), adapting the set to the situation — **new product/site** (full brief), **new flow in an existing app** (inherit dials, ask only job/primary/archetype/components), or **redesign** (also: what's not working · what must stay · reskin/restructure/rebuild, then the P-AP-08 four-lens audit). Each question leads with a recommended option; answers feed the readout (P-AP-09). Validated live: a 4-question intake set the dials for a calm-focused "Cadence" todo app that shipped a uniform 12-screen set (auth → states → settings, desktop + mobile).
+
 ## 2026-05-29 — lookbook:calibrate (maintainer tooling)
 
 The reference-study calibration loop, formalized so any session runs it identically instead of re-deriving from memory. **Maintainer-only — NOT loaded by the consumer `SKILL.md`** (per the tier model: render-and-look ships in SKILL Step 0; calibrate is how the brain is *maintained*, not *used*).

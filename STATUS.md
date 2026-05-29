@@ -13,6 +13,15 @@ Four candidate brain files authored by blind sub-agents, then each put through a
 
 Also fixed dangling references to the dropped `variation.md` brain file in `approach.md` (P-AP-06) and `identity.md` (P-AP-06/P-ID-08 now point at `personality.template.md`); the gallery `Variation.html` chapter still exists and its `gallery → Variation` references stay valid. **Coverage now ~13 archetypes + 5 cross-cutting** (states / motion / mobile / containers / accessibility) + the approach/layout/identity/site-archetypes framing files. Method confirmed again: **more rules ≠ better** — the battle test caught one nerf (P-ID-09) and one neutral (P-SA), both corrected before ship.
 
+## 2026-05-29 — lookbook:calibrate (maintainer tooling)
+
+The reference-study calibration loop, formalized so any session runs it identically instead of re-deriving from memory. **Maintainer-only — NOT loaded by the consumer `SKILL.md`** (per the tier model: render-and-look ships in SKILL Step 0; calibrate is how the brain is *maintained*, not *used*).
+
+- **`scripts/calibrate.md`** — the protocol: what calibration is (refine numbers / contextualize rules against real shipped products; NOT bulk-add — more rules ≠ better), the source-agnostic reference step (committed files never name the aggregator; phrase as "a reference study of real, public, shipped products"), the loop (gather screens → read by HOW RULES ARE APPLIED → VALIDATE/CALIBRATE/TOO-STRICT → evidence receipts → render+contrast gate → battle-test if a rule is added → commit), the convergence contract, and classification heuristics.
+- **`scripts/calibrate.mjs`** — zero-dep scaffolder mirroring `contrast.mjs`. `node scripts/calibrate.mjs` lists every pattern with its rule count + evidence-file age; `node scripts/calibrate.mjs <pattern>` prints the loop, the pattern's current calibration IDs, the evidence status, and a dated run-log template.
+
+Roadmap remaining: **portability experiment** (Opus/Sonnet/Haiku render grading — zero non-Opus data yet).
+
 _Earlier status (components demoted, V1, gallery, tokens) below — unchanged._
 
 ## 2026-05-29 — Component package demoted & removed

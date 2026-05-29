@@ -113,10 +113,10 @@ This is the **Mode A** path (primitives built/vendored to Lookbook's specs). In 
 
 When building, redesigning, OR adding a new screen/flow inside an existing app (any mode — even when you'll build on the project's own components):
 
-0. **Frame it** — for a new product/site, start at gallery → **Approach** (strategy) and **SiteArchetypes** (what *kind* of site/app this is); pull the brand from **Identity** + **Imagery**.
+0. **Frame it** — for a new product/site *or a new flow in an existing app*, run `patterns/approach.md` first (job → archetype → density → the six dials → one signature *on expressive surfaces only*); for site-level shape see gallery → **SiteArchetypes**; pull the brand from **Identity** + **Imagery**.
 1. **Identify the page archetype** (gallery → **Recipes**): CRUD list · record detail/profile · create/edit form · wizard/onboarding · settings · search & results · feed/activity · dashboard · checkout/billing · pricing · detail-with-map · kanban.
 2. **Pull the recipe** — its Ingredients (which components), Required states, and responsive note.
-3. **Generate 2–3 composition directions** using the Layout grammar (gallery → **Layout**) and the **Variation** chapter (the sanctioned ways to diverge). Vary **primary/secondary emphasis**, the **region split**, and the **section rhythm** — *never* the design language. For a new or important surface, render all directions and let the human choose. (This is what makes pages feel distinct while staying consistent — see **Variation**.)
+3. **Generate 2–3 composition directions** using `patterns/layout.md` (the composition grammar; specimens in gallery → **Layout**). Vary **primary/secondary emphasis**, the **region split**, and the **section rhythm** — *never* the design language. This is where variety comes from: distinct *compositions* of one clean system, not decoration bolted on. For a new or important surface, render all directions and let the human choose. (On expressive surfaces an optional single signature move may distinguish a direction — gallery → **Variation**; on functional surfaces, none.)
 4. **Build the chosen direction** from Lookbook primitives + tokens, with all required states. Cite fundamental rule IDs (`F<n>`) in narration as decisions are made — body size, spacing, hierarchy, accent placement — so the application is auditable.
 5. **Verify against `fundamentals.md`** — walk the `Check:` lines for measurable rules, confirm the rendered output complies, and flag any violation. A violation must be either fixed or declared in `personality.md` with a justification. Undeclared deviations are not a choice — they are bugs.
 
@@ -130,7 +130,7 @@ Directions are "different arrangements of the same kit," not different design la
 
 ---
 
-## Layout grammar (summary — full specimens in gallery → Layout)
+## Layout grammar (summary — full grammar in `patterns/layout.md`, specimens in gallery → Layout)
 
 - **Grid**: content max-widths (prose ~720px, app ~1280px, full-bleed), token-based gutters + section rhythm.
 - **Region splits**: single · `1fr/320px` rail · 2-col · 3-col · asymmetric (8/4, 7/5) — choose by primary/secondary content + scan order; mark sticky regions.

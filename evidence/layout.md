@@ -1,0 +1,44 @@
+# Evidence — Layout (composition grammar) (P-LY calibration)
+
+Method: studied **12 real, public, shipped web screens across four distinct archetypes** — analytics **dashboard**, **marketing** landing, record **detail**, and **settings** — read by **(a) craft to learn** and **(b) how the composition grammar is applied in reality**: region decomposition (header / nav / canvas / rail / footer), column split, content measure/width, asymmetry vs symmetry, whitespace rhythm, and where real products diverge from a naive 12-column grid. Each observation is classified **CONFIRM** (the rule holds as written), **CALIBRATE** (a number/boundary needed fixing), or **TOO-STRICT** (the rule overfit and was loosened). Reading reality is the strongest calibration — it catches rules that are wrong, not just rules that are imprecise. Captured 2026-05-29.
+
+Screens — **Dashboard:** Mixpanel (left grouped nav + pinned upgrade card; KPI-tile row over a segment table), Base44 (left nav + 2-up card grid: line chart wide, Page-Traffic/Country pair below), Linktree (left nav + 2-up map/cities cards + full-width device bar), Vimeo (left report nav + left-flush stat blocks beside a full-bleed map). **Marketing:** Relevance AI (top bar; **left-flush** narrow text hero, product-conversation cards below — not a 50/50 split), Otter.ai (top bar; classic **~7/5** text-left / media-right hero + trust-logo strip), Ferndesk (top bar; **~45/55** text-left / product-screenshot-right hero). **Detail:** Jobber (left app nav; main content split Location 4 / Overview-stack 8, success banner on top), Linear (left nav + main description column + **right properties rail ~8/4** + milestones), TheyDo (left nav + list + right inspector). **Settings:** Squarespace (left section nav + **centered ~640px form** nested in a wider content region), Lindy (left section nav, grouped, + centered form card), Linktree (left app nav + centered narrow account form). 2026-05-29.
+
+## Rule-application table (rule × screens × verdict)
+
+| Rule | What real screens showed | Verdict |
+|---|---|---|
+| **P-LY-01** region set from content shape | All six canonical splits appear in the wild: single column (Squarespace settings form body), main+right-rail (Linear 8/4), main+left-rail nav (every product app), 6/6-ish (none pure — see CALIBRATE), 7/5 asymmetric (Otter), 3-col (none in this set — rare, as the rule says) | **CONFIRM** — splits are content-shape-driven; the six cover the field. |
+| **P-LY-02** left=nav, right=support | Universal: Mixpanel/Base44/Linktree/Linear/Jobber/Squarespace/Lindy all put nav LEFT; Linear/TheyDo put properties/inspector RIGHT. Zero counterexamples. | **CONFIRM** — strong, no exceptions found. |
+| **P-LY-03** left sidebar for deep-nav product apps | 8/8 product surfaces used a persistent left sidebar; all three marketing pages used a top bar. Pinned account/upgrade card at rail bottom in Mixpanel, Base44, Linktree. | **CONFIRM** + adds the pinned-bottom-card default. |
+| **P-LY-04** cap content to a measure inside a wide shell | Squarespace + Lindy settings nest a **~640px centered form** inside a much wider content region; Relevance/Otter hero text columns are ~480–560px inside full-width pages. | **CONFIRM** — measure-nesting is real and pervasive; the form is narrower than its region by design. |
+| **P-LY-05** ≤3 measures on one axis (the spine) | Real product apps hold one app measure + a nested prose/form measure on a shared left edge. Marketing pages keep hero text and lower sections on one centered/left axis. | **CONFIRM** — the spine is what separates designed from assembled. |
+| **P-LY-06** whitespace as hierarchy | Linear/Jobber group heading+body tightly, widen between blocks; settings pages separate field-groups with clear gaps. | **CONFIRM.** |
+| **P-LY-07** asymmetry=priority, symmetry=equality | Marketing heroes are **all asymmetric** (Otter 7/5, Ferndesk 45/55, Relevance left-flush) — none is a literal 50/50. Dashboards use peer 2-up pairs (legit symmetry for equals). | **CALIBRATE** — see below; "symmetric split hero" is rarer than expected, asymmetric is the real default. |
+| **P-LY-08** section rhythm ≠ inside-card rhythm | Marketing pages run large between-section gaps with tight inside-card stacks; dashboards run tight section gaps with even tighter card internals. | **CONFIRM.** |
+| **P-LY-09** auto-fit unknown / fixed N-across | Dashboards lean on **2-up card pairs and auto-fitting tile rows**, NOT a rigid 12-col grid everywhere; KPI hero rows are fixed-count (Mixpanel). | **CALIBRATE** — the grid is looser in practice; 2-up pairs + auto-fit dominate. |
+| **P-LY-10** reflow declared, no silent hide | (Desktop captures — reflow not directly observable; deferred to `patterns/mobile.md` evidence.) | **N/A here** — defers to mobile evidence. |
+| **P-LY-11** pin only short supporting rails | Linear's right properties rail and milestones are short and effectively reference; main columns scroll. | **CONFIRM.** |
+
+## Craft to copy
+- **Pinned account/upgrade/trial card at the bottom of the left rail** (Mixpanel "Upgrade Plan", Base44 prompt card, Linktree "10+ new design tools") — a real, repeated dashboard-shell pattern; fed P-LY-03's default.
+- **The hero text column is narrow even on a full-width page** (Relevance ~480px, Otter ~520px) — the F5 measure nested inside a full-bleed hero, not stretched. Fed P-LY-04.
+- **Settings form is deliberately narrower than its content region** (Squarespace ~640px form in a ~900px region) — the clearest real proof that "let the container be wider than the text" is a feature, not a layout bug. Fed P-LY-04.
+- **Dashboards compose from 2-up card pairs**, not a uniform 12-col grid — a line chart spans wide, then a Page-Traffic / Country pair sits 6/6 below (Base44, Linktree). The grid is a budget, not a straitjacket. Fed P-LY-09.
+- **Marketing heroes commit to an axis** — every one was asymmetric or left-flush; none played it safe with a literal centered 50/50. The asymmetry *is* the priority signal. Fed P-LY-07.
+- **Detail page = main reading column + right properties rail at ~8/4** (Linear) — the canonical record layout, distinct from the dashboard's table-led shell. Fed P-LY-01/02/11.
+
+## Over-strict / wrong-rule catches (the strongest calibrations)
+- **No marketing hero was a literal symmetric 50/50** — all three committed to an asymmetric or left-flush axis (Otter 7/5, Ferndesk 45/55, Relevance left-flush text-only). This **CALIBRATED P-LY-07**: the rule now states asymmetry is the *default* for a leading-vs-supporting hero and symmetry is reserved for genuine equals / display moments — rather than presenting 6/6 and 7/5 as co-equal first choices. The naive "split hero" (AP7) is exactly the safe move real products avoid.
+- **Real dashboards don't lay out on a strict 12-column grid** — they compose from 2-up card pairs and auto-fitting tile rows that reshape with the container. This **CALIBRATED P-LY-09**: auto-fit is framed as the workhorse for equivalent/unknown sets, with fixed columns reserved for a deliberate "N across" — not "12-col grid is the default and auto-fit is the exception." A rule mandating rigid 12-col placement everywhere would have overfit.
+- **The settings form being narrower than its region looked "wrong" against a naive full-width instinct** but is universal in shipped settings pages — this **CONFIRMED and sharpened P-LY-04** (measure nests *inside* region; the region is allowed to be wider than the text), preventing a future "stretch the form to fill the region" mistake.
+- **Left-rail-for-nav held with zero counterexamples** across 8 product apps — **CONFIRMED P-LY-02/03** as a near-hard convention, not a soft preference.
+
+## Calibrations applied to patterns/layout.md
+1. **Six canonical region splits, chosen by content shape** — confirmed all present in the wild (P-LY-01).
+2. **Left = nav, right = support; left sidebar for deep-nav product apps** — confirmed with zero counterexamples; added the pinned-bottom-card default (P-LY-02/03).
+3. **Cap content to a measure nested inside a wider region** — confirmed by settings forms and hero text columns narrower than their containers (P-LY-04).
+4. **Asymmetry = priority is the default hero move; symmetry only for genuine equals** — calibrated after every studied hero committed to an axis (P-LY-07).
+5. **Auto-fit + 2-up pairs are the real grid workhorse; fixed columns for deliberate N-across only** — calibrated away from a rigid-12-col default (P-LY-09).
+6. **≤3 measures on one axis (the spine)** + **whitespace as hierarchy** + **two distinct rhythm scales** — confirmed (P-LY-05/06/08).
+7. **Reflow + mobile collapse** defer to `patterns/mobile.md`; **overlay-vs-page** defers to `patterns/containers.md` — kept this file to the composition skeleton only (P-LY-10).

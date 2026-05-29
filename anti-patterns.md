@@ -137,13 +137,23 @@ Cite these by ID (`AP1`, `AP2`, …) in the verification narration, the same way
 *Tell:* No element breaks the grid, no intentional asymmetry, no single bold move, nothing that a committee would flag. Immaculate and forgettable.
 *Why it reads as AI:* The model regresses to the mean at every decision. The *absence* of any risk is itself the tell — real design has at least one opinion.
 *Instead:* Make one deliberate, defensible bold move — the signature move from `personality.md`. One element that commits. Safe-everywhere is the meta-tell that contains all the others.
-*Surface scope:* This tell applies to **expressive surfaces** — marketing, hero, landing, brand moments — where restraint reads as timidity. It does **not** bite on scan-first product surfaces (dashboards, data tables, settings), where restraint *is* the goal (familiarity beats novelty; see `patterns/dashboard.md`). On those surfaces, the signature move is the one allowed flourish, not a per-region demand. Don't flag AP20 on a dashboard for being calm.
+*Surface scope:* This tell applies to **expressive surfaces** — marketing, hero, landing, brand moments — where restraint reads as timidity. It does **not** bite on scan-first product surfaces (dashboards, data tables, settings), where restraint *is* the goal (familiarity beats novelty; see `patterns/dashboard.md`). On those surfaces the design earns its quality through **clarity, not a decorative gesture** — give it *zero* added flourish, only functional treatments (tabular numerals, a clear status channel, a tuned density). A signature move bolted onto a dashboard is noise, not personality. Don't flag AP20 on a calm dashboard; *do* flag the inverse (AP23/AP24) when a functional surface gets decorated.
 
 **AP22. Tells instead of shows — all text, no craft.**
 *Tell:* The page *describes* the product in prose — hero headline, feature paragraphs, three text steps, a quote — with little or no product imagery, depth, iconography, or texture. Flat type blocks on a flat background. The canonical AI-SaaS skeleton, and "spacious" sections that are actually just *empty*.
 *Why it reads as AI:* A human who ships software *shows* the software — real UI in a frame, an annotated screenshot, a diagram of how it works, a code/diff, a data viz, depth and layering. Generation defaults to *describing* because describing is just more text. The result passes every rule and still screams "generated." It's the cumulative face of P-M-07 (imagery is product-true), F49 (imagery does a job), and AP20 (no opinion).
 *Instead:* Show the product. At least one substantial visual that *is* the explanation, not text about it. Add craft — depth, one real texture device with intent, iconography with weight. Spacious ≠ empty: fill the room with something worth seeing.
 *Detect:* You can only catch this by **looking at the rendered design** — viewing the actual output, not reading the markup or the rules. It is invisible to every rule check: each element is individually fine; the page is flat. (Battle-tested: a fully rule-compliant Mason landing read as "text on paper, screams AI" — caught only once the rendered result was actually viewed.)
+
+**AP23. Status double-encoded in two visual channels.**
+*Tell:* The same status said twice at once — a "Critical/Low" badge *and* a colored depletion/progress bar in the same cell; or a status pill *and* a tinted row *and* an icon, all carrying the one fact.
+*Why it reads as AI:* Redundant encoding masquerading as thoroughness — it adds visual weight without adding information (the F13 noise tax) and crowds dense cells until they read as "too much." One status, one channel.
+*Instead:* Pick the single most legible channel for the context — a pill for a category, a bar for magnitude, a colored value for a threshold breach — not two. If both magnitude *and* category matter, show magnitude (the bar/number) and let *its* color carry the category. (Battle-tested: a warehouse dashboard stacked a Critical/Low badge over a depletion bar in one status column — the redundancy was the noise.)
+
+**AP24. Decorative icons on stat / KPI tiles.**
+*Tell:* Every KPI/overview tile gets a little glyph in the corner (a box, a truck, a warning mark) — an icon per card because "cards have icons."
+*Why it reads as AI:* The reflex "add an icon" move (cousin of AP12/AP14). On a stat tile the **number is the content**; a decorative icon is F13 noise tax that competes with the figure for the eye and makes a clean strip look busy.
+*Instead:* Let the label + number carry the tile. Add a glyph only when it's *functional* — a trend arrow that encodes direction, a status dot that flags a breach — never as per-card decoration. (Battle-tested: KPI tiles with corner icons read measurably busier than the same strip without them.)
 
 ---
 

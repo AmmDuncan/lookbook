@@ -30,9 +30,12 @@ const invalid = computed(() => (props.error ? true : undefined))
 
 <template>
   <div class="field">
-    <label v-if="label" :for="controlId" class="field-label">
-      {{ label }}<span v-if="required" class="req" aria-hidden="true">*</span>
-    </label>
+    <div v-if="label || $slots['label-end']" class="field-label-row">
+      <label v-if="label" :for="controlId" class="field-label">
+        {{ label }}<span v-if="required" class="req" aria-hidden="true">*</span>
+      </label>
+      <span v-if="$slots['label-end']" class="field-label-end"><slot name="label-end" /></span>
+    </div>
 
     <slot :id="controlId" :describedby="describedby" :invalid="invalid" />
 

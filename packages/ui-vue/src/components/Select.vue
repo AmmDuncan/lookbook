@@ -14,7 +14,7 @@ interface SelectOption {
 
 const props = withDefaults(
   defineProps<{ options: SelectOption[]; size?: Size; error?: boolean; disabled?: boolean; placeholder?: string }>(),
-  { size: 'md', placeholder: 'Select…' },
+  { size: 'lg', placeholder: 'Select…' },
 )
 const model = defineModel<string>()
 const triggerClass = computed(() => ['select', `select--${props.size}`, { 'is-error': props.error }])

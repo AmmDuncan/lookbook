@@ -14,7 +14,7 @@ const props = withDefaults(
     disabled?: boolean
     type?: 'button' | 'submit' | 'reset'
   }>(),
-  { variant: 'primary', size: 'md', type: 'button' },
+  { variant: 'primary', size: 'lg', type: 'button' },
 )
 
 const classes = computed(() => [

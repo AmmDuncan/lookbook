@@ -44,6 +44,8 @@
     transform       var(--duration-fast) var(--ease-standard);
 }
 .btn > svg { width: var(--btn-icon); height: var(--btn-icon); flex-shrink: 0; }
+.btn-content { display: contents; }
+.btn-content > svg { width: var(--btn-icon); height: var(--btn-icon); flex-shrink: 0; }
 
 /* Sizes — pull from the shared scale */
 .btn--xs { --btn-h: var(--size-xs-h); --btn-px: var(--size-xs-px); --btn-fs: var(--size-xs-fs); --btn-gap: var(--size-xs-gap); --btn-icon: var(--size-xs-icon); --btn-radius: var(--size-xs-radius); }
@@ -132,9 +134,15 @@
 
 /* Loading */
 .btn.is-loading { cursor: progress; }
-.btn.is-loading .btn-content { opacity: 0.7; }
-.btn.is-loading .btn-spinner { display: inline-block; }
-.btn .btn-spinner { display: none; width: var(--btn-icon); height: var(--btn-icon); }
+/* Loading: hide content (keeps width, no jump) and center a single spinner —
+   icon-position-agnostic, so a trailing icon doesn't fight a leading spinner. */
+.btn.is-loading .btn-content { visibility: hidden; }
+.btn.is-loading .btn-spinner { display: grid; }
+.btn .btn-spinner {
+  display: none; place-items: center;
+  position: absolute; inset: 0; margin: auto;
+  width: var(--btn-icon); height: var(--btn-icon);
+}
 .btn .btn-spinner svg { width: 100%; height: 100%; animation: lb-spin 700ms linear infinite; }
 
 @keyframes lb-spin { to { transform: rotate(360deg); } }
@@ -151,6 +159,7 @@
   --ctrl-radius: var(--size-md-radius);
 
   width: 100%;
+  min-width: 0; /* allow shrink below intrinsic input size in flex/grid */
   font-family: inherit;
   font-size: var(--ctrl-fs);
   color: var(--text-primary);
@@ -214,6 +223,15 @@
 .select[aria-invalid="true"]:focus, .select.is-error.is-focus {
   box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-danger-500) 22%, transparent);
 }
+/* Neutralize browser autofill tint (Chrome paints a lavender/yellow fill). */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.phone-input .phone-field:-webkit-autofill {
+  -webkit-text-fill-color: var(--text-primary);
+  -webkit-box-shadow: 0 0 0 1000px var(--surface) inset;
+  caret-color: var(--text-primary);
+}
 .textarea {
   height: auto;
   padding: 9px var(--ctrl-px);
@@ -238,6 +256,7 @@
 .input-affix {
   position: relative;
   display: flex; align-items: center;
+  min-width: 0;
 }
 .input-affix .input { padding-left: 36px; }
 .input-affix .input.has-trailing { padding-right: 36px; }
@@ -256,6 +275,61 @@
   color: var(--text-muted); padding: 4px; border-radius: var(--radius-sm);
 }
 .input-affix .input-trailing button:hover { color: var(--text-primary); background: var(--surface-sunken); }
+
+/* Phone input — locked country prefix + national-number field */
+.phone-input {
+  --ctrl-h:      var(--size-md-h);
+  --ctrl-px:     var(--size-md-px);
+  --ctrl-fs:     var(--size-md-fs);
+  --ctrl-radius: var(--size-md-radius);
+
+  display: flex; align-items: center;
+  width: 100%;
+  min-width: 0;
+  height: var(--ctrl-h);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--ctrl-radius);
+  overflow: hidden;
+  transition:
+    border-color var(--duration-fast) var(--ease-standard),
+    box-shadow   var(--duration-fast) var(--ease-standard);
+}
+.phone-input--sm { --ctrl-h: var(--size-sm-h); --ctrl-px: var(--size-sm-px); --ctrl-fs: var(--size-sm-fs); --ctrl-radius: var(--size-sm-radius); }
+.phone-input--lg { --ctrl-h: var(--size-lg-h); --ctrl-px: var(--size-lg-px); --ctrl-fs: var(--size-lg-fs); --ctrl-radius: var(--size-lg-radius); }
+.phone-input--xl { --ctrl-h: var(--size-xl-h); --ctrl-px: var(--size-xl-px); --ctrl-fs: var(--size-xl-fs); --ctrl-radius: var(--size-xl-radius); }
+.phone-input:hover { border-color: var(--border-strong); }
+.phone-input:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--focus-ring) 22%, transparent);
+}
+.phone-input.is-error { border-color: var(--color-danger-500); }
+.phone-input.is-error:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-danger-500) 22%, transparent);
+}
+.phone-input.is-disabled { background: var(--surface-sunken); cursor: not-allowed; }
+.phone-input.is-disabled .phone-field { color: var(--text-muted); }
+.phone-input .phone-prefix {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 100%;
+  padding: 0 10px 0 var(--ctrl-px);
+  border-right: 1px solid var(--border);
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+  font-size: var(--ctrl-fs);
+  white-space: nowrap;
+}
+.phone-input .phone-flag { font-size: 1.15em; line-height: 1; }
+.phone-input .phone-field {
+  flex: 1; min-width: 0;
+  height: 100%;
+  padding: 0 var(--ctrl-px);
+  border: 0; background: transparent; outline: none;
+  font-family: inherit;
+  font-size: var(--ctrl-fs);
+  color: var(--text-primary);
+}
+.phone-input .phone-field::placeholder { color: var(--text-muted); }
 
 /* ============================================================
    3. CHECKBOX, RADIO, SWITCH
@@ -573,9 +647,11 @@
 /* ============================================================
    9. FIELD (label + control + helper + error)
    ============================================================ */
-.field { display: flex; flex-direction: column; gap: 6px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field-label-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .field-label { font-size: 13px; font-weight: 500; color: var(--text-primary); display: flex; align-items: center; gap: 6px; }
 .field-label .req { color: var(--color-danger-500); }
+.field-label-end { font-size: var(--text-micro-size); line-height: 1; }
 .field-helper { font-size: var(--text-micro-size); color: var(--text-muted); line-height: var(--text-micro-lh); }
 .field-error  { font-size: var(--text-micro-size); color: var(--color-danger-600); display: inline-flex; align-items: center; gap: 5px; line-height: var(--text-micro-lh); }
 .field-error svg { width: 13px; height: 13px; flex-shrink: 0; }
@@ -714,7 +790,7 @@
 .alert {
   display: flex; align-items: flex-start; gap: 12px;
   border-radius: var(--radius-md);
-  padding: 14px 14px 14px 16px;
+  padding: 11px 14px 11px 16px;
   border: 1px solid transparent;
   position: relative;
 }
@@ -732,10 +808,11 @@
   flex-shrink: 0;
 }
 .alert .alert-close:hover { opacity: 1; background: color-mix(in oklch, currentColor 8%, transparent); }
-.alert--success { background: var(--success-bg); color: var(--success-fg); border-color: color-mix(in oklch, var(--success-fg) 25%, transparent); }
-.alert--warning { background: var(--warning-bg); color: var(--warning-fg); border-color: color-mix(in oklch, var(--warning-fg) 25%, transparent); }
-.alert--danger  { background: var(--danger-bg);  color: var(--danger-fg);  border-color: color-mix(in oklch, var(--danger-fg) 25%, transparent); }
-.alert--info    { background: var(--info-bg);    color: var(--info-fg);    border-color: color-mix(in oklch, var(--info-fg) 25%, transparent); }
+/* Backgrounds softened toward the surface (srgb mix) so the fill reads gentle, not saturated. */
+.alert--success { background: color-mix(in srgb, var(--success-bg) 55%, var(--surface)); color: var(--success-fg); border-color: color-mix(in oklch, var(--success-fg) 22%, transparent); }
+.alert--warning { background: color-mix(in srgb, var(--warning-bg) 55%, var(--surface)); color: var(--warning-fg); border-color: color-mix(in oklch, var(--warning-fg) 22%, transparent); }
+.alert--danger  { background: color-mix(in srgb, var(--danger-bg) 55%, var(--surface));  color: var(--danger-fg);  border-color: color-mix(in oklch, var(--danger-fg) 22%, transparent); }
+.alert--info    { background: color-mix(in srgb, var(--info-bg) 55%, var(--surface));    color: var(--info-fg);    border-color: color-mix(in oklch, var(--info-fg) 22%, transparent); }
 
 /* ============================================================
    14. TABS (underline + pill)
@@ -774,7 +851,9 @@
 .tabs--pill {
   display: inline-flex; gap: 4px;
   padding: 4px;
-  background: var(--surface-sunken);
+  /* A touch darker than surface-sunken so an active (white) pill reads clearly.
+     Mix in srgb — oklch swings the hue through pink for near-neutral colors. */
+  background: color-mix(in srgb, var(--surface-sunken), var(--border) 60%);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
 }
@@ -1707,6 +1786,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   max-height: var(--overflow-max-h, 180px);
+  min-height: var(--overflow-min-h, auto);
   padding: 2px;
 }
 
@@ -1716,6 +1796,7 @@
 .overflow--both .overflow-track {
   overflow: auto;
   max-height: var(--overflow-max-h, 360px);
+  min-height: var(--overflow-min-h, auto);
   padding: 2px;
 }
 
@@ -1753,7 +1834,7 @@
 /* Arrow buttons — pressable, sit on top of the fade. */
 .overflow-arrow {
   position: absolute;
-  width: var(--overflow-arrow-size, 28px); height: var(--overflow-arrow-size, 28px);
+  width: var(--overflow-arrow-size, 36px); height: var(--overflow-arrow-size, 36px);
   display: inline-flex; align-items: center; justify-content: center;
   background: var(--surface-raised);
   border: 1px solid var(--border);
@@ -1770,7 +1851,7 @@
 .overflow-arrow:hover { background: var(--surface); color: var(--text-primary); border-color: var(--border-strong); }
 .overflow-arrow:disabled,
 .overflow-arrow.is-disabled { opacity: 0; pointer-events: none; }
-.overflow-arrow svg { width: 14px; height: 14px; }
+.overflow-arrow svg { width: 18px; height: 18px; }
 
 /* Horizontal arrow positions (also the left/right pair in both-axis mode) */
 .overflow--h .overflow-arrow-left,  .overflow--both .overflow-arrow-left  { left:  6px; top: 50%; transform: translateY(-50%); }

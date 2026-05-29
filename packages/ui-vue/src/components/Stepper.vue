@@ -5,7 +5,7 @@ type Size = 'sm' | 'md' | 'lg' | 'xl'
 
 const props = withDefaults(
   defineProps<{ size?: Size; min?: number; max?: number; step?: number; disabled?: boolean }>(),
-  { size: 'md', step: 1 },
+  { size: 'lg', step: 1 },
 )
 const model = defineModel<number>({ default: 0 })
 

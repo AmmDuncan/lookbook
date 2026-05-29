@@ -5,7 +5,7 @@ type Size = 'sm' | 'md' | 'lg' | 'xl'
 
 const props = withDefaults(
   defineProps<{ size?: Size; error?: boolean; disabled?: boolean; readonly?: boolean }>(),
-  { size: 'md' },
+  { size: 'lg' },
 )
 const model = defineModel<string>()
 const cls = computed(() => ['textarea', `textarea--${props.size}`, { 'is-error': props.error }])

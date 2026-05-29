@@ -16,6 +16,9 @@ const props = withDefaults(
     scrollAmount?: number | string
     /** Caps the track height for vertical / both (maps to --overflow-max-h). */
     maxHeight?: string
+    /** Floor for the track height for vertical / both (maps to --overflow-min-h)
+     * so the list doesn't crush on short viewports. */
+    minHeight?: string
     showArrows?: boolean
     /** Match the fade to a tinted container (default: the surface colour). */
     fadeColor?: string
@@ -80,6 +83,7 @@ const wrapClass = computed(() => [
 const wrapStyle = computed(() => {
   const s: Record<string, string> = {}
   if (props.maxHeight) s['--overflow-max-h'] = props.maxHeight
+  if (props.minHeight) s['--overflow-min-h'] = props.minHeight
   if (props.fadeColor) s['--overflow-fade-color'] = props.fadeColor
   if (props.fadeSize != null) s['--overflow-fade-size'] = `${props.fadeSize}px`
   if (props.arrowSize != null) s['--overflow-arrow-size'] = `${props.arrowSize}px`

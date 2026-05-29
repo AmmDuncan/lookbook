@@ -7,8 +7,12 @@ import {
 import type { MenuEntry } from '../types'
 
 withDefaults(
-  defineProps<{ items: MenuEntry[]; align?: 'start' | 'center' | 'end' }>(),
-  { align: 'start' },
+  defineProps<{
+    items: MenuEntry[]
+    align?: 'start' | 'center' | 'end'
+    side?: 'top' | 'bottom' | 'left' | 'right'
+  }>(),
+  { align: 'start', side: 'bottom' },
 )
 </script>
 
@@ -18,7 +22,7 @@ withDefaults(
       <slot />
     </DropdownMenuTrigger>
     <DropdownMenuPortal>
-      <DropdownMenuContent class="menu" :align="align" :side-offset="6">
+      <DropdownMenuContent class="menu" :align="align" :side="side" :side-offset="6">
         <template v-for="(item, i) in items" :key="i">
           <DropdownMenuSeparator v-if="item.type === 'separator'" class="menu-divider" />
           <DropdownMenuLabel v-else-if="item.type === 'label'" class="menu-label">{{ item.label }}</DropdownMenuLabel>

@@ -11,7 +11,7 @@ const props = withDefaults(
     readonly?: boolean
     type?: string
   }>(),
-  { size: 'md', type: 'text' },
+  { size: 'lg', type: 'text' },
 )
 
 const model = defineModel<string | number>()

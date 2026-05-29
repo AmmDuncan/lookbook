@@ -47,8 +47,8 @@ New. *Why:* the logo is context, not content.
 **P-A-12. Mobile: the card spans the viewport with side padding 16–20px.** No max-width on mobile; full-width forms feel native there.
 Refines: P-A-01. *Why:* a 400px card on a 375px viewport leaves awkward gutters.
 
-**P-A-13. Show-password toggle on the password input is mandatory.**
-New. *Why:* mistyped passwords are the #1 login failure; the toggle is a 30-second build and a 30% fewer-error feature.
+**P-A-13. Show-password toggle on the password input is strongly recommended.**
+New. *Why:* mistyped passwords are the #1 login failure; the toggle is a 30-second build and a 30% fewer-error feature. (Live-UI calibration: present on only ~40% of shipped auth screens — so it's a best-practice the brain leads with, not an absolute floor; absent is allowed, present is better.)
 
 ## Composition defaults
 - **Desktop**: centered card on backplate; optional split-screen with brand visual on the left (50/50 or 60/40), card on the right.

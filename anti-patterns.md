@@ -155,6 +155,11 @@ Cite these by ID (`AP1`, `AP2`, …) in the verification narration, the same way
 *Why it reads as AI:* The reflex "add an icon" move (cousin of AP12/AP14). On a stat tile the **number is the content**; a decorative icon is F13 noise tax that competes with the figure for the eye and makes a clean strip look busy.
 *Instead:* Let the label + number carry the tile. Add a glyph only when it's *functional* — a trend arrow that encodes direction, a status dot that flags a breach — never as per-card decoration. (Battle-tested: KPI tiles with corner icons read measurably busier than the same strip without them.)
 
+**AP25. Decorative accent border on cards / tiles — the colored-edge "AI favorite."**
+*Tell:* A colored accent strip down the left edge (sometimes top, sometimes a full accent outline) of cards, KPI tiles, or panels, applied for emphasis "because it looks designed" — frequently on one tile to "highlight" it, or on every-other row.
+*Why it reads as AI:* A reflex decoration that spends the accent on a container *edge* rather than on *meaning* — the border carries no information (violates F17 accent-scarcity and F19 accent-encodes-meaning; an F13 noise tax). It became a recognizable generated-UI signature: ornament masquerading as hierarchy. Real emphasis comes from size / weight / position or a tonal surface, not a candy stripe.
+*Instead:* Earn emphasis *structurally* (the depth rubric's hierarchy axis) — a larger figure, a heavier weight, a tinted or elevated surface, or the hero slot. Use a colored edge only when it *encodes* something (a status accent on a breached row, a selected-state marker) — never as default card chrome. (Flagged by eye: across the depth-rubric battle test the accent left-border was the one tell that survived an otherwise-clean dashboard.)
+
 ---
 
 ## How to use this file

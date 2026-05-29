@@ -7,6 +7,7 @@ The standalone, runnable verification pass. Run top to bottom after building any
 - [ ] **Is it genuinely good / would I ship it?** (the north star — not "does it avoid the tells")
 - [ ] Reads as *made by someone who ships software*, not text-on-paper (AP22)
 - [ ] Shows substance/craft/depth where the surface calls for it — not flat
+- [ ] **Depth rubric** (SKILL.md Step 0): name the designed-depth axes the surface earned — **axes earned: ___** (functional ≥2 of #1–#5; expressive = anchor + show-don't-tell + ≥1). Earned by *designing*, not decorating; instantiation varied (not the same dark rail / accent-border stamp every time — AP25)
 - [ ] "Spacious" sections are full, not *empty*
 - [ ] Nothing reads as accidental (clipped texture, floating content, mis-wrapped headline)
 
@@ -26,10 +27,11 @@ The standalone, runnable verification pass. Run top to bottom after building any
 - [ ] Copy: sentence case (F67); buttons are verbs (F68); errors say problem + fix (F69); no jargon (F73)
 
 ## 3 · Anti-pattern sweep (count the tells)
-- [ ] Walked AP1–AP22. **Tell count: ___** (0 ideal · 1–2 OK · **3+ = rework**)
+- [ ] Walked AP1–AP25. **Tell count: ___** (0 ideal · 1–2 OK · **3+ = rework**)
 - [ ] No violet-blue gradient (AP1), gradient text (AP2), glassmorphism (AP3)
 - [ ] Has a point of view — not perfectly-safe-everywhere on an expressive surface (AP20)
 - [ ] Shows the product, not just describes it (AP22)
+- [ ] No reflex decoration — no double-encoded status (AP23), per-tile icons (AP24), or accent-border-on-cards "AI favorite" (AP25)
 
 ## 4 · Pattern fit (load the archetype's pattern file)
 - [ ] Right density for the surface (F26 / pattern band)
@@ -40,6 +42,15 @@ The standalone, runnable verification pass. Run top to bottom after building any
 
 ## 5 · Deviations
 - [ ] Every rule broken on purpose is declared in `personality.md` with a reason. Undeclared deviations are violations, not choices.
+
+## 6 · Receipt (make the review visible)
+Emit this block — claims don't count, paste the evidence. No "done / looks good" without it.
+- [ ] **Render**: method + widths actually viewed (e.g. "headless screenshot, 1280 / 768 / 390")
+- [ ] **Contrast**: the `contrast.mjs` table (pairs + pass/fail)
+- [ ] **Anti-patterns**: tell count + IDs
+- [ ] **Depth**: axes earned + count vs gate
+- [ ] **Alignment spine**: section widths traced
+- [ ] If you **could not render** here, say so and flag the output **visually unverified** — don't claim it's good.
 
 ---
 **Precedence when two checks conflict** (fundamentals.md): accessibility → declared deviations → fundamentals → pattern calibrations → anti-pattern/taste. Never break a higher tier to satisfy a lower one.

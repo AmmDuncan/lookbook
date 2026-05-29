@@ -22,6 +22,17 @@ description: Use when designing, building, OR EXPLORING any web-app UI — pages
 
 If none is obvious, ask which is available rather than guessing. Then look, critique against the north star (*is it genuinely good?* — not merely rule-passing), fix, and **re-render after each fix** until it holds. This look-fix-look loop is where craft becomes legible; the sweeps below only catch what rules can express.
 
+**The depth rubric — name the designed depth, or the surface is flat.** The hardest failure to self-catch is *dryness*: a rule-passing, contrast-clean, correctly-spaced surface that is nonetheless flat and forgettable. A model's self-grade has a blind spot here — it will say "I'd ship it" of its own flat work — so don't rely on taste; **count.** Looking at the render, name which of these the surface actually *earned*. Each is *designed substance, never ornament* — depth comes from **designing more, not decorating more** (decoration fails the anti-pattern sweep, AP20/AP22/AP23/AP24, and still reads as generated):
+
+1. **A compositional anchor** — one element commits and owns the eye: a dark/inverted rail, an asymmetric or oversized focal region, a primary panel with real weight. Structure, not flourish — on a functional surface the anchor is a *layout/value* move (a dark sidebar, a dominant primary panel), never a decorative gesture.
+2. **Hierarchy with real contrast** — the most important thing is *dramatically* louder than the rest (a decisive size / weight / quietness jump), not one notch up. Everything-the-same-weight is the AP20 even-grey.
+3. **Type-character where it counts** — the headline or the key figures carry a voice: a display face, tabular numerals, a decisive scale jump on the numbers that matter. The figure is the content (AP24) — give it character, don't decorate around it.
+4. **Data shows a relationship, not a lone reading** — comparison / part-to-whole / target-vs-actual / over-time-against-a-baseline / distribution. The relationship *is* the information; a single number or a lone "line going up" is the dry default (F56–F65).
+5. **A genuine secondary view** — a breakdown, a distribution, a second cut of the data — substance beyond the one hero chart. Spacious ≠ empty (AP22).
+6. **Product-true substance** (expressive surfaces) — real UI in a frame, an annotated screenshot, a diagram that *is* the explanation. Show, don't tell (AP22, P-M-13).
+
+**The gate is surface-aware.** A **functional** surface (dashboard, data view, settings) must earn depth on **≥2 of #1–#5** — the *designed-information* axes — while decoration stays banned (no signature flourish AP20, no double-encoded status AP23, no per-tile icons AP24): it gets deep by being a better-composed, more-informative instrument, not by being dressed up. An **expressive** surface (marketing, hero, landing) needs **#1 anchor + #6 show-don't-tell + ≥1 more**; flatness here is AP22. If you can't name the required count, the surface is flat — **go back to the composition** (a bolder anchor, a sharper hierarchy, a relationship in the data, a real second view); do *not* reach for ornament to fill the gap. (This makes craft semi-deterministic for any model — it lifts dryness-prone output without pushing strong output into decoration; battle-test-gated.)
+
 **After the design is built**, run a verification pass in two sweeps. First, fundamentals: walk the rules that have a `Check:` line, confirm the rendered output complies, and flag violations. A violation must be either fixed or moved to `personality.md` with a justification — undeclared deviations are not a choice. Second, load `anti-patterns.md` and run the "looks like AI" sweep: count the tells (`AP1`…), report the IDs in narration, and rework until under 3. Fundamentals catch broken rules; anti-patterns catch a technically-correct-but-generic result.
 
 **Two checks the pass must always run explicitly — they get skipped silently otherwise:**
@@ -147,7 +158,7 @@ Then **map each reaction to the lever that owns it and re-enter the loop:**
 - density → `F26` / `patterns/approach.md` P-AP-03
 - type / personality → identity dials / `F1`
 - a specific region → composition variants (P-AP-10) / `patterns/layout.md`
-- **flat / boring → a depth pass** — *not decoration* (AP20/AP23/AP24 still hold). The teachable craft moves: one bolder compositional anchor (e.g. a dark rail, an asymmetric hero), show a *relationship* in the data viz instead of a lone trend, give the key numbers type-character, add a genuine secondary view (a breakdown panel) rather than one chart. Make it *designed*, not ornamented.
+- **flat / boring → a depth pass** — run **the depth rubric** (Step 0) against the surface and earn the missing axes: a bolder compositional anchor, a *relationship* in the data viz, type-character on the key numbers, a genuine secondary view. *Designed*, not decorated (AP20/AP23/AP24 hold).
 - hierarchy / emphasis → P-AP-10
 - copy & tone → `F67`–`F69`
 

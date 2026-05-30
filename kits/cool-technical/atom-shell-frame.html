@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  MOLECULE M1 — app-shell / nav · register: cool-technical
+  Distilled from how real shipped products (Linear, Vercel) build the frame: a quiet
+  ~220px rail, tiny uppercase SECTION eyebrows grouping items, inactive items dimmed
+  hard, the active item a QUIET treatment (subtle accent-tint fill + 2px accent rail,
+  DM-4) — never a saturated block. Topbar carries a ⌘K command affordance (DM-2).
+  Satisfies AD-7, T-3, DM-2, DM-4, MC-1, MC-5.
+  Variants: (A) light labeled-rail (default) — rendered full with sample content ·
+  (B) dark-anchor rail — shown as the alternative below (the "one bold compositional
+  anchor" depth option). CONFIRM vs live: rail width, nav item height, active fill alpha.
+-->
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M1 shell — cool-technical</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;
+       -webkit-font-smoothing:antialiased;padding:32px}
+  .frame-label{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;
+        color:var(--subtle);margin:0 0 12px;display:block}
+  .frame{height:560px;border:var(--border-w) solid var(--border);border-radius:var(--radius-lg);
+         overflow:hidden;display:flex;background:var(--surface);margin-bottom:40px}
+
+  /* ---- rail ---- */
+  .rail{width:224px;flex-shrink:0;background:var(--surface);border-right:var(--border-w) solid var(--border);
+        display:flex;flex-direction:column}
+  /* brand header shares --topbar-h with the topbar so both bottom borders form ONE seam */
+  .brand{display:flex;align-items:center;gap:9px;height:var(--topbar-h);padding:0 16px;border-bottom:var(--border-w) solid var(--border)}
+  .mark{width:26px;height:26px;border-radius:6px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .brandname{font-size:14.5px;font-weight:600;letter-spacing:-0.01em}
+  .nav{flex:1;padding:12px 10px;overflow-y:auto}
+  .navsec{margin-bottom:6px}
+  .navsec-label{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+        color:var(--muted);padding:10px 8px 4px}
+  .item{display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:6px;font-size:13px;
+        color:var(--muted);text-decoration:none;cursor:pointer;position:relative;
+        transition:background var(--motion) var(--ease),color var(--motion) var(--ease)}
+  .item:hover{background:var(--bg);color:var(--ink)}
+  .item svg{opacity:.7;flex-shrink:0}
+  .item.active{background:var(--accent-tint);color:var(--accent);font-weight:500}
+  .item.active svg{opacity:1}
+  .item.active::before{content:'';position:absolute;left:-2px;top:5px;bottom:5px;width:2px;
+        background:var(--accent);border-radius:1px}
+  .item .badge{margin-left:auto;font-family:var(--font-mono);font-size:10.5px;font-weight:500;
+        color:var(--muted)}
+  .railfoot{border-top:var(--border-w) solid var(--border);padding:10px}
+  .org{display:flex;align-items:center;gap:9px;padding:8px;border-radius:6px;cursor:pointer}
+  .org:hover{background:var(--bg)}
+  .orgava{width:26px;height:26px;border-radius:6px;background:#E4E6EB;display:flex;align-items:center;
+        justify-content:center;font-size:10.5px;font-weight:700;color:var(--muted)}
+  .orgname{font-size:12.5px;font-weight:500} .orgmeta{font-size:11px;color:var(--muted)}
+
+  /* ---- main ---- */
+  .main{flex:1;display:flex;flex-direction:column;min-width:0}
+  .topbar{height:var(--topbar-h);border-bottom:var(--border-w) solid var(--border);display:flex;align-items:center;
+        gap:12px;padding:0 24px;flex-shrink:0}
+  .crumb{font-size:13.5px;font-weight:500;flex:1;color:var(--ink)}
+  .cmdk{display:flex;align-items:center;gap:8px;width:240px;padding:6px 10px;background:var(--bg);
+        border:var(--border-w) solid var(--border);border-radius:var(--radius);cursor:pointer;
+        transition:border-color var(--motion) var(--ease)}
+  .cmdk:hover{border-color:#D6DAE0}
+  .cmdk-t{font-size:12.5px;color:var(--subtle);flex:1}
+  .kbd{font-family:var(--font-mono);font-size:10px;color:var(--muted);background:var(--surface);
+        border:var(--border-w) solid var(--border);border-radius:3px;padding:1px 4px}
+  .iconbtn{width:30px;height:30px;border:none;background:transparent;color:var(--muted);border-radius:6px;
+        display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .iconbtn:hover{background:var(--bg);color:var(--ink)}
+  .well{flex:1;padding:28px 24px;overflow:auto}
+  .welltitle{font-size:22px;font-weight:600;letter-spacing:-0.02em}
+  .wellsub{font-size:13px;color:var(--muted);margin-top:3px}
+  .ph{margin-top:22px;border:1px dashed var(--border);border-radius:var(--radius);height:220px;
+        display:flex;align-items:center;justify-content:center;color:var(--subtle);font-size:12.5px}
+
+  /* dark-anchor variant rail */
+  .rail.dark{background:#16181D;border-right-color:#24262C}
+  .rail.dark .brand{border-bottom-color:#24262C}
+  .rail.dark .brandname{color:#ECEDEF}
+  .rail.dark .navsec-label{color:#5C626C}
+  .rail.dark .item{color:#9AA1AC}
+  .rail.dark .item:hover{background:#1E2127;color:#ECEDEF}
+  .rail.dark .item.active{background:rgba(91,91,214,0.18);color:#C7C7F5}
+  .rail.dark .railfoot{border-top-color:#24262C}
+  .rail.dark .org:hover{background:#1E2127}
+  .rail.dark .orgname{color:#ECEDEF}
+</style>
+</head>
+<body>
+
+<span class="frame-label">Variant A — light labeled-rail shell (default)</span>
+<div class="frame">
+  <aside class="rail" id="railA"></aside>
+  <div class="main">
+    <div class="topbar">
+      <span class="crumb">Overview</span>
+      <div class="cmdk">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#9AA1AC" stroke-width="1.5" stroke-linecap="round"><circle cx="6" cy="6" r="4"/><path d="M9 9l3.5 3.5"/></svg>
+        <span class="cmdk-t">Search…</span><span class="kbd">⌘K</span>
+      </div>
+      <button class="iconbtn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6v3L2 11h12l-1.5-2V6C12.5 3.5 10.5 1.5 8 1.5Z"/><path d="M6.5 11v.5a1.5 1.5 0 003 0V11"/></svg></button>
+      <div class="orgava" style="width:30px;height:30px;border-radius:50%">PM</div>
+    </div>
+    <div class="well">
+      <div class="welltitle">Overview</div>
+      <div class="wellsub">Content composes here — KPI (M2), chart (M4), table (M3) drop into this well.</div>
+      <div class="ph">composition slot</div>
+    </div>
+  </div>
+</div>
+
+<span class="frame-label">Variant B — dark-anchor rail (the bold compositional anchor option)</span>
+<div class="frame">
+  <aside class="rail dark" id="railB"></aside>
+  <div class="main">
+    <div class="topbar">
+      <span class="crumb">Overview</span>
+      <div class="cmdk">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#9AA1AC" stroke-width="1.5" stroke-linecap="round"><circle cx="6" cy="6" r="4"/><path d="M9 9l3.5 3.5"/></svg>
+        <span class="cmdk-t">Search…</span><span class="kbd">⌘K</span>
+      </div>
+      <div class="orgava" style="width:30px;height:30px;border-radius:50%">PM</div>
+    </div>
+    <div class="well">
+      <div class="welltitle">Overview</div>
+      <div class="wellsub">Same molecules, dark rail anchor — composition variety from one kit.</div>
+      <div class="ph">composition slot</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // shared rail markup injected into both variants (one source, two skins)
+  const rail = `
+    <div class="brand">
+      <div class="mark"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="7" width="4.5" height="6" rx="1" fill="#fff" opacity=".9"/><rect x="7.5" y="3" width="4.5" height="10" rx="1" fill="#fff"/><rect x="1" y="1.5" width="4.5" height="4" rx="1" fill="#fff" opacity=".6"/></svg></div>
+      <span class="brandname">Northwind</span>
+    </div>
+    <nav class="nav">
+      <div class="navsec">
+        <div class="navsec-label">Overview</div>
+        <a class="item active"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="1.5" width="4.5" height="4.5" rx=".75"/><rect x="9" y="1.5" width="4.5" height="4.5" rx=".75"/><rect x="1.5" y="9" width="4.5" height="4.5" rx=".75"/><rect x="9" y="9" width="4.5" height="4.5" rx=".75"/></svg>Dashboard</a>
+        <a class="item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,10.5 5,6 8,8 11.5,3.5"/><path d="M10 3.5h3.5V7"/></svg>Analytics</a>
+      </div>
+      <div class="navsec">
+        <div class="navsec-label">Build</div>
+        <a class="item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3" width="12" height="9" rx="1"/><path d="M1.5 6h12"/></svg>Deployments<span class="badge">3</span></a>
+        <a class="item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 1.5l6 3.5v5l-6 3.5-6-3.5v-5l6-3.5Z"/></svg>Projects</a>
+        <a class="item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="6"/><path d="M7.5 4v3.5l2.5 1.5"/></svg>Logs</a>
+      </div>
+      <div class="navsec">
+        <div class="navsec-label">Settings</div>
+        <a class="item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="5.5" r="2.5"/><path d="M2 13.5c0-2.5 2.5-4.5 5.5-4.5s5.5 2 5.5 4.5"/></svg>Team</a>
+      </div>
+    </nav>
+    <div class="railfoot">
+      <div class="org"><div class="orgava">NW</div><div><div class="orgname">Northwind Inc.</div><div class="orgmeta">Pro · us-east-1</div></div></div>
+    </div>`;
+  document.getElementById('railA').innerHTML = rail;
+  document.getElementById('railB').innerHTML = rail;
+</script>
+</body>
+</html>

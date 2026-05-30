@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian Systems — Account Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COOL-TECHNICAL register — _tokens.css inlined
+   ============================================================================ */
+:root {
+  --bg:        #F7F8F9;
+  --surface:   #FFFFFF;
+  --border:    #E8EAED;
+  --ink:       #16181D;
+  --muted:     #6B7280;
+  --subtle:    #9AA1AC;
+
+  --accent:        #5B5BD6;
+  --accent-ink:    #4A4AC4;
+  --accent-tint:   rgba(91,91,214,0.07);
+
+  --positive:  #1A7F4B;
+  --warning:   #92600A;
+  --danger:    #C8412E;
+
+  --font-ui:      'Inter', system-ui, sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  --t-display:   600 32px/1.15 var(--font-display);
+  --tr-display:  -0.025em;
+  --t-h:         600 16px/1.3  var(--font-ui);
+  --t-body:      400 14px/1.5  var(--font-ui);
+  --t-eyebrow:   600 11px/1    var(--font-ui);
+  --tr-eyebrow:  0.07em;
+  --t-figure:    600 40px/1.05 var(--font-display);
+  --tr-figure:   -0.02em;
+  --t-caption:   500 12px/1.3  var(--font-ui);
+
+  --radius:      7px;
+  --radius-lg:   11px;
+  --border-w:    1px;
+  --row-h:       38px;
+  --page-pad:    40px;
+  --motion:      140ms;
+  --ease:        cubic-bezier(0.2, 0, 0, 1);
+
+  /* status semantic ramp */
+  --st-ok:var(--positive);   --st-ok-tint:rgba(26,127,75,0.10);
+  --st-warn:var(--warning);  --st-warn-tint:rgba(183,121,31,0.12);
+  --st-idle:#6B7280;         --st-idle-tint:rgba(107,114,128,0.10);
+  --st-bad:var(--danger);    --st-bad-tint:rgba(200,65,46,0.10);
+  --st-info:var(--accent);   --st-info-tint:var(--accent-tint);
+}
+
+/* tabular numerals */
+.tnum { font-variant-numeric: tabular-nums; }
+
+/* ============================================================================
+   Base reset
+   ============================================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; }
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  width: 1280px;
+}
+
+/* ============================================================================
+   M1 Shell — Variant B (dark-anchor rail)
+   ============================================================================ */
+.app { display: flex; height: 100vh; overflow: hidden; }
+
+.rail {
+  width: 224px;
+  flex-shrink: 0;
+  background: #16181D;
+  border-right: 1px solid #24262C;
+  display: flex;
+  flex-direction: column;
+}
+.brand {
+  display: flex; align-items: center; gap: 9px;
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid #24262C;
+}
+.mark {
+  width: 26px; height: 26px; border-radius: 6px;
+  background: var(--accent);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.brandname { font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; color: #ECEDEF; }
+
+.nav { flex: 1; padding: 12px 10px; overflow-y: auto; }
+.navsec { margin-bottom: 6px; }
+.navsec-label {
+  font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em;
+  color: #5C626C; padding: 10px 8px 4px;
+}
+.item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 7px 8px; border-radius: 6px;
+  font-size: 13px; color: #9AA1AC;
+  text-decoration: none; cursor: pointer; position: relative;
+  transition: background var(--motion) var(--ease), color var(--motion) var(--ease);
+}
+.item:hover { background: #1E2127; color: #ECEDEF; }
+.item svg { opacity: .7; flex-shrink: 0; }
+.item.active { background: rgba(91,91,214,0.18); color: #C7C7F5; font-weight: 500; }
+.item.active svg { opacity: 1; }
+.item.active::before {
+  content: ''; position: absolute; left: -2px; top: 5px; bottom: 5px;
+  width: 2px; background: var(--accent); border-radius: 1px;
+}
+.item .badge {
+  margin-left: auto; font-family: var(--font-mono);
+  font-size: 10.5px; font-weight: 500; color: #5C626C;
+}
+
+.railfoot { border-top: 1px solid #24262C; padding: 10px; }
+.org { display: flex; align-items: center; gap: 9px; padding: 8px; border-radius: 6px; cursor: pointer; }
+.org:hover { background: #1E2127; }
+.orgava {
+  width: 26px; height: 26px; border-radius: 6px;
+  background: #2A2D35;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10.5px; font-weight: 700; color: #9AA1AC;
+}
+.orgname { font-size: 12.5px; font-weight: 500; color: #ECEDEF; }
+.orgmeta { font-size: 11px; color: #5C626C; }
+
+/* ============================================================================
+   Main content area
+   ============================================================================ */
+.main { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+
+.topbar {
+  height: 52px; border-bottom: var(--border-w) solid var(--border);
+  display: flex; align-items: center; gap: 12px; padding: 0 24px; flex-shrink: 0;
+  background: var(--surface);
+}
+.crumb-trail { display: flex; align-items: center; gap: 8px; flex: 1; }
+.crumb-seg { font-size: 13.5px; color: var(--muted); }
+.crumb-sep { color: var(--subtle); font-size: 13px; }
+.crumb-cur { font-size: 13.5px; font-weight: 500; color: var(--ink); }
+.cmdk {
+  display: flex; align-items: center; gap: 8px; width: 240px; padding: 6px 10px;
+  background: var(--bg); border: var(--border-w) solid var(--border);
+  border-radius: var(--radius); cursor: pointer;
+  transition: border-color var(--motion) var(--ease);
+}
+.cmdk:hover { border-color: #D6DAE0; }
+.cmdk-t { font-size: 12.5px; color: var(--subtle); flex: 1; }
+.kbd {
+  font-family: var(--font-mono); font-size: 10px; color: var(--muted);
+  background: var(--surface); border: var(--border-w) solid var(--border);
+  border-radius: 3px; padding: 1px 4px;
+}
+.iconbtn {
+  width: 30px; height: 30px; border: none; background: transparent;
+  color: var(--muted); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.iconbtn:hover { background: var(--bg); color: var(--ink); }
+.user-ava {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--accent-tint); border: 1px solid rgba(91,91,214,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600; color: var(--accent-ink);
+}
+
+.well { flex: 1; overflow-y: auto; padding: 32px var(--page-pad); }
+
+/* ============================================================================
+   Identity header — the record anchor (no molecule, pure composition)
+   ============================================================================ */
+.identity-header {
+  display: flex; align-items: flex-start; gap: 20px;
+  margin-bottom: 28px;
+}
+.account-avatar {
+  width: 52px; height: 52px; border-radius: 10px;
+  background: #EEF0FF; border: 1px solid rgba(91,91,214,0.18);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; font-weight: 700; color: var(--accent-ink);
+  flex-shrink: 0; letter-spacing: -0.02em;
+}
+.identity-meta { flex: 1; min-width: 0; }
+.identity-name {
+  font-size: 22px; font-weight: 600; letter-spacing: -0.022em;
+  color: var(--ink); line-height: 1.2;
+}
+.identity-sub {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 5px; flex-wrap: wrap;
+}
+.identity-sub-item { display: flex; align-items: center; gap: 5px; font-size: 13px; color: var(--muted); }
+.identity-sub-item svg { flex-shrink: 0; }
+.account-id {
+  font-family: var(--font-mono); font-size: 11.5px; font-weight: 500;
+  color: var(--subtle); background: var(--bg);
+  border: var(--border-w) solid var(--border);
+  border-radius: 4px; padding: 2px 7px;
+}
+.identity-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 500; padding: 7px 14px;
+  border-radius: var(--radius); border: var(--border-w) solid var(--border);
+  cursor: pointer; background: var(--surface); color: var(--ink);
+  transition: background var(--motion) var(--ease), border-color var(--motion) var(--ease);
+}
+.btn:hover { background: var(--bg); border-color: #D6DAE0; }
+.btn.primary {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}
+.btn.primary:hover { background: var(--accent-ink); border-color: var(--accent-ink); }
+
+/* ============================================================================
+   M5 — Variant B: tint pill (used in identity header — standalone, not in table)
+   ============================================================================ */
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; padding: 3px 9px;
+  border-radius: 999px; line-height: 1.4;
+}
+.pill .pd { width: 6px; height: 6px; border-radius: 50%; }
+.pill.ok  { background: var(--st-ok-tint); color: #15673B; }
+.pill.ok .pd { background: var(--st-ok); }
+.pill.warn { background: var(--st-warn-tint); color: var(--st-warn); }
+.pill.warn .pd { background: var(--st-warn); }
+.pill.idle { background: var(--st-idle-tint); color: #565D6A; }
+.pill.idle .pd { background: var(--st-idle); }
+.pill.bad  { background: var(--st-bad-tint); color: #B0362A; }
+.pill.bad .pd { background: var(--st-bad); }
+.pill.info { background: var(--st-info-tint); color: var(--accent-ink); }
+.pill.info .pd { background: var(--accent); }
+
+/* M5-A dot+label used in table only */
+.dotstat { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 500; }
+.dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.dotstat.ok { color: var(--st-ok); }    .dot.ok  { background: var(--st-ok); }
+.dotstat.warn { color: var(--st-warn); }.dot.warn{ background: var(--st-warn); }
+.dotstat.idle { color: var(--st-idle); }.dot.idle{ background: var(--st-idle); }
+.dotstat.bad  { color: var(--st-bad); } .dot.bad { background: var(--st-bad); }
+.dotstat.info { color: var(--st-info); }.dot.info{ background: var(--accent); }
+
+/* ============================================================================
+   Two-column layout: left=figures+chart, right=contact+plan meta
+   ============================================================================ */
+.layout-body { display: grid; grid-template-columns: 1fr 296px; gap: 20px; margin-bottom: 24px; }
+
+/* ============================================================================
+   M2 — Variant B: graded tiles, one lead (MRR is the lead)
+   Used for account's key figures — NOT a uniform 5-card strip
+   ============================================================================ */
+.kpi-grid {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-lg); overflow: hidden;
+  background: var(--surface); margin-bottom: 20px;
+}
+.tile { padding: 20px 22px; border-right: var(--border-w) solid var(--border); }
+.tile:last-child { border-right: none; }
+.eyebrow {
+  font-size: 10.5px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .07em; color: var(--muted); margin-bottom: 8px;
+}
+.figure { font-weight: 600; letter-spacing: var(--tr-figure); line-height: 1.04; color: var(--ink); font-variant-numeric: tabular-nums; }
+.tile.lead .figure { font-size: 34px; }
+.tile .figure { font-size: 26px; }
+.delta { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; margin-top: 6px; }
+.delta.up { color: var(--positive); }
+.delta.down { color: var(--danger); }
+.delta.flat { color: var(--muted); }
+.tile-sub { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+
+/* ============================================================================
+   M4 — Variant B: dual-series gap-band (invoiced vs collected)
+   Shows the open-receivable RELATIONSHIP for this account
+   ============================================================================ */
+.chart-card {
+  background: var(--surface); border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-lg); padding: 22px 24px;
+}
+.chead { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; }
+.ctitle { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.csub { font-size: 12px; color: var(--muted); }
+.mono { font-family: var(--font-mono); }
+.legend { display: flex; gap: 16px; font-size: 11.5px; color: var(--muted); margin-top: 14px; }
+.lg { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 2px; border-radius: 1px; display: inline-block; }
+
+/* ============================================================================
+   Right column — plan card + contact card
+   ============================================================================ */
+.side-stack { display: flex; flex-direction: column; gap: 14px; }
+.side-card {
+  background: var(--surface); border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-lg); padding: 18px 20px;
+}
+.side-card-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 14px; }
+.meta-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: var(--border-w) solid var(--border); }
+.meta-row:last-child { border-bottom: none; padding-bottom: 0; }
+.meta-key { font-size: 12.5px; color: var(--muted); }
+.meta-val { font-size: 12.5px; font-weight: 500; color: var(--ink); text-align: right; }
+.meta-val.mono { font-family: var(--font-mono); font-size: 12px; }
+.plan-chip {
+  font-size: 11.5px; font-weight: 600; color: var(--accent-ink);
+  background: var(--accent-tint); border: 1px solid rgba(91,91,214,0.18);
+  border-radius: 4px; padding: 2px 8px;
+}
+.contact-item { display: flex; align-items: center; gap: 9px; padding: 8px 0; border-bottom: var(--border-w) solid var(--border); }
+.contact-item:last-child { border-bottom: none; padding-bottom: 0; }
+.contact-ico { color: var(--subtle); flex-shrink: 0; }
+.contact-detail { min-width: 0; }
+.contact-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.contact-role { font-size: 11.5px; color: var(--muted); }
+.contact-email { font-size: 12px; font-family: var(--font-mono); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* timeline row inside side card */
+.timeline-item { display: flex; gap: 11px; padding: 8px 0; border-bottom: var(--border-w) solid var(--border); align-items: flex-start; }
+.timeline-item:last-child { border-bottom: none; padding-bottom: 0; }
+.tl-dot-col { display: flex; flex-direction: column; align-items: center; padding-top: 3px; }
+.tl-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.tl-dot.ok { background: var(--positive); }
+.tl-dot.accent { background: var(--accent); }
+.tl-dot.idle { background: var(--subtle); }
+.tl-dot.warn { background: var(--warning); }
+.tl-line { width: 1px; flex: 1; background: var(--border); margin-top: 4px; min-height: 14px; }
+.tl-body { flex: 1; min-width: 0; }
+.tl-label { font-size: 12.5px; font-weight: 500; color: var(--ink); }
+.tl-date { font-size: 11px; font-family: var(--font-mono); color: var(--muted); margin-top: 1px; }
+
+/* ============================================================================
+   M3 — Variant A: standard data table (invoices)
+   ============================================================================ */
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.section-title { font-size: 14px; font-weight: 600; color: var(--ink); }
+.section-link { font-size: 12.5px; color: var(--accent); font-weight: 500; cursor: pointer; }
+.section-link:hover { color: var(--accent-ink); }
+
+.panel { background: var(--surface); border: var(--border-w) solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.tbl { width: 100%; border-collapse: collapse; }
+.tbl thead th {
+  font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em;
+  color: var(--muted); text-align: left; padding: 10px 18px;
+  background: var(--bg); border-bottom: var(--border-w) solid var(--border);
+}
+.tbl thead th.r { text-align: right; }
+.tbl tbody tr { border-bottom: var(--border-w) solid var(--border); transition: background var(--motion) var(--ease); }
+.tbl tbody tr:last-child { border-bottom: none; }
+.tbl tbody tr:hover { background: var(--bg); }
+.tbl td { padding: 9px 18px; height: var(--row-h); vertical-align: middle; }
+
+.inv-id { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--accent-ink); }
+.primary { font-size: 13px; font-weight: 500; color: var(--ink); }
+.secondary { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+.date { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.num { font-size: 13px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; text-align: right; }
+.num.muted { color: var(--muted); font-weight: 400; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- M1-B: dark-anchor rail -->
+  <aside class="rail">
+    <div class="brand">
+      <div class="mark">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <rect x="1" y="7" width="4.5" height="6" rx="1" fill="#fff" opacity=".9"/>
+          <rect x="7.5" y="3" width="4.5" height="10" rx="1" fill="#fff"/>
+          <rect x="1" y="1.5" width="4.5" height="4" rx="1" fill="#fff" opacity=".6"/>
+        </svg>
+      </div>
+      <span class="brandname">Northwind</span>
+    </div>
+    <nav class="nav">
+      <div class="navsec">
+        <div class="navsec-label">Workspace</div>
+        <a class="item">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="1.5" width="4.5" height="4.5" rx=".75"/><rect x="9" y="1.5" width="4.5" height="4.5" rx=".75"/><rect x="1.5" y="9" width="4.5" height="4.5" rx=".75"/><rect x="9" y="9" width="4.5" height="4.5" rx=".75"/></svg>
+          Overview
+        </a>
+        <a class="item">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,10.5 5,6 8,8 11.5,3.5"/><path d="M10 3.5h3.5V7"/></svg>
+          Analytics
+        </a>
+      </div>
+      <div class="navsec">
+        <div class="navsec-label">Billing</div>
+        <a class="item active">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="5.5" r="2.5"/><path d="M2 13.5c0-2.5 2.5-4.5 5.5-4.5s5.5 2 5.5 4.5"/></svg>
+          Customers
+        </a>
+        <a class="item">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3.5" width="12" height="8" rx="1"/><path d="M1.5 6.5h12"/></svg>
+          Invoices
+          <span class="badge">12</span>
+        </a>
+        <a class="item">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 1.5v12M1.5 7.5h12"/></svg>
+          Subscriptions
+        </a>
+      </div>
+      <div class="navsec">
+        <div class="navsec-label">Settings</div>
+        <a class="item">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 9.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M13.5 7.5h-1.3a4.7 4.7 0 0 0-.5-1.2l.9-.9-1.4-1.4-.9.9a4.7 4.7 0 0 0-1.2-.5V3h-2v1.4a4.7 4.7 0 0 0-1.2.5l-.9-.9L3.6 5.4l.9.9a4.7 4.7 0 0 0-.5 1.2H2.5v2h1.5a4.7 4.7 0 0 0 .5 1.2l-.9.9 1.4 1.4.9-.9a4.7 4.7 0 0 0 1.2.5v1.4h2v-1.4a4.7 4.7 0 0 0 1.2-.5l.9.9 1.4-1.4-.9-.9a4.7 4.7 0 0 0 .5-1.2h1.3v-2Z"/></svg>
+          Settings
+        </a>
+      </div>
+    </nav>
+    <div class="railfoot">
+      <div class="org">
+        <div class="orgava">NW</div>
+        <div>
+          <div class="orgname">Northwind Inc.</div>
+          <div class="orgmeta">Admin · us-east-1</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="main">
+    <div class="topbar">
+      <div class="crumb-trail">
+        <span class="crumb-seg">Customers</span>
+        <span class="crumb-sep">/</span>
+        <span class="crumb-cur">Meridian Systems</span>
+      </div>
+      <div class="cmdk">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#9AA1AC" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="6" cy="6" r="4"/><path d="M9 9l3.5 3.5"/>
+        </svg>
+        <span class="cmdk-t">Search…</span>
+        <span class="kbd">⌘K</span>
+      </div>
+      <button class="iconbtn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6v3L2 11h12l-1.5-2V6C12.5 3.5 10.5 1.5 8 1.5Z"/><path d="M6.5 11v.5a1.5 1.5 0 003 0V11"/></svg>
+      </button>
+      <div class="user-ava">JL</div>
+    </div>
+
+    <div class="well">
+
+      <!-- Identity header -->
+      <div class="identity-header">
+        <div class="account-avatar">MS</div>
+        <div class="identity-meta">
+          <div class="identity-name">Meridian Systems</div>
+          <div class="identity-sub">
+            <span class="pill ok"><span class="pd"></span>Active</span>
+            <span class="account-id">cus_9f2a8c41</span>
+            <span class="identity-sub-item">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1L7.5 4.5H11L8 6.5l1 3.5L6 8 3 10l1-3.5L1 4.5h3.5Z" opacity=".6"/></svg>
+              Enterprise
+            </span>
+            <span class="identity-sub-item">Since Jan 2022</span>
+          </div>
+        </div>
+        <div class="identity-actions">
+          <button class="btn">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 1v11M1 6.5h11"/></svg>
+            New invoice
+          </button>
+          <button class="btn primary">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6.5h11M7.5 2 12 6.5 7.5 11"/></svg>
+            Manage
+          </button>
+        </div>
+      </div>
+
+      <!-- Two-column body layout -->
+      <div class="layout-body">
+
+        <!-- Left column: KPI tiles + chart -->
+        <div>
+          <!-- M2-B: graded tiles — MRR leads -->
+          <div class="kpi-grid">
+            <div class="tile lead">
+              <div class="eyebrow">MRR</div>
+              <div class="figure tnum">$14,800</div>
+              <div class="delta up">↑ 8.3% MoM</div>
+            </div>
+            <div class="tile">
+              <div class="eyebrow">Lifetime value</div>
+              <div class="figure tnum">$318,240</div>
+              <div class="tile-sub">Since Jan 2022</div>
+            </div>
+            <div class="tile">
+              <div class="eyebrow">Open balance</div>
+              <div class="figure tnum">$6,200</div>
+              <div class="delta warn">↑ 1 inv. overdue</div>
+            </div>
+          </div>
+
+          <!-- M4-B: dual-series gap-band — invoiced vs collected for this account -->
+          <div class="chart-card">
+            <div class="chead">
+              <div>
+                <div class="ctitle">Invoiced vs collected · last 6 months</div>
+                <div class="csub">Band is open receivable — $6,200 outstanding</div>
+              </div>
+              <div class="csub mono">$88.8k invoiced</div>
+            </div>
+            <svg width="100%" height="170" viewBox="0 0 640 170" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#5B5BD6" stop-opacity="0.11"/>
+                  <stop offset="100%" stop-color="#5B5BD6" stop-opacity="0.02"/>
+                </linearGradient>
+              </defs>
+              <!-- gridlines -->
+              <line x1="0" y1="35" x2="640" y2="35" stroke="#E8EAED" stroke-width="1"/>
+              <line x1="0" y1="85" x2="640" y2="85" stroke="#E8EAED" stroke-width="1"/>
+              <line x1="0" y1="135" x2="640" y2="135" stroke="#E8EAED" stroke-width="1"/>
+              <!-- band fill -->
+              <path d="M0,130 L128,118 L256,100 L384,78 L512,68 L640,50
+                        L640,148 L512,138 L384,124 L256,130 L128,142 L0,148 Z" fill="url(#band)"/>
+              <!-- invoiced: solid accent -->
+              <path d="M0,130 L128,118 L256,100 L384,78 L512,68 L640,50"
+                    fill="none" stroke="#5B5BD6" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- collected: muted dashed -->
+              <path d="M0,148 L128,142 L256,130 L384,124 L512,138 L640,148"
+                    fill="none" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="4 3" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- axis labels -->
+              <text x="3" y="31" font-size="9.5" font-family="'JetBrains Mono',monospace" fill="#6B7280">$20k</text>
+              <text x="3" y="81" font-size="9.5" font-family="'JetBrains Mono',monospace" fill="#6B7280">$14k</text>
+              <text x="3" y="131" font-size="9.5" font-family="'JetBrains Mono',monospace" fill="#6B7280">$8k</text>
+              <!-- month labels -->
+              <text x="0"   y="162" font-size="9.5" font-family="'JetBrains Mono',monospace" fill="#9AA1AC">Dec</text>
+              <text x="118" y="162" font-size="9.5" font-family="'JetBrains Mono',monospace" fill="#9AA1AC">Jan</text>
+              <text x="246" y="162" font-size="9.5" font-family="'JetBrains Mono',monospace" fill="#9AA1AC">Feb</text>
+              <text x="374" y="162" font-size="9.5" font-family="'JetBrains Mono',monospace" fill="#9AA1AC">Mar</text>
+              <text x="502" y="162" font-size="9.5" font-family="'JetBrains Mono',monospace" fill="#9AA1AC">Apr</text>
+              <text x="624" y="162" font-size="9.5" font-family="'JetBrains Mono',monospace" fill="#9AA1AC">May</text>
+            </svg>
+            <div class="legend">
+              <span class="lg"><span class="sw" style="background:#5B5BD6"></span>Invoiced</span>
+              <span class="lg">
+                <span class="sw" style="background:#6B7280;background-image:repeating-linear-gradient(90deg,#6B7280 0 4px,transparent 4px 7px)"></span>
+                Collected
+              </span>
+              <span class="lg"><span class="sw" style="background:rgba(91,91,214,0.2)"></span>Outstanding</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right column: plan details + contact + subscription timeline -->
+        <div class="side-stack">
+
+          <!-- Plan / account meta -->
+          <div class="side-card">
+            <div class="side-card-title">Account</div>
+            <div class="meta-row">
+              <span class="meta-key">Plan</span>
+              <span class="plan-chip">Enterprise</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Billing cycle</span>
+              <span class="meta-val">Annual</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Next renewal</span>
+              <span class="meta-val mono">2026-01-14</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Seats</span>
+              <span class="meta-val tnum">42 / 50</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Region</span>
+              <span class="meta-val">us-east-1</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Payment method</span>
+              <span class="meta-val">·· 4291</span>
+            </div>
+          </div>
+
+          <!-- Primary contact -->
+          <div class="side-card">
+            <div class="side-card-title">Contacts</div>
+            <div class="contact-item">
+              <svg class="contact-ico" width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="5" r="2.5"/><path d="M2 13c0-2.5 2.5-4.5 5.5-4.5S13 10.5 13 13"/></svg>
+              <div class="contact-detail">
+                <div class="contact-name">Priya Kapoor</div>
+                <div class="contact-role">Account owner · Finance VP</div>
+                <div class="contact-email">p.kapoor@meridiansys.io</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <svg class="contact-ico" width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="5" r="2.5"/><path d="M2 13c0-2.5 2.5-4.5 5.5-4.5S13 10.5 13 13"/></svg>
+              <div class="contact-detail">
+                <div class="contact-name">Devon Osei</div>
+                <div class="contact-role">Technical contact · Eng lead</div>
+                <div class="contact-email">d.osei@meridiansys.io</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subscription timeline -->
+          <div class="side-card">
+            <div class="side-card-title">Timeline</div>
+            <div class="timeline-item">
+              <div class="tl-dot-col"><span class="tl-dot warn"></span><span class="tl-line"></span></div>
+              <div class="tl-body">
+                <div class="tl-label">Invoice INV-2024-0118 overdue</div>
+                <div class="tl-date">2025-05-22</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot-col"><span class="tl-dot ok"></span><span class="tl-line"></span></div>
+              <div class="tl-body">
+                <div class="tl-label">Renewal processed — $177,600</div>
+                <div class="tl-date">2025-01-14</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot-col"><span class="tl-dot accent"></span><span class="tl-line"></span></div>
+              <div class="tl-body">
+                <div class="tl-label">Upgraded Starter → Enterprise</div>
+                <div class="tl-date">2024-03-01</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot-col"><span class="tl-dot idle"></span></div>
+              <div class="tl-body">
+                <div class="tl-label">Account created</div>
+                <div class="tl-date">2022-01-09</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- M3-A: Invoice table -->
+      <div class="section-header">
+        <span class="section-title">Recent invoices</span>
+        <span class="section-link">View all →</span>
+      </div>
+      <div class="panel">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Invoice</th>
+              <th>Description</th>
+              <th>Issued</th>
+              <th>Due</th>
+              <th>Status</th>
+              <th class="r">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="inv-id">INV-2025-0052</span></td>
+              <td>
+                <div class="primary">Enterprise · May 2025</div>
+                <div class="secondary">Annual seat renewal — 42 seats</div>
+              </td>
+              <td><span class="date">May 1, 2025</span></td>
+              <td><span class="date">May 31, 2025</span></td>
+              <td>
+                <div class="dotstat ok"><span class="dot ok"></span>Paid</div>
+              </td>
+              <td class="num">$14,800.00</td>
+            </tr>
+            <tr>
+              <td><span class="inv-id">INV-2025-0118</span></td>
+              <td>
+                <div class="primary">Add-on · SSO module</div>
+                <div class="secondary">One-time activation fee</div>
+              </td>
+              <td><span class="date">Apr 14, 2025</span></td>
+              <td><span class="date">May 14, 2025</span></td>
+              <td>
+                <div class="dotstat warn"><span class="dot warn"></span>Overdue</div>
+              </td>
+              <td class="num">$6,200.00</td>
+            </tr>
+            <tr>
+              <td><span class="inv-id">INV-2025-0044</span></td>
+              <td>
+                <div class="primary">Enterprise · Apr 2025</div>
+                <div class="secondary">Annual seat renewal — 42 seats</div>
+              </td>
+              <td><span class="date">Apr 1, 2025</span></td>
+              <td><span class="date">Apr 30, 2025</span></td>
+              <td>
+                <div class="dotstat ok"><span class="dot ok"></span>Paid</div>
+              </td>
+              <td class="num">$14,800.00</td>
+            </tr>
+            <tr>
+              <td><span class="inv-id">INV-2025-0037</span></td>
+              <td>
+                <div class="primary">Enterprise · Mar 2025</div>
+                <div class="secondary">Annual seat renewal — 42 seats</div>
+              </td>
+              <td><span class="date">Mar 1, 2025</span></td>
+              <td><span class="date">Mar 31, 2025</span></td>
+              <td>
+                <div class="dotstat ok"><span class="dot ok"></span>Paid</div>
+              </td>
+              <td class="num">$14,800.00</td>
+            </tr>
+            <tr>
+              <td><span class="inv-id">INV-2025-0029</span></td>
+              <td>
+                <div class="primary">Enterprise · Feb 2025</div>
+                <div class="secondary">Annual seat renewal — 42 seats</div>
+              </td>
+              <td><span class="date">Feb 1, 2025</span></td>
+              <td><span class="date">Feb 28, 2025</span></td>
+              <td>
+                <div class="dotstat ok"><span class="dot ok"></span>Paid</div>
+              </td>
+              <td class="num">$14,800.00</td>
+            </tr>
+            <tr>
+              <td><span class="inv-id">INV-2025-0019</span></td>
+              <td>
+                <div class="primary">Credit note · seat reduction</div>
+                <div class="secondary">Seat count adjusted 50 → 42</div>
+              </td>
+              <td><span class="date">Jan 22, 2025</span></td>
+              <td><span class="date">—</span></td>
+              <td>
+                <div class="dotstat idle"><span class="dot idle"></span>Applied</div>
+              </td>
+              <td class="num muted">−$2,400.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

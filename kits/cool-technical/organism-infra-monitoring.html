@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API Health Monitor — Platform Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COOL-TECHNICAL register — _tokens.css inlined
+   ============================================================================ */
+:root {
+  --bg:        #F7F8F9;
+  --surface:   #FFFFFF;
+  --border:    #E8EAED;
+  --ink:       #16181D;
+  --muted:     #6B7280;
+  --subtle:    #9AA1AC;
+
+  --accent:        #5B5BD6;
+  --accent-ink:    #4A4AC4;
+  --accent-tint:   rgba(91,91,214,0.07);
+
+  --positive:  #1A7F4B;
+  --warning:   #92600A;
+  --danger:    #C8412E;
+
+  --font-ui:      'Inter', system-ui, sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  --t-display:   600 32px/1.15 var(--font-display);
+  --tr-display:  -0.025em;
+  --t-h:         600 16px/1.3  var(--font-ui);
+  --t-body:      400 14px/1.5  var(--font-ui);
+  --t-eyebrow:   600 11px/1    var(--font-ui);
+  --tr-eyebrow:  0.07em;
+  --t-figure:    600 40px/1.05 var(--font-display);
+  --tr-figure:   -0.02em;
+  --t-caption:   500 12px/1.3  var(--font-ui);
+
+  --radius:      7px;
+  --radius-lg:   11px;
+  --border-w:    1px;
+  --row-h:       38px;
+  --page-pad:    40px;
+  --motion:      140ms;
+  --ease:        cubic-bezier(0.2, 0, 0, 1);
+
+  /* status semantic ramp */
+  --st-ok:var(--positive);   --st-ok-tint:rgba(26,127,75,0.10);
+  --st-warn:var(--warning);  --st-warn-tint:rgba(146,96,10,0.12);
+  --st-idle:#6B7280;         --st-idle-tint:rgba(107,114,128,0.10);
+  --st-bad:var(--danger);    --st-bad-tint:rgba(200,65,46,0.10);
+  --st-info:var(--accent);   --st-info-tint:var(--accent-tint);
+}
+
+.tnum { font-variant-numeric: tabular-nums; }
+
+/* ============================================================================
+   RESET + BASE
+   ============================================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { width: 1280px; }
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  width: 1280px;
+  min-height: 900px;
+  overflow-x: hidden;
+}
+
+/* ============================================================================
+   M1-B — dark-anchor rail shell
+   ============================================================================ */
+.frame { display: flex; height: 100vh; min-height: 900px; }
+
+.rail {
+  width: 224px;
+  flex-shrink: 0;
+  background: #16181D;
+  border-right: var(--border-w) solid #24262C;
+  display: flex;
+  flex-direction: column;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 18px 16px 14px;
+  border-bottom: var(--border-w) solid #24262C;
+}
+.mark {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.brandname { font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; color: #ECEDEF; }
+
+.nav { flex: 1; padding: 12px 10px; overflow-y: auto; }
+.navsec { margin-bottom: 6px; }
+.navsec-label {
+  font-size: 10.5px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .08em;
+  color: #5C626C;
+  padding: 10px 8px 4px;
+}
+.item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 7px 8px; border-radius: 6px;
+  font-size: 13px; color: #9AA1AC;
+  text-decoration: none; cursor: pointer;
+  position: relative;
+  transition: background var(--motion) var(--ease), color var(--motion) var(--ease);
+}
+.item:hover { background: #1E2127; color: #ECEDEF; }
+.item svg { opacity: .7; flex-shrink: 0; }
+.item.active {
+  background: rgba(91,91,214,0.18);
+  color: #C7C7F5;
+  font-weight: 500;
+}
+.item.active svg { opacity: 1; }
+.item.active::before {
+  content: '';
+  position: absolute; left: -2px; top: 5px; bottom: 5px;
+  width: 2px; background: var(--accent); border-radius: 1px;
+}
+.item .badge {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10.5px; font-weight: 500;
+  color: #5C626C;
+}
+.item .badge.alert { color: var(--danger); }
+
+.railfoot {
+  border-top: var(--border-w) solid #24262C;
+  padding: 10px;
+}
+.org {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px; border-radius: 6px; cursor: pointer;
+}
+.org:hover { background: #1E2127; }
+.orgava {
+  width: 26px; height: 26px; border-radius: 6px;
+  background: #24262C;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10.5px; font-weight: 700; color: #8A909B;
+}
+.orgname { font-size: 12.5px; font-weight: 500; color: #ECEDEF; }
+.orgmeta { font-size: 11px; color: #5C626C; }
+
+/* ============================================================================
+   MAIN AREA
+   ============================================================================ */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--bg);
+}
+
+.topbar {
+  height: 52px;
+  border-bottom: var(--border-w) solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 28px;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+.crumb { font-size: 13.5px; font-weight: 500; flex: 1; color: var(--ink); }
+.crumb span { color: var(--muted); font-weight: 400; margin: 0 6px; }
+
+.cmdk {
+  display: flex; align-items: center; gap: 8px;
+  width: 220px; padding: 6px 10px;
+  background: var(--bg);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color var(--motion) var(--ease);
+}
+.cmdk:hover { border-color: #D6DAE0; }
+.cmdk-t { font-size: 12.5px; color: var(--subtle); flex: 1; }
+.kbd {
+  font-family: var(--font-mono); font-size: 10px; color: var(--muted);
+  background: var(--surface);
+  border: var(--border-w) solid var(--border);
+  border-radius: 3px; padding: 1px 4px;
+}
+
+.topbar-meta {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 11.5px;
+  color: var(--muted);
+}
+.topbar-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--positive); }
+.topbar-dot.warn { background: var(--warning); }
+
+.well {
+  flex: 1;
+  padding: 28px 28px 40px;
+  overflow: auto;
+}
+
+/* ============================================================================
+   PAGE HEADER
+   ============================================================================ */
+.page-hd {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 22px;
+}
+.page-title { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+.page-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.time-badge {
+  font-family: var(--font-mono); font-size: 11.5px; color: var(--muted);
+  background: var(--surface);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px 10px;
+}
+
+/* ============================================================================
+   M2-B — graded KPI tile strip (peer signals, no single hero)
+   ============================================================================ */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  background: var(--surface);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+.tile {
+  padding: 18px 20px;
+  border-right: var(--border-w) solid var(--border);
+}
+.tile:last-child { border-right: none; }
+.eyebrow {
+  font-size: 10.5px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .07em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.tile .figure {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 600;
+  letter-spacing: var(--tr-figure);
+  line-height: 1.04;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.tile.lead .figure { font-size: 34px; }
+.tile .figure.bad { color: var(--danger); }
+.tile .figure.warn { color: var(--warning); }
+.tile .delta {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 11.5px; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  margin-top: 5px;
+}
+.delta.up { color: var(--positive); }
+.delta.down { color: var(--danger); }
+.delta.neutral { color: var(--muted); }
+
+/* latency sub-row inside a tile */
+.latency-row {
+  display: flex; gap: 10px; margin-top: 6px;
+}
+.lat-item { font-size: 11px; font-variant-numeric: tabular-nums; }
+.lat-label { font-size: 10px; color: var(--subtle); text-transform: uppercase; letter-spacing: .05em; }
+.lat-val { font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; color: var(--ink); }
+.lat-val.warn { color: var(--warning); }
+.lat-val.bad  { color: var(--danger);  }
+
+/* ============================================================================
+   MIDDLE BAND — chart left, status tiles right
+   ============================================================================ */
+.mid-band {
+  display: grid;
+  grid-template-columns: 1fr 296px;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.panel {
+  background: var(--surface);
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.panel-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 16px 20px 0;
+}
+.panel-title { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.panel-sub   { font-size: 12px; color: var(--muted); }
+.panel-meta  { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
+
+/* M4-B dual-series gap-band chart (req/s vs baseline) */
+.chart-wrap { padding: 14px 20px 16px; }
+.chart-legend {
+  display: flex; gap: 16px;
+  font-size: 11.5px; color: var(--muted);
+  margin-top: 10px;
+}
+.lg { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 2px; border-radius: 1px; display: inline-block; }
+
+/* right status rail */
+.status-rail { display: flex; flex-direction: column; }
+.status-hd {
+  padding: 16px 18px 12px;
+  border-bottom: var(--border-w) solid var(--border);
+  font-size: 13px; font-weight: 600; color: var(--ink);
+}
+.status-hd span { font-size: 11.5px; font-weight: 400; color: var(--muted); margin-left: 6px; }
+.svc-row {
+  display: flex; align-items: center;
+  padding: 10px 18px;
+  border-bottom: var(--border-w) solid var(--border);
+  gap: 10px;
+}
+.svc-row:last-child { border-bottom: none; }
+.svc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.svc-dot.ok   { background: var(--positive); }
+.svc-dot.warn { background: var(--warning);  }
+.svc-dot.bad  { background: var(--danger);   }
+.svc-name { font-size: 12.5px; font-weight: 500; color: var(--ink); flex: 1; }
+.svc-uptime { font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.svc-uptime.ok   { color: var(--positive); }
+.svc-uptime.warn { color: var(--warning);  }
+.svc-uptime.bad  { color: var(--danger);   }
+
+/* M5-B tint pill — used in status rail header */
+.pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11.5px; font-weight: 600;
+  padding: 2px 8px; border-radius: 999px; line-height: 1.4;
+}
+.pill .pd { width: 6px; height: 6px; border-radius: 50%; }
+.pill.ok   { background: var(--st-ok-tint);   color: #15673B; }   .pill.ok   .pd { background: var(--positive); }
+.pill.warn { background: var(--st-warn-tint);  color: var(--warning); } .pill.warn .pd { background: var(--warning); }
+.pill.bad  { background: var(--st-bad-tint);   color: #B0362A; }   .pill.bad  .pd { background: var(--danger); }
+.pill.idle { background: var(--st-idle-tint);  color: #565D6A; }   .pill.idle .pd { background: var(--st-idle); }
+
+/* ============================================================================
+   M3-B — sparkline table (per-endpoint with leading dot + trend line)
+   ============================================================================ */
+.tbl-section { margin-top: 0; }
+.tbl-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 0;
+}
+
+.tbl { width: 100%; border-collapse: collapse; }
+.tbl thead th {
+  font-size: 10.5px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .07em;
+  color: var(--muted);
+  text-align: left;
+  padding: 10px 18px;
+  background: var(--bg);
+  border-bottom: var(--border-w) solid var(--border);
+}
+.tbl thead th.r { text-align: right; }
+.tbl thead th.c { text-align: center; }
+.tbl tbody tr {
+  border-bottom: var(--border-w) solid var(--border);
+  transition: background var(--motion) var(--ease);
+}
+.tbl tbody tr:last-child { border-bottom: none; }
+.tbl tbody tr:hover { background: var(--bg); }
+.tbl td { padding: 9px 18px; height: var(--row-h); vertical-align: middle; }
+
+.ep-cell { display: flex; align-items: center; gap: 8px; }
+.ep-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.ep-dot.ok   { background: var(--positive); }
+.ep-dot.warn { background: var(--warning);  }
+.ep-dot.bad  { background: var(--danger);   }
+
+.ep-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.ep-svc  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+.mono-cell {
+  font-family: var(--font-mono);
+  font-size: 12.5px; font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.mono-cell.warn { color: var(--warning); }
+.mono-cell.bad  { color: var(--danger);  }
+
+.num-cell {
+  font-size: 13px; font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.num-cell.warn { color: var(--warning); }
+.num-cell.bad  { color: var(--danger);  }
+
+.spark { display: block; }
+
+/* latency trio in a cell */
+.lat-trio {
+  display: flex; gap: 12px;
+  font-family: var(--font-mono); font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}
+.lat-trio span { color: var(--ink); }
+.lat-trio .lk { font-size: 10px; color: var(--subtle); }
+.lat-trio .lv { font-weight: 500; }
+.lat-trio .lv.warn { color: var(--warning); }
+.lat-trio .lv.bad  { color: var(--danger);  }
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <!-- M1-B dark-anchor rail -->
+  <aside class="rail">
+    <div class="brand">
+      <div class="mark">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <rect x="1" y="7" width="4.5" height="6" rx="1" fill="#fff" opacity=".9"/>
+          <rect x="7.5" y="3" width="4.5" height="10" rx="1" fill="#fff"/>
+          <rect x="1" y="1.5" width="4.5" height="4" rx="1" fill="#fff" opacity=".6"/>
+        </svg>
+      </div>
+      <span class="brandname">Infrapulse</span>
+    </div>
+    <nav class="nav">
+      <div class="navsec">
+        <div class="navsec-label">Observe</div>
+        <a class="item active">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><path d="M7.5 4v3.5l2 1.5"/></svg>
+          API Health
+        </a>
+        <a class="item">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,10.5 5,6 8,8 11.5,3.5"/><path d="M10 3.5h3.5V7"/></svg>
+          Metrics
+        </a>
+        <a class="item">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3" width="12" height="9" rx="1"/><path d="M1.5 6h12M5 3v3M10 3v3"/></svg>
+          Logs
+          <span class="badge alert">3</span>
+        </a>
+        <a class="item">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 1.5l6 3.5v5l-6 3.5-6-3.5v-5l6-3.5Z"/></svg>
+          Traces
+        </a>
+      </div>
+      <div class="navsec">
+        <div class="navsec-label">Manage</div>
+        <a class="item">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 1.5C5 1.5 3 3.5 3 6v3L1.5 11h12L12 9V6C12 3.5 10 1.5 7.5 1.5Z"/><path d="M6 11v.5a1.5 1.5 0 003 0V11"/></svg>
+          Alerts
+          <span class="badge alert">2</span>
+        </a>
+        <a class="item">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="5" r="2.5"/><path d="M2 13c0-2.5 2.5-4.5 5.5-4.5s5.5 2 5.5 4.5"/></svg>
+          Team
+        </a>
+        <a class="item">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="2.5"/><path d="M7.5 1v2M7.5 12v2M1 7.5h2M12 7.5h2M2.9 2.9l1.4 1.4M10.7 10.7l1.4 1.4M2.9 12.1l1.4-1.4M10.7 4.3l1.4-1.4"/></svg>
+          Settings
+        </a>
+      </div>
+    </nav>
+    <div class="railfoot">
+      <div class="org">
+        <div class="orgava">PE</div>
+        <div>
+          <div class="orgname">Platform Eng.</div>
+          <div class="orgmeta">Production · us-east-1</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- main content -->
+  <div class="main">
+    <div class="topbar">
+      <span class="crumb">API Health <span>/</span> Overview</span>
+      <div class="topbar-meta">
+        <span class="topbar-dot warn"></span>
+        1 degraded service
+      </div>
+      <div class="cmdk">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#9AA1AC" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="6" cy="6" r="4"/>
+          <path d="M9 9l3.5 3.5"/>
+        </svg>
+        <span class="cmdk-t">Search endpoints…</span>
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="orgava" style="width:30px;height:30px;border-radius:50%;background:#E4E6EB;font-size:11px;font-weight:700;color:#6B7280;display:flex;align-items:center;justify-content:center;">JR</div>
+    </div>
+
+    <div class="well">
+
+      <!-- page header -->
+      <div class="page-hd">
+        <div>
+          <div class="page-title">API Health Monitor</div>
+          <div class="page-sub">29 endpoints across 6 services · last refreshed 14s ago</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="pill warn"><span class="pd"></span>1 Degraded</span>
+          <span class="time-badge">window: 1h</span>
+        </div>
+      </div>
+
+      <!-- M2-B: 5-tile graded strip — peer signals, no hero -->
+      <div class="kpi-strip">
+        <div class="tile lead">
+          <div class="eyebrow">Uptime · 30d</div>
+          <div class="figure tnum">99.91%</div>
+          <div class="delta neutral">▲ 0.04% vs last month</div>
+        </div>
+        <div class="tile">
+          <div class="eyebrow">Throughput</div>
+          <div class="figure tnum">3,842<span style="font-size:16px;font-weight:500;color:var(--muted);margin-left:3px">req/s</span></div>
+          <div class="delta up">↑ 12% vs 1h ago</div>
+        </div>
+        <div class="tile">
+          <div class="eyebrow">Error rate</div>
+          <div class="figure tnum warn">0.31%</div>
+          <div class="delta down">↑ 0.18% — webhooks</div>
+        </div>
+        <div class="tile">
+          <div class="eyebrow">P50 / P95 / P99</div>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-top:4px;">
+            <span style="font-family:var(--font-mono);font-size:22px;font-weight:600;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;">42</span>
+            <span style="font-family:var(--font-mono);font-size:15px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;">/ 128 /</span>
+            <span style="font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--warning);font-variant-numeric:tabular-nums;">612 ms</span>
+          </div>
+          <div class="delta neutral" style="font-size:10.5px;margin-top:4px;">p99 ↑ driven by /webhooks</div>
+        </div>
+        <div class="tile">
+          <div class="eyebrow">Apdex score</div>
+          <div class="figure tnum">0.94</div>
+          <div class="delta down">↓ 0.03 this hour</div>
+        </div>
+      </div>
+
+      <!-- mid band: M4-B chart + service status rail -->
+      <div class="mid-band">
+
+        <!-- M4-B: dual-series gap-band — req/s actual vs rolling baseline -->
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Request throughput vs baseline</div>
+              <div class="panel-sub">Gap = deviation from 7-day rolling average</div>
+            </div>
+            <div class="panel-meta">peak 4,210 req/s</div>
+          </div>
+          <div class="chart-wrap">
+            <svg width="100%" height="160" viewBox="0 0 640 160" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="bandGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#5B5BD6" stop-opacity="0.10"/>
+                  <stop offset="100%" stop-color="#5B5BD6" stop-opacity="0.02"/>
+                </linearGradient>
+              </defs>
+              <!-- gridlines -->
+              <line x1="0" y1="30"  x2="640" y2="30"  stroke="#E8EAED" stroke-width="1"/>
+              <line x1="0" y1="75"  x2="640" y2="75"  stroke="#E8EAED" stroke-width="1"/>
+              <line x1="0" y1="120" x2="640" y2="120" stroke="#E8EAED" stroke-width="1"/>
+              <!-- band fill between actual (upper) and baseline (lower) -->
+              <path d="M0,90 L80,85 L160,78 L240,70 L320,58 L400,52 L480,44 L560,38 L640,32
+                       L640,105 L560,98 L480,95 L400,90 L320,84 L240,92 L160,96 L80,100 L0,102 Z"
+                    fill="url(#bandGrad)"/>
+              <!-- actual throughput: solid accent -->
+              <path d="M0,90 L80,85 L160,78 L240,70 L320,58 L400,52 L480,44 L560,38 L640,32"
+                    fill="none" stroke="#5B5BD6" stroke-width="1.75"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- rolling baseline: muted dashed -->
+              <path d="M0,102 L80,100 L160,96 L240,92 L320,84 L400,90 L480,95 L560,98 L640,105"
+                    fill="none" stroke="#9AA1AC" stroke-width="1.5" stroke-dasharray="4 3"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- spike anomaly marker at x=320 -->
+              <line x1="320" y1="0" x2="320" y2="140" stroke="#E8EAED" stroke-width="1" stroke-dasharray="3 3"/>
+              <circle cx="640" cy="32" r="3.5" fill="#5B5BD6"/>
+              <circle cx="640" cy="32" r="6.5" fill="#5B5BD6" opacity="0.15"/>
+              <!-- axis labels -->
+              <text x="4" y="26"  font-size="9" fill="#6B7280" font-family="'JetBrains Mono',monospace">4.2k</text>
+              <text x="4" y="71"  font-size="9" fill="#6B7280" font-family="'JetBrains Mono',monospace">3.0k</text>
+              <text x="4" y="116" font-size="9" fill="#6B7280" font-family="'JetBrains Mono',monospace">1.8k</text>
+              <!-- time axis -->
+              <text x="4"   y="150" font-size="9" fill="#9AA1AC" font-family="'JetBrains Mono',monospace">-60m</text>
+              <text x="148" y="150" font-size="9" fill="#9AA1AC" font-family="'JetBrains Mono',monospace">-45m</text>
+              <text x="298" y="150" font-size="9" fill="#9AA1AC" font-family="'JetBrains Mono',monospace">-30m</text>
+              <text x="448" y="150" font-size="9" fill="#9AA1AC" font-family="'JetBrains Mono',monospace">-15m</text>
+              <text x="604" y="150" font-size="9" fill="#9AA1AC" font-family="'JetBrains Mono',monospace">now</text>
+            </svg>
+            <div class="chart-legend">
+              <span class="lg"><span class="sw" style="background:#5B5BD6"></span>Actual req/s</span>
+              <span class="lg"><span class="sw" style="background:#9AA1AC;border-top:1px dashed #9AA1AC;height:0;margin-top:1px;"></span>7d baseline</span>
+              <span class="lg"><span class="sw" style="background:rgba(91,91,214,0.14)"></span>Deviation band</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- M5-B tint pills + service uptime status rail -->
+        <div class="panel status-rail">
+          <div class="status-hd">Services <span>6 total</span></div>
+          <div class="svc-row">
+            <span class="svc-dot ok"></span>
+            <span class="svc-name">api-gateway</span>
+            <span class="svc-uptime ok tnum" style="font-family:var(--font-mono);font-size:12px;">100.00%</span>
+          </div>
+          <div class="svc-row">
+            <span class="svc-dot ok"></span>
+            <span class="svc-name">auth-service</span>
+            <span class="svc-uptime ok tnum" style="font-family:var(--font-mono);font-size:12px;">99.98%</span>
+          </div>
+          <div class="svc-row">
+            <span class="svc-dot ok"></span>
+            <span class="svc-name">payments-api</span>
+            <span class="svc-uptime ok tnum" style="font-family:var(--font-mono);font-size:12px;">99.96%</span>
+          </div>
+          <div class="svc-row">
+            <span class="svc-dot warn"></span>
+            <span class="svc-name">webhook-broker</span>
+            <span class="svc-uptime warn tnum" style="font-family:var(--font-mono);font-size:12px;">98.21%</span>
+          </div>
+          <div class="svc-row">
+            <span class="svc-dot ok"></span>
+            <span class="svc-name">search-api</span>
+            <span class="svc-uptime ok tnum" style="font-family:var(--font-mono);font-size:12px;">99.99%</span>
+          </div>
+          <div class="svc-row">
+            <span class="svc-dot ok"></span>
+            <span class="svc-name">media-cdn</span>
+            <span class="svc-uptime ok tnum" style="font-family:var(--font-mono);font-size:12px;">100.00%</span>
+          </div>
+          <div style="padding:12px 18px;border-top:var(--border-w) solid var(--border);display:flex;gap:6px;flex-wrap:wrap;">
+            <span class="pill ok"><span class="pd"></span>5 Healthy</span>
+            <span class="pill warn"><span class="pd"></span>1 Degraded</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- M3-B: sparkline table — per-endpoint with dot + trend line + latency trio -->
+      <div class="panel tbl-section">
+        <div class="tbl-hd" style="margin-bottom:0;">
+          <div>
+            <span class="panel-title" style="display:block;padding-bottom:4px;">Endpoint breakdown</span>
+            <span class="panel-sub" style="display:block;">29 endpoints · sorted by p95 latency desc</span>
+          </div>
+          <div style="display:flex;gap:8px;padding-bottom:2px;">
+            <span class="pill idle"><span class="pd"></span>Last 1h</span>
+          </div>
+        </div>
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th style="width:26%">Endpoint</th>
+              <th>P50 / P95 / P99</th>
+              <th>Req/s</th>
+              <th>Trend · 1h</th>
+              <th class="r">Error %</th>
+              <th class="r">Apdex</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="ep-cell">
+                  <span class="ep-dot warn"></span>
+                  <div><div class="ep-name">POST /v1/webhooks</div><div class="ep-svc">webhook-broker</div></div>
+                </div>
+              </td>
+              <td>
+                <div class="lat-trio">
+                  <div><div class="lk">p50</div><div class="lv">188 ms</div></div>
+                  <div><div class="lk">p95</div><div class="lv warn">412 ms</div></div>
+                  <div><div class="lk">p99</div><div class="lv bad">1,204 ms</div></div>
+                </div>
+              </td>
+              <td class="mono-cell">84.2</td>
+              <td>
+                <svg class="spark" width="100" height="20" viewBox="0 0 100 20" preserveAspectRatio="none">
+                  <path d="M0,8 L12,9 L25,7 L37,10 L50,12 L62,14 L75,16 L87,17 L100,18"
+                        fill="none" stroke="var(--warning)" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </td>
+              <td class="num-cell warn">0.31%</td>
+              <td class="num-cell warn">0.81</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="ep-cell">
+                  <span class="ep-dot ok"></span>
+                  <div><div class="ep-name">GET /v1/charges</div><div class="ep-svc">payments-api</div></div>
+                </div>
+              </td>
+              <td>
+                <div class="lat-trio">
+                  <div><div class="lk">p50</div><div class="lv">44 ms</div></div>
+                  <div><div class="lk">p95</div><div class="lv">128 ms</div></div>
+                  <div><div class="lk">p99</div><div class="lv">241 ms</div></div>
+                </div>
+              </td>
+              <td class="mono-cell">642.1</td>
+              <td>
+                <svg class="spark" width="100" height="20" viewBox="0 0 100 20" preserveAspectRatio="none">
+                  <path d="M0,14 L12,12 L25,13 L37,10 L50,11 L62,8 L75,9 L87,7 L100,6"
+                        fill="none" stroke="var(--accent)" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </td>
+              <td class="num-cell">0.02%</td>
+              <td class="num-cell">0.98</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="ep-cell">
+                  <span class="ep-dot ok"></span>
+                  <div><div class="ep-name">POST /v1/charges</div><div class="ep-svc">payments-api</div></div>
+                </div>
+              </td>
+              <td>
+                <div class="lat-trio">
+                  <div><div class="lk">p50</div><div class="lv">62 ms</div></div>
+                  <div><div class="lk">p95</div><div class="lv">189 ms</div></div>
+                  <div><div class="lk">p99</div><div class="lv">308 ms</div></div>
+                </div>
+              </td>
+              <td class="mono-cell">318.7</td>
+              <td>
+                <svg class="spark" width="100" height="20" viewBox="0 0 100 20" preserveAspectRatio="none">
+                  <path d="M0,12 L12,11 L25,12 L37,10 L50,9 L62,10 L75,8 L87,8 L100,7"
+                        fill="none" stroke="var(--accent)" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </td>
+              <td class="num-cell">0.04%</td>
+              <td class="num-cell">0.96</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="ep-cell">
+                  <span class="ep-dot ok"></span>
+                  <div><div class="ep-name">GET /v1/customers</div><div class="ep-svc">payments-api</div></div>
+                </div>
+              </td>
+              <td>
+                <div class="lat-trio">
+                  <div><div class="lk">p50</div><div class="lv">38 ms</div></div>
+                  <div><div class="lk">p95</div><div class="lv">96 ms</div></div>
+                  <div><div class="lk">p99</div><div class="lv">178 ms</div></div>
+                </div>
+              </td>
+              <td class="mono-cell">421.4</td>
+              <td>
+                <svg class="spark" width="100" height="20" viewBox="0 0 100 20" preserveAspectRatio="none">
+                  <path d="M0,10 L12,9 L25,10 L37,8 L50,9 L62,7 L75,8 L87,6 L100,5"
+                        fill="none" stroke="var(--accent)" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </td>
+              <td class="num-cell">0.01%</td>
+              <td class="num-cell">0.99</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="ep-cell">
+                  <span class="ep-dot ok"></span>
+                  <div><div class="ep-name">POST /auth/token</div><div class="ep-svc">auth-service</div></div>
+                </div>
+              </td>
+              <td>
+                <div class="lat-trio">
+                  <div><div class="lk">p50</div><div class="lv">28 ms</div></div>
+                  <div><div class="lk">p95</div><div class="lv">74 ms</div></div>
+                  <div><div class="lk">p99</div><div class="lv">142 ms</div></div>
+                </div>
+              </td>
+              <td class="mono-cell">1,204.0</td>
+              <td>
+                <svg class="spark" width="100" height="20" viewBox="0 0 100 20" preserveAspectRatio="none">
+                  <path d="M0,11 L12,10 L25,9 L37,10 L50,8 L62,9 L75,7 L87,8 L100,7"
+                        fill="none" stroke="var(--accent)" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </td>
+              <td class="num-cell">0.00%</td>
+              <td class="num-cell">0.99</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="ep-cell">
+                  <span class="ep-dot ok"></span>
+                  <div><div class="ep-name">GET /v2/search</div><div class="ep-svc">search-api</div></div>
+                </div>
+              </td>
+              <td>
+                <div class="lat-trio">
+                  <div><div class="lk">p50</div><div class="lv">52 ms</div></div>
+                  <div><div class="lk">p95</div><div class="lv">144 ms</div></div>
+                  <div><div class="lk">p99</div><div class="lv">264 ms</div></div>
+                </div>
+              </td>
+              <td class="mono-cell">788.3</td>
+              <td>
+                <svg class="spark" width="100" height="20" viewBox="0 0 100 20" preserveAspectRatio="none">
+                  <path d="M0,13 L12,12 L25,10 L37,11 L50,9 L62,10 L75,8 L87,9 L100,8"
+                        fill="none" stroke="var(--accent)" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </td>
+              <td class="num-cell">0.03%</td>
+              <td class="num-cell">0.97</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="ep-cell">
+                  <span class="ep-dot ok"></span>
+                  <div><div class="ep-name">GET /v1/routes</div><div class="ep-svc">api-gateway</div></div>
+                </div>
+              </td>
+              <td>
+                <div class="lat-trio">
+                  <div><div class="lk">p50</div><div class="lv">18 ms</div></div>
+                  <div><div class="lk">p95</div><div class="lv">48 ms</div></div>
+                  <div><div class="lk">p99</div><div class="lv">84 ms</div></div>
+                </div>
+              </td>
+              <td class="mono-cell">3,842.0</td>
+              <td>
+                <svg class="spark" width="100" height="20" viewBox="0 0 100 20" preserveAspectRatio="none">
+                  <path d="M0,14 L12,13 L25,12 L37,13 L50,11 L62,10 L75,9 L87,10 L100,8"
+                        fill="none" stroke="var(--accent)" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </td>
+              <td class="num-cell">0.00%</td>
+              <td class="num-cell">1.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /well -->
+  </div><!-- /main -->
+</div><!-- /frame -->
+</body>
+</html>

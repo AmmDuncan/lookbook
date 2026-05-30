@@ -1,0 +1,80 @@
+/* ============================================================
+   Skin — Cool-technical (Linear / Vercel / Stripe register)
+   The re-skin contract: load AFTER tokens.css; these overrides
+   map Lookbook onto the cool-slate / off-axis-indigo register
+   used by the molecule-library kit (kits/cool-technical/).
+
+   This is the ADOPTION BRIDGE: a project using @lookbook/tokens
+   gets the cool-technical look by importing this after the base
+   tokens. The runnable kit ships its own self-contained
+   kits/cool-technical/_tokens.css (same values, kit vocabulary).
+
+   Values = Specimen A, contrast-tuned to WCAG AA. Cool-neutral
+   ramp (slate undertone, hue ~250) + indigo-violet accent off the
+   default blue/indigo axis (§palette construction in the brain).
+   ============================================================ */
+
+:root,
+[data-theme="light"] {
+  --bg:              #F7F8F9;   /* off-white, slate undertone — never pure #FFF */
+  --surface:         #FFFFFF;
+  --surface-raised:  #FFFFFF;
+  --surface-sunken:  #F1F2F4;
+
+  --border:          #E8EAED;   /* hairline, the primary separator (no shadow-soup) */
+  --border-strong:   #D6DAE0;
+
+  --text-primary:    #16181D;   /* near-black with the neutral's cool undertone, not #000 */
+  --text-secondary:  #6B7280;
+  --text-muted:      #9AA1AC;
+  --text-on-accent:  #FFFFFF;
+
+  --accent:          #5B5BD6;   /* indigo-violet, off the default 220/260 axis */
+  --accent-hover:    #4A4AC4;   /* pressed / ink */
+  --accent-subtle:   #EEF0FF;   /* selected-row / tint background */
+  --focus-ring:      #5B5BD6;
+
+  /* status — quiet, AA-tuned text inks (no full-saturation badges) */
+  --success-bg: #E7F4EC;  --success-fg: #15673B;
+  --warning-bg: #FBF1DF;  --warning-fg: #92600A;
+  --danger-bg:  #FBE7E4;  --danger-fg:  #B0362A;
+  --info-bg:    #EEF0FF;  --info-fg:    #4A4AC4;
+
+  /* type — Geist UI + mono for data/IDs (the register's pairing dial) */
+  --font-sans:    "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sans);
+  --font-mono:    "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+
+  /* craft — confident, not bubbly */
+  --radius-md: 7px;
+  --radius-lg: 11px;
+
+  /* kit additions (not in base tokens) — shared structural seams the molecules read */
+  --topbar-h: 52px;   /* rail brand-header AND topbar share this → one continuous seam */
+  --row-h:    38px;   /* tight admin table row (MC-2) */
+}
+
+[data-theme="dark"] {
+  --bg:              #0E0F13;
+  --surface:         #16181D;
+  --surface-raised:  #1C1E24;
+  --surface-sunken:  #0B0C10;
+
+  --border:          #24262C;
+  --border-strong:   #30333A;
+
+  --text-primary:    #ECEDEF;
+  --text-secondary:  #9AA1AC;
+  --text-muted:      #6B7280;
+  --text-on-accent:  #FFFFFF;
+
+  --accent:          #7C7CF0;   /* lifted for contrast on dark */
+  --accent-hover:    #9A9AF5;
+  --accent-subtle:   rgba(124,124,240,0.14);
+  --focus-ring:      #7C7CF0;
+
+  --success-bg: rgba(26,127,75,0.18);  --success-fg: #86E0AD;
+  --warning-bg: rgba(146,96,10,0.20);  --warning-fg: #E8C079;
+  --danger-bg:  rgba(176,54,42,0.20);  --danger-fg:  #F0A99C;
+  --info-bg:    rgba(124,124,240,0.16); --info-fg:    #A6A6F0;
+}

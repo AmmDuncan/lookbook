@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  RECIPES — figure compositions · register: cool-technical
+  Named ARRANGEMENTS built from the figure atoms (figure-atoms.html: hero-figure + stat).
+  STRUCTURAL DISTINCTNESS RULE (KIT §0.5): recipes must differ in WHERE elements sit —
+  not just boxed-vs-bare. Boxing / density are FLAGS on a recipe, never separate recipes.
+  (Earlier we had summary-card + bare-hero-band as two recipes — they were the same shape,
+  hero + a stat ROW, just boxed vs not. Collapsed into one: "hero + stat-row", boxed flag.)
+  The recipes below each answer "where do the supporting stats go?" differently:
+    hero + stat-row — stats in a horizontal row beside/under the hero   (boxed flag)
+    hero + rail     — stats stacked vertically in a side rail
+    stat-tiles      — NO hero; peer stats as tiles, one promoted to lead
+    hero-solo       — NO stats; the hero stands alone, context comes from chart/table below
+    dual-hero       — two co-equal hero figures, no stat row
+  Pick the one whose STRUCTURE fits the brief; vary it across surfaces.
+-->
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Figure recipes — cool-technical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);
+       font-size:14px;-webkit-font-smoothing:antialiased;padding:40px}
+  .specimen{max-width:880px;margin:0 auto}
+  .specimen + .specimen{margin-top:44px}
+  .label{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;
+         color:var(--subtle);margin-bottom:12px;display:block}
+
+  /* ---- shared atoms (identical to figure-atoms.html — the coherence) ---- */
+  .eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+  .figure{font-weight:600;letter-spacing:var(--tr-figure);line-height:1.04;color:var(--ink);
+          font-variant-numeric:tabular-nums}
+  .delta{display:inline-flex;align-items:center;gap:3px;font-weight:600;font-variant-numeric:tabular-nums}
+  .delta.up{color:var(--positive)} .delta.down{color:var(--danger)}
+  .delta-note{color:var(--muted);font-weight:400}
+  .hero-figure .eyebrow{margin-bottom:8px}
+  .hero-figure .figure{font-size:50px}
+  .hero-figure .delta-row{display:flex;align-items:baseline;gap:8px;margin-top:8px;font-size:13px}
+  .stat .eyebrow{font-size:10.5px;margin-bottom:5px}
+  .stat .figure{font-size:22px}
+  .stat .delta{font-size:11.5px;margin-top:3px}
+
+  /* boxed flag: any recipe can sit in a card or bare on the page */
+  .boxed{background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius-lg)}
+  .pad{padding:26px 28px}
+
+  /* ---- RECIPE 1: hero + stat-row (stats horizontal · the conventional · boxed flag shown) ---- */
+  .r-row .statrow{display:flex;gap:40px;margin-top:20px;padding-top:18px;border-top:var(--border-w) solid var(--border)}
+
+  /* ---- RECIPE 2: hero + rail (stats VERTICAL in a side rail) ---- */
+  .r-rail{display:flex}
+  .r-rail .main{flex:1;padding:26px 28px}
+  .r-rail .main .note{margin-top:16px;padding-top:16px;border-top:var(--border-w) solid var(--border);font-size:13px;color:var(--muted)}
+  .r-rail .side{width:200px;border-left:var(--border-w) solid var(--border);padding:24px 22px;display:flex;flex-direction:column;gap:18px}
+
+  /* ---- RECIPE 3: stat-tiles (NO hero · peer stats, one lead) ---- */
+  .r-tiles{display:grid;grid-template-columns:1.4fr 1fr 1fr;overflow:hidden}
+  .r-tiles .stat{padding:20px 22px;border-right:var(--border-w) solid var(--border)}
+  .r-tiles .stat:last-child{border-right:none}
+  .r-tiles .stat.lead .figure{font-size:32px}
+
+  /* ---- RECIPE 4: hero-solo (NO stats · the number stands alone) ----
+     RESTRAINT: dominance comes from standing ALONE, not from size. The hero figure stays
+     in the 44–54px band even here — a 60px+ number is the "out of hand" tell. */
+  .r-solo .hero-figure .figure{font-size:54px}
+  .r-solo .csub{font-size:13px;color:var(--muted);margin-top:14px}
+
+  /* ---- RECIPE 5: dual-hero (two co-equal figures, no stat row) ---- */
+  .r-dual{display:grid;grid-template-columns:1fr 1fr}
+  .r-dual .h{padding:26px 28px}
+  .r-dual .h + .h{border-left:var(--border-w) solid var(--border)}
+</style>
+</head>
+<body>
+
+  <div class="specimen">
+    <span class="label">Recipe 1 — hero + stat-row  (stats HORIZONTAL · the conventional · ·boxed· flag on)</span>
+    <div class="boxed pad r-row">
+      <div class="hero-figure">
+        <div class="eyebrow">Today's revenue · live</div>
+        <div class="figure">$8,341.50</div>
+        <div class="delta-row"><span class="delta up">↑ +24.7%</span><span class="delta-note">vs yesterday</span></div>
+      </div>
+      <div class="statrow">
+        <div class="stat"><div class="eyebrow">Orders</div><div class="figure">147</div><div class="delta up">↑ 18</div></div>
+        <div class="stat"><div class="eyebrow">Avg order</div><div class="figure">$56.74</div><div class="delta up">↑ 4.1%</div></div>
+        <div class="stat"><div class="eyebrow">Conversion</div><div class="figure">4.2%</div><div class="delta down">↓ 0.2%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Recipe 2 — hero + rail  (stats VERTICAL in a side rail — different axis)</span>
+    <div class="boxed r-rail">
+      <div class="main">
+        <div class="hero-figure">
+          <div class="eyebrow">Today's revenue · live</div>
+          <div class="figure">$8,341.50</div>
+          <div class="delta-row"><span class="delta up">↑ +24.7%</span><span class="delta-note">vs yesterday</span></div>
+        </div>
+        <div class="note">Net of $82.50 refunds · 147 orders today</div>
+      </div>
+      <div class="side">
+        <div class="stat"><div class="eyebrow">Avg order</div><div class="figure">$56.74</div><div class="delta up">↑ 4.1%</div></div>
+        <div class="stat"><div class="eyebrow">Conversion</div><div class="figure">4.2%</div><div class="delta down">↓ 0.2%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Recipe 3 — stat-tiles  (NO hero · peer stats, one promoted to lead — for "nothing dominates")</span>
+    <div class="boxed r-tiles">
+      <div class="stat lead"><div class="eyebrow">MRR</div><div class="figure">$92,480</div><div class="delta up">↑ 6.1% MoM</div></div>
+      <div class="stat"><div class="eyebrow">Active projects</div><div class="figure">1,204</div><div class="delta up">↑ 48</div></div>
+      <div class="stat"><div class="eyebrow">Build success</div><div class="figure">99.2%</div><div class="delta down">↓ 0.4%</div></div>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Recipe 4 — hero-solo  (NO stats · the number stands alone, context lives in the chart/table below)</span>
+    <div class="boxed pad r-solo">
+      <div class="hero-figure">
+        <div class="eyebrow">Today's revenue · live</div>
+        <div class="figure">$8,341.50</div>
+        <div class="delta-row"><span class="delta up">↑ +24.7%</span><span class="delta-note">vs yesterday ($6,690.10)</span></div>
+      </div>
+      <div class="csub">Tracking 18% ahead of the 30-day average. Full breakdown below.</div>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Recipe 5 — dual-hero  (two co-equal figures, no stat row — for two-headline briefs)</span>
+    <div class="boxed r-dual">
+      <div class="h hero-figure">
+        <div class="eyebrow">Revenue · today</div>
+        <div class="figure">$8,341.50</div>
+        <div class="delta-row"><span class="delta up">↑ +24.7%</span><span class="delta-note">vs yesterday</span></div>
+      </div>
+      <div class="h hero-figure">
+        <div class="eyebrow">Gross profit · today</div>
+        <div class="figure">$3,712.20</div>
+        <div class="delta-row"><span class="delta up">↑ +19.1%</span><span class="delta-note">44.5% margin</span></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

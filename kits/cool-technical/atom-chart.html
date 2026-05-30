@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  MOLECULE M4 — chart · register: cool-technical
+  ONE signature data-viz treatment owned app-wide (DM-3): single-hue soft area fill +
+  thin top stroke, hairline gridlines, tabular mono axis labels, a single end-point dot.
+  Variant B adds the brain's depth move "show a RELATIONSHIP, not just a trend" — a dual
+  series with the gap between them banded (e.g. Invoiced vs Collected). Satisfies DM-3,
+  MC-1, T-1, AD-4 (subtle single-hue fill only, no rainbow gradient).
+  CONFIRM vs live: fill opacity (refs ~0.10–0.16 top → ~0 bottom), stroke width (1.5px),
+  gridline color (= --border), axis label size.
+-->
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M4 chart — cool-technical</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;
+       -webkit-font-smoothing:antialiased;padding:40px}
+  .specimen{max-width:760px;margin:0 auto}
+  .specimen + .specimen{margin-top:44px}
+  .label{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;
+         color:var(--subtle);margin-bottom:12px;display:block}
+  .card{background:var(--surface);border:var(--border-w) solid var(--border);
+        border-radius:var(--radius-lg);padding:22px 24px}
+  .chead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
+  .ctitle{font-size:13.5px;font-weight:600;color:var(--ink)}
+  .csub{font-size:12px;color:var(--muted)}
+  .legend{display:flex;gap:16px;font-size:11.5px;color:var(--muted);margin-top:14px}
+  .lg{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:10px;height:2px;border-radius:1px;display:inline-block}
+  .mono{font-family:var(--font-mono)}
+</style>
+</head>
+<body>
+
+  <div class="specimen">
+    <span class="label">Variant A — single-series area (the signature trend, DM-3)</span>
+    <div class="card">
+      <div class="chead">
+        <div><div class="ctitle">Daily revenue</div><div class="csub">Last 30 days</div></div>
+        <div class="csub mono">$2.4k peak</div>
+      </div>
+      <svg width="100%" height="180" viewBox="0 0 680 180" preserveAspectRatio="none" font-family="'JetBrains Mono',monospace">
+        <defs>
+          <linearGradient id="fillA" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5B5BD6" stop-opacity="0.14"/>
+            <stop offset="100%" stop-color="#5B5BD6" stop-opacity="0.01"/>
+          </linearGradient>
+        </defs>
+        <line x1="0" y1="40" x2="680" y2="40" stroke="#E8EAED" stroke-width="1"/>
+        <line x1="0" y1="90" x2="680" y2="90" stroke="#E8EAED" stroke-width="1"/>
+        <line x1="0" y1="140" x2="680" y2="140" stroke="#E8EAED" stroke-width="1"/>
+        <path d="M0,150 L40,142 L80,138 L120,128 L160,132 L200,118 L240,104 L280,110 L320,92 L360,80 L400,86 L440,64 L480,70 L520,50 L560,56 L600,38 L640,30 L680,22 L680,180 L0,180 Z" fill="url(#fillA)"/>
+        <path d="M0,150 L40,142 L80,138 L120,128 L160,132 L200,118 L240,104 L280,110 L320,92 L360,80 L400,86 L440,64 L480,70 L520,50 L560,56 L600,38 L640,30 L680,22" fill="none" stroke="#5B5BD6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="680" cy="22" r="3.5" fill="#5B5BD6"/><circle cx="680" cy="22" r="6.5" fill="#5B5BD6" opacity="0.16"/>
+        <text x="2" y="36" font-size="9.5" fill="#6B7280">$2,400</text>
+        <text x="2" y="86" font-size="9.5" fill="#6B7280">$1,600</text>
+        <text x="2" y="136" font-size="9.5" fill="#6B7280">$800</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Variant B — dual series, gap banded (shows a RELATIONSHIP, depth move)</span>
+    <div class="card">
+      <div class="chead">
+        <div><div class="ctitle">Invoiced vs collected</div><div class="csub">The band is outstanding receivable</div></div>
+        <div class="csub mono">$18.2k open</div>
+      </div>
+      <svg width="100%" height="180" viewBox="0 0 680 180" preserveAspectRatio="none" font-family="'JetBrains Mono',monospace">
+        <defs>
+          <linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5B5BD6" stop-opacity="0.10"/>
+            <stop offset="100%" stop-color="#5B5BD6" stop-opacity="0.02"/>
+          </linearGradient>
+        </defs>
+        <line x1="0" y1="40" x2="680" y2="40" stroke="#E8EAED" stroke-width="1"/>
+        <line x1="0" y1="90" x2="680" y2="90" stroke="#E8EAED" stroke-width="1"/>
+        <line x1="0" y1="140" x2="680" y2="140" stroke="#E8EAED" stroke-width="1"/>
+        <!-- band between invoiced (upper) and collected (lower) -->
+        <path d="M0,120 L113,108 L226,96 L340,72 L453,80 L566,54 L680,40 L680,150 L566,128 L453,132 L340,118 L226,134 L113,140 L0,148 Z" fill="url(#band)"/>
+        <!-- invoiced: solid -->
+        <path d="M0,120 L113,108 L226,96 L340,72 L453,80 L566,54 L680,40" fill="none" stroke="#5B5BD6" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- collected: muted dashed -->
+        <path d="M0,148 L113,140 L226,134 L340,118 L453,132 L566,128 L680,150" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="4 3" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="2" y="36" font-size="9.5" fill="#6B7280">$60k</text>
+        <text x="2" y="86" font-size="9.5" fill="#6B7280">$40k</text>
+        <text x="2" y="136" font-size="9.5" fill="#6B7280">$20k</text>
+      </svg>
+      <div class="legend">
+        <span class="lg"><span class="sw" style="background:#5B5BD6"></span>Invoiced</span>
+        <span class="lg"><span class="sw" style="background:#6B7280"></span>Collected</span>
+        <span class="lg"><span class="sw" style="background:rgba(91,91,214,0.18)"></span>Outstanding</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

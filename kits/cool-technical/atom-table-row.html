@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  MOLECULE M3 — table-row · register: cool-technical
+  Distilled from how real shipped products (Linear issues, Stripe payments, Vercel
+  deployments) treat dense data rows: hairline horizontal dividers (no verticals, no
+  zebra), tight 36–40px rows, right-aligned tabular numerals, muted secondary text on
+  the same row, quiet hover. Satisfies MC-1, MC-2, T-1, AD-9.
+  Variants shown: (A) standard data row · (B) row with leading status dot + per-row
+  sparkline (DM-3). Both consume the shared register tokens — coherence is free.
+  NUMERIC VALUES to confirm vs live computed styles: --row-h (38px), header tracking,
+  cell padding-x (measured ~16–20px in refs).
+  DENSITY DISCIPLINE (load-bearing — MC-2): rows stay ONE line tall. Every cell nowraps
+  by default; the ONE long-text column gets class .t-title and TRUNCATES with an ellipsis
+  instead of wrapping. Never let a value wrap to a second line — it makes rows vary in
+  height and destroys the pro-tool rhythm. Keep secondary text to one short line; compose
+  ages/counts/IDs as short tokens ("6h 22m", not stacked).
+-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M3 table-row — cool-technical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);
+       font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;padding:40px}
+  .specimen{max-width:880px;margin:0 auto}
+  .specimen + .specimen{margin-top:48px}
+  .label{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;
+         color:var(--subtle);margin-bottom:12px;display:block}
+
+  /* ---- the molecule ---- */
+  .panel{background:var(--surface);border:var(--border-w) solid var(--border);
+         border-radius:var(--radius-lg);overflow:hidden}
+  /* inner horizontal scroll: when columns need more width than the panel has, the table
+     SCROLLS — it never crushes short cells into wrapping. Wrap every .tbl in .tbl-scroll. */
+  .tbl-scroll{overflow-x:auto;overflow-y:visible}
+  .tbl{width:100%;border-collapse:collapse;min-width:max-content}
+  .tbl thead th{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;
+       color:var(--muted);text-align:left;padding:10px 18px;background:var(--bg);
+       border-bottom:var(--border-w) solid var(--border)}
+  .tbl thead th.r{text-align:right}
+  .tbl tbody tr{border-bottom:var(--border-w) solid var(--border);transition:background var(--motion) var(--ease)}
+  .tbl tbody tr:last-child{border-bottom:none}
+  .tbl tbody tr:hover{background:var(--bg)}
+  .tbl td{padding:9px 18px;height:var(--row-h);vertical-align:middle;white-space:nowrap}
+  /* density discipline (MC-2): short cells nowrap (above). the ONE long-text column gets
+     .t-title and truncates with an ellipsis — rows never grow past one line. */
+  .t-title{max-width:240px}
+  .t-title .primary,.t-title .secondary{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .id{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--accent-ink)}
+  .primary{font-size:13px;font-weight:500;color:var(--ink)}
+  .secondary{font-size:11.5px;color:var(--muted);margin-top:1px}
+  .date{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .num{font-size:13px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
+
+  /* status: quiet 8px dot + text, no saturated badge (MC-7) */
+  .st{display:flex;align-items:center;gap:7px}
+  .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  .dot.ok{background:var(--positive)} .dot.warn{background:var(--warning)}
+  .dot.idle{background:var(--subtle)} .dot.bad{background:var(--danger)}
+  .st-txt{font-size:12.5px;font-weight:500;color:var(--muted)}
+
+  /* per-row sparkline (DM-3 signature) */
+  .spark{display:block}
+</style>
+</head>
+<body>
+
+  <div class="specimen">
+    <span class="label">Variant A — standard data row (Linear/Stripe density)</span>
+    <div class="panel">
+      <div class="tbl-scroll">
+      <table class="tbl">
+        <thead><tr><th>Deployment</th><th>Branch</th><th>Created</th><th>Status</th><th class="r">Duration</th></tr></thead>
+        <tbody>
+          <tr><td><span class="id">dpl_8f2a</span></td><td><div class="primary">api · prod</div><div class="secondary">commit 4c1e09a</div></td><td><span class="date">May 30, 14:22</span></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Ready</span></div></td><td class="num">42s</td></tr>
+          <tr><td><span class="id">dpl_8f19</span></td><td><div class="primary">web · prod</div><div class="secondary">commit 9bd2f31</div></td><td><span class="date">May 30, 13:58</span></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Ready</span></div></td><td class="num">1m 03s</td></tr>
+          <tr><td><span class="id">dpl_8f05</span></td><td><div class="primary">api · preview</div><div class="secondary">commit a71c4e8</div></td><td><span class="date">May 30, 11:40</span></td><td><div class="st"><span class="dot warn"></span><span class="st-txt">Building</span></div></td><td class="num">—</td></tr>
+          <tr><td><span class="id">dpl_8ef2</span></td><td><div class="primary">web · preview</div><div class="secondary">commit 33ab190</div></td><td><span class="date">May 30, 09:12</span></td><td><div class="st"><span class="dot bad"></span><span class="st-txt">Error</span></div></td><td class="num">18s</td></tr>
+          <tr><td><span class="id">dpl_8ed7</span></td><td><div class="primary">api · prod</div><div class="secondary">commit 0f9c2aa</div></td><td><span class="date">May 29, 22:05</span></td><td><div class="st"><span class="dot idle"></span><span class="st-txt">Queued</span></div></td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Variant B — row with leading status dot + inline sparkline (signature viz, DM-3)</span>
+    <div class="panel">
+      <div class="tbl-scroll">
+      <table class="tbl">
+        <thead><tr><th>Endpoint</th><th>p95 latency</th><th>Requests · 24h</th><th>Trend</th><th class="r">Error rate</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="st"><span class="dot ok"></span><span class="primary">/v1/charges</span></div></td>
+            <td class="num" style="text-align:left">128 ms</td>
+            <td><span class="date">1,204,882</span></td>
+            <td>
+              <svg class="spark" width="120" height="22" viewBox="0 0 120 22" preserveAspectRatio="none">
+                <path d="M0,16 L15,14 L30,15 L45,11 L60,12 L75,8 L90,10 L105,6 L120,7" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </td>
+            <td class="num">0.02%</td>
+          </tr>
+          <tr>
+            <td><div class="st"><span class="dot ok"></span><span class="primary">/v1/customers</span></div></td>
+            <td class="num" style="text-align:left">96 ms</td>
+            <td><span class="date">842,109</span></td>
+            <td>
+              <svg class="spark" width="120" height="22" viewBox="0 0 120 22" preserveAspectRatio="none">
+                <path d="M0,10 L15,11 L30,9 L45,10 L60,8 L75,9 L90,7 L105,8 L120,6" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </td>
+            <td class="num">0.01%</td>
+          </tr>
+          <tr>
+            <td><div class="st"><span class="dot warn"></span><span class="primary">/v1/webhooks</span></div></td>
+            <td class="num" style="text-align:left">412 ms</td>
+            <td><span class="date">318,440</span></td>
+            <td>
+              <svg class="spark" width="120" height="22" viewBox="0 0 120 22" preserveAspectRatio="none">
+                <path d="M0,8 L15,9 L30,7 L45,11 L60,10 L75,14 L90,13 L105,17 L120,16" fill="none" stroke="var(--warning)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </td>
+            <td class="num">0.31%</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

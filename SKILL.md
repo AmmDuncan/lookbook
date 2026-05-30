@@ -97,9 +97,9 @@ There are **two modes of adoption**, and both are first-class. Pick per task; yo
 This resolves the central tension — consistency vs. "every page looks the same":
 
 - **Converge at the token + primitive layer.** The same Badge, the same `--accent`, the same spacing scale, everywhere. This is the consistency you *want* — it's what makes two pages feel like one product and what lets a re-skin ripple through for free.
-- **Diverge at the composition layer.** *How* a page is arranged — the grid, the column split, the rhythm — is where variety lives.
+- **Diverge at the composition layer — and, when asked for genuinely distinct directions, at the visual-expression and shell layers too.** *How* a page is arranged (grid, column split, rhythm) is the default axis of variety; for distinct directions you also vary *how the tokens are spent* (light vs. dark rail, surface model, accent placement) and the *shell* (sidebar vs. topbar vs. workbench) — all still inside the token contract, never a new palette or one-off parts. See **How to make 3 directions**.
 
-Never introduce ad-hoc colors, spacing, or one-off components (that breaks convergence). Never force every page into one identical template (that kills healthy divergence). Variety comes from composition, not from reinventing the parts.
+Never introduce ad-hoc colors, spacing, or one-off components (that breaks convergence). Never force every page into one identical template (that kills healthy divergence). Variety comes from composition and from how the system is *spent* — not from reinventing the parts.
 
 **The three-layer model (how a project becomes recognizably itself):**
 1. **System** — tokens + primitives. Identical across every project.
@@ -147,18 +147,24 @@ When building, redesigning, OR adding a new screen/flow inside an existing app (
 0. **Frame it** — for a new product/site, *a new flow in an existing app*, OR *a redesign*, **start with the Frame-it intake (`patterns/approach.md` P-AP-11): ASK the user the framing inputs through structured multiple-choice — personality · accent/brand · theme · platform · scope — adapting the set to the situation (new / in-app-flow / redesign), and lead each question with a recommended option. Never guess the dials.** Then run the rest of `patterns/approach.md` (job → archetype → density → the six dials → one signature *on expressive surfaces only*); for site-level shape load `patterns/site-archetypes.md` (shell choice + the cross-page invariants; gallery → **SiteArchetypes** for specimens); derive the brand token system with `patterns/identity.md` (gallery → **Identity** + **Imagery** for specimens).
 1. **Identify the page archetype** (gallery → **Recipes**): CRUD list · record detail/profile · create/edit form · wizard/onboarding · settings · search & results · feed/activity · dashboard · checkout/billing · pricing · detail-with-map · kanban.
 2. **Pull the recipe** — its Ingredients (which components), Required states, and responsive note.
-3. **Generate 2–3 composition directions** using `patterns/layout.md` (the composition grammar; specimens in gallery → **Layout**). Vary **primary/secondary emphasis**, the **region split**, and the **section rhythm** — *never* the design language. This is where variety comes from: distinct *compositions* of one clean system, not decoration bolted on. For a new or important surface, render all directions and let the human choose — **presented in the user's chosen view surface, not as a bare path** (see *Presenting directions* below). (On expressive surfaces an optional single signature move may distinguish a direction — gallery → **Variation**; on functional surfaces, none.)
+3. **Generate 2–3 directions** with the three-direction-types method (see **How to make 3 directions**) — ask which layer varies (composition / visual / shell), default to **visual + composition**; `patterns/layout.md` is the composition grammar (gallery → **Layout**) and `patterns/site-archetypes.md` the shell options. Vary emphasis / split / rhythm and (for distinct directions) *how the tokens are spent* + the *shell* — *never the token system itself* (same accent, fonts, primitives). This is where variety comes from: distinct *expressions* of one clean system, not decoration bolted on. For a new or important surface, render all directions and let the human choose — **presented in the user's chosen view surface, not as a bare path** (see *Presenting directions* below). (On expressive surfaces an optional single signature move may distinguish a direction — gallery → **Variation**; on functional surfaces, none.)
 4. **Build the chosen direction** from Lookbook primitives + tokens, with all required states. Cite fundamental rule IDs (`F<n>`) in narration as decisions are made — body size, spacing, hierarchy, accent placement — so the application is auditable.
 5. **Verify against `fundamentals.md`** — walk the `Check:` lines for measurable rules, confirm the rendered output complies, and flag any violation. A violation must be either fixed or declared in `personality.md` with a justification. Undeclared deviations are not a choice — they are bugs.
 6. **Present and pull reaction — the Review intake** (the bookend to the Frame-it intake, step 0). First **present the render(s) in the user's chosen view surface** — ask once per session how they want to see directions (browser / easel / screenshots / running app), then reuse it; never just hand over a file path (see **Presenting directions** below). Then, **don't lock the design on your own eye.** Your self-grade has a taste ceiling (it routinely fails to see its own flatness); the user's eye is the authority. ASK for structured reaction through the host's question UI, then feed it into a revise cycle. See **The Review intake** below.
 
 ### How to make 3 directions (without breaking consistency)
-Same components, same tokens. Only vary:
-- **Emphasis** — what's the focal region? (hero-led vs. content-led vs. summary-led)
-- **Split** — single column vs. `1fr + rail` vs. sticky-summary split vs. stacked-with-anchors.
-- **Rhythm/density** — airy vs. compact section spacing.
 
-Directions are "different arrangements of the same kit," not different design languages.
+**First decide what "direction" means here.** "Another direction / option / take / version" is ambiguous, and the common miss is varying only the shallowest layer — panels rearranged, everything else identical — so two "directions" read as the same screen. Three layers can vary:
+
+1. **Composition** — same visual language + shell; varies *arrangement*: focal region / emphasis, region split, order, section rhythm, density.
+2. **Visual** — same requirements + shell; varies *how the tokens are spent*: light vs. dark rail, accent-on-fill vs. accent-on-text, elevated-card vs. flat-bordered vs. table-first surface, type rhythm, contrast model, active-nav treatment, KPI & chart presentation.
+3. **Structural** — varies the *shell / nav model*: sidebar vs. topbar vs. icon-rail, split-pane vs. workbench vs. report-page (the sanctioned shells in `patterns/site-archetypes.md`).
+
+**Ask which layer should vary** when the user hasn't said (offer the structured choice: composition / visual styling / shell / any combo). **If they say proceed without answering, default to VISUAL + COMPOSITION — never composition-only.** Two directions must never read as the same screen with the panels moved.
+
+**This doesn't break the cardinal rule — it *spends* the system, it doesn't abandon it.** Every layer stays inside the token contract: a visual direction re-spends the SAME `--accent` / `--surface` / type tokens (a dark rail and a light rail are the same tokens applied differently, not a new palette); a structural direction picks from the SAME sanctioned shells. **Converge on the token system; diverge on composition, visual expression, and shell.** Still banned is *ad-hoc* divergence — a new accent, off-scale spacing, a one-off component, or three genuinely different design languages. (Battle-tested: three directions that varied shell / surface / KPI / density on one fixed token set read as "same design language, different implementations" — distinct yet unmistakably one product.)
+
+**Acceptance check (for a visual direction):** ≥3 of these must visibly differ between directions — rail styling (light / dark / topbar) · active-nav treatment · surface/card model · table treatment · KPI treatment · type scale/rhythm · accent placement · density rhythm · chart presentation · header/action treatment. If only emphasis / split / rhythm moved, you produced one direction three times.
 
 ### Presenting directions — let the user pick the view surface (once per session)
 
@@ -210,7 +216,7 @@ This skill applies to *exploration*, not just final builds. When producing mocku
 
 - Pull `@lookbook/tokens` (or inline the token `:root` block) into the mockup; use token colors/spacing/type, not ad-hoc values.
 - Reuse the component specs (Badge, Tabs, cards, etc.) and the recipe archetypes.
-- When asked for **"N directions"**, generate them with the composition-directions method (vary emphasis / split / rhythm, never the design language) — so every direction is consistent and brand-true, and only the layout differs. **Present them in the user's chosen view surface** (ask once per session — browser / easel / screenshots / running app), each direction labeled; never just hand over a file path (see *Presenting directions*).
+- When asked for **"N directions"**, generate them with the three-direction-types method (ask which layer varies — composition / visual / shell; default to visual + composition — so they're genuinely distinct, not the same screen rearranged, yet all on the same tokens; see **How to make 3 directions**). **Present them in the user's chosen view surface** (ask once per session — browser / easel / screenshots / running app), each direction labeled; never just hand over a file path (see *Presenting directions*).
 
 ## When an external source is named (a public site, Dribbble, Figma…)
 

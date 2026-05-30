@@ -38,7 +38,7 @@ Refines: F (signature move). *Why:* recognizability comes from one repeated gest
 Each ships a clean original on the shared tokens; provenance is in each kit file's top comment ("distilled from a study of real shipped products").
 - **`shell-frame`** (`atom-shell-frame.html`) — app skeleton: rail + topbar + content well. Variants: light labeled-rail / dark-anchor rail (a treatment choice, not a composition). Carries P-MOL-05.
 - **`figure`** (`atom-figure.html`) — `hero-figure` (eyebrow + 44–54px tabular figure + delta; the DM-5 move) and `stat` (eyebrow + 20–26px figure + delta). Carries P-MOL-03.
-- **`table-row`** (`atom-table-row.html`) — dense 38px row, hairline dividers, right-aligned tabular numerals, quiet hover. Variants: standard / leading-dot + inline sparkline. Carries P-MOL-04.
+- **`table-row`** (`atom-table-row.html`) — dense 38px row, hairline dividers, right-aligned tabular numerals, quiet hover. Variants: standard / leading-dot + inline sparkline. Carries P-MOL-04. Composes via the table/list recipes (`recipe-table.html`).
 - **`chart`** (`atom-chart.html`) — one signature viz: single-hue soft area fill + thin top stroke + end dot. Variants: single-series area / dual-series gap-band (shows a RELATIONSHIP).
 - **`status`** (`atom-status.html`) — quiet 8px dot + label (dense) / low-chroma tint pill (standalone). Never a full-saturation badge; always paired with text.
 
@@ -51,6 +51,15 @@ All built from `hero-figure` + `stat`; differ in where the stats go (P-MOL-02):
 - **`dual-hero`** — two co-equal hero-figures, no stat row. For two-headline briefs.
 
 A revenue brief naturally pulls `hero + stat-row`, but the right recipe tracks the brief's emphasis: one dominant number → `hero-solo`; two co-equal → `dual-hero`; no headline → `stat-tiles`. (Verified: the same domain across briefs of different emphasis yields structurally different summaries.)
+
+## Recipe catalog (the composition vocabulary — tables/lists)
+All built from the `table-row` atom (`recipe-table.html`); differ in where controls/grouping/detail sit (P-MOL-02):
+- **`toolbar-list`** — controls in a top toolbar (search + filter chips + primary action) over the table. The default admin list.
+- **`filter-rail-list`** — a persistent left facet rail + table. For heavy filtering, logs, catalog.
+- **`grouped-list`** — rows under section group headers. For grouping by status / date / owner.
+- **`split-list`** — a narrow master list + a detail pane. For triage / rapid record review.
+
+Pick by where the list's controls belong: light filtering → `toolbar-list`; faceted → `filter-rail-list`; the grouping IS the story → `grouped-list`; review-one-then-next → `split-list`.
 
 ## How a builder uses the kit (the picker)
 The dials are inherited from the register (see the skin); the builder makes only composition choices. Full picker — dials → atoms → recipes → composition grammar → depth floor → restraint — is `kits/cool-technical/KIT.md`.

@@ -12,7 +12,8 @@ on composition*) — see `patterns/molecules.md` for the model and `anti-pattern
 - **Atoms (treatment):** `atom-shell-frame` · `atom-figure` (hero-figure + stat) · `atom-table-row`
   · `atom-chart` · `atom-status`. Each shows its genuine variants.
 - **Recipes (composition):** `recipe-figure` — `hero + stat-row` · `hero + rail` · `stat-tiles`
-  · `hero-solo` · `dual-hero`. Structurally distinct (boxing is a flag, not a recipe).
+  · `hero-solo` · `dual-hero`. `recipe-table` — `toolbar-list` · `filter-rail-list` ·
+  `grouped-list` · `split-list`. Structurally distinct (boxing is a flag, not a recipe).
 - **Organisms (verified worked examples):** `organism-ops-console` · `organism-infra-monitoring`
   · `organism-account-detail` · `organism-revenue-overview`. Same kit, four different skeletons.
 

@@ -123,7 +123,8 @@ Composing tightly is the move — adding surfaces is not. Hard rules:
 **Atoms (treatment):** `atom-shell-frame.html` · `atom-figure.html` (hero-figure + stat) ·
 `atom-table-row.html` · `atom-chart.html` · `atom-status.html`.
 **Recipes (composition):** `recipe-figure.html` (hero+stat-row · hero+rail · stat-tiles ·
-hero-solo · dual-hero).
+hero-solo · dual-hero) · `recipe-table.html` (toolbar-list · filter-rail-list · grouped-list ·
+split-list).
 **Organisms (verified worked examples):** `organism-ops-console.html` ·
 `organism-infra-monitoring.html` · `organism-account-detail.html` ·
 `organism-revenue-overview.html`.

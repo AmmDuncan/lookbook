@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  RECIPES — table / list compositions · register: cool-technical
+  Named ARRANGEMENTS built from the table-row atom (atom-table-row.html). Per the
+  structural-distinctness rule (molecules.md P-MOL-02), these differ in WHERE the
+  controls and grouping sit — not in row styling (that's the atom, constant here).
+  Distilled from how real shipped products lay out list surfaces (Linear issues,
+  Stripe payments, Vercel projects, GitHub PRs, Retool tables).
+  Recipes (answer: "where do filters / grouping / detail live relative to the rows?"):
+    toolbar-list     — controls in a top toolbar over the table. The default admin list.
+    filter-rail-list — persistent left facet rail + table. For heavy filtering / logs / catalog.
+    grouped-list     — rows under section group headers. For status/date/owner grouping.
+    split-list       — narrow master list + detail pane. For triage / rapid record review.
+  Inherits the atom's density discipline: rows one line tall, .t-title truncates, .tbl-scroll.
+-->
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Table recipes — cool-technical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);
+       font-size:14px;-webkit-font-smoothing:antialiased;padding:40px}
+  .specimen{max-width:920px;margin:0 auto}
+  .specimen + .specimen{margin-top:46px}
+  .label{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;
+         color:var(--subtle);margin-bottom:12px;display:block}
+
+  /* ---- table-row atom (treatment — constant across recipes) ---- */
+  .panel{background:var(--surface);border:var(--border-w) solid var(--border);
+         border-radius:var(--radius-lg);overflow:hidden}
+  .tbl-scroll{overflow-x:auto}
+  .tbl{width:100%;border-collapse:collapse;min-width:max-content}
+  .tbl thead th{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;
+       color:var(--muted);text-align:left;padding:10px 18px;background:var(--bg);
+       border-bottom:var(--border-w) solid var(--border);white-space:nowrap}
+  .tbl thead th.r{text-align:right}
+  .tbl tbody tr{border-bottom:var(--border-w) solid var(--border)}
+  .tbl tbody tr:last-child{border-bottom:none}
+  .tbl tbody tr:hover{background:var(--bg)}
+  .tbl td{padding:9px 18px;height:var(--row-h);vertical-align:middle;white-space:nowrap}
+  .t-title{max-width:240px}
+  .t-title .primary{font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .t-title .secondary{font-size:11.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .id{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--accent-ink)}
+  .num{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+  .st{display:flex;align-items:center;gap:7px}
+  .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  .dot.ok{background:var(--positive)} .dot.warn{background:var(--warning)}
+  .dot.idle{background:var(--subtle)} .dot.bad{background:var(--danger)}
+  .st-txt{font-size:12.5px;font-weight:500;color:var(--muted)}
+
+  /* ---- shared list chrome ---- */
+  .toolbar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:var(--border-w) solid var(--border)}
+  .search{display:flex;align-items:center;gap:7px;flex:1;max-width:300px;padding:6px 10px;background:var(--bg);
+          border:var(--border-w) solid var(--border);border-radius:var(--radius);color:var(--subtle);font-size:13px}
+  .chip{font-size:12px;font-weight:500;color:var(--muted);padding:5px 11px;border:var(--border-w) solid var(--border);
+        border-radius:var(--radius);background:var(--surface)}
+  .chip.on{color:var(--accent-ink);background:var(--accent-tint);border-color:transparent}
+  .spacer{flex:1}
+  .btn{font-size:13px;font-weight:600;color:#fff;background:var(--accent);padding:6px 13px;border-radius:var(--radius);border:none}
+  .kbd{font-family:var(--font-mono);font-size:11px;border:var(--border-w) solid var(--border);border-radius:4px;padding:1px 5px;color:var(--subtle);margin-left:auto}
+
+  /* ---- RECIPE: filter-rail-list ---- */
+  .rail-wrap{display:flex}
+  .frail{width:188px;flex-shrink:0;border-right:var(--border-w) solid var(--border);padding:16px 14px}
+  .frail .fsec{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--muted);margin:14px 0 7px}
+  .frail .fsec:first-child{margin-top:0}
+  .frail .fopt{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);padding:4px 0}
+  .frail .fopt .cb{width:14px;height:14px;border:var(--border-w) solid var(--border);border-radius:4px;flex-shrink:0}
+  .frail .fopt .cb.on{background:var(--accent);border-color:var(--accent)}
+  .frail .fopt .ct{margin-left:auto;font-size:11.5px;color:var(--subtle);font-variant-numeric:tabular-nums}
+  .rail-main{flex:1;min-width:0}
+
+  /* ---- RECIPE: grouped-list ---- */
+  .grouphd{display:flex;align-items:center;gap:9px;padding:9px 18px;background:var(--bg);
+           border-bottom:var(--border-w) solid var(--border);font-size:12px;font-weight:600;color:var(--muted)}
+  .grouphd .gc{font-variant-numeric:tabular-nums;color:var(--subtle);font-weight:500}
+
+  /* ---- RECIPE: split-list ---- */
+  .split{display:flex;min-height:340px}
+  .split .mlist{width:300px;flex-shrink:0;border-right:var(--border-w) solid var(--border)}
+  .split .mrow{display:flex;flex-direction:column;gap:2px;padding:11px 16px;border-bottom:var(--border-w) solid var(--border);cursor:pointer}
+  .split .mrow.sel{background:var(--accent-tint);box-shadow:inset 2px 0 0 var(--accent)}
+  .split .mrow .mt{font-size:13px;font-weight:500;display:flex;align-items:center;gap:7px}
+  .split .mrow .ms{font-size:11.5px;color:var(--muted)}
+  .split .detail{flex:1;padding:24px 26px}
+  .split .detail .eyebrow{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--muted)}
+  .split .detail h2{font-size:20px;font-weight:600;letter-spacing:-0.01em;margin:5px 0 14px}
+  .split .detail .kv{display:flex;gap:32px}
+  .split .detail .kv .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .split .detail .kv .v{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:3px}
+</style>
+</head>
+<body>
+
+  <!-- RECIPE 1: toolbar-list -->
+  <div class="specimen">
+    <span class="label">Recipe — toolbar-list  (controls in a top toolbar · the default admin list)</span>
+    <div class="panel">
+      <div class="toolbar">
+        <span class="search">⌕ Search orders…<span class="kbd">⌘K</span></span>
+        <span class="chip on">All</span><span class="chip">Open</span><span class="chip">Paid</span>
+        <span class="spacer"></span>
+        <button class="btn">New order</button>
+      </div>
+      <div class="tbl-scroll"><table class="tbl">
+        <thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>Placed</th><th class="r">Total</th></tr></thead>
+        <tbody>
+          <tr><td><span class="id">#10842</span></td><td class="t-title"><div class="primary">Margot Delacroix</div><div class="secondary">margot@email.co</div></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Fulfilled</span></div></td><td><span class="st-txt">May 30, 14:22</span></td><td class="num">$124.00</td></tr>
+          <tr><td><span class="id">#10841</span></td><td class="t-title"><div class="primary">Tom Brinkley</div><div class="secondary">t.brinkley@me.com</div></td><td><div class="st"><span class="dot warn"></span><span class="st-txt">Pending</span></div></td><td><span class="st-txt">May 30, 13:58</span></td><td class="num">$48.50</td></tr>
+          <tr><td><span class="id">#10840</span></td><td class="t-title"><div class="primary">Suki Watanabe</div><div class="secondary">suki.w@studio.io</div></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Fulfilled</span></div></td><td><span class="st-txt">May 30, 11:40</span></td><td class="num">$212.75</td></tr>
+          <tr><td><span class="id">#10839</span></td><td class="t-title"><div class="primary">Fabian Nkrumah</div><div class="secondary">fabian.n@corp.gh</div></td><td><div class="st"><span class="dot bad"></span><span class="st-txt">Refunded</span></div></td><td><span class="st-txt">May 30, 09:12</span></td><td class="num">$38.00</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- RECIPE 2: filter-rail-list -->
+  <div class="specimen">
+    <span class="label">Recipe — filter-rail-list  (persistent left facet rail + table · heavy filtering / logs / catalog)</span>
+    <div class="panel rail-wrap">
+      <div class="frail">
+        <div class="fsec">Status</div>
+        <div class="fopt"><span class="cb on"></span>Active<span class="ct">128</span></div>
+        <div class="fopt"><span class="cb"></span>Trialing<span class="ct">34</span></div>
+        <div class="fopt"><span class="cb"></span>Churned<span class="ct">19</span></div>
+        <div class="fsec">Plan</div>
+        <div class="fopt"><span class="cb on"></span>Enterprise<span class="ct">42</span></div>
+        <div class="fopt"><span class="cb"></span>Growth<span class="ct">86</span></div>
+        <div class="fopt"><span class="cb"></span>Starter<span class="ct">53</span></div>
+      </div>
+      <div class="rail-main">
+        <div class="tbl-scroll"><table class="tbl">
+          <thead><tr><th>Account</th><th>Plan</th><th>Status</th><th class="r">MRR</th></tr></thead>
+          <tbody>
+            <tr><td class="t-title"><div class="primary">Northwind Trading Co.</div><div class="secondary">12 seats</div></td><td><span class="st-txt">Enterprise</span></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Active</span></div></td><td class="num">$2,400</td></tr>
+            <tr><td class="t-title"><div class="primary">Meridian Systems</div><div class="secondary">40 seats</div></td><td><span class="st-txt">Enterprise</span></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Active</span></div></td><td class="num">$5,100</td></tr>
+            <tr><td class="t-title"><div class="primary">Cascade Outdoor Supply</div><div class="secondary">8 seats</div></td><td><span class="st-txt">Enterprise</span></td><td><div class="st"><span class="dot warn"></span><span class="st-txt">Past due</span></div></td><td class="num">$1,280</td></tr>
+            <tr><td class="t-title"><div class="primary">Blue Ridge Wholesale</div><div class="secondary">15 seats</div></td><td><span class="st-txt">Enterprise</span></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Active</span></div></td><td class="num">$1,950</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECIPE 3: grouped-list -->
+  <div class="specimen">
+    <span class="label">Recipe — grouped-list  (rows under section group headers · group by status / date / owner)</span>
+    <div class="panel">
+      <div class="tbl-scroll"><table class="tbl">
+        <thead><tr><th>Issue</th><th>Assignee</th><th>Priority</th><th class="r">Updated</th></tr></thead>
+        <tbody>
+          <tr><td colspan="4" style="padding:0"><div class="grouphd"><span class="dot warn"></span>In progress<span class="gc">3</span></div></td></tr>
+          <tr><td class="t-title"><div class="primary">Payment webhook retries dropping</div><div class="secondary">ENG-2841</div></td><td><span class="st-txt">J. Park</span></td><td><span class="st-txt">High</span></td><td><span class="st-txt">2h ago</span></td></tr>
+          <tr><td class="t-title"><div class="primary">Rate-limit headers missing on v2</div><div class="secondary">ENG-2838</div></td><td><span class="st-txt">M. Osei</span></td><td><span class="st-txt">Medium</span></td><td><span class="st-txt">4h ago</span></td></tr>
+          <tr><td colspan="4" style="padding:0"><div class="grouphd"><span class="dot idle"></span>Backlog<span class="gc">2</span></div></td></tr>
+          <tr><td class="t-title"><div class="primary">Audit log export to CSV</div><div class="secondary">ENG-2790</div></td><td><span class="st-txt">Unassigned</span></td><td><span class="st-txt">Low</span></td><td><span class="st-txt">2d ago</span></td></tr>
+          <tr><td class="t-title"><div class="primary">Dark-mode token drift on charts</div><div class="secondary">ENG-2781</div></td><td><span class="st-txt">A. Torres</span></td><td><span class="st-txt">Low</span></td><td><span class="st-txt">3d ago</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- RECIPE 4: split-list -->
+  <div class="specimen">
+    <span class="label">Recipe — split-list  (narrow master list + detail pane · triage / rapid record review)</span>
+    <div class="panel split">
+      <div class="mlist">
+        <div class="mrow sel"><div class="mt"><span class="dot bad"></span>Apex Medical Supplies</div><div class="ms">#ORD-09241 · 6h 22m</div></div>
+        <div class="mrow"><div class="mt"><span class="dot warn"></span>Hartwell Electronics</div><div class="ms">#ORD-09238 · 4h 57m</div></div>
+        <div class="mrow"><div class="mt"><span class="dot idle"></span>ClearPath Logistics</div><div class="ms">#ORD-09244 · 2h 08m</div></div>
+        <div class="mrow"><div class="mt"><span class="dot ok"></span>Northgate Pharma</div><div class="ms">#ORD-09237 · 44m</div></div>
+      </div>
+      <div class="detail">
+        <div class="eyebrow">Order #ORD-09241</div>
+        <h2>Apex Medical Supplies</h2>
+        <div class="kv">
+          <div><div class="k">Items</div><div class="v">47</div></div>
+          <div><div class="k">Total</div><div class="v">$4,182.00</div></div>
+          <div><div class="k">Destination</div><div class="v" style="font-weight:500;font-size:14px">New York, NY</div></div>
+          <div><div class="k">Status</div><div class="v" style="font-size:14px"><span class="st"><span class="dot bad"></span><span class="st-txt">Exception</span></span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

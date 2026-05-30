@@ -12,6 +12,7 @@
   --bg:        #F7F8F9;   /* off-white, never #FFF (AD-6) */
   --surface:   #FFFFFF;
   --border:    #E8EAED;   /* hairline separator — the primary divider (AD-9/MC-1) */
+  --border-strong: #D6DAE0; /* checkbox/radio/toggle edges — a half-step up from --border */
   --ink:       #16181D;   /* near-black w/ cool undertone, never #000 (AD-6) */
   --muted:     #6B7280;
   --subtle:    #9AA1AC;   /* DECORATIVE ONLY (icon strokes, dots) — never readable text: 2.60:1.

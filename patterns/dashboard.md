@@ -2,6 +2,7 @@
 
 **Inherits:** all of `fundamentals.md` unless overridden below.
 **Cite as:** `P-D-<nn>` (e.g. P-D-04).
+**Molecule kit:** runnable figure/chart/status atoms + figure recipes + 4 worked organisms in `kits/cool-technical/` (`atom-figure.html`, `recipe-figure.html` — hero+stat-row / hero+rail / stat-tiles / hero-solo / dual-hero); treatment-vs-composition model in `patterns/molecules.md`.
 
 ## Surface intent
 A scan-first interface for monitoring state: KPIs, trends, anomalies. Read in seconds, returned to many times a day. Familiarity beats novelty. The user's eye moves *fast*; everything must answer "what changed?" before "what is this?"

@@ -2,6 +2,7 @@
 
 **Inherits:** all of `fundamentals.md` unless overridden below.
 **Cite as:** `P-DT-<nn>`.
+**Molecule kit:** runnable atoms + the `split-list` recipe (master/detail) + the `organism-account-detail` worked example in `kits/cool-technical/`; treatment-vs-composition model in `patterns/molecules.md`.
 
 ## Surface intent
 A page to **understand and act on one record** — a person, an order, an issue, a vehicle, an account. The user arrives knowing *which* record (they clicked it from a list); the page's job is to answer, in order: **who/what is this** (identity), **what are its facts** (key-value data), **what's related to it** (linked entities, sub-records), **what can I do to it** (actions), and **what has happened to it** (history). It is the most common product surface and the hub the rest of the app links into. Unlike a dashboard (monitor many things fast) or a form (give the system data), the detail page is *read-mostly with targeted edits* — the user scans to comprehend, then acts on one or two things.

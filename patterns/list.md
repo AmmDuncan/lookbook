@@ -2,6 +2,7 @@
 
 **Inherits:** all of `fundamentals.md` unless overridden below.
 **Cite as:** `P-L-<nn>`.
+**Molecule kit:** runnable table-row atom + list recipes in `kits/cool-technical/` (`atom-table-row.html`, `recipe-table.html` — toolbar-list / filter-rail-list / grouped-list / split-list); treatment-vs-composition model in `patterns/molecules.md`.
 
 ## Surface intent
 The workhorse admin surface: a **collection of records** the user scans, filters, and acts on — orders, users, vehicles, articles, tasks, invoices. The user arrives to *find* one record (then clicks into its detail page — P-DT), *triage* many (filter, sort, bulk-act), or *create* a new one. The page answers, in order: **what collection is this and how big** (title + count), **how do I narrow it** (quick-filters + search + filters), **what's in it** (the records, scannable), **what can I do to one / to many** (row affordances + selection → bulk actions), and **how do I add one** (the single primary). Unlike a dashboard (monitor aggregates) it operates on individual records; unlike a detail page (one record deep) it is breadth-first and scan-optimized. It is the hub the detail pages link back to.

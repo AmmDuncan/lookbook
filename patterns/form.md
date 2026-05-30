@@ -2,6 +2,7 @@
 
 **Inherits:** all of `fundamentals.md` unless overridden below.
 **Cite as:** `P-F-<nn>`.
+**Molecule kit:** runnable form controls + recipes in `kits/cool-technical/` (`atom-field.html`, `recipe-form.html` — entry-card / settings-sectioned / inline-compact); treatment-vs-composition model in `patterns/molecules.md`.
 
 ## Surface intent
 A surface where the user gives the system structured data. Success = the user finishes without confusion or error. Speed matters less than confidence. Every choice the form makes is a tax on the user's attention, so the form must be ruthlessly clear about what's required, what's optional, and what went wrong.

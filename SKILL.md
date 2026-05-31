@@ -120,6 +120,15 @@ Two signatures cancel each other out. Five of six dials match the chosen brand a
 ### Banned (the generic-AI tells)
 Raw Tailwind default colors (`bg-emerald-500`, `text-rose-100`, `bg-amber-300/20`), hardcoded hex/px where a token exists, Inter-everywhere with no display face, purple→blue gradients, glassmorphism by default, emoji-as-icons, pure-white page backgrounds, missing interaction/empty/error states.
 
+### Asset sourcing — reach for these, don't wait to be told
+A ban only says what to avoid. When a build needs a concrete asset, **pick and source it yourself** — full detail + real sources in **`patterns/assets.md`** (`P-AS`):
+- **Icon?** → ONE monoline set, **Lucide** default, inline as a `<symbol>` sprite, `currentColor`. Reuse `kits/cool-technical/_icons.svg` or pull from `lucide-static`. Swap the set wholesale; never emoji, unicode, or a hand-drawn one-off (`P-AS-01`/`P-MOL-11`).
+- **Empty-state / first-run / marketing spot?** → a recolorable open illustration (**Popsy / unDraw**) remapped to tokens, OR a large Lucide mark for product registers; style tracks the register (`P-AS-02`/`P-MOL-12`).
+- **Type voice?** → a **display + sans** pairing via `identity.md` tokens (gallery → Foundations), **never Inter-only** (`P-AS-03`).
+- **Hero visual / logo / social proof?** → product-true imagery, a bespoke mark, a monochromed logo wall — never stock (`P-AS-04`/`P-M-07`).
+
+The discipline for every class: **bind the asset to the tokens** (recolor to `--accent`/`--ink`/`--subtle`, scale to the type/space tokens) — a raw asset dropped in un-remapped is an off-system tell.
+
 ---
 
 ## Lists, search & overflow (DVLA-proven patterns)
@@ -148,7 +157,7 @@ When building, redesigning, OR adding a new screen/flow inside an existing app (
 1. **Identify the page archetype** (gallery → **Recipes**): CRUD list · record detail/profile · create/edit form · wizard/onboarding · settings · search & results · feed/activity · dashboard · checkout/billing · pricing · detail-with-map · kanban.
 2. **Pull the recipe** — its Ingredients (which components), Required states, and responsive note.
 3. **Generate 2–3 directions** with the three-direction-types method (see **How to make 3 directions**) — ask which layer varies (composition / visual / shell), default to **visual + composition**; `patterns/layout.md` is the composition grammar (gallery → **Layout**) and `patterns/site-archetypes.md` the shell options. Vary emphasis / split / rhythm and (for distinct directions) *how the tokens are spent* + the *shell* — *never the token system itself* (same accent, fonts, primitives). This is where variety comes from: distinct *expressions* of one clean system, not decoration bolted on. For a new or important surface, render all directions and let the human choose — **presented in the user's chosen view surface, not as a bare path** (see *Presenting directions* below). (On expressive surfaces an optional single signature move may distinguish a direction — gallery → **Variation**; on functional surfaces, none.)
-4. **Build the chosen direction** from Lookbook primitives + tokens, with all required states. Cite fundamental rule IDs (`F<n>`) in narration as decisions are made — body size, spacing, hierarchy, accent placement — so the application is auditable.
+4. **Build the chosen direction** from Lookbook primitives + tokens, with all required states. **Source assets as you go — `patterns/assets.md` (`P-AS`): icons → Lucide sprite, illustrations → recolored Popsy/unDraw, fonts → display+sans pairing, imagery → product-true. Don't wait to be told which to use; bind each to the tokens.** Cite fundamental rule IDs (`F<n>`) in narration as decisions are made — body size, spacing, hierarchy, accent placement — so the application is auditable.
 5. **Verify against `fundamentals.md`** — walk the `Check:` lines for measurable rules, confirm the rendered output complies, and flag any violation. A violation must be either fixed or declared in `personality.md` with a justification. Undeclared deviations are not a choice — they are bugs.
 6. **Present and pull reaction — the Review intake** (the bookend to the Frame-it intake, step 0). First **present the render(s) in the user's chosen view surface** — ask once per session how they want to see directions (browser / easel / screenshots / running app), then reuse it; never just hand over a file path (see **Presenting directions** below). Then, **don't lock the design on your own eye.** Your self-grade has a taste ceiling (it routinely fails to see its own flatness); the user's eye is the authority. ASK for structured reaction through the host's question UI, then feed it into a revise cycle. See **The Review intake** below.
 

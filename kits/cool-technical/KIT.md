@@ -109,10 +109,11 @@ Composing tightly is the move — adding surfaces is not. Hard rules:
 - **No redundant double-encoding.** A zone chip next to a spelled-out destination, a colored
   age next to a status dot next to a priority pill — pick the ONE encoding that carries the
   signal. Stacking them is decoration.
-- **The hero figure lives in a 44–54px band — cap it.** Dominance comes from the number
-  standing ALONE (hero-solo) or being LARGEST relative to its stats, never from absolute
-  bigness. A 60px+ figure is itself the "out of hand" tell — it stops reading as confident
-  and starts reading as shouting. Even hero-solo stays ≤54px.
+- **In-app focal numbers sit at 32–40px; a standalone hero ≤44px (P-MOL-03).** Dominance
+  comes from the number standing ALONE (hero-solo) or being LARGEST relative to its stats,
+  never from absolute bigness. A figure ≥48px reads as a marketing/landing hero, not a
+  product metric — measured against real dashboards (Wise ~24, Monarch ~26, Rocket ~32).
+  Oversizing the number is the most common "designed in isolation, not shipped" tell.
 - **The shell seam is ONE line.** The rail's brand-header row and the topbar both use
   `--topbar-h` (52px) so their bottom borders meet in a single continuous horizontal line. A
   taller brand block jogs the divider at the rail edge — the most common shell tell. Never

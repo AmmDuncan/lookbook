@@ -101,8 +101,10 @@ Refs: Linear, Vapi, Replit, Clay, Fey.
 
 ## Pass summary (2026-05-30, eyedrop grounding via real-product study)
 **Validated (shipped):** figures, tables, shell, forms — all hold; coherence corroborated in the wild
-(Linear/Midday/Fresha/Clerk/etc.). **Proposed tightenings (flag for eye-gate, NOT auto-applied):**
-hero-figure default 50→~44px (reserve ≥50 for hero-solo); offer 40px `--row-h` for non-dense lists;
-settings default to label-above (label-left a variant). **Pre-grounded (to build):** overlays
+(Linear/Midday/Fresha/Clerk/etc.). **Tightenings — status:**
+- ✅ APPLIED (rule-backed, P-MOL-03): hero-figure 50→**34px**, hero-solo 54→**44px**. Measured band
+  32–40px in-app / ≤44 standalone; ≥48px = marketing tell. Real refs: Wise ~24, Monarch ~26, Rocket ~32.
+- ⏳ offer 40px `--row-h` for non-dense lists (open).
+- ⏳ settings default to label-above (label-left a variant) — see table/form fixes below. **Pre-grounded (to build):** overlays
 (modal + slideover — host the form recipes), empty-states (DM-1), command-palette (DM-2). Not grounded
 (low-risk, build on demand): toast/banner, page-header/toolbar, badges/avatars.

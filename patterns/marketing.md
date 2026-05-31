@@ -55,6 +55,9 @@ New. *Why:* the composition flexes to what's being shown; the constant is *show 
 **P-M-15. Trust markers sit near the hero CTA, not only in a later section** — a rating chip, a curated logo wall, or "no credit card required" microcopy directly under the CTA cluster.
 New. *Why:* the skeptical reader needs proof at the decision point (Fireflies rating + compliance, Dovetail logo wall, Visitors "no card").
 
+**P-M-16. A multi-section landing builds rhythm through SURFACE ALTERNATION, not hairline rules. Use ≥2 distinct full-bleed section surfaces down the page (paper / white-card-band / accent-tint / dark), and separate sections by the surface change + whitespace — never a `border-top` hairline between major marketing sections.**
+New (battle-test 2026-05-31 — derived from Linear / Stripe / Vercel / Mercury, against the `kits/marketing` landing organism). *Why:* an all-one-background landing whose sections are divided by hairline rules reads FLAT even when the content varies — and the hairline-between-sections is the cool-technical/app/doc tell leaking onto a marketing surface. Real premium landings give each argument its own ground: a tinted testimonial band, a white feature band, a dark CTA. The fix that proved it (a flat paper page with `border-top` separators → paper→white→tint→paper→dark bands, hairlines removed) measurably lifted the rhythm. *Check:* count distinct section-background treatments down the page (≥2); confirm no `border-top` hairline separates two stacked full-width marketing sections.
+
 ## Composition defaults
 - **Hero**: eyebrow → headline → deck → CTA cluster → **trust markers** → **product visual** (right side or below, with depth). The product visual and trust markers are required, not optional (P-M-13/15).
 - **Section rhythm**: ~5 sections — hero, "what it is" (feature triplet or split), "how it works" (steps or product shots), "social proof" (quote or logo wall), CTA + footer.
@@ -70,6 +73,7 @@ New. *Why:* the skeptical reader needs proof at the decision point (Fireflies ra
 - Animated text reveals on every section heading.
 - Glassmorphism by default. (Banned tell.)
 - Equal-rhythm sections (5 sections all "title + paragraph + image right").
+- Hairline (`border-top`) separators between major marketing sections on one flat background — alternate full-bleed section surfaces + whitespace instead (P-M-16).
 - "Generic SaaS hero" — laptop on a 3D pedestal, blob background, gradient text. Avoid the trifecta.
 
 ## Sources

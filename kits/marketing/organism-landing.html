@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ORGANISM — landing page · register: marketing
+  Composes the marketing atoms into one worked page with VISUAL RHYTHM (P-M-09: not
+  equal-height sections): nav → hero (centered+visual) → logo-wall (thin) → bento features →
+  testimonial (airy single quote) → split feature (text/visual alternation) → CTA (dark) → footer.
+  ≤5 content sections above the footer (P-M-06). One accent, scarce (P-M-10). Responsive
+  reflow at --bp 900/560 (nav→condensed, grids→1col, split→stack). Render 1280 / 768 / 390.
+-->
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landing page — marketing organism</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--content-max);margin:0 auto;padding-left:32px;padding-right:32px}
+  .btn{display:inline-flex;align-items:center;gap:9px;font:540 15px/1 var(--font-sans);border-radius:var(--radius-pill);
+       padding:13px 22px;border:1px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
+  .btn.sm{padding:11px 18px;font-size:14px}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--border-strong)}
+  .btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);
+        text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+  .eyebrow::before{content:"";width:20px;height:1px;background:var(--accent);opacity:.55}
+  .ic{stroke:var(--accent);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+  /* nav */
+  .nav{display:flex;align-items:center;gap:32px;padding:22px 0}
+  .brand{display:flex;align-items:center;gap:9px;font:600 18px/1 var(--font-display);letter-spacing:-0.02em}
+  .brand .m{width:26px;height:26px;border-radius:7px;background:var(--accent);display:grid;place-items:center}
+  .brand .m svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .nav .links{display:flex;gap:26px;margin-left:6px}
+  .nav .links a{font:500 15px/1 var(--font-sans);color:var(--muted);text-decoration:none}
+  .nav .right{margin-left:auto;display:flex;align-items:center;gap:18px}
+  .nav .signin{font:500 15px/1 var(--font-sans);color:var(--ink);text-decoration:none}
+  .burger{display:none;width:26px;height:26px;margin-left:auto;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;text-align:center;padding-bottom:96px}
+  .hero::before{content:"";position:absolute;inset:0;background:var(--atmos);pointer-events:none}
+  .hero .in{position:relative;max-width:860px;margin:0 auto;padding-top:60px}
+  .hero h1{font:var(--t-hero);letter-spacing:var(--tr-hero);margin:0 auto 24px;max-width:16ch}
+  .hero .deck{font:var(--t-deck);color:var(--muted);max-width:56ch;margin:0 auto 32px}
+  .hero .cluster{display:flex;justify-content:center;gap:14px;margin-bottom:26px}
+  .htrust{display:flex;justify-content:center;align-items:center;gap:16px;font:400 14px/1 var(--font-sans);color:var(--muted)}
+  .htrust .stars{display:inline-flex;gap:1px;color:#E0A93B} .htrust .stars svg{width:14px;height:14px;fill:currentColor;stroke:none}
+  .htrust .rate{display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-weight:500}
+  .htrust .sep{width:3px;height:3px;border-radius:50%;background:var(--subtle)}
+  .shot{max-width:1000px;margin:52px auto 0;background:var(--surface);border:1px solid var(--border);
+       border-radius:var(--radius-lg);box-shadow:var(--shadow-float);overflow:hidden;position:relative}
+  .shot .bar{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid var(--border);background:#FCFBFA}
+  .shot .bar i{width:11px;height:11px;border-radius:50%;background:#E4E1DB}
+  .shot .body{display:grid;grid-template-columns:208px 1fr;min-height:360px}
+  .shot .rail{border-right:1px solid var(--border);background:#FCFBFA;padding:16px 12px}
+  .shot .rb{display:flex;align-items:center;gap:8px;font:600 13px/1 var(--font-display);padding:4px 8px 14px}
+  .shot .rb .m{width:20px;height:20px;border-radius:6px;background:var(--accent)}
+  .shot .ni{display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:7px;font:500 13px/1 var(--font-sans);color:var(--muted);margin-bottom:2px}
+  .shot .ni.on{background:var(--accent-tint);color:var(--accent);font-weight:600}
+  .shot .ni svg{width:15px;height:15px}
+  .shot .main{padding:20px 24px;text-align:left}
+  .shot .mh{font:600 17px/1 var(--font-display);margin-bottom:16px}
+  .shot .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+  .shot .kpi{border:1px solid var(--border);border-radius:10px;padding:13px 15px}
+  .shot .k{font:600 10px/1 var(--font-sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .shot .v{font:600 22px/1 var(--font-display);letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+  .shot .chart{height:104px;display:flex;align-items:flex-end;gap:8px;border:1px solid var(--border);border-radius:10px;padding:14px}
+  .shot .chart span{flex:1;background:var(--accent-tint);border-top:2px solid var(--accent);border-radius:3px 3px 0 0}
+
+  /* logo wall */
+  .logos{padding:40px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .logos .cap{text-align:center;font:500 13px/1 var(--font-sans);color:var(--muted);margin-bottom:24px}
+  .logos .row{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+  .logos .lg{display:inline-flex;align-items:center;gap:9px;color:var(--muted)}
+  .logos .lg svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.75}
+  .logos .lg span{font:600 17px/1 var(--font-display);letter-spacing:-0.02em}
+
+  /* section lede + bento */
+  .sec{padding:96px 0}
+  .lede{max-width:60ch;margin-bottom:44px}
+  .lede h2{font:var(--t-display);letter-spacing:var(--tr-display);margin-bottom:14px;max-width:18ch}
+  .lede p{font:var(--t-deck);color:var(--muted)}
+  .chip{width:42px;height:42px;border-radius:11px;background:var(--accent-tint);display:grid;place-items:center;margin-bottom:16px}
+  .chip svg{width:22px;height:22px}
+  .cell h3{font:600 18px/1.3 var(--font-display);letter-spacing:-0.015em;margin-bottom:8px}
+  .cell p{font:400 15px/1.55 var(--font-sans);color:var(--muted)}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:26px;box-shadow:var(--shadow-sm)}
+  /* full-bleed section bands — rhythm via SURFACE alternation, not hairline rules (P-M-09 refinement) */
+  .band{width:100%}
+  .band.surf{background:var(--surface)}
+  .band.tintb{background:var(--accent-faint)}
+  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .bento .big{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column}
+  .bento .big .demo{margin-top:auto;border:1px solid var(--border);border-radius:11px;background:#FCFBFA;padding:16px;display:flex;align-items:flex-end;gap:7px;height:150px}
+  .bento .big .demo span{flex:1;background:var(--accent-tint);border-top:2px solid var(--accent);border-radius:3px 3px 0 0}
+
+  /* testimonial */
+  .quote{text-align:center;padding:96px 0}
+  .quote .qm{font:700 56px/0.6 var(--font-display);color:var(--accent);opacity:.25;display:block;margin-bottom:8px}
+  .quote blockquote{font:500 30px/1.4 var(--font-display);letter-spacing:-0.02em;max-width:24ch;margin:0 auto 28px}
+  .quote .by{display:inline-flex;align-items:center;gap:12px}
+  .quote .av{width:44px;height:44px;border-radius:50%;background:var(--accent-tint);color:var(--accent);display:grid;place-items:center;font:600 15px/1 var(--font-sans)}
+  .quote .n{font:600 15px/1.2 var(--font-sans);text-align:left} .quote .r{font:400 13.5px/1.2 var(--font-sans);color:var(--muted);text-align:left;margin-top:3px}
+
+  /* split feature */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:96px 0}
+  .split h2{font:var(--t-display);letter-spacing:var(--tr-display);margin-bottom:14px;max-width:14ch}
+  .split p{font:var(--t-deck);color:var(--muted);max-width:40ch;margin-bottom:22px}
+  .split .pts{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .split .pts li{display:flex;gap:10px;font:400 15px/1.5 var(--font-sans)}
+  .split .pts svg{width:18px;height:18px;flex-shrink:0;margin-top:1px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .split .visual{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);padding:22px;min-height:300px}
+  .split .vrow{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font:400 13.5px/1 var(--font-sans)}
+  .split .vrow:last-child{border-bottom:0} .split .vrow .pill{font:600 11px/1 var(--font-sans);color:var(--positive);background:rgba(26,127,75,.09);border-radius:5px;padding:5px 8px}
+  .split .vrow .m{color:var(--muted);font-variant-numeric:tabular-nums}
+
+  /* CTA band (dark centered) */
+  .ctaband{margin:0 0 0;}
+  .cta-in{background:#17171C;color:#F4F3F1;border-radius:var(--radius-lg);padding:72px 56px;text-align:center;position:relative;overflow:hidden;margin-bottom:64px}
+  .cta-in *{color:inherit}
+  .cta-in::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 120% at 50% 0%,rgba(91,91,214,.30),transparent 60%)}
+  .cta-in h2{color:#fff;font:var(--t-display);letter-spacing:var(--tr-display);position:relative;max-width:20ch;margin:0 auto 14px}
+  .cta-in p{color:#B7B7BE;font:var(--t-deck);position:relative;max-width:46ch;margin:0 auto 28px}
+  .cta-in .cluster{display:flex;justify-content:center;gap:14px;position:relative}
+  .cta-in .btn.primary{background:#fff;color:#17171C} .cta-in .btn.ghost{color:#F4F3F1;border-color:rgba(255,255,255,.22)}
+
+  /* footer */
+  .footer{background:#17171C;color:#B7B7BE;padding:64px 0 36px}
+  .footer *{color:inherit}
+  .fin{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
+  .footer .brand{color:#fff;margin-bottom:14px}
+  .fblurb{font:400 14px/1.6 var(--font-sans);color:#8B8B93;max-width:30ch}
+  .fcol h4{font:600 12px/1 var(--font-sans);letter-spacing:.07em;text-transform:uppercase;color:#8B8B93;margin-bottom:16px}
+  .fcol a{display:block;font:400 14px/1 var(--font-sans);color:#B7B7BE;text-decoration:none;margin-bottom:12px}
+  .fbar{margin-top:44px;padding-top:24px;border-top:1px solid #26262C;display:flex;align-items:center;gap:18px;font:400 13px/1 var(--font-sans);color:#8B8B93}
+  .fbar .sp{margin-left:auto} .fbar a{color:#8B8B93;text-decoration:none}
+
+  /* ---- responsive ---- */
+  @media (max-width:900px){
+    .nav .links,.nav .signin{display:none} .burger{display:block}
+    .hero h1{font-size:44px} .shot .body{grid-template-columns:1fr} .shot .rail{display:none}
+    .bento{grid-template-columns:1fr} .bento .big{grid-column:auto;grid-row:auto}
+    .split{grid-template-columns:1fr;gap:36px} .fin{grid-template-columns:1fr 1fr;gap:32px}
+  }
+  @media (max-width:560px){
+    .wrap{padding-left:20px;padding-right:20px} .hero h1{font-size:36px} .hero .deck{font-size:18px}
+    .hero .cluster{flex-direction:column} .htrust{flex-wrap:wrap;justify-content:center}
+    .logos .row{justify-content:center;gap:18px 28px} .sec,.quote,.split{padding:56px 0}
+    .quote blockquote{font-size:24px} .kpis,.shot .kpis{grid-template-columns:1fr 1fr}
+    .cta-in{padding:48px 28px} .fin{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+  <!-- nav -->
+  <div class="wrap"><nav class="nav">
+    <div class="brand"><span class="m"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>Ledgerly</div>
+    <div class="links"><a>Product</a><a>Solutions</a><a>Pricing</a><a>Customers</a><a>Docs</a></div>
+    <div class="right"><a class="signin">Sign in</a><a class="btn primary sm">Start free</a></div>
+    <svg class="burger" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </nav></div>
+
+  <!-- hero -->
+  <section class="hero"><div class="wrap"><div class="in">
+    <span class="eyebrow">Spend management, reconciled</span>
+    <h1>The ledger your finance team actually trusts.</h1>
+    <p class="deck">Close the books in hours, not weeks. Every transaction reconciled, categorised, and audit-ready the moment it lands.</p>
+    <div class="cluster">
+      <a class="btn primary">Start free<svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      <a class="btn ghost"><svg viewBox="0 0 24 24"><polygon points="7 4 20 12 7 20 7 4" fill="currentColor" stroke="none"/></svg>Watch the 2-min demo</a>
+    </div>
+    <div class="htrust">
+      <span class="rate"><span class="stars">
+        <svg viewBox="0 0 24 24"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+      </span>4.9 on G2</span>
+      <span class="sep"></span><span>SOC 2 Type II</span><span class="sep"></span><span>No credit card required</span>
+    </div>
+    <div class="shot">
+      <div class="bar"><i></i><i></i><i></i></div>
+      <div class="body">
+        <aside class="rail">
+          <div class="rb"><span class="m"></span>Ledgerly</div>
+          <div class="ni on"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Overview</div>
+          <div class="ni"><svg class="ic" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>Transactions</div>
+          <div class="ni"><svg class="ic" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Cards</div>
+          <div class="ni"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Reports</div>
+        </aside>
+        <div class="main">
+          <div class="mh">Overview</div>
+          <div class="kpis">
+            <div class="kpi"><div class="k">Net cash</div><div class="v">$248,910</div></div>
+            <div class="kpi"><div class="k">Reconciled</div><div class="v">98.7%</div></div>
+            <div class="kpi"><div class="k">Open items</div><div class="v">12</div></div>
+          </div>
+          <div class="chart"><span style="height:38%"></span><span style="height:52%"></span><span style="height:45%"></span><span style="height:64%"></span><span style="height:58%"></span><span style="height:78%"></span><span style="height:70%"></span><span style="height:88%"></span><span style="height:82%"></span><span style="height:96%"></span></div>
+        </div>
+      </div>
+    </div>
+  </div></div></section>
+
+  <!-- logo wall -->
+  <div class="wrap"><div class="logos">
+    <p class="cap">Trusted by finance teams at</p>
+    <div class="row">
+      <span class="lg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg><span>Northwind</span></span>
+      <span class="lg"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8"/></svg><span>Cobalt</span></span>
+      <span class="lg"><svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5z"/><path d="M2 17l10 5 10-5"/></svg><span>Tessera</span></span>
+      <span class="lg"><svg viewBox="0 0 24 24"><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18"/><path d="M12 3a15 15 0 0 0 0 18"/></svg><span>Meridian</span></span>
+      <span class="lg"><svg viewBox="0 0 24 24"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/></svg><span>Halcyon</span></span>
+      <span class="lg"><svg viewBox="0 0 24 24"><path d="M4 20V8a8 8 0 0 1 16 0v12"/></svg><span>Arcadia</span></span>
+    </div>
+  </div></div>
+
+  <!-- bento features (white surface band) -->
+  <div class="band surf"><div class="wrap"><section class="sec">
+    <div class="lede">
+      <span class="eyebrow">Why teams switch</span>
+      <h2>Everything close-the-books needs. Nothing it doesn't.</h2>
+      <p>One reconciliation engine that connects your stack, flags what's off, and keeps an audit trail you can hand to anyone.</p>
+    </div>
+    <div class="bento">
+      <div class="card big cell">
+        <div class="chip"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
+        <h3>Real-time reconciliation</h3>
+        <p>Every transaction matched against source the moment it lands — no overnight batch, no month-end scramble. Watch the close progress live.</p>
+        <div class="demo"><span style="height:40%"></span><span style="height:55%"></span><span style="height:48%"></span><span style="height:70%"></span><span style="height:62%"></span><span style="height:84%"></span><span style="height:76%"></span><span style="height:95%"></span></div>
+      </div>
+      <div class="card cell">
+        <div class="chip"><svg class="ic" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3>Audit-ready</h3><p>SOC 2 trail on every change.</p>
+      </div>
+      <div class="card cell">
+        <div class="chip"><svg class="ic" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></div>
+        <h3>Auto-categorised</h3><p>Rules learn from your edits.</p>
+      </div>
+    </div>
+  </section></div></div>
+
+  <!-- testimonial (tint band) -->
+  <div class="band tintb"><div class="wrap"><section class="quote">
+    <span class="qm">“</span>
+    <blockquote>We cut our monthly close from nine days to two. The first time the board asked for numbers mid-month, we just had them.</blockquote>
+    <div class="by"><div class="av">RA</div><div><div class="n">Rachel Amoah</div><div class="r">VP Finance, Cobalt</div></div></div>
+  </section></div></div>
+
+  <!-- split feature -->
+  <div class="wrap"><section class="split">
+    <div>
+      <span class="eyebrow">One source of truth</span>
+      <h2>Every account, reconciled in real time.</h2>
+      <p>Connect your banks, cards, and billing tools. Ledgerly matches across all of them continuously — so the number you see is the number that's true.</p>
+      <ul class="pts">
+        <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>50+ native integrations, live in minutes</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Anomalies flagged before they hit the close</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Exportable trail for every reconciled line</li>
+      </ul>
+    </div>
+    <div class="visual">
+      <div class="vrow"><span>Mercury · checking</span><span class="m">$182,400</span></div>
+      <div class="vrow"><span>Amex · corporate</span><span class="m">−$36,120</span></div>
+      <div class="vrow"><span>Stripe · payouts</span><span class="pill">reconciled</span></div>
+      <div class="vrow"><span>Brex · expenses</span><span class="m">−$8,940</span></div>
+      <div class="vrow"><span>Ramp · bills</span><span class="pill">reconciled</span></div>
+    </div>
+  </section></div>
+
+  <!-- CTA band -->
+  <div class="wrap"><section class="ctaband"><div class="cta-in">
+    <h2>Close your next month in an afternoon.</h2>
+    <p>Join the finance teams who stopped dreading month-end. Free for 14 days, no card required.</p>
+    <div class="cluster"><a class="btn primary">Start free<svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a><a class="btn ghost">Book a demo</a></div>
+  </div></section></div>
+
+  <!-- footer -->
+  <footer class="footer"><div class="wrap">
+    <div class="fin">
+      <div>
+        <div class="brand"><span class="m"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>Ledgerly</div>
+        <p class="fblurb">The reconciliation engine finance teams trust to close the books in hours, not weeks.</p>
+      </div>
+      <div class="fcol"><h4>Product</h4><a>Overview</a><a>Reconciliation</a><a>Reporting</a><a>Security</a></div>
+      <div class="fcol"><h4>Company</h4><a>About</a><a>Customers</a><a>Careers</a><a>Blog</a></div>
+      <div class="fcol"><h4>Resources</h4><a>Docs</a><a>API</a><a>Status</a><a>Support</a></div>
+    </div>
+    <div class="fbar"><span>© 2026 Ledgerly, Inc.</span><span class="sp"></span><a>Privacy</a><a>Terms</a><a>SOC 2</a></div>
+  </div></footer>
+
+</body>
+</html>

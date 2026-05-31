@@ -10,7 +10,9 @@ on composition*) — see `patterns/molecules.md` for the model and `anti-pattern
   `@lookbook/tokens` instead? Use `packages/tokens/skins/cool-technical.css`.)
 - **`KIT.md`** — the picker: dials → atoms → recipes → composition grammar → depth floor → restraint.
 - **Atoms (treatment):** `atom-shell-frame` · `atom-figure` (hero-figure + stat) · `atom-table-row`
-  · `atom-chart` · `atom-status`. Each shows its genuine variants.
+  · `atom-chart` · `atom-status` · `atom-overlay` (modal/slideover shell) · `atom-empty` (DM-1) ·
+  `atom-cmdk` (⌘K, DM-2). Each shows its genuine variants. (Icons are unicode PLACEHOLDERS —
+  swap for one monoline set per P-MOL-11.)
 - **Recipes (composition):** `recipe-figure` — `hero + stat-row` · `hero + rail` · `stat-tiles`
   · `hero-solo` · `dual-hero`. `recipe-table` — `toolbar-list` · `filter-rail-list` ·
   `grouped-list` · `split-list`. Structurally distinct (boxing is a flag, not a recipe).

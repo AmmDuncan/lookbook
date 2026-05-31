@@ -126,7 +126,9 @@ Composing tightly is the move — adding surfaces is not. Hard rules:
 ## 6. Files
 **Foundation:** `_tokens.css` (the coherence layer — include once).
 **Atoms (treatment):** `atom-shell-frame.html` · `atom-figure.html` (hero-figure + stat) ·
-`atom-table-row.html` · `atom-chart.html` · `atom-status.html`.
+`atom-table-row.html` · `atom-chart.html` · `atom-status.html` · `atom-overlay.html`
+(modal/slideover shell) · `atom-empty.html` (DM-1 empty state) · `atom-cmdk.html` (⌘K, DM-2).
+NOTE: icons in the kit HTML are unicode PLACEHOLDERS — swap for one monoline set (P-MOL-11).
 **Recipes (composition):** `recipe-figure.html` (hero+stat-row · hero+rail · stat-tiles ·
 hero-solo · dual-hero) · `recipe-table.html` (toolbar-list · filter-rail-list · grouped-list ·
 split-list).

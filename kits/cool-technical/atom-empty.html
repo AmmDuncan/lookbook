@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ATOM — empty state · register: cool-technical  (DM-1, highest-ROI distinctive move)
+  A centered stack: small spot illustration (~120–160px) → confident one-line heading →
+  optional muted sub-sentence → ONE primary CTA. The illustration carries personality; the
+  copy is confident, never an apologetic "No data." Grounded in real products (Quicken accent
+  glyph, Typeform/Tally personable illustration + CTA, Klarna). Satisfies DM-1, AD-3 (no emoji).
+  Variants: (A) illustrated (rich, first-run) · (B) minimal glyph (in-panel / smaller surfaces).
+  CONFIRM vs live: illustration size, heading size, vertical rhythm.
+-->
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empty state — cool-technical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased;padding:40px}
+  .specimen{max-width:880px;margin:0 auto}.specimen + .specimen{margin-top:32px}
+  .label{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--subtle);margin-bottom:12px;display:block}
+  .panel{background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius-lg)}
+
+  .empty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:56px 32px}
+  .empty .art{margin-bottom:18px}
+  .empty h3{font-size:18px;font-weight:600;letter-spacing:-0.01em;margin-bottom:6px}
+  .empty p{font-size:13.5px;color:var(--muted);line-height:1.5;max-width:34ch;margin-bottom:20px}
+  .btn{height:38px;padding:0 16px;font-size:14px;font-weight:600;font-family:inherit;border-radius:var(--radius);
+       border:none;background:var(--accent);color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .btn.ghost{background:transparent;color:var(--accent-ink);border:var(--border-w) solid var(--border)}
+
+  .empty.min{padding:40px 28px}
+  .empty.min .art{margin-bottom:14px}
+  .empty.min h3{font-size:15px}
+</style>
+</head>
+<body>
+
+  <div class="specimen">
+    <span class="label">Variant A — illustrated (first-run / primary empty; personality + one CTA)</span>
+    <div class="panel">
+      <div class="empty">
+        <svg class="art" width="116" height="92" viewBox="0 0 116 92" fill="none">
+          <rect x="14" y="20" width="88" height="58" rx="7" fill="var(--accent-tint)" stroke="var(--accent)" stroke-width="1.5"/>
+          <path d="M24 62 L40 50 L52 57 L70 40 L92 56" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="70" cy="40" r="3.5" fill="var(--accent)"/>
+          <rect x="24" y="28" width="26" height="4" rx="2" fill="var(--accent)" opacity="0.35"/>
+          <circle cx="92" cy="20" r="11" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+          <path d="M92 15.5 V24.5 M87.5 20 H96.5" stroke="var(--accent)" stroke-width="1.75" stroke-linecap="round"/>
+        </svg>
+        <h3>No reports yet</h3>
+        <p>Build your first report to see revenue, orders, and trends at a glance.</p>
+        <button class="btn">＋ Create report</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Variant B — minimal glyph (in-panel / secondary empty; quieter)</span>
+    <div class="panel">
+      <div class="empty min">
+        <svg class="art" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="var(--subtle)" stroke-width="1.5">
+          <rect x="7" y="9" width="26" height="22" rx="3"/><path d="M7 16 H33"/><path d="M13 23 H21"/>
+        </svg>
+        <h3>No results</h3>
+        <p>No customers match these filters. Try widening the date range.</p>
+        <button class="btn ghost">Clear filters</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

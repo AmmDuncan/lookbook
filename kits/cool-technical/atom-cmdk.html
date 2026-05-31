@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ATOM — command palette (⌘K) · register: cool-technical  (DM-2 signature move)
+  A centered overlay ~520–560px: search input → grouped action list (each row = icon + label +
+  right-aligned shortcut) → footer nav hints. Optional context chip above the input. The visible
+  ⌘K affordance in the shell topbar opens THIS. Grounded in real products (Linear, Vapi, Clay, Replit):
+  grouped actions, single-letter row shortcuts, "↑↓ navigate · ↵ select · N results" footer.
+  CONFIRM vs live: palette width, row height, shortcut-chip styling.
+-->
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Command palette — cool-technical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased;padding:40px}
+  .specimen{max-width:880px;margin:0 auto}
+  .label{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--subtle);margin-bottom:12px;display:block}
+
+  .scrim{background:rgba(16,18,24,0.45);border-radius:var(--radius-lg);padding:64px 32px;display:flex;justify-content:center;align-items:flex-start}
+  .pal{width:540px;max-width:100%;background:var(--surface);border:var(--border-w) solid var(--border);
+       border-radius:var(--radius-lg);box-shadow:0 16px 48px rgba(16,18,24,0.28);overflow:hidden}
+  .ctx{display:inline-flex;margin:12px 14px 0;font-size:11.5px;color:var(--muted);background:var(--bg);
+       border:var(--border-w) solid var(--border);border-radius:6px;padding:2px 8px}
+  .palsearch{display:flex;align-items:center;gap:9px;padding:14px 16px;border-bottom:var(--border-w) solid var(--border)}
+  .palsearch .ic{color:var(--subtle)}
+  .palsearch input{border:none;outline:none;font-size:15px;font-family:inherit;color:var(--ink);background:transparent;flex:1}
+  .palsearch input::placeholder{color:var(--subtle)}
+  .palgrp{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--muted);padding:12px 16px 6px}
+  .palrow{display:flex;align-items:center;gap:11px;padding:8px 16px;font-size:13.5px;color:var(--ink)}
+  .palrow.sel{background:var(--accent-tint)}
+  .palrow .ic{color:var(--muted);display:flex}
+  .palrow .kb{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--subtle)}
+  .palfoot{display:flex;align-items:center;gap:16px;padding:9px 16px;border-top:var(--border-w) solid var(--border);
+           background:var(--bg);font-size:11.5px;color:var(--muted)}
+  .palfoot .n{margin-left:auto;font-variant-numeric:tabular-nums}
+  .palfoot kbd{font-family:var(--font-mono);border:var(--border-w) solid var(--border);border-radius:4px;padding:0 4px;color:var(--subtle)}
+</style>
+</head>
+<body>
+
+  <div class="specimen">
+    <span class="label">Command palette (⌘K) — search + grouped actions + per-row shortcuts + nav footer</span>
+    <div class="scrim">
+      <div class="pal">
+        <span class="ctx">Customers · Meridian Systems</span>
+        <div class="palsearch"><span class="ic">⌕</span><input placeholder="Type a command or search…" value=""></div>
+        <div class="palgrp">Actions</div>
+        <div class="palrow sel"><span class="ic">＋</span>Add customer<span class="kb">C</span></div>
+        <div class="palrow"><span class="ic">⤴</span>Invite teammate<span class="kb">I</span></div>
+        <div class="palrow"><span class="ic">⤓</span>Export customers as CSV<span class="kb">E</span></div>
+        <div class="palgrp">Go to</div>
+        <div class="palrow"><span class="ic">▦</span>Subscriptions</div>
+        <div class="palrow"><span class="ic">↗</span>Revenue</div>
+        <div class="palrow"><span class="ic">⚙</span>Settings</div>
+        <div class="palfoot"><span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> select</span><span><kbd>esc</kbd> close</span><span class="n">9 results</span></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

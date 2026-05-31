@@ -43,13 +43,19 @@ New (measured). *Why:* a time-series with y-values but no x-labels reads as an o
 **P-MOL-10. Color encodes STATE, not category — a hue means ONE thing per screen.** Status/state columns get the semantic palette (the quiet dot/pill, M5). CATEGORY columns — plan tier, type, role, team — render NEUTRAL: plain text or a single neutral pill (`--bg`/`--muted`/hairline border). Reserve the accent for the one signature move + the primary action.
 New (measured). *Why:* the convergence build colored plan tiers (Enterprise indigo / Growth green / Trial amber) AND status (Active green / Past-due amber) — so **green meant both "Active" and "Growth"** on one screen. When a hue carries two meanings the viewer can't decode it at a glance, and the chroma blows past the accent-scarcity floor (≤4 accent instances). Real restrained products (Stripe, Attio) render plan/type as neutral text and spend color only on state. *Check:* list every hue on the screen and what it means — if any hue appears with two meanings (a plan color that's also a status color), neutralize the category use. The M5 tint-pill is a STATUS atom; using it for a category is the misuse this rule guards.
 
+**P-MOL-11. Icons are ONE monoline set at ONE stroke weight — never mismatched unicode glyphs or emoji.** Use Lucide / Phosphor / a custom set, 14–16px, ~1.5px stroke, optically aligned to text. The kit's HTML uses unicode glyphs (`⋯ ⌕ ↓ ＋ ⚙`) as PLACEHOLDERS only — in production, swap them for the chosen icon set.
+Operationalizes MC-4 / AD-3 for the kit. *Why:* mismatched unicode glyphs (a thin `↗` next to a heavy `▦` next to a `⚙`) read as unpolished — the eye catches the inconsistent weights/baselines instantly; it's a quiet but real "not shipped" tell. A single coherent icon set is one of the cheapest, highest-signal production markers. *Check:* are all icons from one set at one stroke weight, baseline-aligned? Mixed unicode symbols fail — replace them.
+
 ## Atom catalog (the treatment vocabulary)
 Each ships a clean original on the shared tokens; provenance is in each kit file's top comment ("distilled from a study of real shipped products").
 - **`shell-frame`** (`atom-shell-frame.html`) — app skeleton: rail + topbar + content well. Variants: light labeled-rail / dark-anchor rail (a treatment choice, not a composition). Carries P-MOL-05.
 - **`figure`** (`atom-figure.html`) — `hero-figure` (eyebrow + 44–54px tabular figure + delta; the DM-5 move) and `stat` (eyebrow + 20–26px figure + delta). Carries P-MOL-03.
 - **`table-row`** (`atom-table-row.html`) — dense 38px row, hairline dividers, right-aligned tabular numerals, quiet hover. Variants: standard / leading-dot + inline sparkline. Carries P-MOL-04. Composes via the table/list recipes (`recipe-table.html`).
 - **`chart`** (`atom-chart.html`) — one signature viz: single-hue soft area fill + thin top stroke + end dot. Variants: single-series area / dual-series gap-band (shows a RELATIONSHIP).
-- **`status`** (`atom-status.html`) — quiet 8px dot + label (dense) / low-chroma tint pill (standalone). Never a full-saturation badge; always paired with text.
+- **`status`** (`atom-status.html`) — quiet 8px dot + label (dense) / low-chroma tint pill (standalone). Never a full-saturation badge; always paired with text. STATE only (P-MOL-10).
+- **`overlay`** (`atom-overlay.html`) — the dialog shell: modal (centered ~440px) / slideover (right-edge ~460px), each = dimmed backdrop + panel + title-and-✕ header + body slot + footer action-bar (secondary + primary). HOSTS a form recipe (containers.md P-CN).
+- **`empty`** (`atom-empty.html`) — DM-1: centered illustration + confident one-line heading + optional sub + ONE CTA. Variants: illustrated (first-run) / minimal glyph (in-panel). The illustration carries personality; copy is confident, not "No data."
+- **`cmdk`** (`atom-cmdk.html`) — DM-2: centered ~540px palette, search + grouped action list + per-row shortcut + nav footer + optional context chip. Opened by the shell topbar's ⌘K affordance.
 
 ## Recipe catalog (the composition vocabulary — figures)
 All built from `hero-figure` + `stat`; differ in where the stats go (P-MOL-02):

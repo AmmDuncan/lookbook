@@ -18,6 +18,8 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:var(--font-sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:5px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   .wrap{max-width:var(--content-max);margin:0 auto;padding-left:32px;padding-right:32px}
   .btn{display:inline-flex;align-items:center;gap:9px;font:540 15px/1 var(--font-sans);border-radius:var(--radius-pill);
        padding:13px 22px;border:1px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
@@ -40,7 +42,7 @@
   .phero::before{content:"";position:absolute;inset:0;background:var(--atmos);pointer-events:none}
   .phero .eyebrow{display:inline-flex;align-items:center;gap:9px;font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--accent);margin-bottom:18px;position:relative}
   .phero .eyebrow::before,.phero .eyebrow::after{content:"";width:20px;height:1px;background:var(--accent);opacity:.55}
-  .phero h1{font:var(--t-hero);font-size:52px;letter-spacing:var(--tr-hero);margin:0 auto 16px;max-width:18ch;position:relative}
+  .phero h1{font:var(--t-hero);font-size:52px;letter-spacing:var(--tr-hero);margin:0 auto 16px;max-width:18ch;position:relative;text-wrap:balance}
   .phero p{font:var(--t-deck);color:var(--muted);max-width:48ch;margin:0 auto;position:relative}
 
   /* billing toggle */

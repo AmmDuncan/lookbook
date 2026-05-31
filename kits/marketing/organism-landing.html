@@ -18,6 +18,9 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:var(--font-sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  /* a11y design floor: register focus-visible ring + reduced-motion (P-AY-03/12; real builds add names/landmarks) */
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:5px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   .wrap{max-width:var(--content-max);margin:0 auto;padding-left:32px;padding-right:32px}
   .btn{display:inline-flex;align-items:center;gap:9px;font:540 15px/1 var(--font-sans);border-radius:var(--radius-pill);
        padding:13px 22px;border:1px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
@@ -39,13 +42,14 @@
   .nav .links a{font:500 15px/1 var(--font-sans);color:var(--muted);text-decoration:none}
   .nav .right{margin-left:auto;display:flex;align-items:center;gap:18px}
   .nav .signin{font:500 15px/1 var(--font-sans);color:var(--ink);text-decoration:none}
-  .burger{display:none;width:26px;height:26px;margin-left:auto;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round}
+  .burger{display:none;margin-left:auto;background:none;border:0;padding:4px;cursor:pointer;line-height:0}
+  .burger svg{width:26px;height:26px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round}
 
   /* hero */
   .hero{position:relative;overflow:hidden;text-align:center;padding-bottom:96px}
   .hero::before{content:"";position:absolute;inset:0;background:var(--atmos);pointer-events:none}
   .hero .in{position:relative;max-width:860px;margin:0 auto;padding-top:60px}
-  .hero h1{font:var(--t-hero);letter-spacing:var(--tr-hero);margin:0 auto 24px;max-width:16ch}
+  .hero h1{font:var(--t-hero);letter-spacing:var(--tr-hero);margin:0 auto 24px;max-width:16ch;text-wrap:balance}
   .hero .deck{font:var(--t-deck);color:var(--muted);max-width:56ch;margin:0 auto 32px}
   .hero .cluster{display:flex;justify-content:center;gap:14px;margin-bottom:26px}
   .htrust{display:flex;justify-content:center;align-items:center;gap:16px;font:400 14px/1 var(--font-sans);color:var(--muted)}
@@ -83,7 +87,7 @@
   /* section lede + bento */
   .sec{padding:96px 0}
   .lede{max-width:60ch;margin-bottom:44px}
-  .lede h2{font:var(--t-display);letter-spacing:var(--tr-display);margin-bottom:14px;max-width:18ch}
+  .lede h2{font:var(--t-display);letter-spacing:var(--tr-display);margin-bottom:14px;max-width:18ch;text-wrap:balance}
   .lede p{font:var(--t-deck);color:var(--muted)}
   .chip{width:42px;height:42px;border-radius:11px;background:var(--accent-tint);display:grid;place-items:center;margin-bottom:16px}
   .chip svg{width:22px;height:22px}
@@ -93,7 +97,9 @@
   /* full-bleed section bands — rhythm via SURFACE alternation, not hairline rules (P-M-09 refinement) */
   .band{width:100%}
   .band.surf{background:var(--surface)}
-  .band.tintb{background:var(--accent-faint)}
+  /* P-M-16: the band delta must be PERCEPTIBLE at a glance — a 5% wash reads as "same bg".
+     A clear soft-indigo tint (ties to the accent) so the rhythm actually registers. */
+  .band.tintb{background:var(--accent-band)}
   .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .bento .big{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column}
   .bento .big .demo{margin-top:auto;border:1px solid var(--border);border-radius:11px;background:#FCFBFA;padding:16px;display:flex;align-items:flex-end;gap:7px;height:150px}
@@ -102,14 +108,14 @@
   /* testimonial */
   .quote{text-align:center;padding:96px 0}
   .quote .qm{font:700 56px/0.6 var(--font-display);color:var(--accent);opacity:.25;display:block;margin-bottom:8px}
-  .quote blockquote{font:500 30px/1.4 var(--font-display);letter-spacing:-0.02em;max-width:24ch;margin:0 auto 28px}
+  .quote blockquote{font:500 30px/1.4 var(--font-display);letter-spacing:-0.02em;max-width:24ch;margin:0 auto 28px;text-wrap:balance}
   .quote .by{display:inline-flex;align-items:center;gap:12px}
   .quote .av{width:44px;height:44px;border-radius:50%;background:var(--accent-tint);color:var(--accent);display:grid;place-items:center;font:600 15px/1 var(--font-sans)}
   .quote .n{font:600 15px/1.2 var(--font-sans);text-align:left} .quote .r{font:400 13.5px/1.2 var(--font-sans);color:var(--muted);text-align:left;margin-top:3px}
 
   /* split feature */
   .split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:96px 0}
-  .split h2{font:var(--t-display);letter-spacing:var(--tr-display);margin-bottom:14px;max-width:14ch}
+  .split h2{font:var(--t-display);letter-spacing:var(--tr-display);margin-bottom:14px;max-width:14ch;text-wrap:balance}
   .split p{font:var(--t-deck);color:var(--muted);max-width:40ch;margin-bottom:22px}
   .split .pts{list-style:none;display:flex;flex-direction:column;gap:12px}
   .split .pts li{display:flex;gap:10px;font:400 15px/1.5 var(--font-sans)}
@@ -149,7 +155,7 @@
   }
   @media (max-width:560px){
     .wrap{padding-left:20px;padding-right:20px} .hero h1{font-size:36px} .hero .deck{font-size:18px}
-    .hero .cluster{flex-direction:column} .htrust{flex-wrap:wrap;justify-content:center}
+    .hero .cluster{flex-direction:column;align-items:center} .htrust{flex-wrap:wrap;justify-content:center}
     .logos .row{justify-content:center;gap:18px 28px} .sec,.quote,.split{padding:56px 0}
     .quote blockquote{font-size:24px} .kpis,.shot .kpis{grid-template-columns:1fr 1fr}
     .cta-in{padding:48px 28px} .fin{grid-template-columns:1fr}
@@ -163,7 +169,7 @@
     <div class="brand"><span class="m"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>Ledgerly</div>
     <div class="links"><a>Product</a><a>Solutions</a><a>Pricing</a><a>Customers</a><a>Docs</a></div>
     <div class="right"><a class="signin">Sign in</a><a class="btn primary sm">Start free</a></div>
-    <svg class="burger" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    <button class="burger" aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </nav></div>
 
   <!-- hero -->

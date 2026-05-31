@@ -21,7 +21,8 @@ Governed by `patterns/marketing.md` (P-M), `patterns/pricing.md` (P-PR), `patter
 - `atom-pricing-row` — full P-PR anatomy: 3 tiers, recommended lifted by stacked cues, price-as-hero, toggle + savings, trust strip, Enterprise-below.
 - `atom-cta-band` — the closing-CTA treatment (vocabulary). **See `recipe-cta` for compositions.**
 - `atom-nav-footer` — marketing top-nav (default + floating scrolled) + dark fat-footer (P-SA shell).
-- `atom-social-faq` — curated monochrome logo-wall (P-AS-04) + single-quote testimonial + accordion FAQ (P-PR-08).
+- `atom-social-faq` — curated monochrome logo-wall (P-AS-04) + single-quote testimonial + **testimonial-with-metrics** (quote paired with proof figures, for dev/data products) + accordion FAQ (P-PR-08).
+- `atom-code` — **dev-product visual**: terminal / live-log stream + syntax-highlighted code block (P-M-18). Syntax is token-derived (`--code-*`), keyword = indigo. The hero product-visual is product-type-fit: dashboard (SaaS) / terminal+code (dev) / device (consumer).
 
 ## Recipes (compositions — vary with the brief, for variety)
 - `recipe-cta` — **four structurally-distinct CTA compositions** (centered / split-horizontal / with-visual / slim-inline), with the surface flag (dark / tint / surface / paper) demoted to an orthogonal flag. This is the granularity principle: the CTA-band is a *treatment*; the variety is composition, not the dark/tint skin (near-duplicate recipes = AP27). Answers "won't every page have the same band?" — no.
@@ -30,8 +31,17 @@ Governed by `patterns/marketing.md` (P-M), `patterns/pricing.md` (P-PR), `patter
 - `organism-landing` — hero → logo-wall → bento → testimonial → split → dark CTA. Rhythm via **surface alternation** (paper → white → tint → paper → dark), not hairline rules (**P-M-16**, battle-test).
 - `organism-pricing` — value hero → toggle + 3 tiers → trust → Enterprise → FAQ → slim CTA. A *different page shape* from the landing (the comparison row is the centre of gravity) — variety via composition, one register. Mobile stacks recommended-first (P-PR-11).
 
-## Rules earned in this kit's battle-test
-- **P-M-16** (`patterns/marketing.md`) — marketing rhythm = surface alternation + whitespace, never `border-top` hairlines between sections.
+## Rules earned in this kit's battle-test (loop to cool-technical parity)
+- **P-M-16** — marketing rhythm = surface alternation + whitespace, never `border-top` hairlines between sections; **the band delta must be perceptible** (`--accent-band`, not the 5% wash).
+- **P-M-17** — hero/section headlines use `text-wrap: balance` — no orphaned last word.
+- **P-M-18** — hero product-visual is product-type-fit (dashboard / terminal+code / device); code syntax is token-derived (`--code-*`). Shipped `atom-code` + the testimonial-with-metrics treatment for it.
+- **Mobile CTAs** (`patterns/marketing.md` composition) — stacked CTAs stay content-width centered, never stretched full-bleed pills.
+- Convergence test (a fresh rules-only dev-tool build) drove P-M-18 + the `--accent-band`/`--code-*` tokens.
+
+## Notes for real builds
+- `atom-nav-footer` shows default + `.scrolled` nav visually; wire the scroll-trigger in the app, or a CSS-only always-blurred sticky nav is an acceptable fallback.
+- Logo wall: real monochromed SVG customer logos in production; the kit's icon+wordmark pairs are stand-ins.
+- The non-color a11y floor (accessible names, landmarks, real button/link semantics) is wired at build time per `patterns/accessibility.md`; the kit specifies the visual focus-visible ring + reduced-motion guard.
 
 ## Discipline
 Render every change at 2x (`--force-device-scale-factor=2 --virtual-time-budget` so webfonts load) and LOOK. Contrast-gate every non-neutral text pair (`scripts/contrast.mjs`). The icon set (`_icons.svg`, Lucide) and assets follow `patterns/assets.md`.

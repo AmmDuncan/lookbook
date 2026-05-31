@@ -29,10 +29,23 @@
   --accent-ink:    #4A4AC4;              /* hover/pressed step (white text 6.85:1) */
   --accent-tint:   rgba(91,91,214,0.08); /* selected/spot tint */
   --accent-faint:  rgba(91,91,214,0.05); /* atmospheric wash only */
+  --accent-band:   #EFEEF7;              /* PERCEPTIBLE section-tint band for P-M-16 rhythm —
+                                            the 5% --accent-faint wash is invisible against warm paper;
+                                            this soft cool-indigo reads as a distinct band at a glance. */
 
   --positive:  #1A7F4B;
   --warning:   #92600A;
   --danger:    #C8412E;
+
+  /* — code/terminal palette: token-derived so a dev-product code block isn't invented per build
+       (the marketing hero product-visual is product-type-fit — dashboard / terminal / code / device). — */
+  --code-bg:      #0F1117;
+  --code-fg:      #E6EDF3;
+  --code-comment: #8A93A6;
+  --code-keyword: #A6A6F2;   /* indigo-violet — ties to --accent */
+  --code-string:  #9ECE6A;
+  --code-number:  #E0A36B;
+  --code-func:    #7AA2F7;
 
   /* — type: Bricolage Grotesque DISPLAY + Geist SANS (the marketing pairing, P-M-08) — */
   --font-display: 'Bricolage Grotesque', 'Geist', system-ui, sans-serif;

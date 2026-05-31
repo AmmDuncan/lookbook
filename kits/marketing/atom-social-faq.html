@@ -40,6 +40,16 @@
   .quote .who .n{font:600 15px/1.2 var(--font-sans);color:var(--ink)}
   .quote .who .r{font:400 13.5px/1.2 var(--font-sans);color:var(--muted);margin-top:3px}
 
+  /* ---- testimonial + metrics (proof) — quote paired with supporting figures ---- */
+  .proof{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .proof blockquote{font:500 24px/1.45 var(--font-display);letter-spacing:-0.018em;text-wrap:balance;margin-bottom:22px}
+  .proof .by{display:inline-flex;align-items:center;gap:12px}
+  .proof .av{width:42px;height:42px;border-radius:50%;background:var(--accent-tint);color:var(--accent);display:grid;place-items:center;font:600 14px/1 var(--font-sans)}
+  .proof .n{font:600 14.5px/1.2 var(--font-sans)} .proof .r{font:400 13px/1.2 var(--font-sans);color:var(--muted);margin-top:3px}
+  .proof .metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;border-left:1px solid var(--border);padding-left:48px}
+  .proof .metric .fig{font:600 34px/1 var(--font-display);letter-spacing:-0.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+  .proof .metric .lab{font:400 13px/1.45 var(--font-sans);color:var(--muted);margin-top:8px}
+
   /* ---- FAQ accordion ---- */
   .faq{max-width:760px;margin:0 auto}
   .faq h2{font:var(--t-display);letter-spacing:var(--tr-display);text-align:center;margin-bottom:32px}
@@ -75,6 +85,21 @@
       <div class="by">
         <div class="av">RA</div>
         <div class="who"><div class="n">Rachel Amoah</div><div class="r">VP Finance, Cobalt</div></div>
+      </div>
+    </div>
+  </section>
+
+  <span class="label">Atom — testimonial + metrics · quote paired with proof figures (dev/data products)</span>
+  <section class="section">
+    <div class="proof">
+      <div>
+        <blockquote>We were dropping roughly 2% of webhooks under load and didn't know it for weeks. Relay's logs made that visible in the first hour.</blockquote>
+        <div class="by"><div class="av">JC</div><div><div class="n">Jamie Chen</div><div class="r">Platform Engineer, Cobalt</div></div></div>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="fig">1.2B+</div><div class="lab">webhooks delivered in the last 30 days</div></div>
+        <div class="metric"><div class="fig">&lt;80<span style="font-size:18px"> ms</span></div><div class="lab">median delivery latency, p50</div></div>
+        <div class="metric"><div class="fig">99.99%</div><div class="lab">delivery SLA, retries included</div></div>
       </div>
     </div>
   </section>

@@ -26,7 +26,11 @@
   --warning:   #92600A;   /* amber-700: passes 4.5:1 as text on surface/bg (was #B7791F=3.64 fail) */
   --danger:    #C8412E;
 
-  /* — type: differentiated registers, not Inter-on-everything (AD-5) — */
+  /* — type: ONE deliberate technical face (Geist), differentiated by the type SCALE below
+       (--t-display/--t-body weight+size+tracking), not a second family — the Vercel/Linear
+       product-register pattern (P-AS-03). NB: the HTML must actually LOAD Geist (Google Fonts);
+       a declared-but-unloaded face silently falls back to Inter = the lazy "Inter-everywhere"
+       tell (AD-5). — */
   --font-ui:      'Geist', 'Inter', system-ui, sans-serif;
   --font-display: 'Geist', 'Inter', system-ui, sans-serif;
   --font-mono:    'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;

@@ -32,6 +32,9 @@
   .lg{display:inline-flex;align-items:center;gap:6px}
   .sw{width:10px;height:2px;border-radius:1px;display:inline-block}
   .mono{font-family:var(--font-mono)}
+  /* x-axis time labels (P-MOL-09): a primary chart labels its time axis, not just values */
+  .xax{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9.5px;
+       color:var(--muted);margin-top:7px;padding:0 2px}
 </style>
 </head>
 <body>
@@ -60,6 +63,7 @@
         <text x="2" y="86" font-size="9.5" fill="#6B7280">$1,600</text>
         <text x="2" y="136" font-size="9.5" fill="#6B7280">$800</text>
       </svg>
+      <div class="xax"><span>May 1</span><span>May 8</span><span>May 15</span><span>May 22</span><span>May 30</span></div>
     </div>
   </div>
 
@@ -90,6 +94,7 @@
         <text x="2" y="86" font-size="9.5" fill="#6B7280">$40k</text>
         <text x="2" y="136" font-size="9.5" fill="#6B7280">$20k</text>
       </svg>
+      <div class="xax"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
       <div class="legend">
         <span class="lg"><span class="sw" style="background:#5B5BD6"></span>Invoiced</span>
         <span class="lg"><span class="sw" style="background:#6B7280"></span>Collected</span>

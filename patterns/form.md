@@ -12,8 +12,8 @@ A surface where the user gives the system structured data. Success = the user fi
 
 ## Calibrations
 
-**P-F-01. Label placement is contextual. Fast-entry forms (signup, checkout, create) → labels above. Settings/preferences forms → label-left / control-right rows are equally valid.** Weight 500, size 13–14px either way.
-Refines: F23. *Why:* Wroblewski — top labels read fastest for *data entry*, and reflow to mobile cleanly. But settings forms are scan-and-occasionally-edit, not fast entry, so the label-left two-column row (Supabase, Gorgias — `evidence/form.md`) is a real, good pattern there. Inline (placeholder-as-label) is forbidden in both — it disappears the moment the user types.
+**P-F-01. Label placement is contextual. Fast-entry forms (signup, checkout, create) → labels above. Settings split BY CONTROL TYPE: text/select FIELD rows → label-above (full-width); toggle/switch PREFERENCE rows → label-left + description, control right.** Weight 500, size 13–14px.
+Refines: F23. *Why:* Wroblewski — top labels read fastest for *data entry*, and reflow to mobile cleanly. _(Calibrated 2026-05-31 vs real settings: Clerk & Slite put text FIELDS label-above even in settings; the label-left two-column row is for TOGGLE/PREFERENCE rows — Clerk permissions, Slack — where the description carries the meaning and the control is a switch. So a settings page mixes both: field sections label-above, preference sections label-left. The earlier "settings = label-left" was too coarse.)_ Inline (placeholder-as-label) is forbidden in both — it disappears the moment the user types.
 
 **P-F-02. Field height 38–44px desktop (40px sweet spot — match the primary button for rhythm); 44–48px on mobile / coarse pointer.**
 Refines: F27, F52. *Why:* 44–48px is the *touch* target (iOS/Material), correct on mobile — but applying it to desktop reads chunky. _(Calibrated 2026-05-29: real desktop fields cluster ~38–42px; common design-system default is 40px. The old 44–48 desktop figure was the touch number misapplied.)_

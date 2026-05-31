@@ -105,6 +105,8 @@ Refs: Linear, Vapi, Replit, Clay, Fey.
 - ✅ APPLIED (rule-backed, P-MOL-03): hero-figure 50→**34px**, hero-solo 54→**44px**. Measured band
   32–40px in-app / ≤44 standalone; ≥48px = marketing tell. Real refs: Wise ~24, Monarch ~26, Rocket ~32.
 - ⏳ offer 40px `--row-h` for non-dense lists (open).
-- ⏳ settings default to label-above (label-left a variant) — see table/form fixes below. **Pre-grounded (to build):** overlays
+- ✅ APPLIED (rule P-MOL-08): admin tables get a trailing row-action (quiet ⋮) + sortable-header signal.
+- ✅ APPLIED (rule P-F-01 refined): settings split by control type — FIELD rows label-above (Clerk/Slite),
+  PREFERENCE/toggle rows label-left + description. recipe-form sandbox updated (awaits forms gate to bank). **Pre-grounded (to build):** overlays
 (modal + slideover — host the form recipes), empty-states (DM-1), command-palette (DM-2). Not grounded
 (low-risk, build on demand): toast/banner, page-header/toolbar, badges/avatars.

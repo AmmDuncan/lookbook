@@ -8,11 +8,14 @@ on composition*) — see `patterns/molecules.md` for the model and `anti-pattern
 ## What's here
 - **`_tokens.css`** — the coherence layer. Include once; every atom reads it. (Adopting over
   `@lookbook/tokens` instead? Use `packages/tokens/skins/cool-technical.css`.)
+- **`_icons.svg`** — the icon set: Lucide (ISC), one stroke weight, `currentColor`. Inline once per
+  page; reference an icon with `<svg class="ic"><use href="#i-NAME"/></svg>`.
 - **`KIT.md`** — the picker: dials → atoms → recipes → composition grammar → depth floor → restraint.
-- **Atoms (treatment):** `atom-shell-frame` · `atom-figure` (hero-figure + stat) · `atom-table-row`
-  · `atom-chart` · `atom-status` · `atom-overlay` (modal/slideover shell) · `atom-empty` (DM-1) ·
-  `atom-cmdk` (⌘K, DM-2). Each shows its genuine variants. (Icons are unicode PLACEHOLDERS —
-  swap for one monoline set per P-MOL-11.)
+- **Atoms (treatment):** `atom-icon` (the icon primitive) · `atom-shell-frame` · `atom-figure`
+  (hero-figure + stat) · `atom-table-row` · `atom-chart` · `atom-status` · `atom-overlay`
+  (modal/slideover shell) · `atom-empty` (DM-1) · `atom-cmdk` (⌘K, DM-2). Each shows its genuine
+  variants. Icons are a real set (`_icons.svg`, Lucide) — swap the SET wholesale, never mix or
+  hand-draw a one-off (P-MOL-11); `⌘ ↑ ↓ ↵` in `<kbd>` chips stay typographic.
 - **Recipes (composition):** `recipe-figure` — `hero + stat-row` · `hero + rail` · `stat-tiles`
   · `hero-solo` · `dual-hero`. `recipe-table` — `toolbar-list` · `filter-rail-list` ·
   `grouped-list` · `split-list`. Structurally distinct (boxing is a flag, not a recipe).

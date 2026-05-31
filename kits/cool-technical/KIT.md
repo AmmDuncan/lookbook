@@ -124,11 +124,15 @@ Composing tightly is the move — adding surfaces is not. Hard rules:
   give the brand header its own ad-hoc padding-driven height.
 
 ## 6. Files
-**Foundation:** `_tokens.css` (the coherence layer — include once).
-**Atoms (treatment):** `atom-shell-frame.html` · `atom-figure.html` (hero-figure + stat) ·
-`atom-table-row.html` · `atom-chart.html` · `atom-status.html` · `atom-overlay.html`
-(modal/slideover shell) · `atom-empty.html` (DM-1 empty state) · `atom-cmdk.html` (⌘K, DM-2).
-NOTE: icons in the kit HTML are unicode PLACEHOLDERS — swap for one monoline set (P-MOL-11).
+**Foundation:** `_tokens.css` (the coherence layer — include once) · `_icons.svg` (the icon set —
+Lucide, ISC, one stroke weight, `currentColor`; inline once per page, reference `<use href="#i-NAME"/>`).
+**Atoms (treatment):** `atom-icon.html` (the icon primitive, P-MOL-11) · `atom-shell-frame.html` ·
+`atom-figure.html` (hero-figure + stat) · `atom-table-row.html` · `atom-chart.html` ·
+`atom-status.html` · `atom-overlay.html` (modal/slideover shell) · `atom-empty.html`
+(DM-1 empty state — Lucide mark or recolorable Popsy/unDraw illustration, P-MOL-12) ·
+`atom-cmdk.html` (⌘K, DM-2).
+NOTE: icons are a real set (`_icons.svg`, Lucide) — swap the SET wholesale, never mix or hand-draw
+a one-off (P-MOL-11). `⌘ ↑ ↓ ↵` inside `<kbd>` chips and `·` separators stay typographic.
 **Recipes (composition):** `recipe-figure.html` (hero+stat-row · hero+rail · stat-tiles ·
 hero-solo · dual-hero) · `recipe-table.html` (toolbar-list · filter-rail-list · grouped-list ·
 split-list).

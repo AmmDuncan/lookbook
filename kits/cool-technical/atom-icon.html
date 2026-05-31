@@ -1,45 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <!--
-  ATOM — command palette (⌘K) · register: cool-technical  (DM-2 signature move)
-  A centered overlay ~520–560px: search input → grouped action list (each row = icon + label +
-  right-aligned shortcut) → footer nav hints. Optional context chip above the input. The visible
-  ⌘K affordance in the shell topbar opens THIS. Grounded in real products (Linear, Vapi, Clay, Replit):
-  grouped actions, single-letter row shortcuts, "↑↓ navigate · ↵ select · N results" footer.
-  CONFIRM vs live: palette width, row height, shortcut-chip styling.
+  ATOM — icon · register: cool-technical (primitive; satisfies P-MOL-11)
+  ONE monoline set (Lucide, ISC), ONE stroke weight (1.75), recolored via currentColor so an icon
+  inherits the ink/accent/subtle/muted of its context. Canonical sprite lives in _icons.svg and is
+  inlined into every specimen that uses icons; reference an icon with
+      <svg class="ic"><use href="#i-NAME"/></svg>
+  instead of inventing a glyph. Sizes: 14-16px inline beside text, 24px standalone, 40-48px as an
+  empty-state spot mark. NEVER mix unicode/emoji or a second icon set. The SET is swappable wholesale
+  (Lucide -> Phosphor/Tabler) but never mixed per-icon. Illustrations (empty states) are a separate
+  source: restrained Lucide marks for this register; recolorable scene illustrations (Popsy/unDraw)
+  for warmer registers — see atom-empty.html.
 -->
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Command palette — cool-technical</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>Icon set — cool-technical</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_tokens.css">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased;padding:40px}
-  .specimen{max-width:880px;margin:0 auto}
+  .specimen{max-width:880px;margin:0 auto}.specimen + .specimen{margin-top:32px}
   .label{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--subtle);margin-bottom:12px;display:block}
-
-  .scrim{background:rgba(16,18,24,0.45);border-radius:var(--radius-lg);padding:64px 32px;display:flex;justify-content:center;align-items:flex-start}
-  .pal{width:540px;max-width:100%;background:var(--surface);border:var(--border-w) solid var(--border);
-       border-radius:var(--radius-lg);box-shadow:0 16px 48px rgba(16,18,24,0.28);overflow:hidden}
-  .ctx{display:inline-flex;margin:12px 14px 0;font-size:11.5px;color:var(--muted);background:var(--bg);
-       border:var(--border-w) solid var(--border);border-radius:6px;padding:2px 8px}
-  .palsearch{display:flex;align-items:center;gap:9px;padding:14px 16px;border-bottom:var(--border-w) solid var(--border)}
-  .palsearch .ic{color:var(--subtle)}
-  .palsearch input{border:none;outline:none;font-size:15px;font-family:inherit;color:var(--ink);background:transparent;flex:1}
-  .palsearch input::placeholder{color:var(--subtle)}
-  .palgrp{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--muted);padding:12px 16px 6px}
-  .palrow{display:flex;align-items:center;gap:11px;padding:8px 16px;font-size:13.5px;color:var(--ink)}
-  .palrow.sel{background:var(--accent-tint)}
-  .palrow .ic{color:var(--muted);display:flex}
-  .palrow .kb{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--subtle)}
-  .palfoot{display:flex;align-items:center;gap:16px;padding:9px 16px;border-top:var(--border-w) solid var(--border);
-           background:var(--bg);font-size:11.5px;color:var(--muted)}
-  .palfoot .n{margin-left:auto;font-variant-numeric:tabular-nums}
-  .palfoot kbd{font-family:var(--font-mono);border:var(--border-w) solid var(--border);border-radius:4px;padding:0 4px;color:var(--subtle)}
-  svg.ic{width:16px;height:16px;flex:none}
+  .panel{background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius-lg);padding:24px}
+  .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .cell{display:flex;flex-direction:column;align-items:center;gap:9px;padding:16px 6px;border-radius:var(--radius)}
+  .cell:hover{background:var(--bg)}
+  .ico{width:22px;height:22px;color:var(--ink)}
+  .cell span{font-size:10.5px;color:var(--subtle);font-family:var(--font-mono)}
+  .ctxrow{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding:6px 2px}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;color:var(--ink)}
+  .chip svg{width:16px;height:16px}
+  .chip.sub svg{color:var(--subtle)} .chip.acc svg{color:var(--accent)} .chip.mut svg{color:var(--muted)}
+  .sizes{display:flex;align-items:flex-end;gap:24px}
+  .sz{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted)}
+  .sz svg{color:var(--ink)} .sz span{font-size:11px;color:var(--subtle);font-family:var(--font-mono)}
+  .s14 svg{width:14px;height:14px} .s16 svg{width:16px;height:16px} .s24 svg{width:24px;height:24px} .s44 svg{width:44px;height:44px}
 </style>
 </head>
 <body>
@@ -69,20 +65,54 @@
 </svg>
 
   <div class="specimen">
-    <span class="label">Command palette (⌘K) — search + grouped actions + per-row shortcuts + nav footer</span>
-    <div class="scrim">
-      <div class="pal">
-        <span class="ctx">Customers · Meridian Systems</span>
-        <div class="palsearch"><svg class="ic"><use href="#i-search"/></svg><input placeholder="Type a command or search…" value=""></div>
-        <div class="palgrp">Actions</div>
-        <div class="palrow sel"><svg class="ic"><use href="#i-plus"/></svg>Add customer<span class="kb">C</span></div>
-        <div class="palrow"><svg class="ic"><use href="#i-user-plus"/></svg>Invite teammate<span class="kb">I</span></div>
-        <div class="palrow"><svg class="ic"><use href="#i-download"/></svg>Export customers as CSV<span class="kb">E</span></div>
-        <div class="palgrp">Go to</div>
-        <div class="palrow"><svg class="ic"><use href="#i-layout-grid"/></svg>Subscriptions</div>
-        <div class="palrow"><svg class="ic"><use href="#i-trending-up"/></svg>Revenue</div>
-        <div class="palrow"><svg class="ic"><use href="#i-settings"/></svg>Settings</div>
-        <div class="palfoot"><span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> select</span><span><kbd>esc</kbd> close</span><span class="n">9 results</span></div>
+    <span class="label">Icon set — Lucide · monoline · 1.75 stroke · currentColor (one set, swappable wholesale)</span>
+    <div class="panel">
+      <div class="grid">
+      <div class="cell"><svg class="ico"><use href="#i-search"/></svg><span>search</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-plus"/></svg><span>plus</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-user-plus"/></svg><span>user-plus</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-download"/></svg><span>download</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-layout-grid"/></svg><span>layout-grid</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-layout-dashboard"/></svg><span>layout-dashboard</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-trending-up"/></svg><span>trending-up</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-settings"/></svg><span>settings</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-corner-down-left"/></svg><span>corner-down-left</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-arrow-up"/></svg><span>arrow-up</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-arrow-down"/></svg><span>arrow-down</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-file-text"/></svg><span>file-text</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-inbox"/></svg><span>inbox</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-more-horizontal"/></svg><span>more-horizontal</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-x"/></svg><span>x</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-line-chart"/></svg><span>line-chart</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-rocket"/></svg><span>rocket</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-box"/></svg><span>box</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-scroll-text"/></svg><span>scroll-text</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-users"/></svg><span>users</span></div>
+      <div class="cell"><svg class="ico"><use href="#i-bell"/></svg><span>bell</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Inherits context color (currentColor) — same glyph, ink / subtle / muted / accent</span>
+    <div class="panel">
+      <div class="ctxrow">
+        <span class="chip"><svg><use href="#i-search"/></svg>ink</span>
+        <span class="chip sub"><svg><use href="#i-search"/></svg>subtle</span>
+        <span class="chip mut"><svg><use href="#i-search"/></svg>muted</span>
+        <span class="chip acc"><svg><use href="#i-search"/></svg>accent</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Sizes — 14-16px beside text · 24px standalone · 44px empty-state spot mark</span>
+    <div class="panel">
+      <div class="sizes">
+        <div class="sz s14"><svg><use href="#i-settings"/></svg><span>14</span></div>
+        <div class="sz s16"><svg><use href="#i-settings"/></svg><span>16</span></div>
+        <div class="sz s24"><svg><use href="#i-settings"/></svg><span>24</span></div>
+        <div class="sz s44"><svg><use href="#i-inbox"/></svg><span>44</span></div>
       </div>
     </div>
   </div>

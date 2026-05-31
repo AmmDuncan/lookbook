@@ -110,3 +110,20 @@ Refs: Linear, Vapi, Replit, Clay, Fey.
   PREFERENCE/toggle rows label-left + description. recipe-form sandbox updated (awaits forms gate to bank). **Pre-grounded (to build):** overlays
 (modal + slideover — host the form recipes), empty-states (DM-1), command-palette (DM-2). Not grounded
 (low-risk, build on demand): toast/banner, page-header/toolbar, badges/avatars.
+
+## Icons & illustrations (2026-05-31, P-MOL-11/12 — retired the placeholder limit)
+The kit's icons were unicode placeholders + a few per-file hand-drawn SVGs (shell nav). Both retired
+to a real set, banked into the kit:
+- **Icons → Lucide (ISC).** `_icons.svg` = 21-symbol inline sprite, `viewBox 0 0 24`, `stroke 1.75`,
+  `currentColor`. `atom-icon.html` is the primitive; cmdk / empty / shell-frame / table-row /
+  recipe-table / overlay all rewired to `<use href="#i-NAME"/>`. Lucide is what shadcn/Linear-adjacent
+  products ship → lands on-register for free. Alternates (wholesale only): Phosphor / Tabler / Heroicons.
+  Kept typographic (not icons): `⌘ ↑ ↓ ↵` in `<kbd>` chips, `·` separators, delta-direction arrows.
+- **Illustrations → recolorable open sets (Popsy, unDraw).** Free, single/low-ink line-art that recolors
+  to tokens. cool-technical DEFAULT empty state = a 40px Lucide mark (Linear/Vercel restraint); scene
+  illustrations are the warm-leaning option and MUST have all inks remapped (a stock palette's violet ≠
+  `--accent` — the kit's Popsy demo was remapped #5936D8→#5B5BD6, #BA8EFF→#C7C7F5, line→#9AA0AA).
+- **"Get a better one if needed":** free set is the floor; flag bespoke/paid (Phosphor duotone,
+  Streamline, custom spot art) only when a marquee surface earns it — not by default.
+- **Not yet rewired (noted follow-up):** the 4 organism files still embed the older hand-drawn nav art
+  (out of the agreed atoms+recipes scope); rewire on next pass for full whole-kit coherence.

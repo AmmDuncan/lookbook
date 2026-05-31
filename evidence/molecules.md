@@ -125,5 +125,7 @@ to a real set, banked into the kit:
   `--accent` — the kit's Popsy demo was remapped #5936D8→#5B5BD6, #BA8EFF→#C7C7F5, line→#9AA0AA).
 - **"Get a better one if needed":** free set is the floor; flag bespoke/paid (Phosphor duotone,
   Streamline, custom spot art) only when a marquee surface earns it — not by default.
-- **Not yet rewired (noted follow-up):** the 4 organism files still embed the older hand-drawn nav art
-  (out of the agreed atoms+recipes scope); rewire on next pass for full whole-kit coherence.
+- **Whole-kit coherence (done, commit f3fa0da):** the 4 organisms' hand-drawn nav was rewired to the
+  sprite too (mapped by nav label; charts/sparklines/brand-marks untouched), and `_icons.svg` grew
+  21→30 for the organism domains (truck, package, git-branch, shopping-cart, credit-card, etc.). Every
+  icon-using file now inlines the identical canonical 30-symbol sprite. One set across the entire kit.

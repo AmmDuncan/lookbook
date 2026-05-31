@@ -109,6 +109,10 @@ Composing tightly is the move — adding surfaces is not. Hard rules:
 - **No redundant double-encoding.** A zone chip next to a spelled-out destination, a colored
   age next to a status dot next to a priority pill — pick the ONE encoding that carries the
   signal. Stacking them is decoration.
+- **Color encodes STATE, not category (P-MOL-10).** A hue means ONE thing per screen. Status
+  gets the semantic palette (M5 dot/pill); category columns (plan, type, role) render NEUTRAL
+  (plain text or a `--bg`/`--muted`/hairline pill). If green means both "Active" and "Growth
+  plan" on one screen, neutralize the category — the M5 pill is for STATE, never a category.
 - **In-app focal numbers sit at 32–40px; a standalone hero ≤44px (P-MOL-03).** Dominance
   comes from the number standing ALONE (hero-solo) or being LARGEST relative to its stats,
   never from absolute bigness. A figure ≥48px reads as a marketing/landing hero, not a

@@ -67,6 +67,14 @@
 
   /* per-row sparkline (DM-3 signature) */
   .spark{display:block}
+
+  /* affordances (P-MOL-08): sortable header + trailing row-action — real admin tables have both */
+  .th-sort{cursor:pointer}
+  .th-sort .sort{margin-left:5px;color:var(--subtle);font-weight:400}
+  .tbl th.act,.tbl td.act{width:40px;padding-left:0;padding-right:12px;text-align:right}
+  .actbtn{width:26px;height:26px;border:none;background:transparent;color:var(--subtle);border-radius:6px;
+          cursor:pointer;line-height:1;font-size:16px;transition:background var(--motion) var(--ease),color var(--motion) var(--ease)}
+  .actbtn:hover{background:var(--border);color:var(--ink)}   /* quiet at rest (subtle), brighter on hover */
 </style>
 </head>
 <body>
@@ -76,13 +84,13 @@
     <div class="panel">
       <div class="tbl-scroll">
       <table class="tbl">
-        <thead><tr><th>Deployment</th><th>Branch</th><th>Created</th><th>Status</th><th class="r">Duration</th></tr></thead>
+        <thead><tr><th>Deployment</th><th>Branch</th><th class="th-sort">Created <span class="sort">↓</span></th><th>Status</th><th class="r">Duration</th><th class="act"></th></tr></thead>
         <tbody>
-          <tr><td><span class="id">dpl_8f2a</span></td><td><div class="primary">api · prod</div><div class="secondary">commit 4c1e09a</div></td><td><span class="date">May 30, 14:22</span></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Ready</span></div></td><td class="num">42s</td></tr>
-          <tr><td><span class="id">dpl_8f19</span></td><td><div class="primary">web · prod</div><div class="secondary">commit 9bd2f31</div></td><td><span class="date">May 30, 13:58</span></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Ready</span></div></td><td class="num">1m 03s</td></tr>
-          <tr><td><span class="id">dpl_8f05</span></td><td><div class="primary">api · preview</div><div class="secondary">commit a71c4e8</div></td><td><span class="date">May 30, 11:40</span></td><td><div class="st"><span class="dot warn"></span><span class="st-txt">Building</span></div></td><td class="num">—</td></tr>
-          <tr><td><span class="id">dpl_8ef2</span></td><td><div class="primary">web · preview</div><div class="secondary">commit 33ab190</div></td><td><span class="date">May 30, 09:12</span></td><td><div class="st"><span class="dot bad"></span><span class="st-txt">Error</span></div></td><td class="num">18s</td></tr>
-          <tr><td><span class="id">dpl_8ed7</span></td><td><div class="primary">api · prod</div><div class="secondary">commit 0f9c2aa</div></td><td><span class="date">May 29, 22:05</span></td><td><div class="st"><span class="dot idle"></span><span class="st-txt">Queued</span></div></td><td class="num">—</td></tr>
+          <tr><td><span class="id">dpl_8f2a</span></td><td><div class="primary">api · prod</div><div class="secondary">commit 4c1e09a</div></td><td><span class="date">May 30, 14:22</span></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Ready</span></div></td><td class="num">42s</td><td class="act"><button class="actbtn">⋯</button></td></tr>
+          <tr><td><span class="id">dpl_8f19</span></td><td><div class="primary">web · prod</div><div class="secondary">commit 9bd2f31</div></td><td><span class="date">May 30, 13:58</span></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Ready</span></div></td><td class="num">1m 03s</td><td class="act"><button class="actbtn">⋯</button></td></tr>
+          <tr><td><span class="id">dpl_8f05</span></td><td><div class="primary">api · preview</div><div class="secondary">commit a71c4e8</div></td><td><span class="date">May 30, 11:40</span></td><td><div class="st"><span class="dot warn"></span><span class="st-txt">Building</span></div></td><td class="num">—</td><td class="act"><button class="actbtn">⋯</button></td></tr>
+          <tr><td><span class="id">dpl_8ef2</span></td><td><div class="primary">web · preview</div><div class="secondary">commit 33ab190</div></td><td><span class="date">May 30, 09:12</span></td><td><div class="st"><span class="dot bad"></span><span class="st-txt">Error</span></div></td><td class="num">18s</td><td class="act"><button class="actbtn">⋯</button></td></tr>
+          <tr><td><span class="id">dpl_8ed7</span></td><td><div class="primary">api · prod</div><div class="secondary">commit 0f9c2aa</div></td><td><span class="date">May 29, 22:05</span></td><td><div class="st"><span class="dot idle"></span><span class="st-txt">Queued</span></div></td><td class="num">—</td><td class="act"><button class="actbtn">⋯</button></td></tr>
         </tbody>
       </table>
       </div>

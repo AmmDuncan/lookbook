@@ -53,6 +53,11 @@
   .dot.ok{background:var(--positive)} .dot.warn{background:var(--warning)}
   .dot.idle{background:var(--subtle)} .dot.bad{background:var(--danger)}
   .st-txt{font-size:12.5px;font-weight:500;color:var(--muted)}
+  /* affordances (P-MOL-08): sortable header + hover row-action */
+  .th-sort{cursor:pointer} .th-sort .sort{margin-left:5px;color:var(--subtle);font-weight:400}
+  .tbl th.act,.tbl td.act{width:40px;padding-left:0;padding-right:12px;text-align:right}
+  .actbtn{width:26px;height:26px;border:none;background:transparent;color:var(--subtle);border-radius:6px;cursor:pointer;font-size:16px;line-height:1;transition:background var(--motion) var(--ease),color var(--motion) var(--ease)}
+  .actbtn:hover{background:var(--border);color:var(--ink)}
 
   /* ---- shared list chrome ---- */
   .toolbar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:var(--border-w) solid var(--border)}
@@ -109,12 +114,12 @@
         <button class="btn">New order</button>
       </div>
       <div class="tbl-scroll"><table class="tbl">
-        <thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>Placed</th><th class="r">Total</th></tr></thead>
+        <thead><tr><th>Order</th><th>Customer</th><th>Status</th><th class="th-sort">Placed <span class="sort">↓</span></th><th class="r">Total</th><th class="act"></th></tr></thead>
         <tbody>
-          <tr><td><span class="id">#10842</span></td><td class="t-title"><div class="primary">Margot Delacroix</div><div class="secondary">margot@email.co</div></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Fulfilled</span></div></td><td><span class="st-txt">May 30, 14:22</span></td><td class="num">$124.00</td></tr>
-          <tr><td><span class="id">#10841</span></td><td class="t-title"><div class="primary">Tom Brinkley</div><div class="secondary">t.brinkley@me.com</div></td><td><div class="st"><span class="dot warn"></span><span class="st-txt">Pending</span></div></td><td><span class="st-txt">May 30, 13:58</span></td><td class="num">$48.50</td></tr>
-          <tr><td><span class="id">#10840</span></td><td class="t-title"><div class="primary">Suki Watanabe</div><div class="secondary">suki.w@studio.io</div></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Fulfilled</span></div></td><td><span class="st-txt">May 30, 11:40</span></td><td class="num">$212.75</td></tr>
-          <tr><td><span class="id">#10839</span></td><td class="t-title"><div class="primary">Fabian Nkrumah</div><div class="secondary">fabian.n@corp.gh</div></td><td><div class="st"><span class="dot bad"></span><span class="st-txt">Refunded</span></div></td><td><span class="st-txt">May 30, 09:12</span></td><td class="num">$38.00</td></tr>
+          <tr><td><span class="id">#10842</span></td><td class="t-title"><div class="primary">Margot Delacroix</div><div class="secondary">margot@email.co</div></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Fulfilled</span></div></td><td><span class="st-txt">May 30, 14:22</span></td><td class="num">$124.00</td><td class="act"><button class="actbtn">⋯</button></td></tr>
+          <tr><td><span class="id">#10841</span></td><td class="t-title"><div class="primary">Tom Brinkley</div><div class="secondary">t.brinkley@me.com</div></td><td><div class="st"><span class="dot warn"></span><span class="st-txt">Pending</span></div></td><td><span class="st-txt">May 30, 13:58</span></td><td class="num">$48.50</td><td class="act"><button class="actbtn">⋯</button></td></tr>
+          <tr><td><span class="id">#10840</span></td><td class="t-title"><div class="primary">Suki Watanabe</div><div class="secondary">suki.w@studio.io</div></td><td><div class="st"><span class="dot ok"></span><span class="st-txt">Fulfilled</span></div></td><td><span class="st-txt">May 30, 11:40</span></td><td class="num">$212.75</td><td class="act"><button class="actbtn">⋯</button></td></tr>
+          <tr><td><span class="id">#10839</span></td><td class="t-title"><div class="primary">Fabian Nkrumah</div><div class="secondary">fabian.n@corp.gh</div></td><td><div class="st"><span class="dot bad"></span><span class="st-txt">Refunded</span></div></td><td><span class="st-txt">May 30, 09:12</span></td><td class="num">$38.00</td><td class="act"><button class="actbtn">⋯</button></td></tr>
         </tbody>
       </table></div>
     </div>

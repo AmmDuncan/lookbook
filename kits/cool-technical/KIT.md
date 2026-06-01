@@ -128,14 +128,15 @@ Composing tightly is the move — adding surfaces is not. Hard rules:
 Lucide, ISC, one stroke weight, `currentColor`; inline once per page, reference `<use href="#i-NAME"/>`).
 **Atoms (treatment):** `atom-icon.html` (the icon primitive, P-MOL-11) · `atom-shell-frame.html` ·
 `atom-figure.html` (hero-figure + stat) · `atom-table-row.html` · `atom-chart.html` ·
-`atom-status.html` · `atom-overlay.html` (modal/slideover shell) · `atom-empty.html`
+`atom-status.html` · `atom-field.html` (controls across states + 3-tier buttons) ·
+`atom-overlay.html` (modal/slideover shell) · `atom-empty.html`
 (DM-1 empty state — Lucide mark or recolorable Popsy/unDraw illustration, P-MOL-12) ·
 `atom-cmdk.html` (⌘K, DM-2).
 NOTE: icons are a real set (`_icons.svg`, Lucide) — swap the SET wholesale, never mix or hand-draw
 a one-off (P-MOL-11). `⌘ ↑ ↓ ↵` inside `<kbd>` chips and `·` separators stay typographic.
 **Recipes (composition):** `recipe-figure.html` (hero+stat-row · hero+rail · stat-tiles ·
 hero-solo · dual-hero) · `recipe-table.html` (toolbar-list · filter-rail-list · grouped-list ·
-split-list).
+split-list) · `recipe-form.html` (entry-card · settings-sectioned · inline-compact).
 **Organisms (verified worked examples):** `organism-ops-console.html` ·
 `organism-infra-monitoring.html` · `organism-account-detail.html` ·
 `organism-revenue-overview.html`.

@@ -12,13 +12,15 @@ on composition*) — see `patterns/molecules.md` for the model and `anti-pattern
   page; reference an icon with `<svg class="ic"><use href="#i-NAME"/></svg>`.
 - **`KIT.md`** — the picker: dials → atoms → recipes → composition grammar → depth floor → restraint.
 - **Atoms (treatment):** `atom-icon` (the icon primitive) · `atom-shell-frame` · `atom-figure`
-  (hero-figure + stat) · `atom-table-row` · `atom-chart` · `atom-status` · `atom-overlay`
-  (modal/slideover shell) · `atom-empty` (DM-1) · `atom-cmdk` (⌘K, DM-2). Each shows its genuine
-  variants. Icons are a real set (`_icons.svg`, Lucide) — swap the SET wholesale, never mix or
-  hand-draw a one-off (P-MOL-11); `⌘ ↑ ↓ ↵` in `<kbd>` chips stay typographic.
+  (hero-figure + stat) · `atom-table-row` · `atom-chart` · `atom-status` · `atom-field`
+  (controls across states + 3-tier buttons) · `atom-overlay` (modal/slideover shell) ·
+  `atom-empty` (DM-1) · `atom-cmdk` (⌘K, DM-2). Each shows its genuine variants. Icons are a real
+  set (`_icons.svg`, Lucide) — swap the SET wholesale, never mix or hand-draw a one-off (P-MOL-11);
+  `⌘ ↑ ↓ ↵` in `<kbd>` chips stay typographic.
 - **Recipes (composition):** `recipe-figure` — `hero + stat-row` · `hero + rail` · `stat-tiles`
   · `hero-solo` · `dual-hero`. `recipe-table` — `toolbar-list` · `filter-rail-list` ·
-  `grouped-list` · `split-list`. Structurally distinct (boxing is a flag, not a recipe).
+  `grouped-list` · `split-list`. `recipe-form` — `entry-card` · `settings-sectioned` ·
+  `inline-compact`. Structurally distinct (boxing is a flag, not a recipe).
 - **Organisms (verified worked examples):** `organism-ops-console` · `organism-infra-monitoring`
   · `organism-account-detail` · `organism-revenue-overview`. Same kit, four different skeletons.
 

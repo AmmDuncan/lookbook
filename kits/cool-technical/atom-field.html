@@ -1,65 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <!--
-  ATOM — overlay shell (modal · slideover) · register: cool-technical
-  The dialog CONTAINER treatment. An overlay is a shell — backdrop + panel + header
-  (title + ✕) + body slot + footer action-bar — that HOSTS a form recipe (recipe-form.html)
-  or content. Per containers.md (P-CN): modal = short resolve-now (≤~5 fields); slideover =
-  longer/contextual edit beside a live list. Grounded in real products (Relevance AI, ClassDojo,
-  Whop modals; Airwallex, Acctual slideovers): centered ~360–480px modal / right-edge ~420–480px
-  panel on a dimmed backdrop; title + ✕ header; footer actions bottom-right (secondary + primary).
-  CONFIRM vs live: backdrop alpha (~0.4–0.5), panel radius, footer padding.
+  ATOMS — form controls + buttons · register: cool-technical
+  The taste-bearing TREATMENTS for input. Each atom dictates only HOW one control looks
+  across its states — arrangement (entry-card vs settings vs inline) is a recipe's job
+  (recipe-form.html). Grounded in patterns/form.md (P-F-01..12) + a study of real shipped
+  products (Linear, Stripe, Supabase, Vercel forms).
+  Controls: field · select · combobox (server-search) · textarea · checkbox · radio ·
+  toggle · segmented. Plus the 3-tier BUTTON hierarchy (primary / secondary / ghost) + danger + icon.
+  Discipline: field bg != page bg (P-F-03); 40px desktop height (P-F-02); accent focus ring;
+  error UNDER the field w/ leading icon (P-F-06); help below, muted (P-F-11); validate on blur (P-F-07).
+  Icons: Lucide sprite (_icons.svg) via <use>, currentColor; ⌘K + $ stay typographic (P-MOL-11).
+  Fonts: Geist + Geist Mono (kit standard, P-AS-03). CONFIRM vs live: field height (38–42px), focus-ring, radius.
 -->
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Overlay shell — cool-technical</title>
+<title>Form atoms — cool-technical</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_tokens.css">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased;padding:40px}
-  .specimen{max-width:880px;margin:0 auto}.specimen + .specimen{margin-top:40px}
-  .label{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--subtle);margin-bottom:12px;display:block}
+  body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);
+       font-size:14px;-webkit-font-smoothing:antialiased;padding:40px}
+  .specimen{max-width:880px;margin:0 auto}
+  .specimen + .specimen{margin-top:40px}
+  .label{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;
+         color:var(--subtle);margin-bottom:14px;display:block}
+  .card{background:var(--surface);border:var(--border-w) solid var(--border);
+        border-radius:var(--radius-lg);padding:24px 26px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px 28px}
 
-  /* form atoms reused in the body (constant) */
-  .flabel{font-size:13px;font-weight:500;color:var(--ink)}
-  .inp{height:40px;padding:0 12px;font-size:14px;font-family:inherit;color:var(--ink);background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius);width:100%}
-  .inp::placeholder{color:var(--subtle)}
-  .sel{display:flex;align-items:center;justify-content:space-between;height:40px;padding:0 12px;background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius);font-size:14px}
-  .sel .chev{color:var(--subtle)}
+  /* ---- field scaffold (label + control + help/error) ---- */
   .fld{display:flex;flex-direction:column;gap:6px}
-  .btn{height:38px;padding:0 15px;font-size:14px;font-weight:600;font-family:inherit;border-radius:var(--radius);border:var(--border-w) solid transparent;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
-  .btn-primary{background:var(--accent);color:#fff}.btn-secondary{background:var(--surface);color:var(--ink);border-color:var(--border)}
+  .flabel{font-size:13px;font-weight:500;color:var(--ink)}
+  .flabel .opt{color:var(--subtle);font-weight:400}
+  .fhelp{font-size:12px;color:var(--muted)}
+  .ferr{font-size:12px;color:var(--danger);display:flex;align-items:center;gap:5px}
 
-  /* ---- the overlay shell ---- */
-  .scrim{position:relative;background:rgba(16,18,24,0.45);border-radius:var(--radius-lg);overflow:hidden;
-         min-height:340px;display:flex}                       /* dimmed backdrop (demo frame) */
-  .scrim.center{align-items:center;justify-content:center;padding:28px}
-  .scrim.right{justify-content:flex-end}
+  /* ---- text field (P-F-02/03) ---- */
+  .inp{height:40px;padding:0 12px;font-size:14px;font-family:inherit;color:var(--ink);
+       background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius);
+       width:100%;transition:border-color var(--motion) var(--ease),box-shadow var(--motion) var(--ease)}
+  .inp::placeholder{color:var(--subtle)}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint)}
+  .inp.is-focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint)}
+  .inp.is-error{border-color:var(--danger);box-shadow:0 0 0 3px rgba(200,65,46,0.10)}
+  .inp:disabled,.inp.is-disabled{background:var(--bg);color:var(--subtle);cursor:not-allowed}
+  /* leading-icon / affix variants */
+  .inwrap{position:relative;display:flex;align-items:center}
+  .inwrap .lead{position:absolute;left:11px;color:var(--subtle);display:flex;pointer-events:none}
+  .inwrap .lead + .inp{padding-left:32px}
+  .inwrap .kbd{position:absolute;right:10px;font-family:var(--font-mono);font-size:11px;color:var(--subtle);
+       border:var(--border-w) solid var(--border);border-radius:4px;padding:1px 5px}
 
-  .panel{background:var(--surface);border-radius:var(--radius-lg);box-shadow:0 16px 48px rgba(16,18,24,0.22);
-         display:flex;flex-direction:column;overflow:hidden}
-  .panel.modal{width:440px;max-width:100%}
-  .panel.slide{width:460px;height:100%;border-radius:0;box-shadow:-16px 0 48px rgba(16,18,24,0.18)}
+  /* ---- textarea ---- */
+  .ta{min-height:84px;padding:9px 12px;line-height:1.5;resize:vertical}
 
-  .ohead{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:var(--border-w) solid var(--border)}
-  .ohead h3{font-size:16px;font-weight:600;letter-spacing:-0.01em}
-  .xbtn{width:28px;height:28px;border:none;background:transparent;color:var(--subtle);border-radius:6px;font-size:17px;line-height:1;cursor:pointer}
-  .xbtn:hover{background:var(--bg);color:var(--ink)}
+  /* ---- select (closed) + combobox ---- */
+  .sel{display:flex;align-items:center;justify-content:space-between;height:40px;padding:0 12px;
+       background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius);
+       font-size:14px;color:var(--ink)}
+  .sel .chev{color:var(--subtle)}
+  .sel.placeholder{color:var(--subtle)}
 
-  .obody{padding:22px;display:flex;flex-direction:column;gap:16px}
-  .obody.scroll{overflow-y:auto;flex:1}
-  .osub{font-size:13.5px;color:var(--muted);margin:-4px 0 4px}
-  .sec{font-size:13px;font-weight:600;margin-top:4px}
+  /* ---- checkbox + radio ---- */
+  .opt-row{display:flex;align-items:center;gap:9px;font-size:14px;color:var(--ink)}
+  .cbx{width:18px;height:18px;border:var(--border-w) solid var(--border-strong);border-radius:5px;
+       flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--surface)}
+  .cbx.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .rdo{width:18px;height:18px;border:1.5px solid var(--border-strong);border-radius:50%;flex-shrink:0;
+       display:flex;align-items:center;justify-content:center;background:var(--surface)}
+  .rdo.on{border-color:var(--accent)} .rdo.on::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--accent)}
 
-  .ofoot{display:flex;justify-content:flex-end;gap:10px;padding:14px 22px;border-top:var(--border-w) solid var(--border);background:var(--bg)}
-  .xbtn svg{width:16px;height:16px}
+  /* ---- toggle (switch) ---- */
+  .sw{display:inline-block;vertical-align:middle;width:36px;height:20px;border-radius:999px;background:var(--border-strong);position:relative;flex-shrink:0;transition:background var(--motion) var(--ease)}
+  .sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.15);transition:left var(--motion) var(--ease)}
+  .sw.on{background:var(--accent)} .sw.on::after{left:18px}
+
+  /* ---- segmented control ---- */
+  .seg{display:inline-flex;background:var(--bg);border:var(--border-w) solid var(--border);border-radius:var(--radius);padding:2px}
+  .seg .s{font-size:13px;font-weight:500;color:var(--muted);padding:5px 14px;border-radius:5px}
+  .seg .s.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+  /* ---- buttons (3-tier hierarchy, P-F-04/MC-5) ---- */
+  .btnrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .btn{height:40px;padding:0 16px;font-size:14px;font-weight:600;font-family:inherit;border-radius:var(--radius);
+       border:var(--border-w) solid transparent;display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+       transition:background var(--motion) var(--ease)}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:var(--accent-ink)}
+  .btn-secondary{background:var(--surface);color:var(--ink);border-color:var(--border)}
+  .btn-secondary:hover{background:var(--bg)}
+  .btn-ghost{background:transparent;color:var(--muted)}
+  .btn-ghost:hover{background:var(--bg);color:var(--ink)}
+  .btn-danger{background:var(--danger);color:#fff}
+  .btn[disabled]{opacity:.5;cursor:not-allowed}
+  .btn-icon{width:40px;padding:0;justify-content:center;background:var(--surface);border-color:var(--border);color:var(--muted)}
+  .spin{width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%}
+
+  /* icons: Lucide sprite (_icons.svg), currentColor, sized per context (P-MOL-11) */
+  .lead svg{width:15px;height:15px;display:block}
+  .sel .chev svg{width:16px;height:16px;display:block}
+  .cbx svg{width:13px;height:13px}
+  .btn-icon svg{width:16px;height:16px}
+  .ferr svg{width:13px;height:13px;flex-shrink:0}
 </style>
 </head>
 <body>
-<!-- Lucide icons (ISC license) · one set · 1.75 stroke · currentColor. Canonical sprite source for the cool-technical kit; inline this block (or its symbols) into any specimen that uses icons. Swap the SET wholesale (Lucide -> Phosphor/Tabler) but never mix per-icon. -->
+
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /> <circle cx="11" cy="11" r="8" /></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /> <path d="M12 5v14" /></symbol>
@@ -95,35 +145,57 @@
   <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></symbol>
 </svg>
 
+
   <div class="specimen">
-    <span class="label">Modal — centered ~440px, short resolve-now (containers.md P-CN-01)</span>
-    <div class="scrim center">
-      <div class="panel modal">
-        <div class="ohead"><h3>Invite teammate</h3><button class="xbtn"><svg><use href="#i-x"/></svg></button></div>
-        <div class="obody">
-          <div class="osub">They'll get an email to join the Northwind workspace.</div>
-          <div class="fld"><span class="flabel">Email</span><input class="inp" placeholder="name@company.com"></div>
-          <div class="fld"><span class="flabel">Role</span><div class="sel"><span>Member</span><span class="chev">⌄</span></div></div>
-        </div>
-        <div class="ofoot"><button class="btn btn-secondary">Cancel</button><button class="btn btn-primary">Send invite</button></div>
+    <span class="label">Atom — text field · across states (P-F-02/03/06/07/11)</span>
+    <div class="card grid">
+      <div class="fld"><span class="flabel">Email</span><input class="inp" placeholder="you@company.com"><span class="fhelp">We'll only use this for receipts.</span></div>
+      <div class="fld"><span class="flabel">Workspace name</span><input class="inp is-focus" value="Northwind"><span class="fhelp">Focused state — accent ring.</span></div>
+      <div class="fld"><span class="flabel">Tax ID <span class="opt">(optional)</span></span><input class="inp" value="GB 123 4567 89" disabled><span class="fhelp">Disabled — sits on page-bg.</span></div>
+      <div class="fld"><span class="flabel">Email</span><input class="inp is-error" value="not-an-email"><span class="ferr"><svg><use href="#i-triangle-alert"/></svg>Enter a valid email address.</span></div>
+      <div class="fld"><span class="flabel">Search</span><div class="inwrap"><span class="lead"><svg><use href="#i-search"/></svg></span><input class="inp" placeholder="Search…"><span class="kbd">⌘K</span></div></div>
+      <div class="fld"><span class="flabel">Amount</span><div class="inwrap"><span class="lead">$</span><input class="inp" value="1,240.00"></div></div>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Atom — select · combobox · textarea</span>
+    <div class="card grid">
+      <div class="fld"><span class="flabel">Plan</span><div class="sel"><span>Enterprise</span><span class="chev"><svg><use href="#i-chevron-down"/></svg></span></div></div>
+      <div class="fld"><span class="flabel">Assign owner</span><div class="sel placeholder"><span>Search people…</span><span class="chev"><svg><use href="#i-chevron-down"/></svg></span></div><span class="fhelp">Combobox — server-side search for paginated data (P-F-10).</span></div>
+      <div class="fld" style="grid-column:1/-1"><span class="flabel">Notes <span class="opt">(optional)</span></span><textarea class="inp ta" placeholder="Add internal context…"></textarea></div>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Atom — checkbox · radio · toggle · segmented</span>
+    <div class="card" style="display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <span class="opt-row"><span class="cbx on"><svg><use href="#i-check"/></svg></span>Email notifications</span>
+        <span class="opt-row"><span class="cbx"></span>SMS notifications</span>
+        <span class="opt-row" style="color:var(--subtle)"><span class="cbx"></span>Webhook (coming soon)</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <span class="opt-row"><span class="rdo on"></span>Monthly billing</span>
+        <span class="opt-row"><span class="rdo"></span>Annual billing</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span class="opt-row"><span class="sw on"></span>Two-factor auth</span>
+        <span class="opt-row"><span class="sw"></span>Beta features</span>
+        <div class="seg"><span class="s on">Day</span><span class="s">Week</span><span class="s">Month</span></div>
       </div>
     </div>
   </div>
 
   <div class="specimen">
-    <span class="label">Slideover — right-edge ~460px, longer/contextual edit beside a live list (P-CN-03)</span>
-    <div class="scrim right">
-      <div class="panel slide">
-        <div class="ohead"><h3>Edit customer</h3><button class="xbtn"><svg><use href="#i-x"/></svg></button></div>
-        <div class="obody scroll">
-          <div class="fld"><span class="flabel">Company</span><input class="inp" value="Meridian Systems"></div>
-          <div class="fld"><span class="flabel">Billing email</span><input class="inp" value="ops@meridiansys.io"></div>
-          <div class="sec">Plan</div>
-          <div class="fld"><span class="flabel">Tier</span><div class="sel"><span>Enterprise</span><span class="chev">⌄</span></div></div>
-          <div class="fld"><span class="flabel">Seats</span><input class="inp" value="40"></div>
-        </div>
-        <div class="ofoot"><button class="btn btn-secondary">Cancel</button><button class="btn btn-primary">Save changes</button></div>
-      </div>
+    <span class="label">Atom — button hierarchy (primary · secondary · ghost · danger · icon · loading)</span>
+    <div class="card btnrow">
+      <button class="btn btn-primary">Save changes</button>
+      <button class="btn btn-secondary">Cancel</button>
+      <button class="btn btn-ghost">Discard</button>
+      <button class="btn btn-primary" disabled><span class="spin"></span>Saving…</button>
+      <button class="btn btn-danger">Delete account</button>
+      <button class="btn btn-icon"><svg><use href="#i-more-horizontal"/></svg></button>
     </div>
   </div>
 

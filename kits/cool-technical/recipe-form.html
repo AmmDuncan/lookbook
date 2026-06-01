@@ -1,4 +1,75 @@
-<!-- Lucide icons (ISC license) · one set · 1.75 stroke · currentColor. Canonical sprite source for the cool-technical kit; inline this block (or its symbols) into any specimen that uses icons. Swap the SET wholesale (Lucide -> Phosphor/Tabler) but never mix per-icon. -->
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  RECIPES — form compositions · register: cool-technical
+  Named ARRANGEMENTS built from the form-control atoms (atom-field.html). Per P-MOL-02 they
+  differ in WHERE labels/fields/actions sit — not in control styling (that's the atom, constant).
+  Grounded in patterns/form.md's two-context split (entry vs settings) + a study of real products.
+  Recipes (answer: "what shape is this form?"):
+    entry-card        — centered card, single column, TOP labels, full-width primary. signup/create.
+    settings-sectioned— sectioned. FIELD rows = label-ABOVE (Clerk/Slite); PREFERENCE/toggle
+                        rows = label-LEFT + description (Clerk permissions/Slack). Per-section Save.
+    inline-compact    — fields in a row + action. quick-add / filter / single-line edit.
+  Icons: Lucide sprite (_icons.svg); fonts Geist + Geist Mono (kit standard).
+  Discipline: one primary action (P-F-04); single column by default (P-F-12); field bg != page bg.
+-->
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Form recipes — cool-technical</title>
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased;padding:40px}
+  .specimen{max-width:880px;margin:0 auto}.specimen + .specimen{margin-top:44px}
+  .label{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--subtle);margin-bottom:12px;display:block}
+
+  /* atoms (constant) */
+  .flabel{font-size:13px;font-weight:500;color:var(--ink)}.flabel .opt{color:var(--subtle);font-weight:400}
+  .fhelp{font-size:12px;color:var(--muted)}
+  .inp{height:40px;padding:0 12px;font-size:14px;font-family:inherit;color:var(--ink);background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius);width:100%}
+  .inp::placeholder{color:var(--subtle)}
+  .inp.is-focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint)}
+  .sel{display:flex;align-items:center;justify-content:space-between;height:40px;padding:0 12px;background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius);font-size:14px}
+  .sel .chev{color:var(--subtle)}
+  .sw{display:inline-block;vertical-align:middle;width:36px;height:20px;border-radius:999px;background:var(--border-strong);position:relative;flex-shrink:0}
+  .sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+  .sw.on{background:var(--accent)}.sw.on::after{left:18px}
+  .btn{height:40px;padding:0 16px;font-size:14px;font-weight:600;font-family:inherit;border-radius:var(--radius);border:var(--border-w) solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:7px;cursor:pointer}
+  .btn-primary{background:var(--accent);color:#fff}.btn-secondary{background:var(--surface);color:var(--ink);border-color:var(--border)}.btn-ghost{background:transparent;color:var(--muted)}
+
+  /* ---- RECIPE: entry-card (centered, single col, top labels, full-width primary) ---- */
+  .entry{max-width:420px;margin:0 auto;background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius-lg);padding:30px 30px 26px}
+  .entry h2{font-size:20px;font-weight:600;letter-spacing:-0.01em;margin-bottom:4px}
+  .entry .sub{font-size:13.5px;color:var(--muted);margin-bottom:22px}
+  .entry .fld{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+  .entry .btn{width:100%;margin-top:6px}
+  .entry .alt{text-align:center;font-size:13px;color:var(--muted);margin-top:16px}
+  .entry .alt a{color:var(--accent-ink);font-weight:500}
+
+  /* ---- RECIPE: settings-sectioned (label-left rows, per-section save, in shell) ---- */
+  .settings{background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+  .sechd{display:flex;align-items:baseline;justify-content:space-between;padding:18px 24px 14px;border-bottom:var(--border-w) solid var(--border)}
+  .sechd h3{font-size:15px;font-weight:600}.sechd .sd{font-size:12.5px;color:var(--muted)}
+  /* field rows = label-ABOVE (Clerk/Slite); preference rows = label-LEFT (.srow below) */
+  .sbody{padding:18px 24px;display:flex;flex-direction:column;gap:16px;border-bottom:var(--border-w) solid var(--border)}
+  .srow{display:grid;grid-template-columns:1fr 220px;gap:24px;align-items:center;padding:16px 24px;border-bottom:var(--border-w) solid var(--border)}
+  .srow .sk{font-size:13px;font-weight:500}.srow .skh{font-size:12px;color:var(--muted);margin-top:2px}
+  .secfoot{display:flex;justify-content:flex-end;gap:10px;padding:14px 24px;background:var(--bg)}
+
+  /* ---- RECIPE: inline-compact (fields in a row + action) ---- */
+  .inline{display:flex;align-items:flex-end;gap:12px;background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius-lg);padding:18px 20px}
+  .inline .fld{display:flex;flex-direction:column;gap:6px}
+  .inline .fld.grow{flex:1}
+
+  /* icons: Lucide sprite (_icons.svg), currentColor (P-MOL-11) */
+  .sel .chev svg{width:16px;height:16px;display:block}
+</style>
+</head>
+<body>
+
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /> <circle cx="11" cy="11" r="8" /></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /> <path d="M12 5v14" /></symbol>
@@ -33,3 +104,45 @@
   <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></symbol>
   <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></symbol>
 </svg>
+
+
+  <div class="specimen">
+    <span class="label">Recipe — entry-card (centered · single column · top labels · full-width primary)</span>
+    <div class="entry">
+      <h2>Create your workspace</h2>
+      <div class="sub">Start a 14-day trial. No card required.</div>
+      <div class="fld"><span class="flabel">Work email</span><input class="inp" placeholder="you@company.com"></div>
+      <div class="fld"><span class="flabel">Workspace name</span><input class="inp is-focus" value="Northwind"></div>
+      <div class="fld"><span class="flabel">Region</span><div class="sel"><span>EU (Frankfurt)</span><span class="chev"><svg><use href="#i-chevron-down"/></svg></span></div></div>
+      <button class="btn btn-primary">Create workspace</button>
+      <div class="alt">Already have one? <a>Sign in</a></div>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Recipe — settings-sectioned (FIELD rows label-above · PREFERENCE rows label-left · per-section Save)</span>
+    <div class="settings">
+      <div class="sechd"><h3>Profile</h3><span class="sd">Your account details</span></div>
+      <div class="sbody">
+        <div class="fld"><span class="flabel">Display name</span><input class="inp" value="Jane Doe"></div>
+        <div class="fld"><span class="flabel">Email</span><input class="inp" value="jane@northwind.co"></div>
+      </div>
+      <div class="sechd"><h3>Notifications</h3><span class="sd">How and when we reach you</span></div>
+      <div class="srow"><div><div class="sk">Email digest</div><div class="skh">A daily summary at 8am</div></div><div class="sel" style="max-width:220px"><span>Daily</span><span class="chev"><svg><use href="#i-chevron-down"/></svg></span></div></div>
+      <div class="srow"><div><div class="sk">Product updates</div><div class="skh">Occasional feature news</div></div><div><span class="sw on"></span></div></div>
+      <div class="srow"><div><div class="sk">Security alerts</div><div class="skh">Always on for your safety</div></div><div><span class="sw on"></span></div></div>
+      <div class="secfoot"><button class="btn btn-ghost">Reset</button><button class="btn btn-primary">Save</button></div>
+    </div>
+  </div>
+
+  <div class="specimen">
+    <span class="label">Recipe — inline-compact (fields in a row + action · quick-add / filter / single-line edit)</span>
+    <div class="inline">
+      <div class="fld grow"><span class="flabel">Add team member</span><input class="inp" placeholder="name@company.com"></div>
+      <div class="fld"><span class="flabel">Role</span><div class="sel" style="width:150px"><span>Member</span><span class="chev"><svg><use href="#i-chevron-down"/></svg></span></div></div>
+      <button class="btn btn-primary">Send invite</button>
+    </div>
+  </div>
+
+</body>
+</html>

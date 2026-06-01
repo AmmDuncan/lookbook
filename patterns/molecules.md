@@ -60,6 +60,7 @@ Each ships a clean original on the shared tokens; provenance is in each kit file
 - **`overlay`** (`atom-overlay.html`) — the dialog shell: modal (centered ~440px) / slideover (right-edge ~460px), each = dimmed backdrop + panel + title-and-✕ header + body slot + footer action-bar (secondary + primary). HOSTS a form recipe (containers.md P-CN).
 - **`empty`** (`atom-empty.html`) — DM-1: centered spot art + confident one-line heading + optional sub + ONE CTA. Variants: illustrated (first-run; recolorable open illustration — Popsy/unDraw, tinted to tokens) / minimal mark (in-panel; a 40px Lucide spot mark — the cool-technical default). Carries P-MOL-12. Copy is confident, not "No data."
 - **`cmdk`** (`atom-cmdk.html`) — DM-2: centered ~540px palette, search + grouped action list + per-row shortcut + nav footer + optional context chip. Opened by the shell topbar's ⌘K affordance.
+- **`field` / controls + buttons** (`atom-field.html`) — the input treatments across states: text field / select / combobox (server-side search, P-F-10) / textarea / checkbox / radio / toggle / segmented, each shown default / focus (accent ring) / disabled (on page-bg) / error (red ring + `triangle-alert` + message under). Plus the 3-tier BUTTON hierarchy (primary / secondary / ghost / danger / icon / loading). Field bg ≠ page bg (P-F-03), 40px height (P-F-02), error under the field (P-F-06). Composes via the form recipes (`recipe-form.html`).
 
 ## Recipe catalog (the composition vocabulary — figures)
 All built from `hero-figure` + `stat`; differ in where the stats go (P-MOL-02):
@@ -79,6 +80,14 @@ All built from the `table-row` atom (`recipe-table.html`); differ in where contr
 - **`split-list`** — a narrow master list + a detail pane. For triage / rapid record review.
 
 Pick by where the list's controls belong: light filtering → `toolbar-list`; faceted → `filter-rail-list`; the grouping IS the story → `grouped-list`; review-one-then-next → `split-list`.
+
+## Recipe catalog (the composition vocabulary — forms)
+All built from the `field`/control + button atoms (`recipe-form.html`); differ in where labels/fields/actions sit (P-MOL-02), never in control styling (that's the atom, constant):
+- **`entry-card`** — centered card, single column, TOP labels, full-width primary. Signup / create.
+- **`settings-sectioned`** — sectioned; FIELD rows label-above (Clerk/Slite), PREFERENCE/toggle rows label-left + description; per-section Save (P-F-01).
+- **`inline-compact`** — fields in a row + action. Quick-add / filter / single-line edit.
+
+Pick by context: account creation → `entry-card`; managing existing settings → `settings-sectioned`; one quick field + action → `inline-compact`.
 
 ## Marketing register — atom catalog (the convince-surface treatments)
 The SAME two-layer machinery on a different register. Runnable kit: `kits/marketing/` (spacious · Bricolage Grotesque display + Geist body · brand-continuous indigo · texture allowed — the deliberate opposite of cool-technical). Governed by `patterns/marketing.md` (P-M), `pricing.md` (P-PR), `assets.md` (P-AS). Reuses the `icon` primitive (Lucide). Register dials in `kits/marketing/_tokens.css`.

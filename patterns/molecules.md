@@ -2,10 +2,10 @@
 
 **Inherits:** all of `fundamentals.md` unless overridden below.
 **Cite as:** `P-MOL-<nn>`.
-**Runnable kit:** `kits/cool-technical/` (atoms, recipes, organisms, picker). **Adoption skin:** `packages/tokens/skins/cool-technical.css`.
+**Runnable kits:** `kits/cool-technical/` (data/app surfaces) · `kits/marketing/` (marketing/convince surfaces) — each ships atoms, recipes, organisms. **Register index + when-to-use:** root `KIT.md`. **Adoption skin:** `packages/tokens/skins/cool-technical.css`.
 
 ## Surface intent
-This file is not a page archetype — it is the **generative machinery** behind the cardinal rule (*converge on vocabulary, diverge on composition*). It gives that rule concrete parts so a builder of any model strength can assemble on-taste screens without re-inventing them: **treatment atoms** carry the taste, a **shared token foundation** carries coherence, and **composition recipes** carry variety. Use it whenever you compose a data/metrics surface (dashboard, ops console, monitoring, record detail, revenue overview) and want the result distinctive without drifting off-system.
+This file is not a page archetype — it is the **generative machinery** behind the cardinal rule (*converge on vocabulary, diverge on composition*). It gives that rule concrete parts so a builder of any model strength can assemble on-taste screens without re-inventing them: **treatment atoms** carry the taste, a **shared token foundation** carries coherence, and **composition recipes** carry variety. Use it whenever you compose a data/metrics surface (dashboard, ops console, monitoring, record detail, revenue overview) and want the result distinctive without drifting off-system. **The machinery is register-agnostic — the two-layer model and the granularity rules (P-MOL-01/02) apply to ANY register; only the atom/recipe *catalogs* are per-register.** Two runnable registers exist today: `cool-technical` (data/app surfaces, catalogs below) and `marketing` (marketing/convince surfaces, catalog further below). The CTA recipes in the marketing kit are the cleanest cross-register proof of P-MOL-01/02.
 
 ## The two layers (and why each recurs differently)
 - **Treatment atoms** — `hero-figure`, `stat`, `table-row`, `chart`, `status`, `shell-frame`. An atom dictates only **how one thing looks** (size, weight, tracking, encoding). Atoms recur ON PURPOSE — that recurrence IS the brand (every Stripe number looks like Stripe). Coherence is free because every atom reads the same token foundation.
@@ -80,8 +80,26 @@ All built from the `table-row` atom (`recipe-table.html`); differ in where contr
 
 Pick by where the list's controls belong: light filtering → `toolbar-list`; faceted → `filter-rail-list`; the grouping IS the story → `grouped-list`; review-one-then-next → `split-list`.
 
+## Marketing register — atom catalog (the convince-surface treatments)
+The SAME two-layer machinery on a different register. Runnable kit: `kits/marketing/` (spacious · Bricolage Grotesque display + Geist body · brand-continuous indigo · texture allowed — the deliberate opposite of cool-technical). Governed by `patterns/marketing.md` (P-M), `pricing.md` (P-PR), `assets.md` (P-AS). Reuses the `icon` primitive (Lucide). Register dials in `kits/marketing/_tokens.css`.
+- **`hero`** (`atom-hero.html`) — eyebrow → headline → deck → one primary CTA + ghost → trust markers → product-true visual with depth (P-M-13/14/15). Compositions: centered-visual-below (default) / left-text right-visual.
+- **`feature-grid`** (`atom-feature-grid.html`) — feature cells (Lucide chip + title + body). Compositions: asymmetric **bento** (one product-visual cell) / hierarchy **triplet**. Dodges the 3-equal-cards tell (P-M-09).
+- **`pricing-row`** (`atom-pricing-row.html`) — the comparison instrument: 2–4 tier cards, recommended lifted by *stacked* cues, price-as-hero, billing toggle + savings, trust strip, Enterprise-below (full P-PR-01..11). Equal-height, CTAs bottom-pinned (the AP5 comparison-peer carve-out).
+- **`cta-band`** (`atom-cta-band.html`) — the closing-CTA TREATMENT (headline + deck + CTA cluster + trust). The surface flag (dark/tint/surface/paper) is orthogonal; the compositions live in `recipe-cta`.
+- **`nav-footer`** (`atom-nav-footer.html`) — marketing top-nav (default + floating scrolled) + dark fat-footer sitemap (the P-SA marketing shell).
+- **`social-faq`** (`atom-social-faq.html`) — curated monochrome logo-wall (P-AS-04) + single-quote testimonial + **testimonial-with-metrics** (quote paired with proof figures, for dev/data products) + accordion FAQ (P-PR-08).
+- **`code`** (`atom-code.html`) — the DEV-product visual: terminal / live-log stream + syntax-highlighted code block, token-derived `--code-*` palette (keyword = indigo). Operationalizes P-M-18: the hero visual is product-type-fit — dashboard (SaaS) / terminal+code (dev) / device (consumer).
+
+## Marketing register — recipe catalog (CTA — the cross-register P-MOL-01/02 exemplar)
+`recipe-cta.html` is the clearest proof of the granularity rules on a second register: the **CTA-band is a TREATMENT**; variety lives in **structurally-distinct compositions** (P-MOL-02), with dark/tint/surface/paper demoted to an orthogonal surface **flag** (not a recipe). Built from the `cta-band` treatment, differ in WHERE the elements sit:
+- **`centered`** — stacked headline + deck + CTA, symmetric. The big closing moment.
+- **`split-horizontal`** — copy left, action right; the eye reads ACROSS.
+- **`with-visual`** — copy + CTA beside a product frame; a closing mini-hero.
+- **`slim-inline`** — one compact row; a mid-page / end-of-section nudge.
+A page picks the composition that fits its moment; any composition wears any surface flag — exactly the figure-recipe lesson, on a marketing surface. (Whole-page marketing rhythm = surface alternation between bands, P-M-16, not hairline separators.)
+
 ## How a builder uses the kit (the picker)
-The dials are inherited from the register (see the skin); the builder makes only composition choices. Full picker — dials → atoms → recipes → composition grammar → depth floor → restraint — is `kits/cool-technical/KIT.md`.
+The dials are inherited from the register (see the skin); the builder makes only composition choices. Pick the register first via the root `KIT.md` (data/app → `cool-technical`; marketing/convince → `marketing`). Full data-surface picker — dials → atoms → recipes → composition grammar → depth floor → restraint — is `kits/cool-technical/KIT.md`; the marketing kit's parts + rules are in `kits/marketing/README.md`.
 
 ## Forbidden moves
 - A molecule that bakes in a layout (over-composed → it's a mini-organism). (P-MOL-01)
@@ -95,4 +113,4 @@ The dials are inherited from the register (see the skin); the builder makes only
 - A multi-hue stock illustration dropped in un-remapped, or a scene illustration on a cool-technical surface. (P-MOL-12)
 
 ## Sources
-Cardinal rule + tokens contract (`SKILL.md`, `fundamentals.md`) · `anti-patterns.md` (over-composition, near-duplicate recipes) · runnable kit `kits/cool-technical/` · **Reference study of real shipped products (Linear, Vercel, Stripe, Mercury, Ramp) → the molecule-library taste rules.** Battle-tested 2026-05-30 via a weak-builder (Sonnet) compose-vs-free-design trial: the kit lifted taste and compelled appropriate composition variety across briefs; the granularity + structural-distinctness rules were the load-bearing fixes. **Grounding ledger** (real-product validation of the molecule numbers + pre-grounding for the next families — overlays, empty-states, command-palette): `evidence/molecules.md`. **Icon/illustration sourcing** (P-MOL-11/12): icons = Lucide (ISC) — the set shadcn/Linear-adjacent products ship, so it lands on-register; illustrations = Popsy/unDraw (free, recolorable). The kit's previous unicode + hand-drawn glyphs were retired wholesale to `_icons.svg`.
+Cardinal rule + tokens contract (`SKILL.md`, `fundamentals.md`) · `anti-patterns.md` (over-composition, near-duplicate recipes) · runnable kits `kits/cool-technical/` (data surfaces) + `kits/marketing/` (marketing surfaces, governed by `patterns/marketing.md`/`pricing.md`, battle-tested to parity 2026-06-01) · root `KIT.md` (register index) · **Reference study of real shipped products (Linear, Vercel, Stripe, Mercury, Ramp) → the molecule-library taste rules.** Battle-tested 2026-05-30 via a weak-builder (Sonnet) compose-vs-free-design trial: the kit lifted taste and compelled appropriate composition variety across briefs; the granularity + structural-distinctness rules were the load-bearing fixes. **Grounding ledger** (real-product validation of the molecule numbers + pre-grounding for the next families — overlays, empty-states, command-palette): `evidence/molecules.md`. **Icon/illustration sourcing** (P-MOL-11/12): icons = Lucide (ISC) — the set shadcn/Linear-adjacent products ship, so it lands on-register; illustrations = Popsy/unDraw (free, recolorable). The kit's previous unicode + hand-drawn glyphs were retired wholesale to `_icons.svg`.

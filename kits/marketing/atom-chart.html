@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ATOM — chart / sparkline · register: marketing
+  The DATA-PROOF visual for marketing. Convergence #2 flagged this gap: a marketing landing
+  that wants to PROVE a number (volume processed, uptime, growth) had to invent a trend viz
+  because the kit only modelled prose + product mockups. This adopts the cool-technical
+  signature data-viz vocab (DM-3) wholesale — single-hue indigo area fill (0.14→0.01),
+  thin 1.5px top stroke, one end-point dot — so the family converges on the same chart
+  language and a "data feature-cell" reads identical whether it's in the app or the landing.
+  Three treatments:
+    .spark    — bare inline sparkline (no axes, no labels), for embedding in a stat/cell
+    .datacell — a metric (figure + delta) over a sparkline — the marketing "data feature-cell"
+    .areacard — a framed, depth-bearing area chart, a bento big-cell PRODUCT VISUAL (P-M-13)
+  FIGURES use Geist tabular (--font-sans .tnum), NOT Bricolage — data reads precise, distinct
+  from the display voice (the cool-technical pattern: figures stay neutral sans).
+  Color encodes STATE not category (P-MOL-10): the up-delta is --positive green, the trend
+  stays the single brand hue. Render at 2x with --virtual-time-budget so webfonts load.
+-->
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chart / sparkline atom — marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding:40px 32px}
+  .label{max-width:1080px;margin:0 auto 14px;font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--subtle)}
+  .specimen{max-width:1080px;margin:0 auto}
+  .specimen + .label{margin-top:52px}
+
+  /* shared figure treatment — Geist tabular, precise data voice (not Bricolage) */
+  .fig{font-family:var(--font-sans);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em;color:var(--ink)}
+  .eyebrow{font:var(--t-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--muted)}
+  /* delta: typographic arrow (↑/↓) + value — never an icon-set glyph (P-MOL-11); color encodes state (P-MOL-10) */
+  .delta{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .delta.up{color:var(--positive)}
+  .delta .ar{font-weight:700;margin-right:1px}
+  /* sparkline/chart svgs: let the end-point dot's halo render past the viewBox edge (no clip) */
+  svg{overflow:visible}
+
+  /* ---- SPARK: bare inline sparkline ---- */
+  .sparkbox{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;max-width:300px}
+  .sparkbox .eyebrow{display:block;margin-bottom:10px}
+
+  /* ---- DATACELL: metric + delta over a sparkline (the marketing data feature-cell) ---- */
+  .band{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .datacell{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 24px 0;
+        box-shadow:var(--shadow-sm);overflow:hidden}
+  .datacell .eyebrow{display:block;margin-bottom:12px}
+  .datacell .row{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+  .datacell .row .delta{margin-left:auto} /* push delta to the cell's right edge — breathing room from the figure */
+  .datacell .fig{font-size:36px;line-height:1}
+  .datacell .sub{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .datacell svg{display:block} /* sits within the 24px padding so the end dot + halo breathe; fill touches the bottom edge */
+
+  /* ---- AREACARD: framed area chart, a bento big-cell product visual (depth earned) ---- */
+  .areacard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+        padding:26px 28px;box-shadow:var(--shadow-card);max-width:720px}
+  .ahead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+  .ahead .eyebrow{display:block;margin-bottom:7px}
+  .ahead .fig{font-size:34px;line-height:1.05}
+  .ahead .meta{text-align:right}
+  .ahead .meta .delta{margin-bottom:5px}
+  .ahead .meta .when{font-size:12px;color:var(--muted)}
+  .xax{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:9px;font-variant-numeric:tabular-nums;padding:0 1px}
+</style>
+</head>
+<body>
+
+  <span class="label">Atom — chart · SPARK (bare inline sparkline — the signature trend, no axes, embed anywhere)</span>
+  <div class="specimen">
+    <div class="sparkbox">
+      <span class="eyebrow">Throughput</span>
+      <svg width="100%" height="46" viewBox="0 0 260 46" preserveAspectRatio="none">
+        <defs><linearGradient id="sf1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5B5BD6" stop-opacity="0.14"/><stop offset="100%" stop-color="#5B5BD6" stop-opacity="0.01"/>
+        </linearGradient></defs>
+        <path d="M0,38 L32,34 L65,36 L98,27 L130,30 L162,21 L195,17 L228,11 L260,7 L260,46 L0,46 Z" fill="url(#sf1)"/>
+        <path d="M0,38 L32,34 L65,36 L98,27 L130,30 L162,21 L195,17 L228,11 L260,7" fill="none" stroke="#5B5BD6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="260" cy="7" r="3.5" fill="#5B5BD6"/><circle cx="260" cy="7" r="6.5" fill="#5B5BD6" opacity="0.16"/>
+      </svg>
+    </div>
+  </div>
+
+  <span class="label">Atom — chart · DATA FEATURE-CELLS (metric + delta over the sparkline — the marketing proof band)</span>
+  <div class="specimen">
+    <div class="band">
+      <div class="datacell">
+        <span class="eyebrow">Events delivered</span>
+        <div class="row"><span class="fig">12.4M</span><span class="delta up"><span class="ar">↑</span>18%</span></div>
+        <div class="sub">this month</div>
+        <svg width="100%" height="62" viewBox="0 0 320 62" preserveAspectRatio="none">
+          <defs><linearGradient id="d1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5B5BD6" stop-opacity="0.14"/><stop offset="100%" stop-color="#5B5BD6" stop-opacity="0.01"/></linearGradient></defs>
+          <path d="M0,50 L46,46 L91,48 L137,38 L183,42 L228,30 L274,24 L320,16 L320,62 L0,62 Z" fill="url(#d1)"/>
+          <path d="M0,50 L46,46 L91,48 L137,38 L183,42 L228,30 L274,24 L320,16" fill="none" stroke="#5B5BD6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="320" cy="16" r="3.5" fill="#5B5BD6"/><circle cx="320" cy="16" r="6.5" fill="#5B5BD6" opacity="0.16"/>
+        </svg>
+      </div>
+      <div class="datacell">
+        <span class="eyebrow">Avg latency</span>
+        <div class="row"><span class="fig">84<span style="font-size:20px;color:var(--muted);font-weight:500"> ms</span></span><span class="delta up"><span class="ar">↓</span>31%</span></div>
+        <div class="sub">p95, last 30 days</div>
+        <svg width="100%" height="62" viewBox="0 0 320 62" preserveAspectRatio="none">
+          <defs><linearGradient id="d2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5B5BD6" stop-opacity="0.14"/><stop offset="100%" stop-color="#5B5BD6" stop-opacity="0.01"/></linearGradient></defs>
+          <path d="M0,18 L46,22 L91,20 L137,30 L183,28 L228,38 L274,42 L320,48 L320,62 L0,62 Z" fill="url(#d2)"/>
+          <path d="M0,18 L46,22 L91,20 L137,30 L183,28 L228,38 L274,42 L320,48" fill="none" stroke="#5B5BD6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="320" cy="48" r="3.5" fill="#5B5BD6"/><circle cx="320" cy="48" r="6.5" fill="#5B5BD6" opacity="0.16"/>
+        </svg>
+      </div>
+      <div class="datacell">
+        <span class="eyebrow">Delivery success</span>
+        <div class="row"><span class="fig">99.98<span style="font-size:20px;color:var(--muted);font-weight:500">%</span></span><span class="delta up"><span class="ar">✓</span>SLA</span></div>
+        <div class="sub">trailing 90 days</div>
+        <svg width="100%" height="62" viewBox="0 0 320 62" preserveAspectRatio="none">
+          <defs><linearGradient id="d3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5B5BD6" stop-opacity="0.14"/><stop offset="100%" stop-color="#5B5BD6" stop-opacity="0.01"/></linearGradient></defs>
+          <path d="M0,22 L46,18 L91,24 L137,16 L183,20 L228,14 L274,18 L320,12 L320,62 L0,62 Z" fill="url(#d3)"/>
+          <path d="M0,22 L46,18 L91,24 L137,16 L183,20 L228,14 L274,18 L320,12" fill="none" stroke="#5B5BD6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="320" cy="12" r="3.5" fill="#5B5BD6"/><circle cx="320" cy="12" r="6.5" fill="#5B5BD6" opacity="0.16"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <span class="label">Atom — chart · AREA CARD (a framed, depth-bearing area chart — a bento big-cell product visual)</span>
+  <div class="specimen">
+    <div class="areacard">
+      <div class="ahead">
+        <div>
+          <span class="eyebrow">Events delivered</span>
+          <div class="fig">12.4M</div>
+        </div>
+        <div class="meta">
+          <span class="delta up"><span class="ar">↑</span>18% vs last month</span>
+          <div class="when">May 2026</div>
+        </div>
+      </div>
+      <svg width="100%" height="190" viewBox="0 0 680 190" preserveAspectRatio="none">
+        <defs><linearGradient id="af" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5B5BD6" stop-opacity="0.14"/><stop offset="100%" stop-color="#5B5BD6" stop-opacity="0.01"/>
+        </linearGradient></defs>
+        <line x1="0" y1="42" x2="680" y2="42" stroke="#E9E6E0" stroke-width="1"/>
+        <line x1="0" y1="96" x2="680" y2="96" stroke="#E9E6E0" stroke-width="1"/>
+        <line x1="0" y1="150" x2="680" y2="150" stroke="#E9E6E0" stroke-width="1"/>
+        <path d="M0,158 L40,150 L80,146 L120,134 L160,140 L200,124 L240,110 L280,116 L320,98 L360,86 L400,92 L440,68 L480,74 L520,52 L560,58 L600,40 L640,32 L680,24 L680,190 L0,190 Z" fill="url(#af)"/>
+        <path d="M0,158 L40,150 L80,146 L120,134 L160,140 L200,124 L240,110 L280,116 L320,98 L360,86 L400,92 L440,68 L480,74 L520,52 L560,58 L600,40 L640,32 L680,24" fill="none" stroke="#5B5BD6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="680" cy="24" r="3.5" fill="#5B5BD6"/><circle cx="680" cy="24" r="6.5" fill="#5B5BD6" opacity="0.16"/>
+        <text x="2" y="38" font-size="10.5" font-family="Geist, sans-serif" fill="#6B6B72">12M</text>
+        <text x="2" y="92" font-size="10.5" font-family="Geist, sans-serif" fill="#6B6B72">8M</text>
+        <text x="2" y="146" font-size="10.5" font-family="Geist, sans-serif" fill="#6B6B72">4M</text>
+      </svg>
+      <div class="xax"><span>May 1</span><span>May 8</span><span>May 15</span><span>May 22</span><span>May 30</span></div>
+    </div>
+  </div>
+
+</body>
+</html>

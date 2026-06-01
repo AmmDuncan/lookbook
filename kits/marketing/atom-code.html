@@ -6,8 +6,9 @@
   dev-tool build had to INVENT this because the kit only modelled a SaaS dashboard). The marketing
   hero product-visual is PRODUCT-TYPE-FIT: dashboard (SaaS) / terminal+code (dev) / device (consumer)
   — all share the framed-with-depth treatment (P-M-13). Syntax colors are TOKEN-DERIVED (--code-*),
-  never invented per build. Two treatments:
+  never invented per build. Three treatments:
     .terminal — a logs / event-stream frame (window chrome + monospace stream)
+    .split    — a two-panel "run it, see it" frame (editor pane calls, terminal pane answers)
     .codeblock — a syntax-highlighted snippet (the "how it's used" proof)
   Geist Mono for code; keyword color ties to the indigo accent. Render at 2x.
 -->
@@ -48,6 +49,17 @@
   .codeblock .body{padding:18px 20px;overflow-x:auto}
   .codeblock pre{font-family:var(--font-mono);font-size:13.5px;line-height:1.8;white-space:pre}
   .codeblock .gutter{color:#3A3F4B;user-select:none;margin-right:18px}
+
+  /* ---- TWO-PANEL: split editor + live output (the turnkey "run it, see it" dev visual) ---- */
+  .split .body{display:flex;padding:0}
+  .split .pane{flex:1;min-width:0;padding:15px 18px 17px}
+  .split .pane + .pane{border-left:1px solid rgba(255,255,255,.07)}
+  .split .pane-label{font-family:var(--font-mono);font-size:10.5px;font-weight:500;letter-spacing:.05em;
+        text-transform:uppercase;color:var(--code-comment);display:block;margin-bottom:12px}
+  .split pre{font-family:var(--font-mono);font-size:12.5px;line-height:1.85;white-space:pre}
+  .split .gutter{color:#3A3F4B;user-select:none;margin-right:14px}
+  .split .logline{gap:10px;font-size:12px;line-height:1.95}
+  .split .prompt{color:var(--code-func)}
 </style>
 </head>
 <body>
@@ -62,6 +74,35 @@
         <div class="logline"><span class="t">10:42:01.402</span><span class="badge retry">503</span><span class="p">POST</span><span class="s">/webhooks/acme</span><span class="c">→ retry 1/6 scheduled +2s</span></div>
         <div class="logline"><span class="t">10:42:03.461</span><span class="badge ok">200</span><span class="p">POST</span><span class="s">/webhooks/acme</span><span class="c">→ delivered on retry · 2.1s</span></div>
         <div class="logline"><span class="t">10:42:03.640</span><span class="badge ok">200</span><span class="p">POST</span><span class="s">/webhooks/linear</span><span class="c">→ delivered in 76ms</span></div>
+      </div>
+    </div>
+  </div>
+
+  <span class="label">Atom — code · TWO-PANEL (turnkey "run it, see it" — editor calls, terminal answers)</span>
+  <div class="specimen">
+    <div class="frame split">
+      <div class="winbar"><div class="dots"><i></i><i></i><i></i></div><span class="title">relay&nbsp;·&nbsp;deliver</span><span class="badge live" style="margin-left:auto">● live</span></div>
+      <div class="body">
+        <div class="pane">
+          <span class="pane-label">deliver.ts</span>
+          <pre><span class="gutter">1</span><span class="k">import</span> <span class="p">{ Relay }</span> <span class="k">from</span> <span class="s">"@relay/sdk"</span>
+<span class="gutter">2</span>
+<span class="gutter">3</span><span class="k">const</span> <span class="p">relay</span> <span class="k">=</span> <span class="k">new</span> <span class="f">Relay</span><span class="p">(KEY)</span>
+<span class="gutter">4</span>
+<span class="gutter">5</span><span class="k">await</span> <span class="p">relay</span><span class="p">.</span><span class="f">deliver</span><span class="p">({</span>
+<span class="gutter">6</span>  <span class="p">event</span><span class="p">:</span> <span class="s">"invoice.paid"</span><span class="p">,</span>
+<span class="gutter">7</span>  <span class="p">retries</span><span class="p">:</span> <span class="n">6</span><span class="p">,</span>
+<span class="gutter">8</span><span class="p">})</span>
+</pre>
+        </div>
+        <div class="pane">
+          <span class="pane-label">output</span>
+          <div class="logline"><span class="prompt">$</span><span class="p">relay deliver --watch</span></div>
+          <div class="logline"><span class="badge ok">200</span><span class="s">invoice.paid</span><span class="c">84ms</span></div>
+          <div class="logline"><span class="badge ok">200</span><span class="s">invoice.paid</span><span class="c">112ms</span></div>
+          <div class="logline"><span class="badge retry">503</span><span class="s">acme.hook</span><span class="c">retry 1/6</span></div>
+          <div class="logline"><span class="badge ok">200</span><span class="s">acme.hook</span><span class="c">2.1s ✓</span></div>
+        </div>
       </div>
     </div>
   </div>

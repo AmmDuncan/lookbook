@@ -12,8 +12,9 @@ composition, the granularity rules) is shared across registers and lives in `pat
 |---|---|---|---|---|
 | **cool-technical** | **Operate on data** — dashboards, ops consoles, monitoring, admin tables, record detail, settings, forms | Dense · cool-slate neutrals · Geist single-family · indigo accent · hairline borders · flat | `kits/cool-technical/` | `kits/cool-technical/KIT.md` |
 | **marketing** | **Convince a visitor** — landing, pricing, features, CTA, social proof | Spacious · warm paper · Bricolage Grotesque + Geist · indigo accent · texture allowed · real depth | `kits/marketing/` | `kits/marketing/README.md` |
+| **warm-editorial** | **Read long-form** — articles, essays, the publication index, considered long reads | Warm cream paper · all-serif (Fraunces + Lora) · indigo accent (scarcest) · low radius · rules-not-shadows · 66ch measure | `kits/warm-editorial/` | `kits/warm-editorial/README.md` |
 
-*Future registers (not yet built): warm-editorial, confident-fintech — port the slice, re-test.*
+*Future registers (not yet built): confident-fintech — port the slice, re-test.*
 
 ## How to choose
 
@@ -32,7 +33,7 @@ composition, the granularity rules) is shared across registers and lives in `pat
   re-skin dials (accent, fonts, neutrals, radius, density); the scale/structure are constant.
 - **The icon primitive** — ONE Lucide sprite (`kits/cool-technical/_icons.svg`), `currentColor`
   (P-AS-01 / P-MOL-11). The marketing kit reuses it.
-- **The granularity machinery** — the two-layer model + the atom/recipe catalogs for both registers:
+- **The granularity machinery** — the two-layer model + the atom/recipe catalogs for all registers:
   `patterns/molecules.md`.
 - **The asset-sourcing rules** — icons / illustrations / fonts / imagery: `patterns/assets.md` (P-AS).
 
@@ -42,4 +43,4 @@ Render at 2× and LOOK before trusting it (`--force-device-scale-factor=2 --virt
 so webfonts load); contrast-gate every non-neutral text pair (`scripts/contrast.mjs`); run the Flow
 audit on edit-oriented surfaces; battle-test new rules against real shipped products. The exit
 criterion for "this register is production-grade" is a **convergence test** — a fresh rules-only build
-that comes back with nothing invented (both kits have passed it).
+that comes back with nothing invented (all three kits have passed it).

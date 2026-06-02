@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ATOM — prose · register: warm-editorial
+  The reading experience — the register's core surface. ONE body treatment at measure (66ch),
+  Lora 19/1.72, print-convention paragraphs (first flush, rest indented, no inter-para gap),
+  with the in-prose elements editorial long-form needs: subhead (Fraunces), pull-quote
+  (breaks the measure, the one accent mark), blockquote (rule + italic), inline figure +
+  caption (breakout wider than measure), list, link, dinkus scene break.
+  Discipline: measure is the spine; accent appears ONCE (the pull-quote rule / a link);
+  rules + space carry structure, not shadows. Render at 2x so Fraunces + Lora load.
+-->
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prose atom — warm-editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-body);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .label{max-width:var(--content-max);margin:0 auto;padding:22px var(--gutter) 0;
+         font:var(--t-kicker);letter-spacing:var(--tr-kicker);text-transform:uppercase;color:var(--subtle)}
+  .prose{max-width:760px;margin:0 auto;padding:36px var(--gutter) 64px}
+
+  /* body — the measure spine */
+  .prose .col{max-width:var(--measure)}
+  .prose p{font:var(--t-body);color:var(--ink)}
+  .prose p + p{text-indent:1.4em}              /* print convention: indent, no inter-para gap */
+  .prose .col > * + *{margin-top:0}
+  .prose h2{font:var(--t-h);color:var(--ink);margin:38px 0 14px;letter-spacing:-0.01em}
+  .prose a{color:var(--accent-ink);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+  .prose em{font-style:italic}
+  .prose .first::first-letter{} /* drop-cap shown in masthead; prose opens mid-article here */
+
+  /* blockquote — rule + italic, inside the measure */
+  .prose blockquote{margin:26px 0;padding-left:22px;border-left:2px solid var(--rule-strong);
+        font-family:var(--font-body);font-style:italic;font-size:20px;line-height:1.6;color:var(--muted)}
+
+  /* pull-quote — BREAKS the measure (wider, centered), the one accent mark */
+  .pullquote{margin:42px auto;max-width:680px;text-align:center}
+  .pullquote .mark{width:34px;height:2px;background:var(--accent);margin:0 auto 20px}
+  .pullquote q{font-family:var(--font-display);font-weight:500;font-size:30px;line-height:1.28;
+        letter-spacing:-0.01em;color:var(--ink);quotes:none}
+  .pullquote .who{display:block;margin-top:16px;font:var(--t-byline);color:var(--muted);font-style:normal}
+
+  /* figure — breakout wider than the measure */
+  .breakout{max-width:920px;margin:40px auto}
+  .figure{margin:0}
+  .figure .img{aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;position:relative;
+        background:linear-gradient(120deg,#2A2540 0%,#5B5BD6 48%,#C9A77F 100%)}
+  .figure .img::after{content:"";position:absolute;inset:0;opacity:.5;mix-blend-mode:soft-light;
+        background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.6'/></svg>")}
+  .figure figcaption{margin-top:10px;font:var(--t-caption);color:var(--muted);max-width:var(--measure)}
+  .figure figcaption .credit{color:var(--subtle)}
+
+  /* list */
+  .prose ul{list-style:none;margin:18px 0;padding:0}
+  .prose ul li{font:var(--t-body);padding-left:22px;position:relative}
+  .prose ul li + li{margin-top:8px}
+  .prose ul li::before{content:"";position:absolute;left:2px;top:.8em;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.6}
+
+  .dinkus{text-align:center;color:var(--subtle);letter-spacing:.5em;font-size:15px;margin:34px 0}
+</style>
+</head>
+<body>
+
+  <span class="label">Atom — prose · the reading surface (measure · subhead · pull-quote · blockquote · figure · list · dinkus)</span>
+  <article class="prose">
+    <div class="col">
+      <p>The first thing the night shift learns is that silence has a texture. A station at three in the morning is not empty so much as <em>differently occupied</em> — by the hum of escalators left running, by the tick of cooling rails, by the soft argument of ventilation fans deciding how much of the day’s heat to keep.</p>
+      <p>For the operators who keep it all moving, that texture is information. A change in the hum means a change in the load; a new tick is a question that has to be answered before the first train of the morning asks it for them.</p>
+
+      <h2>Learning to trust the hunch of a machine</h2>
+      <p>When the sensors arrived, nobody quite believed them. A vibration flagged on a set of points looked, to a veteran engineer, like a rounding error — until the third time the machine was right and the engineer was not.</p>
+    </div>
+
+    <div class="pullquote">
+      <div class="mark"></div>
+      <q>You stop asking whether the data is right and start asking what it noticed that you didn’t.</q>
+      <span class="who">— Adaeze Okafor, duty manager</span>
+    </div>
+
+    <div class="col">
+      <p>That shift — from defending experience to interrogating it — turned out to be the real upgrade. The hardware was ordinary. The change was a willingness to be wrong earlier, and more cheaply, than a breakdown would allow.</p>
+      <blockquote>It is easier to trust a colleague’s instinct than a sensor’s. The work was making the sensor feel like a colleague.</blockquote>
+    </div>
+
+    <figure class="figure breakout">
+      <div class="img"></div>
+      <figcaption>Eighteen months of vibration readings from a single junction, collapsed into one frame. <span class="credit">Visualisation — placeholder.</span></figcaption>
+    </figure>
+
+    <div class="col">
+      <p>By the end of the first year, the control room had settled into a quieter rhythm. The biggest savings were not the avoided failures anyone could point to, but the ones that never formed:</p>
+      <ul>
+        <li>points re-greased a week before they would have begun to drag;</li>
+        <li>a fan motor swapped on a Tuesday instead of failing on a Friday;</li>
+        <li>a rail joint watched, not replaced, until the data agreed it was time.</li>
+      </ul>
+      <p>None of it makes the morning news. That, the operators will tell you, is the entire point. You can read more in our <a href="#">companion piece on predictive maintenance</a>.</p>
+      <div class="dinkus">· · ·</div>
+    </div>
+  </article>
+
+</body>
+</html>

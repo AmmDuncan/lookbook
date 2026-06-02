@@ -108,6 +108,14 @@ The SAME two-layer machinery on a different register. Runnable kit: `kits/market
 - **`slim-inline`** — one compact row; a mid-page / end-of-section nudge.
 A page picks the composition that fits its moment; any composition wears any surface flag — exactly the figure-recipe lesson, on a marketing surface. (Whole-page marketing rhythm = surface alternation between bands, P-M-16, not hairline separators.)
 
+## Warm-editorial register — atom catalog (the long-form / reading treatments)
+The SAME two-layer machinery on a third register. Runnable kit: `kits/warm-editorial/` (warm cream paper · all-serif Fraunces display + Lora body · indigo accent spent the scarcest · LOW radius · rules-not-shadows · 66ch measure — a surface that READS, not one that operates or convinces). Dials from the brain's editorial column (`identity.md` adjective table · P-AP-05). Register dials in `kits/warm-editorial/_tokens.css`. Reuses the family palette (indigo) + the granularity machinery; its distinctiveness is the all-serif voice.
+- **`masthead`** (`atom-masthead.html`) — how an article OPENS: kicker → serif headline → standfirst → byline rule → lead image + caption. Compositions: centered long-read / left-aligned standard. The drop-cap + dinkus prove the body voice.
+- **`prose`** (`atom-prose.html`) — the reading surface: measure-spine body (66ch, print-convention indented paragraphs), Fraunces subhead, pull-quote that BREAKS the measure (the one accent mark), rule+italic blockquote, breakout figure, quiet list, accent link, dinkus scene-break. The measure is the spine; only the pull-quote + breakout figure leave it.
+- **`index`** (`atom-index.html`) — the publication landing: one story-card treatment (thumb + kicker + Fraunces headline + Lora dek + byline). Compositions: featured-lead + secondary grid (ONE story promoted — the editorial point of view, the AP5 answer, never an equal peer grid) / text-river (no thumbs, archive list).
+
+Worked organisms: `organism-article` (header → masthead → prose → related grid → footer) + `organism-index` (header → featured lead → grid → river → footer) — different page shapes, one register. Convergence-verified 2026-06-02 (a fresh rules-only text-forward essay came back "INVENTED: none"): the existing cardinal / identity / AP5 rules generalize to editorial with no new machinery — the register port ADDS a register, not new rules.
+
 ## How a builder uses the kit (the picker)
 The dials are inherited from the register (see the skin); the builder makes only composition choices. Pick the register first via the root `KIT.md` (data/app → `cool-technical`; marketing/convince → `marketing`). Full data-surface picker — dials → atoms → recipes → composition grammar → depth floor → restraint — is `kits/cool-technical/KIT.md`; the marketing kit's parts + rules are in `kits/marketing/README.md`.
 

@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reproduction · issue list (dense app)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     TOKENS — defined before any component (base §3 process).
+     A dense, dark, app surface. Reproduced from a study of a real
+     shipped product (project-management issue tracker).
+     ============================================================ */
+  :root {
+    /* color — dark, not pure black (§4). Neutrals tinted cool. */
+    --bg:            #08090a;   /* app + sidebar */
+    --surface:       #0f1011;   /* raised list panel */
+    --row-hover:     #15161a;
+    --border:        rgba(255,255,255,.07);  /* hairline */
+    --border-strong: rgba(255,255,255,.12);
+    --selected:      rgba(94,106,210,.13);
+
+    --text:        #eeeef0;     /* primary — not #fff (§4) */
+    --text-muted:  #8a8f98;     /* the signature cool blue-gray */
+    --text-subtle: #62666d;     /* faintest meta */
+
+    --accent:      #5e6ad2;     /* indigo — spent scarcely (§4 60-30-10) */
+    --accent-soft: #828bdc;
+
+    /* status hues — functional, paired with shape never color alone (§4/§10) */
+    --st-todo:     #6f747d;
+    --st-progress: #e2b33e;
+    --st-done:     #5e6ad2;
+    --st-back:     #4b4f57;
+
+    /* label dot hues */
+    --dot-blue:   #4ea7fc;
+    --dot-purple: #b29dff;
+
+    /* type (§3) — 13px workhorse, 12px meta. Nothing < 12. */
+    --font: "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --fs-meta: 12px;
+    --fs-body: 13px;
+
+    /* spacing — 4px scale only (§5) */
+    --row-h: 36px;
+    --sb-w: 220px;
+    --r-sm: 5px;
+    --r-md: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: var(--font);
+    font-size: var(--fs-body);
+    line-height: 1.4;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-variant-numeric: tabular-nums;
+  }
+  .app { display: grid; grid-template-columns: var(--sb-w) 1fr; height: 100vh; }
+
+  /* ====================== SIDEBAR ====================== */
+  .sidebar { display: flex; flex-direction: column; padding: 8px; gap: 2px; min-height: 0; }
+  .ws {
+    display: flex; align-items: center; gap: 8px;
+    height: 32px; padding: 0 8px; border-radius: var(--r-sm);
+    cursor: default;
+  }
+  .ws:hover { background: var(--row-hover); }
+  .ws-logo {
+    width: 18px; height: 18px; border-radius: 5px; flex: 0 0 auto;
+    background: linear-gradient(135deg, #6872e0, #4b54b8);
+    display: grid; place-items: center; font-size: 10px; font-weight: 600; color: #fff;
+  }
+  .ws-name { font-weight: 500; font-size: var(--fs-body); }
+  .ws .chev { margin-left: 2px; color: var(--text-subtle); }
+  .ws .spacer { flex: 1; }
+  .ico-btn { color: var(--text-muted); display: grid; place-items: center; width: 22px; height: 22px; border-radius: 5px; cursor: pointer; }
+  .ico-btn:hover { background: var(--row-hover); color: var(--text); }
+
+  .nav-group { margin-top: 10px; display: flex; flex-direction: column; gap: 1px; }
+  .nav-label {
+    font-size: var(--fs-meta); color: var(--text-subtle);
+    padding: 6px 8px 4px; letter-spacing: .01em;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    height: 28px; padding: 0 8px; border-radius: var(--r-sm);
+    color: var(--text-muted); cursor: default; font-size: var(--fs-body);
+  }
+  .nav-item svg { flex: 0 0 auto; }
+  .nav-item:hover { background: var(--row-hover); color: var(--text); }
+  .nav-item.active { background: var(--selected); color: var(--text); }
+  .nav-item.active svg { color: var(--accent-soft); }
+  .nav-sub { padding-left: 26px; }
+  .sb-foot { margin-top: auto; padding: 8px; display: flex; align-items: center; justify-content: space-between; color: var(--text-subtle); font-size: var(--fs-meta); }
+  .trial-pill { background: var(--row-hover); border: 1px solid var(--border); border-radius: 5px; padding: 2px 6px; color: var(--text-muted); }
+
+  /* ====================== MAIN PANEL ====================== */
+  .main {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px 0 0 0;
+    margin: 8px 0 0 0;
+    display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+  }
+  .topbar {
+    display: flex; align-items: center; gap: 10px;
+    height: 44px; padding: 0 16px; flex: 0 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .crumb { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+  .crumb .star { color: var(--text-subtle); }
+  .topbar .spacer { flex: 1; }
+  .top-action { display: flex; align-items: center; gap: 6px; color: var(--text-muted); font-size: var(--fs-meta); padding: 4px 8px; border-radius: var(--r-sm); cursor: pointer; }
+  .top-action:hover { background: var(--row-hover); color: var(--text); }
+
+  .filterbar {
+    display: flex; align-items: center; gap: 8px;
+    height: 38px; padding: 0 16px; flex: 0 0 auto;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted); font-size: var(--fs-meta);
+  }
+
+  .scroll { overflow-y: auto; min-height: 0; }
+
+  /* group header */
+  .grp {
+    display: flex; align-items: center; gap: 8px;
+    height: 36px; padding: 0 16px;
+    background: rgba(255,255,255,.018);
+    font-size: var(--fs-meta); font-weight: 500; color: var(--text);
+    position: sticky; top: 0;
+  }
+  .grp .count { color: var(--text-subtle); font-weight: 400; }
+  .grp .spacer { flex: 1; }
+  .grp .add { color: var(--text-subtle); cursor: pointer; width: 20px; height: 20px; display: grid; place-items: center; border-radius: 4px; }
+  .grp .add:hover { background: var(--row-hover); color: var(--text); }
+
+  /* issue row — the heart. Hierarchy by OPACITY not size (the loud move). */
+  /* No per-row dividers: separation is row rhythm + hover, not lines.
+     (§6 — "extra space often removes the need for a divider; try that first".) */
+  .row {
+    display: flex; align-items: center; gap: 8px;
+    height: var(--row-h); padding: 0 16px;
+    cursor: default; transition: background 120ms ease-out;
+  }
+  .row:hover { background: var(--row-hover); }
+  .row.sel { background: var(--selected); }
+  .priority { color: var(--text-subtle); flex: 0 0 auto; display: grid; place-items: center; width: 16px; }
+  .iid { color: var(--text-muted); font-size: var(--fs-meta); width: 52px; flex: 0 0 auto; }
+  .status { flex: 0 0 auto; display: grid; place-items: center; width: 16px; }
+  .title { color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .parent { color: var(--text-subtle); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .parent::before { content: "›"; color: var(--text-subtle); }
+  .row .spacer { flex: 1 1 auto; min-width: 8px; }
+
+  .meta { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--text-muted); font-size: var(--fs-meta);
+    border: 1px solid var(--border); border-radius: 11px;
+    height: 22px; padding: 0 8px; max-width: 230px;
+  }
+  .chip svg { color: var(--accent-soft); }
+  .chip .pname { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lbl { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); font-size: var(--fs-meta); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; }
+  .dates { display: flex; align-items: center; gap: 12px; color: var(--text-subtle); font-size: var(--fs-meta); }
+  .date-due { display: inline-flex; align-items: center; gap: 5px; }
+  .avatar {
+    width: 20px; height: 20px; border-radius: 50%; flex: 0 0 auto;
+    display: grid; place-items: center; font-size: 9px; font-weight: 600; color: #fff;
+  }
+  .avatar.ph { background: transparent; border: 1px dashed var(--border-strong); color: var(--text-subtle); }
+</style>
+</head>
+<body>
+  <div class="app">
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar">
+      <div class="ws">
+        <span class="ws-logo">N</span>
+        <span class="ws-name">Northwind</span>
+        <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        <span class="spacer"></span>
+        <span class="ico-btn" title="Search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+        <span class="ico-btn" title="New issue"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.5 4.5l4 4-9.5 9.5-4.5 1 1-4.5z"/></svg></span>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v12H4z"/><path d="M4 9h6a2 2 0 004 0h6"/></svg>Inbox</div>
+        <div class="nav-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>My issues</div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Workspace <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        <div class="nav-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6.5L12 3l9 3.5-9 3.5z"/><path d="M3 12l9 3.5L21 12"/></svg>Projects</div>
+        <div class="nav-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/></svg>Views</div>
+        <div class="nav-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="3"/><path d="M3 19c0-3 2.7-4.5 6-4.5"/><circle cx="16.5" cy="11" r="2.5"/><path d="M13 19c0-2.4 2-3.6 4-3.6s4 1.2 4 3.6"/></svg>Teams</div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Your teams <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        <div class="nav-item"><span class="ws-logo" style="width:15px;height:15px;border-radius:4px;font-size:8px;">N</span>Northwind <svg class="chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        <div class="nav-item nav-sub active"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2"/></svg>Issues</div>
+        <div class="nav-item nav-sub">Active</div>
+        <div class="nav-item nav-sub">Backlog</div>
+        <div class="nav-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6.5L12 3l9 3.5-9 3.5z"/><path d="M3 12l9 3.5L21 12"/></svg>Projects</div>
+        <div class="nav-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/></svg>Views</div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Try <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        <div class="nav-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Import issues</div>
+        <div class="nav-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3.3 2.7-5 6-5"/><path d="M17 8v6M14 11h6"/></svg>Invite people</div>
+        <div class="nav-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg>Cycles</div>
+      </div>
+
+      <div class="sb-foot">
+        <span>Trial ends in <span class="trial-pill">29 days</span></span>
+        <span class="ico-btn" title="Help">?</span>
+      </div>
+    </aside>
+
+    <!-- ===================== MAIN ===================== -->
+    <main class="main">
+      <div class="topbar">
+        <div class="crumb">All issues <span class="star">☆</span></div>
+        <span class="spacer"></span>
+        <span class="top-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 4v16M4 9h5"/></svg>Display</span>
+      </div>
+      <div class="filterbar">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg>
+        Filter
+      </div>
+
+      <div class="scroll">
+        <!-- IN PROGRESS -->
+        <div class="grp">
+          <svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-progress)" stroke-width="2.2"/><path d="M12 12 L12 5 A7 7 0 0 1 18 9 Z" fill="var(--st-progress)"/></svg>
+          In Progress <span class="count">3</span>
+          <span class="spacer"></span><span class="add">+</span>
+        </div>
+
+        <div class="row">
+          <span class="priority" title="High"><svg width="14" height="14" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="5" rx="1" fill="currentColor"/><rect x="6" y="6" width="3" height="8" rx="1" fill="currentColor"/><rect x="11" y="3" width="3" height="11" rx="1" fill="#a4abb6"/></svg></span>
+          <span class="iid">ENG-218</span>
+          <span class="status"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-progress)" stroke-width="2.2"/><path d="M12 12 L12 5 A7 7 0 0 1 18 9 Z" fill="var(--st-progress)"/></svg></span>
+          <span class="title">Token refresh races on concurrent 401s</span>
+          <span class="spacer"></span>
+          <div class="meta">
+            <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/></svg><span class="pname">Auth hardening</span></span>
+            <span class="lbl"><span class="dot" style="background:var(--dot-purple)"></span>Bug</span>
+            <span class="dates"><span class="date-due"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/></svg>Sep 4</span><span>Aug 28</span></span>
+            <span class="avatar" style="background:#3d8f6f">RA</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <span class="priority"><svg width="14" height="14" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="5" rx="1" fill="currentColor"/><rect x="6" y="6" width="3" height="8" rx="1" fill="#a4abb6"/><rect x="11" y="3" width="3" height="11" rx="1" fill="#a4abb6"/></svg></span>
+          <span class="iid">ENG-204</span>
+          <span class="status"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-progress)" stroke-width="2.2"/><path d="M12 12 L12 5 A7 7 0 0 1 16 6.3 Z" fill="var(--st-progress)"/></svg></span>
+          <span class="title">Virtualize the activity feed past 500 rows</span>
+          <span class="parent">Performance pass</span>
+          <span class="spacer"></span>
+          <div class="meta">
+            <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/></svg><span class="pname">Performance pass</span></span>
+            <span class="lbl"><span class="dot" style="background:var(--dot-blue)"></span>Improvement</span>
+            <span class="dates"><span>Aug 27</span></span>
+            <span class="avatar" style="background:#8a5cc4">MK</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <span class="priority"><svg width="14" height="14" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="5" rx="1" fill="currentColor"/><rect x="6" y="6" width="3" height="8" rx="1" fill="#a4abb6"/><rect x="11" y="3" width="3" height="11" rx="1" fill="#a4abb6"/></svg></span>
+          <span class="iid">ENG-231</span>
+          <span class="status"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-progress)" stroke-width="2.2"/><path d="M12 12 L12 5 A7 7 0 0 1 18 9 Z" fill="var(--st-progress)"/></svg></span>
+          <span class="title">Empty state for filtered views with zero results</span>
+          <span class="spacer"></span>
+          <div class="meta">
+            <span class="dates"><span>Aug 26</span></span>
+            <span class="avatar ph">+</span>
+          </div>
+        </div>
+
+        <!-- TODO -->
+        <div class="grp">
+          <svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-todo)" stroke-width="2.2"/></svg>
+          Todo <span class="count">7</span>
+          <span class="spacer"></span><span class="add">+</span>
+        </div>
+
+        <div class="row">
+          <span class="priority"><svg width="14" height="14" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="5" rx="1" fill="currentColor"/><rect x="6" y="6" width="3" height="8" rx="1" fill="currentColor"/><rect x="11" y="3" width="3" height="11" rx="1" fill="currentColor"/></svg></span>
+          <span class="iid">ENG-240</span>
+          <span class="status"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-todo)" stroke-width="2.2"/></svg></span>
+          <span class="title">Keyboard shortcuts for bulk status changes</span>
+          <span class="spacer"></span>
+          <div class="meta">
+            <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/></svg><span class="pname">Power-user polish</span></span>
+            <span class="dates"><span>Aug 25</span><span>Sep 1</span></span>
+            <span class="avatar" style="background:#c2683f">JT</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <span class="priority"><svg width="14" height="14" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="5" rx="1" fill="currentColor"/><rect x="6" y="6" width="3" height="8" rx="1" fill="#a4abb6"/><rect x="11" y="3" width="3" height="11" rx="1" fill="#a4abb6"/></svg></span>
+          <span class="iid">ENG-238</span>
+          <span class="status"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-todo)" stroke-width="2.2"/></svg></span>
+          <span class="title">Persist column widths per saved view</span>
+          <span class="parent">Power-user polish</span>
+          <span class="spacer"></span>
+          <div class="meta">
+            <span class="lbl"><span class="dot" style="background:var(--dot-blue)"></span>Improvement</span>
+            <span class="lbl"><span class="dot" style="background:#e0a73c"></span>Design</span>
+            <span class="dates"><span>Aug 25</span></span>
+            <span class="avatar" style="background:#3d8f6f">RA</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <span class="priority"><svg width="14" height="14" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="5" rx="1" fill="currentColor"/><rect x="6" y="6" width="3" height="8" rx="1" fill="#a4abb6"/><rect x="11" y="3" width="3" height="11" rx="1" fill="#a4abb6"/></svg></span>
+          <span class="iid">ENG-235</span>
+          <span class="status"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-todo)" stroke-width="2.2"/></svg></span>
+          <span class="title">Audit log export for SOC 2 evidence</span>
+          <span class="spacer"></span>
+          <div class="meta">
+            <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/></svg><span class="pname">Compliance Q3</span></span>
+            <span class="dates"><span class="date-due"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/></svg>Sep 12</span><span>Aug 24</span></span>
+            <span class="avatar" style="background:#5e6ad2">DP</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <span class="priority" title="No priority"><svg width="14" height="14" viewBox="0 0 16 16"><rect x="1" y="11" width="3" height="2" rx="1" fill="currentColor"/><rect x="6" y="11" width="3" height="2" rx="1" fill="currentColor"/><rect x="11" y="11" width="3" height="2" rx="1" fill="currentColor"/></svg></span>
+          <span class="iid">ENG-233</span>
+          <span class="status"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-todo)" stroke-width="2.2"/></svg></span>
+          <span class="title">Invite teammates to Northwind</span>
+          <span class="spacer"></span>
+          <div class="meta">
+            <span class="dates"><span>Aug 22</span></span>
+            <span class="avatar ph">+</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <span class="priority" title="No priority"><svg width="14" height="14" viewBox="0 0 16 16"><rect x="1" y="11" width="3" height="2" rx="1" fill="currentColor"/><rect x="6" y="11" width="3" height="2" rx="1" fill="currentColor"/><rect x="11" y="11" width="3" height="2" rx="1" fill="currentColor"/></svg></span>
+          <span class="iid">ENG-230</span>
+          <span class="status"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-todo)" stroke-width="2.2"/></svg></span>
+          <span class="title">Connect GitHub for automated issue sync</span>
+          <span class="spacer"></span>
+          <div class="meta">
+            <span class="dates"><span>Aug 22</span></span>
+            <span class="avatar" style="background:#8a5cc4">MK</span>
+          </div>
+        </div>
+
+        <!-- BACKLOG -->
+        <div class="grp">
+          <svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-back)" stroke-width="2.2" stroke-dasharray="2.4 2.4"/></svg>
+          Backlog <span class="count">2</span>
+          <span class="spacer"></span><span class="add">+</span>
+        </div>
+
+        <div class="row">
+          <span class="priority" title="No priority"><svg width="14" height="14" viewBox="0 0 16 16"><rect x="1" y="11" width="3" height="2" rx="1" fill="currentColor"/><rect x="6" y="11" width="3" height="2" rx="1" fill="currentColor"/><rect x="11" y="11" width="3" height="2" rx="1" fill="currentColor"/></svg></span>
+          <span class="iid">ENG-221</span>
+          <span class="status"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-back)" stroke-width="2.2" stroke-dasharray="2.4 2.4"/></svg></span>
+          <span class="title">Revisit webhook retry backoff curve</span>
+          <span class="spacer"></span>
+          <div class="meta">
+            <span class="dates"><span>Aug 14</span></span>
+            <span class="avatar ph">+</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <span class="priority"><svg width="14" height="14" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="5" rx="1" fill="currentColor"/><rect x="6" y="6" width="3" height="8" rx="1" fill="#a4abb6"/><rect x="11" y="3" width="3" height="11" rx="1" fill="#a4abb6"/></svg></span>
+          <span class="iid">ENG-216</span>
+          <span class="status"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="var(--st-back)" stroke-width="2.2" stroke-dasharray="2.4 2.4"/></svg></span>
+          <span class="title">Spike: move search to a dedicated index</span>
+          <span class="parent">Performance pass</span>
+          <span class="spacer"></span>
+          <div class="meta">
+            <span class="dates"><span>Aug 11</span></span>
+            <span class="avatar" style="background:#c2683f">JT</span>
+          </div>
+        </div>
+
+        <!-- DONE -->
+        <div class="grp">
+          <svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="var(--st-done)"/><path d="M8.5 12.2l2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Done <span class="count">2</span>
+          <span class="spacer"></span><span class="add">+</span>
+        </div>
+
+        <div class="row">
+          <span class="priority"><svg width="14" height="14" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="5" rx="1" fill="currentColor"/><rect x="6" y="6" width="3" height="8" rx="1" fill="currentColor"/><rect x="11" y="3" width="3" height="11" rx="1" fill="currentColor"/></svg></span>
+          <span class="iid">ENG-209</span>
+          <span class="status"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="var(--st-done)"/><path d="M8.5 12.2l2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="title" style="color:var(--text-muted)">Rotate signing keys without downtime</span>
+          <span class="spacer"></span>
+          <div class="meta">
+            <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/></svg><span class="pname">Auth hardening</span></span>
+            <span class="dates"><span>Aug 8</span></span>
+            <span class="avatar" style="background:#3d8f6f">RA</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <span class="priority"><svg width="14" height="14" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="5" rx="1" fill="currentColor"/><rect x="6" y="6" width="3" height="8" rx="1" fill="#a4abb6"/><rect x="11" y="3" width="3" height="11" rx="1" fill="#a4abb6"/></svg></span>
+          <span class="iid">ENG-201</span>
+          <span class="status"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="var(--st-done)"/><path d="M8.5 12.2l2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="title" style="color:var(--text-muted)">Debounce the saved-view autosave</span>
+          <span class="spacer"></span>
+          <div class="meta">
+            <span class="dates"><span>Aug 5</span></span>
+            <span class="avatar" style="background:#8a5cc4">MK</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

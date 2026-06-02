@@ -1,15 +1,17 @@
 # Lookbook
 
-**Lookbook is a design brain** — an agent-facing reasoning layer that makes AI-built UI *genuinely good*. Point any coding agent at it and the UI it designs comes out considered, on-brand, accessible, and not generic-AI. It is design **intelligence**, not a component library: timeless fundamentals, per-surface patterns, page recipes, a composition grammar, an anti-pattern ("looks-like-AI") sweep, and a render-and-look verification loop — applied on whatever stack you already use.
+**Lookbook is a design brain — with a render-and-look loop at its core.**
 
-It works by **asking before it designs and after it presents**: a *Frame-it intake* pulls your direction (personality, accent, density, platform) up front, and a *Review intake* pulls your reaction afterward and revises on it — so the result converges on your eye, not the model's. (A token contract and a visual gallery ship alongside as supporting reference — but the brain is the point.)
+An agent-facing reasoning layer (timeless fundamentals, per-surface patterns, a composition grammar, an anti-generic-AI sweep) wired to a perception loop: it builds the screen, renders the real pixels at 2×, *looks*, and iterates — against what it sees and your eye — instead of emitting code it never views. Design **intelligence + a way of seeing**, on whatever stack you already use. It is not a component library; bring your own components.
+
+It also **asks before it designs and after it presents**: a *Frame-it intake* pulls your direction (personality, accent, density, platform) up front, and a *Review intake* pulls your reaction afterward and revises on it — so the result converges on your eye, not the model's. (A token contract and a visual gallery ship alongside as supporting reference — but the brain and the loop are the point.)
 
 ## Getting started
 
 The brain is plain markdown — any agent that can read files can use it. Clone it once, then point your tool at it.
 
 ```bash
-git clone <repo-url> ~/work/tools/lookbook   # or anywhere you like
+git clone https://github.com/AmmDuncan/lookbook.git ~/work/tools/lookbook   # or anywhere you like
 ```
 
 **Claude Code** (auto-triggers as a skill):

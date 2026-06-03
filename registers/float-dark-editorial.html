@@ -24,7 +24,7 @@
     --panel: #1f1a10;
     --ink:   #ece4d2;          /* warm off-white */
     --muted: #9d937e;
-    --faint: #6a6150;
+    --faint: #8a8170;
     --rule:  rgba(236,228,210,.12);
     --rule2: rgba(236,228,210,.2);
     --gold:  #cBA45c; --gold: #cba45c;   /* the one scarce accent: brass */
@@ -60,7 +60,8 @@
   .st-head .lab { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
   .st-head .mk { font-family: var(--disp); font-size: 17px; font-weight: 600; color: var(--gold); }
   .st-nw { font-family: var(--disp); font-size: 46px; font-weight: 500; letter-spacing: -.015em; margin: 18px 0 2px; }
-  .st-up { font-style: italic; font-size: 15.5px; color: var(--sage); }
+  .st-up { font-style: italic; font-size: 15.5px; color: var(--muted); }
+  .st-up .gain { font-style: normal; font-weight: 600; color: #a3c77f; }
   .alloc { margin: 22px 0 0; }
   .alloc .bar { display: flex; height: 12px; border-radius: 3px; overflow: hidden; }
   .alloc .bar i { display: block; height: 100%; }
@@ -72,7 +73,7 @@
   .rows .r { display: flex; align-items: baseline; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--rule); }
   .rows .r .n { font-size: 15.5px; color: var(--ink); }
   .rows .r .n small { color: var(--faint); font-style: italic; font-size: 13.5px; margin-left: 8px; }
-  .rows .r .a { font-family: var(--disp); font-size: 16px; font-variant-numeric: tabular-nums; }
+  .rows .r .a { font-family: var(--body); font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
   .st-foot { font-style: italic; font-size: 14.5px; color: var(--muted); margin-top: 16px; }
   .st-foot em { color: var(--gold); font-style: italic; }
 
@@ -121,7 +122,7 @@
       <div class="statement">
         <div class="st-head"><span class="lab">Statement · August</span><span class="mk">Float</span></div>
         <div class="st-nw">$48,210.34</div>
-        <div class="st-up">Up $1,140 this month — your calmest quarter yet.</div>
+        <div class="st-up">Up <span class="gain">+$1,140</span> this month — your calmest quarter yet.</div>
         <div class="alloc">
           <div class="bar">
             <i style="width:26%;background:var(--gold)"></i><i style="width:46%;background:var(--sage)"></i><i style="width:18%;background:var(--bronze)"></i><i style="width:10%;background:var(--sand)"></i>

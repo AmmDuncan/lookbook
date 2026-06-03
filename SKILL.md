@@ -5,6 +5,16 @@ description: Use when designing, building, OR EXPLORING any web-app UI — pages
 
 # Lookbook — the UI design mastermind
 
+## The spine and the proven library (the empirical layer)
+
+Lookbook is mid-transition to an **evidence-grounded** core. Two artifacts now sit above the older sprawl:
+
+- **`the-design-brain.md` — the spine.** A tight, opinionated principles spine (5 laws · 4 lineages · the Job→Hierarchy→Grid→Tokens→Components→States→Polish process · type/space/color/depth/motion scales · §11 anti-slop · §12 domain playbooks · §13 pre-ship checklist). It has been **validated by reproduction** — real shipped screens (app · marketing · system) rebuilt from it alone, no invented machinery. Read it as the principles layer; it is a tighter, trustworthier distillation of `fundamentals.md` (which remains as the cited-rule floor until the spine fully absorbs it).
+- **`cookbooks/` — recipes that demonstrably cook.** Each cookbook is a surface recipe **earned by reproducing a real screen** (not self-authored, not convergence-graded): `dense-data-list`, `state-as-shape` (the status-cosplay antidote), `marketing-hero`, `synthetic-product-imagery`, `settings-page`. When the surface you're building matches a cookbook, load it — it beats the older `patterns/*.md` for that surface because it was proven against reality. Cookbooks **grow by coverage**; the old self-judged `patterns/` and `kits/` are superseded surface-by-surface as cookbooks reach them, never in a big-bang.
+- **The reproduction loop (`EXPERIMENT.md`) — the gate.** New patterns earn their place by reproducing a real screen convincingly with no invented machinery — this replaces the self-graded convergence test (which a generous eye passed even on shipped tells, e.g. AP28). To extend the brain: reproduce, score the gap honestly, distill only what cooked.
+
+Everything below (fundamentals, patterns, the render-and-look loop, the sweeps) still applies and is **additive** to the spine — the render-and-look discipline in particular is Lookbook's unique value and is kept in full.
+
 ## Read this first — every time
 
 **Before any UI work** (design, mockup, code, exploration), load `fundamentals.md` from this skill directory. It is the hard floor — measurable rules with concrete numbers, cited by ID (`F1`, `F2`, …). Keep the rule IDs in mind while designing and cite them in narration when applying or evaluating choices ("body 16px/1.55 [F3]; section padding 96px [F11]; one accent at 5 instances max [F17]").

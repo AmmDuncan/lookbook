@@ -49,6 +49,9 @@ Honest first pass (revise as reproductions teach us):
 ## Status
 - [x] Base saved (`the-design-brain.md`)
 - [x] Method + keep/cut written (this file)
-- [x] Reproduction #1 — Linear issue list (`reproductions/linear-issue-list.*`), committed `26f2e99`; 3 cookbook candidates pending user gate
-- [ ] … iterate, distill cookbooks
-- [ ] Decide whether to merge to `main`
+- [x] Reproduction #1 — Linear issue list → cookbooks `dense-data-list`, `state-as-shape`. User-gated.
+- [x] Reproduction #2 — Fibery marketing hero → cookbooks `marketing-hero`, `synthetic-product-imagery`. User-gated.
+- [x] Reproduction #3 — ClickUp settings → cookbook `settings-page`. User-gated. (app · marketing · system span complete.)
+- [x] **Merged → `main` (fast-forward, local only, not pushed).** Pass bar = decision-transfer (convincing + zero invented machinery), set by user. All 3: ~0 base gaps.
+- [x] Folded AP25–28 into the spine §11; wired SKILL.md to the spine + cookbooks + reproduction loop.
+- [ ] **Deepen (ongoing):** keep reproducing to grow cookbook coverage — dashboard/charts, full data table, master–detail, pricing, empty/loading, command palette, overlays, the 3 registers. Retire old `patterns/`/`kits/` surface-by-surface as cookbooks reach them.

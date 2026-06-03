@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reproduction #10 · ARR + growth combo chart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     TOKENS — an ARR + growth-rate combo chart (bars + overlaid line,
+     DUAL axes). Reproduced from a study of a real shipped financial-
+     modelling tool. The viz test the other reproductions didn't run:
+     §12-A dashboards + the data-ink discipline. The chart IS the
+     explanation (per the visualization law) — bars carry the level,
+     the line carries the rate, two y-axes because they're two units.
+     Restraint (§4): exactly two series colors, gridlines are faint
+     dashes, everything else neutral. Per-bar value labels do the work
+     a tooltip would, so the static frame still reads.
+     ============================================================ */
+  :root {
+    --bg:      #f6f7f8;
+    --card:    #ffffff;
+    --line:    #ececef;
+    --grid:    #e9eaed;
+    --ink:     #1f2329;
+    --muted:   #7b818b;
+    --faint:   #aeb3bb;
+    --bar:     #2f8fe5;
+    --bar-top: #57a6ec;
+    --growth:  #e8657f;
+    --val:     #8a9099;        /* per-bar value labels */
+    --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  .viewport { width: 1280px; height: 720px; overflow: hidden; padding: 40px 44px; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 1px 2px rgba(20,22,28,.03); }
+  .chead { display: flex; align-items: center; gap: 7px; padding: 16px 22px; border-bottom: 1px solid var(--line); }
+  .chead .t { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .chead .i { width: 14px; height: 14px; border-radius: 50%; border: 1.3px solid var(--faint); color: var(--faint); font-size: 9px; display: grid; place-items: center; font-weight: 600; }
+  .cbody { padding: 18px 18px 8px; }
+
+  .legend { display: flex; justify-content: center; gap: 26px; padding: 12px 0 16px; }
+  .lg { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+  .lg .sw { width: 9px; height: 9px; border-radius: 2px; }
+  text { font-family: var(--font); }
+</style>
+</head>
+<body>
+  <div class="viewport">
+    <div class="card">
+      <div class="chead"><span class="t">ARR + Growth</span><span class="i">i</span></div>
+      <div class="cbody">
+        <svg id="chart" width="1172" height="360" viewBox="0 0 1172 360"></svg>
+        <div class="legend">
+          <span class="lg"><span class="sw" style="background:var(--bar)"></span> ARR</span>
+          <span class="lg"><span class="sw" style="background:var(--growth);border-radius:50%"></span> Growth rate</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ---- data: 36 months, ARR in $k (rising), growth = MoM % (spikes then decays) ----
+  const months = [];
+  const mlabels = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  for (let y=22; y<=24; y++) for (let m=0; m<12; m++) months.push(`${mlabels[m]} '${y}`);
+  const arr = [75,73,169,359,550,744,940,1000,1110,1300,1500,1700,
+               1880,2000,2090,2180,2230,2270,2320,2360,2400,2450,2500,2540,
+               2580,2620,2660,2700,2760,2820,2880,2910,2960,3010,3120,3210]; // $k
+
+  const W=1172, H=360;
+  const padL=46, padR=42, padT=20, padB=34;
+  const plotW = W-padL-padR, plotH = H-padT-padB;
+  const maxL = 4000;   // $ axis to $4m
+  const maxR = 150;    // % axis to 150%
+
+  const xFor = i => padL + (i+0.5)*(plotW/arr.length);
+  const yL   = v => padT + plotH - (v/maxL)*plotH;       // $ value
+  const yR   = p => padT + plotH - (p/maxR)*plotH;       // %
+  const barW = (plotW/arr.length)*0.62;
+
+  const fmt = k => k>=1000 ? `$${(k/1000).toFixed(k%1000===0?0:1)}m` : `$${k}k`;
+
+  let svg = "";
+  // dashed horizontal gridlines + left $ axis labels + right % axis labels
+  const leftTicks = [0,1000,2000,3000,4000];
+  leftTicks.forEach(v=>{
+    const y = yL(v);
+    svg += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="var(--grid)" stroke-width="1" stroke-dasharray="3 4"/>`;
+    svg += `<text x="${padL-8}" y="${y+3.5}" text-anchor="end" font-size="11" fill="var(--muted)">${v===0?'$0':fmt(v)}</text>`;
+  });
+  [0,50,100,150].forEach(p=>{
+    const y = yR(p);
+    svg += `<text x="${W-padR+8}" y="${y+3.5}" text-anchor="start" font-size="11" fill="var(--muted)">${p}%</text>`;
+  });
+
+  // bars + value labels
+  arr.forEach((v,i)=>{
+    const x = xFor(i)-barW/2, y = yL(v), h = padT+plotH-y;
+    svg += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" rx="1.5" fill="var(--bar)"/>`;
+    svg += `<text x="${xFor(i).toFixed(1)}" y="${(y-5).toFixed(1)}" text-anchor="middle" font-size="9.5" fill="var(--val)">${fmt(v)}</text>`;
+  });
+
+  // growth line (MoM %), clamped to axis
+  const growth = arr.map((v,i)=> i===0 ? 0 : Math.min(maxR, ((v-arr[i-1])/arr[i-1])*100));
+  const pts = growth.map((p,i)=>`${xFor(i).toFixed(1)},${yR(p).toFixed(1)}`);
+  // smooth-ish polyline
+  svg += `<polyline points="${pts.join(' ')}" fill="none" stroke="var(--growth)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  // small dots on the early high-curvature region
+  growth.forEach((p,i)=>{ if(i<=8){ svg += `<circle cx="${xFor(i).toFixed(1)}" cy="${yR(p).toFixed(1)}" r="2.4" fill="#fff" stroke="var(--growth)" stroke-width="1.6"/>`; }});
+
+  // x-axis labels (every other month)
+  arr.forEach((v,i)=>{ if(i%2===0){ svg += `<text x="${xFor(i).toFixed(1)}" y="${H-12}" text-anchor="middle" font-size="10.5" fill="var(--muted)">${months[i]}</text>`; }});
+  // baseline
+  svg += `<line x1="${padL}" y1="${padT+plotH}" x2="${W-padR}" y2="${padT+plotH}" stroke="var(--line)" stroke-width="1"/>`;
+
+  document.getElementById("chart").innerHTML = svg;
+</script>
+</body>
+</html>

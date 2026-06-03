@@ -2,7 +2,7 @@
 
 **Domain:** system/component (overlay) · **Target:** a real shipped link-in-bio tool's "add field" modal.
 **Reference:** `_ref/linktree-modal.png` (eyedrop only).
-**Build:** `linktree-modal.html` → render `linktree-modal@2x.png`. **Gate:** pushed live beside the reference. Status: **awaiting user eye-gate.**
+**Build:** `linktree-modal.html` → render `linktree-modal@2x.png`. **Gate:** pushed live beside the reference. Status: **GATED — user "all looks good" 2026-06-03.**
 
 > Deepening pass: this **validates the overlay shell** the command-palette cookbook (#6) claimed was reusable — scrim + centered floating surface + shadow. Same backdrop/float contract, different payload: a form instead of a command list. If the shell didn't transfer, this is where it'd show.
 
@@ -36,4 +36,4 @@
 
 Reproduces convincingly, and — the actual test — the overlay shell from repro #6 **transferred cleanly**: same scrim/float/shadow, new payload. The multi-step stack, the char counter, the choices repeater, and the one-accent/full-width-Save all land at the decision level. ~0 base gaps; §6 + §7 + §4 + the forms rules carried it, and the ⌘K cookbook's shell did real work here. The distillable is the modal-and-repeater recipe layered on the shared shell — no invented machinery.
 
-**Cookbook written after the user confirms the reproduction landed.**
+**Cookbook distilled (user gated 2026-06-03).**

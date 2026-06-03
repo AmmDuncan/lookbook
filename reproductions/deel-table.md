@@ -2,7 +2,7 @@
 
 **Domain:** system/component (data table) · **Target:** a real shipped payroll product's people directory.
 **Reference:** `_ref/deel-table.png` (eyedrop only).
-**Build:** `deel-table.html` → render `deel-table@2x.png`. **Gate:** pushed live beside the reference. Status: **awaiting user eye-gate.**
+**Build:** `deel-table.html` → render `deel-table@2x.png`. **Gate:** pushed live beside the reference. Status: **GATED — user "all looks good" 2026-06-03.**
 
 > Deepening pass: the *table* tested hard. The list (repro #1) was rhythm + a single anchor column; this is the real §8 surface — a filter toolbar, sortable headers, a multi-column grid, an anchor identity cell, status pills, bulk-select, and per-row actions all at once.
 
@@ -37,4 +37,4 @@
 
 Reproduces convincingly. The anchor identity cell, the no-vertical-rules hairline grid, the two-hue status pills with dot+word, the one-filled filter toolbar, and the quiet bulk-select + sortable affordances all land at the decision level. ~0 base gaps — §8 + §11 + §4 carried it; the only distillable is the *assembly* (a data-table cookbook). Same exit signal as the prior six: strong spine, one cookbook's worth of recipe, no invented machinery.
 
-**Cookbook written after the user confirms the reproduction landed.**
+**Cookbook distilled (user gated 2026-06-03).**

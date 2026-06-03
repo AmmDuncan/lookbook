@@ -2,7 +2,7 @@
 
 **Domain:** system (app layout) · **Target:** a real shipped CRM / agent inbox.
 **Reference:** `_ref/lemni-inbox.png` (eyedrop only).
-**Build:** `lemni-inbox.html` → render `lemni-inbox@2x.png`. **Gate:** pushed live beside the reference. Status: **awaiting user eye-gate.**
+**Build:** `lemni-inbox.html` → render `lemni-inbox@2x.png`. **Gate:** pushed live beside the reference. Status: **GATED — user "all looks good" 2026-06-03.**
 
 > Deepening pass: the *layout* tested. The table (repro #7) was one grid; this is four panes of progressive disclosure with full-height pane rules and — the real distillable — a structured **details rail** of label→value field rows.
 
@@ -36,4 +36,4 @@
 
 Reproduces convincingly. The four-pane progressive disclosure, the full-height pane rules, the field-labeled email quote, and — the point of the exercise — the details rail with its captioned sections, fixed-label rows, leading-glyph values, and "+ Add" empty-field affordances all land at the decision level. ~0 base gaps — §8 + §4 + §6 carried the structure; the distillable is the *details-rail recipe* + the master-detail shell. Same exit signal as the prior seven: strong spine, one cookbook's worth of recipe, no invented machinery.
 
-**Cookbook written after the user confirms the reproduction landed.**
+**Cookbook distilled (user gated 2026-06-03).**

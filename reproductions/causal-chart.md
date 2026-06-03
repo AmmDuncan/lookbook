@@ -2,7 +2,7 @@
 
 **Domain:** dashboard / data-visualization (§12-A) · **Target:** a real shipped financial-modelling tool.
 **Reference:** `_ref/causal-chart.png` (eyedrop only).
-**Build:** `causal-chart.html` (HTML + hand-built SVG) → render `causal-chart@2x.png`. **Gate:** pushed live beside the reference. Status: **awaiting user eye-gate.**
+**Build:** `causal-chart.html` (HTML + hand-built SVG) → render `causal-chart@2x.png`. **Gate:** pushed live beside the reference. Status: **GATED — user "all looks good" 2026-06-03.**
 
 > Deepening pass: the **visualization axis** the other nine reproductions never ran. The KPI cookbook (#4) covered *cards with a sparkline*; this is a real multi-series chart — and the visualization law ("could a bullet list say this just as well? if yes, rebuild it") is the whole test.
 
@@ -36,4 +36,4 @@
 
 Reproduces convincingly, and it's the first reproduction to exercise the **visualization** axis: the honest dual-axis bars-plus-line, per-bar value labels standing in for tooltips, the spike-then-decay growth shape carrying the story, and the two-color/faint-grid data-ink restraint all land at the decision level. ~0 base gaps — §12-A + the visualization law + §4 restraint carried it; the distillable is a *charts cookbook* (multi-series + dual-axis honesty + static-frame labeling). No invented machinery; built with plain SVG, no chart library.
 
-**Cookbook written after the user confirms the reproduction landed.**
+**Cookbook distilled (user gated 2026-06-03).**

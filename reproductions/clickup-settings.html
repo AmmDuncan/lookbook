@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reproduction #3 · settings (system / forms)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     TOKENS — system/forms surface. Reproduced from a study of a
+     real shipped work app's settings page. Forms discipline (§8):
+     label every field, label-above for fields / label-left for
+     preferences (P-F-01), one accent, consistent control styling.
+     ============================================================ */
+  :root {
+    --bg:       #ffffff;     /* main canvas */
+    --nav-bg:   #f7f8fa;     /* settings nav */
+    --rail-bg:  #f1f2f5;     /* icon rail */
+    --ink:      #1f2233;     /* headings / primary */
+    --ink-2:    #4b5060;     /* labels, nav */
+    --muted:    #8a8f9c;     /* descriptions, placeholder, leading icons */
+    --border:   #e7e9ef;     /* hairlines, input borders */
+    --border-2: #d8dbe3;
+    --field-bg: #ffffff;
+    --accent:   #7b68ee;     /* the single accent — active/selected/badge/toggle */
+    --accent-bg:#efeafe;     /* accent tint (badge bg, active nav) */
+    --save:     #1f2233;     /* primary button — near-black, NOT the accent */
+
+    --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --r-sm: 7px; --r-md: 9px; --r-lg: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; line-height: 1.45; }
+  /* fixed shell height (not min-height) so content scrolls and the footer pins (corrected render convention) */
+  .app { display: grid; grid-template-columns: 52px 224px 1fr; height: 940px; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ====================== ICON RAIL ====================== */
+  .rail { background: var(--rail-bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 10px 0; gap: 4px; }
+  .rail .applogo { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg,#8b5cf6,#ec4899); display: grid; place-items: center; color: #fff; position: relative; margin-bottom: 8px; }
+  .rail .applogo .badge { position: absolute; top: -3px; right: -3px; background: #ec4899; color: #fff; font-size: 8px; font-weight: 700; border-radius: 8px; padding: 1px 4px; border: 2px solid var(--rail-bg); }
+  .rail .ritem { width: 40px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; border-radius: 8px; color: var(--ink-2); cursor: default; }
+  .rail .ritem span { font-size: 9px; font-weight: 500; }
+  .rail .ritem:hover { background: #e7e9ef; }
+  .rail .spacer { flex: 1; }
+
+  /* ====================== SETTINGS NAV ====================== */
+  .snav { background: var(--nav-bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 10px 10px 0; min-height: 0; }
+  .ws { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: var(--r-sm); cursor: default; }
+  .ws:hover { background: #ecedf2; }
+  .ws .wl { width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(135deg,#5b8def,#7b68ee); color:#fff; display:grid; place-items:center; font-size: 10px; font-weight: 700; flex:0 0 auto; }
+  .ws .wn { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ws .chev { color: var(--muted); margin-left: auto; }
+  .snav-title { font-size: 15px; font-weight: 700; padding: 12px 8px 8px; }
+  .ngroup { display: flex; flex-direction: column; gap: 1px; margin-bottom: 8px; }
+  .nglabel { font-size: 11px; font-weight: 600; color: var(--muted); padding: 8px 8px 4px; letter-spacing: .02em; }
+  .nitem { display: flex; align-items: center; gap: 9px; padding: 6px 8px; border-radius: var(--r-sm); color: var(--ink-2); font-size: 13px; font-weight: 500; cursor: default; }
+  .nitem svg { color: var(--muted); flex: 0 0 auto; }
+  .nitem:hover { background: #ecedf2; }
+  .nitem.active { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+  .nitem.active svg { color: var(--accent); }
+  .snav .scroll { overflow-y: auto; min-height: 0; }
+  .snav .logout { margin-top: auto; border-top: 1px solid var(--border); }
+
+  /* ====================== MAIN ====================== */
+  .main { display: flex; flex-direction: column; min-height: 0; }
+  .topbar { height: 48px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; gap: 12px; flex: 0 0 auto; }
+  .search { flex: 1; max-width: 380px; margin: 0 auto; display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border: 1px solid var(--border); border-radius: var(--r-sm); color: var(--muted); font-size: 13px; background: var(--nav-bg); }
+  .search .kbd { margin-left: auto; font-size: 11px; color: var(--muted); border: 1px solid var(--border-2); border-radius: 4px; padding: 0 4px; }
+  .topbar .right { display: flex; align-items: center; gap: 12px; color: var(--muted); margin-left: auto; }
+  .topbar .ava { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#f0883a,#ec6f9e); }
+
+  .content { overflow-y: auto; padding: 28px 40px 0; min-height: 0; }
+  .h-title { font-size: 21px; font-weight: 700; margin-bottom: 24px; }
+
+  /* two-column section: description left, controls right (the settings signature) */
+  .section { display: grid; grid-template-columns: 240px 1fr; gap: 40px; padding: 26px 0; border-top: 1px solid var(--border); max-width: 920px; }
+  .section:first-of-type { border-top: none; padding-top: 0; }
+  .sec-head .sh-title { font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .sec-head .sh-desc { font-size: 13px; color: var(--muted); line-height: 1.5; max-width: 16rem; }
+  .badge { font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-bg); border-radius: 5px; padding: 2px 7px; }
+
+  /* fields — label ABOVE (P-F-01: field rows) */
+  .avatar-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+  .avatar-row .av { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background:#d8dbe3 center/cover; }
+  .avatar-row .an { font-size: 13px; font-weight: 600; }
+  .field { margin-bottom: 16px; }
+  .field > label { display: block; font-size: 12px; font-weight: 600; color: var(--ink-2); margin-bottom: 6px; }
+  .input { display: flex; align-items: center; gap: 9px; height: 40px; padding: 0 12px; border: 1px solid var(--border-2); border-radius: var(--r-md); background: var(--field-bg); font-size: 14px; }
+  .input svg { color: var(--muted); flex: 0 0 auto; }
+  .input input { border: none; outline: none; font: inherit; color: var(--ink); background: transparent; width: 100%; }
+  .input input::placeholder { color: var(--muted); }
+  .input:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
+
+  /* preference rows — label LEFT + description + toggle (P-F-01: preference rows) */
+  .pref { display: flex; align-items: flex-start; gap: 14px; padding: 12px 0; }
+  .pref + .pref { border-top: 1px solid var(--border); }
+  .toggle { width: 36px; height: 20px; border-radius: 11px; background: var(--border-2); position: relative; flex: 0 0 auto; margin-top: 2px; cursor: pointer; transition: background 140ms ease-out; }
+  .toggle .knob { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: left 140ms ease-out; }
+  .toggle.on { background: var(--accent); }
+  .toggle.on .knob { left: 18px; }
+  .pref .pf-body { flex: 1; }
+  .pref .pf-title { font-size: 13px; font-weight: 600; }
+  .pref .pf-desc { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  .pref .pf-edit { color: var(--accent); font-size: 13px; font-weight: 600; cursor: pointer; }
+
+  /* swatches */
+  .swatches { display: flex; gap: 12px; flex-wrap: wrap; }
+  .sw { width: 30px; height: 30px; border-radius: 8px; cursor: pointer; display: grid; place-items: center; }
+  .sw.sel { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--accent); }
+
+  /* appearance segmented tiles */
+  .tiles { display: flex; gap: 16px; }
+  .tile { width: 130px; cursor: pointer; }
+  .tile .prev { height: 78px; border-radius: var(--r-md); border: 2px solid var(--border); overflow: hidden; padding: 8px; display: flex; gap: 6px; }
+  .tile.sel .prev { border-color: var(--accent); }
+  .tile .tl { font-size: 13px; font-weight: 600; text-align: center; margin-top: 8px; }
+  .prev .pside { border-radius: 4px; }
+  .prev .pn { width: 26%; }
+  .prev .pc { flex: 1; }
+  /* light/dark/auto fills */
+  .light .pn { background:#e7e9ef;} .light .pc{ background:#f7f8fa; border:1px solid #e7e9ef;}
+  .dark  .pn { background:#3a3d4d;} .dark  .pc{ background:#23252f;}
+  .auto  .pn { background:linear-gradient(135deg,#e7e9ef 50%,#3a3d4d 50%);} .auto .pc{ background:linear-gradient(135deg,#f7f8fa 50%,#23252f 50%); border:1px solid #e7e9ef;}
+
+  /* footer save */
+  .foot { border-top: 1px solid var(--border); padding: 14px 40px; display: flex; justify-content: flex-end; flex: 0 0 auto; }
+  .btn-save { background: var(--save); color: #fff; border: none; font: inherit; font-weight: 600; font-size: 14px; height: 38px; padding: 0 18px; border-radius: var(--r-md); cursor: pointer; }
+  .btn-save:hover { background: #000; }
+</style>
+</head>
+<body>
+  <div class="app">
+    <!-- ICON RAIL -->
+    <aside class="rail">
+      <div class="applogo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 14l8-9 8 9-8 5z"/></svg><span class="badge">9+</span></div>
+      <div class="ritem"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11l8-7 8 7v8a1 1 0 01-1 1h-4v-6H9v6H5a1 1 0 01-1-1z"/></svg><span>Home</span></div>
+      <div class="ritem"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 4v16"/></svg><span>Planner</span></div>
+      <div class="ritem"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 4a3 3 0 00-3 3 3 3 0 00-1 5 3 3 0 001 5 3 3 0 003 3M15 4a3 3 0 013 3 3 3 0 011 5 3 3 0 01-1 5 3 3 0 01-3 3"/></svg><span>Brain</span></div>
+      <div class="ritem"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3.3 2.7-5 6-5"/><circle cx="16" cy="10" r="2.5"/><path d="M13 19c0-2.4 1.8-3.6 4-3.6"/></svg><span>Teams</span></div>
+      <div class="ritem"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg><span>Boards</span></div>
+      <div class="spacer"></div>
+      <div class="ritem"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3.3 2.7-5 6-5"/><path d="M17 7v6M14 10h6"/></svg><span>Invite</span></div>
+    </aside>
+
+    <!-- SETTINGS NAV -->
+    <aside class="snav">
+      <div class="ws"><span class="wl">AS</span><span class="wn">AS Mobbin Official</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l4 4 4-4"/></svg></div>
+      <div class="snav-title">All settings</div>
+      <div class="scroll">
+        <div class="ngroup">
+          <div class="nglabel">Workspace</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3.3 2.7-5 6-5"/><circle cx="16" cy="10" r="2.5"/></svg>People</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/></svg>App Center</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2M6 6l1.5 1.5M16.5 16.5L18 18"/></svg>Settings</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>Work Schedule</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4"/></svg>Spaces</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/></svg>Security &amp; Permissions</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M8 10h8M8 14h6"/></svg>Audit Logs</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3.3 2.7-5 6-5"/><circle cx="16" cy="10" r="2.5"/></svg>Teams</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Task Types</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v10M8 10l4 4 4-4M5 19h14"/></svg>Imports / Exports</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 8l-5 4 5 4M15 8l5 4-5 4"/></svg>ClickUp API</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 8l8 5 8-5"/></svg>Email Integration</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M7 6V4h10v2"/></svg>Billing</div>
+        </div>
+        <div class="ngroup">
+          <div class="nglabel">Alex Smith</div>
+          <div class="nitem active"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>My Settings</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16"/></svg>Workspaces</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 1112 0c0 7 3 7 3 9H3c0-2 3-2 3-9"/><path d="M10 21a2 2 0 004 0"/></svg>Notifications</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5h14v10H9l-4 4z"/></svg>Chat</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>Apps</div>
+          <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/></svg>Calendar</div>
+        </div>
+      </div>
+      <div class="ngroup logout">
+        <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 4h4a1 1 0 011 1v14a1 1 0 01-1 1h-4M10 12H3m0 0l3-3m-3 3l3 3"/></svg>Log out</div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="topbar">
+        <div class="search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Search<span class="kbd">⌘K</span></div>
+        <div class="right">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 1112 0c0 7 3 7 3 9H3c0-2 3-2 3-9"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span class="ava"></span>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="h-title">My Settings</div>
+
+        <!-- PROFILE — label-above field rows -->
+        <section class="section">
+          <div class="sec-head">
+            <div class="sh-title">Profile</div>
+            <div class="sh-desc">Your personal information and account security settings.</div>
+          </div>
+          <div class="sec-body">
+            <div class="avatar-row">
+              <div class="av" style="background-image:url('https://i.pravatar.cc/120?img=12')"></div>
+              <div class="an">Alex Smith</div>
+            </div>
+            <div class="field">
+              <label>Full Name</label>
+              <div class="input"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.3 3.1-5 7-5s7 1.7 7 5"/></svg><input value="Alex Smith"></div>
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <div class="input"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><input value="alexsmith.mobbin@gmail.com"></div>
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label>Password</label>
+              <div class="input"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg><input placeholder="Enter New Password"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2FA — label-left preference rows -->
+        <section class="section">
+          <div class="sec-head">
+            <div class="sh-title">Two-factor authentication (2FA) <span class="badge">Enabled</span></div>
+            <div class="sh-desc">Keep your account secure by enabling 2FA via SMS or using a temporary one-time passcode (TOTP) from an authenticator app.</div>
+          </div>
+          <div class="sec-body">
+            <div class="pref">
+              <div class="toggle on"><span class="knob"></span></div>
+              <div class="pf-body">
+                <div class="pf-title">Text Message (SMS)</div>
+                <div class="pf-desc">Receive a one-time passcode via SMS each time you log in.</div>
+              </div>
+              <span class="pf-edit">Edit</span>
+            </div>
+            <div class="pref">
+              <div class="toggle"><span class="knob"></span></div>
+              <div class="pf-body">
+                <div class="pf-title">Authenticator App (TOTP)</div>
+                <div class="pf-desc">Use an app to receive a one-time passcode each time you log in.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- THEME COLOR — swatches -->
+        <section class="section">
+          <div class="sec-head">
+            <div class="sh-title">Theme color</div>
+            <div class="sh-desc">Choose a preferred theme for the app.</div>
+          </div>
+          <div class="sec-body">
+            <div class="swatches">
+              <span class="sw" style="background:#2d2d3a"></span>
+              <span class="sw" style="background:#5b8def"></span>
+              <span class="sw" style="background:#4aa3df"></span>
+              <span class="sw" style="background:#ec6f9e"></span>
+              <span class="sw" style="background:#9b6dde"></span>
+              <span class="sw sel" style="background:#6c5ce7"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><path d="M5 12l4 4 10-10"/></svg></span>
+              <span class="sw" style="background:#f0883a"></span>
+              <span class="sw" style="background:#2bb3a3"></span>
+              <span class="sw" style="background:#a98d76"></span>
+              <span class="sw" style="background:#4caf72"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- APPEARANCE — segmented preview tiles -->
+        <section class="section" style="padding-bottom:36px">
+          <div class="sec-head">
+            <div class="sh-title">Appearance</div>
+            <div class="sh-desc">Choose light or dark mode, or switch your mode automatically based on your system settings.</div>
+          </div>
+          <div class="sec-body">
+            <div class="tiles">
+              <div class="tile sel"><div class="prev light"><span class="pside pn"></span><span class="pside pc"></span></div><div class="tl">Light</div></div>
+              <div class="tile"><div class="prev dark"><span class="pside pn"></span><span class="pside pc"></span></div><div class="tl">Dark</div></div>
+              <div class="tile"><div class="prev auto"><span class="pside pn"></span><span class="pside pc"></span></div><div class="tl">Auto</div></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="foot"><button class="btn-save">Save changes</button></div>
+    </main>
+  </div>
+</body>
+</html>

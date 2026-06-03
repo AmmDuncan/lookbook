@@ -58,7 +58,8 @@
   .st-head { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--rule); padding-bottom: 14px; }
   .st-head .lab { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--faint); }
   .st-head .mk { font-family: var(--disp); font-size: 18px; font-weight: 600; letter-spacing: .01em; }
-  .st-nw { font-family: var(--disp); font-size: 48px; font-weight: 500; letter-spacing: -.01em; margin: 18px 0 2px; }
+  /* numbers use a legible tabular companion, NOT the Didone display face (legibility overrides voice for data) */
+  .st-nw { font-family: var(--body); font-size: 44px; font-weight: 600; letter-spacing: -.02em; margin: 18px 0 2px; font-variant-numeric: tabular-nums; }
   .st-up { font-size: 14px; color: var(--muted); }
   .st-up b { color: var(--accent); font-weight: 600; }
   .alloc { margin: 22px 0 0; }
@@ -72,7 +73,7 @@
   .rows .r { display: flex; align-items: baseline; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--rule); }
   .rows .r .n { font-size: 14.5px; color: var(--ink); }
   .rows .r .n small { color: var(--faint); font-size: 12.5px; margin-left: 8px; text-transform: uppercase; letter-spacing: .04em; }
-  .rows .r .a { font-family: var(--disp); font-size: 17px; font-variant-numeric: tabular-nums; }
+  .rows .r .a { font-family: var(--body); font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
   .st-foot { font-size: 13.5px; color: var(--muted); margin-top: 16px; }
   .st-foot b { color: var(--ink); font-weight: 600; }
 

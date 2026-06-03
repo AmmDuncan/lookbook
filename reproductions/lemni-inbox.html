@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reproduction #8 · master-detail inbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     TOKENS — a four-pane master-detail inbox. Reproduced from a
+     study of a real shipped CRM/agent tool. The structure is
+     progressive disclosure (§8): nav (which section) → list (which
+     item) → reading (the item) → details (structured metadata).
+     Each pane narrows scope; full-height HAIRLINE rules between
+     panes are the one place vertical rules are right (§8 — they
+     separate panes, not table columns). The details rail is a stack
+     of label→value field rows in quiet-captioned sections, with
+     "+ Add" affordances where a field is empty (never a blank gap).
+     ============================================================ */
+  :root {
+    --bg:      #ffffff;
+    --rail:    #fbfbfc;          /* nav + list chrome, faintly cooler */
+    --line:    #ecedf0;
+    --line-2:  #f1f2f4;
+    --ink:     #20242b;
+    --ink-2:   #3a3f47;
+    --muted:   #767c86;          /* labels, secondary */
+    --faint:   #9aa1ac;
+    --cap:     #9298a2;          /* section captions */
+    --sel:     #f0f1f3;          /* selected list row / nav item */
+    --add:     #aeb4be;          /* + Add affordance */
+    --amber:   #e0a020;          /* status dot (in progress) */
+    --accent:  #6b5bd6;          /* upgrade card / scarce */
+
+    --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  .app { width: 1280px; height: 820px; display: grid; grid-template-columns: 218px 250px 1fr 256px; background: var(--bg); overflow: hidden; }
+  .pane { height: 820px; overflow: hidden; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid var(--line); }
+
+  /* ---- nav rail ---- */
+  .nav { background: var(--rail); }
+  .ws { display: flex; align-items: center; gap: 9px; padding: 13px 14px; }
+  .ws .sq { width: 22px; height: 22px; border-radius: 6px; background: #20242b; color: #fff; display: grid; place-items: center; font-size: 11px; font-weight: 600; }
+  .ws .nm { font-size: 13.5px; font-weight: 500; color: var(--ink); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ws .cv { color: var(--muted); }
+  .navlist { padding: 6px 10px; }
+  .nitem { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 7px; font-size: 13.5px; color: var(--ink-2); font-weight: 450; }
+  .nitem.on { background: var(--sel); color: var(--ink); font-weight: 500; }
+  .nitem svg { color: var(--muted); flex: 0 0 auto; }
+  .nitem.on svg { color: var(--ink); }
+  .ncap { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--cap); padding: 16px 12px 6px; }
+  .grow { flex: 1; }
+  .promo { margin: 12px 12px 10px; padding: 13px; border: 1px solid var(--line); border-radius: 11px; background: #fff; }
+  .promo .pct { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .promo .sub { font-size: 12px; color: var(--muted); margin: 3px 0 10px; line-height: 1.4; }
+  .promo .btn { display: block; text-align: center; font-size: 12.5px; font-weight: 500; color: #fff; background: var(--accent); border-radius: 8px; padding: 7px; }
+  .foot { padding: 4px 12px 14px; }
+  .foot .fi { display: flex; align-items: center; gap: 9px; padding: 6px 6px; font-size: 13px; color: var(--ink-2); }
+  .foot .ico { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; font-size: 13px; }
+
+  /* ---- list pane ---- */
+  .list { background: var(--rail); }
+  .lhead { display: flex; align-items: center; gap: 8px; padding: 14px 16px 12px; }
+  .lhead .t { font-size: 14.5px; font-weight: 600; color: var(--ink); flex: 1; }
+  .ltools { display: flex; align-items: center; gap: 14px; padding: 0 16px 10px; border-bottom: 1px solid var(--line); }
+  .ltool { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--muted); font-weight: 450; }
+  .lrow { padding: 12px 16px; border-bottom: 1px solid var(--line-2); display: flex; gap: 11px; }
+  .lrow.sel { background: var(--sel); }
+  .lrow .av { width: 30px; height: 30px; border-radius: 50%; background: #e0795f; color: #fff; display: grid; place-items: center; font-size: 12px; font-weight: 600; flex: 0 0 auto; }
+  .lrow .body { flex: 1; min-width: 0; }
+  .lrow .top { display: flex; align-items: baseline; gap: 8px; }
+  .lrow .who { font-size: 13.5px; font-weight: 500; color: var(--ink); flex: 1; }
+  .lrow .when { font-size: 11.5px; color: var(--faint); }
+  .lrow .prev { font-size: 12.5px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ---- reading pane ---- */
+  .read { background: var(--bg); }
+  .rhead { display: flex; align-items: center; gap: 10px; padding: 14px 20px; border-bottom: 1px solid var(--line); }
+  .rhead .dot { width: 9px; height: 9px; border-radius: 50%; background: #e0795f; }
+  .rhead .h { font-size: 15px; font-weight: 600; color: var(--ink); flex: 1; }
+  .rhead .close { font-size: 13px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+  .rbody { flex: 1; overflow-y: auto; padding: 20px 26px; }
+  .sender { font-size: 13.5px; color: var(--ink); font-weight: 500; }
+  .sender .role { color: var(--muted); font-weight: 400; }
+  .quote { border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0 14px; }
+  .fld { margin-bottom: 14px; }
+  .fld .fl { font-size: 11px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--cap); margin-bottom: 4px; }
+  .fld .fv { font-size: 13.5px; color: var(--ink-2); line-height: 1.6; }
+  .fld .fv.body p { margin-bottom: 11px; }
+  .sendrow { display: flex; align-items: center; gap: 10px; padding: 13px 0 4px; border-top: 1px solid var(--line); margin-top: 4px; }
+  .sendbtn { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; color: var(--ink); }
+  .approved { font-size: 12px; color: var(--muted); margin-left: auto; }
+  .evt { font-size: 12.5px; color: var(--muted); padding: 14px 2px 0; }
+  .composer { margin: 14px 0 0; border: 1px solid var(--line); border-radius: 12px; padding: 13px 16px; display: flex; align-items: center; gap: 12px; }
+  .composer .ph { flex: 1; font-size: 13px; color: var(--faint); }
+  .composer .send { font-size: 13px; font-weight: 500; color: var(--muted); }
+
+  /* ---- details rail ---- */
+  .det { background: var(--bg); }
+  .dhead { font-size: 14.5px; font-weight: 600; color: var(--ink); padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .dbody { flex: 1; overflow-y: auto; padding: 6px 0 16px; }
+  .dcap { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--cap); padding: 16px 18px 8px; }
+  .drow { display: flex; align-items: center; gap: 12px; padding: 7px 18px; }
+  .drow .k { font-size: 13px; color: var(--muted); width: 74px; flex: 0 0 auto; }
+  .drow .v { font-size: 13px; color: var(--ink-2); display: inline-flex; align-items: center; gap: 7px; flex: 1; min-width: 0; }
+  .drow .v.add { color: var(--add); }
+  .drow .v .vt { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gdot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; }
+  .dsep { height: 1px; background: var(--line); margin: 8px 18px; }
+  .miniava { width: 18px; height: 18px; border-radius: 50%; background: #7b86f2; color: #fff; font-size: 9px; font-weight: 600; display: grid; place-items: center; flex: 0 0 auto; }
+  .bars { display: inline-flex; align-items: flex-end; gap: 1.5px; height: 11px; }
+  .bars i { width: 3px; background: var(--muted); border-radius: 1px; display: block; }
+</style>
+</head>
+<body>
+  <div class="app">
+    <!-- NAV RAIL -->
+    <div class="pane nav">
+      <div class="ws"><span class="sq">S</span><span class="nm">Sam Lee's Works…</span><span class="cv"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg></span></div>
+      <div class="navlist">
+        <div class="nitem on"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v10H8l-4 4z"/></svg> Inbox</div>
+        <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8M4 12l3 3"/></svg> Assigned</div>
+        <div class="ncap">Manage</div>
+        <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.3 3.1-5 7-5s7 1.7 7 5"/></svg> Agents</div>
+        <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 9h6M9 13h6"/></svg> Knowledge</div>
+        <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h4l2 6 4-14 2 8h4"/></svg> Behavior</div>
+        <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 3L4 14h7l-1 7 9-11h-7z"/></svg> Actions</div>
+        <div class="nitem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M18.4 5.6l-2 2M7.6 16.4l-2 2"/></svg> Settings</div>
+      </div>
+      <div class="grow"></div>
+      <div class="promo">
+        <div class="pct">Get a 50% discount</div>
+        <div class="sub">Upgrade your free trial today</div>
+        <span class="btn">Upgrade</span>
+      </div>
+      <div class="foot">
+        <div class="fi"><span class="ico" style="background:#efeaff">▶</span> Tutorials</div>
+        <div class="fi"><span class="ico" style="background:#ffe9d6">📄</span> Docs</div>
+      </div>
+    </div>
+
+    <!-- LIST PANE -->
+    <div class="pane list">
+      <div class="lhead"><span class="t">Inbox</span></div>
+      <div class="ltools">
+        <span class="ltool">1 Todo <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></span>
+        <span class="ltool"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg> Filter</span>
+        <span class="ltool"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7 4v16M7 4l-3 3M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3"/></svg> Sort</span>
+      </div>
+      <div class="lrow sel">
+        <span class="av">A</span>
+        <div class="body">
+          <div class="top"><span class="who">Alex</span><span class="when">4d</span></div>
+          <div class="prev">Busy, unable to do teardown</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- READING PANE -->
+    <div class="pane read">
+      <div class="rhead">
+        <span class="dot"></span>
+        <span class="h">Alex</span>
+        <span class="close"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg> Close</span>
+      </div>
+      <div class="rbody">
+        <div class="sender">Alex Smith <span class="role">· CPO at ASMobbin</span></div>
+        <div class="quote">
+          <div class="fld"><div class="fl">Email Address</div><div class="fv">alexsmith.mobbin@gmail.com</div></div>
+          <div class="fld"><div class="fl">Subject</div><div class="fv">Confirmation: Your Lemni App Teardown Request</div></div>
+          <div class="fld">
+            <div class="fl">Email Text And Signature</div>
+            <div class="fv body">
+              <p>Dear Alex,</p>
+              <p>Thank you for reaching out to Mobbin! We've received your request for a teardown analysis of the Lemni website.</p>
+              <p>We appreciate your interest in our insights, and we're pleased to confirm that your request is now under review by our team. Our standard processing timeline for evaluating teardown requests is typically 3–5 business days.</p>
+              <p>To help us better understand your needs, could you please share a direct link to the Lemni website? Additionally, if there are any specific features or aspects of the design you're particularly interested in, please let us know.</p>
+              <p>Warm regards,<br/>The Mobbin Team</p>
+            </div>
+          </div>
+        </div>
+        <div class="sendrow">
+          <span class="sendbtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> Send Email</span>
+          <span class="approved">Alex approved ✓</span>
+        </div>
+        <div class="evt">Alex requested Lemni app teardown analysis. Email sent.</div>
+        <div class="composer">
+          <span class="ph">Write a short email to explain we don't offer refunds, then send it using gmail…</span>
+          <span class="send">Send</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAILS RAIL -->
+    <div class="pane det">
+      <div class="dhead">Details</div>
+      <div class="dbody">
+        <div class="dcap">Information</div>
+        <div class="drow"><span class="k">Status</span><span class="v"><span class="gdot" style="background:var(--amber)"></span><span class="vt">In Progress</span></span></div>
+        <div class="drow"><span class="k">Priority</span><span class="v"><span class="bars"><i style="height:5px"></i><i style="height:8px"></i><i style="height:11px;background:#cfd3da"></i></span><span class="vt">Medium</span></span></div>
+        <div class="drow"><span class="k">Assigned</span><span class="v"><span class="miniava">AS</span><span class="vt">Alex Smith</span></span></div>
+        <div class="drow"><span class="k">Dates</span><span class="v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#767c86" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg><span class="vt">Jul 30</span><span class="add" style="margin-left:6px">+ Add</span></span></div>
+
+        <div class="dsep"></div>
+        <div class="dcap">Contact</div>
+        <div class="drow"><span class="k">Name</span><span class="v"><span class="vt">Alex</span></span></div>
+        <div class="drow"><span class="k">Email</span><span class="v"><span class="vt">alexsmith.mobbin@gmail.com</span></span></div>
+        <div class="drow"><span class="k">Phone</span><span class="v add"><span class="vt">+ Add</span></span></div>
+        <div class="drow"><span class="k">Company</span><span class="v"><span class="vt">ASMobbin</span></span></div>
+        <div class="drow"><span class="k">Address</span><span class="v add"><span class="vt">+ Add</span></span></div>
+
+        <div class="dsep"></div>
+        <div class="dcap">Thread</div>
+        <div class="drow"><span class="k">Subject</span><span class="v"><span class="vt">Teardown Request for Lemni</span></span></div>
+        <div class="drow"><span class="k">Summary</span><span class="v"><span class="vt">Alex requested a teardown of Lemni website</span></span></div>
+        <div class="drow"><span class="k">Language</span><span class="v"><span class="vt">English</span></span></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

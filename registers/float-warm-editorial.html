@@ -6,28 +6,29 @@
 <title>Float · warm-editorial voice</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
-     REGISTER: WARM-EDITORIAL — same Float content. Voice grounded in
-     a real warm fintech (Monarch): a surface that READS. §3 type =
-     an all-serif pairing (Fraunces display + Newsreader body), modest
-     hero size, real reading rhythm. §4 color = warm CREAM paper (never
-     stark white), warm-tinted neutrals, ONE scarce terracotta accent.
-     §6 depth = RULES not shadows, a warm photographic panel + a soft
-     frosted card (the one place a shadow is earned), low radius. The
-     laurels/awards strip = the editorial trust signal. Calm, roomy,
-     left-aligned and asymmetric. The opposite energy of the bold voice.
+     REGISTER: WARM-EDITORIAL — same Float content. The hard register:
+     warmth that READS. KEY FINDING (from gate iterations): this is the
+     one voice you cannot fake with a fabricated illustration — botanical
+     line-art, muddy gradient panels and stock card-stills all read as
+     slop. The honest visual is EITHER real photography OR a genuine
+     product surface treated as a curated object. Here: an elegant printed
+     STATEMENT card (not a dashboard — that's cool-technical's job), so
+     the voice stays distinct. Editorial type leads (Fraunces, mixed
+     roman/italic, real scale + reading rhythm); warmth from bright paper
+     + ink + ONE oxblood accent; depth from RULES, not shadows.
      ============================================================ */
   :root {
-    --paper: #f4efe4;
-    --card:  #fbf8f1;
-    --ink:   #2b2722;
-    --muted: #6f675c;
-    --faint: #a59b8c;
-    --rule:  #e4dccb;
-    --clay:  #b8502f;          /* the one scarce accent */
-    --photo1:#d9c3a6; --photo2:#c2a883; --photo3:#a8895f;
+    --paper: #f7f2e7;
+    --card:  #fffdf8;
+    --ink:   #221f18;
+    --muted: #6b6358;
+    --faint: #a89e8c;
+    --rule:  #e4dcca;
+    --clay:  #9a3b27;          /* the one scarce accent (oxblood) */
+    --sage:  #87966a; --gold:#c7a25c; --sand:#d8c7a6;
     --disp:  "Fraunces", Georgia, serif;
     --body:  "Newsreader", Georgia, serif;
   }
@@ -35,54 +36,55 @@
   body { font-family: var(--body); background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased; }
   .page { width: 1240px; height: 1480px; overflow: hidden; position: relative; }
 
-  .nav { display: flex; align-items: center; gap: 30px; padding: 26px 52px; border-bottom: 1px solid var(--rule); }
-  .brand { font-family: var(--disp); font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
+  /* masthead nav */
+  .nav { display: flex; align-items: baseline; gap: 30px; padding: 24px 56px 18px; border-bottom: 1.5px solid var(--ink); }
+  .brand { font-family: var(--disp); font-size: 23px; font-weight: 600; letter-spacing: -.01em; }
   .nav .links { display: flex; gap: 26px; font-size: 15px; color: var(--muted); }
   .nav .sp { flex: 1; }
   .nav .login { font-size: 15px; color: var(--muted); }
-  .nav .cta { font-size: 14px; font-weight: 500; padding: 9px 17px; border-radius: 7px; background: var(--ink); color: var(--paper); }
+  .nav .iss { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); }
 
-  /* hero — asymmetric: editorial text left, warm photographic panel right */
-  .hero { display: grid; grid-template-columns: 1.02fr .98fr; gap: 48px; padding: 72px 52px 0; align-items: center; }
-  .lede .kicker { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--clay); font-family: var(--body); font-weight: 500; }
-  h1 { font-family: var(--disp); font-size: 64px; line-height: 1.02; letter-spacing: -.015em; font-weight: 500; margin: 20px 0 0; }
+  /* hero — editorial type left, statement object right */
+  .hero { display: grid; grid-template-columns: 1.06fr .94fr; gap: 52px; padding: 60px 56px 0; align-items: center; }
+  .kicker { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--clay); }
+  h1 { font-family: var(--disp); font-size: 76px; line-height: .99; letter-spacing: -.02em; font-weight: 500; margin: 18px 0 0; }
   h1 em { font-style: italic; font-weight: 400; }
-  .sub { max-width: 460px; font-size: 19px; line-height: 1.6; color: var(--muted); margin: 24px 0 0; }
-  .actions { display: flex; align-items: center; gap: 22px; margin: 30px 0 0; }
-  .btn-primary { font-family: var(--body); font-size: 16px; font-weight: 500; padding: 13px 24px; border-radius: 8px; background: var(--clay); color: #fff7f0; }
-  .link { font-size: 16px; color: var(--ink); border-bottom: 1px solid var(--faint); padding-bottom: 2px; }
+  .standfirst { font-family: var(--body); font-style: italic; font-size: 23px; line-height: 1.45; color: var(--muted); max-width: 30ch; margin: 24px 0 0; }
+  .actions { display: flex; align-items: center; gap: 24px; margin: 32px 0 0; }
+  .btn { font-family: var(--body); font-size: 16px; font-weight: 500; padding: 13px 24px; border-radius: 7px; background: var(--ink); color: var(--paper); }
+  .lnk { font-size: 16px; color: var(--clay); border-bottom: 1px solid currentColor; padding-bottom: 2px; }
 
-  /* warm scene panel: a tangible Float card still-life + frosted stat */
-  .photo { position: relative; height: 440px; border-radius: 14px; overflow: hidden;
-    background:
-      radial-gradient(150% 130% at 80% 6%, #f1e3c6, rgba(241,227,198,0) 52%),
-      linear-gradient(155deg, var(--photo1), var(--photo2) 55%, var(--photo3)); }
-  .photo .grain { position: absolute; inset: 0; opacity: .5; mix-blend-mode: multiply;
-    background-image: radial-gradient(circle at 1px 1px, rgba(120,90,50,.10) 1px, transparent 0); background-size: 4px 4px; }
-  .fcard { position: absolute; right: 44px; top: 52px; width: 304px; height: 192px; border-radius: 16px; transform: rotate(-7deg);
-    background: linear-gradient(150deg, #cdaa78, #9c7a4f 58%, #7c5d37); color: #fdf6ea; padding: 20px 21px;
-    box-shadow: 0 34px 64px -22px rgba(70,48,24,.6), inset 0 1px 0 rgba(255,255,255,.28); }
-  .fcard .sheen { position: absolute; inset: 0; border-radius: 16px; background: linear-gradient(118deg, rgba(255,255,255,.26), rgba(255,255,255,0) 42%); pointer-events: none; }
-  .fcard .ct { display: flex; align-items: center; justify-content: space-between; }
-  .fcard .wm { font-family: var(--disp); font-size: 21px; font-weight: 600; letter-spacing: -.01em; }
-  .fcard .chip { width: 36px; height: 27px; border-radius: 6px; background: linear-gradient(135deg,#f3d79a,#c49f5c); box-shadow: inset 0 0 0 1px rgba(255,255,255,.3); }
-  .fcard .num { font-family: var(--body); letter-spacing: .2em; font-size: 15px; margin-top: 50px; opacity: .92; }
-  .fcard .cb { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; opacity: .85; margin-top: 11px; }
-  .frost { position: absolute; left: 24px; bottom: 24px; width: 332px; background: rgba(251,248,241,.9); backdrop-filter: blur(7px); border: 1px solid rgba(255,255,255,.55); border-radius: 12px; padding: 20px 22px; box-shadow: 0 16px 36px -16px rgba(60,45,30,.45); }
-  .frost .fl { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
-  .frost .fv { font-family: var(--disp); font-size: 30px; font-weight: 500; letter-spacing: -.01em; margin-top: 4px; }
-  .frost .fd { font-size: 14px; color: var(--muted); margin-top: 6px; }
+  /* the statement object — a curated printed statement, not a dashboard */
+  .statement { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 30px 32px 26px; box-shadow: 0 26px 50px -30px rgba(80,60,30,.4); }
+  .st-head { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--rule); padding-bottom: 14px; }
+  .st-head .lab { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+  .st-head .mk { font-family: var(--disp); font-size: 17px; font-weight: 600; }
+  .st-nw { font-family: var(--disp); font-size: 46px; font-weight: 500; letter-spacing: -.015em; margin: 18px 0 2px; }
+  .st-up { font-style: italic; font-size: 15.5px; color: var(--sage); }
+  .alloc { margin: 22px 0 0; }
+  .alloc .bar { display: flex; height: 12px; border-radius: 3px; overflow: hidden; }
+  .alloc .bar i { display: block; height: 100%; }
+  .alloc .leg { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 14px; }
+  .alloc .leg div { font-size: 14.5px; color: var(--muted); }
+  .alloc .leg .sw { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 8px; vertical-align: 1px; }
+  .alloc .leg b { font-family: var(--body); font-weight: 500; color: var(--ink); }
+  .rows { margin: 22px 0 0; border-top: 1px solid var(--rule); }
+  .rows .r { display: flex; align-items: baseline; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--rule); }
+  .rows .r .n { font-size: 15.5px; color: var(--ink); }
+  .rows .r .n small { color: var(--faint); font-style: italic; font-size: 13.5px; margin-left: 8px; }
+  .rows .r .a { font-family: var(--disp); font-size: 16px; font-variant-numeric: tabular-nums; }
+  .st-foot { font-style: italic; font-size: 14.5px; color: var(--muted); margin-top: 16px; }
 
   /* laurels / awards strip */
-  .laurels { display: flex; justify-content: center; gap: 56px; padding: 40px 0 38px; margin-top: 52px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .laurels { display: flex; justify-content: center; gap: 56px; padding: 38px 0 36px; margin-top: 56px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
   .award { display: flex; align-items: center; gap: 12px; }
-  .award .lf { color: var(--faint); font-size: 30px; }
+  .award .lf { color: var(--faint); font-size: 26px; }
   .award .at { text-align: center; }
   .award .a1 { font-family: var(--disp); font-size: 15px; font-weight: 500; }
   .award .a2 { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
   /* features — calm serif rhythm, rules between */
-  .band { padding: 16px 52px 0; }
+  .band { padding: 16px 56px 0; }
   .feat { display: grid; grid-template-columns: 56px 1fr; gap: 22px; padding: 34px 0; border-bottom: 1px solid var(--rule); }
   .feat:last-child { border-bottom: none; }
   .feat .num { font-family: var(--disp); font-size: 22px; color: var(--clay); font-weight: 500; }
@@ -90,7 +92,7 @@
   .feat p { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 720px; }
 
   /* closing */
-  .closing { text-align: center; padding: 54px 0 0; }
+  .closing { text-align: center; padding: 52px 0 0; }
   .closing h2 { font-family: var(--disp); font-size: 40px; font-weight: 500; letter-spacing: -.015em; }
   .closing em { font-style: italic; font-weight: 400; }
   .closing .sub2 { font-size: 16px; color: var(--muted); margin: 12px 0 24px; }
@@ -103,32 +105,41 @@
       <div class="links"><span>Product</span><span>Pricing</span><span>Company</span></div>
       <span class="sp"></span>
       <span class="login">Log in</span>
-      <span class="cta">Get started</span>
+      <span class="iss">No. 01 · On Money</span>
     </div>
 
     <div class="hero">
       <div class="lede">
         <div class="kicker">Personal finance, reimagined</div>
         <h1>Money that<br/>makes <em>sense.</em></h1>
-        <p class="sub">Float brings every account, card, and bill into one calm view — so you always know where you stand.</p>
+        <p class="standfirst">Every account, card, and bill — gathered into one calm view, so you always know where you stand.</p>
         <div class="actions">
-          <span class="btn-primary">Get started free</span>
-          <span class="link">See how it works</span>
+          <span class="btn">Get started free</span>
+          <span class="lnk">See how it works</span>
         </div>
       </div>
-      <div class="photo">
-        <div class="grain"></div>
-        <div class="fcard">
-          <div class="sheen"></div>
-          <div class="ct"><span class="wm">Float</span><span class="chip"></span></div>
-          <div class="num">5212 •••• •••• 8240</div>
-          <div class="cb"><span>S. Mensah</span><span>09 / 28</span></div>
+
+      <div class="statement">
+        <div class="st-head"><span class="lab">Statement · August</span><span class="mk">Float</span></div>
+        <div class="st-nw">$48,210.34</div>
+        <div class="st-up">Up $1,140 this month — your calmest quarter yet.</div>
+        <div class="alloc">
+          <div class="bar">
+            <i style="width:26%;background:var(--clay)"></i><i style="width:46%;background:var(--sage)"></i><i style="width:18%;background:var(--gold)"></i><i style="width:10%;background:var(--sand)"></i>
+          </div>
+          <div class="leg">
+            <div><span class="sw" style="background:var(--clay)"></span><b>Cash</b> · $12,480</div>
+            <div><span class="sw" style="background:var(--sage)"></span><b>Investments</b> · $31,902</div>
+            <div><span class="sw" style="background:var(--gold)"></span><b>Property</b> · $8,640</div>
+            <div><span class="sw" style="background:var(--sand)"></span><b>Other</b> · $4,188</div>
+          </div>
         </div>
-        <div class="frost">
-          <div class="fl">Net worth · this month</div>
-          <div class="fv">$48,210.34</div>
-          <div class="fd">Up $1,140 since last month — your calmest quarter yet.</div>
+        <div class="rows">
+          <div class="r"><span class="n">Chase <small>Checking</small></span><span class="a">$8,204.10</span></div>
+          <div class="r"><span class="n">Vanguard <small>Roth IRA</small></span><span class="a">$31,902.55</span></div>
+          <div class="r"><span class="n">Amex <small>Platinum</small></span><span class="a">−$1,486.31</span></div>
         </div>
+        <div class="st-foot">At today's pace, your money lasts <em>8.2 months</em> without a single deposit.</div>
       </div>
     </div>
 
@@ -147,7 +158,7 @@
     <div class="closing">
       <h2>Start floating <em>today.</em></h2>
       <div class="sub2">Free to start. No card required.</div>
-      <span class="btn-primary">Get started free</span>
+      <span class="btn">Get started free</span>
     </div>
   </div>
 </body>

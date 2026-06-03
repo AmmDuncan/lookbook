@@ -17,6 +17,7 @@
     /* color — dark, not pure black (§4). Neutrals tinted cool. */
     --bg:            #08090a;   /* app + sidebar */
     --surface:       #0f1011;   /* raised list panel */
+    --grp-bg:        #131417;   /* sticky group header — OPAQUE (rows must not show through) */
     --row-hover:     #15161a;
     --border:        rgba(255,255,255,.07);  /* hairline */
     --border-strong: rgba(255,255,255,.12);
@@ -135,9 +136,9 @@
   .grp {
     display: flex; align-items: center; gap: 8px;
     height: 36px; padding: 0 16px;
-    background: rgba(255,255,255,.018);
+    background: var(--grp-bg);
     font-size: var(--fs-meta); font-weight: 500; color: var(--text);
-    position: sticky; top: 0;
+    position: sticky; top: 0; z-index: 1;
   }
   .grp .count { color: var(--text-subtle); font-weight: 400; }
   .grp .spacer { flex: 1; }

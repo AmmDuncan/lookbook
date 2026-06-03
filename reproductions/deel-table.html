@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reproduction #7 · people data table</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     TOKENS — a people/HR data table. Reproduced from a study of a
+     real shipped payroll product. §8 tables: hairline horizontal
+     dividers only (no vertical rules), generous row height, the
+     anchor column carries identity. §11 status: color + a WORD,
+     never color alone (the dot is reinforcement, not the signal).
+     Light done quiet (§4): white surface on a faintly cooler chrome.
+     ============================================================ */
+  :root {
+    --bg:       #ffffff;
+    --chrome:   #fcfcfd;
+    --line:     #ecedf0;          /* row hairline */
+    --line-2:   #e4e6ea;          /* toolbar borders */
+    --ink:      #1c1f25;          /* primary text */
+    --muted:    #6b7280;          /* subtitles, secondary cols */
+    --faint:    #9aa1ac;          /* column headers */
+    --link:     #2d63e6;          /* person name */
+    --pill:     #ffffff;
+    --pill-ln:  #e0e2e7;
+    --active-bg:#e9f6ee; --active-fg:#1f8b4c; --active-dot:#27ae60;
+    --invite-bg:#eef1fc; --invite-fg:#3f5bd0; --invite-dot:#5572e0;
+    --accent:   #1c1f25;          /* the one filled toolbar pill */
+
+    --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--chrome); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  .viewport { width: 1280px; height: 860px; overflow: hidden; background: var(--bg); position: relative; }
+
+  /* ---- toolbar ---- */
+  .toolbar { display: flex; align-items: center; gap: 8px; padding: 14px 22px; border-bottom: 1px solid var(--line); }
+  .ic-btn { width: 30px; height: 30px; border: 1px solid var(--pill-ln); border-radius: 8px; background: var(--pill); display: grid; place-items: center; color: var(--muted); flex: 0 0 auto; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border: 1px solid var(--pill-ln); border-radius: 8px; background: var(--pill); font-size: 13px; font-weight: 500; color: #3a3f48; white-space: nowrap; }
+  .pill.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .pill .cv { color: var(--faint); }
+  .pill.on .cv { color: rgba(255,255,255,.7); }
+  .spacer { flex: 1; }
+  .pill.ghost { color: #3a3f48; }
+  .dots { width: 30px; height: 30px; display: grid; place-items: center; color: var(--muted); }
+
+  /* ---- count line ---- */
+  .countline { padding: 13px 22px 11px; font-size: 13px; color: var(--muted); font-weight: 500; border-bottom: 1px solid var(--line); }
+
+  /* ---- table ---- */
+  table { width: 100%; border-collapse: collapse; }
+  thead th { text-align: left; font-size: 12px; font-weight: 500; color: var(--faint); padding: 11px 16px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  thead th .sortable { display: inline-flex; align-items: center; gap: 5px; }
+  thead th svg { opacity: .65; }
+  tbody td { padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: 13.5px; color: var(--ink); vertical-align: middle; white-space: nowrap; }
+  tbody td.sec { color: var(--muted); }
+  .chk { width: 44px; padding-left: 22px !important; }
+  .box { width: 16px; height: 16px; border: 1.5px solid #cbd0d8; border-radius: 5px; display: inline-block; }
+
+  /* person cell */
+  .person { display: flex; align-items: center; gap: 11px; }
+  .ava { width: 32px; height: 32px; border-radius: 50%; flex: 0 0 auto; display: grid; place-items: center; font-size: 12px; font-weight: 600; color: #fff; }
+  .pn { display: flex; flex-direction: column; line-height: 1.3; }
+  .pn .nm { color: var(--link); font-weight: 500; font-size: 13.5px; }
+  .pn .role { color: var(--muted); font-size: 12px; }
+
+  .flag { width: 18px; height: 13px; border-radius: 2px; display: inline-block; margin-right: 8px; vertical-align: -1px; object-fit: cover; box-shadow: 0 0 0 1px rgba(0,0,0,.04); }
+  .ctry { display: inline-flex; align-items: center; }
+
+  /* status pill */
+  .st { display: inline-flex; align-items: center; gap: 6px; height: 23px; padding: 0 9px; border-radius: 6px; font-size: 12px; font-weight: 500; }
+  .st .d { width: 6px; height: 6px; border-radius: 50%; }
+  .st.active { background: var(--active-bg); color: var(--active-fg); }
+  .st.active .d { background: var(--active-dot); }
+  .st.invited { background: var(--invite-bg); color: var(--invite-fg); }
+  .st.invited .d { background: var(--invite-dot); }
+
+  .rowdots { color: #b6bcc6; display: grid; place-items: center; }
+  td.end { text-align: right; padding-right: 22px !important; }
+</style>
+</head>
+<body>
+  <div class="viewport">
+    <!-- toolbar -->
+    <div class="toolbar">
+      <span class="ic-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18M6 12h12M10 19h4"/></svg></span>
+      <span class="ic-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18l-7 8v6l-4-2v-4z"/></svg></span>
+      <span class="pill">Group <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg></span>
+      <span class="pill on">Worker status <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg></span>
+      <span class="pill">Worker type <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg></span>
+      <span class="pill">Job title <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg></span>
+      <span class="pill">Contract type <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg></span>
+      <span class="pill">Contract status <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg></span>
+      <span class="pill">Country <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg></span>
+      <span class="pill">Currency <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg></span>
+      <span class="spacer"></span>
+      <span class="pill ghost"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V10M9 19V5M14 19v-7M19 19V8"/></svg> View as report</span>
+      <span class="pill ghost"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg> Configure columns</span>
+      <span class="dots"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></span>
+    </div>
+
+    <div class="countline">Total 289 people</div>
+
+    <!-- table -->
+    <table>
+      <thead>
+        <tr>
+          <th class="chk"><span class="box"></span></th>
+          <th><span class="sortable">Person <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg></span></th>
+          <th>Country</th>
+          <th>Entity</th>
+          <th>Group</th>
+          <th>Worker type</th>
+          <th><span class="sortable">Worker status <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg></span></th>
+          <th>Coverage</th>
+          <th>Start</th>
+          <th class="end"></th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+<script>
+  const flag = (cc) => `https://flagcdn.com/w40/${cc}.png`;
+  const people = [
+    ["Adriana Costa","Regional Web Administrator","#e0795f","AC","tw","Taiwan","Wayne Enterpr…","Wayne Enterprise Global","Person without a contract","active","Active","None","Jul 4"],
+    ["Alverta Gauvin","Designer","#7b86f2","AG","jp","Japan","JP entity","JP · group","Direct Employee Payroll","active","Active","None","Nov 2"],
+    ["Anna Olsson","Manager","#d98ad0","AO","us","United States","Wayne Enterp…","Wayne Enterprise Tea…","PEO employee","active","Active","None","Nov 1"],
+    ["Benny Brakus","Supply Chain Analyst","#5cb0a6","BB","us","United States","Wayne Enterp…","US · Payroll Connect …","Contractor","active","Active","None","Aug 9"],
+    ["Billie Pfeffer","Software Engineer","#e0a14f","BP","us","United States","US entity · Pa…","US · Payroll Connect …","Direct Employee Payroll","invited","Invited","None","Jan 8"],
+    ["Bowie Wilco","Product Management","#6fa8e0","BW","us","United States","US entity","US · group","Direct Employee Payroll","active","Active","None","Nov 3"],
+    ["Bowie Worstall","Legal Assistant","#c77fb0","BW","us","United States","US entity · Pa…","US · Payroll Connect …","Direct Employee Payroll","active","Active","None","Jan 2"],
+    ["Boyd Heathcote","Legal Assistant","#9c8cf0","BH","us","United States","Wayne Enterp…","Wayne Enterprise Tea…","Direct Employee Payroll","invited","Invited","None","Jan 7"],
+    ["Brandy Ziemann","Software Engineer","#e07f7f","BZ","us","United States","US entity · Pa…","US · Payroll Connect …","Direct Employee Payroll","active","Active","None","Nov 9"],
+    ["Brannon Smitham","Software Engineer","#5fb0c7","BS","us","United States","US entity · Pa…","US · Payroll Connect …","Direct Employee Payroll","active","Active","None","Jan 4"],
+    ["Cordie Padberg","Account Director","#b59ce0","CP","us","United States","US entity","US · group","Direct Employee Payroll","active","Active","None","Oct 6"],
+    ["Damaris Kub","Data Engineer","#e0a06f","DK","de","Germany","DE entity","DE · group","Direct Employee Payroll","invited","Invited","None","Feb 1"],
+    ["Delphia Bode","Brand Strategist","#6fc79a","DB","gb","United Kingdom","UK entity","UK · group","EOR employee","active","Active","None","Sep 8"],
+  ];
+  const rows = people.map(p => {
+    const [name,role,col,mono,cc,ctry,entity,group,wtype,stCls,stLabel,cov,start] = p;
+    return `<tr>
+      <td class="chk"><span class="box"></span></td>
+      <td><div class="person"><span class="ava" style="background:${col}">${mono}</span><span class="pn"><span class="nm">${name}</span><span class="role">${role}</span></span></div></td>
+      <td class="sec"><span class="ctry"><img class="flag" src="${flag(cc)}" alt=""/>${ctry}</span></td>
+      <td class="sec">${entity}</td>
+      <td class="sec">${group}</td>
+      <td class="sec">${wtype}</td>
+      <td><span class="st ${stCls}"><span class="d"></span>${stLabel}</span></td>
+      <td class="sec">${cov}</td>
+      <td class="sec">${start}</td>
+      <td class="end"><span class="rowdots"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></span></td>
+    </tr>`;
+  }).join("");
+  document.getElementById("rows").innerHTML = rows;
+</script>
+</body>
+</html>

@@ -42,7 +42,8 @@ Honest first pass (revise as reproductions teach us):
 | **convergence test** | **REPLACE** | Reproduce-a-real-screen is the stronger gate. |
 
 ## Render conventions
-- Render reproductions at **1280×1024**, `--force-device-scale-factor=2`, `--virtual-time-budget=6000` (webfonts). Taller viewport so the screen has headroom below the fold and never reads as cropped at the gate.
+- **Give the reproduction shell an intrinsic px height (e.g. `height: 1024px`), never `100vh`.** Easel sizes each card to the content's intrinsic height; `100vh` resolves against easel's own frame and collapses to a default, so the easel card and the local render disagree. An explicit px height makes both agree. (Proven A/B/C: 1100px→tall, 800px→shorter, 100vh→collapsed.)
+- Render the local look at `--force-device-scale-factor=2 --virtual-time-budget=6000` (webfonts), window matched to the shell height. The render window only affects the local PNG — it never reaches easel.
 - **Easel pushes are LIVE HTML, never a screenshot of the HTML.** The render-and-look PNG is for the local look only. The one exception is the real reference screen (ground truth is a raster).
 
 ## Status

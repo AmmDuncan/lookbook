@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Float · bold-expressive voice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     REGISTER: BOLD-EXPRESSIVE ("marketing" voice) — same Float
+     content. Voice grounded in a real bold fintech (Wise): the type
+     IS the design — huge heavy display, big §3 scale contrast (hero
+     vs body is dramatic, not gentle). ONE electric accent (§4) used
+     loud and confident on the CTA + a hero word. Energy over restraint:
+     a playful synthetic illustration (floating money cards, per the
+     synthetic-imagery cookbook), bright flat surfaces, pill buttons
+     full-radius. Light bg, near-black type, the accent does the
+     shouting. This is the voice where typographic courage pays off.
+     ============================================================ */
+  :root {
+    --bg:    #fcfcf7;
+    --ink:   #14160f;
+    --muted: #5d6157;
+    --accent:#37d96b;          /* electric green — loud, confident */
+    --accent-d:#1faa50;
+    --card:  #ffffff;
+    --line:  #ecece4;
+    --lilac: #c9b8ff; --peach:#ffd28a; --sky:#a9d8ff;
+    --disp:  "Bricolage Grotesque", sans-serif;
+    --sans:  "Inter", -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--sans); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  .page { width: 1240px; height: 1480px; overflow: hidden; position: relative; }
+
+  .nav { display: flex; align-items: center; gap: 30px; padding: 26px 48px; }
+  .brand { font-family: var(--disp); font-size: 23px; font-weight: 800; letter-spacing: -.02em; }
+  .nav .links { display: flex; gap: 26px; font-size: 15px; font-weight: 500; color: var(--ink); }
+  .nav .sp { flex: 1; }
+  .nav .login { font-size: 15px; font-weight: 500; }
+  .nav .cta { font-size: 15px; font-weight: 600; padding: 10px 20px; border-radius: 999px; background: var(--accent); color: #07260f; }
+
+  .hero { text-align: center; padding: 56px 0 0; }
+  .trust { display: inline-flex; align-items: center; gap: 14px; font-size: 14px; font-weight: 500; color: var(--muted); }
+  .trust b { color: var(--ink); }
+  .trust .star { color: #ffb020; }
+  h1 { font-family: var(--disp); font-size: 104px; line-height: .92; letter-spacing: -.04em; font-weight: 800; margin: 26px 0 0; }
+  h1 .hl { color: var(--accent-d); }
+  .sub { max-width: 600px; margin: 28px auto 0; font-size: 21px; line-height: 1.5; color: var(--muted); font-weight: 450; }
+  .actions { display: flex; gap: 14px; justify-content: center; margin: 34px 0 0; }
+  .btn-primary { font-size: 17px; font-weight: 600; padding: 16px 30px; border-radius: 999px; background: var(--accent); color: #07260f; }
+  .btn-ghost { font-size: 17px; font-weight: 600; padding: 16px 30px; border-radius: 999px; border: 2px solid var(--ink); color: var(--ink); }
+
+  /* playful synthetic illustration — floating money cards */
+  .stage { position: relative; height: 320px; margin: 36px auto 0; width: 1000px; }
+  .coin { position: absolute; border-radius: 22px; box-shadow: 0 18px 40px -14px rgba(20,22,15,.28); display: flex; flex-direction: column; justify-content: space-between; padding: 16px 18px; color: #14160f; }
+  .coin .t { font-size: 13px; font-weight: 600; opacity: .8; }
+  .coin .v { font-family: var(--disp); font-weight: 800; font-size: 26px; letter-spacing: -.02em; }
+  .c1 { width: 210px; height: 132px; background: var(--accent); left: 150px; top: 40px; transform: rotate(-8deg); }
+  .c2 { width: 240px; height: 150px; background: var(--lilac); left: 400px; top: 8px; transform: rotate(4deg); z-index: 3; }
+  .c3 { width: 200px; height: 126px; background: var(--peach); left: 680px; top: 56px; transform: rotate(9deg); }
+  .c4 { width: 170px; height: 110px; background: var(--sky); left: 330px; top: 168px; transform: rotate(-3deg); }
+  .c5 { width: 180px; height: 116px; background: #ffffff; border: 1px solid var(--line); left: 590px; top: 176px; transform: rotate(6deg); }
+
+  /* proof band — bold cards */
+  .band { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; padding: 0 48px; margin-top: 40px; }
+  .feat { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 30px 28px; }
+  .feat .ic { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 18px; }
+  .feat h3 { font-family: var(--disp); font-size: 24px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 9px; }
+  .feat p { font-size: 16px; line-height: 1.5; color: var(--muted); }
+
+  /* closing CTA band */
+  .closing { margin: 44px 48px 0; background: var(--accent); border-radius: 28px; text-align: center; padding: 56px 0; }
+  .closing h2 { font-family: var(--disp); font-size: 52px; font-weight: 800; letter-spacing: -.03em; color: #07260f; }
+  .closing .sub2 { font-size: 17px; color: #0c3a1a; margin: 12px 0 26px; font-weight: 500; }
+  .closing .btn-dark { font-size: 17px; font-weight: 600; padding: 16px 32px; border-radius: 999px; background: #07260f; color: #eafff0; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="nav">
+      <div class="brand">Float</div>
+      <div class="links"><span>Product</span><span>Pricing</span><span>Company</span></div>
+      <span class="sp"></span>
+      <span class="login">Log in</span>
+      <span class="cta">Get started</span>
+    </div>
+
+    <div class="hero">
+      <span class="trust"><span><span class="star">★</span> <b>4.8</b> on App Store · 152K reviews</span></span>
+      <h1>Money that<br/>makes <span class="hl">sense</span>.</h1>
+      <p class="sub">Float brings every account, card, and bill into one calm view — so you always know where you stand.</p>
+      <div class="actions">
+        <span class="btn-primary">Get started free</span>
+        <span class="btn-ghost">See how it works</span>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="coin c1"><div class="t">Checking</div><div class="v">$12,480</div></div>
+      <div class="coin c4"><div class="t">Card</div><div class="v">$842</div></div>
+      <div class="coin c2"><div class="t">Net worth</div><div class="v">$48,210</div></div>
+      <div class="coin c5"><div class="t">Runway</div><div class="v">8.2 mo</div></div>
+      <div class="coin c3"><div class="t">Investments</div><div class="v">$31,902</div></div>
+    </div>
+
+    <div class="band">
+      <div class="feat"><div class="ic" style="background:#e3fbe c;background:#e3fbec"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1faa50" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></div><h3>Everything in one place</h3><p>Bank accounts, cards, loans, and investments — synced automatically, reconciled to the cent.</p></div>
+      <div class="feat"><div class="ic" style="background:#efe9ff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6b4fd0" stroke-width="2"><path d="M4 19V9M10 19V5M16 19v-8M22 19h-20"/></svg></div><h3>Know your runway</h3><p>See exactly how long your money lasts at today's burn — recalculated the moment anything moves.</p></div>
+      <div class="feat"><div class="ic" style="background:#fff0d6"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d6911f" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg></div><h3>Quietly on top of it</h3><p>Gentle nudges before a bill hits. No noisy alerts, no nagging — just the signal, never the noise.</p></div>
+    </div>
+
+    <div class="closing">
+      <h2>Start floating today.</h2>
+      <div class="sub2">Free to start. No card required.</div>
+      <span class="btn-dark">Get started free</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Float · cool-technical voice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     REGISTER: COOL-TECHNICAL — Float landing, constant content.
+     Voice grounded in a real cool-technical fintech (Fey): pure
+     near-black, restrained off-white sans, ONE near-absent accent,
+     keyboard-craft signal, a glowing dark product shot. The dials:
+     §3 type = Geist, medium weight, tight tracking, moderate hero
+     (not huge — restraint IS the voice). §4 color = cool-tinted
+     near-black neutrals, accent SCARCE (a single cold mint, used
+     once). §6 depth = deep dark + a soft radial glow under the
+     product (it earns the glow), hairline borders, low radius.
+     Density = airy, centered, calm. Signature = the ⌘ keyboard hint.
+     ============================================================ */
+  :root {
+    --bg:    #08090b;
+    --panel: #0e0f12;
+    --line:  rgba(255,255,255,.08);
+    --line2: rgba(255,255,255,.13);
+    --text:  #ededf0;
+    --muted: #8b9096;
+    --faint: #585c63;
+    --mint:  #6fe0c0;          /* the ONE accent, used once */
+    --font:  "Geist", -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono:  "Geist Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+  .page { width: 1240px; height: 1480px; overflow: hidden; position: relative; }
+
+  /* nav */
+  .nav { display: flex; align-items: center; gap: 28px; padding: 22px 44px; border-bottom: 1px solid var(--line); }
+  .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+  .brand .mk { width: 18px; height: 18px; border-radius: 5px; background: linear-gradient(160deg,#3a3d44,#16171a); border: 1px solid var(--line2); }
+  .nav .links { display: flex; gap: 24px; font-size: 13.5px; color: var(--muted); }
+  .nav .sp { flex: 1; }
+  .nav .login { font-size: 13.5px; color: var(--muted); }
+  .nav .cta { font-size: 13px; font-weight: 500; padding: 7px 14px; border: 1px solid var(--line2); border-radius: 8px; color: var(--text); }
+
+  /* hero */
+  .hero { text-align: center; padding: 96px 0 0; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); }
+  h1 { font-size: 58px; line-height: 1.04; letter-spacing: -.03em; font-weight: 600; margin: 26px 0 0; }
+  h1 .q { color: var(--muted); }
+  .sub { max-width: 560px; margin: 22px auto 0; font-size: 17px; line-height: 1.55; color: var(--muted); }
+  .actions { display: flex; gap: 12px; justify-content: center; margin: 32px 0 0; }
+  .btn-primary { font-size: 14px; font-weight: 500; padding: 11px 20px; border-radius: 9px; background: var(--text); color: #0a0b0d; }
+  .btn-ghost { font-size: 14px; font-weight: 500; padding: 11px 20px; border-radius: 9px; border: 1px solid var(--line2); color: var(--text); }
+  .kbd-hint { margin: 20px 0 0; font-family: var(--mono); font-size: 12px; color: var(--faint); }
+  .kbd-hint kbd { border: 1px solid var(--line2); border-radius: 5px; padding: 1px 6px; color: var(--muted); font-family: var(--mono); }
+
+  /* product shot with glow */
+  .shotwrap { position: relative; margin: 56px auto 0; width: 940px; }
+  .glow { position: absolute; left: 50%; top: 8%; transform: translateX(-50%); width: 620px; height: 320px; background: radial-gradient(ellipse at center, rgba(111,224,192,.16), rgba(111,224,192,0) 70%); filter: blur(8px); }
+  .shot { position: relative; border: 1px solid var(--line2); border-radius: 14px 14px 0 0; background: var(--panel); overflow: hidden; box-shadow: 0 -1px 0 rgba(255,255,255,.04); }
+  .shot .bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .shot .bar i { width: 9px; height: 9px; border-radius: 50%; background: #2a2c30; display: inline-block; }
+  .shot .body { display: grid; grid-template-columns: 168px 1fr; height: 300px; }
+  .shot .sb { border-right: 1px solid var(--line); padding: 14px 12px; }
+  .shot .sb .r { height: 9px; border-radius: 4px; background: rgba(255,255,255,.06); margin-bottom: 11px; }
+  .shot .sb .r.s { width: 55%; } .shot .sb .r.m { width: 78%; }
+  .shot .main { padding: 20px 22px; }
+  .shot .kpi { font-family: var(--mono); font-size: 30px; letter-spacing: -.02em; color: var(--text); }
+  .shot .kpi small { color: var(--mint); font-size: 13px; margin-left: 8px; }
+  .shot .klabel { font-size: 12px; color: var(--faint); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .08em; }
+  .spark { margin-top: 22px; height: 96px; display: flex; align-items: flex-end; gap: 6px; }
+  .spark i { flex: 1; background: linear-gradient(180deg, rgba(111,224,192,.5), rgba(111,224,192,.08)); border-radius: 2px 2px 0 0; }
+  .row3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--line); margin-top: 20px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .row3 .c { background: var(--panel); padding: 12px 14px; }
+  .row3 .c .l { font-size: 11px; color: var(--faint); }
+  .row3 .c .v { font-family: var(--mono); font-size: 15px; margin-top: 4px; }
+
+  /* proof band */
+  .band { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 92px; }
+  .feat { background: var(--bg); padding: 40px 36px; }
+  .feat .n { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+  .feat h3 { font-size: 19px; font-weight: 600; letter-spacing: -.01em; margin: 14px 0 8px; }
+  .feat p { font-size: 14.5px; line-height: 1.55; color: var(--muted); }
+
+  /* closing */
+  .closing { text-align: center; padding: 80px 0 0; }
+  .closing h2 { font-size: 34px; font-weight: 600; letter-spacing: -.02em; }
+  .closing .sub2 { font-size: 15px; color: var(--muted); margin: 12px 0 26px; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="nav">
+      <div class="brand"><span class="mk"></span> Float</div>
+      <div class="links"><span>Product</span><span>Pricing</span><span>Company</span></div>
+      <span class="sp"></span>
+      <span class="login">Log in</span>
+      <span class="cta">Get started</span>
+    </div>
+
+    <div class="hero">
+      <span class="eyebrow"><span class="dot"></span> Personal finance, reimagined</span>
+      <h1>Money that<br/>makes <span class="q">sense.</span></h1>
+      <p class="sub">Float brings every account, card, and bill into one calm view — so you always know where you stand.</p>
+      <div class="actions">
+        <span class="btn-primary">Get started free</span>
+        <span class="btn-ghost">See how it works</span>
+      </div>
+      <div class="kbd-hint">Press <kbd>⌘</kbd> <kbd>K</kbd> anywhere to jump to any account</div>
+    </div>
+
+    <div class="shotwrap">
+      <div class="glow"></div>
+      <div class="shot">
+        <div class="bar"><i></i><i></i><i></i></div>
+        <div class="body">
+          <div class="sb">
+            <div class="r m"></div><div class="r s"></div><div class="r"></div><div class="r m"></div><div class="r s"></div><div class="r"></div>
+          </div>
+          <div class="main">
+            <div class="klabel">Net worth</div>
+            <div class="kpi">$48,210.34 <small>+2.4%</small></div>
+            <div class="spark">
+              <i style="height:40%"></i><i style="height:52%"></i><i style="height:46%"></i><i style="height:63%"></i><i style="height:58%"></i><i style="height:72%"></i><i style="height:66%"></i><i style="height:81%"></i><i style="height:76%"></i><i style="height:92%"></i><i style="height:85%"></i><i style="height:100%"></i>
+            </div>
+            <div class="row3">
+              <div class="c"><div class="l">Cash</div><div class="v">$12,480</div></div>
+              <div class="c"><div class="l">Investments</div><div class="v">$31,902</div></div>
+              <div class="c"><div class="l">Runway</div><div class="v">8.2 mo</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="band">
+      <div class="feat"><div class="n">01</div><h3>Everything in one place</h3><p>Bank accounts, cards, loans, and investments, synced automatically and reconciled to the cent.</p></div>
+      <div class="feat"><div class="n">02</div><h3>Know your runway</h3><p>See exactly how long your money lasts at today's burn — recalculated the moment anything moves.</p></div>
+      <div class="feat"><div class="n">03</div><h3>Quietly on top of it</h3><p>Gentle nudges before a bill hits. No noisy alerts, no nagging — just the signal, never the noise.</p></div>
+    </div>
+
+    <div class="closing">
+      <h2>Start floating today.</h2>
+      <div class="sub2">Free to start. No card required.</div>
+      <span class="btn-primary">Get started free</span>
+    </div>
+  </div>
+</body>
+</html>

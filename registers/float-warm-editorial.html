@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Float · warm-editorial voice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     REGISTER: WARM-EDITORIAL — same Float content. Voice grounded in
+     a real warm fintech (Monarch): a surface that READS. §3 type =
+     an all-serif pairing (Fraunces display + Newsreader body), modest
+     hero size, real reading rhythm. §4 color = warm CREAM paper (never
+     stark white), warm-tinted neutrals, ONE scarce terracotta accent.
+     §6 depth = RULES not shadows, a warm photographic panel + a soft
+     frosted card (the one place a shadow is earned), low radius. The
+     laurels/awards strip = the editorial trust signal. Calm, roomy,
+     left-aligned and asymmetric. The opposite energy of the bold voice.
+     ============================================================ */
+  :root {
+    --paper: #f4efe4;
+    --card:  #fbf8f1;
+    --ink:   #2b2722;
+    --muted: #6f675c;
+    --faint: #a59b8c;
+    --rule:  #e4dccb;
+    --clay:  #b8502f;          /* the one scarce accent */
+    --photo1:#d9c3a6; --photo2:#c2a883; --photo3:#a8895f;
+    --disp:  "Fraunces", Georgia, serif;
+    --body:  "Newsreader", Georgia, serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--body); background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  .page { width: 1240px; height: 1480px; overflow: hidden; position: relative; }
+
+  .nav { display: flex; align-items: center; gap: 30px; padding: 26px 52px; border-bottom: 1px solid var(--rule); }
+  .brand { font-family: var(--disp); font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
+  .nav .links { display: flex; gap: 26px; font-size: 15px; color: var(--muted); }
+  .nav .sp { flex: 1; }
+  .nav .login { font-size: 15px; color: var(--muted); }
+  .nav .cta { font-size: 14px; font-weight: 500; padding: 9px 17px; border-radius: 7px; background: var(--ink); color: var(--paper); }
+
+  /* hero — asymmetric: editorial text left, warm photographic panel right */
+  .hero { display: grid; grid-template-columns: 1.02fr .98fr; gap: 48px; padding: 72px 52px 0; align-items: center; }
+  .lede .kicker { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--clay); font-family: var(--body); font-weight: 500; }
+  h1 { font-family: var(--disp); font-size: 64px; line-height: 1.02; letter-spacing: -.015em; font-weight: 500; margin: 20px 0 0; }
+  h1 em { font-style: italic; font-weight: 400; }
+  .sub { max-width: 460px; font-size: 19px; line-height: 1.6; color: var(--muted); margin: 24px 0 0; }
+  .actions { display: flex; align-items: center; gap: 22px; margin: 30px 0 0; }
+  .btn-primary { font-family: var(--body); font-size: 16px; font-weight: 500; padding: 13px 24px; border-radius: 8px; background: var(--clay); color: #fff7f0; }
+  .link { font-size: 16px; color: var(--ink); border-bottom: 1px solid var(--faint); padding-bottom: 2px; }
+
+  /* warm photographic panel + frosted card */
+  .photo { position: relative; height: 440px; border-radius: 14px; overflow: hidden; background: linear-gradient(150deg, var(--photo1), var(--photo2) 55%, var(--photo3)); }
+  .photo::after { content:""; position:absolute; inset:0; background: radial-gradient(120% 90% at 30% 10%, rgba(255,250,240,.45), rgba(255,250,240,0) 55%); }
+  .frost { position: absolute; left: 26px; bottom: 26px; right: 64px; background: rgba(251,248,241,.86); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.5); border-radius: 12px; padding: 20px 22px; box-shadow: 0 16px 36px -16px rgba(60,45,30,.4); }
+  .frost .fl { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+  .frost .fv { font-family: var(--disp); font-size: 30px; font-weight: 500; letter-spacing: -.01em; margin-top: 4px; }
+  .frost .fd { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+  /* laurels / awards strip */
+  .laurels { display: flex; justify-content: center; gap: 56px; padding: 40px 0 38px; margin-top: 52px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .award { display: flex; align-items: center; gap: 12px; }
+  .award .lf { color: var(--faint); font-size: 30px; }
+  .award .at { text-align: center; }
+  .award .a1 { font-family: var(--disp); font-size: 15px; font-weight: 500; }
+  .award .a2 { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* features — calm serif rhythm, rules between */
+  .band { padding: 16px 52px 0; }
+  .feat { display: grid; grid-template-columns: 56px 1fr; gap: 22px; padding: 34px 0; border-bottom: 1px solid var(--rule); }
+  .feat:last-child { border-bottom: none; }
+  .feat .num { font-family: var(--disp); font-size: 22px; color: var(--clay); font-weight: 500; }
+  .feat h3 { font-family: var(--disp); font-size: 26px; font-weight: 500; letter-spacing: -.01em; margin-bottom: 8px; }
+  .feat p { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 720px; }
+
+  /* closing */
+  .closing { text-align: center; padding: 54px 0 0; }
+  .closing h2 { font-family: var(--disp); font-size: 40px; font-weight: 500; letter-spacing: -.015em; }
+  .closing em { font-style: italic; font-weight: 400; }
+  .closing .sub2 { font-size: 16px; color: var(--muted); margin: 12px 0 24px; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="nav">
+      <div class="brand">Float</div>
+      <div class="links"><span>Product</span><span>Pricing</span><span>Company</span></div>
+      <span class="sp"></span>
+      <span class="login">Log in</span>
+      <span class="cta">Get started</span>
+    </div>
+
+    <div class="hero">
+      <div class="lede">
+        <div class="kicker">Personal finance, reimagined</div>
+        <h1>Money that<br/>makes <em>sense.</em></h1>
+        <p class="sub">Float brings every account, card, and bill into one calm view — so you always know where you stand.</p>
+        <div class="actions">
+          <span class="btn-primary">Get started free</span>
+          <span class="link">See how it works</span>
+        </div>
+      </div>
+      <div class="photo">
+        <div class="frost">
+          <div class="fl">Net worth · this month</div>
+          <div class="fv">$48,210.34</div>
+          <div class="fd">Up $1,140 since last month — your calmest quarter yet.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="laurels">
+      <div class="award"><span class="lf">❦</span><div class="at"><div class="a1">Best Budgeting App</div><div class="a2">The Times, 2025</div></div></div>
+      <div class="award"><span class="lf">❦</span><div class="at"><div class="a1">Editors' Choice</div><div class="a2">App Store, 2025</div></div></div>
+      <div class="award"><span class="lf">❦</span><div class="at"><div class="a1">4.9 ★ · 50,000+ reviews</div><div class="a2">Across iOS & Android</div></div></div>
+    </div>
+
+    <div class="band">
+      <div class="feat"><div class="num">I</div><div><h3>Everything in one place</h3><p>Bank accounts, cards, loans, and investments — gathered into a single, unhurried view, reconciled to the cent and quietly kept current.</p></div></div>
+      <div class="feat"><div class="num">II</div><div><h3>Know your runway</h3><p>See exactly how long your money lasts at today's pace — recalculated, gently, the moment anything moves.</p></div></div>
+      <div class="feat"><div class="num">III</div><div><h3>Quietly on top of it</h3><p>A gentle word before a bill arrives. No noisy alerts, no nagging — only the signal, and never the noise.</p></div></div>
+    </div>
+
+    <div class="closing">
+      <h2>Start floating <em>today.</em></h2>
+      <div class="sub2">Free to start. No card required.</div>
+      <span class="btn-primary">Get started free</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -41,9 +41,13 @@ Honest first pass (revise as reproductions teach us):
 | **kits/ (3 registers + molecule library)** | **SUPERSEDE, don't delete yet** | The most self-judged layer. Replace a register only when a reproduction-distilled cookbook beats it. cool-technical/marketing/warm-editorial stay as reference until then. |
 | **convergence test** | **REPLACE** | Reproduce-a-real-screen is the stronger gate. |
 
+## Render conventions
+- Render reproductions at **1280×1024**, `--force-device-scale-factor=2`, `--virtual-time-budget=6000` (webfonts). Taller viewport so the screen has headroom below the fold and never reads as cropped at the gate.
+- **Easel pushes are LIVE HTML, never a screenshot of the HTML.** The render-and-look PNG is for the local look only. The one exception is the real reference screen (ground truth is a raster).
+
 ## Status
 - [x] Base saved (`the-design-brain.md`)
 - [x] Method + keep/cut written (this file)
-- [ ] Reproduction #1 (TBD target — likely a Linear/Stripe/Vercel surface, §14)
+- [x] Reproduction #1 — Linear issue list (`reproductions/linear-issue-list.*`), committed `26f2e99`; 3 cookbook candidates pending user gate
 - [ ] … iterate, distill cookbooks
 - [ ] Decide whether to merge to `main`

@@ -53,23 +53,28 @@
   .btn-primary { font-size: 17px; font-weight: 600; padding: 16px 30px; border-radius: 999px; background: var(--accent); color: #07260f; }
   .btn-ghost { font-size: 17px; font-weight: 600; padding: 16px 30px; border-radius: 999px; border: 2px solid var(--ink); color: var(--ink); }
 
-  /* playful synthetic illustration — floating money cards */
-  .stage { position: relative; height: 320px; margin: 36px auto 0; width: 1000px; }
-  .coin { position: absolute; border-radius: 22px; box-shadow: 0 18px 40px -14px rgba(20,22,15,.28); display: flex; flex-direction: column; justify-content: space-between; padding: 16px 18px; color: #14160f; }
-  .coin .t { font-size: 13px; font-weight: 600; opacity: .8; }
-  .coin .v { font-family: var(--disp); font-weight: 800; font-size: 26px; letter-spacing: -.02em; }
-  .c1 { width: 210px; height: 132px; background: var(--accent); left: 150px; top: 40px; transform: rotate(-8deg); }
-  .c2 { width: 240px; height: 150px; background: var(--lilac); left: 400px; top: 8px; transform: rotate(4deg); z-index: 3; }
-  .c3 { width: 200px; height: 126px; background: var(--peach); left: 680px; top: 56px; transform: rotate(9deg); }
-  .c4 { width: 170px; height: 110px; background: var(--sky); left: 330px; top: 168px; transform: rotate(-3deg); }
-  .c5 { width: 180px; height: 116px; background: #ffffff; border: 1px solid var(--line); left: 590px; top: 176px; transform: rotate(6deg); }
+  /* ONE confident product card (not scattered tilted "money cards") — numbers in Inter tabular */
+  .showcase { width: 600px; margin: 38px auto 0; background: var(--card); border: 1px solid var(--line); border-radius: 28px; box-shadow: 0 34px 70px -28px rgba(20,22,15,.24); padding: 30px 32px 28px; }
+  .showcase .sh { display: flex; align-items: center; justify-content: space-between; }
+  .showcase .sh .t { font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .07em; }
+  .showcase .sh .pill { font-size: 12px; font-weight: 600; color: #07260f; background: var(--accent); border-radius: 999px; padding: 5px 12px; }
+  .showcase .nw { font-family: var(--sans); font-size: 46px; font-weight: 800; letter-spacing: -.025em; font-variant-numeric: tabular-nums; margin: 16px 0 2px; }
+  .showcase .up { font-size: 15px; color: #157a3e; font-weight: 700; }
+  .showcase .chart { display: flex; align-items: flex-end; gap: 9px; height: 116px; margin: 24px 0 0; }
+  .showcase .chart i { flex: 1; background: var(--accent); border-radius: 6px 6px 0 0; }
+  .showcase .chart i.peak { background: var(--accent-d); }
+  .showcase .chips { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 24px; }
+  .showcase .chip { background: #f3f5ef; border-radius: 16px; padding: 14px 16px; }
+  .showcase .chip .l { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .showcase .chip .v { font-family: var(--sans); font-size: 21px; font-weight: 800; font-variant-numeric: tabular-nums; margin-top: 5px; }
 
-  /* proof band — bold cards */
-  .band { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; padding: 0 48px; margin-top: 40px; }
-  .feat { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 30px 28px; }
-  .feat .ic { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 18px; }
-  .feat h3 { font-family: var(--disp); font-size: 24px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 9px; }
-  .feat p { font-size: 16px; line-height: 1.5; color: var(--muted); }
+  /* feature band — big-number scale contrast (not three identical pastel-icon squares) */
+  .band { padding: 0 56px; margin-top: 52px; display: flex; flex-direction: column; }
+  .feat { display: grid; grid-template-columns: 150px 1fr; gap: 30px; align-items: baseline; padding: 30px 0; border-bottom: 1px solid var(--line); }
+  .feat:last-child { border-bottom: none; }
+  .feat .num { font-family: var(--disp); font-size: 88px; font-weight: 800; line-height: .8; letter-spacing: -.04em; color: var(--accent-d); }
+  .feat h3 { font-family: var(--disp); font-size: 30px; font-weight: 700; letter-spacing: -.015em; margin-bottom: 8px; }
+  .feat p { font-size: 17px; line-height: 1.5; color: var(--muted); max-width: 660px; }
 
   /* closing CTA band */
   .closing { margin: 44px 48px 0; background: var(--accent); border-radius: 28px; text-align: center; padding: 56px 0; }
@@ -98,18 +103,24 @@
       </div>
     </div>
 
-    <div class="stage">
-      <div class="coin c1"><div class="t">Checking</div><div class="v">$12,480</div></div>
-      <div class="coin c4"><div class="t">Card</div><div class="v">$842</div></div>
-      <div class="coin c2"><div class="t">Net worth</div><div class="v">$48,210</div></div>
-      <div class="coin c5"><div class="t">Runway</div><div class="v">8.2 mo</div></div>
-      <div class="coin c3"><div class="t">Investments</div><div class="v">$31,902</div></div>
+    <div class="showcase">
+      <div class="sh"><span class="t">This month</span><span class="pill">On track</span></div>
+      <div class="nw">$48,210.34</div>
+      <div class="up">↑ +$1,140 this month</div>
+      <div class="chart">
+        <i style="height:42%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:66%"></i><i style="height:60%"></i><i style="height:78%"></i><i style="height:72%"></i><i class="peak" style="height:100%"></i>
+      </div>
+      <div class="chips">
+        <div class="chip"><div class="l">Cash</div><div class="v">$12,480</div></div>
+        <div class="chip"><div class="l">Investments</div><div class="v">$31,902</div></div>
+        <div class="chip"><div class="l">Runway</div><div class="v">8.2 mo</div></div>
+      </div>
     </div>
 
     <div class="band">
-      <div class="feat"><div class="ic" style="background:#e3fbec"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1faa50" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></div><h3>Everything in one place</h3><p>Bank accounts, cards, loans, and investments — synced automatically, reconciled to the cent.</p></div>
-      <div class="feat"><div class="ic" style="background:#efe9ff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6b4fd0" stroke-width="2"><path d="M4 19V9M10 19V5M16 19v-8M22 19h-20"/></svg></div><h3>Know your runway</h3><p>See exactly how long your money lasts at today's burn — recalculated the moment anything moves.</p></div>
-      <div class="feat"><div class="ic" style="background:#fff0d6"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d6911f" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg></div><h3>Quietly on top of it</h3><p>Gentle nudges before a bill hits. No noisy alerts, no nagging — just the signal, never the noise.</p></div>
+      <div class="feat"><div class="num">01</div><div class="ft"><h3>Everything in one place</h3><p>Bank accounts, cards, loans, and investments — synced automatically, reconciled to the cent.</p></div></div>
+      <div class="feat"><div class="num">02</div><div class="ft"><h3>Know your runway</h3><p>See exactly how long your money lasts at today's burn — recalculated the moment anything moves.</p></div></div>
+      <div class="feat"><div class="num">03</div><div class="ft"><h3>Quietly on top of it</h3><p>Gentle nudges before a bill hits. No noisy alerts, no nagging — just the signal, never the noise.</p></div></div>
     </div>
 
     <div class="closing">

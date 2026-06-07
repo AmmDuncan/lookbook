@@ -62,7 +62,7 @@ An editorial index is legitimately text-heavy — kickers + serif headlines + de
 
 ## Contrast: the audit's blind spot keeps migrating
 
-Every text tier must clear AA on the surface it sits on — the oxblood kicker (it's text), the dek, the byline, the date meta, and any text on a non-cream promo panel (measure against the *promo* bg, not the page). And note where the failure hides now: it has migrated named-tier → border-token-as-text → **a hardcoded magic hex on a glyph** (a `·` separator at `#c4b498` / 1.79:1 that dodged the token table so the gate wouldn't measure it). **The gate only parses tokens — a hardcoded `color:#…` on text slips it.** Grep for `color:\s*#` on text elements, not just `var(--…)`, and put every quiet glyph/separator on a real measured tier. Run `node scripts/check-contrast.mjs <file>` and clear it.
+Every text tier must clear AA on the surface it sits on — the oxblood kicker (it's text), the dek, the byline, the date meta, and any text on a non-cream promo panel (measure against the *promo* bg, not the page). And note where the failure hides now: it has migrated named-tier → border-token-as-text → **a hardcoded magic hex on a glyph** (a `·` separator at `#c4b498` / 1.79:1 that dodged the token table so the gate wouldn't measure it). The token gate can't pass/fail a literal (a `#hex` glyph is indistinguishable from a decorative one), but `check-contrast.mjs` now **surfaces every hardcoded `color:#hex` on text as a `⚐` advisory** — when you see one, confirm it's genuinely decorative or move it onto a measured text tier (`--faint`, not a magic hex). Run `node scripts/check-contrast.mjs <file>` and clear both the gate and the advisory.
 
 ## Don't
 

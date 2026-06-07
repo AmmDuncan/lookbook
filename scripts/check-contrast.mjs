@@ -8,9 +8,21 @@
 // against any primary SURFACE token it could realistically sit on. Better a false
 // flag on a pairing that never happens than a real sub-AA label shipping silently.
 //
+// It ALSO surfaces hardcoded `color: #hex` LITERALS (text colours not routed through
+// a token), because the audit's blind spot keeps migrating to where the token table
+// can't see it — a `--rule` reused as text, then a magic hex on a quiet glyph (a `·`
+// at 1.79:1 that dodged the table on purpose). Literals are reported as an ADVISORY
+// (the ⚐ line), NOT gated: a literal is indistinguishable from a decorative glyph
+// (an amber ★ at 1.78:1 reads identically to a broken separator at 1.79:1 — only the
+// element knows which), so blocking would false-positive. Clear inverse text
+// (light-on-dark-button, ~1:1 vs the page bg) is filtered out; the rest are listed
+// for a human/critic to verify against the actual element. The PASS/FAIL exit code is
+// driven by tokens only — the advisory never changes it.
+//
 // Usage:  node scripts/check-contrast.mjs <file.html> [...more.html]
 //         node scripts/check-contrast.mjs registers/float-*.html
-// Exit:   0 = all clear · 1 = at least one AA failure · 2 = bad input
+// Exit:   0 = all token pairings clear · 1 = ≥1 blocking token AA failure · 2 = bad input
+//         (the ⚐ literal advisory is informational and does NOT affect the exit code)
 
 import { readFileSync } from "node:fs";
 
@@ -60,6 +72,20 @@ function colorUsedTokens(css) {
   let m;
   while ((m = re.exec(css))) used.add(m[1]);
   return used;
+}
+// hardcoded hex used as a TEXT color (not via a token). The audit's blind spot
+// keeps migrating to where the token table can't see it — a `--rule` token reused
+// as text, then a literal magic hex on a quiet glyph (a `·` separator at 1.79:1
+// that dodged the table on purpose). This catches that: any literal `color: #hex`
+// becomes an anonymous text entry, measured against the page surfaces like a token.
+// Same negative-lookbehind rejects background-/border-/*-color and `--name-color:`
+// DEFINITIONS (the char before "color" is "-"); only real `color:` declarations match.
+function colorLiterals(css) {
+  const lits = new Set();
+  const re = /(?<![-a-z])color\s*:\s*(#[0-9a-fA-F]{3,8})\b/g;
+  let m;
+  while ((m = re.exec(css))) lits.add(m[1].toLowerCase());
+  return [...lits];
 }
 
 function classify(name, colorUsed) {
@@ -116,6 +142,34 @@ function checkFile(path) {
     return { fails: 0, skipped: true };
   }
 
+  const disp = (n) => (n[0] === "#" ? `color:${n}` : `--${n}`);
+
+  // ---- advisory: hardcoded literal text colors the token table can't see ----
+  // The audit's blind spot keeps MIGRATING to where the token gate can't look: a
+  // `--rule` token reused as text, then a literal `color: #hex` magic value on a quiet
+  // glyph (the #c4b498 `·` separator at 1.79:1 that dodged the table on purpose). We
+  // surface those — but we do NOT gate on them, because a literal is indistinguishable
+  // from a decorative glyph (an amber ★ rating at 1.78:1 reads identically to a broken
+  // separator at 1.79:1; only the element knows which). Blocking would false-positive
+  // on icon glyphs and previously-passing files. So: drop clear inverse text (light-on-
+  // dark-button etc., ~1:1 vs the page bg), then LIST any literal that fails AA against
+  // its best page surface for a human/critic to verify against its actual element.
+  const pageBg = hexToRgb(tokens[bgName]);
+  const tokenHexes = new Set(names.map((n) => tokens[n].toLowerCase()));
+  const litAdvisory = [];
+  for (const hex of colorLiterals(css)) {
+    const rgb = hexToRgb(hex);
+    if (!rgb || tokenHexes.has(hex)) continue;      // measured already as a token's value
+    if (contrast(rgb, pageBg) < 1.3) continue;      // inverse text on an inverted element — not page text
+    const best = Math.max(...primarySurfaces.map((s) => contrast(rgb, hexToRgb(tokens[s]))));
+    if (best < AA) litAdvisory.push({ hex, best });
+  }
+  const printAdvisory = () => {
+    if (!litAdvisory.length) return;
+    console.log(`  ⚐ hardcoded text-color literal(s) to VERIFY (gate can't see the element — confirm decorative, else fix):`);
+    for (const a of litAdvisory) console.log(`      ${disp(a.hex)} — ${a.best}:1 vs best page surface`);
+  };
+
   const fails = [];
   for (const t of texts) {
     const tr = hexToRgb(tokens[t]);
@@ -128,7 +182,8 @@ function checkFile(path) {
 
   const header = `${path}  (${texts.length} text × ${surfaces.length} surface tokens)`;
   if (!fails.length) {
-    console.log(`✓ ${header} — all pairings ≥ ${AA}:1`);
+    console.log(`✓ ${header} — all token pairings ≥ ${AA}:1`);
+    printAdvisory();
     return { fails: 0 };
   }
   // a pairing only counts as a real failure if the text token fails against the
@@ -150,13 +205,14 @@ function checkFile(path) {
   console.log(`✗ ${header}`);
   for (const f of fails) {
     const blocking = real.some((r) => r.t === f.t);
-    console.log(`    ${blocking ? "✗" : "⚠"} --${f.t} on --${f.s}: ${f.ratio}:1`);
+    console.log(`    ${blocking ? "✗" : "⚠"} ${disp(f.t)} on --${f.s}: ${f.ratio}:1`);
   }
   if (real.length) {
-    console.log(`  → BLOCKING (text below its floor): ${real.map((r) => `--${r.t} ${r.best}:1 < ${r.floor}`).join(", ")}`);
+    console.log(`  → BLOCKING (text below its floor): ${real.map((r) => `${disp(r.t)} ${r.best}:1 < ${r.floor}`).join(", ")}`);
   } else {
     console.log(`  → warnings only (3.0–4.5 on possibly-large text); no blocking failures`);
   }
+  printAdvisory();
   return { fails: real.length };
 }
 

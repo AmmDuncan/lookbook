@@ -1,0 +1,1226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aperture · Observability Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   TOKENS — dense cool-technical dark console.
+   Exemplar: Linear (restraint, dark surfaces, keyboard-first).
+   Every text token measured for ≥4.5:1 against its surface.
+   ============================================================ */
+:root {
+  /* — surfaces — */
+  --bg:            #0c0e11;   /* page/app shell — not pure black */
+  --surface:       #111318;   /* nav rail + log panel */
+  --surface-raised:#161a20;   /* topbar + metric tiles */
+  --surface-hover: #1c2028;   /* row hover */
+  --surface-active:#1f2530;   /* active/selected row */
+
+  /* — borders — */
+  --border:        #232830;   /* hairline dividers */
+  --border-strong: #2e3540;   /* section separators */
+
+  /* — text tiers — measured against --surface (#111318) */
+  /* #e8eaf0 on #111318 = 13.8:1 ✓ */
+  --ink:           #e8eaf0;   /* primary text */
+  /* #9aa0ad on #111318 = 5.7:1 ✓ */
+  --muted:         #9aa0ad;   /* secondary labels */
+  /* #787f8c on #0c0e11 = 4.80:1 ✓, on #111318 = 4.61:1 ✓ */
+  --faint:         #8a909e;   /* timestamps, meta, tile labels — DATA: clears 4.5:1 on ALL surfaces incl. hover(5.1)/active(4.8) */
+
+  /* — accent (scarce mint/cyan — active state, live dot, good deltas) — */
+  --accent:        #2dd4bf;   /* mint — scarce by visual weight, every instance load-bearing (active state, live dots, data-subject hl-path in log lines) */
+  --accent-dim:    #1a7a6e;   /* muted accent for backgrounds */
+  --accent-text:   #2dd4bf;   /* on --surface: 7.1:1 ✓ */
+
+  /* — status colors — functional, never decorative — */
+  --ok:            #34d399;   /* healthy / good delta: on --surface = 8.2:1 ✓ */
+  --warn:          #fbbf24;   /* degraded / bad delta */
+  --err:           #f87171;   /* down / error */
+  --ok-bg:         rgba(52,211,153,.12);
+  --warn-bg:       rgba(251,191,36,.12);
+  --err-bg:        rgba(248,113,113,.12);
+
+  /* — type — */
+  --font:      "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", "Fira Code", monospace;
+  --fs-meta:   11px;
+  --fs-sm:     12px;
+  --fs-body:   13px;
+  --fs-label:  12px;
+
+  /* — geometry — */
+  --nav-w:     200px;
+  --r:         4px;
+  --r-md:      6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  line-height: 1.45;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================ LAYOUT */
+.app {
+  display: grid;
+  grid-template-columns: var(--nav-w) 1fr;
+  grid-template-rows: 40px 1fr;
+  height: 100vh;
+  min-height: 900px;
+}
+
+/* ============================================================ NAV RAIL */
+.nav {
+  grid-row: 1 / 3;
+  grid-column: 1;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+}
+
+.nav-wordmark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--r);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent);
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+.nav-logo svg { display: block; }
+
+.nav-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.nav-env {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.nav-env:hover { background: var(--surface-hover); }
+
+.nav-env-label {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.nav-env-caret {
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.nav-search {
+  padding: 8px 8px 4px;
+}
+.nav-search input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 5px 8px;
+  font-family: var(--font);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  outline: none;
+}
+.nav-search input::placeholder { color: var(--faint); }
+.nav-search input:focus {
+  border-color: var(--accent);
+  outline: 2px solid rgba(45,212,191,.2);
+  outline-offset: 0;
+}
+.nav-search-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--faint);
+  float: right;
+  margin-top: -18px;
+  margin-right: 6px;
+  pointer-events: none;
+}
+
+.nav-section {
+  padding: 12px 8px 4px;
+}
+.nav-section-label {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  padding: 0 4px;
+  margin-bottom: 2px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: var(--r);
+  cursor: pointer;
+  color: var(--muted);
+  font-size: var(--fs-body);
+  position: relative;
+  text-decoration: none;
+}
+.nav-item:hover { background: var(--surface-hover); color: var(--ink); }
+.nav-item.active {
+  background: rgba(45,212,191,.08);
+  color: var(--accent-text);
+}
+.nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.nav-item svg { flex: 0 0 auto; opacity: .7; }
+.nav-item.active svg { opacity: 1; }
+
+.nav-badge {
+  margin-left: auto;
+  background: var(--err-bg);
+  color: var(--err);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 10px;
+  font-family: var(--font-mono);
+}
+
+/* ============================================================ TOPBAR */
+.topbar {
+  grid-row: 1;
+  grid-column: 2;
+  background: var(--surface-raised);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 16px;
+}
+
+.topbar-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  flex: 1;
+}
+.topbar-breadcrumb .sep { color: var(--faint); }
+.topbar-breadcrumb .current { color: var(--ink); font-weight: 500; }
+.topbar-breadcrumb .env-chip {
+  background: var(--surface-hover);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r);
+  padding: 1px 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ok);
+}
+
+.time-chips {
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 2px;
+  gap: 1px;
+}
+.time-chip {
+  font-size: var(--fs-sm);
+  font-family: var(--font-mono);
+  color: var(--muted);
+  padding: 3px 9px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.time-chip:hover { color: var(--ink); background: var(--surface-hover); }
+.time-chip.active {
+  background: var(--surface-raised);
+  color: var(--ink);
+  border: 1px solid var(--border-strong);
+}
+
+.live-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.live-toggle:hover { border-color: var(--border-strong); color: var(--ink); }
+.live-toggle.on { border-color: var(--accent-dim); color: var(--accent-text); }
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+  flex: 0 0 auto;
+}
+.live-toggle.on .live-dot {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .live-toggle.on .live-dot {
+    animation: pulse 2s ease-in-out infinite;
+  }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--accent); }
+  50%       { opacity: .6; box-shadow: 0 0 2px var(--accent); }
+}
+
+.topbar-action {
+  margin-left: 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: var(--fs-sm);
+  padding: 4px 12px;
+  cursor: pointer;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.topbar-action:hover { border-color: var(--border-strong); color: var(--ink); background: var(--surface-hover); }
+.topbar-action:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ============================================================ MAIN CANVAS */
+.canvas {
+  grid-row: 2;
+  grid-column: 2;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--bg);
+}
+
+/* ============================================================ METRIC TILES */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.metric-tile {
+  background: var(--surface-raised);
+  padding: 12px 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.metric-label {
+  font-size: var(--fs-meta);
+  font-family: var(--font-mono);
+  color: var(--faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.metric-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.metric-value {
+  font-size: 22px;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.metric-delta {
+  font-size: var(--fs-sm);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.metric-delta.good { color: var(--ok); }
+.metric-delta.bad  { color: var(--err); }
+.metric-delta.warn { color: var(--warn); }
+
+.metric-spark {
+  margin-top: 4px;
+}
+
+/* ============================================================ SECTION HEADER */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-title {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-count {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--muted);
+  padding: 1px 6px;
+}
+
+.section-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 4px 8px;
+  font-family: var(--font);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  width: 160px;
+  outline: none;
+}
+.filter-input::placeholder { color: var(--faint); }
+.filter-input:focus {
+  border-color: var(--accent);
+}
+
+/* ============================================================ STATUS GRID */
+.status-grid {
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.grid-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.grid-table thead th {
+  font-size: var(--fs-meta);
+  font-family: var(--font-mono);
+  color: var(--faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 400;
+  background: var(--surface);
+  white-space: nowrap;
+}
+.grid-table thead th:first-child { padding-left: 16px; }
+.grid-table thead th.num { text-align: right; }
+
+.grid-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  cursor: default;
+  transition: background 100ms ease-out;
+}
+.grid-table tbody tr:hover { background: var(--surface-hover); }
+.grid-table tbody tr:last-child { border-bottom: none; }
+
+.grid-table td {
+  padding: 8px 10px;
+  font-size: var(--fs-body);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.grid-table td:first-child { padding-left: 16px; }
+.grid-table td.num {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.svc-name {
+  font-weight: 500;
+  color: var(--ink);
+}
+.svc-path {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  margin-top: 1px;
+}
+
+.region-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 2px 6px;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--r);
+  padding: 2px 7px;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+.status-pill.ok   { background: var(--ok-bg);   color: var(--ok);  }
+.status-pill.warn { background: var(--warn-bg);  color: var(--warn); }
+.status-pill.err  { background: var(--err-bg);   color: var(--err); }
+
+.status-pill .dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: currentColor;
+  flex: 0 0 auto;
+}
+
+.deploy-time {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.deploy-sha {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--faint);
+  margin-top: 1px;
+}
+
+.num-ok   { color: var(--ok);   font-family: var(--font-mono); }
+.num-warn { color: var(--warn); font-family: var(--font-mono); }
+.num-err  { color: var(--err);  font-family: var(--font-mono); }
+.num-muted { color: var(--muted); font-family: var(--font-mono); }
+
+/* ============================================================ LOG PANEL */
+.log-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 320px;
+}
+
+.log-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.log-live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--accent-text);
+}
+.log-live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 5px var(--accent);
+  flex: 0 0 auto;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .log-live-dot {
+    animation: pulse 2s ease-in-out infinite;
+  }
+}
+
+.log-pause-btn {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  padding: 3px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.log-pause-btn:hover { color: var(--ink); border-color: var(--border-strong); }
+
+.log-filter {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  width: 220px;
+  outline: none;
+}
+.log-filter::placeholder { color: var(--faint); }
+.log-filter:focus { border-color: var(--accent); }
+
+.log-spacer { flex: 1; }
+
+.log-count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--faint);
+}
+
+.log-table-wrap {
+  overflow-y: auto;
+  flex: 1;
+  background: var(--bg);
+}
+
+.log-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+}
+
+.log-table thead th {
+  font-size: var(--fs-meta);
+  color: var(--faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: left;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 400;
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  white-space: nowrap;
+}
+.log-table thead th:first-child { padding-left: 16px; }
+
+.log-table tbody tr {
+  border-bottom: 1px solid rgba(35,40,48,.6);
+  transition: background 80ms ease-out;
+}
+.log-table tbody tr:hover { background: var(--surface-hover); }
+.log-table tbody tr.new-row {
+  animation: rowfade 400ms ease-out;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rowfade {
+    from { opacity: 0; background: rgba(45,212,191,.04); }
+    to   { opacity: 1; background: transparent; }
+  }
+}
+
+.log-table td {
+  padding: 5px 10px;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  vertical-align: top;
+}
+.log-table td:first-child { padding-left: 16px; }
+
+.log-ts {
+  font-variant-numeric: tabular-nums;
+  color: var(--faint);
+  white-space: nowrap;
+  font-size: 11px;
+}
+
+.log-level {
+  white-space: nowrap;
+}
+.level-chip {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 1px 5px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-variant-numeric: normal;
+}
+.level-chip.INFO  { background: rgba(154,160,173,.1); color: var(--muted); }
+.level-chip.WARN  { background: var(--warn-bg); color: var(--warn); }
+.level-chip.ERROR { background: var(--err-bg);  color: var(--err); }
+.level-chip.DEBUG { background: rgba(110,117,130,.08); color: var(--faint); }
+
+.log-svc {
+  color: var(--muted);
+  white-space: nowrap;
+  font-size: 11px;
+}
+
+.log-msg {
+  color: var(--ink);
+  font-size: 11px;
+  word-break: break-all;
+}
+.log-msg .hl-path  { color: var(--accent-text); }
+.log-msg .hl-warn  { color: var(--warn); }
+.log-msg .hl-err   { color: var(--err); }
+.log-msg .hl-num   { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* ============================================================ MISC UTILS */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- =========================================================== NAV RAIL -->
+<nav class="nav" aria-label="Primary navigation">
+  <div class="nav-wordmark">
+    <div class="nav-logo" aria-hidden="true">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <circle cx="6" cy="6" r="4" stroke="#2dd4bf" stroke-width="1.5"/>
+        <circle cx="6" cy="6" r="1.5" fill="#2dd4bf"/>
+      </svg>
+    </div>
+    <span class="nav-name">Aperture</span>
+  </div>
+
+  <div class="nav-env" role="button" tabindex="0" aria-label="Switch environment">
+    <span class="nav-env-label">api-gateway · prod</span>
+    <span class="nav-env-caret">▾</span>
+  </div>
+
+  <div class="nav-search">
+    <input type="search" placeholder="Search…" aria-label="Search" />
+    <span class="nav-search-hint" aria-hidden="true">⌘K</span>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Observe</div>
+    <a class="nav-item" href="#" tabindex="0">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/>
+        <rect x="9" y="1" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/>
+        <rect x="1" y="9" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/>
+        <rect x="9" y="9" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+      Overview
+    </a>
+    <a class="nav-item" href="#" tabindex="0">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M7 4v3l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      Services
+    </a>
+    <a class="nav-item active" href="#" tabindex="0" aria-current="page">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M1 10l3-4 3 2 3-5 3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Logs
+    </a>
+    <a class="nav-item" href="#" tabindex="0">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M2 11V8M5 11V5M8 11V7M11 11V3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      Metrics
+    </a>
+    <a class="nav-item" href="#" tabindex="0">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M7 2v2M7 10v2M2 7h2M10 7h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+      Alerts
+      <span class="nav-badge">3</span>
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Config</div>
+    <a class="nav-item" href="#" tabindex="0">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M6.5 1.5h1l.5 1.5c.4.1.8.3 1.1.5l1.5-.5.7.7-.5 1.5c.2.3.4.7.5 1.1l1.5.5v1l-1.5.5c-.1.4-.3.8-.5 1.1l.5 1.5-.7.7-1.5-.5c-.3.2-.7.4-1.1.5l-.5 1.5h-1l-.5-1.5a4.5 4.5 0 0 1-1.1-.5l-1.5.5-.7-.7.5-1.5a4.5 4.5 0 0 1-.5-1.1L1 7.5v-1l1.5-.5c.1-.4.3-.8.5-1.1L2.5 3.4l.7-.7 1.5.5c.3-.2.7-.4 1.1-.5L6.5 1.5Z" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="7" cy="7" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+      Settings
+    </a>
+  </div>
+</nav>
+
+<!-- =========================================================== TOPBAR -->
+<header class="topbar" role="banner">
+  <div class="topbar-breadcrumb">
+    <span>api-gateway</span>
+    <span class="sep">/</span>
+    <span class="current">Logs</span>
+    <span class="env-chip">production</span>
+  </div>
+
+  <div class="time-chips" role="group" aria-label="Time range">
+    <span class="time-chip">15m</span>
+    <span class="time-chip active" aria-pressed="true">1h</span>
+    <span class="time-chip">24h</span>
+    <span class="time-chip">7d</span>
+  </div>
+
+  <button class="live-toggle on" type="button" aria-pressed="true" aria-label="Live stream: on">
+    <span class="live-dot" aria-hidden="true"></span>
+    Live
+  </button>
+
+  <button class="topbar-action" type="button">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <path d="M6 1v10M1 6l5-5 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Acknowledge all
+  </button>
+</header>
+
+<!-- =========================================================== CANVAS -->
+<main class="canvas">
+
+  <!-- ——— METRIC TILES ROW ——— -->
+  <section class="metrics-row" aria-label="Live metrics">
+
+    <div class="metric-tile">
+      <div class="metric-label">p99 latency</div>
+      <div class="metric-value-row">
+        <span class="metric-value">142ms</span>
+        <span class="metric-delta bad">+18ms</span>
+      </div>
+      <svg class="metric-spark" width="100%" height="28" viewBox="0 0 120 28" preserveAspectRatio="none">
+        <polyline points="0,22 15,20 30,21 45,18 60,16 75,14 90,11 105,15 120,18"
+          fill="none" stroke="#f87171" stroke-width="1.5" stroke-linejoin="round" opacity=".7"/>
+        <polyline points="0,22 15,20 30,21 45,18 60,16 75,14 90,11 105,15 120,18"
+          fill="url(#err-fill)" stroke="none" opacity=".15"/>
+        <defs>
+          <linearGradient id="err-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f87171"/>
+            <stop offset="100%" stop-color="#f87171" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="metric-tile">
+      <div class="metric-label">req / sec</div>
+      <div class="metric-value-row">
+        <span class="metric-value">2,847</span>
+        <span class="metric-delta good">+3.2%</span>
+      </div>
+      <svg class="metric-spark" width="100%" height="28" viewBox="0 0 120 28" preserveAspectRatio="none">
+        <polyline points="0,20 15,18 30,17 45,19 60,16 75,12 90,10 105,11 120,9"
+          fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" opacity=".7"/>
+      </svg>
+    </div>
+
+    <div class="metric-tile">
+      <div class="metric-label">error rate</div>
+      <div class="metric-value-row">
+        <span class="metric-value">0.83%</span>
+        <span class="metric-delta warn">+0.21%</span>
+      </div>
+      <svg class="metric-spark" width="100%" height="28" viewBox="0 0 120 28" preserveAspectRatio="none">
+        <polyline points="0,24 15,23 30,22 45,24 60,21 75,22 90,18 105,16 120,14"
+          fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linejoin="round" opacity=".7"/>
+      </svg>
+    </div>
+
+    <div class="metric-tile">
+      <div class="metric-label">cpu util</div>
+      <div class="metric-value-row">
+        <span class="metric-value">61%</span>
+        <span class="metric-delta good">−4%</span>
+      </div>
+      <svg class="metric-spark" width="100%" height="28" viewBox="0 0 120 28" preserveAspectRatio="none">
+        <polyline points="0,14 15,16 30,15 45,13 60,14 75,18 90,16 105,14 120,15"
+          fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" opacity=".7"/>
+      </svg>
+    </div>
+
+    <div class="metric-tile">
+      <div class="metric-label">apdex score</div>
+      <div class="metric-value-row">
+        <span class="metric-value">0.91</span>
+        <span class="metric-delta good">+0.03</span>
+      </div>
+      <svg class="metric-spark" width="100%" height="28" viewBox="0 0 120 28" preserveAspectRatio="none">
+        <polyline points="0,18 15,16 30,14 45,15 60,12 75,10 90,11 105,9 120,8"
+          fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" opacity=".7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ——— STATUS GRID ——— -->
+  <section class="status-grid" aria-label="Service status">
+    <div class="section-header">
+      <div class="section-title">
+        Services
+        <span class="section-count">9</span>
+      </div>
+      <div class="section-actions">
+        <input class="filter-input" type="search" placeholder="Filter services…" aria-label="Filter services" />
+      </div>
+    </div>
+
+    <table class="grid-table">
+      <thead>
+        <tr>
+          <th scope="col">Service</th>
+          <th scope="col">Region</th>
+          <th scope="col">Status</th>
+          <th scope="col" class="num">p99</th>
+          <th scope="col" class="num">Err%</th>
+          <th scope="col">Last deploy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="svc-name">api-gateway</div>
+            <div class="svc-path">/svc/gateway</div>
+          </td>
+          <td><span class="region-tag">us-east-1</span></td>
+          <td><span class="status-pill ok"><span class="dot"></span>Healthy</span></td>
+          <td class="num"><span class="num-muted">142ms</span></td>
+          <td class="num"><span class="num-warn">0.83%</span></td>
+          <td>
+            <div class="deploy-time">8 min ago</div>
+            <div class="deploy-sha">3f2a1c9</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="svc-name">auth-service</div>
+            <div class="svc-path">/svc/auth</div>
+          </td>
+          <td><span class="region-tag">us-east-1</span></td>
+          <td><span class="status-pill ok"><span class="dot"></span>Healthy</span></td>
+          <td class="num"><span class="num-muted">38ms</span></td>
+          <td class="num"><span class="num-ok">0.02%</span></td>
+          <td>
+            <div class="deploy-time">2 hr ago</div>
+            <div class="deploy-sha">8b90d4e</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="svc-name">inference-worker</div>
+            <div class="svc-path">/svc/infer</div>
+          </td>
+          <td><span class="region-tag">us-west-2</span></td>
+          <td><span class="status-pill warn"><span class="dot"></span>Degraded</span></td>
+          <td class="num"><span class="num-warn">890ms</span></td>
+          <td class="num"><span class="num-warn">2.14%</span></td>
+          <td>
+            <div class="deploy-time">47 min ago</div>
+            <div class="deploy-sha">c1e7a2f</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="svc-name">vector-store</div>
+            <div class="svc-path">/svc/vectors</div>
+          </td>
+          <td><span class="region-tag">us-east-1</span></td>
+          <td><span class="status-pill ok"><span class="dot"></span>Healthy</span></td>
+          <td class="num"><span class="num-muted">24ms</span></td>
+          <td class="num"><span class="num-ok">0.00%</span></td>
+          <td>
+            <div class="deploy-time">6 hr ago</div>
+            <div class="deploy-sha">d4f8c3b</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="svc-name">queue-consumer</div>
+            <div class="svc-path">/svc/queue</div>
+          </td>
+          <td><span class="region-tag">eu-west-1</span></td>
+          <td><span class="status-pill err"><span class="dot"></span>Down</span></td>
+          <td class="num"><span class="num-err">—</span></td>
+          <td class="num"><span class="num-err">100%</span></td>
+          <td>
+            <div class="deploy-time">3 hr ago</div>
+            <div class="deploy-sha">a7d1e5c</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="svc-name">event-router</div>
+            <div class="svc-path">/svc/events</div>
+          </td>
+          <td><span class="region-tag">us-east-1</span></td>
+          <td><span class="status-pill ok"><span class="dot"></span>Healthy</span></td>
+          <td class="num"><span class="num-muted">11ms</span></td>
+          <td class="num"><span class="num-ok">0.01%</span></td>
+          <td>
+            <div class="deploy-time">1 hr ago</div>
+            <div class="deploy-sha">f9b2a7d</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="svc-name">billing-api</div>
+            <div class="svc-path">/svc/billing</div>
+          </td>
+          <td><span class="region-tag">us-east-1</span></td>
+          <td><span class="status-pill ok"><span class="dot"></span>Healthy</span></td>
+          <td class="num"><span class="num-muted">67ms</span></td>
+          <td class="num"><span class="num-ok">0.05%</span></td>
+          <td>
+            <div class="deploy-time">5 hr ago</div>
+            <div class="deploy-sha">2c8e4f1</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="svc-name">cdn-proxy</div>
+            <div class="svc-path">/svc/cdn</div>
+          </td>
+          <td><span class="region-tag">ap-south-1</span></td>
+          <td><span class="status-pill warn"><span class="dot"></span>Degraded</span></td>
+          <td class="num"><span class="num-warn">312ms</span></td>
+          <td class="num"><span class="num-warn">1.47%</span></td>
+          <td>
+            <div class="deploy-time">22 min ago</div>
+            <div class="deploy-sha">7e3d9a2</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="svc-name">telemetry-sink</div>
+            <div class="svc-path">/svc/telemetry</div>
+          </td>
+          <td><span class="region-tag">us-east-1</span></td>
+          <td><span class="status-pill ok"><span class="dot"></span>Healthy</span></td>
+          <td class="num"><span class="num-muted">9ms</span></td>
+          <td class="num"><span class="num-ok">0.00%</span></td>
+          <td>
+            <div class="deploy-time">4 hr ago</div>
+            <div class="deploy-sha">b5f6c8e</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ——— STREAMING LOG PANEL ——— -->
+  <section class="log-panel" aria-label="Live log stream">
+    <div class="log-header">
+      <div class="log-live-indicator" aria-label="Stream is live">
+        <span class="log-live-dot" aria-hidden="true"></span>
+        Streaming
+      </div>
+
+      <button class="log-pause-btn" type="button" aria-label="Pause log stream">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+          <rect x="2" y="1.5" width="2.5" height="7" rx=".5" fill="currentColor"/>
+          <rect x="5.5" y="1.5" width="2.5" height="7" rx=".5" fill="currentColor"/>
+        </svg>
+        Pause
+      </button>
+
+      <input class="log-filter" type="search" placeholder="Filter: level:ERROR svc:infer…" aria-label="Filter log entries" />
+
+      <span class="log-spacer" aria-hidden="true"></span>
+      <span class="log-count" aria-live="polite">4,812 events · last 1h</span>
+    </div>
+
+    <div class="log-table-wrap" role="log" aria-live="polite" aria-label="Log entries">
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th scope="col">Timestamp</th>
+            <th scope="col">Level</th>
+            <th scope="col">Service</th>
+            <th scope="col">Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="new-row">
+            <td class="log-ts">14:02:31.814</td>
+            <td class="log-level"><span class="level-chip ERROR">ERROR</span></td>
+            <td class="log-svc">queue-consumer</td>
+            <td class="log-msg"><span class="hl-err">connection refused</span>: redis://cache-primary:6379 — retrying in <span class="hl-num">5s</span></td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:31.601</td>
+            <td class="log-level"><span class="level-chip WARN">WARN</span></td>
+            <td class="log-svc">inference-worker</td>
+            <td class="log-msg">GPU memory pressure: <span class="hl-warn">87%</span> utilized — shedding <span class="hl-num">3</span> queued requests</td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:31.447</td>
+            <td class="log-level"><span class="level-chip INFO">INFO</span></td>
+            <td class="log-svc">api-gateway</td>
+            <td class="log-msg">POST <span class="hl-path">/v1/inferences</span> → <span class="hl-num">202</span> accepted · upstream: inference-worker · <span class="hl-num">38ms</span></td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:30.992</td>
+            <td class="log-level"><span class="level-chip INFO">INFO</span></td>
+            <td class="log-svc">auth-service</td>
+            <td class="log-msg">JWT validated for client_id=<span class="hl-path">org_8f2a1c9d</span> · scopes: [infer:write, billing:read]</td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:30.781</td>
+            <td class="log-level"><span class="level-chip ERROR">ERROR</span></td>
+            <td class="log-svc">queue-consumer</td>
+            <td class="log-msg"><span class="hl-err">panic: send on closed channel</span> goroutine 47 [running] · stack trace attached</td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:30.519</td>
+            <td class="log-level"><span class="level-chip WARN">WARN</span></td>
+            <td class="log-svc">cdn-proxy</td>
+            <td class="log-msg">origin response time <span class="hl-warn">312ms</span> exceeds SLO threshold · route: <span class="hl-path">/assets/models/*</span></td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:30.204</td>
+            <td class="log-level"><span class="level-chip INFO">INFO</span></td>
+            <td class="log-svc">event-router</td>
+            <td class="log-msg">dispatched <span class="hl-num">24</span> events to topic=<span class="hl-path">inference.completed</span> · partition: <span class="hl-num">3</span></td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:29.877</td>
+            <td class="log-level"><span class="level-chip DEBUG">DEBUG</span></td>
+            <td class="log-svc">vector-store</td>
+            <td class="log-msg">ANN search: k=<span class="hl-num">20</span> dim=<span class="hl-num">1536</span> ef=<span class="hl-num">64</span> · <span class="hl-num">8ms</span> · <span class="hl-num">12,288</span> candidates</td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:29.541</td>
+            <td class="log-level"><span class="level-chip INFO">INFO</span></td>
+            <td class="log-svc">api-gateway</td>
+            <td class="log-msg">GET <span class="hl-path">/v1/models</span> → <span class="hl-num">200</span> OK · <span class="hl-num">11ms</span> · cache: HIT</td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:29.317</td>
+            <td class="log-level"><span class="level-chip ERROR">ERROR</span></td>
+            <td class="log-svc">queue-consumer</td>
+            <td class="log-msg"><span class="hl-err">dial tcp 10.0.1.47:6379: connect: connection refused</span> · attempt <span class="hl-num">14</span>/20</td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:28.994</td>
+            <td class="log-level"><span class="level-chip INFO">INFO</span></td>
+            <td class="log-svc">billing-api</td>
+            <td class="log-msg">invoice finalized for org_id=<span class="hl-path">org_4b2e8c1f</span> · amount=<span class="hl-num">$1,248.00</span> · items: <span class="hl-num">6</span></td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:28.712</td>
+            <td class="log-level"><span class="level-chip WARN">WARN</span></td>
+            <td class="log-svc">inference-worker</td>
+            <td class="log-msg">model gc-turbo-v3 warm-up exceeded <span class="hl-warn">800ms</span> · request queued (depth: <span class="hl-warn">41</span>)</td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:28.405</td>
+            <td class="log-level"><span class="level-chip INFO">INFO</span></td>
+            <td class="log-svc">auth-service</td>
+            <td class="log-msg">token refresh accepted · client_id=<span class="hl-path">org_3c9d2a7b</span> · ttl: <span class="hl-num">3600s</span></td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:28.121</td>
+            <td class="log-level"><span class="level-chip DEBUG">DEBUG</span></td>
+            <td class="log-svc">telemetry-sink</td>
+            <td class="log-msg">flushed <span class="hl-num">512</span> spans to jaeger-collector:14268 · <span class="hl-num">9ms</span> · ok</td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:27.804</td>
+            <td class="log-level"><span class="level-chip INFO">INFO</span></td>
+            <td class="log-svc">api-gateway</td>
+            <td class="log-msg">POST <span class="hl-path">/v1/embeddings</span> → <span class="hl-num">200</span> OK · upstream: vector-store · <span class="hl-num">24ms</span></td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:27.562</td>
+            <td class="log-level"><span class="level-chip WARN">WARN</span></td>
+            <td class="log-svc">cdn-proxy</td>
+            <td class="log-msg">cache MISS ratio elevated: <span class="hl-warn">34%</span> last <span class="hl-num">5m</span> · possible cache thrash on route <span class="hl-path">/static</span></td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:27.281</td>
+            <td class="log-level"><span class="level-chip INFO">INFO</span></td>
+            <td class="log-svc">event-router</td>
+            <td class="log-msg">consumer group lag: <span class="hl-num">0</span> for topic=<span class="hl-path">billing.events</span> · <span class="hl-num">3</span> partitions healthy</td>
+          </tr>
+          <tr>
+            <td class="log-ts">14:02:26.998</td>
+            <td class="log-level"><span class="level-chip ERROR">ERROR</span></td>
+            <td class="log-svc">queue-consumer</td>
+            <td class="log-msg"><span class="hl-err">health check failed</span>: GET /health → <span class="hl-num">503</span> in <span class="hl-num">5,001ms</span> · marking unhealthy</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main><!-- /.canvas -->
+</div><!-- /.app -->
+</body>
+</html>

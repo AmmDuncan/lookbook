@@ -29,8 +29,8 @@ Nothing here is deleted or moved (that would fragment the kits — atoms share e
 | `recipe-table` | **COVERED** | `cookbooks/data-table.md` |
 | `organism-account-detail` | **COVERED** | `cookbooks/details-rail.md` |
 | `organism-revenue-overview` | mostly COVERED | `cookbooks/dashboard-kpi.md` (KPI cards) + `charts.md` (combo chart) |
-| `organism-infra-monitoring` | **ORPHAN** | a dense monitoring dashboard (metrics + status + logs) — only partially covered; a real gap |
-| `organism-ops-console` | **ORPHAN** | an ops console (live logs + actions) — not reproduced; a real gap |
+| `organism-infra-monitoring` | **COVERED** | `cookbooks/ops-console.md` (reproduction #12 — three-band metrics+status+logs console) |
+| `organism-ops-console` | **COVERED** | `cookbooks/ops-console.md` (reproduction #12 — streaming log stream + Live + actions) |
 
 ## marketing/
 
@@ -63,6 +63,6 @@ Nothing here is deleted or moved (that would fragment the kits — atoms share e
 ## The reproduction backlog (orphans worth a cookbook, ranked)
 
 1. ~~Editorial article / reading surface~~ — **DONE** → `cookbooks/reading-surface.md` (reproduction #11). The first non-scanning archetype in the library.
-2. **Ops / monitoring dashboard** (`organism-infra-monitoring` + `organism-ops-console`) — dense operational surface: live metrics + status grid + streaming logs + actions. `dashboard-kpi`/`charts` cover the metric tiles, not the console.
+2. ~~Ops / monitoring dashboard~~ — **DONE** → `cookbooks/ops-console.md` (reproduction #12). The three-band operational surface (live metrics + status grid + streaming logs + actions) the parts-cookbooks never composed; adds status-as-shape at log-table scale.
 3. **Editorial index / content homepage** (`organism-index`) — a curated listing surface.
 4. **Lighter, covered-by-example** (backlog only if a real second consumer appears): empty-state, figure/diagram frame, app-shell-frame, feature-grid, cta-band, nav-footer, social-faq, code-block.

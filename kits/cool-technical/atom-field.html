@@ -44,6 +44,15 @@
        background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius);
        width:100%;transition:border-color var(--motion) var(--ease),box-shadow var(--motion) var(--ease)}
   .inp::placeholder{color:var(--subtle)}
+  /* FOCUS (P-AY-03 / WCAG 1.4.11 non-text 3:1):
+     - `:focus` (NOT `:focus-visible`) is intentional for TEXT FIELDS — a field focused by
+       pointer (click/tap) should show the ring too, since the user is about to type; suppressing
+       it on click (what `:focus-visible` does) is worse UX for inputs. Buttons/links/checkboxes
+       are the opposite case and DO want `:focus-visible`.
+     - The 3:1-compliant indicator is the SOLID `--accent` BORDER (verified 5.37:1 on #FFF light /
+       3.31:1 on #16181D dark — dark is tight). The 3px `--accent-tint` box-shadow is a DECORATIVE
+       GLOW only (~1.09:1) — it does NOT clear 3:1 and must never be the sole indicator. Keep the
+       border. Re-check the dark ratio if `--accent` darkens or `--surface` lightens. */
   .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint)}
   .inp.is-focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint)}
   .inp.is-error{border-color:var(--danger);box-shadow:0 0 0 3px rgba(200,65,46,0.10)}

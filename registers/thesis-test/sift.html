@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sift — Log search for backend engineers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/*
+ * ## Tokens
+ *
+ * Primitives — cool blue-grey ramp (OKLCH-anchored, hex for portability)
+ *   gray-950  #090910
+ *   gray-900  #0d0d16
+ *   gray-850  #111118
+ *   gray-800  #18181f
+ *   gray-700  #252530
+ *   gray-600  #3a3a48
+ *   gray-500  #5a5a6e
+ *   gray-400  #7f7f96
+ *   gray-300  #a8a8bc
+ *   gray-200  #c8c8d8
+ *   gray-100  #e8e8f0
+ *   gray-50   #f4f4f8
+ *
+ * Accent — teal-green (cool, single hue)
+ *   accent-600  #007a62
+ *   accent-500  #00b894
+ *   accent-400  #00d4aa  ← primary accent
+ *   accent-300  #4fe6c9
+ *
+ * Semantic token table
+ * ─────────────────────────────────────────────────────
+ *   --surface       #090910   page background (not pure black)
+ *   --surface-raised  #111118   card/panel surfaces
+ *   --surface-high  #18181f   elevated surfaces (modals, chips)
+ *   --border        #252530   hairline borders (1px)
+ *   --border-strong #3a3a48   emphasis borders (active, focus)
+ *   (step-ordinals) #606075   howto step numbers — 48px large text, 3.24:1 AA pass
+ *   --ink           #e8e8f0   primary text     (~14.2:1 on --surface)
+ *   --muted         #a8a8bc   secondary text   (~6.8:1 on --surface)
+ *   --faint         #7f7f96   tertiary labels  (~4.6:1 on --surface) — CHECKED: passes AA ≥4.5:1
+ *   --accent        #00d4aa   primary accent
+ *   --accent-dim    rgba(0,212,170,0.12)  accent glow / tint
+ *   --accent-hover  #4fe6c9   accent hover state
+ *   --focus-ring    #00d4aa
+ *
+ * Typography companion
+ *   --font-sans     'Geist', sans-serif
+ *   --font-mono     'Geist Mono', monospace
+ *
+ * Spacing scale (4px base)
+ *   --s-1  4px  --s-2  8px  --s-3  12px  --s-4  16px  --s-5  20px
+ *   --s-6  24px --s-8  32px --s-10 40px  --s-12 48px  --s-16 64px
+ *   --s-20 80px --s-24 96px --s-32 128px
+ */
+
+:root {
+  --surface:       #090910;
+  --surface-raised:#111118;
+  --surface-high:  #18181f;
+  --border:        #252530;
+  --border-strong: #3a3a48;
+  --ink:           #e8e8f0;
+  --muted:         #a8a8bc;
+  --faint:         #7f7f96;
+  --accent:        #00d4aa;
+  --accent-dim:    rgba(0, 212, 170, 0.12);
+  --accent-glow:   rgba(0, 212, 170, 0.20);
+  --accent-hover:  #4fe6c9;
+  --focus-ring:    #00d4aa;
+
+  --font-sans:  'Geist', system-ui, sans-serif;
+  --font-mono:  'Geist Mono', 'Menlo', monospace;
+
+  --s-1:  4px;  --s-2:  8px;  --s-3:  12px; --s-4:  16px; --s-5:  20px;
+  --s-6:  24px; --s-8:  32px; --s-10: 40px; --s-12: 48px; --s-16: 64px;
+  --s-20: 80px; --s-24: 96px; --s-32: 128px;
+
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--surface);
+  color: var(--ink);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ─── Utilities ─────────────────────────────────────── */
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--s-8);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.accent { color: var(--accent); }
+
+/* ─── Nav ────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+  background: rgba(9, 9, 16, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--s-8);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.nav-logo-mark {
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-logo-mark svg {
+  width: 12px;
+  height: 12px;
+  stroke: var(--accent);
+  fill: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--s-8);
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 120ms ease-out;
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-cta {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--surface);
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0 var(--s-4);
+  height: 34px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  transition: background 120ms ease-out;
+}
+
+.nav-cta:hover { background: var(--accent-hover); }
+.nav-cta:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+/* ─── Hero ───────────────────────────────────────────── */
+.hero {
+  padding-top: 144px;
+  padding-bottom: var(--s-32);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle radial accent behind the terminal */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 80px;
+  right: -120px;
+  width: 720px;
+  height: 520px;
+  background: radial-gradient(ellipse at center, rgba(0,212,170,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-16);
+  align-items: start;
+}
+
+.hero-copy {
+  padding-top: var(--s-6);
+}
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: var(--s-6);
+}
+
+.hero-headline {
+  font-size: 58px;
+  font-weight: 600;
+  line-height: 1.07;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-wrap: balance;
+  margin-bottom: var(--s-6);
+}
+
+.hero-headline em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero-deck {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 52ch;
+  margin-bottom: var(--s-10);
+  text-wrap: pretty;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--surface);
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0 var(--s-6);
+  height: 40px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  transition: background 120ms ease-out;
+}
+
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-primary:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+.btn-secondary {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--s-6);
+  height: 40px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  transition: border-color 120ms ease-out, color 120ms ease-out;
+}
+
+.btn-secondary:hover { border-color: var(--muted); color: var(--ink); }
+.btn-secondary:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+.kbd-hint {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--faint);
+  margin-top: var(--s-4);
+}
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-size: 11px;
+  color: var(--faint);
+  background: var(--surface-raised);
+  line-height: 1.4;
+}
+
+/* ─── Terminal artifact ──────────────────────────────── */
+.terminal {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Subtle glow — earned, not decorative: the terminal is the product hero */
+.terminal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 0 1px rgba(0, 212, 170, 0.12) inset;
+  pointer-events: none;
+}
+
+.terminal-bar {
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  background: var(--surface-high);
+}
+
+.terminal-dots {
+  display: flex;
+  gap: var(--s-2);
+}
+
+.terminal-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: var(--border-strong);
+}
+
+.terminal-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--faint);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.terminal-search {
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  background: var(--surface-raised);
+}
+
+.terminal-search-icon {
+  width: 14px;
+  height: 14px;
+  stroke: var(--faint);
+  fill: none;
+  flex-shrink: 0;
+}
+
+.terminal-search input {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink);
+  flex: 1;
+  caret-color: var(--accent);
+}
+
+.terminal-search input::placeholder { color: var(--faint); }
+
+.terminal-search-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border-radius: 2px;
+  padding: 1px 6px;
+}
+
+.log-list {
+  padding: var(--s-2) 0;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.log-row {
+  padding: var(--s-1) var(--s-4);
+  display: grid;
+  grid-template-columns: 80px 48px 1fr;
+  gap: var(--s-3);
+  transition: background 80ms ease-out;
+}
+
+.log-row:hover { background: var(--surface-high); }
+
+.log-row.active {
+  background: var(--accent-dim);
+  border-left: 2px solid var(--accent);
+  padding-left: calc(var(--s-4) - 2px);
+}
+
+.log-ts {
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.log-level {
+  font-weight: 500;
+  text-align: right;
+}
+
+.level-err  { color: #f87171; }
+.level-warn { color: #fbbf24; }
+.level-info { color: var(--muted); }
+
+.log-msg { color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.log-msg .hl { color: var(--accent); background: var(--accent-dim); border-radius: 2px; padding: 0 3px; }
+
+.terminal-footer {
+  padding: var(--s-2) var(--s-4);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface-high);
+}
+
+.terminal-footer-left {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--faint);
+}
+
+.terminal-footer-right {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--faint);
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+/* ─── Divider ────────────────────────────────────────── */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* ─── Proof strip ────────────────────────────────────── */
+.proof-strip {
+  padding: var(--s-12) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.proof-strip-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--s-8);
+  display: flex;
+  align-items: center;
+  gap: var(--s-8);
+}
+
+.proof-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.proof-rule {
+  flex: 0 0 1px;
+  height: 1px;
+  background: var(--border);
+}
+
+.proof-logos {
+  display: flex;
+  align-items: center;
+  gap: var(--s-10);
+  flex-wrap: wrap;
+}
+
+.proof-logo {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--faint);
+  letter-spacing: -0.01em;
+  transition: color 120ms ease-out;
+}
+
+.proof-logo:hover { color: var(--muted); }
+
+/* ─── Body — asymmetric span: full-width log stream ──── */
+.section {
+  padding: var(--s-32) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-header {
+  margin-bottom: var(--s-16);
+}
+
+.section-n {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: var(--s-3);
+}
+
+.section-title {
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  color: var(--ink);
+  text-wrap: balance;
+  max-width: 28ch;
+}
+
+.section-deck {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 56ch;
+  margin-top: var(--s-4);
+  text-wrap: pretty;
+}
+
+/*
+ * BODY ARRANGEMENT:
+ *
+ * 1. ASYMMETRIC SPAN — "Query" section: the full-width real artifact
+ *    (log stream / query runner) spans 2 columns; text is narrow left.
+ *    This is the asymmetric-span body pattern — one feature gets the wide
+ *    treatment, others are narrow. Hierarchy from scale contrast, not
+ *    card borders.
+ *
+ * 2. STAGGERED 1+2 — "Speed" section: one big stat on its own row,
+ *    two narrower proof-points sharing the next. Not a 3-across grid.
+ *
+ * 3. BIG-NUMBER / EDITORIAL LIST — "How it works" section: ruled
+ *    list with oversized display numerals (tabular-nums companion).
+ *    Features as ruled editorial rows, not icon cards.
+ *
+ * None of these three arrangements share the same skeleton.
+ */
+
+/* ─── Section 1: Asymmetric span (query-first) ────────── */
+.query-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--s-16);
+  align-items: start;
+}
+
+.query-copy {}
+
+.query-artifact {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.query-bar {
+  padding: var(--s-3) var(--s-4);
+  background: var(--surface-high);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.query-prompt {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  flex: 1;
+}
+
+.query-prompt-label {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.query-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--faint);
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+.query-result-count {
+  color: var(--accent);
+}
+
+.query-result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.query-result-table thead th {
+  padding: var(--s-2) var(--s-4);
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--faint);
+  border-bottom: 1px solid var(--border);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.query-result-table th:last-child,
+.query-result-table td:last-child { text-align: right; }
+
+.query-result-table tbody tr { transition: background 80ms ease-out; }
+.query-result-table tbody tr:hover { background: var(--surface-high); }
+
+.query-result-table td {
+  padding: var(--s-2) var(--s-4);
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+}
+
+.query-result-table td.col-service { color: var(--ink); }
+.query-result-table td.col-count { color: var(--ink); font-weight: 500; }
+.query-result-table td.col-p99 { color: var(--accent); }
+.query-result-table td.col-err { color: #f87171; }
+
+.query-facets {
+  display: flex;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  border-top: 1px solid var(--border);
+  background: var(--surface-high);
+  flex-wrap: wrap;
+}
+
+.facet-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 8px;
+}
+
+.facet-chip.active {
+  color: var(--accent);
+  border-color: rgba(0, 212, 170, 0.4);
+  background: var(--accent-dim);
+}
+
+/* ─── Section 2: Staggered 1+2 (speed metrics) ─────────── */
+.speed-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-8) var(--s-16);
+}
+
+.speed-stat-big {
+  grid-column: 1 / -1;
+  padding-bottom: var(--s-8);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--s-4);
+}
+
+.speed-stat-number {
+  font-size: 76px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-sans);
+}
+
+.speed-stat-number span { color: var(--accent); font-size: 48px; }
+
+.speed-stat-label {
+  font-size: 16px;
+  color: var(--muted);
+  margin-top: var(--s-3);
+}
+
+.speed-pair {
+  display: contents;
+}
+
+.speed-item {
+  padding-top: var(--s-6);
+}
+
+.speed-item-number {
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: var(--s-2);
+}
+
+.speed-item-number small {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.speed-item-label {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ─── Section 3: Big-number editorial list (how it works) ─ */
+.howto-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: var(--s-12);
+}
+
+.howto-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 360px;
+  gap: var(--s-8) var(--s-12);
+  align-items: start;
+  padding: var(--s-8) 0;
+  border-top: 1px solid var(--border);
+}
+
+.howto-num {
+  font-family: var(--font-mono);
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1;
+  color: #606075; /* 3.24:1 on --surface — passes large-text AA */
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  padding-top: var(--s-1);
+}
+
+.howto-text {}
+
+.howto-title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: var(--s-3);
+}
+
+.howto-body {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.howto-artifact {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--s-4);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.howto-code-line {
+  display: flex;
+  gap: var(--s-3);
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.howto-code-line .lnum {
+  color: var(--border-strong);
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+  min-width: 16px;
+}
+
+.howto-code-line .kw { color: var(--accent); }
+.howto-code-line .str { color: #fbbf24; }
+.howto-code-line .cm { color: var(--faint); }
+
+/* ─── Testimonial ────────────────────────────────────── */
+.testimonial-section {
+  padding: var(--s-32) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.testimonial-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--s-8);
+}
+
+.testimonial-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-16);
+  align-items: center;
+}
+
+.testimonial-quote {
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+  text-wrap: pretty;
+}
+
+.testimonial-quote::before {
+  content: '\201C';
+  color: var(--accent);
+  font-size: 36px;
+  line-height: 0;
+  vertical-align: -0.25em;
+  margin-right: 2px;
+}
+
+.testimonial-attr {
+  margin-top: var(--s-6);
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+.testimonial-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: var(--surface-high);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.testimonial-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.testimonial-role {
+  font-size: 13px;
+  color: var(--faint);
+}
+
+.testimonial-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.metric-row {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--s-5) var(--s-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.metric-label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.metric-val {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.metric-val .unit {
+  font-size: 14px;
+  color: var(--faint);
+  margin-left: 2px;
+}
+
+.metric-delta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border-radius: 2px;
+  padding: 1px 6px;
+}
+
+/* ─── Closing CTA ────────────────────────────────────── */
+.cta-section {
+  padding: var(--s-32) 0;
+}
+
+.cta-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--s-8);
+}
+
+.cta-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: var(--s-16);
+  align-items: center;
+}
+
+.cta-headline {
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.cta-deck {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: var(--s-4);
+  max-width: 48ch;
+}
+
+.cta-box {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--s-8);
+}
+
+.cta-box-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: var(--s-2);
+}
+
+.cta-box-sub {
+  font-size: 13px;
+  color: var(--faint);
+  margin-bottom: var(--s-6);
+}
+
+.cta-input-row {
+  display: flex;
+  gap: var(--s-2);
+}
+
+.cta-input {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--s-4);
+  height: 40px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 120ms ease-out;
+}
+
+.cta-input::placeholder { color: var(--faint); }
+.cta-input:focus { border-color: var(--accent); }
+
+.cta-submit {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--surface);
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0 var(--s-5);
+  height: 40px;
+  cursor: pointer;
+  transition: background 120ms ease-out;
+  white-space: nowrap;
+}
+
+.cta-submit:hover { background: var(--accent-hover); }
+.cta-submit:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+.cta-terms {
+  font-size: 12px;
+  color: var(--faint);
+  margin-top: var(--s-4);
+}
+
+.cta-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  margin: var(--s-6) 0;
+}
+
+.cta-divider-line { flex: 1; height: 1px; background: var(--border); }
+.cta-divider-text { font-size: 12px; color: var(--faint); }
+
+.cta-secondary-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.cta-btn-docs {
+  flex: 1;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--s-4);
+  height: 36px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  transition: border-color 120ms ease-out, color 120ms ease-out;
+}
+
+.cta-btn-docs:hover { border-color: var(--muted); color: var(--ink); }
+
+/* ─── Footer ─────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: var(--s-8) 0;
+}
+
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--s-8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.footer-copy {
+  font-size: 13px;
+  color: var(--faint);
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--faint);
+  text-decoration: none;
+  transition: color 120ms ease-out;
+}
+
+.footer-links a:hover { color: var(--muted); }
+
+/* ─── Motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .log-row { transition: background 80ms ease-out; }
+  .query-result-table tbody tr { transition: background 80ms ease-out; }
+  .btn-primary, .btn-secondary, .nav-cta, .cta-submit, .cta-btn-docs {
+    transition: background 120ms ease-out, border-color 120ms ease-out, color 120ms ease-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-mark">
+        <svg viewBox="0 0 12 12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 3h8M2 6h5M2 9h3"/>
+        </svg>
+      </span>
+      sift
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Docs</a></li>
+      <li><a href="#">Pricing</a></li>
+      <li><a href="#">Changelog</a></li>
+      <li><a href="#">GitHub</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Get early access</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-layout">
+
+      <div class="hero-copy">
+        <p class="hero-eyebrow">Log search for backend engineers</p>
+        <h1 class="hero-headline">Find the signal<br>in <em>any</em> log stream</h1>
+        <p class="hero-deck">
+          Structured query over billions of events in milliseconds.
+          No dashboards to configure. No proprietary query language to learn.
+          Just search.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn-primary">Start searching free</a>
+          <a href="#" class="btn-secondary">View the docs</a>
+        </div>
+        <p class="kbd-hint" style="margin-top: 20px;">
+          Open search from anywhere &nbsp;
+          <kbd class="kbd">⌘</kbd>&nbsp;<kbd class="kbd">K</kbd>
+        </p>
+      </div>
+
+      <!-- Terminal artifact: the real product hero -->
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="terminal-title">sift — production · us-east-1</span>
+        </div>
+
+        <div class="terminal-search">
+          <svg class="terminal-search-icon" viewBox="0 0 16 16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="7" cy="7" r="4.5"/>
+            <path d="M10.5 10.5 L13.5 13.5"/>
+          </svg>
+          <input type="text" value='level:error service:payment-api' readonly>
+          <span class="terminal-search-count">247 matches</span>
+        </div>
+
+        <div class="log-list">
+          <div class="log-row">
+            <span class="log-ts">14:03:21.04</span>
+            <span class="log-level level-info">INFO</span>
+            <span class="log-msg">request completed method=POST path=/v1/charge latency=34ms</span>
+          </div>
+          <div class="log-row">
+            <span class="log-ts">14:03:21.91</span>
+            <span class="log-level level-warn">WARN</span>
+            <span class="log-msg">retry attempt=2 downstream=stripe timeout=5000</span>
+          </div>
+          <div class="log-row active">
+            <span class="log-ts">14:03:22.18</span>
+            <span class="log-level level-err">ERR</span>
+            <span class="log-msg"><span class="hl">payment-api</span>: upstream 502 trace_id=7f3a9c</span>
+          </div>
+          <div class="log-row">
+            <span class="log-ts">14:03:22.34</span>
+            <span class="log-level level-err">ERR</span>
+            <span class="log-msg">circuit breaker opened service=stripe-gateway</span>
+          </div>
+          <div class="log-row">
+            <span class="log-ts">14:03:22.41</span>
+            <span class="log-level level-err">ERR</span>
+            <span class="log-msg">charge failed user_id=9812 amount=4900 code=upstream_timeout</span>
+          </div>
+          <div class="log-row">
+            <span class="log-ts">14:03:23.05</span>
+            <span class="log-level level-info">INFO</span>
+            <span class="log-msg">circuit breaker half-open probe dispatched</span>
+          </div>
+          <div class="log-row">
+            <span class="log-ts">14:03:23.72</span>
+            <span class="log-level level-info">INFO</span>
+            <span class="log-msg">probe succeeded circuit closed latency=128ms</span>
+          </div>
+        </div>
+
+        <div class="terminal-footer">
+          <span class="terminal-footer-left">ingesting 2.1 M events/s</span>
+          <span class="terminal-footer-right">
+            <span>tail -f</span>
+            <span>export</span>
+            <span>share</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROOF STRIP -->
+<div class="proof-strip">
+  <div class="proof-strip-inner">
+    <span class="proof-label">Used by engineers at</span>
+    <div class="proof-rule"></div>
+    <div class="proof-logos">
+      <span class="proof-logo">Vercel</span>
+      <span class="proof-logo">Resend</span>
+      <span class="proof-logo">Planetscale</span>
+      <span class="proof-logo">Railway</span>
+      <span class="proof-logo">Render</span>
+      <span class="proof-logo">Fly.io</span>
+    </div>
+  </div>
+</div>
+
+<!-- BODY SECTION 1: ASYMMETRIC SPAN — query-first search -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-header">
+      <p class="section-n">01 / Query</p>
+      <h2 class="section-title">A query language you already speak</h2>
+      <p class="section-deck">
+        Field-colon syntax. Boolean operators. Regex. Relative time.
+        No proprietary DSL — if you've used grep, you're already proficient.
+      </p>
+    </div>
+
+    <!-- Asymmetric: narrow left rail + wide artifact spanning the rest -->
+    <div class="query-layout">
+      <div class="query-copy">
+        <p style="font-size:14px; color: var(--muted); line-height: 1.7; text-wrap: pretty;">
+          Aggregate across services in a single query. Group by field,
+          filter by time window, sort by p99 latency — without leaving
+          the keyboard.
+        </p>
+        <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-top: 2px;">›</span>
+            <span style="font-size: 14px; color: var(--muted);">Boolean operators: <code style="font-family: var(--font-mono); font-size: 12px; color: var(--ink);">AND OR NOT</code></span>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-top: 2px;">›</span>
+            <span style="font-size: 14px; color: var(--muted);">Time ranges: <code style="font-family: var(--font-mono); font-size: 12px; color: var(--ink);">since:30m before:15m</code></span>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-top: 2px;">›</span>
+            <span style="font-size: 14px; color: var(--muted);">Aggregations: <code style="font-family: var(--font-mono); font-size: 12px; color: var(--ink);">p50 p99 count sum</code></span>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-top: 2px;">›</span>
+            <span style="font-size: 14px; color: var(--muted);">Regex: <code style="font-family: var(--font-mono); font-size: 12px; color: var(--ink);">/pattern/</code></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="query-artifact">
+        <div class="query-bar">
+          <div class="query-prompt">
+            <span class="query-prompt-label">›</span>
+            <span style="font-family: var(--font-mono); font-size: 13px; color: var(--ink);">
+              level:error | groupby service | sort p99 desc | since:1h
+            </span>
+          </div>
+          <div class="query-meta">
+            <span class="query-result-count">12 services</span>
+            <span>ran in 41ms</span>
+          </div>
+        </div>
+        <table class="query-result-table">
+          <thead>
+            <tr>
+              <th>service</th>
+              <th>environment</th>
+              <th>count</th>
+              <th>p50</th>
+              <th>p99</th>
+              <th>err %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-service">payment-api</td>
+              <td>production</td>
+              <td class="col-count">2,841</td>
+              <td>23ms</td>
+              <td class="col-p99">612ms</td>
+              <td class="col-err">8.4 %</td>
+            </tr>
+            <tr>
+              <td class="col-service">auth-service</td>
+              <td>production</td>
+              <td class="col-count">1,204</td>
+              <td>18ms</td>
+              <td class="col-p99">289ms</td>
+              <td class="col-err">3.1 %</td>
+            </tr>
+            <tr>
+              <td class="col-service">webhook-consumer</td>
+              <td>production</td>
+              <td class="col-count">892</td>
+              <td>54ms</td>
+              <td class="col-p99">204ms</td>
+              <td class="col-err">2.7 %</td>
+            </tr>
+            <tr>
+              <td class="col-service">billing-worker</td>
+              <td>staging</td>
+              <td class="col-count">441</td>
+              <td>11ms</td>
+              <td class="col-p99">118ms</td>
+              <td class="col-err">1.2 %</td>
+            </tr>
+            <tr>
+              <td class="col-service">mailer</td>
+              <td>production</td>
+              <td class="col-count">218</td>
+              <td>8ms</td>
+              <td class="col-p99">76ms</td>
+              <td class="col-err">0.4 %</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="query-facets">
+          <span class="facet-chip active">All environments</span>
+          <span class="facet-chip">production</span>
+          <span class="facet-chip">staging</span>
+          <span class="facet-chip">since: 1h</span>
+          <span class="facet-chip">since: 6h</span>
+          <span class="facet-chip">since: 24h</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BODY SECTION 2: STAGGERED 1+2 (speed metrics) -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-header">
+      <p class="section-n">02 / Speed</p>
+      <h2 class="section-title">Results before you finish typing</h2>
+      <p class="section-deck">
+        Sub-100ms median query time across a multi-billion-event corpus.
+        No warm-up, no pre-aggregation, no query planner to tune.
+      </p>
+    </div>
+
+    <!-- Staggered: big number alone on a row, two narrower below -->
+    <div class="speed-layout" style="margin-top: 48px;">
+
+      <!-- 1 alone (full-width) -->
+      <div class="speed-stat-big">
+        <div class="speed-stat-number">38<span>ms</span></div>
+        <p class="speed-stat-label">median query latency at 10 B events — no pre-aggregation</p>
+      </div>
+
+      <!-- 2 on the next row -->
+      <div class="speed-item">
+        <div class="speed-item-number">2.1 <small>M events/s</small></div>
+        <p class="speed-item-label">continuous ingest from any source — Kafka, Fluentd, the SDK</p>
+      </div>
+      <div class="speed-item">
+        <div class="speed-item-number">99.97 <small>% uptime</small></div>
+        <p class="speed-item-label">multi-region active-active; query during rolling deploys</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BODY SECTION 3: BIG-NUMBER EDITORIAL LIST (how it works) -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-header">
+      <p class="section-n">03 / Setup</p>
+      <h2 class="section-title">From zero to searching in four minutes</h2>
+      <p class="section-deck">
+        One SDK, one environment variable, no infrastructure to run.
+      </p>
+    </div>
+
+    <div class="howto-list">
+
+      <div class="howto-row">
+        <span class="howto-num">01</span>
+        <div class="howto-text">
+          <h3 class="howto-title">Install the SDK</h3>
+          <p class="howto-body">
+            One package. Auto-instruments your HTTP servers, ORMs, and queues
+            out of the box — no manual spans.
+          </p>
+        </div>
+        <div class="howto-artifact">
+          <div class="howto-code-line"><span class="lnum">$</span><span><span class="kw">npm</span> install @sift/sdk</span></div>
+        </div>
+      </div>
+
+      <div class="howto-row">
+        <span class="howto-num">02</span>
+        <div class="howto-text">
+          <h3 class="howto-title">Set your ingest key</h3>
+          <p class="howto-body">
+            One environment variable. Sift's SDK reads it automatically
+            — nothing else to configure for most stacks.
+          </p>
+        </div>
+        <div class="howto-artifact">
+          <div class="howto-code-line">
+            <span class="lnum">$</span>
+            <span><span class="kw">export</span> SIFT_INGEST_KEY=<span class="str">sk_live_…</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="howto-row">
+        <span class="howto-num">03</span>
+        <div class="howto-text">
+          <h3 class="howto-title">Ship structured logs</h3>
+          <p class="howto-body">
+            Use your existing logger — pino, winston, zerolog, logrus.
+            Sift parses structured JSON automatically and indexes every field.
+          </p>
+        </div>
+        <div class="howto-artifact">
+          <div class="howto-code-line"><span class="lnum">1</span><span><span class="kw">import</span> { logger } <span class="kw">from</span> <span class="str">'@sift/sdk'</span></span></div>
+          <div class="howto-code-line"><span class="lnum">2</span><span>&nbsp;</span></div>
+          <div class="howto-code-line"><span class="lnum">3</span><span>logger.info({</span></div>
+          <div class="howto-code-line"><span class="lnum">4</span><span>&nbsp;&nbsp;<span class="str">event</span>: <span class="str">'charge.created'</span>,</span></div>
+          <div class="howto-code-line"><span class="lnum">5</span><span>&nbsp;&nbsp;<span class="str">amount</span>: <span class="str">4900</span>, <span class="str">currency</span>: <span class="str">'usd'</span></span></div>
+          <div class="howto-code-line"><span class="lnum">6</span><span>})</span></div>
+        </div>
+      </div>
+
+      <div class="howto-row">
+        <span class="howto-num">04</span>
+        <div class="howto-text">
+          <h3 class="howto-title">Open the search</h3>
+          <p class="howto-body">
+            Hit <kbd class="kbd" style="font-size: 11px; vertical-align: 0.05em;">⌘</kbd>&nbsp;<kbd class="kbd" style="font-size: 11px; vertical-align: 0.05em;">K</kbd> from anywhere in the console.
+            Your logs are already there.
+          </p>
+        </div>
+        <div class="howto-artifact" style="display: flex; align-items: center; gap: 10px;">
+          <svg width="14" height="14" viewBox="0 0 16 16" stroke="var(--accent)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="7" cy="7" r="4.5"/>
+            <path d="M10.5 10.5 L13.5 13.5"/>
+          </svg>
+          <span style="font-family: var(--font-mono); font-size: 12px; color: var(--faint);">event:charge.created since:10m</span>
+          <span style="margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--accent); background: var(--accent-dim); border-radius: 2px; padding: 1px 6px;">3 results</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL + METRICS (inset vs full-bleed variation) -->
+<section class="testimonial-section">
+  <div class="testimonial-inner">
+    <div class="testimonial-layout">
+
+      <div>
+        <blockquote class="testimonial-quote">
+          Replaced three dashboards we never fully understood. Now it's just Sift, a terminal, and time to think.
+        </blockquote>
+        <div class="testimonial-attr">
+          <div class="testimonial-avatar">MK</div>
+          <div>
+            <p class="testimonial-name">Maya Kowalski</p>
+            <p class="testimonial-role">Staff Engineer, Resend</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-stack">
+        <div class="metric-row">
+          <span class="metric-label">Mean time to root cause</span>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="metric-val">4<span class="unit">min</span></span>
+            <span class="metric-delta">↓ 83 %</span>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Query execution (p50)</span>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="metric-val">38<span class="unit">ms</span></span>
+            <span class="metric-delta">↓ 97 %</span>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Dashboards configured</span>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="metric-val">0</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING CTA (inset box, asymmetric — not full-bleed centered) -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-layout">
+
+      <div>
+        <h2 class="cta-headline">Start searching.<br>No setup ceremony.</h2>
+        <p class="cta-deck">
+          Free tier includes 500 M events per month and 90-day retention.
+          No credit card required to start.
+        </p>
+      </div>
+
+      <div class="cta-box">
+        <p class="cta-box-title">Get early access</p>
+        <p class="cta-box-sub">Join 800+ engineers on the waitlist.</p>
+        <div class="cta-input-row">
+          <label for="cta-email" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Work email</label>
+          <input class="cta-input" id="cta-email" type="email" placeholder="you@company.com" autocomplete="email">
+          <button class="cta-submit" type="button">Request access</button>
+        </div>
+        <p class="cta-terms">No spam. Unsubscribe any time.</p>
+        <div class="cta-divider">
+          <span class="cta-divider-line"></span>
+          <span class="cta-divider-text">or</span>
+          <span class="cta-divider-line"></span>
+        </div>
+        <div class="cta-secondary-actions">
+          <a href="#" class="cta-btn-docs">Read the docs</a>
+          <a href="#" class="cta-btn-docs">View on GitHub</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2024 Sift Systems, Inc.</span>
+    <ul class="footer-links">
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="#">Status</a></li>
+      <li><a href="#">Security</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>

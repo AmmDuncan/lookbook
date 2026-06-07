@@ -57,12 +57,12 @@ Nothing here is deleted or moved (that would fragment the kits — atoms share e
 | `atom-masthead` | ORPHAN (light) | masthead — demonstrated in editorial register voices, not a cookbook |
 | `organism-index` | **ORPHAN** | an editorial index / content homepage — not reproduced |
 | `atom-index` | **ORPHAN** | editorial listing item — part of the index gap |
-| `organism-article` | **ORPHAN** | a full editorial **article** (a reading surface) — the registers only ever did landings/dashboards, never long-form prose. The clearest archetype gap in the whole library. |
-| `atom-prose` | **ORPHAN** | reading-body prose — part of the article gap |
+| `organism-article` | ✅ COVERED | `cookbooks/reading-surface.md` (reproduction #11, grounded in The New Yorker) |
+| `atom-prose` | ✅ COVERED | `cookbooks/reading-surface.md` (the reading measure + serif body recipe) |
 
 ## The reproduction backlog (orphans worth a cookbook, ranked)
 
-1. **Editorial article / reading surface** (`organism-article` + `atom-prose`) — a whole archetype the registers never touched; reading-rhythm, measure, drop-caps, pull-quotes, footnotes.
+1. ~~Editorial article / reading surface~~ — **DONE** → `cookbooks/reading-surface.md` (reproduction #11). The first non-scanning archetype in the library.
 2. **Ops / monitoring dashboard** (`organism-infra-monitoring` + `organism-ops-console`) — dense operational surface: live metrics + status grid + streaming logs + actions. `dashboard-kpi`/`charts` cover the metric tiles, not the console.
 3. **Editorial index / content homepage** (`organism-index`) — a curated listing surface.
 4. **Lighter, covered-by-example** (backlog only if a real second consumer appears): empty-state, figure/diagram frame, app-shell-frame, feature-grid, cta-band, nav-footer, social-faq, code-block.

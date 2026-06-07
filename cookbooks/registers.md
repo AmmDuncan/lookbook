@@ -46,6 +46,18 @@ A **register is a coherent selection across these dials** — coherent meaning t
 
 Warm- and dark-editorial deliberately **hold composition constant** (hero + statement-beside) so you can read the temperature/surface change in isolation — a controlled comparison, not three independent voices. Cold-editorial then moves composition too, to show that dial is independent. The lesson: you don't need a new type system for a new voice — **re-point two or three dials** — but make sure *temperature* and *composition* are dials you set on purpose, because both love to ride on autopilot while you fuss over colour.
 
+## Composing the body (below the hero) — reach FOR these, don't just avoid the tells
+
+The composition dial above names *hero* shapes (cover / object-beside / ribbon …). But a page is mostly *body* — the proof, features, and CTA below the hero — and the anti-slop rules there are usually stated as **prohibitions** ("no three-identical-feature cards," "no stacked full-bleed bands"). A prohibition with no positive alternative is a trap: told only what to avoid, you avoid by reflex and land on the default grid anyway. (Proven — a weaker model handed this cookbook nailed every *named* dial and still shipped a 3-up feature grid + four stacked bands, because the body had no vocabulary to reach for.) So, body patterns to choose from:
+
+- **Bento.** A few cells of *different sizes* in an irregular grid — one large feature cell + two small, a wide data cell spanning two columns. Breaks the equal-column rhythm by construction.
+- **Asymmetric span.** One feature gets a wide 2-column treatment (its artifact full-width — a log stream, a chart, a real screenshot); the others are narrow. Scale contrast = hierarchy.
+- **Staggered 1 + 2 (or 2 + 1).** Not three-across: one feature alone on a row, two sharing the next. The row rhythm itself differs.
+- **Inset vs full-bleed, alternated.** Don't make every band edge-to-edge with the same horizontal rhythm. Inset the CTA, let the hero card bleed past the grid, give the page a *silhouette* instead of four identical rectangles.
+- **Big-number / editorial list.** Features as a ruled list with oversized display numerals (see `float-bold-expressive`) or roman-numeral editorial rows (`float-warm-editorial`) — scale contrast instead of icon cards.
+
+**The §11 "three-identical-cards" and "stacked-bands" tells apply *intra-page*, not just across voices.** Differing *content* inside identical *card shapes* does not satisfy "bones differ" — it's the most common way the tell sneaks back (rich artifacts in a stamped 3-up grid still reads as a stamped grid). Vary at least one band's *arrangement*, not just its contents.
+
 ## How to derive a voice for a real brief
 
 1. **Read the brief for feeling-words** (the §-identity interview): serious/playful, calm/urgent, heritage/modern, technical/human, premium/accessible.
@@ -69,13 +81,13 @@ Warm- and dark-editorial deliberately **hold composition constant** (hero + stat
 Every caution above, made pass/fail. This exists because the discipline kept living in prose the builder forgot to apply to their own work. If any line fails, it's not ready — no matter how good it looks to you.
 
 - [ ] **Composition moved, not just palette.** No two voices share a layout skeleton. At least where you claim distinct voices, the *bones* differ (object-beside vs below vs ribbon vs cover), not only the ink.
-- [ ] **Contrast: every text-carrying token clears AA at its real size** — including the tertiary/`--faint` label colour (eyebrows, dates, table headers, captions are *text*, not decoration). Measure it (≥4.5:1 small, ≥3:1 only for ≥18.66px bold). Faint means de-emphasised, not invisible.
+- [ ] **Contrast: every text-carrying token clears AA at its real size** — including the tertiary/`--faint` label colour (eyebrows, dates, table headers, captions are *text*, not decoration). ≥4.5:1 small, ≥3:1 only for ≥18.66px bold. Faint means de-emphasised, not invisible. **This line is machine-enforceable:** run `node scripts/check-contrast.mjs <file.html>` — it parses the token table, detects foreground-vs-surface polarity, and fails on any named text tier (`--faint`/`--muted`/`--ink`) below 4.5 (accents below 3.0). It caught a 1.68:1 log-timestamp text in a weaker model's output that the model's own eye had passed.
 - [ ] **Numbers in a tabular companion, never the display face.** Amounts, data, dense figures use a legible face with `tabular-nums`; the expressive/Didone/display face is headline-only.
 - [ ] **No status-cosplay.** No coloured dot beside a label on non-live state. Dots are for genuinely live channels only; use a real glyph otherwise.
 - [ ] **No centered-everything hero**, no three-identical-icon feature row, no scattered tilted "floating cards," no decorative macOS traffic-lights — the named §11 marketing tells. Run the slop-radar on your *own* chrome, not just reproduced UI.
 - [ ] **Temperature + accent set on purpose.** Confirm by eye the dial you meant to move actually moved (the "dark editorial that's still warm" trap).
 - [ ] **Imagery is real or a genuine product object** — never fabricated CSS illustration on the warm/editorial point.
-- [ ] **One accent, scarce** (≤ a few instances); grounded in a *named* real exemplar; no CSS typos; every font-weight you use is actually loaded.
+- [ ] **One accent hue, every instance load-bearing.** Scarcity is a *visual-weight* judgment, not a tally — don't count to a magic number, and don't delete a meaningful colour (an active pipeline bar, a live indicator) just to hit one. Ask of each instance "does this carry meaning or is it decoration?"; kill the decoration, keep the rest. Grounded in a *named* real exemplar; no CSS typos; every font-weight you use is actually loaded.
 - [ ] **An adversary reviewed it** (critic agent or this list), not just the author.
 
 ## Don't

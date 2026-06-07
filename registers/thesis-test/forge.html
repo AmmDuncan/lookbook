@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1240">
+<title>Forge — CI/CD for engineers who ship</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────────────────────────────
+   TOKENS
+   Surface: dark  Temperature: cool  Accent: electric-cyan (scarce)
+   ───────────────────────────────────────────────────────────────── */
+:root {
+  /* Neutral ramp — cool-tinted dark */
+  --gray-950: #09090C;
+  --gray-900: #0D0F14;
+  --gray-850: #111318;
+  --gray-800: #181B22;
+  --gray-700: #242830;
+  --gray-600: #363A44;
+  --gray-500: #4D5261;
+  --gray-400: #6B7280;
+  --gray-300: #9CA3AF;
+  --gray-200: #CBD5E1;
+  --gray-100: #E2E8F0;
+  --gray-50:  #F1F5F9;
+
+  /* Semantic surface */
+  --bg:          #0D0F14;
+  --bg-subtle:   #111318;
+  --surface:     #181B22;
+  --surface-raised: #1E2230;
+  --border:      #242830;
+  --border-strong: #363A44;
+  --text:        #E2E8F0;
+  --text-muted:  #9CA3AF;
+  --text-faint:  #818897;  /* eyebrows, captions — lightened to clear 4.5:1 on --bg */
+
+  /* Accent — scarce electric-cyan */
+  --accent:       #00D4FF;
+  --accent-dim:   rgba(0, 212, 255, 0.12);
+  --accent-glow:  0 0 16px rgba(0, 212, 255, 0.25);
+
+  /* Status */
+  --success: #34D399;
+  --warning: #FBBF24;
+  --danger:  #F87171;
+
+  /* Type */
+  --font-sans: 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'Menlo', monospace;
+
+  /* Spacing scale (4px base) */
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
+  --space-5: 20px;  --space-6: 24px;  --space-8: 32px;  --space-10: 40px;
+  --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+
+  /* Type scale */
+  --text-xs:   12px;  --text-sm:  14px;  --text-base: 16px;
+  --text-lg:   20px;  --text-xl:  25px;  --text-2xl:  31px;
+  --text-3xl:  39px;  --text-4xl: 49px;  --text-5xl:  61px;
+
+  /* Radius — sharp/technical */
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 8px;
+  --r-pill: 9999px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  width: 1240px;
+  height: 1400px;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+  width: 1240px;
+  height: 1400px;
+  overflow: hidden;
+}
+
+/* ─── TYPOGRAPHY HELPERS ──────────────────────────────────────── */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── NAV ─────────────────────────────────────────────────────── */
+nav {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-12);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.nav-logo-mark {
+  width: 24px;
+  height: 24px;
+  background: var(--accent);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-logo-mark svg { display: block; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1;
+  padding: 9px var(--space-4);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  transition: all 140ms ease-out;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-strong);
+}
+
+.btn-ghost:hover {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--gray-500);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--gray-950);
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  padding: 9px 20px;
+}
+
+.btn-primary:hover {
+  background: #33DDFF;
+  box-shadow: var(--accent-glow);
+}
+
+/* ─── MAIN LAYOUT ─────────────────────────────────────────────── */
+main {
+  display: flex;
+  flex-direction: column;
+  height: calc(1400px - 61px); /* minus nav */
+}
+
+/* ─── HERO ────────────────────────────────────────────────────── */
+.hero {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: start;
+  padding: var(--space-12) var(--space-12) var(--space-10);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding-top: var(--space-4);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 5px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  background: var(--surface);
+}
+
+.hero-badge-dot {
+  /* Genuine live-state dot — this build counter updates */
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  flex-shrink: 0;
+}
+
+.hero-headline {
+  font-size: var(--text-5xl);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  text-wrap: balance;
+  max-width: 16ch;
+}
+
+.hero-headline em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 44ch;
+  text-wrap: pretty;
+}
+
+.hero-cta-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.hero-kbd-hint {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 5px;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  border-bottom-width: 2px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--surface);
+  line-height: 1.4;
+}
+
+/* ─── PIPELINE VISUALIZATION (hero right) ──────────────────────── */
+.hero-right {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.pipeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+
+.pipeline-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pipeline-title {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.pipeline-ref {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  padding: 2px 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+}
+
+.pipeline-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Pipeline stages */
+.pipeline-stages {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.stage-row {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--r-sm);
+}
+
+.stage-row:hover { background: var(--bg-subtle); }
+
+.stage-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.stage-bar-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.stage-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 400ms ease-out;
+}
+
+.stage-bar-fill.done    { background: var(--success); }
+.stage-bar-fill.running { background: var(--accent); animation: pulse-bar 1.4s ease-in-out infinite; }
+.stage-bar-fill.queued  { background: var(--border-strong); }
+
+@keyframes pulse-bar {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.55; }
+}
+
+.stage-time {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  min-width: 44px;
+}
+
+.stage-status-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stage-status-icon.done    { background: rgba(52, 211, 153, 0.15); color: var(--success); }
+.stage-status-icon.running { background: rgba(0, 212, 255, 0.12);  color: var(--accent);  }
+.stage-status-icon.queued  { background: transparent; border: 1px solid var(--border-strong); }
+
+/* Build summary bar */
+.pipeline-summary {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pipeline-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.pipeline-stat-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.pipeline-stat-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+.pipeline-stat-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border);
+}
+
+/* ─── PROOF / METRICS BAND ───────────────────────────────────── */
+.proof-band {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+
+.proof-cell {
+  padding: var(--space-5) var(--space-8);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.proof-cell:last-child { border-right: none; }
+
+.proof-value {
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.proof-value .accent { color: var(--accent); }
+
+.proof-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+/* ─── FEATURES ─────────────────────────────────────────────────── */
+.features {
+  flex: 1 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.feature {
+  padding: var(--space-8) var(--space-8);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.feature:last-child { border-right: none; }
+
+.feature-icon {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.feature-icon.active {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+.feature-title {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.feature-body {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+
+.feature-detail {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+/* Log stream (feature 1) */
+.log-stream {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.7;
+  color: var(--text-faint);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: var(--space-3) var(--space-4);
+  max-height: 110px;
+  overflow: hidden;
+}
+
+.log-stream .log-line { display: flex; gap: var(--space-3); }
+.log-stream .log-ts   { color: var(--gray-600); flex-shrink: 0; }
+.log-stream .log-ok   { color: var(--success); }
+.log-stream .log-step { color: var(--text-muted); }
+.log-stream .log-accent { color: var(--accent); }
+
+/* Deploy target list (feature 2) */
+.deploy-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.deploy-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--space-4);
+  align-items: center;
+  padding: 6px var(--space-3);
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.deploy-env {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.deploy-sha {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+.deploy-status {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.deploy-status.ok      { color: var(--success); }
+.deploy-status.pending { color: var(--warning); }
+.deploy-status.active  { color: var(--accent); }
+
+/* Shortcut grid (feature 3) */
+.shortcut-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.shortcut-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.shortcut-row:last-child { border-bottom: none; }
+
+.shortcut-label {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.shortcut-keys {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* ─── CTA SECTION ──────────────────────────────────────────────── */
+.cta-section {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-10) var(--space-12);
+  border-top: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+
+.cta-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.cta-headline {
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+.cta-sub {
+  font-size: var(--text-base);
+  color: var(--text-muted);
+  max-width: 42ch;
+  text-wrap: pretty;
+}
+
+.cta-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.cta-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* install block */
+.install-block {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.install-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.install-block-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+.install-copy-hint {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+.install-block-body {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.install-cmd {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.install-cmd .prompt { color: var(--text-faint); user-select: none; }
+.install-cmd .cmd-accent { color: var(--accent); }
+.install-cmd .cmd-arg   { color: var(--text); }
+.install-cmd .cmd-flag  { color: var(--gray-400); }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg width="14" height="14" fill="none" viewBox="0 0 14 14">
+        <path d="M2 2h4v4H2V2zM8 2h4v4H8V2zM2 8h4v4H2V8zM9 9l3 3M12 9l-3 3" stroke="#0D0F14" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    Forge
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Docs</a></li>
+    <li><a href="#">Changelog</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a href="#">Status</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#" class="btn btn-ghost">Sign in</a>
+    <a href="#" class="btn btn-primary">Start building</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ── HERO ─────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-left">
+      <span class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        3,847 builds in the last hour
+      </span>
+
+      <h1 class="hero-headline">
+        CI/CD that gets out of your <em>way.</em>
+      </h1>
+
+      <p class="hero-sub">
+        Forge connects to your repo, infers your stack, and ships a working pipeline in under two minutes. No YAML theology. No waiting for a green light from DevOps.
+      </p>
+
+      <div class="hero-cta-row">
+        <a href="#" class="btn btn-primary" style="font-size:15px;padding:10px 24px;">Deploy your first build</a>
+        <span class="hero-kbd-hint">or press <kbd class="kbd">⌘</kbd> <kbd class="kbd">K</kbd> to open Forge</span>
+      </div>
+    </div>
+
+    <!-- Live pipeline card -->
+    <div class="hero-right">
+      <div class="pipeline-header">
+        <div class="pipeline-title-row">
+          <span class="pipeline-title">main</span>
+          <span class="pipeline-ref">a3f9c12</span>
+          <span class="pipeline-ref">feat/search-index</span>
+        </div>
+        <span class="pipeline-meta">triggered 23s ago</span>
+      </div>
+
+      <div class="pipeline-stages">
+
+        <div class="stage-row">
+          <div class="stage-name">
+            <span class="stage-status-icon done">
+              <svg width="8" height="8" fill="none" viewBox="0 0 8 8"><path d="M1.5 4l2 2 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            checkout
+          </div>
+          <div class="stage-bar-track"><div class="stage-bar-fill done" style="width:100%"></div></div>
+          <span class="stage-time">0.8s</span>
+        </div>
+
+        <div class="stage-row">
+          <div class="stage-name">
+            <span class="stage-status-icon done">
+              <svg width="8" height="8" fill="none" viewBox="0 0 8 8"><path d="M1.5 4l2 2 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            install
+          </div>
+          <div class="stage-bar-track"><div class="stage-bar-fill done" style="width:100%"></div></div>
+          <span class="stage-time">14.2s</span>
+        </div>
+
+        <div class="stage-row">
+          <div class="stage-name">
+            <span class="stage-status-icon done">
+              <svg width="8" height="8" fill="none" viewBox="0 0 8 8"><path d="M1.5 4l2 2 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            lint + typecheck
+          </div>
+          <div class="stage-bar-track"><div class="stage-bar-fill done" style="width:100%"></div></div>
+          <span class="stage-time">8.4s</span>
+        </div>
+
+        <div class="stage-row">
+          <div class="stage-name">
+            <span class="stage-status-icon done">
+              <svg width="8" height="8" fill="none" viewBox="0 0 8 8"><path d="M1.5 4l2 2 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            test (128 specs)
+          </div>
+          <div class="stage-bar-track"><div class="stage-bar-fill done" style="width:100%"></div></div>
+          <span class="stage-time">31.7s</span>
+        </div>
+
+        <div class="stage-row">
+          <div class="stage-name">
+            <span class="stage-status-icon running">
+              <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="2.5" fill="currentColor" opacity="0.8"/></svg>
+            </span>
+            build
+          </div>
+          <div class="stage-bar-track"><div class="stage-bar-fill running" style="width:62%"></div></div>
+          <span class="stage-time" style="color:var(--accent)">~18s</span>
+        </div>
+
+        <div class="stage-row">
+          <div class="stage-name">
+            <span class="stage-status-icon queued"></span>
+            deploy → prod
+          </div>
+          <div class="stage-bar-track"><div class="stage-bar-fill queued" style="width:0%"></div></div>
+          <span class="stage-time">—</span>
+        </div>
+
+      </div>
+
+      <div class="pipeline-summary">
+        <div class="pipeline-stat">
+          <span class="pipeline-stat-value">55.1s</span>
+          <span class="pipeline-stat-label">elapsed</span>
+        </div>
+        <div class="pipeline-stat-divider"></div>
+        <div class="pipeline-stat">
+          <span class="pipeline-stat-value">128 / 128</span>
+          <span class="pipeline-stat-label">tests passed</span>
+        </div>
+        <div class="pipeline-stat-divider"></div>
+        <div class="pipeline-stat">
+          <span class="pipeline-stat-value">4 stages done</span>
+          <span class="pipeline-stat-label">1 running · 1 queued</span>
+        </div>
+        <div class="pipeline-stat-divider"></div>
+        <div class="pipeline-stat">
+          <span class="pipeline-stat-value" style="color:var(--accent)">running</span>
+          <span class="pipeline-stat-label">build #2,841</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROOF BAND ─────────────────────────────────────────────── -->
+  <div class="proof-band">
+    <div class="proof-cell">
+      <span class="proof-value">2<span class="accent">m</span> 14<span class="accent">s</span></span>
+      <span class="proof-label">median pipeline · p50</span>
+    </div>
+    <div class="proof-cell">
+      <span class="proof-value">99.97<span class="accent">%</span></span>
+      <span class="proof-label">uptime last 90 days</span>
+    </div>
+    <div class="proof-cell">
+      <span class="proof-value">~0<span class="accent">s</span></span>
+      <span class="proof-label">queue wait · autoscaled runners</span>
+    </div>
+    <div class="proof-cell">
+      <span class="proof-value">12<span class="accent">×</span></span>
+      <span class="proof-label">faster than median GitHub Actions</span>
+    </div>
+  </div>
+
+  <!-- ── FEATURES ──────────────────────────────────────────────── -->
+  <div class="features">
+
+    <!-- Feature 1: Streaming logs -->
+    <div class="feature">
+      <div class="feature-icon active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16">
+          <rect x="2" y="2" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.25"/>
+          <path d="M4.5 6l2 1.5L4.5 9M8.5 9.5h3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3 class="feature-title">Streaming build logs</h3>
+      <p class="feature-body">
+        Every line, in real time. No polling, no page refresh. Tail any stage from the CLI or the dashboard — latency under 80&nbsp;ms.
+      </p>
+      <div class="feature-detail">
+        <div class="log-stream">
+          <div class="log-line"><span class="log-ts">14:02:31.041</span><span class="log-ok">✓</span><span class="log-step">cache restored (node_modules)</span></div>
+          <div class="log-line"><span class="log-ts">14:02:31.118</span><span class="log-step">$ tsc --noEmit</span></div>
+          <div class="log-line"><span class="log-ts">14:02:38.409</span><span class="log-ok">✓</span><span class="log-step">0 type errors</span></div>
+          <div class="log-line"><span class="log-ts">14:02:38.510</span><span class="log-step">$ vitest run --coverage</span></div>
+          <div class="log-line"><span class="log-ts">14:02:58.991</span><span class="log-ok">✓</span><span class="log-step">128 passed  0 failed  in 20.48s</span></div>
+          <div class="log-line"><span class="log-ts">14:02:59.003</span><span class="log-accent">→</span><span class="log-step">starting build stage…</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 2: Zero-config deploys -->
+    <div class="feature">
+      <div class="feature-icon">
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16">
+          <path d="M3 12l2-2m8-8l-2 2m0 0l-4 4m4-4a2 2 0 10-2.828-2.828M9 7L5 11m0 0l-2 2" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3 class="feature-title">Zero-config deploys</h3>
+      <p class="feature-body">
+        Forge detects your stack and writes the deploy config. Override what you need with a <span class="mono" style="font-size:12px;color:var(--text-muted)">forge.toml</span> — the rest is inferred.
+      </p>
+      <div class="feature-detail">
+        <div class="deploy-list">
+          <div class="deploy-row">
+            <span class="deploy-env">production</span>
+            <span class="deploy-sha">a3f9c12</span>
+            <span class="deploy-status ok">deployed 2m ago</span>
+          </div>
+          <div class="deploy-row">
+            <span class="deploy-env">staging</span>
+            <span class="deploy-sha">b7e1d44</span>
+            <span class="deploy-status active">deploying…</span>
+          </div>
+          <div class="deploy-row">
+            <span class="deploy-env">preview / pr-184</span>
+            <span class="deploy-sha">f2c10a8</span>
+            <span class="deploy-status ok">deployed 8m ago</span>
+          </div>
+          <div class="deploy-row">
+            <span class="deploy-env">preview / pr-179</span>
+            <span class="deploy-sha">c9b5f03</span>
+            <span class="deploy-status pending">queued</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 3: Keyboard-first -->
+    <div class="feature">
+      <div class="feature-icon">
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16">
+          <rect x="1.5" y="4" width="13" height="9" rx="1.5" stroke="currentColor" stroke-width="1.25"/>
+          <path d="M4 7h1M6.5 7h1M9 7h1M11.5 7h1M4 9.5h8" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3 class="feature-title">Built for the keyboard</h3>
+      <p class="feature-body">
+        Command palette, vim-style navigation in log views, global shortcuts. Every action reachable in under three keystrokes.
+      </p>
+      <div class="feature-detail">
+        <div class="shortcut-grid">
+          <div class="shortcut-row">
+            <span class="shortcut-label">Open command palette</span>
+            <div class="shortcut-keys"><kbd class="kbd">⌘</kbd><kbd class="kbd">K</kbd></div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-label">Re-run pipeline</span>
+            <div class="shortcut-keys"><kbd class="kbd">R</kbd></div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-label">Jump to failing step</span>
+            <div class="shortcut-keys"><kbd class="kbd">F</kbd></div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-label">Cancel build</span>
+            <div class="shortcut-keys"><kbd class="kbd">⌃</kbd><kbd class="kbd">C</kbd></div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-label">Copy build URL</span>
+            <div class="shortcut-keys"><kbd class="kbd">⌘</kbd><kbd class="kbd">⇧</kbd><kbd class="kbd">C</kbd></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── CTA ──────────────────────────────────────────────────── -->
+  <section class="cta-section">
+    <div class="cta-left">
+      <span class="eyebrow">Get started in 2 minutes</span>
+      <h2 class="cta-headline">Your first build<br>is one command away.</h2>
+      <p class="cta-sub">Connect your repo, run <span class="mono" style="font-size:13px;color:var(--text-muted)">forge init</span>, and Forge handles the rest. No credit card until you're ready to scale.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-primary" style="font-size:15px;padding:10px 24px;">Create free account</a>
+        <a href="#" class="btn btn-ghost">Read the docs →</a>
+      </div>
+    </div>
+
+    <div class="cta-right">
+      <div class="install-block">
+        <div class="install-block-header">
+          <span class="install-block-title">terminal</span>
+          <span class="install-copy-hint">click to copy</span>
+        </div>
+        <div class="install-block-body">
+          <div class="install-cmd"><span class="prompt">$ </span><span class="cmd-accent">npm</span> <span class="cmd-arg">install</span> <span class="cmd-flag">-g</span> <span class="cmd-arg">@forge/cli</span></div>
+          <div class="install-cmd"><span class="prompt">$ </span><span class="cmd-accent">forge</span> <span class="cmd-arg">init</span></div>
+          <div class="install-cmd" style="color:var(--success);">  ✓ detected: Node 20 · Vitest · Vite</div>
+          <div class="install-cmd" style="color:var(--success);">  ✓ pipeline created: 6 stages</div>
+          <div class="install-cmd" style="color:var(--success);">  ✓ first build queued → <span style="color:var(--accent);">forge.run/my-app</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>

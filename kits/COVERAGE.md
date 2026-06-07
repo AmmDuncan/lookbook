@@ -1,0 +1,68 @@
+# kits/ — coverage & status (retire-by-coverage)
+
+**Status: conceptually superseded, artifact-layer untrusted.** The 3-named-registers *model* is dead — `cookbooks/registers.md` replaces it with a composable dial-space (any number of voices, not a fixed three). But the kit *artifacts* — the per-voice `_tokens.css` foundations and the copy-paste atom/recipe/organism specimens — are the **self-judged layer that shipped AP28** (the status-cosplay tell a real designer's glance caught). They were never validated by reproduction.
+
+**How to use this directory:** don't import or copy a kit specimen as if it's trusted. For any surface, check the table below:
+- **COVERED** → use the named cookbook instead; it was earned against a real screen.
+- **ORPHAN** → no cookbook yet; the kit specimen is the only reference, but treat it as *untrusted* — reproduce it through the `EXPERIMENT.md` gate before relying on it. These are the reproduction backlog.
+
+Nothing here is deleted or moved (that would fragment the kits — atoms share each voice's `_tokens.css`). This file is the authoritative status; the specimens stay as frozen reference.
+
+## cool-technical/
+
+| Specimen | Status | Covered by / note |
+|---|---|---|
+| `_tokens.css` | concept COVERED | dial-space (`registers.md`); cool-technical token values demonstrated in `registers/float-cool-technical.html` |
+| `_icons.svg` | infra | shared icon set — keep |
+| `atom-chart` | **COVERED** | `cookbooks/charts.md` |
+| `atom-cmdk` | **COVERED** | `cookbooks/command-palette.md` |
+| `atom-empty` | ORPHAN (light) | empty-state pattern lives in `patterns/empty-states.md`; no reproduction-earned cookbook yet |
+| `atom-field` | **COVERED** | `cookbooks/settings-page.md` + `modal-and-repeater.md` |
+| `atom-figure` | ORPHAN | explanatory figure/diagram frame — partially `charts.md`, but the figure-as-explanation recipe isn't earned |
+| `atom-icon` | infra | icon usage — keep |
+| `atom-overlay` | **COVERED** | `cookbooks/command-palette.md` (overlay shell) + `modal-and-repeater.md` |
+| `atom-shell-frame` | ORPHAN | app-shell (topbar + nav + panes); the master-detail shell in `details-rail.md` covers the pane case only |
+| `atom-status` | **COVERED** | `cookbooks/state-as-shape.md` |
+| `atom-table-row` | **COVERED** | `cookbooks/data-table.md` |
+| `recipe-figure` | ORPHAN | see `atom-figure` |
+| `recipe-form` | **COVERED** | `cookbooks/settings-page.md` + `modal-and-repeater.md` |
+| `recipe-table` | **COVERED** | `cookbooks/data-table.md` |
+| `organism-account-detail` | **COVERED** | `cookbooks/details-rail.md` |
+| `organism-revenue-overview` | mostly COVERED | `cookbooks/dashboard-kpi.md` (KPI cards) + `charts.md` (combo chart) |
+| `organism-infra-monitoring` | **ORPHAN** | a dense monitoring dashboard (metrics + status + logs) — only partially covered; a real gap |
+| `organism-ops-console` | **ORPHAN** | an ops console (live logs + actions) — not reproduced; a real gap |
+
+## marketing/
+
+| Specimen | Status | Covered by / note |
+|---|---|---|
+| `_tokens.css` | concept COVERED | a marketing voice is demonstrated in `registers/float-bold-expressive.html` |
+| `atom-hero` | **COVERED** | `cookbooks/marketing-hero.md` |
+| `atom-pricing-row` | **COVERED** | `cookbooks/pricing-table.md` |
+| `atom-chart` | **COVERED** | `cookbooks/charts.md` |
+| `organism-landing` | **COVERED** | `cookbooks/marketing-hero.md` + the registers landings |
+| `organism-pricing` | **COVERED** | `cookbooks/pricing-table.md` |
+| `atom-feature-grid` | ORPHAN (light) | the §11 "three-identical-features" trap; the registers bold redesign shows a non-cliché alternative, but no cookbook |
+| `atom-cta-band` | ORPHAN (light) | closing-CTA band — demonstrated in registers voices, not a cookbook |
+| `atom-nav-footer` | ORPHAN (light) | nav + footer chrome — common, no cookbook |
+| `atom-social-faq` | ORPHAN | social proof + FAQ block — no cookbook |
+| `atom-code` | ORPHAN | code block as a marketing/dev-tool visual — no cookbook (`synthetic-product-imagery` is product imagery, not code) |
+| `recipe-cta` | ORPHAN (light) | CTA composition — see `atom-cta-band` |
+
+## warm-editorial/
+
+| Specimen | Status | Covered by / note |
+|---|---|---|
+| `_tokens.css` | concept COVERED | editorial voices demonstrated in `registers/float-{warm,dark,cold}-editorial.html` |
+| `atom-masthead` | ORPHAN (light) | masthead — demonstrated in editorial register voices, not a cookbook |
+| `organism-index` | **ORPHAN** | an editorial index / content homepage — not reproduced |
+| `atom-index` | **ORPHAN** | editorial listing item — part of the index gap |
+| `organism-article` | **ORPHAN** | a full editorial **article** (a reading surface) — the registers only ever did landings/dashboards, never long-form prose. The clearest archetype gap in the whole library. |
+| `atom-prose` | **ORPHAN** | reading-body prose — part of the article gap |
+
+## The reproduction backlog (orphans worth a cookbook, ranked)
+
+1. **Editorial article / reading surface** (`organism-article` + `atom-prose`) — a whole archetype the registers never touched; reading-rhythm, measure, drop-caps, pull-quotes, footnotes.
+2. **Ops / monitoring dashboard** (`organism-infra-monitoring` + `organism-ops-console`) — dense operational surface: live metrics + status grid + streaming logs + actions. `dashboard-kpi`/`charts` cover the metric tiles, not the console.
+3. **Editorial index / content homepage** (`organism-index`) — a curated listing surface.
+4. **Lighter, covered-by-example** (backlog only if a real second consumer appears): empty-state, figure/diagram frame, app-shell-frame, feature-grid, cta-band, nav-footer, social-faq, code-block.

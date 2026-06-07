@@ -55,8 +55,8 @@ Nothing here is deleted or moved (that would fragment the kits — atoms share e
 |---|---|---|
 | `_tokens.css` | concept COVERED | editorial voices demonstrated in `registers/float-{warm,dark,cold}-editorial.html` |
 | `atom-masthead` | ORPHAN (light) | masthead — demonstrated in editorial register voices, not a cookbook |
-| `organism-index` | **ORPHAN** | an editorial index / content homepage — not reproduced |
-| `atom-index` | **ORPHAN** | editorial listing item — part of the index gap |
+| `organism-index` | **COVERED** | `cookbooks/editorial-index.md` (reproduction #13 — chrome + featured lead + ruled column grid + stacked department) |
+| `atom-index` | **COVERED** | `cookbooks/editorial-index.md` (the kicker + serif headline + dek + byline scanning-unit, with weight tiers) |
 | `organism-article` | ✅ COVERED | `cookbooks/reading-surface.md` (reproduction #11, grounded in The New Yorker) |
 | `atom-prose` | ✅ COVERED | `cookbooks/reading-surface.md` (the reading measure + serif body recipe) |
 
@@ -64,5 +64,5 @@ Nothing here is deleted or moved (that would fragment the kits — atoms share e
 
 1. ~~Editorial article / reading surface~~ — **DONE** → `cookbooks/reading-surface.md` (reproduction #11). The first non-scanning archetype in the library.
 2. ~~Ops / monitoring dashboard~~ — **DONE** → `cookbooks/ops-console.md` (reproduction #12). The three-band operational surface (live metrics + status grid + streaming logs + actions) the parts-cookbooks never composed; adds status-as-shape at log-table scale.
-3. **Editorial index / content homepage** (`organism-index`) — a curated listing surface.
+3. ~~Editorial index / content homepage~~ — **DONE** → `cookbooks/editorial-index.md` (reproduction #13). The curated listing (chrome → featured lead → weight-varied ruled column grid → stacked department) that leads to articles; distinct organism from the `reading-surface` article.
 4. **Lighter, covered-by-example** (backlog only if a real second consumer appears): empty-state, figure/diagram frame, app-shell-frame, feature-grid, cta-band, nav-footer, social-faq, code-block.

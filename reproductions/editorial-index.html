@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Meridian — Culture, Essays, Fiction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<style>
+  /* ==========================================================
+     THE MERIDIAN — editorial INDEX
+     A curated content homepage for a literary / culture magazine.
+     Voice: warm-editorial. Dials below.
+
+     Type:        Fraunces (display serif) for headlines; Newsreader (reading serif) for deks/body
+     Surface:     cream/paper #f6f0e3
+     Temperature: warm — taupe greys, cream, oxblood
+     Density:     airy-editorial
+     Depth:       rules-not-shadows — hairlines everywhere, zero drop-shadows
+     Accent:      oxblood #8b2517, load-bearing on kickers (the section-label system) + the subscribe CTA
+     Shape:       low radius / square
+     Composition: featured-lead + ruled 3-column index + stacked-list department
+     Motion:      calm (hover transitions only)
+
+     Token table (machine-parseable by check-contrast.mjs):
+  ========================================================== */
+  :root {
+    /* surfaces */
+    --paper:        #f6f0e3;   /* page background — cream */
+    --card-bg:      #fffdf8;   /* subscribe promo panel */
+    --rule:         #d9ceb2;   /* hairline rules between/below items */
+
+    /* text tiers */
+    --ink:          #1c1915;   /* primary headlines, body */
+    --muted:        #4a4339;   /* deks, secondary body */
+    --faint:        #5e5242;   /* bylines, dates, meta — passes AA on both paper and promo-bg */
+
+    /* accent */
+    --accent:       #8b2517;   /* oxblood — kickers, end-marks, subscribe button */
+
+    /* promo card */
+    --promo-bg:     #f0d96a;   /* amber-yellow, like the New Yorker reference */
+    --promo-ink:    #1c1915;   /* text on promo card — same as --ink */
+  }
+
+  /* ---- reset ---- */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Newsreader", Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ---- page shell ---- */
+  .page {
+    width: 1440px;
+    margin: 0 auto;
+    background: var(--paper);
+  }
+
+  /* ========================================================
+     PUBLICATION CHROME — masthead + utility + section nav
+  ======================================================== */
+  .utility-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 64px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--faint);
+    letter-spacing: .01em;
+  }
+  .utility-bar .sub-offer {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .utility-bar .sub-offer a {
+    color: var(--accent);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .utility-bar .util-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 12px;
+    color: var(--faint);
+  }
+  .utility-bar .util-actions span { cursor: pointer; }
+  .utility-bar .util-actions .search-icon {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  /* masthead */
+  .masthead {
+    text-align: center;
+    padding: 32px 64px 28px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .masthead .wordmark {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 80px;
+    font-weight: 500;
+    letter-spacing: -.015em;
+    line-height: 1;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .masthead .wordmark em {
+    font-style: italic;
+    font-weight: 300;
+  }
+  .masthead .issue-line {
+    margin-top: 12px;
+    font-size: 11.5px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  /* section nav */
+  .section-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    padding: 0 64px;
+  }
+  .section-nav a {
+    font-size: 12.5px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 14px 22px;
+    position: relative;
+    transition: color 120ms ease;
+  }
+  .section-nav a:hover { color: var(--ink); }
+  .section-nav a.active {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .section-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 22px;
+    right: 22px;
+    height: 2px;
+    background: var(--ink);
+  }
+  .section-nav .subscribe-btn {
+    margin-left: auto;
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    padding: 8px 18px;
+    background: var(--accent);
+    color: #fff7f0;
+    border-radius: 3px;
+    text-decoration: none;
+    align-self: center;
+    transition: opacity 120ms ease;
+  }
+  .section-nav .subscribe-btn:hover { opacity: .88; }
+
+  /* ========================================================
+     FEATURED LEAD — the anchor story above the index
+  ======================================================== */
+  .featured-lead {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 0;
+    border-bottom: 2px solid var(--ink);
+    padding: 64px 64px 56px;
+    align-items: start;
+  }
+  .featured-lead .lead-meta {
+    padding-right: 64px;
+    border-right: 1px solid var(--rule);
+  }
+  .featured-lead .lead-kicker {
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 18px;
+  }
+  .featured-lead h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 80px;
+    font-weight: 500;
+    line-height: 1.0;
+    letter-spacing: -.03em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .featured-lead h1 em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .featured-lead .lead-right {
+    padding-left: 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 12px;
+  }
+  .featured-lead .lead-dek {
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--muted);
+    font-style: italic;
+    text-wrap: pretty;
+    margin-bottom: 28px;
+  }
+  .featured-lead .lead-byline {
+    font-size: 14px;
+    color: var(--faint);
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+  .featured-lead .lead-byline strong {
+    font-weight: 500;
+    color: var(--muted);
+    font-style: normal;
+  }
+
+  /* ========================================================
+     CURATED INDEX — ruled 3-column grid
+  ======================================================== */
+  .index-section {
+    padding: 0 64px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .index-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 20px 0 18px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .index-header .section-label {
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 500;
+  }
+  .index-header .section-rule-line {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* 3-column grid with vertical hairline rules */
+  .index-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* hairline rules via borders on cells */
+  }
+
+  /* each column is a stack of items */
+  .index-col {
+    border-right: 1px solid var(--rule);
+    padding: 0;
+  }
+  .index-col:last-child { border-right: none; }
+
+  /* individual index entry */
+  .index-entry {
+    padding: 36px 36px 32px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .index-entry:last-child { border-bottom: none; }
+
+  /* weight variations */
+  .index-entry.weight-lead .entry-headline { font-size: 30px; line-height: 1.08; }
+  .index-entry.weight-mid  .entry-headline { font-size: 22px; line-height: 1.1; }
+  .index-entry.weight-short .entry-headline { font-size: 17px; line-height: 1.15; }
+
+  .index-entry .entry-kicker {
+    font-size: 10.5px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 12px;
+    font-family: "Newsreader", Georgia, serif;
+  }
+  .index-entry .entry-headline {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -.015em;
+    color: var(--ink);
+    text-transform: uppercase;
+    text-wrap: balance;
+    margin-bottom: 0;
+  }
+  .index-entry .entry-headline em {
+    font-style: italic;
+    text-transform: none;
+    font-weight: 400;
+  }
+  .index-entry .entry-dek {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin-top: 12px;
+    text-wrap: pretty;
+  }
+  .index-entry .entry-byline {
+    font-size: 12.5px;
+    color: var(--faint);
+    margin-top: 14px;
+  }
+
+  /* short entries — just headline + byline, no dek */
+  .index-entry.weight-short .entry-dek { display: none; }
+  .index-entry.weight-short .entry-byline { margin-top: 10px; }
+
+  /* promo card — woven into the column flow */
+  .promo-card {
+    background: var(--promo-bg);
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-bottom: 1px solid #c8b94a;
+    flex: 1;
+  }
+  .promo-card .promo-wordmark {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--promo-ink);
+    opacity: .75;
+  }
+  .promo-card .promo-headline {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -.01em;
+    color: var(--promo-ink);
+    text-wrap: balance;
+  }
+  .promo-card .promo-headline em {
+    display: block;   /* second tagline line as a block — no <br> hard-break */
+    font-style: italic;
+    font-weight: 400;
+  }
+  .promo-card .promo-body {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--promo-ink);
+    opacity: .78;
+  }
+  .promo-card .promo-btn {
+    display: inline-block;
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 11px 20px;
+    background: var(--promo-ink);
+    color: var(--promo-bg);
+    border-radius: 2px;
+    text-decoration: none;
+    letter-spacing: .03em;
+    align-self: flex-start;
+    margin-top: 6px;
+    transition: opacity 120ms ease;
+  }
+  .promo-card .promo-btn:hover { opacity: .82; }
+  .promo-card .promo-cancel {
+    font-size: 11.5px;
+    color: var(--promo-ink);
+    opacity: .68;   /* ~4.6:1 on the amber promo-bg — clears AA (was .55 = 3.55:1) */
+  }
+
+  /* column 3 is a flex column so the promo card can fill remaining space */
+  .index-col.col-3 {
+    display: flex;
+    flex-direction: column;
+  }
+  .index-col.col-3 .index-entry { flex-shrink: 0; }
+  .index-col.col-3 .promo-card { flex: 1; }
+
+  /* ========================================================
+     SECOND LISTING RHYTHM — stacked-list department ("From the Notebook")
+  ======================================================== */
+  .notebook-section {
+    padding: 0 64px 80px;
+  }
+  .notebook-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 20px 0 18px;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 0;
+  }
+  .notebook-header .section-label {
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 500;
+  }
+  .notebook-header .section-rule-line {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* stacked rows — Quartz variant: rule-left rhythm + thumbnail option */
+  .notebook-list {
+    list-style: none;
+  }
+  .notebook-item {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 0 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .notebook-item:last-child { border-bottom: none; }
+
+  /* typographic "thumbnail" — a date block, no fake imagery */
+  .nb-date-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4px;
+    border-right: 1px solid var(--rule);
+    padding-right: 32px;
+  }
+  .nb-date-block .nb-month {
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 500;
+  }
+  .nb-date-block .nb-day {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 44px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ink);
+    margin-top: 4px;
+  }
+
+  .nb-content { padding-left: 0; }
+  .nb-kicker {
+    font-size: 10.5px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .nb-headline {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.14;
+    letter-spacing: -.015em;
+    color: var(--ink);
+    text-wrap: balance;
+    margin-bottom: 8px;
+  }
+  .nb-headline em { font-style: italic; font-weight: 400; }
+  .nb-dek {
+    font-size: 14px;
+    line-height: 1.58;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .nb-meta {
+    font-size: 12px;
+    color: var(--faint);
+    margin-top: 10px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .nb-meta .nb-sep {
+    color: var(--faint);   /* a real text tier (6.7:1) — it's a glyph a user reads, not a hairline; no off-scale hardcoded color */
+    font-size: 14px;
+  }
+
+  /* ---- hover transitions (calm) ---- */
+  .index-entry .entry-headline,
+  .nb-headline {
+    transition: opacity 150ms ease;
+  }
+  .index-entry:hover .entry-headline,
+  .notebook-item:hover .nb-headline {
+    opacity: .72;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- =====================================================
+       PUBLICATION CHROME
+  ===================================================== -->
+  <div class="utility-bar">
+    <span class="sub-offer">Subscribe and receive our quarterly print edition. <a href="#">Start here →</a></span>
+    <div class="util-actions">
+      <span>Newsletter</span>
+      <span>My Account</span>
+      <span>Shop</span>
+      <span class="search-icon">⌕</span>
+    </div>
+  </div>
+
+  <header class="masthead">
+    <div class="wordmark">The <em>Meridian</em></div>
+    <div class="issue-line">Volume XII · No. 3 · Summer 2026</div>
+  </header>
+
+  <nav class="section-nav" aria-label="Publication sections">
+    <a href="#" class="active">Latest</a>
+    <a href="#">Culture</a>
+    <a href="#">Fiction</a>
+    <a href="#">Essays</a>
+    <a href="#">Criticism</a>
+    <a href="#">Notebook</a>
+    <a href="#">Archive</a>
+    <a href="#" class="subscribe-btn">Subscribe</a>
+  </nav>
+
+  <!-- =====================================================
+       FEATURED LEAD
+  ===================================================== -->
+  <section class="featured-lead" aria-label="Featured story">
+    <div class="lead-meta">
+      <div class="lead-kicker">Cover Essay · Fiction</div>
+      <h1>Everything We Said in the <em>Key of Rain</em></h1>
+    </div>
+    <div class="lead-right">
+      <p class="lead-dek">A story of two sisters, a failing archive, and the peculiar grief of inheriting someone else's unfinished sentences — set across Lagos, London, and a village whose name changed three times in forty years.</p>
+      <div class="lead-byline">By <strong>Chiamaka Osei-Bonsu</strong> &nbsp;·&nbsp; Fiction, 28 min read</div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       CURATED INDEX — ruled 3-column listing
+  ===================================================== -->
+  <section class="index-section" aria-label="Curated index">
+    <div class="index-header">
+      <span class="section-label">This Week</span>
+      <div class="section-rule-line"></div>
+    </div>
+
+    <div class="index-grid">
+
+      <!-- Column 1: one heavier lead + two short entries -->
+      <div class="index-col col-1">
+
+        <article class="index-entry weight-lead">
+          <div class="entry-kicker">Criticism</div>
+          <h2 class="entry-headline">The Architect Who Refused to Name His Buildings</h2>
+          <p class="entry-dek">Olu Martins built fourteen public libraries across West Africa before anyone outside Lagos had heard of him. A new retrospective at the Serpentine asks why it took so long — and what the art world's blindness cost.</p>
+          <div class="entry-byline">By Ekundayo Babatunde</div>
+        </article>
+
+        <article class="index-entry weight-mid">
+          <div class="entry-kicker">Books</div>
+          <h2 class="entry-headline">Reading Woolf in a Country Without Libraries</h2>
+          <p class="entry-dek">A correspondent's letter, and the novel it arrived inside.</p>
+          <div class="entry-byline">By Priya Nair</div>
+        </article>
+
+        <article class="index-entry weight-short">
+          <div class="entry-kicker">Notebook</div>
+          <h2 class="entry-headline">On Keeping Lists No One Will Ever See</h2>
+          <div class="entry-byline">By Margot Bellecour</div>
+        </article>
+
+      </div><!-- /col-1 -->
+
+      <!-- Column 2: two mid-weight entries -->
+      <div class="index-col col-2">
+
+        <article class="index-entry weight-lead">
+          <div class="entry-kicker">Culture · Film</div>
+          <h2 class="entry-headline">The <em>Slow Cinema</em> of Grief Rendered Without Score</h2>
+          <p class="entry-dek">Amara Diallo's debut feature runs two hours and forty minutes, contains almost no dialogue, and refuses to explain what you are seeing. Critics have called it unbearable. It may be the film of the decade.</p>
+          <div class="entry-byline">By Daria Volkov</div>
+        </article>
+
+        <article class="index-entry weight-mid">
+          <div class="entry-kicker">Essays</div>
+          <h2 class="entry-headline">Against the Tyranny of the Useful Hobby</h2>
+          <p class="entry-dek">When every leisure becomes a side hustle, something necessary goes missing — and we are too busy monetising to mourn it.</p>
+          <div class="entry-byline">By Rafael Mendes</div>
+        </article>
+
+        <article class="index-entry weight-short">
+          <div class="entry-kicker">Criticism</div>
+          <h2 class="entry-headline">Toni Morrison's Margins, Annotated</h2>
+          <div class="entry-byline">By Adaeze Chukwu</div>
+        </article>
+
+      </div><!-- /col-2 -->
+
+      <!-- Column 3: one short entry + promo card filling remaining height -->
+      <div class="index-col col-3">
+
+        <article class="index-entry weight-lead">
+          <div class="entry-kicker">Fiction</div>
+          <h2 class="entry-headline">A Room in Lisbon That Belongs to No Decade</h2>
+          <p class="entry-dek">Short fiction. A retired translator discovers her apartment is occupied, intermittently, by visitors from a year she cannot identify.</p>
+          <div class="entry-byline">By Inês Cavalcanti</div>
+        </article>
+
+        <article class="index-entry weight-short">
+          <div class="entry-kicker">Archive</div>
+          <h2 class="entry-headline">What Soyinka Said in the Year the Country Changed</h2>
+          <div class="entry-byline">From the archive, 1986</div>
+        </article>
+
+        <!-- Promo card woven into the column flow -->
+        <div class="promo-card" role="complementary" aria-label="Subscribe offer">
+          <div class="promo-wordmark">The Meridian</div>
+          <p class="promo-headline">The stories that stay. <em>Delivered every season.</em></p>
+          <p class="promo-body">Print + digital subscription. Access to our full archive. A letter from the editors with every issue.</p>
+          <a href="#" class="promo-btn">Subscribe now</a>
+          <p class="promo-cancel">Cancel anytime.</p>
+        </div>
+
+      </div><!-- /col-3 -->
+
+    </div><!-- /index-grid -->
+  </section>
+
+  <!-- =====================================================
+       SECOND LISTING RHYTHM — "From the Notebook"
+       Stacked-list with typographic date block (Quartz variant)
+  ===================================================== -->
+  <section class="notebook-section" aria-label="From the Notebook">
+    <div class="notebook-header">
+      <span class="section-label">From the Notebook</span>
+      <div class="section-rule-line"></div>
+    </div>
+
+    <ul class="notebook-list">
+
+      <li class="notebook-item">
+        <div class="nb-date-block">
+          <span class="nb-month">Jun</span>
+          <span class="nb-day">04</span>
+        </div>
+        <div class="nb-content">
+          <div class="nb-kicker">Notebook · Language</div>
+          <h3 class="nb-headline">The Word for Homesickness That Requires Two Translations to Feel</h3>
+          <p class="nb-dek">A short meditation on <em>saudade</em>, <em>hiraeth</em>, and the words that resist being carried across languages — and what it means to live between the original and its echo.</p>
+          <div class="nb-meta">
+            <span>By Isadora Ferreira</span>
+            <span class="nb-sep">·</span>
+            <span>7 min read</span>
+          </div>
+        </div>
+      </li>
+
+      <li class="notebook-item">
+        <div class="nb-date-block">
+          <span class="nb-month">May</span>
+          <span class="nb-day">28</span>
+        </div>
+        <div class="nb-content">
+          <div class="nb-kicker">Notebook · Music</div>
+          <h3 class="nb-headline">Listening to Ebo Taylor in the Year Everyone Rediscovered Him</h3>
+          <p class="nb-dek">On the peculiarity of being the right audience at the wrong time — and how streaming's memory has reshaped what it means to discover something old.</p>
+          <div class="nb-meta">
+            <span>By Kwame Oduya</span>
+            <span class="nb-sep">·</span>
+            <span>5 min read</span>
+          </div>
+        </div>
+      </li>
+
+      <li class="notebook-item">
+        <div class="nb-date-block">
+          <span class="nb-month">May</span>
+          <span class="nb-day">19</span>
+        </div>
+        <div class="nb-content">
+          <div class="nb-kicker">Notebook · Cities</div>
+          <h3 class="nb-headline">On the Specific Loneliness of Cities That Were Planned by Someone Who Never Lived There</h3>
+          <p class="nb-dek">Abuja, Chandigarh, Canberra: built capitals and the distance they manufacture between a government and its governed.</p>
+          <div class="nb-meta">
+            <span>By Nneka Taiwo-Adeola</span>
+            <span class="nb-sep">·</span>
+            <span>11 min read</span>
+          </div>
+        </div>
+      </li>
+
+      <li class="notebook-item">
+        <div class="nb-date-block">
+          <span class="nb-month">May</span>
+          <span class="nb-day">11</span>
+        </div>
+        <div class="nb-content">
+          <div class="nb-kicker">Notebook · Photography</div>
+          <h3 class="nb-headline">The Archive Samuel Fosso Didn't Intend to Leave</h3>
+          <p class="nb-dek">A revisiting of the Bangui studio years — decades of self-portraiture that was never meant for a gallery, and why that context changes everything about how we look at it now.</p>
+          <div class="nb-meta">
+            <span>By Adwoa Asante</span>
+            <span class="nb-sep">·</span>
+            <span>9 min read</span>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+</div><!-- /page -->
+</body>
+</html>

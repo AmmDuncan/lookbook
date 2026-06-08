@@ -19,9 +19,19 @@
 // for a human/critic to verify against the actual element. The PASS/FAIL exit code is
 // driven by tokens only — the advisory never changes it.
 //
+// LIGHT *and* DARK are checked independently. A file that defines a base `:root` theme
+// plus a dark override (`:root[data-theme="dark"]`, `.dark`, `[data-mode="dark"]`, or
+// `@media (prefers-color-scheme: dark)`) is split into two token sets — light = base,
+// dark = base overridden by the dark scope — and each mode is measured on its own,
+// labelled `[light mode]` / `[dark mode]`. (Measuring the file as one map is wrong: it
+// last-write-wins into a FRANKENSTEIN theme that exists in neither mode, and it silently
+// skips whichever mode isn't last in the file.) This catches dark-mode-only failures like
+// a `--muted` that was never lightened for dark, or an accent-text token too dark on a
+// dark surface. Single-theme files are checked once, unlabelled, exactly as before.
+//
 // Usage:  node scripts/check-contrast.mjs <file.html> [...more.html]
 //         node scripts/check-contrast.mjs registers/float-*.html
-// Exit:   0 = all token pairings clear · 1 = ≥1 blocking token AA failure · 2 = bad input
+// Exit:   0 = all token pairings clear (in every mode) · 1 = ≥1 blocking token AA failure · 2 = bad input
 //         (the ⚐ literal advisory is informational and does NOT affect the exit code)
 
 import { readFileSync } from "node:fs";
@@ -88,6 +98,38 @@ function colorLiterals(css) {
   return [...lits];
 }
 
+// ---- theme-aware token resolution (light vs dark) ----
+// A file often defines a base :root theme + a dark override (`:root[data-theme="dark"]`,
+// `.dark`, `[data-mode="dark"]`, or `@media (prefers-color-scheme: dark)`). Measuring the
+// whole file at once (last-write-wins) yields a FRANKENSTEIN theme — dark values for the
+// overridden tokens, light for the rest — that exists in NEITHER mode. Split them so each
+// mode is checked on its own: light = base; dark = base overridden by the dark scope.
+function cssRules(css) {
+  const out = []; const re = /([^{}]+)\{([^{}]*)\}/g; let m;
+  while ((m = re.exec(css))) out.push({ sel: m[1].trim(), body: m[2] });
+  return out;
+}
+function isDarkSelector(sel) {
+  return /\[data-theme[~|^$*]?=\s*["']?\s*dark|\[data-mode[~|^$*]?=\s*["']?\s*dark|(^|[\s,(])\.dark(?![\w-])|\.theme-dark(?![\w-])|html\.dark|:root\.dark/i.test(sel);
+}
+function splitThemes(css) {
+  // pull balanced @media (prefers-color-scheme: dark){ ... } blocks first (brace-matched)
+  const darkChunks = []; let rest = ""; let last = 0;
+  const re = /@media[^{]*prefers-color-scheme\s*:\s*dark[^{]*\{/gi; let m;
+  while ((m = re.exec(css))) {
+    rest += css.slice(last, m.index);
+    let depth = 1, j = m.index + m[0].length;
+    for (; j < css.length && depth > 0; j++) { if (css[j] === "{") depth++; else if (css[j] === "}") depth--; }
+    darkChunks.push(css.slice(m.index + m[0].length, j - 1));
+    last = j; re.lastIndex = j;
+  }
+  rest += css.slice(last);
+  const base = {}, dark = parseTokens(darkChunks.join("\n"));
+  // remaining flat rules: a dark-scoped selector's tokens go to dark, everything else to base
+  for (const { sel, body } of cssRules(rest)) Object.assign(isDarkSelector(sel) ? dark : base, parseTokens(body));
+  return { base, dark };
+}
+
 function classify(name, colorUsed) {
   const n = name.toLowerCase();
   const isSurface = SURFACE_HINTS.some((h) => n.includes(h));
@@ -104,15 +146,28 @@ function checkFile(path) {
   try { css = readFileSync(path, "utf8"); }
   catch { console.error(`✗ cannot read ${path}`); return { fails: 0, error: true }; }
 
-  const tokens = parseTokens(css);
   const colorUsed = colorUsedTokens(css);
+  const literals = colorLiterals(css);
+  const { base, dark } = splitThemes(css);
+  // a dark scope exists → check BOTH modes independently (light = base, dark = base+overrides);
+  // otherwise a single un-labelled pass (identical to the old single-theme behaviour).
+  const themes = Object.keys(dark).length
+    ? [{ label: "light", tokens: base }, { label: "dark", tokens: { ...base, ...dark } }]
+    : [{ label: null, tokens: base }];
+  let fails = 0;
+  for (const th of themes) fails += checkTheme(path, th.tokens, colorUsed, literals, th.label).fails || 0;
+  return { fails };
+}
+
+function checkTheme(path, tokens, colorUsed, literals, label) {
+  const tag = label ? ` [${label} mode]` : "";
   const names = Object.keys(tokens).filter((n) => hexToRgb(tokens[n]));
 
   const surfaces = names.filter((n) => classify(n, colorUsed).isSurface);
   let texts = names.filter((n) => classify(n, colorUsed).isText);
 
   if (!surfaces.length || !texts.length) {
-    console.log(`• ${path}: no resolvable hex surface/text tokens — skipped (uses var-chains or rgba?)`);
+    console.log(`• ${path}${tag}: no resolvable hex surface/text tokens — skipped (uses var-chains or rgba?)`);
     return { fails: 0, skipped: true };
   }
 
@@ -138,7 +193,7 @@ function checkFile(path) {
   });
 
   if (!texts.length || !primarySurfaces.length) {
-    console.log(`• ${path}: no primary text/surface pairings on the dominant polarity — skipped`);
+    console.log(`• ${path}${tag}: no primary text/surface pairings on the dominant polarity — skipped`);
     return { fails: 0, skipped: true };
   }
 
@@ -157,7 +212,7 @@ function checkFile(path) {
   const pageBg = hexToRgb(tokens[bgName]);
   const tokenHexes = new Set(names.map((n) => tokens[n].toLowerCase()));
   const litAdvisory = [];
-  for (const hex of colorLiterals(css)) {
+  for (const hex of literals) {
     const rgb = hexToRgb(hex);
     if (!rgb || tokenHexes.has(hex)) continue;      // measured already as a token's value
     if (contrast(rgb, pageBg) < 1.3) continue;      // inverse text on an inverted element — not page text
@@ -180,7 +235,7 @@ function checkFile(path) {
     }
   }
 
-  const header = `${path}  (${texts.length} text × ${surfaces.length} surface tokens)`;
+  const header = `${path}${tag}  (${texts.length} text × ${surfaces.length} surface tokens)`;
   if (!fails.length) {
     console.log(`✓ ${header} — all token pairings ≥ ${AA}:1`);
     printAdvisory();

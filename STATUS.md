@@ -1,6 +1,13 @@
 # Lookbook — build status
 
-_Last updated: 2026-05-29 (deepen pass #2 — states / accessibility / identity / site-archetypes, battle-tested)_
+_Last updated: 2026-06-08 (F75 elevation adopted, battle-tested; palette generator tool shipped)_
+
+## 2026-06-08 — F75 elevation adopted (battle-tested) + palette generator
+
+Two things this session, both off the back of reading *Practical UI* (Adham Dannaway) end-to-end and reconciling it against the brain. The honest headline from that read: **the brain already encodes ~90% of the book** as F-rules + patterns, often calibrated *tighter* (e.g. body 15–17/16 vs the book's flat 18 — F3 already allowed the 16 the user wanted). The book is near-total external validation, not a pile of missing cookbooks. Only one genuine foundational gap survived: **no rule governed depth**, even though `--shadow-sm/md/lg/xl` ship in tokens.
+
+- **F75 (Depth / elevation)** — three semantic levels (resting/raised/overlay) mapped onto the four shipped shadow tokens; light-from-top; shadow = darkest neutral never `#000`; colour-as-depth; density-gated (corollary of F36). **Battle-tested** (the repo bar): baseline vs brain+F75 on a depth-heavy "team members settings" brief (resting cards + open dropdown + confirm modal + toast). The F75 arm gave a real dimming scrim under the modal and lifted overlays while keeping resting cards flat; the baseline's overlay tier failed to read against a too-weak scrim — no over-shadow nerf (density gate held). **User-gated HELP → folded into fundamentals.md.** Caveat on record: n=1 pair + author wrote both rule and brief.
+- **`apps/palette/` — palette/skin generator tool.** One brand colour → the 7-step ramp mapped onto the semantic tokens, each role graded (WCAG matching `scripts/contrast.mjs`, + APCA Lc), F66 white-on-accent auto-fix, status colours (F55), add-your-own swatches, light/dark, drop-in skin export. Self-contained (opens offline over `file://`; `index.html` + `color.js` + `palette.js` as classic scripts). check-focus PASS. This is the book's most generator-shaped artifact (the palette tables) operationalised onto the token contract.
 
 ## 2026-05-29 — Deepen pass #2 (battle-tested)
 

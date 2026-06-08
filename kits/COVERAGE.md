@@ -17,7 +17,7 @@ Nothing here is deleted or moved (that would fragment the kits — atoms share e
 | `atom-chart` | **COVERED** | `cookbooks/charts.md` |
 | `atom-cmdk` | **COVERED** | `cookbooks/command-palette.md` |
 | `atom-empty` | ORPHAN (light) | empty-state pattern lives in `patterns/empty-states.md`; no reproduction-earned cookbook yet |
-| `atom-field` | **COVERED** | `cookbooks/settings-page.md` + `modal-and-repeater.md` |
+| `atom-field` | **COVERED** | `cookbooks/forms.md` (reproduction #14 — control inventory × full state matrix, focus first-class); `settings-page.md` + `modal-and-repeater.md` cover the page layout |
 | `atom-figure` | ORPHAN | explanatory figure/diagram frame — partially `charts.md`, but the figure-as-explanation recipe isn't earned |
 | `atom-icon` | infra | icon usage — keep |
 | `atom-overlay` | **COVERED** | `cookbooks/command-palette.md` (overlay shell) + `modal-and-repeater.md` |
@@ -25,7 +25,7 @@ Nothing here is deleted or moved (that would fragment the kits — atoms share e
 | `atom-status` | **COVERED** | `cookbooks/state-as-shape.md` |
 | `atom-table-row` | **COVERED** | `cookbooks/data-table.md` |
 | `recipe-figure` | ORPHAN | see `atom-figure` |
-| `recipe-form` | **COVERED** | `cookbooks/settings-page.md` + `modal-and-repeater.md` |
+| `recipe-form` | **COVERED** | `cookbooks/forms.md` (reproduction #14 — the controls + states + focus recipe); `settings-page.md` + `modal-and-repeater.md` cover the page layout |
 | `recipe-table` | **COVERED** | `cookbooks/data-table.md` |
 | `organism-account-detail` | **COVERED** | `cookbooks/details-rail.md` |
 | `organism-revenue-overview` | mostly COVERED | `cookbooks/dashboard-kpi.md` (KPI cards) + `charts.md` (combo chart) |
@@ -65,5 +65,5 @@ Nothing here is deleted or moved (that would fragment the kits — atoms share e
 1. ~~Editorial article / reading surface~~ — **DONE** → `cookbooks/reading-surface.md` (reproduction #11). The first non-scanning archetype in the library.
 2. ~~Ops / monitoring dashboard~~ — **DONE** → `cookbooks/ops-console.md` (reproduction #12). The three-band operational surface (live metrics + status grid + streaming logs + actions) the parts-cookbooks never composed; adds status-as-shape at log-table scale.
 3. ~~Editorial index / content homepage~~ — **DONE** → `cookbooks/editorial-index.md` (reproduction #13). The curated listing (chrome → featured lead → weight-varied ruled column grid → stacked department) that leads to articles; distinct organism from the `reading-surface` article.
-4. **QUEUED — Forms / input furniture (a real consumer appeared).** The form atoms (`atom-field`, `recipe-form`) are nominally "COVERED" by `settings-page.md` + `modal-and-repeater.md`, but a real Lookbook-guided build shipped controls with **no focus states** — proving that coverage is thin: no cookbook *owns* the input/control furniture as a recipe. Re-earn a dedicated **forms cookbook** grounded in real shipped forms (Linear/Stripe/Vercel/Supabase). Must own: the control inventory (text field · select · combobox w/ server-search · textarea · checkbox · radio · toggle · segmented · the 3-tier button hierarchy) × the full state matrix (default · hover · **focus-visible** · active · disabled · error · loading), label/help/error placement (P-F-06/11), validate-on-blur, and **focus as a first-class state, not a bolt-on** (`:focus-visible` for buttons/controls, `:focus` for text fields; the 3:1 ring; gate with `scripts/check-focus.mjs`). This is where focus *should* live so builds inherit it instead of copying a deprecated kit specimen. Then mark `atom-field`/`recipe-form` COVERED by the new cookbook, not the settings/modal stand-ins.
+4. ~~Forms / input furniture~~ — **DONE** → `cookbooks/forms.md` (reproduction #14). A self-contained specimen sheet: one in-context "New project" form holding the whole control inventory (text field · select · combobox w/ server-search · textarea · checkbox · radio · toggle · segmented · 3-tier button) + a full state matrix (default · hover · **focus-visible** · active · disabled · error · loading) with **focus as a first-class state** — every interactive element carries an explicit `:focus`/`:focus-visible` indicator, 0 on the native ring (`check-focus` PASS). Grounded in real shipped forms (Linear preferences; Hashnode/Jasper/Substack/Salesforce/X error treatment). `atom-field`/`recipe-form` now COVERED by it, not the settings/modal stand-ins.
 5. **Lighter, covered-by-example** (backlog only if a real second consumer appears): empty-state, figure/diagram frame, app-shell-frame, feature-grid, cta-band, nav-footer, social-faq, code-block.

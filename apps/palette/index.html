@@ -16,40 +16,33 @@
   *{box-sizing:border-box;}
   body{margin:0;background:var(--ui-bg);color:var(--ui-ink);font-family:var(--sans);
     line-height:1.5;-webkit-font-smoothing:antialiased;}
-  .page{max-width:980px;margin:0 auto;padding:40px 28px 80px;}
-  header.h{margin-bottom:28px;}
+  .page{max-width:1000px;margin:0 auto;padding:40px 28px 80px;}
   .kick{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
     color:var(--ui-faint);margin:0 0 8px;}
   h1{font-size:30px;font-weight:600;letter-spacing:-.02em;margin:0 0 6px;}
-  .sub{font-size:15px;color:var(--ui-ink2);margin:0;max-width:62ch;}
+  .sub{font-size:15px;color:var(--ui-ink2);margin:0 0 26px;max-width:64ch;}
 
-  /* control bar */
   .bar{display:flex;flex-wrap:wrap;align-items:center;gap:18px;background:var(--ui-panel);
-    border:1px solid var(--ui-line);border-radius:14px;padding:16px 20px;margin:0 0 22px;
+    border:1px solid var(--ui-line);border-radius:14px;padding:16px 20px;margin:0 0 26px;
     box-shadow:0 1px 2px rgb(15 17 23/.04);}
   .ctrl{display:flex;align-items:center;gap:10px;}
   .ctrl label{font-size:13px;font-weight:500;color:var(--ui-ink2);}
-  input[type=color]{width:38px;height:38px;border:1px solid var(--ui-line2);border-radius:9px;
-    padding:0;background:none;cursor:pointer;}
-  input[type=text].hex{font-family:var(--mono);font-size:14px;width:108px;padding:8px 11px;
-    border:1px solid var(--ui-line2);border-radius:9px;color:var(--ui-ink);text-transform:uppercase;}
+  input[type=color]{width:38px;height:38px;border:1px solid var(--ui-line2);border-radius:9px;padding:0;background:none;cursor:pointer;}
+  input.hex{font-family:var(--mono);font-size:14px;width:108px;padding:8px 11px;border:1px solid var(--ui-line2);
+    border-radius:9px;color:var(--ui-ink);text-transform:uppercase;}
 
-  /* Focus — the forms-cookbook discipline applied to the tool itself (F34).
-     Text/colour inputs use :focus (ring on click-to-type); buttons use :focus-visible. */
-  .hex:focus,
-  input[type=color]:focus{outline:none;border-color:var(--ui-accent);
+  /* Focus — the forms-cookbook discipline (F34): :focus on inputs, :focus-visible on buttons. */
+  .hex:focus, input[type=color]:focus{outline:none;border-color:var(--ui-accent);
     box-shadow:0 0 0 3px color-mix(in srgb, var(--ui-accent) 28%, transparent);}
-  .seg button:focus-visible,
-  .btn:focus-visible,
-  .preset:focus-visible,
-  .x:focus-visible{outline:2px solid var(--ui-accent);outline-offset:2px;}
-  .hex:focus-visible,
-  input[type=color]:focus-visible{outline:none;}
+  .seg button:focus-visible, .btn:focus-visible, .preset:focus-visible, .x:focus-visible,
+  .addbtn:focus-visible, .rm:focus-visible, .name:focus-visible{outline:2px solid var(--ui-accent);outline-offset:2px;}
+  .name:focus{outline:none;border-color:var(--ui-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-accent) 28%,transparent);}
+  .hex:focus-visible, input[type=color]:focus-visible{outline:none;}
+
   .seg{display:inline-flex;background:var(--ui-bg);border:1px solid var(--ui-line2);border-radius:10px;padding:3px;}
   .seg button{border:none;background:none;font:inherit;font-size:13px;font-weight:500;color:var(--ui-ink2);
     padding:6px 16px;border-radius:7px;cursor:pointer;}
-  .seg button[aria-pressed=true]{background:var(--ui-panel);color:var(--ui-ink);
-    box-shadow:0 1px 2px rgb(15 17 23/.08);}
+  .seg button[aria-pressed=true]{background:var(--ui-panel);color:var(--ui-ink);box-shadow:0 1px 2px rgb(15 17 23/.08);}
   .spacer{flex:1;}
   .btn{font:inherit;font-size:13px;font-weight:500;border-radius:9px;padding:9px 15px;cursor:pointer;border:1px solid transparent;}
   .btn.primary{background:var(--ui-ink);color:#fff;}
@@ -57,36 +50,43 @@
   .presets{display:flex;gap:7px;}
   .preset{width:24px;height:24px;border-radius:6px;border:1px solid rgb(0 0 0/.12);cursor:pointer;padding:0;}
 
-  /* steps table */
+  .sectionhead{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ui-faint);margin:28px 4px 10px;}
   .panel{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:16px;overflow:hidden;
     box-shadow:0 1px 2px rgb(15 17 23/.04);}
-  .panelhead{display:grid;grid-template-columns:54px 1fr 230px 150px;gap:16px;padding:12px 22px;
-    border-bottom:1px solid var(--ui-line);font-family:var(--mono);font-size:11px;letter-spacing:.08em;
-    text-transform:uppercase;color:var(--ui-faint);}
+  .panelhead,.row{display:grid;grid-template-columns:52px minmax(0,1fr) 186px 206px;gap:16px;align-items:center;}
+  .panelhead{padding:12px 22px;border-bottom:1px solid var(--ui-line);font-family:var(--mono);font-size:11px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ui-faint);}
   .panelhead .r{text-align:right;}
-  .row{display:grid;grid-template-columns:54px 1fr 230px 150px;gap:16px;align-items:center;
-    padding:13px 22px;border-bottom:1px solid #f0f0f2;}
+  .row{padding:13px 22px;border-bottom:1px solid #f0f0f2;}
   .row:last-child{border-bottom:none;}
+  .row.empty{padding:18px 22px;}
   .sw{height:42px;border-radius:9px;border:1px solid rgb(0 0 0/.10);}
-  .role{font-size:15px;font-weight:550;line-height:1.3;}
+  .sw.statusw{display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;}
+  .role{font-size:15px;font-weight:550;line-height:1.3;min-width:0;}
   .role .vn{font-family:var(--mono);font-size:11.5px;color:var(--ui-accent);font-weight:500;}
   .role small{display:block;font-size:12.5px;color:var(--ui-faint);font-weight:400;margin-top:2px;}
   .role .step{display:inline-block;font-size:11px;color:var(--ui-faint);border:1px solid var(--ui-line2);
     border-radius:20px;padding:1px 8px;margin-left:7px;vertical-align:1px;font-weight:500;}
   .vals{font-family:var(--mono);font-size:12.5px;color:var(--ui-ink2);line-height:1.6;}
   .vals b{color:var(--ui-ink);font-weight:600;}
-  .badge{justify-self:end;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);
-    font-size:12px;padding:5px 11px;border-radius:20px;font-weight:500;white-space:nowrap;}
+  .gradecell{display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;padding:5px 10px;
+    border-radius:20px;font-weight:500;white-space:nowrap;}
+  .badge.apca{font-size:11px;padding:3px 9px;}
   .badge .rl{font-size:10.5px;opacity:.7;}
-  .b-ok{color:var(--ok);background:var(--ok-bg);}
-  .b-warn{color:var(--warn);background:var(--warn-bg);}
-  .b-bad{color:var(--bad);background:var(--bad-bg);}
-  .b-mute{color:var(--ui-faint);background:var(--ui-bg);}
+  .b-ok{color:var(--ok);background:var(--ok-bg);} .b-warn{color:var(--warn);background:var(--warn-bg);}
+  .b-bad{color:var(--bad);background:var(--bad-bg);} .b-mute{color:var(--ui-faint);background:var(--ui-bg);}
+  .rm{border:none;background:none;color:var(--ui-faint);font-size:16px;line-height:1;cursor:pointer;padding:2px 4px;border-radius:5px;}
 
-  .note{font-size:13px;color:var(--ui-faint);margin:16px 2px 0;}
+  .note{font-size:13px;color:var(--ui-faint);margin:14px 2px 0;}
   .note b{color:var(--ui-ink2);font-weight:600;}
 
-  /* preview strip */
+  .addrow{display:flex;gap:10px;align-items:center;padding:14px 22px;border-top:1px solid var(--ui-line);background:#fcfcfd;}
+  .name{font-size:13px;padding:8px 11px;border:1px solid var(--ui-line2);border-radius:9px;width:150px;color:var(--ui-ink);}
+  .addbtn{font:inherit;font-size:13px;font-weight:500;border:1px solid var(--ui-line2);background:var(--ui-panel);
+    color:var(--ui-ink);border-radius:9px;padding:8px 14px;cursor:pointer;}
+
   .preview{margin-top:26px;border-radius:16px;overflow:hidden;border:1px solid var(--ui-line);}
   .pv-pad{padding:30px 32px;}
   .pv-ey{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 12px;}
@@ -96,33 +96,28 @@
   .pv-btn{font:inherit;font-size:14px;font-weight:550;border-radius:9px;padding:10px 18px;border:1px solid transparent;cursor:default;}
   .pv-card{border-radius:12px;padding:16px 18px;font-size:14px;margin-top:20px;display:inline-block;}
 
-  /* export modal */
-  .modal-scrim{position:fixed;inset:0;background:rgb(10 12 16/.46);display:none;align-items:center;
-    justify-content:center;padding:32px;z-index:50;}
+  .modal-scrim{position:fixed;inset:0;background:rgb(10 12 16/.46);display:none;align-items:center;justify-content:center;padding:32px;z-index:50;}
   .modal-scrim.open{display:flex;}
-  .modal{background:var(--ui-panel);border-radius:16px;max-width:760px;width:100%;max-height:84vh;
-    display:flex;flex-direction:column;box-shadow:0 24px 60px rgb(10 12 16/.34);overflow:hidden;}
+  .modal{background:var(--ui-panel);border-radius:16px;max-width:760px;width:100%;max-height:84vh;display:flex;
+    flex-direction:column;box-shadow:0 24px 60px rgb(10 12 16/.34);overflow:hidden;}
   .modal h2{font-size:18px;font-weight:600;margin:0;}
   .modal .mh{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--ui-line);}
-  .modal pre{margin:0;overflow:auto;padding:20px 22px;font-family:var(--mono);font-size:12.5px;
-    line-height:1.6;color:var(--ui-ink);background:var(--ui-bg);flex:1;}
+  .modal pre{margin:0;overflow:auto;padding:20px 22px;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ui-ink);background:var(--ui-bg);flex:1;}
   .modal .mf{display:flex;gap:10px;justify-content:flex-end;padding:14px 22px;border-top:1px solid var(--ui-line);}
   .x{border:none;background:none;font-size:20px;cursor:pointer;color:var(--ui-faint);line-height:1;}
 </style>
 </head>
 <body>
 <div class="page">
-  <header class="h">
-    <p class="kick">Lookbook · tokens</p>
-    <h1>Palette generator</h1>
-    <p class="sub">One brand colour → the book's 7-step ramp mapped onto the Lookbook semantic roles, each graded against the surface it sits on, with the F66 white-on-accent check. Toggle light ⇄ dark. Export a drop-in skin.</p>
-  </header>
+  <p class="kick">Lookbook · tokens</p>
+  <h1>Palette generator</h1>
+  <p class="sub">One brand colour → the 7-step ramp mapped onto the Lookbook semantic roles, each graded against the surface it sits on (WCAG + APCA), with the F66 white-on-accent check. Status colours and your own additions are graded the same way. Toggle light ⇄ dark; export a drop-in skin.</p>
 
   <div class="bar">
     <div class="ctrl">
       <label for="picker">Brand</label>
       <input type="color" id="picker" value="#3A6DF0">
-      <input type="text" class="hex" id="hex" value="#3A6DF0" maxlength="7" spellcheck="false">
+      <input type="text" class="hex" id="hex" value="#3A6DF0" maxlength="7" spellcheck="false" aria-label="Brand hex">
     </div>
     <div class="ctrl presets" id="presets"></div>
     <div class="spacer"></div>
@@ -134,19 +129,30 @@
   </div>
 
   <div class="panel">
-    <div class="panelhead">
-      <span>Swatch</span><span>Role · token · usage</span><span>OKLCH · hex</span><span class="r">Contrast</span>
-    </div>
+    <div class="panelhead"><span>Swatch</span><span>Role · token · usage</span><span>OKLCH · hex</span><span class="r">Contrast</span></div>
     <div id="rows"></div>
   </div>
   <p class="note" id="note"></p>
+
+  <p class="sectionhead">Status colours · F19 / F55</p>
+  <div class="panel"><div id="status-rows"></div></div>
+
+  <p class="sectionhead">Add your own</p>
+  <div class="panel">
+    <div id="custom-rows"></div>
+    <div class="addrow">
+      <input class="name" id="custom-name" placeholder="name (e.g. brand-2)" spellcheck="false" aria-label="Custom colour name">
+      <input class="hex" id="custom-hex" placeholder="#hex" maxlength="7" spellcheck="false" aria-label="Custom colour hex">
+      <button class="addbtn" id="custom-add">Add colour</button>
+    </div>
+  </div>
 
   <div class="preview" id="preview"></div>
 </div>
 
 <div class="modal-scrim" id="scrim">
   <div class="modal" role="dialog" aria-modal="true" aria-label="Export skin">
-    <div class="mh"><h2>skin.css <span id="skinname" style="color:var(--ui-faint);font-weight:400;font-size:14px"></span></h2><button class="x" id="close">×</button></div>
+    <div class="mh"><h2>skin.css <span id="skinname" style="color:var(--ui-faint);font-weight:400;font-size:14px"></span></h2><button class="x" id="close" aria-label="Close">×</button></div>
     <pre id="code"></pre>
     <div class="mf">
       <button class="btn ghost" id="copy">Copy</button>
@@ -155,348 +161,7 @@
   </div>
 </div>
 
-<script>
-/* ============================================================
-   Colour math — OKLCH ⇄ sRGB + WCAG contrast.
-   Mirrors scripts/contrast.mjs luminance so badges agree with the gate.
-   (Ottosson OKLab; sRGB companding; relative-luminance contrast.)
-   Inlined (not an ES module) so the file opens offline over file://.
-   ============================================================ */
-const clamp01 = (x) => Math.min(1, Math.max(0, x));
-const srgbToLinear = (c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4); // mirror contrast.mjs
-const linearToSrgb = (c) => (c <= 0.0031308 ? 12.92 * c : 1.055 * c ** (1 / 2.4) - 0.055);
-
-function hexToRgb255(hex) {
-  let h = hex.replace('#', '').trim();
-  if (h.length === 3) h = h.split('').map((c) => c + c).join('');
-  return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
-}
-const rgb255ToHex = ([r, g, b]) =>
-  '#' + [r, g, b].map((v) => Math.round(clamp01(v / 255) * 255).toString(16).padStart(2, '0')).join('').toUpperCase();
-
-function hexToLinear(hex) {
-  return hexToRgb255(hex).map((v) => srgbToLinear(v / 255));
-}
-const relLuminance = ([r, g, b]) => 0.2126 * r + 0.7152 * g + 0.0722 * b;
-
-/** WCAG contrast ratio between two hex colours. */
-function contrast(a, b) {
-  const la = relLuminance(hexToLinear(a)) + 0.05;
-  const lb = relLuminance(hexToLinear(b)) + 0.05;
-  return la > lb ? la / lb : lb / la;
-}
-
-function linearRgbToOklab([r, g, b]) {
-  const l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
-  const m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
-  const s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
-  const l_ = Math.cbrt(l), m_ = Math.cbrt(m), s_ = Math.cbrt(s);
-  return [
-    0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_,
-    1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_,
-    0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_,
-  ];
-}
-function oklabToLinearRgb([L, a, b]) {
-  const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
-  const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
-  const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
-  const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
-  return [
-    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
-    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
-    -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s,
-  ];
-}
-const DEG = Math.PI / 180;
-const oklchToOklab = (L, C, H) => [L, C * Math.cos(H * DEG), C * Math.sin(H * DEG)];
-
-function hexToOklch(hex) {
-  const [L, a, b] = linearRgbToOklab(hexToLinear(hex));
-  const C = Math.hypot(a, b);
-  let H = Math.atan2(b, a) / DEG;
-  if (H < 0) H += 360;
-  return [L, C, H];
-}
-const inGamut = ([r, g, b]) => [r, g, b].every((v) => v >= -0.0008 && v <= 1.0008);
-
-/** OKLCH → hex, reducing chroma until the colour fits the sRGB gamut. */
-function oklchToHex(L, C, H) {
-  let c = C;
-  let lin = oklabToLinearRgb(oklchToOklab(L, c, H));
-  while (!inGamut(lin) && c > 0) {
-    c -= 0.002;
-    lin = oklabToLinearRgb(oklchToOklab(L, c, H));
-  }
-  return rgb255ToHex(lin.map((v) => linearToSrgb(clamp01(v)) * 255));
-}
-const oklchStr = (L, C, H) => `oklch(${L.toFixed(3)} ${C.toFixed(3)} ${Math.round(H)})`;
-
-/**
- * Solve a step's lightness to hit a target contrast against a reference.
- * dir 'down' searches darker than the ref (text on a light bg);
- * dir 'up' searches lighter (text on a dark bg). Bisection on L (monotonic in range).
- */
-function solveL(C, H, refHex, target, dir) {
-  const refL = hexToOklch(refHex)[0];
-  let lo = dir === 'down' ? 0 : refL;
-  let hi = dir === 'down' ? refL : 1;
-  for (let i = 0; i < 28; i++) {
-    const mid = (lo + hi) / 2;
-    const cr = contrast(oklchToHex(mid, C, H), refHex);
-    // contrast rises toward the dark end (down) / light end (up)
-    const tooLow = cr < target;
-    if (dir === 'down') { tooLow ? (hi = mid) : (lo = mid); }
-    else { tooLow ? (lo = mid) : (hi = mid); }
-  }
-  return (lo + hi) / 2;
-}
-
-/* ============================================================
-   Skin generation — brand colour → semantic-role ramp (light/dark).
-   Neutrals carry the brand hue at low chroma (the book's "tinted greys").
-   Text steps are SOLVED to meet Lookbook's floors (F15 ≥7:1 for primary
-   text — stricter than the book's 4.5), not generate-and-hope.
-   ============================================================ */
-const FLOORS = { primary: 7.5, secondary: 5.0, muted: 4.5, ui: 3.0 };
-
-function generate(brandHex, mode) {
-  const [, bC, bH] = hexToOklch(brandHex);
-  const H = bH;
-  const nC = Math.min(0.01, 0.004 + bC * 0.03); // subtle hue tint in the neutrals
-
-  if (mode === 'light') {
-    const surface = '#FFFFFF';
-    const bg = oklchToHex(0.985, nC * 0.7, H);
-    const sunken = oklchToHex(0.965, nC, H);
-    // accent: ensure white text on the accent clears 4.5 (F66)
-    let aL = hexToOklch(brandHex)[0];
-    while (contrast('#FFFFFF', oklchToHex(aL, bC, H)) < 4.5 && aL > 0.2) aL -= 0.008;
-    const accent = oklchToHex(aL, bC, H);
-    const onAccent = contrast('#FFFFFF', accent) >= 4.5 ? '#FFFFFF' : oklchToHex(0.22, nC, H);
-    return {
-      mode, H, refText: bg, refUi: surface,
-      surface, accent, onAccent,
-      bg,
-      sunken,
-      border: oklchToHex(0.925, nC * 0.9, H),
-      // boundary roles solve to the floor (+ margin); text roles are strong by design, then verified
-      borderStrong: oklchToHex(solveL(nC, H, surface, FLOORS.ui + 0.15, 'down'), nC, H),
-      textMuted: oklchToHex(solveL(nC, H, bg, FLOORS.muted + 0.15, 'down'), nC, H),
-      textSecondary: oklchToHex(0.460, nC, H),
-      textPrimary: oklchToHex(0.255, nC, H),
-      accentHover: oklchToHex(Math.max(aL - 0.07, 0.16), bC, H),
-      accentSubtle: oklchToHex(0.955, Math.min(bC * 0.22, 0.05), H),
-      focusRing: oklchToHex(Math.min(aL + 0.07, 0.78), bC, H),
-    };
-  }
-  // dark
-  const bg = oklchToHex(0.145, nC * 0.6, H);
-  const surface = oklchToHex(0.190, nC * 0.8, H);
-  let aL = Math.max(hexToOklch(brandHex)[0], 0.6);
-  while (contrast(oklchToHex(aL, bC, H), bg) < 4.5 && aL < 0.86) aL += 0.008;
-  const accent = oklchToHex(aL, bC, H);
-  const onAccent = contrast('#FFFFFF', accent) >= 4.5 ? '#FFFFFF' : oklchToHex(0.16, nC, H);
-  return {
-    mode, H, refText: bg, refUi: surface,
-    surface, accent, onAccent,
-    bg,
-    sunken: oklchToHex(0.120, nC * 0.6, H),
-    border: oklchToHex(0.270, nC, H),
-    borderStrong: oklchToHex(solveL(nC, H, surface, FLOORS.ui + 0.15, 'up'), nC, H),
-    textMuted: oklchToHex(solveL(nC, H, bg, FLOORS.muted + 0.15, 'up'), nC, H),
-    textSecondary: oklchToHex(0.760, nC, H),
-    textPrimary: oklchToHex(0.965, nC * 0.5, H),
-    accentHover: oklchToHex(Math.min(aL + 0.07, 0.88), bC, H),
-    accentSubtle: oklchToHex(0.30, Math.min(bC * 0.4, 0.08), H),
-    focusRing: oklchToHex(aL, bC, H),
-  };
-}
-
-/* ============================================================
-   The role spec — book step ↔ semantic token ↔ contrast rule.
-   ============================================================ */
-function rowSpec(skin) {
-  const t = (key) => skin[key];
-  return [
-    { sw: t('accent'), name: 'Primary', vn: '--accent', use: 'actions · links · focus', val: t('accent'),
-      grade: { kind: 'fill', label: 'white-on', ratio: contrast(t('onAccent'), t('accent')), floor: 4.5, refName: 'F66' } },
-    { sw: t('textPrimary'), name: 'Darkest', vn: '--text-primary', use: 'headings & body text', val: t('textPrimary'),
-      grade: { kind: 'text', ratio: contrast(t('textPrimary'), skin.refText), floor: FLOORS.primary, refName: 'vs bg · F15' } },
-    { sw: t('textSecondary'), name: 'Dark', vn: '--text-secondary', use: 'secondary text', val: t('textSecondary'),
-      grade: { kind: 'text', ratio: contrast(t('textSecondary'), skin.refText), floor: 4.5, refName: 'vs bg' } },
-    { sw: t('textMuted'), name: 'Dark', vn: '--text-muted', use: 'muted / helper text', val: t('textMuted'),
-      grade: { kind: 'text', ratio: contrast(t('textMuted'), skin.refText), floor: 4.5, refName: 'vs bg' } },
-    { sw: t('borderStrong'), name: 'Medium', vn: '--border-strong', use: 'input / functional borders', val: t('borderStrong'),
-      grade: { kind: 'ui', ratio: contrast(t('borderStrong'), skin.refUi), floor: 3.0, refName: 'UI · vs surface' } },
-    { sw: t('border'), name: 'Light', vn: '--border', use: 'dividers / decorative', val: t('border'),
-      grade: { kind: 'decorative' } },
-    { sw: t('sunken'), name: 'Lightest', vn: '--bg / --surface-sunken', use: 'page / alt background', val: t('bg'),
-      grade: { kind: 'base' } },
-    { sw: t('surface'), name: 'White', vn: '--surface', use: 'cards', val: t('surface'),
-      grade: { kind: 'base' } },
-  ];
-}
-
-/* ============================================================
-   Render.
-   ============================================================ */
-let state = { brand: '#3A6DF0', mode: 'light' };
-
-function badge(grade) {
-  if (grade.kind === 'decorative') return `<span class="badge b-mute">decorative</span>`;
-  if (grade.kind === 'base') return `<span class="badge b-mute">surface</span>`;
-  const pass = grade.ratio >= grade.floor;
-  const cls = pass ? 'b-ok' : (grade.ratio >= grade.floor - 0.6 ? 'b-warn' : 'b-bad');
-  const mark = pass ? '✓' : '⚠';
-  const lab = grade.refName || '';
-  return `<span class="badge ${cls}">${mark} ${grade.ratio.toFixed(2)}:1 <span class="rl">${lab}</span></span>`;
-}
-
-function render() {
-  const skin = generate(state.brand, state.mode);
-  const rows = rowSpec(skin);
-  document.getElementById('rows').innerHTML = rows.map((r) => {
-    const [L, C, Hh] = hexToOklch(r.val);
-    return `<div class="row">
-      <span class="sw" style="background:${r.val}"></span>
-      <span class="role">${r.use ? '' : ''}<span class="vn">${r.vn}</span><span class="step">${r.name}</span>
-        <small>${r.use}</small></span>
-      <span class="vals"><b>${r.val}</b><br>${oklchStr(L, C, Hh)}</span>
-      ${badge(r.grade)}
-    </div>`;
-  }).join('');
-
-  // F66 / accent note
-  const aPass = contrast(skin.onAccent, skin.accent) >= 4.5;
-  const whiteOnAccent = contrast('#FFFFFF', skin.accent);
-  document.getElementById('note').innerHTML =
-    `<b>Accent (F66):</b> white text on the accent is ${whiteOnAccent.toFixed(2)}:1 — ` +
-    (whiteOnAccent >= 4.5
-      ? `passes, so <code>--text-on-accent: #fff</code>.`
-      : `fails, so the tool ${aPass ? `darkened the accent and/or set <code>--text-on-accent</code> to dark ink (${skin.onAccent}).` : `flagged it — pick a deeper brand step.`}`) +
-    `  Neutrals carry the brand hue (${Math.round(skin.H)}°) at low chroma — the book's tinted greys.`;
-
-  renderPreview(skin);
-  state._skin = skin;
-}
-
-function renderPreview(skin) {
-  document.getElementById('preview').innerHTML = `
-    <div class="pv-pad" style="background:${skin.bg};color:${skin.textPrimary}">
-      <p class="pv-ey" style="color:${skin.accent}">Live preview · ${skin.mode}</p>
-      <h2 class="pv-h" style="color:${skin.textPrimary}">A surface in this skin</h2>
-      <p class="pv-p" style="color:${skin.textSecondary}">Body text on the page background, with
-        <span style="color:${skin.accent}">an accent link</span> and
-        <span style="color:${skin.textMuted}">muted helper text</span> beneath it.</p>
-      <div class="pv-actions">
-        <button class="pv-btn" style="background:${skin.accent};color:${skin.onAccent}">Primary action</button>
-        <button class="pv-btn" style="background:${skin.surface};color:${skin.textPrimary};border-color:${skin.borderStrong}">Secondary</button>
-      </div>
-      <div class="pv-card" style="background:${skin.surface};border:1px solid ${skin.border};color:${skin.textSecondary}">
-        A card on <code>--surface</code>, separated by <code>--border</code>.
-      </div>
-    </div>`;
-}
-
-/* ============================================================
-   Export — a drop-in skin in the dvla-self-service.css format.
-   ============================================================ */
-function exportCss() {
-  const light = generate(state.brand, 'light');
-  const dark = generate(state.brand, 'dark');
-  const hueLabel = `${Math.round(light.H)}°`;
-  const block = (s) => [
-    ['--bg', s.bg], ['--surface', s.surface], ['--surface-raised', s.surface], ['--surface-sunken', s.sunken],
-    ['--border', s.border], ['--border-strong', s.borderStrong],
-    ['--text-primary', s.textPrimary], ['--text-secondary', s.textSecondary], ['--text-muted', s.textMuted],
-    ['--text-on-accent', s.onAccent],
-    ['--accent', s.accent], ['--accent-hover', s.accentHover], ['--accent-subtle', s.accentSubtle],
-    ['--focus-ring', s.focusRing],
-  ].map(([k, v]) => `  ${k}:${' '.repeat(Math.max(1, 18 - k.length))}${v};`).join('\n');
-
-  return `/* ============================================================
-   Generated skin — brand ${state.brand}, hue ${hueLabel}
-   Load AFTER @lookbook/tokens. Generated by apps/palette.
-   Text steps solved to Lookbook floors (F15 ≥7:1 primary text);
-   accent verified for white-on-accent (F66).
-   ============================================================ */
-
-:root,
-[data-theme="light"] {
-${block(light)}
-}
-
-[data-theme="dark"] {
-${block(dark)}
-}
-`;
-}
-
-/* ============================================================
-   Wiring.
-   ============================================================ */
-const PRESETS = ['#3A6DF0', '#168A4A', '#E0533D', '#7C4DD1', '#0E7490', '#D4A017'];
-function buildPresets() {
-  document.getElementById('presets').innerHTML = PRESETS.map(
-    (c) => `<button class="preset" style="background:${c}" data-c="${c}" title="${c}"></button>`).join('');
-}
-function setBrand(hex) {
-  if (!/^#?[0-9a-fA-F]{6}$/.test(hex.replace('#', '').slice(0, 6) ? hex : '')) {
-    // tolerant: accept #rgb or #rrggbb
-  }
-  let h = hex.startsWith('#') ? hex : '#' + hex;
-  if (!/^#[0-9a-fA-F]{6}$/.test(h)) return;
-  state.brand = h.toUpperCase();
-  document.getElementById('picker').value = state.brand;
-  document.getElementById('hex').value = state.brand;
-  render();
-}
-
-document.getElementById('picker').addEventListener('input', (e) => setBrand(e.target.value));
-document.getElementById('hex').addEventListener('change', (e) => setBrand(e.target.value.trim()));
-document.getElementById('presets').addEventListener('click', (e) => {
-  const c = e.target.dataset.c; if (c) setBrand(c);
-});
-document.getElementById('m-light').addEventListener('click', () => setMode('light'));
-document.getElementById('m-dark').addEventListener('click', () => setMode('dark'));
-function setMode(m) {
-  state.mode = m;
-  document.getElementById('m-light').setAttribute('aria-pressed', String(m === 'light'));
-  document.getElementById('m-dark').setAttribute('aria-pressed', String(m === 'dark'));
-  render();
-}
-
-const scrim = document.getElementById('scrim');
-document.getElementById('export').addEventListener('click', () => {
-  const css = exportCss();
-  document.getElementById('code').textContent = css;
-  document.getElementById('skinname').textContent = `· ${state.brand}`;
-  scrim.classList.add('open');
-});
-document.getElementById('close').addEventListener('click', () => scrim.classList.remove('open'));
-scrim.addEventListener('click', (e) => { if (e.target === scrim) scrim.classList.remove('open'); });
-document.getElementById('copy').addEventListener('click', async () => {
-  try { await navigator.clipboard.writeText(document.getElementById('code').textContent); } catch (_) {}
-});
-document.getElementById('download').addEventListener('click', () => {
-  const blob = new Blob([document.getElementById('code').textContent], { type: 'text/css' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `skin-${state.brand.replace('#', '').toLowerCase()}.css`;
-  a.click();
-  URL.revokeObjectURL(a.href);
-});
-
-// optional deep-link: ?brand=RRGGBB&mode=light|dark
-const params = new URLSearchParams(location.search);
-const pBrand = params.get('brand');
-const pMode = params.get('mode');
-if (pMode === 'dark') { state.mode = 'dark'; document.getElementById('m-dark').setAttribute('aria-pressed', 'true'); document.getElementById('m-light').setAttribute('aria-pressed', 'false'); }
-
-buildPresets();
-if (pBrand && /^#?[0-9a-fA-F]{6}$/.test(pBrand)) { setBrand(pBrand.startsWith('#') ? pBrand : '#' + pBrand); }
-else { render(); }
-</script>
+<script src="color.js"></script>
+<script src="palette.js"></script>
 </body>
 </html>

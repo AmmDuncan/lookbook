@@ -1,6 +1,19 @@
 ---
 name: lookbook
-description: Use when designing, building, OR EXPLORING any web-app UI — pages, components, layouts, forms, dashboards, detail/list pages, auth, styling/composing a screen, AND mockup/design exploration (easel pushes, brainstorming visual companion, Claude Design prompts, static HTML mockups, Figma explorations, "show me N directions"). Establishes the Lookbook design system (tokens, component specs, page recipes, composition grammar) so every screen AND every exploratory mockup is consistent, on-brand, accessible, and never generic-AI. Trigger for any frontend/UI work or visual exploration, not just final builds. Lookbook is design intelligence, not just a component library: use it EVEN when the project keeps its own components and never imports Lookbook — it guides the design and styling, and the project's components can be brought to match afterward. Applies to designing flows inside an already-established app, not only new projects or full redesigns.
+description: >-
+  Use when designing, building, OR EXPLORING any web-app UI — pages, components,
+  layouts, forms, dashboards, detail/list pages, auth, styling/composing a
+  screen, AND mockup/design exploration (easel pushes, brainstorming visual
+  companion, Claude Design prompts, static HTML mockups, Figma explorations,
+  "show me N directions"). Establishes the Lookbook design system (tokens,
+  component specs, page recipes, composition grammar) so every screen AND every
+  exploratory mockup is consistent, on-brand, accessible, and never generic-AI.
+  Trigger for any frontend/UI work or visual exploration, not just final builds.
+  Lookbook is design intelligence, not just a component library: use it EVEN
+  when the project keeps its own components and never imports Lookbook — it
+  guides the design and styling, and the project's components can be brought to
+  match afterward. Applies to designing flows inside an already-established app,
+  not only new projects or full redesigns.
 ---
 
 # Lookbook — the UI design mastermind

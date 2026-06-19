@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auth screens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   AUTH SCREENS — common authentication layouts (forms only).
+   Neutral professional language; one slate-blue accent.
+   ============================================================================ */
+:root{
+  --bg:#EEEEEA; --surface:#FFFFFF; --page:#F5F4F0; --inset:#F2F2EE; --dark:#1B2230;
+  --border:#E5E4DE; --border-2:#D4D1C7;
+  --ink:#1C1D21; --muted:#585A61; --subtle:#8B8D94;
+  --a:#3858C4; --a-tint:rgba(56,88,196,0.11); --a-ink:#2c46a0;
+  --ok:#2C6E49; --warn:#8A5A12; --bad:#B23A2E;
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --shadow:0 10px 30px -14px rgba(28,29,32,0.22),0 2px 6px rgba(28,29,32,0.05);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:2.5px solid var(--a);outline-offset:2px;border-radius:5px;}
+button{font-family:inherit;cursor:pointer;}
+
+.wrap{max-width:1180px;margin:0 auto;padding:56px 36px 96px;}
+.head{margin-bottom:34px;padding-bottom:24px;border-bottom:1.5px solid var(--ink);}
+.eyebrow{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--subtle);margin-bottom:13px;}
+.head h1{font-size:clamp(32px,5vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1;}
+.head p{font-size:15.5px;color:var(--muted);max-width:62ch;margin-top:14px;}
+
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;align-items:start;}
+.spec{display:flex;flex-direction:column;gap:12px;}
+.spec.full{grid-column:1/-1;}
+.lab{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
+.lab .nm{font-size:14px;font-weight:700;letter-spacing:-0.01em;}
+.lab .nm span{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--a);margin-right:8px;}
+.lab .uw{font-size:12.5px;color:var(--muted);}
+.lab .uw b{color:var(--ink);font-weight:600;}
+
+/* frame */
+.frame{border:1px solid var(--border);border-radius:13px;overflow:hidden;background:var(--page);box-shadow:0 1px 3px rgba(28,29,32,0.05);}
+.chrome{height:30px;display:flex;align-items:center;gap:6px;padding:0 12px;background:#FAFAF8;border-bottom:1px solid var(--border);}
+.chrome i{width:8px;height:8px;border-radius:50%;background:#DDDBD3;}
+.screen{padding:34px 28px;display:flex;align-items:center;justify-content:center;min-height:412px;}
+
+/* brand mark */
+.mark{display:inline-flex;align-items:center;gap:9px;}
+.mark .mk{width:30px;height:30px;border-radius:8px;background:var(--a);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mark .mk b{width:11px;height:11px;border-radius:3px;background:#fff;}
+.mark .wd{font-weight:700;font-size:15px;letter-spacing:-0.01em;}
+
+/* card */
+.card{width:100%;max-width:340px;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:28px 26px;}
+.card.narrow{max-width:320px;}
+.atitle{font-size:21px;font-weight:700;letter-spacing:-0.02em;margin-top:18px;}
+.asub{font-size:13px;color:var(--muted);margin-top:6px;}
+
+/* fields */
+.field{margin-top:15px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.field .inwrap{position:relative;}
+.field input{width:100%;font-family:var(--font-ui);font-size:13.5px;color:var(--ink);background:#fff;border:1px solid var(--border-2);border-radius:8px;padding:10px 12px;transition:border-color .14s,box-shadow .14s;}
+.field input::placeholder{color:var(--subtle);}
+.field input:focus{outline:none;border-color:var(--a);box-shadow:0 0 0 3px var(--a-tint);}
+.field .vchk{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--ok);width:16px;height:16px;}
+.field .ok-help{font-size:11.5px;color:var(--ok);margin-top:6px;display:flex;align-items:center;gap:5px;}
+.field .ok-help svg{width:12px;height:12px;}
+.lblrow{display:flex;align-items:center;justify-content:space-between;}
+.lblrow a{font-size:11.5px;font-weight:600;color:var(--a);}
+
+/* password strength */
+.pwmeter{display:flex;gap:4px;margin-top:9px;}
+.pwmeter i{height:5px;flex:1;border-radius:3px;background:var(--inset);}
+.pwmeter i.s1{background:var(--ok);}.pwmeter i.s2{background:var(--ok);}.pwmeter i.s3{background:var(--ok);}
+.pwnote{font-size:11px;color:var(--muted);margin-top:6px;}
+.pwnote b{color:var(--ok);}
+
+/* remember */
+.remember{display:flex;align-items:center;justify-content:space-between;margin-top:14px;}
+.cbx{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink);cursor:pointer;}
+.cbx input{position:absolute;opacity:0;width:0;height:0;}
+.cbx .bx{width:17px;height:17px;border-radius:4px;border:1.5px solid var(--border-2);background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;}
+.cbx .bx svg{width:11px;height:11px;opacity:0;}
+.cbx input:checked + .bx{background:var(--a);border-color:var(--a);}
+.cbx input:checked + .bx svg{opacity:1;}
+.cbx input:focus-visible + .bx{outline:2.5px solid var(--a);outline-offset:2px;}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:13.5px;font-weight:600;padding:11px 16px;border-radius:9px;border:1px solid transparent;width:100%;transition:all .14s;}
+.btn svg{width:16px;height:16px;}
+.btn-a{background:var(--a);color:#fff;}
+.btn-a:hover{background:var(--a-ink);}
+.btn-o{background:#fff;color:var(--ink);border-color:var(--border-2);}
+.btn-o:hover{background:var(--inset);}
+.btn.mt{margin-top:18px;}
+.social{display:flex;flex-direction:column;gap:9px;margin-top:18px;}
+.smono{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;}
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--subtle);font-size:11px;text-transform:uppercase;letter-spacing:.08em;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.altfoot{text-align:center;font-size:12.5px;color:var(--muted);margin-top:20px;}
+.altfoot a{color:var(--a);font-weight:600;}
+.backlink{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--muted);margin-top:20px;}
+.backlink:hover{color:var(--ink);}
+.backlink svg{width:14px;height:14px;}
+
+/* state icon (forgot/verify) */
+.stateic{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;}
+.stateic svg{width:26px;height:26px;}
+.stateic.blue{background:var(--a-tint);color:var(--a);}
+
+/* split screen */
+.split{display:grid;grid-template-columns:1fr 1fr;min-height:430px;}
+.split .left{background:var(--page);display:flex;align-items:center;justify-content:center;padding:34px 28px;}
+.split .right{background:var(--dark);color:#EAEDF3;padding:38px 34px;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+.split .right::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);background-size:18px 18px;pointer-events:none;}
+.split .right .mk{background:rgba(255,255,255,0.14);}
+.split .right .wd{color:#fff;}
+.split .right .big{font-size:25px;font-weight:700;letter-spacing:-0.02em;line-height:1.25;margin-top:auto;position:relative;}
+.split .right .q{font-size:13.5px;color:#AEB6C6;margin-top:14px;line-height:1.55;position:relative;}
+.split .right .by{display:flex;align-items:center;gap:10px;margin-top:18px;position:relative;}
+.split .right .by .av{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.16);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.split .right .by .nm{font-size:12.5px;font-weight:600;}
+.split .right .by .ro{font-size:11.5px;color:#9AA3B5;}
+.split .card{box-shadow:none;border:none;background:none;padding:0;max-width:300px;}
+
+/* OTP */
+.otp{display:flex;gap:9px;justify-content:space-between;margin-top:16px;}
+.otp .box{width:44px;height:52px;border:1px solid var(--border-2);border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:20px;font-weight:500;color:var(--ink);}
+.otp .box.filled{border-color:var(--a);}
+.otp .box.cur{border-color:var(--a);box-shadow:0 0 0 3px var(--a-tint);}
+.resend{font-size:12px;color:var(--muted);text-align:center;margin-top:16px;}
+.resend a{color:var(--a);font-weight:600;}
+
+@media(max-width:760px){.gallery{grid-template-columns:1fr;}.spec.full{grid-column:auto;}.split{grid-template-columns:1fr;}.split .right{display:none;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-check-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-arrow-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"/><path d="m21 2-9.6 9.6"/><circle cx="7.5" cy="15.5" r="5.5"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <header class="head">
+    <div class="eyebrow">Specimen · authentication</div>
+    <h1>Auth screens</h1>
+    <p>The screens every product needs at the front door — sign in, sign up, recover and verify — each in a composition suited to its moment. Forms are shown for layout only.</p>
+  </header>
+
+  <div class="gallery">
+
+    <!-- 1 CENTERED -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>01</span>Centered card login</div><div class="uw"><b>Use when</b> — the simplest, most universal sign-in.</div></div>
+      <div class="frame">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <div class="screen">
+          <div class="card">
+            <div class="mark"><span class="mk"><b></b></span><span class="wd">Northwind</span></div>
+            <div class="atitle">Welcome back</div>
+            <div class="asub">Sign in to your workspace.</div>
+            <div class="social">
+              <button class="btn btn-o"><span class="smono" style="background:#EDEBF6;color:#3858C4">G</span>Continue with Google</button>
+              <button class="btn btn-o"><span class="smono" style="background:#1C1D21;color:#fff">⌥</span>Continue with GitHub</button>
+            </div>
+            <div class="divider">or</div>
+            <div class="field"><label>Email</label><input value="noa@team.com"></div>
+            <div class="field"><div class="lblrow"><label>Password</label><a>Forgot?</a></div><input type="text" value="••••••••" readonly></div>
+            <div class="remember"><label class="cbx"><input type="checkbox" checked><span class="bx"><svg><use href="#i-check"/></svg></span>Remember me</label></div>
+            <button class="btn btn-a mt">Sign in</button>
+            <div class="altfoot">New here? <a>Create an account</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 SIGN-UP -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>03</span>Sign-up + strength meter</div><div class="uw"><b>Use when</b> — onboarding; guide good passwords inline.</div></div>
+      <div class="frame">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <div class="screen">
+          <div class="card">
+            <div class="mark"><span class="mk"><b></b></span><span class="wd">Northwind</span></div>
+            <div class="atitle">Create your account</div>
+            <div class="asub">Free for 14 days. No card required.</div>
+            <div class="field"><label>Full name</label><input value="Noa Bergström"></div>
+            <div class="field"><label>Work email</label><div class="inwrap"><input value="noa@team.com"><svg class="vchk"><use href="#i-check-c"/></svg></div><div class="ok-help"><svg><use href="#i-check"/></svg>Email available</div></div>
+            <div class="field"><label>Password</label><input type="text" value="••••••••••" readonly>
+              <div class="pwmeter"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i></i></div>
+              <div class="pwnote">Strength: <b>Strong</b> — add one more for excellent.</div>
+            </div>
+            <button class="btn btn-a mt">Create account</button>
+            <div class="altfoot">Already have an account? <a>Sign in</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 SPLIT (full width) -->
+    <div class="spec full">
+      <div class="lab"><div class="nm"><span>02</span>Split-screen login</div><div class="uw"><b>Use when</b> — you want brand presence beside the form.</div></div>
+      <div class="frame">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <div class="split">
+          <div class="left">
+            <div class="card">
+              <div class="mark"><span class="mk"><b></b></span><span class="wd">Northwind</span></div>
+              <div class="atitle">Sign in</div>
+              <div class="asub">Welcome back — let's get you in.</div>
+              <div class="field"><label>Email</label><input value="noa@team.com"></div>
+              <div class="field"><div class="lblrow"><label>Password</label><a>Forgot?</a></div><input type="text" value="••••••••" readonly></div>
+              <div class="remember"><label class="cbx"><input type="checkbox"><span class="bx"><svg><use href="#i-check"/></svg></span>Remember me</label></div>
+              <button class="btn btn-a mt">Sign in</button>
+              <div class="altfoot">New here? <a>Create an account</a></div>
+            </div>
+          </div>
+          <div class="right">
+            <div class="mark"><span class="mk"><b></b></span><span class="wd">Northwind</span></div>
+            <div class="big">Analytics your whole team can trust.</div>
+            <div class="q">“We replaced three tools with Northwind and cut reporting from a day to a coffee break.”</div>
+            <div class="by"><span class="av">SC</span><div><div class="nm">Suki Chen</div><div class="ro">Head of Product, Canopy</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 FORGOT -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>04</span>Forgot / reset password</div><div class="uw"><b>Use when</b> — a focused recovery step; keep it to one field.</div></div>
+      <div class="frame">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <div class="screen">
+          <div class="card narrow">
+            <div class="stateic blue"><svg><use href="#i-key"/></svg></div>
+            <div class="atitle">Reset your password</div>
+            <div class="asub">Enter your email and we'll send a reset link.</div>
+            <div class="field"><label>Email</label><input placeholder="you@team.com"></div>
+            <button class="btn btn-a mt">Send reset link</button>
+            <a class="backlink"><svg><use href="#i-arrow-l"/></svg>Back to sign in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 2FA -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>06</span>Two-factor code (OTP)</div><div class="uw"><b>Use when</b> — verifying a second factor at sign-in.</div></div>
+      <div class="frame">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <div class="screen">
+          <div class="card narrow">
+            <div class="stateic blue"><svg><use href="#i-shield"/></svg></div>
+            <div class="atitle">Two-factor authentication</div>
+            <div class="asub">Enter the 6-digit code from your authenticator app.</div>
+            <div class="otp">
+              <span class="box filled">4</span><span class="box filled">9</span><span class="box filled">2</span><span class="box cur">1</span><span class="box"></span><span class="box"></span>
+            </div>
+            <button class="btn btn-a mt">Verify</button>
+            <div class="resend">Didn't get a code? <a>Resend</a> · <a>Use a backup code</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 VERIFY -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>05</span>Email verification / check inbox</div><div class="uw"><b>Use when</b> — confirming a sent link; a reassuring dead-end.</div></div>
+      <div class="frame">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <div class="screen">
+          <div class="card narrow" style="text-align:center">
+            <div class="stateic blue" style="margin:0 auto"><svg><use href="#i-mail"/></svg></div>
+            <div class="atitle">Check your inbox</div>
+            <div class="asub">We sent a verification link to<br><b style="color:var(--ink)">noa@team.com</b>. It expires in 30 minutes.</div>
+            <button class="btn btn-a mt">Open email app</button>
+            <div class="resend" style="margin-top:14px">Didn't receive it? <a>Resend email</a></div>
+            <a class="backlink"><svg><use href="#i-arrow-l"/></svg>Back to sign in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

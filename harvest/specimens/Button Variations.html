@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Button variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   BUTTON VARIATIONS — specimen sheet on a neutral light ground.
+   Chrome stays quiet so the buttons are the focus; each is labeled.
+   ============================================================================ */
+:root{
+  --paper:#EFEFEC; --surface:#FFFFFF; --border:#E2E2DE; --border-2:#D4D4CE;
+  --ink:#1B1B1E; --muted:#5C5C58; --subtle:#86867F;
+  --disabled-bg:#ECECEA; --disabled-ink:#A8A8A2; --disabled-bd:#E0E0DC;
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--paper);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:2.5px solid #4F46E5;outline-offset:2px;border-radius:6px;}
+
+.wrap{max-width:1180px;margin:0 auto;padding:56px 36px 96px;}
+.head{margin-bottom:36px;padding-bottom:24px;border-bottom:1.5px solid var(--ink);}
+.eyebrow{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--subtle);margin-bottom:14px;}
+.head h1{font-size:clamp(34px,5.5vw,56px);font-weight:800;letter-spacing:-0.03em;line-height:1;}
+.head p{font-size:15.5px;color:var(--muted);max-width:60ch;margin-top:14px;}
+
+.sub{display:flex;align-items:baseline;gap:12px;margin:40px 0 18px;}
+.sub h2{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+.sub .ln{flex:1;height:1px;background:var(--border-2);align-self:center;}
+.sub .ct{font-family:var(--font-mono);font-size:11px;color:var(--subtle);}
+
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.states-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;min-height:152px;}
+.lab{font-family:var(--font-mono);font-size:10.5px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);margin-bottom:6px;}
+.stage{flex:1;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:10px 0;}
+/* special grounds (needed by certain aesthetics) */
+.cell.dark{background:#0B0F17;border-color:#1C2533;}
+.cell.dark .lab{color:#6B7689;}
+.cell.neu{background:#E7E9EE;border-color:#DBDDE3;}
+.cell.neu .lab{color:#8A8E98;}
+.cell.glass{background:linear-gradient(135deg,#7C3AED 0%,#DB2777 55%,#F59E0B 120%);border-color:transparent;}
+.cell.glass .lab{color:rgba(255,255,255,0.85);}
+
+/* states cell */
+.cell.states{min-height:152px;}
+.states{display:flex;gap:10px;}
+.st{flex:1;display:flex;flex-direction:column;align-items:center;gap:9px;}
+.st .sl{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);}
+.st .pad{flex:1;display:flex;align-items:center;}
+
+/* ============================================================================ BASE */
+.b{font-family:var(--font-ui);font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:10px;border:1px solid transparent;cursor:pointer;transition:all .15s cubic-bezier(.2,0,0,1);white-space:nowrap;}
+.b svg{width:16px;height:16px;}
+.is-disabled,.b:disabled{background:var(--disabled-bg)!important;color:var(--disabled-ink)!important;border-color:var(--disabled-bd)!important;box-shadow:none!important;text-shadow:none!important;filter:none!important;cursor:not-allowed!important;transform:none!important;}
+
+/* 1 SOLID */
+.b-solid{background:#4F46E5;color:#fff;box-shadow:0 1px 2px rgba(79,70,229,.4);}
+.b-solid:hover,.b-solid.is-hover{background:#3F37C9;}
+/* 2 SOFT TINT */
+.b-soft{background:rgba(79,70,229,.12);color:#3A33B0;}
+.b-soft:hover,.b-soft.is-hover{background:rgba(79,70,229,.2);}
+/* 3 OUTLINE */
+.b-outline{background:transparent;color:#3A33B0;border:1.5px solid #BBB7EE;}
+.b-outline:hover,.b-outline.is-hover{background:rgba(79,70,229,.08);border-color:#4F46E5;}
+/* 4 GHOST */
+.b-ghost{background:transparent;color:var(--ink);}
+.b-ghost:hover,.b-ghost.is-hover{background:#EFEFEC;}
+/* 5 GRADIENT */
+.b-grad{background:linear-gradient(100deg,#6D5EF6,#A855F7);color:#fff;box-shadow:0 6px 16px -6px rgba(124,77,255,.55);}
+.b-grad:hover,.b-grad.is-hover{filter:brightness(1.07);box-shadow:0 8px 20px -6px rgba(124,77,255,.6);}
+/* 6 NEON / GLOW */
+.b-neon{background:transparent;color:#3CECEC;border:1.5px solid rgba(60,236,236,.55);border-radius:10px;font-weight:600;box-shadow:0 0 14px rgba(60,236,236,.4),inset 0 0 12px rgba(60,236,236,.12);text-shadow:0 0 9px rgba(60,236,236,.55);}
+.b-neon:hover{box-shadow:0 0 22px rgba(60,236,236,.6),inset 0 0 16px rgba(60,236,236,.2);}
+/* 7 NEUMORPHIC */
+.b-neu{background:#E7E9EE;color:#3A3F4B;border-radius:14px;font-weight:600;box-shadow:5px 5px 11px #C8CBD3,-5px -5px 11px #FFFFFF;}
+.b-neu:hover{box-shadow:inset 3px 3px 7px #C8CBD3,inset -3px -3px 7px #FFFFFF;}
+/* 8 PILL */
+.b-pill{background:#047857;color:#fff;border-radius:999px;padding:11px 24px;}
+.b-pill:hover{background:#03634A;}
+/* 9 SHARP */
+.b-sharp{background:#161619;color:#fff;border-radius:0;padding:12px 22px;letter-spacing:.02em;}
+.b-sharp:hover{background:#000;}
+/* 10 BRUTALIST */
+.b-brut{background:#FFE14D;color:#15151A;border:2.5px solid #15151A;border-radius:0;font-weight:800;text-transform:uppercase;letter-spacing:.03em;box-shadow:4px 4px 0 #15151A;}
+.b-brut:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #15151A;}
+/* 11 GLASSY */
+.b-glass{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.45);border-radius:12px;font-weight:600;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);text-shadow:0 1px 3px rgba(0,0,0,.3);box-shadow:0 4px 18px -6px rgba(0,0,0,.3);}
+.b-glass:hover{background:rgba(255,255,255,.28);}
+/* 12 3D RAISED */
+.b-3d{background:#4F46E5;color:#fff;border-radius:11px;font-weight:700;box-shadow:0 5px 0 #36309C;}
+.b-3d:hover,.b-3d.is-hover{background:#5A52ED;}
+.b-3d:active{transform:translateY(3px);box-shadow:0 2px 0 #36309C;}
+/* 13 MONO / TERMINAL */
+.b-term{font-family:var(--font-mono);background:#0B0F17;color:#79F59B;border:1px solid #25303F;border-radius:6px;padding:10px 15px;font-weight:500;font-size:12.5px;}
+.b-term .ca{display:inline-block;width:7px;height:14px;background:#79F59B;margin-left:2px;animation:bl 1.1s steps(1) infinite;}
+@keyframes bl{50%{opacity:0;}}
+.b-term:hover{border-color:#79F59B;}
+/* 14 ICON + LABEL */
+.b-icon{background:#161619;color:#fff;border-radius:10px;}
+.b-icon:hover{background:#000;}
+/* 15 SPLIT */
+.split{display:inline-flex;border-radius:10px;box-shadow:0 1px 2px rgba(79,70,229,.4);overflow:hidden;}
+.split .main{background:#4F46E5;color:#fff;border:none;padding:10px 16px;font-family:var(--font-ui);font-weight:600;font-size:13.5px;cursor:pointer;transition:background .15s;}
+.split .car{background:#4F46E5;color:#fff;border:none;border-left:1px solid rgba(255,255,255,.25);padding:0 11px;display:flex;align-items:center;cursor:pointer;transition:background .15s;}
+.split .car svg{width:15px;height:15px;}
+.split .main:hover,.split .car:hover{background:#3F37C9;}
+/* 16 FAB */
+.fab{width:54px;height:54px;border-radius:50%;background:#BE123C;color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 9px 22px -7px rgba(190,18,60,.65);transition:all .15s;}
+.fab svg{width:23px;height:23px;}
+.fab:hover{background:#A20F33;transform:translateY(-2px);box-shadow:0 13px 26px -7px rgba(190,18,60,.7);}
+/* 17 LINK / UNDERLINE */
+.b-link{background:none;border:none;color:#3A33B0;font-weight:600;font-size:14px;font-family:var(--font-ui);cursor:pointer;position:relative;padding:4px 2px;}
+.b-link::after{content:'';position:absolute;left:2px;right:2px;bottom:0;height:2px;background:#4F46E5;transform:scaleX(.001);transform-origin:left;transition:transform .22s cubic-bezier(.2,0,0,1);}
+.b-link:hover::after{transform:scaleX(1);}
+/* 18 GRADIENT BORDER */
+.b-gborder{border:2px solid transparent;border-radius:11px;color:#6D28D9;font-weight:700;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(100deg,#6D5EF6,#EC4899) border-box;}
+.b-gborder:hover{background:linear-gradient(#FBF8FF,#FBF8FF) padding-box,linear-gradient(100deg,#6D5EF6,#EC4899) border-box;}
+
+@media(max-width:980px){.gallery{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:740px){.gallery{grid-template-columns:repeat(2,1fr);}.states-grid{grid-template-columns:1fr;}}
+@media(max-width:440px){.gallery{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="i-chev-d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.962 0z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <header class="head">
+    <div class="eyebrow">Specimen · controls</div>
+    <h1>Button variations</h1>
+    <p>Eighteen visually distinct button treatments across many aesthetics — from flat solids and soft tints to neon, neumorphic, brutalist, glass and 3D. Four are shown across their default, hover and disabled states.</p>
+  </header>
+
+  <!-- SECTION A: the variations -->
+  <div class="sub"><h2>The variations</h2><span class="ln"></span><span class="ct">14 styles</span></div>
+  <div class="gallery">
+
+    <div class="cell"><span class="lab">02 · Soft tint</span><div class="stage"><button class="b b-soft">Add label</button></div></div>
+    <div class="cell"><span class="lab">04 · Ghost</span><div class="stage"><button class="b b-ghost">Cancel</button></div></div>
+    <div class="cell"><span class="lab">05 · Gradient</span><div class="stage"><button class="b b-grad">Upgrade</button></div></div>
+    <div class="cell dark"><span class="lab">06 · Neon / glow</span><div class="stage"><button class="b b-neon">Activate</button></div></div>
+
+    <div class="cell neu"><span class="lab">07 · Neumorphic</span><div class="stage"><button class="b b-neu">Continue</button></div></div>
+    <div class="cell"><span class="lab">08 · Pill</span><div class="stage"><button class="b b-pill">Subscribe</button></div></div>
+    <div class="cell"><span class="lab">09 · Sharp / squared</span><div class="stage"><button class="b b-sharp">Checkout</button></div></div>
+    <div class="cell"><span class="lab">10 · Brutalist</span><div class="stage"><button class="b b-brut">Send it</button></div></div>
+
+    <div class="cell glass"><span class="lab">11 · Glassy</span><div class="stage"><button class="b b-glass">Explore</button></div></div>
+    <div class="cell dark"><span class="lab">13 · Mono / terminal</span><div class="stage"><button class="b b-term">$ deploy<span class="ca"></span></button></div></div>
+    <div class="cell"><span class="lab">14 · Icon + label</span><div class="stage"><button class="b b-icon"><svg><use href="#i-download"/></svg>Download</button></div></div>
+    <div class="cell"><span class="lab">15 · Split button</span><div class="stage"><div class="split"><button class="main">Save</button><button class="car" aria-label="More options"><svg><use href="#i-chev-d"/></svg></button></div></div></div>
+
+    <div class="cell"><span class="lab">16 · FAB</span><div class="stage"><button class="fab" aria-label="New"><svg><use href="#i-plus"/></svg></button></div></div>
+    <div class="cell"><span class="lab">17 · Link / underline</span><div class="stage"><button class="b-link">Learn more</button></div></div>
+    <div class="cell"><span class="lab">18 · Gradient border</span><div class="stage"><button class="b b-gborder"><svg style="width:15px;height:15px"><use href="#i-spark"/></svg>Generate</button></div></div>
+
+  </div>
+
+  <!-- SECTION B: with states -->
+  <div class="sub"><h2>With states</h2><span class="ln"></span><span class="ct">default · hover · disabled</span></div>
+  <div class="states-grid">
+
+    <div class="cell states">
+      <span class="lab">01 · Solid</span>
+      <div class="states">
+        <div class="st"><div class="pad"><button class="b b-solid">Save</button></div><span class="sl">Default</span></div>
+        <div class="st"><div class="pad"><button class="b b-solid is-hover">Save</button></div><span class="sl">Hover</span></div>
+        <div class="st"><div class="pad"><button class="b b-solid is-disabled" disabled>Save</button></div><span class="sl">Disabled</span></div>
+      </div>
+    </div>
+
+    <div class="cell states">
+      <span class="lab">03 · Outline</span>
+      <div class="states">
+        <div class="st"><div class="pad"><button class="b b-outline">Edit</button></div><span class="sl">Default</span></div>
+        <div class="st"><div class="pad"><button class="b b-outline is-hover">Edit</button></div><span class="sl">Hover</span></div>
+        <div class="st"><div class="pad"><button class="b b-outline is-disabled" disabled>Edit</button></div><span class="sl">Disabled</span></div>
+      </div>
+    </div>
+
+    <div class="cell states">
+      <span class="lab">05 · Gradient</span>
+      <div class="states">
+        <div class="st"><div class="pad"><button class="b b-grad">Upgrade</button></div><span class="sl">Default</span></div>
+        <div class="st"><div class="pad"><button class="b b-grad is-hover">Upgrade</button></div><span class="sl">Hover</span></div>
+        <div class="st"><div class="pad"><button class="b b-grad is-disabled" disabled>Upgrade</button></div><span class="sl">Disabled</span></div>
+      </div>
+    </div>
+
+    <div class="cell states">
+      <span class="lab">12 · 3D raised</span>
+      <div class="states">
+        <div class="st"><div class="pad"><button class="b b-3d">Deploy</button></div><span class="sl">Default</span></div>
+        <div class="st"><div class="pad"><button class="b b-3d is-hover">Deploy</button></div><span class="sl">Hover</span></div>
+        <div class="st"><div class="pad"><button class="b b-3d is-disabled" disabled>Deploy</button></div><span class="sl">Disabled</span></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Auth &amp; onboarding (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Auth & onboarding · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin. Only composition + interaction varies. Placeholder labels
+   only — no real credentials. WCAG AA throughout.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF; --bad:#C0392B; --bad-t:#F9E8E5;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+
+.brand{display:inline-flex;align-items:center;gap:9px;}
+.brand .mk{width:30px;height:30px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;}
+.brand .mk .ico{width:17px;height:17px;color:#fff;}
+.brand b{font-size:17px;font-weight:700;letter-spacing:-0.01em;}
+
+.btn-pri{display:inline-flex;align-items:center;justify-content:center;gap:7px;width:100%;background:var(--accent);color:#fff;font-size:13.5px;font-weight:600;padding:11px 16px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-soc{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:13px;font-weight:600;padding:10px 16px;border-radius:8px;}
+.btn-soc .gico{width:16px;height:16px;}
+.btn-soc:hover{background:var(--inset);}
+
+.fld{display:block;margin-bottom:14px;}
+.fld .lab{font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:6px;display:flex;align-items:center;}
+.fld .lab a{margin-left:auto;font-size:11.5px;font-weight:600;color:var(--accent);text-decoration:none;}
+.inwrap{position:relative;}
+.input{width:100%;font-size:13.5px;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:10px 12px;outline:none;}
+.input::placeholder{color:var(--faint);}
+.input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+.reveal{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--faint);}
+.reveal:hover{background:var(--inset);color:var(--ink);} .reveal .ico{width:16px;height:16px;}
+.divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--faint);font-size:11.5px;}
+.divider::before,.divider::after{content:'';height:1px;background:var(--line);flex:1;}
+
+.subtle{font-size:12.5px;color:var(--mut);}
+.link{color:var(--accent);font-weight:600;text-decoration:none;}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-anchor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M12 22V8M5 12H2a10 10 0 0 0 20 0h-3"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.06 12.34a1 1 0 0 1 0-.68 10.94 10.94 0 0 1 19.88 0 1 1 0 0 1 0 .68 10.94 10.94 0 0 1-19.88 0Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eyeoff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.7 5.1A11 11 0 0 1 12 5c5 0 9.27 3.11 11 7a11.7 11.7 0 0 1-2.18 3.36M6.6 6.6A11.6 11.6 0 0 0 1 12c1.73 3.89 6 7 11 7a11 11 0 0 0 5.4-1.4M2 2l20 20M9.9 9.9a3 3 0 0 0 4.2 4.2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5M9 8V2M15 8V2M18 8v4a6 6 0 0 1-12 0V8Z"/></symbol>
+  <symbol id="g-google" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Auth &amp; onboarding · one skin, five compositions</div>
+    <h1>Same skin. Five ways to get in.</h1>
+    <p>The front door — sign in, sign up, verify, and get started — composed five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white surfaces with hairline borders, slightly-rounded corners, one restrained blue accent, system sans. Fields use placeholder labels only. What changes is purely <em>composition and interaction</em>.</p>
+  </header>
+
+  <!-- ============== 1 · CENTERED CARD LOGIN ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Centered card login</div>
+      <p class="plate-recipe"><b>PULLS</b> — a centered auth card: email + password fields, primary Sign in, social sign-in buttons, “forgot password” and “create account” links. &nbsp;<b>WHY</b> — the universal default: a single centered card focuses all attention on one task and reads instantly on any screen size.</p>
+    </div>
+    <div class="frame" style="display:flex;align-items:center;justify-content:center;padding:48px 24px;min-height:480px">
+      <div style="width:380px;max-width:100%">
+        <div class="brand" style="justify-content:center;width:100%;margin-bottom:22px"><span class="mk"><svg class="ico"><use href="#i-anchor"/></svg></span><b>Harbor</b></div>
+        <div style="background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:26px 26px">
+          <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.01em;text-align:center">Sign in to your account</h3>
+          <p class="subtle" style="text-align:center;margin-top:4px;margin-bottom:20px">Welcome back. Please enter your details.</p>
+          <label class="fld"><span class="lab">Email</span><input class="input" placeholder="you@example.com"></label>
+          <label class="fld" style="margin-bottom:10px"><span class="lab">Password <a href="#">Forgot?</a></span><div class="inwrap"><input class="input" type="password" value="placeholder" data-pw><button class="reveal" data-toggle><svg class="ico"><use href="#i-eye"/></svg></button></div></label>
+          <label style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--mut);margin-bottom:18px;cursor:pointer"><span class="cbx"><svg class="ico"><use href="#i-check"/></svg></span>Remember me for 30 days</label>
+          <button class="btn-pri">Sign in</button>
+          <div class="divider">or continue with</div>
+          <div style="display:flex;gap:10px"><button class="btn-soc"><svg class="gico"><use href="#g-google"/></svg>Google</button><button class="btn-soc">SSO</button></div>
+        </div>
+        <p class="subtle" style="text-align:center;margin-top:18px">Don't have an account? <a href="#" class="link">Create one</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · SPLIT-SCREEN AUTH ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Split-screen auth</div>
+      <p class="plate-recipe"><b>PULLS</b> — the form on the left half + a brand/quote panel on the right half (hairline-striped placeholder for imagery). &nbsp;<b>WHY</b> — for products that sell on story: the form keeps the task clean while the brand panel earns the screen real estate with proof or personality.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:1fr 1fr;min-height:480px">
+      <div style="display:flex;align-items:center;justify-content:center;padding:40px 32px;background:var(--surface)">
+        <div style="width:340px;max-width:100%">
+          <div class="brand" style="margin-bottom:26px"><span class="mk"><svg class="ico"><use href="#i-anchor"/></svg></span><b>Harbor</b></div>
+          <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em">Welcome back</h3>
+          <p class="subtle" style="margin-top:5px;margin-bottom:22px">Sign in to continue to your workspace.</p>
+          <label class="fld"><span class="lab">Email</span><input class="input" placeholder="you@example.com"></label>
+          <label class="fld"><span class="lab">Password <a href="#">Forgot?</a></span><div class="inwrap"><input class="input" type="password" value="placeholder" data-pw><button class="reveal" data-toggle><svg class="ico"><use href="#i-eye"/></svg></button></div></label>
+          <button class="btn-pri" style="margin-top:4px">Sign in</button>
+          <p class="subtle" style="text-align:center;margin-top:18px">New here? <a href="#" class="link">Create an account</a></p>
+        </div>
+      </div>
+      <div style="position:relative;background:var(--inset);background-image:repeating-linear-gradient(135deg,transparent,transparent 9px,rgba(27,30,35,.04) 9px,rgba(27,30,35,.04) 10px);display:flex;flex-direction:column;justify-content:flex-end;padding:36px 36px">
+        <span style="position:absolute;top:16px;left:16px;font-family:var(--mono);font-size:10px;color:var(--faint);background:var(--surface);padding:2px 8px;border-radius:4px;border:1px solid var(--line)">brand image</span>
+        <div style="background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px 24px;box-shadow:var(--shadow)">
+          <div style="font-size:17px;font-weight:600;line-height:1.45;letter-spacing:-0.01em">“Harbor cut our monthly close from nine days to two.”</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:16px"><span style="width:34px;height:34px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">DK</span><div><div style="font-size:13px;font-weight:700">Dana Kessler</div><div style="font-size:11.5px;color:var(--faint)">Head of Finance, Northwind</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · SIGNUP + PASSWORD STRENGTH ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Signup + password strength</div>
+      <p class="plate-recipe"><b>PULLS</b> — a signup form (name, email, password) with a live password-strength meter + a terms checkbox. &nbsp;<b>WHY</b> — account creation is where trust starts: real-time strength feedback nudges safer passwords, and an explicit terms check keeps consent unambiguous.</p>
+    </div>
+    <div class="frame" style="display:flex;align-items:center;justify-content:center;padding:44px 24px;min-height:480px">
+      <div style="width:380px;max-width:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:26px">
+        <div class="brand" style="margin-bottom:18px"><span class="mk"><svg class="ico"><use href="#i-anchor"/></svg></span><b>Harbor</b></div>
+        <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.01em">Create your account</h3>
+        <p class="subtle" style="margin-top:3px;margin-bottom:18px">Start your 14-day free trial. No card required.</p>
+        <label class="fld"><span class="lab">Full name</span><input class="input" placeholder="Your name"></label>
+        <label class="fld"><span class="lab">Work email</span><input class="input" placeholder="you@company.com"></label>
+        <label class="fld" style="margin-bottom:10px"><span class="lab">Password</span><div class="inwrap"><input class="input" type="password" id="pwmeter" placeholder="Create a password"><button class="reveal" data-toggle><svg class="ico"><use href="#i-eye"/></svg></button></div></label>
+        <div style="margin-bottom:16px">
+          <div style="display:flex;gap:5px"><span class="pwbar" data-i="0"></span><span class="pwbar" data-i="1"></span><span class="pwbar" data-i="2"></span><span class="pwbar" data-i="3"></span></div>
+          <div style="font-size:11.5px;color:var(--faint);margin-top:6px" id="pwlabel">Use 8+ characters with a mix of letters, numbers &amp; symbols.</div>
+        </div>
+        <label style="display:flex;align-items:flex-start;gap:9px;font-size:12px;color:var(--mut);margin-bottom:18px;cursor:pointer;line-height:1.5"><span class="cbx" style="margin-top:1px"><svg class="ico"><use href="#i-check"/></svg></span><span>I agree to the <a href="#" class="link">Terms</a> and <a href="#" class="link">Privacy Policy</a>.</span></label>
+        <button class="btn-pri">Create account</button>
+        <p class="subtle" style="text-align:center;margin-top:16px">Already have an account? <a href="#" class="link">Sign in</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · 2FA VERIFY CODE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">2FA verify code</div>
+      <p class="plate-recipe"><b>PULLS</b> — a verification screen: 6 single-digit OTP input boxes + a resend timer + a verify button. &nbsp;<b>WHY</b> — for a one-time code, discrete boxes show length and progress, auto-advance keeps hands on the keyboard, and a countdown sets expectations for resend.</p>
+    </div>
+    <div class="frame" style="display:flex;align-items:center;justify-content:center;padding:48px 24px;min-height:440px">
+      <div style="width:400px;max-width:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:30px 28px;text-align:center">
+        <div style="width:48px;height:48px;border-radius:12px;background:var(--accent-tint);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg class="ico" style="width:24px;height:24px"><use href="#i-shield"/></svg></div>
+        <h3 style="font-size:19px;font-weight:700;letter-spacing:-0.01em">Verify it's you</h3>
+        <p class="subtle" style="margin-top:6px;line-height:1.5">Enter the 6-digit code we sent to<br><b style="color:var(--ink)">•••••@example.com</b>.</p>
+        <div style="display:flex;gap:9px;justify-content:center;margin:22px 0" id="otp">
+          <input class="otpbox" maxlength="1" inputmode="numeric" value="4">
+          <input class="otpbox" maxlength="1" inputmode="numeric" value="2">
+          <input class="otpbox" maxlength="1" inputmode="numeric" value="9">
+          <input class="otpbox filled" maxlength="1" inputmode="numeric" value="1" autofocus>
+          <input class="otpbox" maxlength="1" inputmode="numeric" placeholder="">
+          <input class="otpbox" maxlength="1" inputmode="numeric" placeholder="">
+        </div>
+        <button class="btn-pri">Verify</button>
+        <div class="subtle" style="margin-top:16px">Didn't get a code? <span style="color:var(--faint)">Resend in <b class="tnum" id="otptimer">0:24</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · WELCOME / ONBOARDING ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Welcome / onboarding</div>
+      <p class="plate-recipe"><b>PULLS</b> — a post-signup welcome screen with a short setup checklist (3 steps with progress) and a primary “Get started” CTA. &nbsp;<b>WHY</b> — first impressions drive activation: a warm welcome plus a tiny, finishable checklist turns a new account into momentum instead of a blank slate.</p>
+    </div>
+    <div class="frame" style="display:flex;align-items:center;justify-content:center;padding:44px 24px;min-height:460px">
+      <div style="width:460px;max-width:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:30px 30px;text-align:center">
+        <div style="width:56px;height:56px;border-radius:16px;background:var(--accent-tint);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg class="ico" style="width:26px;height:26px"><use href="#i-rocket"/></svg></div>
+        <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em">Welcome to Harbor, Mara</h3>
+        <p class="subtle" style="margin-top:7px;max-width:36ch;margin-left:auto;margin-right:auto;line-height:1.5">You're all set. Finish these quick steps to get the most out of your workspace.</p>
+        <div style="display:flex;align-items:center;gap:10px;margin:22px 0 16px"><div style="flex:1;height:8px;border-radius:999px;background:var(--inset);overflow:hidden"><i style="display:block;height:100%;width:33%;background:var(--accent);border-radius:999px"></i></div><span style="font-size:12px;font-weight:700;color:var(--mut)" class="tnum">1/3</span></div>
+        <div style="text-align:left;display:flex;flex-direction:column;gap:8px" id="oblist">
+          <div class="obstep done"><span class="obc"><svg class="ico"><use href="#i-check"/></svg></span><span class="obic"><svg class="ico"><use href="#i-user"/></svg></span><div class="obt">Create your profile<span class="obs">Done</span></div></div>
+          <div class="obstep"><span class="obc"></span><span class="obic"><svg class="ico"><use href="#i-plug"/></svg></span><div class="obt">Connect a data source<span class="obs">~2 min</span></div><svg class="ico obgo"><use href="#i-arrow"/></svg></div>
+          <div class="obstep"><span class="obc"></span><span class="obic"><svg class="ico"><use href="#i-users"/></svg></span><div class="obt">Invite your team<span class="obs">Optional</span></div><svg class="ico obgo"><use href="#i-arrow"/></svg></div>
+        </div>
+        <button class="btn-pri" style="margin-top:20px"><svg class="ico"><use href="#i-arrow"/></svg>Get started</button>
+        <div style="margin-top:12px"><a href="#" class="subtle" style="text-decoration:none">Skip for now</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.cbx{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line-2);background:#fff;display:inline-flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;}
+.cbx .ico{width:11px;height:11px;opacity:0;}
+label:has(.cbx) input{display:none;}
+.cbx.on,label.cbxon .cbx{background:var(--accent);border-color:var(--accent);} .cbx.on .ico{opacity:1;}
+.pwbar{flex:1;height:5px;border-radius:999px;background:var(--inset);transition:background .15s;}
+.pwbar.l1{background:var(--bad);} .pwbar.l2{background:var(--warn);} .pwbar.l3{background:#3a8fd6;} .pwbar.l4{background:var(--ok);}
+.otpbox{width:46px;height:54px;border:1.5px solid var(--line-2);border-radius:10px;background:var(--surface);text-align:center;font-size:22px;font-weight:700;color:var(--ink);outline:none;font-variant-numeric:tabular-nums;}
+.otpbox:focus,.otpbox.filled{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+.obstep{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);}
+.obstep.done{background:var(--ok-t);border-color:#bcdcc9;}
+.obc{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line-2);background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;}
+.obstep.done .obc{background:var(--ok);border-color:var(--ok);} .obstep.done .obc .ico{width:13px;height:13px;}
+.obic{width:34px;height:34px;border-radius:9px;background:var(--inset);color:var(--mut);display:flex;align-items:center;justify-content:center;flex-shrink:0;} .obic .ico{width:17px;height:17px;}
+.obstep.done .obic{background:#fff;color:var(--ok);}
+.obt{font-size:13.5px;font-weight:600;flex:1;display:flex;flex-direction:column;}
+.obt .obs{font-size:11.5px;font-weight:500;color:var(--faint);margin-top:1px;}
+.obstep.done .obt .obs{color:var(--ok);}
+.obgo{width:16px;height:16px;color:var(--faint);}
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){.frame[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}}
+</style>
+
+<script>
+/* password reveal */
+document.querySelectorAll('[data-toggle]').forEach(function(b){
+  b.addEventListener('click',function(){var inp=b.parentNode.querySelector('input');var show=inp.type==='password';inp.type=show?'text':'password';b.querySelector('use').setAttribute('href',show?'#i-eyeoff':'#i-eye');});
+});
+/* checkboxes */
+document.querySelectorAll('.cbx').forEach(function(c){c.parentNode.addEventListener('click',function(e){e.preventDefault();c.classList.toggle('on');});});
+/* password strength */
+(function(){
+  var inp=document.getElementById('pwmeter');if(!inp)return;
+  var bars=document.querySelectorAll('.pwbar'),label=document.getElementById('pwlabel');
+  var labels=['Too weak','Weak','Good','Strong'],cls=['l1','l1','l2','l3','l4'];
+  function score(v){var s=0;if(v.length>=8)s++;if(/[A-Z]/.test(v)&&/[a-z]/.test(v))s++;if(/\d/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;return Math.min(s,4);}
+  inp.addEventListener('input',function(){
+    var s=score(inp.value);
+    bars.forEach(function(b,i){b.className='pwbar';if(i<s)b.classList.add(cls[s]);});
+    label.textContent=inp.value?labels[Math.max(s-1,0)]+' password':'Use 8+ characters with a mix of letters, numbers & symbols.';
+  });
+})();
+/* otp auto-advance */
+(function(){
+  var box=document.getElementById('otp');if(!box)return;var inps=[].slice.call(box.querySelectorAll('.otpbox'));
+  inps.forEach(function(inp,i){
+    inp.addEventListener('input',function(){inp.value=inp.value.replace(/\D/g,'').slice(0,1);inp.classList.toggle('filled',!!inp.value);if(inp.value&&i<inps.length-1)inps[i+1].focus();});
+    inp.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!inp.value&&i>0)inps[i-1].focus();});
+  });
+})();
+/* otp resend countdown */
+(function(){
+  var el=document.getElementById('otptimer');if(!el)return;var t=24;
+  var iv=setInterval(function(){t--;if(t<=0){clearInterval(iv);el.parentNode.innerHTML='<a href="#" class="link">Resend code</a>';return;}el.textContent='0:'+('0'+t).slice(-2);},1000);
+})();
+</script>
+</body>
+</html>

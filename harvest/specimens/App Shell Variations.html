@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App shell variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   APP SHELL VARIATIONS — six frames that differ in COMPOSITION, not colour.
+   Shared neutral interior language; one restrained slate-blue accent.
+   ============================================================================ */
+:root{
+  --bg:#EEEEEA; --ink:#1C1D21; --muted:#5A5C63; --subtle:#8A8C93;
+  --a:#3A5BC7; --a-tint:rgba(58,91,199,0.10); --ok:#2C6E49;
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  /* frame interior */
+  --fb:#E6E5DF;       /* interior border */
+  --fbg:#F6F6F3;      /* content well */
+  --fsub:#8C8E95;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+.tnum{font-variant-numeric:tabular-nums;}
+:focus-visible{outline:2.5px solid var(--a);outline-offset:2px;border-radius:5px;}
+button{font-family:inherit;}
+
+.wrap{max-width:1240px;margin:0 auto;padding:56px 36px 96px;}
+.head{margin-bottom:38px;padding-bottom:24px;border-bottom:1.5px solid var(--ink);}
+.eyebrow{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--subtle);margin-bottom:13px;}
+.head h1{font-size:clamp(34px,5.5vw,54px);font-weight:700;letter-spacing:-0.03em;line-height:1;}
+.head p{font-size:15.5px;color:var(--muted);max-width:62ch;margin-top:14px;}
+
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 24px;}
+.spec{display:flex;flex-direction:column;gap:12px;}
+.lab .nm{font-size:14px;font-weight:700;letter-spacing:-0.01em;}
+.lab .nm span{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--a);margin-right:8px;}
+.lab .uw{font-size:12.5px;color:var(--muted);margin-top:3px;}
+.lab .uw b{color:var(--ink);font-weight:600;}
+
+/* ============================ FRAME (app window) ============================ */
+.frame{background:#fff;border:1px solid var(--fb);border-radius:11px;overflow:hidden;box-shadow:0 8px 24px -12px rgba(28,29,32,0.2),0 1px 3px rgba(28,29,32,0.05);height:344px;display:flex;flex-direction:column;font-size:11px;}
+.chrome{height:26px;flex-shrink:0;display:flex;align-items:center;gap:11px;padding:0 11px;border-bottom:1px solid var(--fb);background:#FAFAF8;}
+.dots{display:flex;gap:5px;}
+.dots i{width:8px;height:8px;border-radius:50%;background:#D8D7D0;}
+.chrome .url{font-family:var(--font-mono);font-size:9.5px;color:var(--fsub);}
+.body{flex:1;min-height:0;}
+
+/* shared interior bits */
+.logo{display:flex;align-items:center;gap:7px;font-weight:700;font-size:11.5px;letter-spacing:-0.01em;}
+.logo .mk{width:18px;height:18px;border-radius:5px;background:var(--a);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.logo .mk b{width:7px;height:7px;border-radius:2px;background:#fff;}
+.ni{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;color:var(--muted);font-size:10.5px;font-weight:500;border:none;background:none;width:100%;text-align:left;cursor:pointer;transition:background .12s,color .12s;}
+.ni svg{width:13px;height:13px;flex-shrink:0;opacity:.8;}
+.ni.on{background:var(--a-tint);color:var(--a);font-weight:600;}
+.ni.on svg{opacity:1;}
+.ni:hover:not(.on){background:#F1F1EE;color:var(--ink);}
+.ri{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);border:none;background:none;cursor:pointer;transition:background .12s,color .12s;}
+.ri svg{width:16px;height:16px;}
+.ri.on{background:var(--a-tint);color:var(--a);}
+.ri:hover:not(.on){background:#F1F1EE;color:var(--ink);}
+.navlbl{font-family:var(--font-mono);font-size:8.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--fsub);padding:9px 8px 4px;}
+.av{width:23px;height:23px;border-radius:50%;background:#DCE1EE;color:var(--a);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;}
+.search{display:flex;align-items:center;gap:6px;background:#F2F2EF;border:1px solid var(--fb);border-radius:6px;padding:4px 8px;font-size:9.5px;color:var(--fsub);}
+.search svg{width:11px;height:11px;}
+.btn-a{background:var(--a);color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:10px;font-weight:600;display:inline-flex;align-items:center;gap:5px;cursor:pointer;}
+.btn-a svg{width:12px;height:12px;}
+
+.wd{border:1px solid var(--fb);border-radius:8px;padding:10px;background:#fff;}
+.wd .wl{font-size:9px;color:var(--fsub);text-transform:uppercase;letter-spacing:.05em;}
+.wd .wv{font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-top:4px;font-variant-numeric:tabular-nums;}
+.wd .wdd{font-size:9.5px;color:var(--ok);font-weight:600;margin-top:3px;}
+.chartw{border:1px solid var(--fb);border-radius:8px;padding:10px;background:#fff;}
+.chartw .ct{font-size:9.5px;color:var(--muted);font-weight:600;margin-bottom:6px;}
+.tt{font-weight:600;font-size:12px;}
+.section-tab{border:none;background:none;font-size:10.5px;font-weight:600;color:var(--muted);padding:8px 2px;margin:0 9px;position:relative;cursor:pointer;}
+.section-tab.on{color:var(--ink);}
+.section-tab.on::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--a);border-radius:2px;}
+
+/* mini list rows */
+.mlr{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;}
+.mlr.sel{background:var(--a-tint);}
+.mlr .d{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.mlr .nm{font-size:10.5px;font-weight:600;}
+.mlr .sb{font-size:9px;color:var(--fsub);}
+.mlr .vv{margin-left:auto;font-size:10px;font-weight:600;font-variant-numeric:tabular-nums;}
+
+/* ====== Shell 1: classic sidebar + topbar ====== */
+.f1{display:grid;grid-template-columns:122px 1fr;grid-template-rows:32px 1fr;height:100%;}
+.f1 .side{grid-row:1/3;border-right:1px solid var(--fb);padding:10px 9px;display:flex;flex-direction:column;}
+.f1 .side .logo{padding:2px 4px 8px;}
+.f1 .side .ni{margin-bottom:1px;}
+.f1 .side .uc{margin-top:auto;display:flex;align-items:center;gap:7px;padding:6px 4px;border-top:1px solid var(--fb);}
+.f1 .side .uc .n{font-size:9.5px;font-weight:600;}
+.f1 .top{grid-column:2;display:flex;align-items:center;gap:10px;padding:0 12px;border-bottom:1px solid var(--fb);}
+.f1 .cont{grid-column:2;background:var(--fbg);padding:12px;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:min-content;gap:10px;}
+
+/* ====== Shell 2: icon rail ====== */
+.f2{display:grid;grid-template-columns:46px 1fr;height:100%;}
+.f2 .rail{border-right:1px solid var(--fb);display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 0;}
+.f2 .rail .mk{width:24px;height:24px;border-radius:6px;background:var(--a);display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
+.f2 .rail .mk b{width:9px;height:9px;border-radius:2px;background:#fff;}
+.f2 .rail .av{margin-top:auto;}
+.f2 .main{display:flex;flex-direction:column;min-width:0;}
+.f2 .top{height:34px;display:flex;align-items:center;gap:9px;padding:0 12px;border-bottom:1px solid var(--fb);flex-shrink:0;}
+.f2 .cont{flex:1;background:var(--fbg);padding:12px;display:flex;flex-direction:column;gap:10px;min-height:0;}
+
+/* ====== Shell 3: top navbar + section tabs ====== */
+.f3{display:flex;flex-direction:column;height:100%;}
+.f3 .nav{height:34px;display:flex;align-items:center;gap:14px;padding:0 13px;border-bottom:1px solid var(--fb);flex-shrink:0;}
+.f3 .nav .links{display:flex;gap:14px;}
+.f3 .nav .links a{font-size:10.5px;font-weight:500;color:var(--muted);cursor:pointer;}
+.f3 .nav .links a.on{color:var(--ink);font-weight:600;}
+.f3 .tabs{height:30px;display:flex;align-items:stretch;padding:0 10px;border-bottom:1px solid var(--fb);flex-shrink:0;}
+.f3 .cont{flex:1;background:var(--fbg);padding:12px;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:min-content;gap:10px;min-height:0;}
+.f3 .cont .chartw{grid-column:1/-1;}
+
+/* ====== Shell 4: split master-detail ====== */
+.f4{display:flex;flex-direction:column;height:100%;}
+.f4 .top{height:32px;display:flex;align-items:center;gap:9px;padding:0 12px;border-bottom:1px solid var(--fb);flex-shrink:0;}
+.f4 .split{flex:1;display:grid;grid-template-columns:178px 1fr;min-height:0;}
+.f4 .listcol{border-right:1px solid var(--fb);display:flex;flex-direction:column;min-height:0;}
+.f4 .listcol .lh{padding:8px 9px;border-bottom:1px solid var(--fb);}
+.f4 .listcol .ls{flex:1;overflow:hidden;padding:6px;}
+.f4 .detail{background:var(--fbg);padding:12px;display:flex;flex-direction:column;gap:10px;min-height:0;}
+.f4 .detail .dh{display:flex;align-items:center;gap:9px;}
+.f4 .detail .dh .av{width:30px;height:30px;font-size:11px;}
+.f4 .detail .dh .n{font-size:13px;font-weight:700;}
+.f4 .detail .dh .r{font-size:9.5px;color:var(--fsub);}
+.f4 .drow{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+
+/* ====== Shell 5: dual sidebar ====== */
+.f5{display:grid;grid-template-columns:112px 1fr 142px;grid-template-rows:32px 1fr;height:100%;}
+.f5 .side{grid-row:1/3;border-right:1px solid var(--fb);padding:10px 8px;display:flex;flex-direction:column;}
+.f5 .side .logo{padding:2px 4px 8px;}
+.f5 .top{grid-column:2;display:flex;align-items:center;gap:9px;padding:0 12px;border-bottom:1px solid var(--fb);}
+.f5 .cont{grid-column:2;background:var(--fbg);padding:12px;display:flex;flex-direction:column;gap:10px;min-height:0;}
+.f5 .ctx{grid-row:1/3;grid-column:3;border-left:1px solid var(--fb);padding:11px 10px;display:flex;flex-direction:column;gap:9px;}
+.f5 .ctx .ch{font-family:var(--font-mono);font-size:8.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--fsub);}
+.f5 .ctx .field{display:flex;flex-direction:column;gap:3px;}
+.f5 .ctx .field .k{font-size:9px;color:var(--fsub);}
+.f5 .ctx .field .v{font-size:10.5px;font-weight:600;}
+.f5 .ctx .feed{display:flex;gap:7px;align-items:flex-start;}
+.f5 .ctx .feed .dot{width:6px;height:6px;border-radius:50%;background:var(--a);margin-top:3px;flex-shrink:0;}
+.f5 .ctx .feed .ft{font-size:9px;color:var(--muted);line-height:1.4;}
+
+/* ====== Shell 6: dense command center ====== */
+.f6{display:flex;flex-direction:column;height:100%;}
+.f6 .metricbar{height:46px;flex-shrink:0;display:flex;align-items:stretch;background:#1C1D22;color:#ECEDEF;}
+.f6 .mb{display:flex;flex-direction:column;justify-content:center;padding:0 13px;border-right:1px solid rgba(255,255,255,0.08);}
+.f6 .mb .ml{font-size:8px;text-transform:uppercase;letter-spacing:.06em;color:#9A9CA4;}
+.f6 .mb .mv{font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:2px;}
+.f6 .mb .mv .up{color:#5FCE93;font-size:8.5px;font-weight:600;margin-left:3px;}
+.f6 .mb.acc{background:var(--a);border-right-color:rgba(255,255,255,0.18);}
+.f6 .mb.acc .ml{color:#C9D2F2;}
+.f6 .cont{flex:1;background:var(--fbg);padding:11px;display:grid;grid-template-columns:1.4fr 1fr;gap:10px;min-height:0;}
+.f6 .tbl{background:#fff;border:1px solid var(--fb);border-radius:8px;overflow:hidden;}
+.f6 .tbl .trh{display:grid;grid-template-columns:1fr 46px 50px;gap:6px;padding:6px 9px;background:#FAFAF8;border-bottom:1px solid var(--fb);font-family:var(--font-mono);font-size:8px;text-transform:uppercase;letter-spacing:.05em;color:var(--fsub);}
+.f6 .tbl .tr{display:grid;grid-template-columns:1fr 46px 50px;gap:6px;padding:6px 9px;border-bottom:1px solid var(--fb);font-size:9.5px;align-items:center;}
+.f6 .tbl .tr:last-child{border-bottom:none;}
+.f6 .tbl .tr .mono{font-family:var(--font-mono);}
+.f6 .tbl .tr .rt{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;}
+.f6 .side6{display:flex;flex-direction:column;gap:10px;}
+
+@media(max-width:880px){.gallery{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <header class="head">
+    <div class="eyebrow">Specimen · layouts</div>
+    <h1>App shell variations</h1>
+    <p>Six application frames that differ in composition — where navigation lives, how the workspace splits, and where context sits. Each is a small but complete app window with nav, a toolbar and a couple of widgets.</p>
+  </header>
+
+  <div class="gallery">
+
+    <!-- 1 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>01</span>Classic sidebar + topbar</div><div class="uw"><b>Use when</b> — broad IA with many equally-weighted destinations.</div></div>
+      <div class="frame">
+        <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><span class="url">app.acme.co / dashboard</span></div>
+        <div class="body f1">
+          <aside class="side">
+            <div class="logo"><span class="mk"><b></b></span>Acme</div>
+            <button class="ni on"><svg><use href="#i-grid"/></svg>Dashboard</button>
+            <button class="ni"><svg><use href="#i-cart"/></svg>Orders</button>
+            <button class="ni"><svg><use href="#i-users"/></svg>Customers</button>
+            <button class="ni"><svg><use href="#i-chart"/></svg>Reports</button>
+            <button class="ni"><svg><use href="#i-settings"/></svg>Settings</button>
+            <div class="uc"><span class="av">AM</span><span class="n">Ana M.</span></div>
+          </aside>
+          <div class="top"><span class="tt">Dashboard</span><span class="search" style="margin-left:auto"><svg><use href="#i-search"/></svg>Search</span><span class="av">AM</span></div>
+          <div class="cont">
+            <div class="wd"><div class="wl">Revenue</div><div class="wv tnum">$128.4k</div><div class="wdd">▲ 12.4%</div></div>
+            <div class="wd"><div class="wl">Orders</div><div class="wv tnum">1,284</div><div class="wdd">▲ 4.1%</div></div>
+            <div class="chartw" style="grid-column:1/-1"><div class="ct">Revenue · 30 days</div><svg width="100%" height="58" viewBox="0 0 460 58" preserveAspectRatio="none"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3A5BC7" stop-opacity="0.14"/><stop offset="100%" stop-color="#3A5BC7" stop-opacity="0"/></linearGradient></defs><path d="M0,48 L66,42 L132,45 L198,32 L264,37 L330,20 L396,26 L460,9 L460,58 L0,58 Z" fill="url(#g1)"/><path d="M0,48 L66,42 L132,45 L198,32 L264,37 L330,20 L396,26 L460,9" fill="none" stroke="#3A5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>02</span>Icon-only rail + content</div><div class="uw"><b>Use when</b> — few sections; maximise horizontal room for the work.</div></div>
+      <div class="frame">
+        <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><span class="url">app.acme.co / analytics</span></div>
+        <div class="body f2">
+          <aside class="rail">
+            <div class="mk"><b></b></div>
+            <button class="ri on" aria-label="Dashboard"><svg><use href="#i-grid"/></svg></button>
+            <button class="ri" aria-label="Orders"><svg><use href="#i-cart"/></svg></button>
+            <button class="ri" aria-label="Customers"><svg><use href="#i-users"/></svg></button>
+            <button class="ri" aria-label="Reports"><svg><use href="#i-chart"/></svg></button>
+            <button class="ri" aria-label="Settings"><svg><use href="#i-settings"/></svg></button>
+            <span class="av" style="margin-top:auto">AM</span>
+          </aside>
+          <div class="main">
+            <div class="top"><span class="tt">Analytics</span><span class="search" style="margin-left:auto"><svg><use href="#i-search"/></svg>Search</span><button class="btn-a"><svg><use href="#i-plus"/></svg>New</button></div>
+            <div class="cont">
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+                <div class="wd"><div class="wl">Sessions</div><div class="wv tnum">48.2k</div></div>
+                <div class="wd"><div class="wl">Conv.</div><div class="wv tnum">3.9%</div></div>
+                <div class="wd"><div class="wl">Bounce</div><div class="wv tnum">41%</div></div>
+              </div>
+              <div class="chartw" style="flex:1"><div class="ct">Traffic by hour</div><svg width="100%" height="78" viewBox="0 0 520 78" preserveAspectRatio="none"><g fill="#3A5BC7"><rect x="6" y="46" width="30" height="32"/><rect x="44" y="38" width="30" height="40"/><rect x="82" y="52" width="30" height="26"/><rect x="120" y="30" width="30" height="48"/><rect x="158" y="40" width="30" height="38"/><rect x="196" y="22" width="30" height="56"/><rect x="234" y="34" width="30" height="44"/><rect x="272" y="18" width="30" height="60"/><rect x="310" y="28" width="30" height="50"/><rect x="348" y="42" width="30" height="36"/><rect x="386" y="50" width="30" height="28"/><rect x="424" y="36" width="30" height="42"/><rect x="462" y="24" width="30" height="54"/></g></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>03</span>Top navbar + section tabs</div><div class="uw"><b>Use when</b> — marketing-style or shallow IA; content wants full width.</div></div>
+      <div class="frame">
+        <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><span class="url">app.acme.co / reports</span></div>
+        <div class="body f3">
+          <div class="nav"><div class="logo"><span class="mk"><b></b></span>Acme</div><div class="links"><a class="on">Reports</a><a>Audiences</a><a>Funnels</a><a>Exports</a></div><span class="av" style="margin-left:auto">AM</span></div>
+          <div class="tabs"><button class="section-tab on">Overview</button><button class="section-tab">Revenue</button><button class="section-tab">Retention</button><button class="section-tab">Cohorts</button></div>
+          <div class="cont">
+            <div class="wd"><div class="wl">MRR</div><div class="wv tnum">$248k</div><div class="wdd">▲ 14%</div></div>
+            <div class="wd"><div class="wl">Churn</div><div class="wv tnum">2.1%</div></div>
+            <div class="wd"><div class="wl">LTV</div><div class="wv tnum">$1.9k</div></div>
+            <div class="chartw"><div class="ct">Monthly recurring revenue</div><svg width="100%" height="56" viewBox="0 0 700 56" preserveAspectRatio="none"><defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3A5BC7" stop-opacity="0.14"/><stop offset="100%" stop-color="#3A5BC7" stop-opacity="0"/></linearGradient></defs><path d="M0,46 L100,40 L200,43 L300,30 L400,34 L500,20 L600,25 L700,8 L700,56 L0,56 Z" fill="url(#g3)"/><path d="M0,46 L100,40 L200,43 L300,30 L400,34 L500,20 L600,25 L700,8" fill="none" stroke="#3A5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>04</span>Split master–detail</div><div class="uw"><b>Use when</b> — browsing a list and acting on one item without losing place.</div></div>
+      <div class="frame">
+        <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><span class="url">app.acme.co / inbox</span></div>
+        <div class="body f4">
+          <div class="top"><span class="tt">Customers</span><span class="search" style="margin-left:auto"><svg><use href="#i-search"/></svg>Filter</span></div>
+          <div class="split">
+            <div class="listcol">
+              <div class="lh"><span class="search" style="width:100%"><svg><use href="#i-search"/></svg>Search 248…</span></div>
+              <div class="ls">
+                <div class="mlr sel"><span class="d" style="background:#2C6E49"></span><div><div class="nm">Ava Lindqvist</div><div class="sb">Active · $4.2k</div></div></div>
+                <div class="mlr"><span class="d" style="background:#8A5A12"></span><div><div class="nm">Reza Pour</div><div class="sb">Trial · $0</div></div></div>
+                <div class="mlr"><span class="d" style="background:#2C6E49"></span><div><div class="nm">Jun Okada</div><div class="sb">Active · $2.6k</div></div></div>
+                <div class="mlr"><span class="d" style="background:#AE3B2C"></span><div><div class="nm">Mira Hall</div><div class="sb">Past due</div></div></div>
+                <div class="mlr"><span class="d" style="background:#2C6E49"></span><div><div class="nm">Tom Brink</div><div class="sb">Active · $1.1k</div></div></div>
+              </div>
+            </div>
+            <div class="detail">
+              <div class="dh"><span class="av">AL</span><div><div class="n">Ava Lindqvist</div><div class="r">ava@northwind.co · since 2024</div></div></div>
+              <div class="drow">
+                <div class="wd"><div class="wl">Lifetime</div><div class="wv tnum">$4,280</div></div>
+                <div class="wd"><div class="wl">Orders</div><div class="wv tnum">12</div></div>
+              </div>
+              <div class="chartw" style="flex:1"><div class="ct">Spend · last 6 months</div><svg width="100%" height="46" viewBox="0 0 300 46" preserveAspectRatio="none"><path d="M0,36 L60,30 L120,33 L180,22 L240,26 L300,12" fill="none" stroke="#3A5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>05</span>Dual sidebar</div><div class="uw"><b>Use when</b> — a record needs persistent nav <i>and</i> contextual detail at once.</div></div>
+      <div class="frame">
+        <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><span class="url">app.acme.co / projects</span></div>
+        <div class="body f5">
+          <aside class="side">
+            <div class="logo"><span class="mk"><b></b></span>Acme</div>
+            <button class="ni on"><svg><use href="#i-folder"/></svg>Projects</button>
+            <button class="ni"><svg><use href="#i-inbox"/></svg>Inbox</button>
+            <button class="ni"><svg><use href="#i-users"/></svg>Team</button>
+            <button class="ni"><svg><use href="#i-settings"/></svg>Settings</button>
+          </aside>
+          <div class="top"><span class="tt">Aurora Mobile</span><button class="btn-a" style="margin-left:auto"><svg><use href="#i-plus"/></svg>Task</button></div>
+          <div class="cont">
+            <div class="wd"><div class="wl">Open tasks</div><div class="wv tnum">28</div><div class="wdd">6 due today</div></div>
+            <div class="chartw" style="flex:1"><div class="ct">Burndown</div><svg width="100%" height="62" viewBox="0 0 360 62" preserveAspectRatio="none"><path d="M0,8 L72,18 L144,26 L216,30 L288,44 L360,54" fill="none" stroke="#3A5BC7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M0,12 L360,52" fill="none" stroke="#C9C8C1" stroke-width="1.5" stroke-dasharray="4 4"/></svg></div>
+          </div>
+          <aside class="ctx">
+            <div class="ch">Details</div>
+            <div class="field"><span class="k">Owner</span><span class="v">Noa Bergström</span></div>
+            <div class="field"><span class="k">Status</span><span class="v" style="color:#2C6E49">On track</span></div>
+            <div class="field"><span class="k">Due</span><span class="v">Jul 2</span></div>
+            <div class="ch" style="margin-top:4px">Activity</div>
+            <div class="feed"><span class="dot"></span><span class="ft">Noa moved 3 tasks to Done</span></div>
+            <div class="feed"><span class="dot" style="background:#8A8C93"></span><span class="ft">Comment on “Onboarding”</span></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>06</span>Dense command-center</div><div class="uw"><b>Use when</b> — monitoring; status must be readable at a glance, top-down.</div></div>
+      <div class="frame">
+        <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><span class="url">ops.acme.co / live</span></div>
+        <div class="body f6">
+          <div class="metricbar">
+            <div class="mb"><span class="ml">Requests/s</span><span class="mv tnum">14.2k<span class="up">▲</span></span></div>
+            <div class="mb"><span class="ml">p95 latency</span><span class="mv tnum">142ms</span></div>
+            <div class="mb"><span class="ml">Error rate</span><span class="mv tnum">0.04%</span></div>
+            <div class="mb acc"><span class="ml">Uptime</span><span class="mv tnum">99.98%</span></div>
+            <div class="mb"><span class="ml">Deploys</span><span class="mv tnum">7</span></div>
+          </div>
+          <div class="cont">
+            <div class="tbl">
+              <div class="trh"><span>Service</span><span style="text-align:right">RPS</span><span style="text-align:right">p95</span></div>
+              <div class="tr"><span class="mono">api-gateway</span><span class="rt">5.1k</span><span class="rt">88ms</span></div>
+              <div class="tr"><span class="mono">auth-svc</span><span class="rt">2.4k</span><span class="rt">120ms</span></div>
+              <div class="tr"><span class="mono">billing</span><span class="rt">0.9k</span><span class="rt">210ms</span></div>
+              <div class="tr"><span class="mono">search</span><span class="rt">3.3k</span><span class="rt">96ms</span></div>
+              <div class="tr"><span class="mono">notify</span><span class="rt">1.2k</span><span class="rt">64ms</span></div>
+            </div>
+            <div class="side6">
+              <div class="chartw" style="flex:1"><div class="ct">Throughput</div><svg width="100%" height="42" viewBox="0 0 240 42" preserveAspectRatio="none"><path d="M0,30 L34,24 L68,28 L102,16 L136,22 L170,10 L204,15 L240,6" fill="none" stroke="#3A5BC7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="chartw" style="flex:1"><div class="ct">Errors</div><svg width="100%" height="42" viewBox="0 0 240 42" preserveAspectRatio="none"><g fill="#AE3B2C"><rect x="6" y="30" width="16" height="12"/><rect x="32" y="26" width="16" height="16"/><rect x="58" y="34" width="16" height="8"/><rect x="84" y="22" width="16" height="20"/><rect x="110" y="32" width="16" height="10"/><rect x="136" y="28" width="16" height="14"/><rect x="162" y="36" width="16" height="6"/><rect x="188" y="30" width="16" height="12"/><rect x="214" y="34" width="16" height="8"/></g></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

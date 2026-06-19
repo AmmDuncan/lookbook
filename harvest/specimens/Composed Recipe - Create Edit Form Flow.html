@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Create / edit form flow (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Create / edit form flow · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin (off-white page, white surfaces, hairline borders, slightly
+   rounded corners, one blue accent, system sans + tabular figures). Only
+   composition + interaction varies. Toggles show a visible sliding thumb. AA.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF; --bad:#C0392B; --bad-t:#F9E8E5;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input,select,textarea{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+
+.btn-pri{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:9px 16px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-sec{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+
+/* fields */
+.fld{display:block;margin-bottom:16px;}
+.fld .lab{font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:6px;display:flex;align-items:center;gap:5px;}
+.fld .req{color:var(--bad);}
+.input,.selectw select,.ta{width:100%;font-size:13.5px;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:9px 12px;outline:none;transition:border-color .14s,box-shadow .14s;}
+.input::placeholder,.ta::placeholder{color:var(--faint);}
+.input:focus,.selectw select:focus,.ta:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+.ta{resize:vertical;min-height:74px;line-height:1.5;}
+.selectw{position:relative;}
+.selectw select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:32px;}
+.selectw .ico{position:absolute;right:11px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--mut);pointer-events:none;}
+.hint{font-size:11.5px;color:var(--faint);margin-top:6px;}
+.fld.ok .input{border-color:#a9c8b5;box-shadow:0 0 0 3px var(--ok-t);}
+.fld.err .input,.fld.err .selectw select,.fld.err .ta{border-color:var(--bad);box-shadow:0 0 0 3px var(--bad-t);}
+.errmsg{display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--bad);margin-top:6px;}
+.errmsg .ico{width:13px;height:13px;}
+.okmsg{display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--ok);margin-top:6px;}
+.okmsg .ico{width:13px;height:13px;}
+
+/* toggle visible thumb */
+.tgl{display:inline-flex;align-items:center;width:42px;height:24px;border-radius:999px;background:#CDD2DA;border:1px solid var(--line-2);padding:2px;cursor:pointer;transition:background .15s,border-color .15s;flex-shrink:0;}
+.tgl .thumb{width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(20,24,31,.35);transition:transform .16s cubic-bezier(.3,.8,.4,1);}
+.tgl.on{background:var(--accent);border-color:var(--accent);}
+.tgl.on .thumb{transform:translateX(18px);}
+
+.formsec{padding:20px 24px;border-bottom:1px solid var(--line);}
+.formsec:last-of-type{border-bottom:none;}
+.formsec .st{font-size:14px;font-weight:700;letter-spacing:-0.01em;}
+.formsec .ss{font-size:12px;color:var(--mut);margin-top:2px;margin-bottom:16px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.togrow{display:flex;align-items:center;gap:16px;padding:6px 0;}
+.togrow .meta{flex:1;} .togrow .tt{font-size:13px;font-weight:600;} .togrow .td{font-size:12px;color:var(--faint);margin-top:1px;}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-chevr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chevl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Create / edit form flow · one skin, five compositions</div>
+    <h1>Same skin. Five ways to fill in a form.</h1>
+    <p>One job — create or edit a “Product” record (name, category, price, description, visibility) — composed five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white surfaces with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. What changes is purely <em>composition and interaction</em>.</p>
+  </header>
+
+  <!-- ============== 1 · SINGLE-COLUMN FORM ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Single-column form</div>
+      <p class="plate-recipe"><b>PULLS</b> — a classic vertical form in sections (top labels, helper text, mixed field types incl. a select and a toggle with a visible thumb) + a sticky bottom action bar (Save / Cancel). &nbsp;<b>WHY</b> — the most reliable default: one column means one clear path down the page, and a sticky bar keeps the commit action in reach however long the form runs.</p>
+    </div>
+    <div class="frame" style="display:flex;flex-direction:column;min-height:460px">
+      <div style="padding:18px 24px;border-bottom:1px solid var(--line);background:var(--surface)"><div style="font-size:11.5px;color:var(--faint)">Products /</div><div style="font-size:18px;font-weight:700;letter-spacing:-0.01em">New product</div></div>
+      <div style="overflow:auto;flex:1;background:var(--page);padding:18px 0">
+        <div class="card" style="max-width:600px;margin:0 auto">
+          <div class="formsec">
+            <div class="st">Details</div><div class="ss">Basic information about the product.</div>
+            <label class="fld"><span class="lab">Product name <span class="req">*</span></span><input class="input" value="Horizon UI Kit"></label>
+            <div class="row2">
+              <label class="fld" style="margin-bottom:0"><span class="lab">Category</span><div class="selectw"><select><option>UI kit</option><option>Template</option><option>Font</option></select><svg class="ico"><use href="#i-chev"/></svg></div></label>
+              <label class="fld" style="margin-bottom:0"><span class="lab">Price (USD)</span><input class="input tnum" value="48.00"></label>
+            </div>
+          </div>
+          <div class="formsec">
+            <div class="st">Description</div><div class="ss">Shown on the product page.</div>
+            <label class="fld" style="margin-bottom:0"><textarea class="ta" placeholder="Describe the product…">A 240-component Figma kit with light and dark themes.</textarea><div class="hint">Markdown supported · 0–500 characters</div></label>
+          </div>
+          <div class="formsec">
+            <div class="st">Visibility</div><div class="ss">Control where this appears.</div>
+            <div class="togrow"><div class="meta"><div class="tt">Publish immediately</div><div class="td">Make it live as soon as you save.</div></div><span class="tgl on"><span class="thumb"></span></span></div>
+            <div class="togrow"><div class="meta"><div class="tt">Feature on marketplace</div><div class="td">Show in the curated picks row.</div></div><span class="tgl"><span class="thumb"></span></span></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:13px 24px;border-top:1px solid var(--line);background:var(--surface)"><span style="font-size:12px;color:var(--faint)">Draft saved 2 min ago</span><div style="margin-left:auto;display:flex;gap:9px"><button class="btn-sec">Cancel</button><button class="btn-pri"><svg class="ico"><use href="#i-check"/></svg>Save product</button></div></div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · TWO-COLUMN + LIVE SUMMARY ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Two-column + live summary</div>
+      <p class="plate-recipe"><b>PULLS</b> — form fields on the left + a right live summary/preview card that reflects entered values. &nbsp;<b>WHY</b> — when output is visual or consequential: a live preview turns abstract fields into a concrete result, so users see what they're building as they type.</p>
+    </div>
+    <div class="frame" style="padding:22px 24px;display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start">
+      <div class="card" style="padding:6px 0">
+        <div class="formsec"><div class="st">Product details</div><div class="ss">Updates preview as you edit.</div>
+          <label class="fld"><span class="lab">Name</span><input class="input" id="f2name" value="Horizon UI Kit"></label>
+          <div class="row2"><label class="fld"><span class="lab">Category</span><div class="selectw"><select id="f2cat"><option>UI kit</option><option>Template</option><option>Font</option></select><svg class="ico"><use href="#i-chev"/></svg></div></label><label class="fld"><span class="lab">Price (USD)</span><input class="input tnum" id="f2price" value="48"></label></div>
+          <label class="fld" style="margin-bottom:0"><span class="lab">Short description</span><textarea class="ta" id="f2desc">240 components · light &amp; dark themes.</textarea></label>
+        </div>
+        <div class="formsec" style="border-bottom:none"><div class="togrow"><div class="meta"><div class="tt">On sale</div><div class="td">Apply a 20% launch discount.</div></div><span class="tgl" id="f2sale"><span class="thumb"></span></span></div></div>
+      </div>
+      <aside style="position:sticky;top:0">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin-bottom:9px">Live preview</div>
+        <div class="card" style="overflow:hidden">
+          <div style="height:120px;background:var(--inset);background-image:repeating-linear-gradient(135deg,transparent,transparent 7px,rgba(27,30,35,.035) 7px,rgba(27,30,35,.035) 8px);display:flex;align-items:center;justify-content:center"><span style="font-family:var(--mono);font-size:10px;color:var(--faint);background:var(--surface);padding:2px 8px;border-radius:4px;border:1px solid var(--line)">cover image</span></div>
+          <div style="padding:15px 16px">
+            <span style="display:inline-flex;width:fit-content;font-size:10.5px;font-weight:700;color:var(--accent-ink);background:var(--accent-tint);border-radius:6px;padding:2px 8px" id="p2cat">UI kit</span>
+            <div style="font-size:15px;font-weight:700;letter-spacing:-0.01em;margin-top:9px" id="p2name">Horizon UI Kit</div>
+            <div style="font-size:12.5px;color:var(--mut);margin-top:4px" id="p2desc">240 components · light &amp; dark themes.</div>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-top:12px"><span style="font-size:19px;font-weight:800;letter-spacing:-0.01em" class="tnum" id="p2price">$48</span><span id="p2old" style="display:none;font-size:13px;color:var(--faint);text-decoration:line-through" class="tnum"></span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============== 3 · MULTI-STEP WIZARD ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Multi-step wizard</div>
+      <p class="plate-recipe"><b>PULLS</b> — a horizontal stepper (Details → Options → Review) with the current step's fields + Back / Next. &nbsp;<b>WHY</b> — for longer or branching creation: chunking the form into ordered steps reduces overwhelm and lets each step validate before the next.</p>
+    </div>
+    <div class="frame" style="padding:24px 26px">
+      <div style="max-width:680px;margin:0 auto">
+        <div style="display:flex;align-items:flex-start;margin-bottom:24px" id="w3steps">
+          <div class="w3step done" data-i="0"><span class="sc"><svg class="ico"><use href="#i-check"/></svg></span><span class="sl">Details</span></div>
+          <div class="w3step cur" data-i="1"><span class="sc">2</span><span class="sl">Options</span></div>
+          <div class="w3step" data-i="2"><span class="sc">3</span><span class="sl">Review</span></div>
+        </div>
+        <div class="card" style="padding:22px 24px">
+          <div class="st" style="font-size:15px;font-weight:700">Options</div><div style="font-size:12.5px;color:var(--mut);margin-top:3px;margin-bottom:18px">Configure how the product is sold.</div>
+          <div class="row2"><label class="fld"><span class="lab">License</span><div class="selectw"><select><option>Single seat</option><option>Team</option><option>Unlimited</option></select><svg class="ico"><use href="#i-chev"/></svg></div></label><label class="fld"><span class="lab">Format</span><div class="selectw"><select><option>Figma</option><option>Sketch</option></select><svg class="ico"><use href="#i-chev"/></svg></div></label></div>
+          <div class="togrow"><div class="meta"><div class="tt">Include future updates</div><div class="td">Buyers get new versions free.</div></div><span class="tgl on"><span class="thumb"></span></span></div>
+          <div style="display:flex;justify-content:space-between;margin-top:22px;padding-top:18px;border-top:1px solid var(--inset)"><button class="btn-sec"><svg class="ico"><use href="#i-chevl"/></svg>Back</button><button class="btn-pri">Next<svg class="ico"><use href="#i-chevr"/></svg></button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · INLINE-EDIT RECORD ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Inline-edit record</div>
+      <p class="plate-recipe"><b>PULLS</b> — a record/detail view where fields are inline-editable (pencil affordance, edit-in-place, with a save bar that appears on change). &nbsp;<b>WHY</b> — for editing existing records: showing the saved values as readable text and letting users edit a single field in place is faster and less destructive than a full form.</p>
+    </div>
+    <div class="frame" style="padding:22px 24px">
+      <div class="card" style="max-width:620px;margin:0 auto;overflow:hidden" id="ie4">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px"><span style="width:40px;height:40px;border-radius:10px;background:var(--accent-tint);color:var(--accent-ink);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13px">HK</span><div><div style="font-size:15px;font-weight:700;letter-spacing:-0.01em">Horizon UI Kit</div><div style="font-size:11.5px;color:var(--faint)">Product · #PRD-204</div></div></div>
+        <div style="padding:6px 20px">
+          <div class="ierow" data-field="Name"><div class="iek">Name</div><div class="iev">Horizon UI Kit</div><button class="iepen"><svg class="ico"><use href="#i-pen"/></svg></button></div>
+          <div class="ierow" data-field="Category"><div class="iek">Category</div><div class="iev">UI kit</div><button class="iepen"><svg class="ico"><use href="#i-pen"/></svg></button></div>
+          <div class="ierow" data-field="Price"><div class="iek">Price</div><div class="iev tnum">$48.00</div><button class="iepen"><svg class="ico"><use href="#i-pen"/></svg></button></div>
+          <div class="ierow" data-field="Description"><div class="iek">Description</div><div class="iev">240 components · light &amp; dark themes.</div><button class="iepen"><svg class="ico"><use href="#i-pen"/></svg></button></div>
+        </div>
+        <div id="ie4bar" style="display:none;align-items:center;gap:10px;padding:12px 20px;border-top:1px solid var(--line);background:var(--accent-tint)"><span style="font-size:12px;font-weight:600;color:var(--accent-ink)">Unsaved changes</span><div style="margin-left:auto;display:flex;gap:8px"><button class="btn-sec" id="ie4cancel">Discard</button><button class="btn-pri" id="ie4save"><svg class="ico"><use href="#i-check"/></svg>Save</button></div></div>
+      </div>
+      <div style="text-align:center;font-size:11.5px;color:var(--faint);margin-top:10px">Click any <svg class="ico" style="width:12px;height:12px;color:var(--mut)"><use href="#i-pen"/></svg> to edit that field in place.</div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · VALIDATION ERRORS STATE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Validation errors</div>
+      <p class="plate-recipe"><b>PULLS</b> — the form showing validation: error-styled fields with messages + an error summary at the top, plus one valid field for contrast. &nbsp;<b>WHY</b> — recovering from mistakes is a core state: a summary that lists and links errors, with each field marked and explained inline, gets users to a fixable path fast.</p>
+    </div>
+    <div class="frame" style="padding:18px 0;background:var(--page)">
+      <div class="card" style="max-width:600px;margin:0 auto;overflow:hidden">
+        <div style="padding:16px 24px;border-bottom:1px solid var(--line)"><div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">New product</div></div>
+        <!-- error summary -->
+        <div style="margin:16px 24px;border:1px solid #e6bcb6;background:var(--bad-t);border-radius:10px;padding:13px 16px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--bad)"><svg class="ico" style="width:16px;height:16px"><use href="#i-warn"/></svg>There are 2 problems to fix</div>
+          <ul style="margin:8px 0 0 0;padding-left:24px;font-size:12.5px;color:var(--bad);line-height:1.7">
+            <li><a href="#" style="color:var(--bad);font-weight:600">Product name</a> is required.</li>
+            <li><a href="#" style="color:var(--bad);font-weight:600">Price</a> must be a positive number.</li>
+          </ul>
+        </div>
+        <div style="padding:4px 24px 22px">
+          <div class="fld err"><span class="lab">Product name <span class="req">*</span></span><input class="input" placeholder="e.g. Horizon UI Kit" value=""><div class="errmsg"><svg class="ico"><use href="#i-alert"/></svg>Product name is required.</div></div>
+          <div class="row2">
+            <div class="fld ok" style="margin-bottom:0"><span class="lab">Category</span><div class="selectw"><select><option>UI kit</option></select><svg class="ico"><use href="#i-chev"/></svg></div><div class="okmsg"><svg class="ico"><use href="#i-check"/></svg>Looks good.</div></div>
+            <div class="fld err" style="margin-bottom:0"><span class="lab">Price (USD) <span class="req">*</span></span><input class="input" value="-5"><div class="errmsg"><svg class="ico"><use href="#i-alert"/></svg>Must be a positive number.</div></div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:9px;margin-top:20px"><button class="btn-sec">Cancel</button><button class="btn-pri"><svg class="ico"><use href="#i-check"/></svg>Save product</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.w3step{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;}
+.w3step .sc{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:var(--surface);border:2px solid var(--line-2);color:var(--faint);z-index:1;font-variant-numeric:tabular-nums;}
+.w3step .sc .ico{width:16px;height:16px;}
+.w3step.done .sc{background:var(--accent);border-color:var(--accent);color:#fff;}
+.w3step.cur .sc{background:var(--surface);border-color:var(--accent);color:var(--accent-ink);box-shadow:0 0 0 4px var(--accent-tint);}
+.w3step .sl{font-size:12.5px;font-weight:600;margin-top:9px;color:var(--mut);}
+.w3step.cur .sl,.w3step.done .sl{color:var(--ink);}
+.w3step::before,.w3step::after{content:'';position:absolute;top:16px;height:2px;background:var(--line-2);width:50%;}
+.w3step::before{left:0;} .w3step::after{right:0;}
+.w3step:first-child::before{display:none;} .w3step:last-child::after{display:none;}
+.w3step.done::before,.w3step.done::after,.w3step.cur::before{background:var(--accent);}
+/* inline edit */
+.ierow{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--inset);}
+.ierow:last-child{border-bottom:none;}
+.ierow .iek{font-size:12.5px;color:var(--mut);width:104px;flex-shrink:0;}
+.ierow .iev{flex:1;font-size:13.5px;font-weight:600;color:var(--ink);}
+.ierow .iepen{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--faint);opacity:0;}
+.ierow:hover .iepen{opacity:1;} .ierow .iepen:hover{background:var(--inset);color:var(--accent-ink);} .ierow .iepen .ico{width:15px;height:15px;}
+.ierow.editing{background:var(--accent-tint);margin:0 -20px;padding:13px 20px;border-radius:8px;border-bottom-color:transparent;}
+.ierow.editing .iev{padding:0;}
+.ierow .ieinput{flex:1;font-size:13.5px;color:var(--ink);background:var(--surface);border:1px solid var(--accent);border-radius:7px;padding:7px 10px;outline:none;box-shadow:0 0 0 3px rgba(37,99,204,.16);}
+/* skin table */
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame[style*="grid-template-columns:1fr 320px"]{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script>
+/* toggles */
+document.querySelectorAll('.tgl').forEach(function(t){t.addEventListener('click',function(){t.classList.toggle('on');});});
+/* 2 live preview */
+(function(){
+  var name=document.getElementById('f2name'),cat=document.getElementById('f2cat'),price=document.getElementById('f2price'),desc=document.getElementById('f2desc'),sale=document.getElementById('f2sale');
+  function num(v){v=parseFloat(v);return isNaN(v)?0:v;}
+  function upd(){
+    document.getElementById('p2name').textContent=name.value||'Untitled';
+    document.getElementById('p2cat').textContent=cat.value;
+    document.getElementById('p2desc').textContent=desc.value;
+    var p=num(price.value),on=sale.classList.contains('on');
+    var pr=document.getElementById('p2price'),old=document.getElementById('p2old');
+    if(on){pr.textContent='$'+(p*0.8).toFixed(0);old.textContent='$'+p.toFixed(0);old.style.display='';}
+    else{pr.textContent='$'+p.toFixed(0);old.style.display='none';}
+  }
+  [name,price,desc].forEach(function(el){el.addEventListener('input',upd);});
+  cat.addEventListener('change',upd);
+  sale.addEventListener('click',function(){setTimeout(upd,0);});
+  upd();
+})();
+/* 4 inline edit */
+(function(){
+  var root=document.getElementById('ie4'),bar=document.getElementById('ie4bar'),dirty=false;
+  function showBar(){if(!dirty){dirty=true;bar.style.display='flex';}}
+  root.querySelectorAll('.ierow').forEach(function(row){
+    var pen=row.querySelector('.iepen'),val=row.querySelector('.iev');
+    pen.addEventListener('click',function(){
+      if(row.classList.contains('editing'))return;
+      var cur=val.textContent;row.classList.add('editing');
+      var inp=document.createElement('input');inp.className='ieinput';inp.value=cur;
+      val.replaceWith(inp);inp.focus();inp.select();
+      function done(){var nv=inp.value||cur;var d=document.createElement('div');d.className='iev';d.textContent=nv;inp.replaceWith(d);row.classList.remove('editing');row.querySelector('.iepen');if(nv!==cur)showBar();
+        // re-bind val reference
+        rebind(row);
+      }
+      inp.addEventListener('blur',done);inp.addEventListener('keydown',function(e){if(e.key==='Enter')inp.blur();if(e.key==='Escape'){inp.value=cur;inp.blur();}});
+    });
+  });
+  function rebind(row){/* listeners are delegated per row via closure; nothing extra needed */}
+  document.getElementById('ie4cancel').addEventListener('click',function(){dirty=false;bar.style.display='none';});
+  document.getElementById('ie4save').addEventListener('click',function(){dirty=false;bar.style.display='none';});
+})();
+</script>
+</body>
+</html>

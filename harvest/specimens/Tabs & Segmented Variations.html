@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabs &amp; segmented variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   TABS & SEGMENTED VARIATIONS — one tab set, many established patterns.
+   Neutral professional language; one slate-blue accent. Active + hover shown.
+   ============================================================================ */
+:root{
+  --bg:#EEEEEA; --surface:#FFFFFF; --inset:#F2F2EE; --hint:#FAFAF8;
+  --border:#E5E4DE; --border-2:#D6D4CB;
+  --ink:#1C1D21; --muted:#5A5C63; --subtle:#8B8D94;
+  --a:#3858C4; --a-tint:rgba(56,88,196,0.11); --a-ink:#2c46a0;
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --shadow-sm:0 1px 2px rgba(28,29,32,0.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:2.5px solid var(--a);outline-offset:2px;border-radius:5px;}
+button{font-family:inherit;cursor:pointer;}
+
+.wrap{max-width:1140px;margin:0 auto;padding:56px 36px 96px;}
+.head{margin-bottom:38px;padding-bottom:24px;border-bottom:1.5px solid var(--ink);}
+.eyebrow{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--subtle);margin-bottom:13px;}
+.head h1{font-size:clamp(32px,5vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1;}
+.head p{font-size:15.5px;color:var(--muted);max-width:62ch;margin-top:14px;}
+
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;align-items:start;}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;min-height:188px;}
+.cell.full{grid-column:1/-1;}
+.clab{margin-bottom:18px;}
+.clab .nm{font-size:13.5px;font-weight:700;letter-spacing:-0.01em;}
+.clab .nm span{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--a);margin-right:8px;}
+.clab .uw{font-size:12px;color:var(--muted);margin-top:3px;}
+.demo{flex:1;display:flex;flex-direction:column;justify-content:center;}
+
+/* states legend */
+.legend{display:flex;gap:14px;margin-top:18px;padding-top:14px;border-top:1px dashed var(--border);}
+.leg{display:flex;flex-direction:column;align-items:flex-start;gap:6px;}
+.leg .cap{font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);}
+
+/* content stub */
+.stub{font-size:12.5px;color:var(--subtle);}
+
+/* ===== 1 underline ===== */
+.u-tabs{display:flex;border-bottom:1px solid var(--border);}
+.u-tab{position:relative;border:none;background:none;font-size:13.5px;font-weight:600;color:var(--muted);padding:11px 4px;margin:0 14px;}
+.u-tab:first-child{margin-left:2px;}
+.u-tab:hover,.u-tab.is-hover{color:var(--ink);}
+.u-tab.on{color:var(--ink);}
+.u-tab.on::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2.5px;background:var(--a);border-radius:2px;}
+.u-tab .cnt{font-family:var(--font-mono);font-size:10px;color:var(--subtle);margin-left:6px;}
+.u-tab.on .cnt{color:var(--a);}
+.u-tab svg{width:15px;height:15px;vertical-align:-3px;margin-right:6px;opacity:.85;}
+
+/* ===== 2 pill ===== */
+.p-tabs{display:inline-flex;gap:4px;}
+.p-tab{border:none;background:none;font-size:13px;font-weight:600;color:var(--muted);padding:8px 15px;border-radius:999px;}
+.p-tab:hover,.p-tab.is-hover{background:var(--inset);color:var(--ink);}
+.p-tab.on{background:var(--a);color:#fff;}
+
+/* ===== 3 folder ===== */
+.f-tabs{display:flex;gap:4px;position:relative;z-index:1;padding-left:2px;}
+.f-tab{border:1px solid transparent;border-bottom:none;background:none;font-size:13px;font-weight:600;color:var(--muted);padding:9px 15px;border-radius:8px 8px 0 0;margin-bottom:-1px;}
+.f-tab:hover,.f-tab.is-hover{color:var(--ink);background:var(--inset);}
+.f-tab.on{background:#fff;border-color:var(--border);color:var(--ink);}
+.f-panel{border:1px solid var(--border);border-radius:0 9px 9px 9px;padding:16px;}
+
+/* ===== 4 segmented ===== */
+.s-seg{display:inline-flex;background:var(--inset);border:1px solid var(--border);border-radius:9px;padding:3px;gap:2px;}
+.s-tab{border:none;background:none;font-size:12.5px;font-weight:600;color:var(--muted);padding:7px 14px;border-radius:6px;}
+.s-tab:hover,.s-tab.is-hover{color:var(--ink);}
+.s-tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(28,29,32,.12);}
+
+/* ===== 5 vertical ===== */
+.v-wrap{display:grid;grid-template-columns:138px 1fr;gap:18px;}
+.v-tabs{display:flex;flex-direction:column;gap:2px;}
+.v-tab{position:relative;border:none;background:none;text-align:left;font-size:13px;font-weight:600;color:var(--muted);padding:9px 12px;border-radius:7px;}
+.v-tab:hover,.v-tab.is-hover{background:var(--inset);color:var(--ink);}
+.v-tab.on{background:var(--a-tint);color:var(--a-ink);}
+.v-tab.on::before{content:'';position:absolute;left:-2px;top:7px;bottom:7px;width:3px;border-radius:2px;background:var(--a);}
+.v-panel{border-left:1px solid var(--border);padding-left:18px;display:flex;align-items:center;}
+
+/* ===== 6 outlined button group (icons) ===== */
+.g-tabs{display:inline-flex;border:1px solid var(--border-2);border-radius:9px;overflow:hidden;}
+.g-tab{border:none;border-right:1px solid var(--border);background:#fff;font-size:13px;font-weight:600;color:var(--muted);padding:9px 14px;display:flex;align-items:center;gap:7px;}
+.g-tab:last-child{border-right:none;}
+.g-tab svg{width:15px;height:15px;opacity:.85;}
+.g-tab:hover,.g-tab.is-hover{background:var(--inset);color:var(--ink);}
+.g-tab.on{background:var(--a-tint);color:var(--a-ink);}
+.g-tab.on svg{opacity:1;}
+
+/* ===== 8 enclosed card ===== */
+.e-card{border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm);}
+.e-tabs{display:flex;background:var(--inset);border-bottom:1px solid var(--border);padding:0 4px;}
+.e-tab{position:relative;border:none;background:none;font-size:13px;font-weight:600;color:var(--muted);padding:12px 14px;}
+.e-tab:hover,.e-tab.is-hover{color:var(--ink);}
+.e-tab.on{color:var(--ink);background:#fff;}
+.e-tab.on::after{content:'';position:absolute;left:8px;right:8px;bottom:0;height:2.5px;background:var(--a);border-radius:2px;}
+.e-panel{padding:16px;background:#fff;}
+
+/* ===== 9 scrollable ===== */
+.sc-wrap{position:relative;}
+.sc-tabs{display:flex;overflow-x:auto;border-bottom:1px solid var(--border);scrollbar-width:thin;padding-right:40px;}
+.sc-tabs::-webkit-scrollbar{height:6px;}
+.sc-tabs::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:3px;}
+.sc-tab{position:relative;flex-shrink:0;border:none;background:none;font-size:13.5px;font-weight:600;color:var(--muted);padding:11px 4px;margin:0 14px;white-space:nowrap;}
+.sc-tab:hover,.sc-tab.is-hover{color:var(--ink);}
+.sc-tab.on{color:var(--ink);}
+.sc-tab.on::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2.5px;background:var(--a);border-radius:2px;}
+.sc-fade{position:absolute;right:0;top:0;bottom:7px;width:52px;pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,0),var(--surface));}
+
+@media(max-width:780px){.gallery{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+  <symbol id="i-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <header class="head">
+    <div class="eyebrow">Specimen · navigation</div>
+    <h1>Tabs &amp; segmented variations</h1>
+    <p>One four-item tab set rendered in nine established patterns. Each cell shows the active tab live and a small legend of the default, hover and active states.</p>
+  </header>
+
+  <div class="gallery">
+
+    <!-- 1 underline -->
+    <div class="cell">
+      <div class="clab"><div class="nm"><span>01</span>Underline tabs</div><div class="uw"><b>Use when</b> — the default for switching views inside a page.</div></div>
+      <div class="demo">
+        <div class="u-tabs" data-tabs>
+          <button class="u-tab on">Overview</button><button class="u-tab">Activity</button><button class="u-tab">Reports</button><button class="u-tab">Settings</button>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="leg"><div class="u-tabs" style="border:none"><button class="u-tab" style="margin:0">Tab</button></div><span class="cap">Default</span></div>
+        <div class="leg"><div class="u-tabs" style="border:none"><button class="u-tab is-hover" style="margin:0">Tab</button></div><span class="cap">Hover</span></div>
+        <div class="leg"><div class="u-tabs" style="border:none"><button class="u-tab on" style="margin:0">Tab</button></div><span class="cap">Active</span></div>
+      </div>
+    </div>
+
+    <!-- 2 pill -->
+    <div class="cell">
+      <div class="clab"><div class="nm"><span>02</span>Filled / pill tabs</div><div class="uw"><b>Use when</b> — a compact, friendly switch that floats on any surface.</div></div>
+      <div class="demo">
+        <div class="p-tabs" data-tabs><button class="p-tab on">Overview</button><button class="p-tab">Activity</button><button class="p-tab">Reports</button><button class="p-tab">Settings</button></div>
+      </div>
+      <div class="legend">
+        <div class="leg"><button class="p-tab">Tab</button><span class="cap">Default</span></div>
+        <div class="leg"><button class="p-tab is-hover">Tab</button><span class="cap">Hover</span></div>
+        <div class="leg"><button class="p-tab on">Tab</button><span class="cap">Active</span></div>
+      </div>
+    </div>
+
+    <!-- 3 folder -->
+    <div class="cell">
+      <div class="clab"><div class="nm"><span>03</span>Boxed folder tabs</div><div class="uw"><b>Use when</b> — tabs own a panel and should read like file folders.</div></div>
+      <div class="demo">
+        <div class="f-tabs" data-tabs><button class="f-tab on">Overview</button><button class="f-tab">Activity</button><button class="f-tab">Reports</button><button class="f-tab">Settings</button></div>
+        <div class="f-panel"><span class="stub">Overview panel content.</span></div>
+      </div>
+      <div class="legend">
+        <div class="leg"><button class="f-tab" style="margin:0;border-color:var(--border)">Tab</button><span class="cap">Default</span></div>
+        <div class="leg"><button class="f-tab is-hover" style="margin:0">Tab</button><span class="cap">Hover</span></div>
+        <div class="leg"><button class="f-tab on" style="margin:0">Tab</button><span class="cap">Active</span></div>
+      </div>
+    </div>
+
+    <!-- 4 segmented -->
+    <div class="cell">
+      <div class="clab"><div class="nm"><span>04</span>Segmented control (iOS)</div><div class="uw"><b>Use when</b> — 2–4 mutually-exclusive options of equal weight.</div></div>
+      <div class="demo">
+        <div class="s-seg" data-tabs><button class="s-tab on">Overview</button><button class="s-tab">Activity</button><button class="s-tab">Reports</button><button class="s-tab">Settings</button></div>
+      </div>
+      <div class="legend">
+        <div class="leg"><div class="s-seg"><button class="s-tab">Tab</button></div><span class="cap">Default</span></div>
+        <div class="leg"><div class="s-seg"><button class="s-tab is-hover">Tab</button></div><span class="cap">Hover</span></div>
+        <div class="leg"><div class="s-seg"><button class="s-tab on">Tab</button></div><span class="cap">Active</span></div>
+      </div>
+    </div>
+
+    <!-- 5 vertical -->
+    <div class="cell">
+      <div class="clab"><div class="nm"><span>05</span>Vertical tabs</div><div class="uw"><b>Use when</b> — many sections, or a settings-style side index.</div></div>
+      <div class="demo">
+        <div class="v-wrap">
+          <div class="v-tabs" data-tabs><button class="v-tab on">Overview</button><button class="v-tab">Activity</button><button class="v-tab">Reports</button><button class="v-tab">Settings</button></div>
+          <div class="v-panel"><span class="stub">Overview panel.</span></div>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="leg"><button class="v-tab" style="padding:6px 10px">Tab</button><span class="cap">Default</span></div>
+        <div class="leg"><button class="v-tab is-hover" style="padding:6px 10px">Tab</button><span class="cap">Hover</span></div>
+        <div class="leg"><button class="v-tab on" style="padding:6px 10px">Tab</button><span class="cap">Active</span></div>
+      </div>
+    </div>
+
+    <!-- 6 icons / button group -->
+    <div class="cell">
+      <div class="clab"><div class="nm"><span>06</span>Tabs with leading icons</div><div class="uw"><b>Use when</b> — icons speed recognition (an outlined button group here).</div></div>
+      <div class="demo">
+        <div class="g-tabs" data-tabs>
+          <button class="g-tab on"><svg><use href="#i-grid"/></svg>Overview</button>
+          <button class="g-tab"><svg><use href="#i-activity"/></svg>Activity</button>
+          <button class="g-tab"><svg><use href="#i-users"/></svg>Members</button>
+          <button class="g-tab"><svg><use href="#i-settings"/></svg>Settings</button>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="leg"><div class="g-tabs"><button class="g-tab"><svg><use href="#i-grid"/></svg>Tab</button></div><span class="cap">Default</span></div>
+        <div class="leg"><div class="g-tabs"><button class="g-tab is-hover"><svg><use href="#i-grid"/></svg>Tab</button></div><span class="cap">Hover</span></div>
+        <div class="leg"><div class="g-tabs"><button class="g-tab on"><svg><use href="#i-grid"/></svg>Tab</button></div><span class="cap">Active</span></div>
+      </div>
+    </div>
+
+    <!-- 7 count badges -->
+    <div class="cell">
+      <div class="clab"><div class="nm"><span>07</span>Tabs with count badges</div><div class="uw"><b>Use when</b> — each view has a live quantity worth surfacing.</div></div>
+      <div class="demo">
+        <div class="u-tabs" data-tabs>
+          <button class="u-tab on">Inbox<span class="cnt">24</span></button>
+          <button class="u-tab">Activity<span class="cnt">12</span></button>
+          <button class="u-tab">Mentions<span class="cnt">3</span></button>
+          <button class="u-tab">Archive</button>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="leg"><div class="u-tabs" style="border:none"><button class="u-tab" style="margin:0">Tab<span class="cnt">9</span></button></div><span class="cap">Default</span></div>
+        <div class="leg"><div class="u-tabs" style="border:none"><button class="u-tab is-hover" style="margin:0">Tab<span class="cnt">9</span></button></div><span class="cap">Hover</span></div>
+        <div class="leg"><div class="u-tabs" style="border:none"><button class="u-tab on" style="margin:0">Tab<span class="cnt">9</span></button></div><span class="cap">Active</span></div>
+      </div>
+    </div>
+
+    <!-- 8 enclosed card -->
+    <div class="cell">
+      <div class="clab"><div class="nm"><span>08</span>Enclosed card tabs</div><div class="uw"><b>Use when</b> — the whole module is a self-contained card.</div></div>
+      <div class="demo">
+        <div class="e-card">
+          <div class="e-tabs" data-tabs><button class="e-tab on">Overview</button><button class="e-tab">Activity</button><button class="e-tab">Reports</button><button class="e-tab">Settings</button></div>
+          <div class="e-panel"><span class="stub">Overview panel content lives inside the card.</span></div>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="leg"><div class="e-tabs" style="border:none;background:none;padding:0"><button class="e-tab" style="padding:7px 10px">Tab</button></div><span class="cap">Default</span></div>
+        <div class="leg"><div class="e-tabs" style="border:none;background:none;padding:0"><button class="e-tab is-hover" style="padding:7px 10px">Tab</button></div><span class="cap">Hover</span></div>
+        <div class="leg"><div class="e-tabs" style="border:none;background:none;padding:0"><button class="e-tab on" style="padding:7px 10px">Tab</button></div><span class="cap">Active</span></div>
+      </div>
+    </div>
+
+    <!-- 9 scrollable -->
+    <div class="cell full">
+      <div class="clab"><div class="nm"><span>09</span>Scrollable tab strip with overflow fade</div><div class="uw"><b>Use when</b> — more tabs than fit; the fade hints there's more to scroll.</div></div>
+      <div class="demo">
+        <div class="sc-wrap">
+          <div class="sc-tabs" data-tabs>
+            <button class="sc-tab on">Overview</button><button class="sc-tab">Activity</button><button class="sc-tab">Reports</button><button class="sc-tab">Members</button><button class="sc-tab">Billing</button><button class="sc-tab">Integrations</button><button class="sc-tab">Automations</button><button class="sc-tab">Audit log</button><button class="sc-tab">API keys</button><button class="sc-tab">Settings</button>
+          </div>
+          <div class="sc-fade"></div>
+        </div>
+        <div class="stub" style="margin-top:14px;">Drag or scroll the strip → the right edge fades to signal more tabs.</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('[data-tabs]').forEach(function(g){
+  g.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b)return;
+    g.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+  });
+});
+</script>
+</body>
+</html>

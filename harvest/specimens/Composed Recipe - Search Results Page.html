@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Search / results page (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Search / results page · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin (off-white page, white cards, hairline borders, slightly
+   rounded corners, one blue accent, system sans + tabular figures). Only
+   composition + interaction varies. WCAG AA throughout.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --hl:#FCEFC3; --hl-ink:#6b5310;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+
+/* search bar */
+.sbar{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line-2);border-radius:10px;padding:11px 14px;}
+.sbar.focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+.sbar .ico{width:17px;height:17px;color:var(--mut);}
+.sbar input{flex:1;border:none;outline:none;background:none;font-size:14px;color:var(--ink);}
+.sbar .kbd{font-size:11px;color:var(--faint);border:1px solid var(--line-2);border-radius:5px;padding:2px 7px;}
+.sbar .clear{color:var(--faint);width:20px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:5px;}
+.sbar .clear:hover{background:var(--inset);color:var(--ink);}
+
+mark{background:var(--hl);color:var(--hl-ink);border-radius:2px;padding:0 1px;font-weight:600;}
+
+.facet-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:10px;}
+.fcheck{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:13px;color:var(--ink);cursor:pointer;}
+.fcheck .bx{width:17px;height:17px;border-radius:5px;border:1.5px solid var(--line-2);background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;}
+.fcheck .bx .ico{width:10px;height:10px;opacity:0;}
+.fcheck.on .bx{background:var(--accent);border-color:var(--accent);} .fcheck.on .bx .ico{opacity:1;}
+.fcheck .ct{margin-left:auto;font-size:11.5px;color:var(--faint);}
+.ftag{display:inline-flex;align-items:center;font-size:11.5px;font-weight:600;color:var(--mut);background:var(--inset);border:1px solid var(--line);border-radius:999px;padding:4px 10px;cursor:pointer;}
+.ftag.on{color:var(--accent-ink);background:var(--accent-tint);border-color:#cdddf6;}
+
+/* result row */
+.res{padding:15px 0;border-bottom:1px solid var(--inset);}
+.res:last-child{border-bottom:none;}
+.res .src{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--faint);margin-bottom:5px;}
+.res .src .ic{width:16px;height:16px;border-radius:4px;background:var(--inset);display:flex;align-items:center;justify-content:center;color:var(--mut);}
+.res .src .ic .ico{width:10px;height:10px;}
+.res .tt{font-size:15px;font-weight:600;color:var(--accent-ink);letter-spacing:-0.01em;cursor:pointer;}
+.res .tt:hover{text-decoration:underline;}
+.res .sn{font-size:13px;color:var(--mut);line-height:1.5;margin-top:4px;}
+.res .mt{display:flex;gap:14px;font-size:11.5px;color:var(--faint);margin-top:7px;}
+
+.type-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--inset);color:var(--mut);}
+.type-pill .ico{width:12px;height:12px;}
+
+.pag{display:flex;gap:3px;}
+.pag button{min-width:32px;height:32px;border-radius:8px;font-size:13px;font-weight:600;color:var(--mut);border:1px solid transparent;}
+.pag button:hover{background:#fff;border-color:var(--line);} .pag button.on{background:var(--accent);color:#fff;}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-chevr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chevl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></symbol>
+  <symbol id="i-proj" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2 9 9H2l5 4-2 7 6-4 6 4-2-7 5-4h-7z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-corner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 10 4 15l5 5"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-reply" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17 4 12l5-5"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Search / results page · one skin, five compositions</div>
+    <h1>Same skin. Five ways to return a search.</h1>
+    <p>One query — “renewal” across a workspace — answered five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white cards with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. What changes is purely <em>composition and interaction</em>: how results are grouped, filtered, previewed, or invoked. The skin is the paint, the composition is the skeleton.</p>
+  </header>
+
+  <!-- ============== 1 · RESULTS LIST + FACETS ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Results list + facets</div>
+      <p class="plate-recipe"><b>PULLS</b> — top search bar (active query + result count) + left facet rail (type checkboxes, date, tags) + central result rows (title + snippet + meta + source) + numbered pagination. &nbsp;<b>WHY</b> — the classic web-search layout: facets let users narrow a large, mixed result set, and ranked rows with snippets are the fastest way to judge relevance.</p>
+    </div>
+    <div class="frame">
+      <div style="padding:18px 24px;border-bottom:1px solid var(--line);background:var(--surface)">
+        <div class="sbar focus" style="max-width:640px"><svg class="ico"><use href="#i-search"/></svg><input value="renewal" aria-label="Search"><button class="clear"><svg class="ico" style="width:14px;height:14px"><use href="#i-x"/></svg></button></div>
+        <div style="font-size:12.5px;color:var(--mut);margin-top:10px">About <b>1,284</b> results for “<b>renewal</b>” · 0.18s</div>
+      </div>
+      <div style="display:grid;grid-template-columns:228px 1fr">
+        <aside style="border-right:1px solid var(--line);padding:20px 18px;background:var(--surface);display:flex;flex-direction:column;gap:22px">
+          <div>
+            <div class="facet-t">Type</div>
+            <div class="fcheck on" data-f><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Documents<span class="ct">842</span></div>
+            <div class="fcheck on" data-f><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Invoices<span class="ct">311</span></div>
+            <div class="fcheck" data-f><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>People<span class="ct">64</span></div>
+            <div class="fcheck" data-f><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Messages<span class="ct">67</span></div>
+          </div>
+          <div>
+            <div class="facet-t">Date</div>
+            <div class="fcheck" data-f><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Past 7 days</div>
+            <div class="fcheck on" data-f><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Past 30 days</div>
+            <div class="fcheck" data-f><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Past year</div>
+          </div>
+          <div>
+            <div class="facet-t">Tags</div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px"><button class="ftag on" data-tag>billing</button><button class="ftag" data-tag>contract</button><button class="ftag" data-tag>q3</button><button class="ftag" data-tag>enterprise</button></div>
+          </div>
+        </aside>
+        <div style="padding:8px 24px 20px">
+          <div class="res"><div class="src"><span class="ic"><svg class="ico"><use href="#i-doc"/></svg></span>Documents · /contracts/northwind</div><div class="tt">Annual <mark>renewal</mark> agreement — Northwind LLC</div><div class="sn">Master subscription <mark>renewal</mark> for the Scale plan, effective March 18. Auto-renews unless cancelled 30 days prior to the term end…</div><div class="mt"><span>Updated Jun 18</span><span>Dana Kessler</span><span>PDF · 240 KB</span></div></div>
+          <div class="res"><div class="src"><span class="ic"><svg class="ico"><use href="#i-doc"/></svg></span>Invoices · #TX-4821</div><div class="tt">Invoice #TX-4821 — Scale <mark>renewal</mark></div><div class="sn">Annual <mark>renewal</mark> invoice for Northwind LLC totalling $2,480.00, paid via ACH on June 18, 2026…</div><div class="mt"><span>Jun 18</span><span>Paid</span><span>$2,480.00</span></div></div>
+          <div class="res"><div class="src"><span class="ic"><svg class="ico"><use href="#i-doc"/></svg></span>Documents · /playbooks</div><div class="tt">Customer <mark>renewal</mark> playbook</div><div class="sn">Step-by-step process for managing upcoming <mark>renewals</mark>: outreach timing, discount approvals, and escalation paths…</div><div class="mt"><span>Updated May 30</span><span>Reza Pour</span><span>Doc</span></div></div>
+          <div class="res"><div class="src"><span class="ic"><svg class="ico"><use href="#i-doc"/></svg></span>Reports · /finance</div><div class="tt">Q3 <mark>renewal</mark> forecast</div><div class="sn">Projected <mark>renewal</mark> revenue of $1.42M across 88 accounts, with a 92% gross retention assumption…</div><div class="mt"><span>Jun 12</span><span>Finance</span><span>Sheet</span></div></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-top:1px solid var(--line)">
+        <div style="font-size:12.5px;color:var(--mut)">Page <b>1</b> of <b>129</b></div>
+        <div class="pag" id="s1pag"><button class="nav"><svg class="ico" style="width:14px;height:14px"><use href="#i-chevl"/></svg></button><button class="on">1</button><button>2</button><button>3</button><button>4</button><button style="color:var(--faint)">…</button><button>129</button><button class="nav"><svg class="ico" style="width:14px;height:14px"><use href="#i-chevr"/></svg></button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · FEDERATED / GROUPED ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Federated / grouped</div>
+      <p class="plate-recipe"><b>PULLS</b> — one unified search bar + results grouped by type (People / Files / Projects) each as a labeled section with a few items and a “See all (N)” link. &nbsp;<b>WHY</b> — for multi-entity search across a product: grouping by type lets the user jump straight to the kind of thing they meant, without choosing a scope up front.</p>
+    </div>
+    <div class="frame" style="padding:22px 26px">
+      <div class="sbar" style="max-width:680px;margin:0 auto 6px"><svg class="ico"><use href="#i-search"/></svg><input value="renewal" aria-label="Search everything"><span class="kbd">⌘K</span></div>
+      <div style="text-align:center;font-size:12px;color:var(--faint);margin-bottom:20px">Searching across People, Files, Projects &amp; Messages</div>
+      <div style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:22px">
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px"><span class="type-pill"><svg class="ico"><use href="#i-user"/></svg>People</span><span style="font-size:12px;color:var(--faint)">3 of 64</span></div><a href="#" style="font-size:12.5px;font-weight:600;color:var(--accent);text-decoration:none">See all 64</a></div>
+          <div class="card" style="padding:6px 8px">
+            <a href="#" class="grow"><span class="av">DK</span><div><div class="gn">Dana Kessler · <span style="color:var(--faint);font-weight:500">Renewals owner</span></div><div class="gm">dana@harbor.app · Account management</div></div><svg class="ico gchev"><use href="#i-chevr"/></svg></a>
+            <a href="#" class="grow"><span class="av">RP</span><div><div class="gn">Reza Pour</div><div class="gm">reza@harbor.app · authored “Renewal playbook”</div></div><svg class="ico gchev"><use href="#i-chevr"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px"><span class="type-pill"><svg class="ico"><use href="#i-doc"/></svg>Files</span><span style="font-size:12px;color:var(--faint)">3 of 842</span></div><a href="#" style="font-size:12.5px;font-weight:600;color:var(--accent);text-decoration:none">See all 842</a></div>
+          <div class="card" style="padding:6px 8px">
+            <a href="#" class="grow"><span class="gic"><svg class="ico"><use href="#i-doc"/></svg></span><div><div class="gn">Annual <mark>renewal</mark> agreement — Northwind</div><div class="gm">PDF · /contracts · updated Jun 18</div></div></a>
+            <a href="#" class="grow"><span class="gic"><svg class="ico"><use href="#i-doc"/></svg></span><div><div class="gn">Customer <mark>renewal</mark> playbook</div><div class="gm">Doc · /playbooks · updated May 30</div></div></a>
+            <a href="#" class="grow"><span class="gic"><svg class="ico"><use href="#i-doc"/></svg></span><div><div class="gn">Q3 <mark>renewal</mark> forecast</div><div class="gm">Sheet · /finance · updated Jun 12</div></div></a>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px"><span class="type-pill"><svg class="ico"><use href="#i-proj"/></svg>Projects</span><span style="font-size:12px;color:var(--faint)">2 of 11</span></div><a href="#" style="font-size:12.5px;font-weight:600;color:var(--accent);text-decoration:none">See all 11</a></div>
+          <div class="card" style="padding:6px 8px">
+            <a href="#" class="grow"><span class="gic"><svg class="ico"><use href="#i-proj"/></svg></span><div><div class="gn">Q3 <mark>Renewal</mark> Campaign</div><div class="gm">12 tasks · 4 members · due Sep 30</div></div></a>
+            <a href="#" class="grow"><span class="gic"><svg class="ico"><use href="#i-proj"/></svg></span><div><div class="gn">Enterprise <mark>Renewals</mark> 2026</div><div class="gm">28 tasks · 6 members · in progress</div></div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · SEARCH + PREVIEW PANE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Search + preview pane</div>
+      <p class="plate-recipe"><b>PULLS</b> — results list on the left + a preview pane on the right showing the selected result's detail. &nbsp;<b>WHY</b> — the email/file-search pattern: when results are dense and inspectable, previewing in place lets users triage many hits without opening each one in full.</p>
+    </div>
+    <div class="frame" style="min-height:480px;display:flex;flex-direction:column">
+      <div style="padding:14px 20px;border-bottom:1px solid var(--line);background:var(--surface)"><div class="sbar" style="padding:8px 12px"><svg class="ico"><use href="#i-search"/></svg><input value="renewal" aria-label="Search messages"><span style="font-size:12px;color:var(--faint)" class="tnum">48 results</span></div></div>
+      <div style="display:grid;grid-template-columns:340px 1fr;flex:1;min-height:0">
+        <div style="border-right:1px solid var(--line);background:var(--surface);overflow:auto" id="p3list"></div>
+        <div id="p3prev" style="padding:24px 28px;background:var(--page);display:flex;flex-direction:column;gap:16px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · COMMAND PALETTE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Command palette</div>
+      <p class="plate-recipe"><b>PULLS</b> — a centered ⌘K palette over a dimmed page: input with keyboard hints + instant results grouped into Recent / Suggested / Actions, one row highlighted with ↑↓ and ↵ hints. &nbsp;<b>WHY</b> — for power users: search becomes a launcher, mixing navigation and actions so the keyboard alone gets you anywhere in the product fast.</p>
+    </div>
+    <div class="frame" style="position:relative;min-height:470px;overflow:hidden">
+      <!-- dimmed page behind -->
+      <div aria-hidden="true" style="position:absolute;inset:0;padding:20px 24px;filter:saturate(.9)">
+        <div style="height:14px;width:160px;background:var(--inset);border-radius:5px"></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px">
+          <div class="card" style="height:96px"></div><div class="card" style="height:96px"></div><div class="card" style="height:96px"></div>
+        </div>
+        <div class="card" style="height:150px;margin-top:14px"></div>
+      </div>
+      <div style="position:absolute;inset:0;background:rgba(20,24,31,.42)"></div>
+      <!-- palette -->
+      <div style="position:absolute;left:50%;top:46px;transform:translateX(-50%);width:560px;max-width:calc(100% - 40px)">
+        <div class="card" style="border-radius:14px;box-shadow:0 24px 60px -16px rgba(20,24,31,.5);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:11px;padding:15px 18px;border-bottom:1px solid var(--line)">
+            <svg class="ico" style="width:18px;height:18px;color:var(--mut)"><use href="#i-search"/></svg>
+            <input value="renew" style="flex:1;border:none;outline:none;font-size:15px;color:var(--ink);background:none" aria-label="Command">
+            <span style="font-size:11px;color:var(--faint);border:1px solid var(--line-2);border-radius:5px;padding:2px 7px">esc</span>
+          </div>
+          <div style="padding:8px;max-height:300px;overflow:auto">
+            <div class="cp-grp">Recent</div>
+            <div class="cp-row"><span class="cp-ic"><svg class="ico"><use href="#i-clock"/></svg></span><span class="cp-tx">Q3 <mark>renew</mark>al forecast</span><span class="cp-meta">Report</span></div>
+            <div class="cp-row"><span class="cp-ic"><svg class="ico"><use href="#i-clock"/></svg></span><span class="cp-tx">Northwind <mark>renew</mark>al agreement</span><span class="cp-meta">File</span></div>
+            <div class="cp-grp">Suggested</div>
+            <div class="cp-row on"><span class="cp-ic"><svg class="ico"><use href="#i-doc"/></svg></span><span class="cp-tx">Customer <mark>renew</mark>al playbook</span><span class="cp-key">↵</span></div>
+            <div class="cp-row"><span class="cp-ic"><svg class="ico"><use href="#i-proj"/></svg></span><span class="cp-tx">Q3 <mark>Renew</mark>al Campaign</span><span class="cp-meta">Project</span></div>
+            <div class="cp-grp">Actions</div>
+            <div class="cp-row"><span class="cp-ic acc"><svg class="ico"><use href="#i-plus"/></svg></span><span class="cp-tx">Create <mark>renew</mark>al reminder</span><span class="cp-meta">Action</span></div>
+            <div class="cp-row"><span class="cp-ic acc"><svg class="ico"><use href="#i-bolt"/></svg></span><span class="cp-tx">Run <mark>renew</mark>al forecast</span><span class="cp-meta">Action</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;padding:10px 16px;border-top:1px solid var(--line);font-size:11px;color:var(--faint)">
+            <span><span class="cp-kbd">↑↓</span>navigate</span><span><span class="cp-kbd">↵</span>open</span><span><span class="cp-kbd">⌘↵</span>open in new tab</span><span style="margin-left:auto"><span class="cp-kbd">esc</span>close</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · ZERO-RESULTS ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Zero-results</div>
+      <p class="plate-recipe"><b>PULLS</b> — the empty no-results state: the query shown, a “no matches” message, a did-you-mean suggestion, and a short list of popular/recent searches as chips. &nbsp;<b>WHY</b> — a dead end is the riskiest moment in search; spelling rescue plus popular queries turn “nothing found” into an obvious next move.</p>
+    </div>
+    <div class="frame" style="padding:22px 26px">
+      <div class="sbar" style="max-width:680px;margin:0 auto"><svg class="ico"><use href="#i-search"/></svg><input value="renwal aggreement" aria-label="Search"><button class="clear"><svg class="ico" style="width:14px;height:14px"><use href="#i-x"/></svg></button></div>
+      <div style="max-width:560px;margin:36px auto 8px;text-align:center;display:flex;flex-direction:column;align-items:center">
+        <div style="width:64px;height:64px;border-radius:16px;background:var(--inset);display:flex;align-items:center;justify-content:center;color:var(--faint);margin-bottom:18px"><svg class="ico" style="width:30px;height:30px"><use href="#i-search"/></svg></div>
+        <h3 style="font-size:19px;font-weight:700;letter-spacing:-0.01em">No results for “renwal aggreement”</h3>
+        <p style="font-size:14px;color:var(--mut);margin-top:8px;line-height:1.55">We couldn't find anything matching your search. Check the spelling, or try a broader term.</p>
+        <div style="margin-top:16px;font-size:14px;color:var(--mut)">Did you mean <button style="color:var(--accent-ink);font-weight:700;text-decoration:underline;text-underline-offset:2px">renewal agreement</button>?</div>
+        <div style="margin-top:28px;width:100%">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:11px">Popular searches</div>
+          <div style="display:flex;flex-wrap:wrap;gap:9px;justify-content:center">
+            <button class="ftag"><svg class="ico" style="width:12px;height:12px;margin-right:5px"><use href="#i-star"/></svg>renewal agreement</button>
+            <button class="ftag">invoices</button>
+            <button class="ftag">Q3 forecast</button>
+            <button class="ftag">Northwind LLC</button>
+            <button class="ftag">overdue</button>
+            <button class="ftag">playbook</button>
+          </div>
+          <div style="margin-top:18px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:11px">Recent</div>
+          <div style="display:flex;flex-wrap:wrap;gap:9px;justify-content:center">
+            <button class="ftag"><svg class="ico" style="width:12px;height:12px;margin-right:5px"><use href="#i-clock"/></svg>renewal forecast</button>
+            <button class="ftag"><svg class="ico" style="width:12px;height:12px;margin-right:5px"><use href="#i-clock"/></svg>contract northwind</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — not just color and font, but radius, elevation, and density too — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div class="card" style="overflow:hidden;padding:0">
+      <table class="skintab">
+        <thead>
+          <tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr>
+        </thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:6px"></span><code>Slightly-rounded · 6px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+/* federated rows */
+.grow{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:8px;text-decoration:none;color:var(--ink);}
+.grow:hover{background:var(--inset);}
+.grow .av{width:32px;height:32px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.grow .gic{width:32px;height:32px;border-radius:8px;background:var(--inset);color:var(--mut);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.grow .gic .ico{width:16px;height:16px;}
+.grow .gn{font-size:13.5px;font-weight:600;} .grow .gm{font-size:11.5px;color:var(--faint);margin-top:1px;}
+.grow .gchev{width:15px;height:15px;color:var(--faint);margin-left:auto;}
+/* preview list rows */
+.p3row{display:flex;flex-direction:column;gap:3px;padding:13px 18px;border-bottom:1px solid var(--inset);cursor:pointer;}
+.p3row:hover{background:var(--inset);}
+.p3row.on{background:var(--accent-tint);box-shadow:inset 3px 0 0 var(--accent);}
+.p3row .top{display:flex;align-items:center;gap:8px;}
+.p3row .from{font-size:13px;font-weight:700;} .p3row .when{margin-left:auto;font-size:11px;color:var(--faint);}
+.p3row .subj{font-size:12.5px;color:var(--ink);} .p3row .prev{font-size:11.5px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* command palette */
+.cp-grp{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);padding:10px 10px 5px;}
+.cp-row{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:8px;}
+.cp-row .cp-ic{width:28px;height:28px;border-radius:7px;background:var(--inset);color:var(--mut);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cp-row .cp-ic.acc{background:var(--accent-tint);color:var(--accent-ink);}
+.cp-row .cp-ic .ico{width:15px;height:15px;}
+.cp-row .cp-tx{font-size:13.5px;font-weight:500;} .cp-row .cp-meta{margin-left:auto;font-size:11px;color:var(--faint);}
+.cp-row .cp-key{margin-left:auto;font-size:11px;color:var(--accent-ink);border:1px solid #cdddf6;background:var(--accent-tint);border-radius:5px;padding:1px 7px;font-weight:600;}
+.cp-row.on{background:var(--accent-tint);box-shadow:inset 0 0 0 1px #cdddf6;}
+.cp-kbd{border:1px solid var(--line-2);border-radius:4px;padding:1px 6px;color:var(--mut);margin-right:5px;}
+/* skin table */
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame [style*="grid-template-columns:228px 1fr"],.frame [style*="grid-template-columns:340px 1fr"]{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script>
+/* 1 facets toggle + pagination */
+document.querySelectorAll('[data-f]').forEach(function(c){c.addEventListener('click',function(){c.classList.toggle('on');});});
+document.querySelectorAll('[data-tag]').forEach(function(t){t.addEventListener('click',function(){t.classList.toggle('on');});});
+(function(){var p=document.getElementById('s1pag');if(p)p.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.classList.contains('nav'))return;p.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');});})();
+
+/* 3 search + preview pane */
+(function(){
+  var msgs=[
+    {id:'DK',from:'Dana Kessler',when:'9:41 AM',subj:'Re: Northwind renewal agreement',prev:'Confirmed — the renewal is signed and countersigned. Attaching the final PDF…',body:'Confirmed — the renewal is signed and countersigned. Attaching the final PDF for your records.\n\nThe Scale plan renews at $1,920/yr plus the 8 additional seats. Auto-renew stays on with a 30-day cancellation window.\n\nLet me know if finance needs anything else before close.'},
+    {id:'RP',from:'Reza Pour',when:'Yesterday',subj:'Renewal playbook — v2 draft',prev:'Pushed a second draft of the renewal playbook with the new escalation path…',body:'Pushed a second draft of the renewal playbook with the new escalation path and discount approval matrix.\n\nKey change: outreach now starts at T-60 days instead of T-45. Take a look at the timing section and let me know.'},
+    {id:'FN',from:'Finance',when:'Jun 12',subj:'Q3 renewal forecast ready',prev:'The Q3 renewal forecast is ready for review — $1.42M projected…',body:'The Q3 renewal forecast is ready for review — $1.42M projected across 88 accounts at a 92% gross retention assumption.\n\nThe model and assumptions are linked in the shared sheet.'},
+    {id:'AG',from:'Atlas Group',when:'Jun 10',subj:'Question about our renewal terms',prev:'Hi — could you clarify the proration if we add seats mid-cycle before renewal?',body:'Hi — could you clarify the proration if we add seats mid-cycle before renewal? We may expand by ~20 seats in August.\n\nThanks!'}
+  ];
+  var list=document.getElementById('p3list'),prev=document.getElementById('p3prev');
+  list.innerHTML=msgs.map(function(m,i){return '<div class="p3row'+(i===0?' on':'')+'" data-i="'+i+'"><div class="top"><span class="from">'+m.from+'</span><span class="when">'+m.when+'</span></div><div class="subj">'+hl(m.subj)+'</div><div class="prev">'+m.prev+'</div></div>';}).join('');
+  function hl(s){return s.replace(/(renewal)/gi,'<mark>$1</mark>');}
+  function render(m){
+    prev.innerHTML='<div style="display:flex;align-items:center;gap:13px"><span style="width:42px;height:42px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center">'+m.id+'</span><div style="flex:1"><div style="font-size:15px;font-weight:700">'+m.from+'</div><div style="font-size:12px;color:var(--faint)">to me · '+m.when+'</div></div><button class="ico" style="width:34px;height:34px;border:1px solid var(--line-2);border-radius:8px;color:var(--mut);display:flex;align-items:center;justify-content:center"><svg class="ico" style="width:16px;height:16px"><use href="#i-reply"/></svg></button></div>'+
+      '<div style="font-size:18px;font-weight:700;letter-spacing:-0.01em">'+hl(m.subj)+'</div>'+
+      '<div class="card" style="padding:18px 20px;font-size:13.5px;line-height:1.6;color:var(--mut);white-space:pre-line">'+m.body+'</div>';
+  }
+  list.addEventListener('click',function(e){var r=e.target.closest('.p3row');if(!r)return;list.querySelectorAll('.p3row').forEach(function(x){x.classList.remove('on');});r.classList.add('on');render(msgs[+r.dataset.i]);});
+  render(msgs[0]);
+})();
+</script>
+</body>
+</html>

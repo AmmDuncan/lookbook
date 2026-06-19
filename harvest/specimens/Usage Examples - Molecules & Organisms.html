@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usage examples — molecules &amp; organisms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   USAGE EXAMPLES — molecules & organisms in real compositions.
+   Neutral professional language; one restrained slate-blue accent.
+   ============================================================================ */
+:root{
+  --bg:#EEEEEA; --surface:#FFFFFF; --inset:#F3F2EE; --hint:#FAFAF8;
+  --border:#E5E4DE; --border-2:#D6D4CB;
+  --ink:#1C1D21; --muted:#5A5C63; --subtle:#8B8D94;
+  --a:#3858C4; --a-tint:rgba(56,88,196,0.10); --a-ink:#2c46a0;
+  --ok:#2C6E49; --ok-tint:rgba(44,110,73,0.12);
+  --warn:#8A5A12; --bad:#B23A2E; --bad-tint:rgba(178,58,46,0.10);
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --shadow-sm:0 1px 2px rgba(28,29,32,0.05);
+  --shadow:0 8px 24px -12px rgba(28,29,32,0.2),0 1px 3px rgba(28,29,32,0.05);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+.tnum{font-variant-numeric:tabular-nums;}
+:focus-visible{outline:2.5px solid var(--a);outline-offset:2px;border-radius:5px;}
+button{font-family:inherit;cursor:pointer;}
+
+.wrap{max-width:1180px;margin:0 auto;padding:56px 36px 96px;}
+.head{margin-bottom:40px;padding-bottom:24px;border-bottom:1.5px solid var(--ink);}
+.eyebrow{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--subtle);margin-bottom:13px;}
+.head h1{font-size:clamp(32px,5vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1;}
+.head p{font-size:15.5px;color:var(--muted);max-width:62ch;margin-top:14px;}
+
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 24px;align-items:start;}
+.spec{display:flex;flex-direction:column;gap:12px;}
+.spec.full{grid-column:1/-1;}
+.lab{display:flex;align-items:baseline;gap:12px;}
+.lab .nm{font-size:14px;font-weight:700;letter-spacing:-0.01em;}
+.lab .nm span{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--a);margin-right:8px;}
+.lab .uw{font-size:12.5px;color:var(--muted);}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:13px;box-shadow:var(--shadow-sm);overflow:hidden;}
+
+/* shared atoms */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:600;padding:9px 15px;border-radius:9px;border:1px solid transparent;transition:all .12s;}
+.btn svg{width:15px;height:15px;}
+.btn-a{background:var(--a);color:#fff;box-shadow:0 1px 2px rgba(56,88,196,.32);}
+.btn-a:hover{background:var(--a-ink);}
+.btn-o{background:#fff;color:var(--ink);border-color:var(--border-2);}
+.btn-o:hover{background:var(--inset);}
+.btn-g{background:transparent;color:var(--muted);}
+.btn-g:hover{background:var(--inset);color:var(--ink);}
+.btn-sm{padding:6px 11px;font-size:12px;}
+.iconbtn{width:32px;height:32px;border:none;background:none;color:var(--muted);border-radius:8px;display:flex;align-items:center;justify-content:center;transition:background .12s,color .12s;}
+.iconbtn:hover{background:var(--inset);color:var(--ink);}
+.iconbtn svg{width:16px;height:16px;}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;background:#DCE1EE;color:var(--a-ink);}
+.av.s{width:30px;height:30px;font-size:11px;} .av.m{width:38px;height:38px;font-size:13px;} .av.xl{width:76px;height:76px;font-size:26px;}
+.fld{width:100%;font-family:var(--font-ui);font-size:13.5px;color:var(--ink);background:#fff;border:1px solid var(--border-2);border-radius:8px;padding:9px 11px;transition:border-color .15s,box-shadow .15s;}
+.fld::placeholder{color:var(--subtle);}
+.fld:focus{outline:none;border-color:var(--a);box-shadow:0 0 0 3px var(--a-tint);}
+.flabel{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:6px;display:block;}
+.fhelp{font-size:11px;color:var(--subtle);margin-top:5px;}
+/* toggle */
+.switch{position:relative;display:inline-flex;align-items:center;cursor:pointer;}
+.switch input{position:absolute;opacity:0;width:0;height:0;}
+.track{width:38px;height:22px;border-radius:999px;background:var(--border-2);padding:3px;transition:background .15s;}
+.knob{width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:var(--shadow-sm);transition:transform .15s;}
+.switch input:checked + .track{background:var(--a);}
+.switch input:checked + .track .knob{transform:translateX(16px);}
+.switch input:focus-visible + .track{outline:2.5px solid var(--a);outline-offset:2px;}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;}
+.badge.ok{color:var(--ok);background:var(--ok-tint);}
+
+/* ============================ 5 PROFILE HEADER (full) ============================ */
+.profile{}
+.cover{height:78px;background:var(--inset);border-bottom:1px solid var(--border);}
+.prow{display:flex;align-items:flex-end;gap:18px;padding:0 22px 16px;margin-top:-38px;}
+.prow .av{border:4px solid #fff;}
+.pmeta{flex:1;padding-bottom:2px;}
+.pmeta .nm{font-size:21px;font-weight:700;letter-spacing:-0.02em;}
+.pmeta .hd{font-size:13px;color:var(--muted);}
+.pmeta .row{display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;}
+.pmeta .row span{font-size:12px;color:var(--subtle);display:inline-flex;align-items:center;gap:5px;}
+.pmeta .row svg{width:13px;height:13px;}
+.pacts{display:flex;gap:9px;padding-bottom:4px;}
+.ptabs{display:flex;gap:0;padding:0 18px;border-top:1px solid var(--border);}
+.ptab{position:relative;border:none;background:none;font-size:13px;font-weight:600;color:var(--muted);padding:13px 4px;margin:0 12px;cursor:pointer;}
+.ptab.on{color:var(--ink);} .ptab.on::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2.5px;background:var(--a);border-radius:2px;}
+.ptab:hover:not(.on){color:var(--ink);}
+
+/* ============================ 1 SETTINGS ============================ */
+.settings{display:flex;flex-direction:column;height:438px;}
+.settings .scroll{flex:1;overflow:auto;padding:0;}
+.sgroup{padding:18px 20px;border-bottom:1px solid var(--border);}
+.sgroup h4{font-size:13px;font-weight:700;margin-bottom:3px;}
+.sgroup .gd{font-size:11.5px;color:var(--subtle);margin-bottom:14px;}
+.srow{display:flex;align-items:center;gap:14px;padding:9px 0;}
+.srow + .srow{border-top:1px solid var(--border);}
+.srow .si{flex:1;}
+.srow .si .t{font-size:12.5px;font-weight:600;}
+.srow .si .d{font-size:11px;color:var(--subtle);margin-top:1px;}
+.field-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.savebar{display:flex;align-items:center;gap:12px;padding:12px 20px;border-top:1px solid var(--border);background:var(--inset);}
+.savebar .msg{font-size:12px;color:var(--warn);font-weight:600;display:flex;align-items:center;gap:6px;}
+.savebar .msg svg{width:14px;height:14px;}
+.savebar .sp{flex:1;}
+
+/* ============================ 2 COMMENTS ============================ */
+.thread{padding:18px 20px;}
+.cmt{display:flex;gap:11px;margin-bottom:16px;}
+.cmt.reply{margin-left:30px;padding-left:14px;border-left:2px solid var(--border);}
+.cmt .body{flex:1;min-width:0;}
+.cmt .meta{display:flex;align-items:baseline;gap:8px;}
+.cmt .meta .nm{font-size:13px;font-weight:700;}
+.cmt .meta .tm{font-size:11px;color:var(--subtle);font-family:var(--font-mono);}
+.cmt .txt{font-size:13px;color:var(--ink);margin-top:3px;line-height:1.5;}
+.cmt .acts{display:flex;gap:14px;margin-top:7px;}
+.cmt .acts button{border:none;background:none;font-size:11.5px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:5px;}
+.cmt .acts button:hover{color:var(--ink);}
+.cmt .acts button.liked{color:var(--a);}
+.cmt .acts svg{width:13px;height:13px;}
+.composer{display:flex;gap:11px;align-items:center;padding-top:16px;border-top:1px solid var(--border);}
+.composer .fld{flex:1;}
+
+/* ============================ 3 CHECKOUT ============================ */
+.order{padding:18px 20px;}
+.order h4{font-size:14px;font-weight:700;margin-bottom:14px;}
+.li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.li .thumb{width:42px;height:42px;border-radius:8px;background:var(--inset);border:1px solid var(--border);flex-shrink:0;background-image:repeating-linear-gradient(45deg,rgba(28,29,32,0.05) 0 7px,transparent 7px 14px);}
+.li .nm{font-size:13px;font-weight:600;}
+.li .qty{font-size:11px;color:var(--subtle);}
+.li .pr{margin-left:auto;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;}
+.totals{padding:14px 0 4px;display:flex;flex-direction:column;gap:8px;}
+.tr{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);}
+.tr .v{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500;}
+.tr.grand{font-size:16px;font-weight:700;color:var(--ink);padding-top:11px;margin-top:4px;border-top:1px solid var(--border);}
+.tr.grand .v{font-weight:700;}
+.paybtn{width:100%;margin-top:14px;padding:12px;font-size:14px;}
+.secure{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:var(--subtle);margin-top:10px;}
+.secure svg{width:13px;height:13px;}
+
+/* ============================ 4 NOTIFICATIONS ============================ */
+.notifs .nh{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);}
+.notifs .nh .t{font-size:14px;font-weight:700;}
+.notifs .nh a{font-size:12px;font-weight:600;color:var(--a);cursor:pointer;}
+.ngroup{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);padding:11px 18px 5px;}
+.nitem{display:flex;gap:11px;padding:11px 18px;align-items:flex-start;position:relative;}
+.nitem.unread{background:#F4F6FC;}
+.nitem .dot{position:absolute;left:7px;top:18px;width:7px;height:7px;border-radius:50%;background:var(--a);}
+.nitem .nic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.nitem .ntx{font-size:12.5px;color:var(--ink);line-height:1.45;}
+.nitem.read .ntx{color:var(--muted);}
+.nitem .ntx b{font-weight:700;}
+.nitem .ntm{font-size:11px;color:var(--subtle);font-family:var(--font-mono);margin-top:2px;}
+
+/* ============================ 6 UPLOADER ============================ */
+.uploader{padding:18px 20px;}
+.dropzone{border:2px dashed var(--border-2);border-radius:11px;padding:26px 18px;text-align:center;background:var(--hint);transition:border-color .15s,background .15s;}
+.dropzone:hover{border-color:var(--a);background:var(--a-tint);}
+.dropzone .di{width:44px;height:44px;border-radius:11px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--a);margin:0 auto 12px;}
+.dropzone .di svg{width:21px;height:21px;}
+.dropzone .dt{font-size:13px;font-weight:600;}
+.dropzone .dt b{color:var(--a);text-decoration:underline;cursor:pointer;}
+.dropzone .ds{font-size:11.5px;color:var(--subtle);margin-top:4px;}
+.filerow{display:flex;align-items:center;gap:12px;margin-top:14px;padding:11px 12px;border:1px solid var(--border);border-radius:9px;}
+.filerow .fic{width:34px;height:34px;border-radius:8px;background:var(--inset);display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0;}
+.filerow .fic svg{width:17px;height:17px;}
+.filerow .fmid{flex:1;min-width:0;}
+.filerow .fn{font-size:12.5px;font-weight:600;display:flex;justify-content:space-between;gap:8px;}
+.filerow .fn .pct{font-family:var(--font-mono);font-size:11px;color:var(--muted);}
+.prog{height:6px;background:var(--inset);border-radius:999px;margin-top:7px;overflow:hidden;}
+.prog .bar{height:100%;background:var(--a);border-radius:999px;}
+.filerow.done .fic{background:var(--ok-tint);color:var(--ok);}
+.filerow .fsz{font-size:11px;color:var(--subtle);}
+
+/* ============================ 7 TOOLBAR (full) ============================ */
+.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;}
+.toolbar .count{font-size:13px;font-weight:600;color:var(--muted);}
+.toolbar .count b{color:var(--ink);}
+.search{display:flex;align-items:center;gap:8px;background:var(--inset);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--subtle);font-size:12.5px;width:190px;cursor:text;}
+.search svg{width:14px;height:14px;}
+.fchip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--ink);background:#fff;border:1px solid var(--border-2);border-radius:8px;padding:7px 10px;}
+.fchip svg{width:13px;height:13px;color:var(--muted);}
+.fchip.add{color:var(--muted);border-style:dashed;}
+.seg{display:inline-flex;background:var(--inset);border:1px solid var(--border);border-radius:8px;padding:3px;gap:2px;}
+.seg button{border:none;background:none;color:var(--muted);border-radius:6px;padding:6px;display:flex;transition:all .12s;}
+.seg button svg{width:16px;height:16px;}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:var(--shadow-sm);}
+
+/* ============================ 8 STATE TRIO (full) ============================ */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.state{background:var(--surface);border:1px solid var(--border);border-radius:13px;box-shadow:var(--shadow-sm);padding:28px 22px;min-height:230px;display:flex;flex-direction:column;}
+.state .stag{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);margin-bottom:16px;}
+.state .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.state .sic{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.state .sic svg{width:23px;height:23px;}
+.state .st{font-size:14px;font-weight:700;}
+.state .sd{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5;max-width:24ch;}
+.state .center .btn{margin-top:16px;}
+.skrow{display:flex;align-items:center;gap:11px;margin-bottom:14px;}
+.skc{width:34px;height:34px;border-radius:50%;flex-shrink:0;}
+.skl{flex:1;display:flex;flex-direction:column;gap:7px;}
+.sk{background:linear-gradient(90deg,#ECEBE6 25%,#F5F4F0 37%,#ECEBE6 63%);background-size:400% 100%;animation:sh 1.4s ease infinite;border-radius:6px;height:9px;}
+.sk.c{border-radius:50%;height:34px;width:34px;}
+.sk.w1{width:60%;} .sk.w2{width:90%;}
+@keyframes sh{0%{background-position:100% 0}100%{background-position:0 0}}
+
+@media(max-width:880px){.gallery{grid-template-columns:1fr;}.trio{grid-template-columns:1fr;}.spec.full{grid-column:auto;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+  <symbol id="i-reply" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 13V3"/><path d="m7 8 5-5 5 5"/><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v5h5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></symbol>
+  <symbol id="i-chev-d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-sort" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5h10"/><path d="M11 9h7"/><path d="M11 13h4"/><path d="m3 17 3 3 3-3"/><path d="M6 18V4"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h.01"/><path d="M3 12h.01"/><path d="M3 19h.01"/><path d="M8 5h13"/><path d="M8 12h13"/><path d="M8 19h13"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <header class="head">
+    <div class="eyebrow">Specimen · compositions</div>
+    <h1>Usage examples — molecules &amp; organisms</h1>
+    <p>The atoms assembled into the patterns they actually ship as: a settings panel, a comment thread, a checkout, notifications, a profile header, an uploader, a toolbar, and the empty / loading / error states every list needs.</p>
+  </header>
+
+  <div class="gallery">
+
+    <!-- 5 PROFILE HEADER -->
+    <div class="spec full">
+      <div class="lab"><div class="nm"><span>01</span>User profile header</div><div class="uw">avatar · meta · actions · tabs</div></div>
+      <div class="panel profile">
+        <div class="cover"></div>
+        <div class="prow">
+          <span class="av xl">NB</span>
+          <div class="pmeta">
+            <div class="nm">Noa Bergström</div>
+            <div class="hd">@noa · Product Designer</div>
+            <div class="row"><span><svg><use href="#i-pin"/></svg>Stockholm, SE</span><span><svg><use href="#i-cal"/></svg>Joined Mar 2024</span><span><svg><use href="#i-link"/></svg>noa.design</span></div>
+          </div>
+          <div class="pacts"><button class="btn btn-a">Follow</button><button class="btn btn-o">Message</button></div>
+        </div>
+        <div class="ptabs" data-tabs><button class="ptab on">Overview</button><button class="ptab">Projects</button><button class="ptab">Activity</button><button class="ptab">About</button></div>
+      </div>
+    </div>
+
+    <!-- 1 SETTINGS -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>02</span>Settings panel</div><div class="uw">sectioned form + save bar</div></div>
+      <div class="panel settings">
+        <div class="scroll">
+          <div class="sgroup">
+            <h4>Profile</h4>
+            <div class="gd">How you appear across the workspace.</div>
+            <div class="field-pair">
+              <div><label class="flabel">Full name</label><input class="fld" value="Noa Bergström"></div>
+              <div><label class="flabel">Display name</label><input class="fld" value="noa"></div>
+            </div>
+            <div style="margin-top:12px"><label class="flabel">Email</label><input class="fld" value="noa@northwind.co"><div class="fhelp">Used for sign-in and notifications.</div></div>
+          </div>
+          <div class="sgroup">
+            <h4>Notifications</h4>
+            <div class="gd">Choose what reaches your inbox.</div>
+            <div class="srow"><div class="si"><div class="t">Product updates</div><div class="d">News about features and releases.</div></div><label class="switch"><input type="checkbox" checked><span class="track"><span class="knob"></span></span></label></div>
+            <div class="srow"><div class="si"><div class="t">Mentions</div><div class="d">When someone @mentions you.</div></div><label class="switch"><input type="checkbox" checked><span class="track"><span class="knob"></span></span></label></div>
+            <div class="srow"><div class="si"><div class="t">Weekly digest</div><div class="d">A Monday summary of activity.</div></div><label class="switch"><input type="checkbox"><span class="track"><span class="knob"></span></span></label></div>
+          </div>
+        </div>
+        <div class="savebar"><span class="msg"><svg><use href="#i-alert"/></svg>Unsaved changes</span><span class="sp"></span><button class="btn btn-g btn-sm">Cancel</button><button class="btn btn-a btn-sm">Save changes</button></div>
+      </div>
+    </div>
+
+    <!-- 2 COMMENTS -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>03</span>Comment thread</div><div class="uw">nested reply + composer</div></div>
+      <div class="panel">
+        <div class="thread">
+          <div class="cmt">
+            <span class="av m" style="background:#D8E4DC;color:#235838">AL</span>
+            <div class="body">
+              <div class="meta"><span class="nm">Ava Lindqvist</span><span class="tm">2h ago</span></div>
+              <div class="txt">The new spacing scale feels much calmer — nice work. One thought: should the tight rows still use 8px?</div>
+              <div class="acts"><button class="liked"><svg><use href="#i-heart"/></svg>4</button><button><svg><use href="#i-reply"/></svg>Reply</button></div>
+            </div>
+          </div>
+          <div class="cmt reply">
+            <span class="av m">NB</span>
+            <div class="body">
+              <div class="meta"><span class="nm">Noa Bergström</span><span class="tm">1h ago</span></div>
+              <div class="txt">Good catch — dense tables stay at 8, everything else moves to the new scale.</div>
+              <div class="acts"><button><svg><use href="#i-heart"/></svg>2</button><button><svg><use href="#i-reply"/></svg>Reply</button></div>
+            </div>
+          </div>
+          <div class="composer"><span class="av m" style="background:#E5E0D4;color:#7A5E12">ME</span><input class="fld" placeholder="Add a comment…"><button class="btn btn-a btn-sm"><svg><use href="#i-send"/></svg>Send</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 CHECKOUT -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>04</span>Checkout / order summary</div><div class="uw">line items · totals · pay</div></div>
+      <div class="panel">
+        <div class="order">
+          <h4>Order summary</h4>
+          <div class="li"><span class="thumb"></span><div><div class="nm">Linen Throw Blanket</div><div class="qty">Qty 1 · Stone</div></div><span class="pr tnum">$89.00</span></div>
+          <div class="li"><span class="thumb"></span><div><div class="nm">Ceramic Mug Set</div><div class="qty">Qty 2 · Clay</div></div><span class="pr tnum">$48.00</span></div>
+          <div class="totals">
+            <div class="tr">Subtotal<span class="v tnum">$137.00</span></div>
+            <div class="tr">Shipping<span class="v tnum">$6.00</span></div>
+            <div class="tr">Tax<span class="v tnum">$11.44</span></div>
+            <div class="tr grand">Total<span class="v tnum">$154.44</span></div>
+          </div>
+          <button class="btn btn-a paybtn"><svg><use href="#i-cart"/></svg>Pay $154.44</button>
+          <div class="secure"><svg><use href="#i-lock"/></svg>Secure checkout · encrypted</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 NOTIFICATIONS -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>05</span>Notification list</div><div class="uw">read vs unread · grouped</div></div>
+      <div class="panel notifs">
+        <div class="nh"><span class="t">Notifications</span><a>Mark all read</a></div>
+        <div class="ngroup">Today</div>
+        <div class="nitem unread"><span class="dot"></span><span class="nic" style="background:var(--a-tint);color:var(--a)"><svg style="width:16px;height:16px"><use href="#i-reply"/></svg></span><div><div class="ntx"><b>Ava Lindqvist</b> replied to your comment in <b>Aurora Mobile</b>.</div><div class="ntm">12 min ago</div></div></div>
+        <div class="nitem unread"><span class="dot"></span><span class="nic" style="background:var(--ok-tint);color:var(--ok)"><svg style="width:16px;height:16px"><use href="#i-check"/></svg></span><div><div class="ntx"><b>Deploy</b> to production succeeded.</div><div class="ntm">1 hour ago</div></div></div>
+        <div class="ngroup">Earlier</div>
+        <div class="nitem read"><span class="nic" style="background:var(--inset);color:var(--muted)"><svg style="width:16px;height:16px"><use href="#i-bell"/></svg></span><div><div class="ntx"><b>Reza Pour</b> invited you to <b>Project Meridian</b>.</div><div class="ntm">Yesterday</div></div></div>
+        <div class="nitem read"><span class="nic" style="background:var(--inset);color:var(--muted)"><svg style="width:16px;height:16px"><use href="#i-up"/></svg></span><div><div class="ntx">Your weekly report is ready to view.</div><div class="ntm">2 days ago</div></div></div>
+      </div>
+    </div>
+
+    <!-- 6 UPLOADER -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>06</span>File uploader</div><div class="uw">dropzone + progress</div></div>
+      <div class="panel">
+        <div class="uploader">
+          <div class="dropzone"><div class="di"><svg><use href="#i-up"/></svg></div><div class="dt">Drop files here or <b>browse</b></div><div class="ds">PNG, JPG or PDF · up to 10 MB</div></div>
+          <div class="filerow"><span class="fic"><svg><use href="#i-file"/></svg></span><div class="fmid"><div class="fn">brand-guidelines.pdf<span class="pct">68%</span></div><div class="prog"><div class="bar" style="width:68%"></div></div></div><button class="iconbtn" aria-label="Cancel upload"><svg><use href="#i-x"/></svg></button></div>
+          <div class="filerow done"><span class="fic"><svg><use href="#i-check"/></svg></span><div class="fmid"><div class="fn">cover-photo.jpg</div><div class="fsz">2.4 MB · Uploaded</div></div><button class="iconbtn" aria-label="Remove file"><svg><use href="#i-x"/></svg></button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 TOOLBAR -->
+    <div class="spec full">
+      <div class="lab"><div class="nm"><span>07</span>Filter / toolbar bar</div><div class="uw">search · chips · sort · view toggle</div></div>
+      <div class="panel">
+        <div class="toolbar">
+          <span class="count"><b>248</b> customers</span>
+          <span style="flex:1"></span>
+          <div class="search"><svg><use href="#i-search"/></svg>Search…</div>
+          <button class="fchip"><svg><use href="#i-filter"/></svg>Status: Active<svg><use href="#i-chev-d"/></svg></button>
+          <button class="fchip">Plan<svg><use href="#i-chev-d"/></svg></button>
+          <button class="fchip add">＋ Filter</button>
+          <button class="fchip"><svg><use href="#i-sort"/></svg>Sort<svg><use href="#i-chev-d"/></svg></button>
+          <div class="seg" data-seg><button class="on" aria-label="List view"><svg><use href="#i-list"/></svg></button><button aria-label="Grid view"><svg><use href="#i-grid"/></svg></button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8 STATE TRIO -->
+    <div class="spec full">
+      <div class="lab"><div class="nm"><span>08</span>Empty · loading · error</div><div class="uw">the three states every list needs</div></div>
+      <div class="trio">
+        <div class="state">
+          <div class="stag">Empty</div>
+          <div class="center">
+            <div class="sic" style="background:var(--inset);color:var(--muted)"><svg><use href="#i-inbox"/></svg></div>
+            <div class="st">No customers yet</div>
+            <div class="sd">New customers will appear here once they sign up.</div>
+            <button class="btn btn-a btn-sm">Invite customer</button>
+          </div>
+        </div>
+        <div class="state">
+          <div class="stag">Loading</div>
+          <div style="flex:1">
+            <div class="skrow"><span class="sk c"></span><div class="skl"><span class="sk w1"></span><span class="sk w2"></span></div></div>
+            <div class="skrow"><span class="sk c"></span><div class="skl"><span class="sk w1"></span><span class="sk w2"></span></div></div>
+            <div class="skrow"><span class="sk c"></span><div class="skl"><span class="sk w1"></span><span class="sk w2"></span></div></div>
+            <div class="skrow" style="margin-bottom:0"><span class="sk c"></span><div class="skl"><span class="sk w1"></span><span class="sk w2"></span></div></div>
+          </div>
+        </div>
+        <div class="state">
+          <div class="stag">Error</div>
+          <div class="center">
+            <div class="sic" style="background:var(--bad-tint);color:var(--bad)"><svg><use href="#i-alert"/></svg></div>
+            <div class="st">Couldn't load customers</div>
+            <div class="sd">Something went wrong on our end. Check your connection and try again.</div>
+            <button class="btn btn-o btn-sm"><svg><use href="#i-refresh"/></svg>Retry</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('[data-tabs],[data-seg]').forEach(function(g){
+  g.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b)return;
+    g.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adding personality to UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   ADDING PERSONALITY TO UI — an illustrated guide of before/after pairs.
+   Warm paper, one clay accent. The page practises what it preaches.
+   ============================================================================ */
+:root{
+  --paper:#F3F0E9; --surface:#FFFFFF; --inset:#F6F3EC;
+  --border:#E4DFD3; --border-2:#D6CFBD;
+  --ink:#211E1A; --muted:#5E5950; --subtle:#8C867A;
+  --accent:#BD5234; --accent-ink:#9E4327; --accent-tint:rgba(189,82,52,0.10);
+  --sage:#5C7A55; --gold:#B5872A; --slate:#456074;
+  --font-display:'Bricolage Grotesque','Hanken Grotesk',sans-serif;
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--paper);color:var(--ink);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:5px;}
+
+.wrap{max-width:1060px;margin:0 auto;padding:60px 36px 100px;}
+.eyebrow{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent);margin-bottom:18px;}
+.masthead{border-bottom:1.5px solid var(--ink);padding-bottom:32px;margin-bottom:14px;}
+.masthead h1{font-family:var(--font-display);font-weight:800;font-size:clamp(40px,7.5vw,82px);line-height:0.95;letter-spacing:-0.035em;max-width:14ch;}
+.masthead h1 em{font-style:normal;color:var(--accent);}
+.masthead p{font-size:17px;color:var(--muted);max-width:58ch;margin-top:22px;line-height:1.55;}
+
+/* technique block */
+.tech{padding:44px 0;border-bottom:1px solid var(--border);}
+.tech-head{display:flex;align-items:baseline;gap:16px;margin-bottom:22px;}
+.tnum{font-family:var(--font-mono);font-size:13px;color:var(--accent);font-weight:500;padding-top:5px;flex-shrink:0;}
+.tech-head h2{font-family:var(--font-display);font-weight:700;font-size:25px;letter-spacing:-0.02em;line-height:1.1;}
+.note{font-size:13.5px;color:var(--muted);margin-top:6px;}
+.note b{color:var(--ink);font-weight:600;}
+
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.demo{position:relative;border:1px solid var(--border);border-radius:12px;background:var(--surface);overflow:hidden;min-height:172px;display:flex;flex-direction:column;}
+.dtag{position:absolute;top:11px;left:12px;font-family:var(--font-mono);font-size:9.5px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--subtle);background:rgba(255,255,255,0.82);border:1px solid var(--border);padding:2px 7px;border-radius:5px;z-index:3;}
+.dtag.on{color:var(--accent);border-color:var(--accent-tint);background:var(--accent-tint);}
+.stage{flex:1;display:flex;align-items:center;justify-content:center;padding:34px 26px 26px;}
+
+/* shared snippet atoms */
+.mini-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;width:100%;max-width:260px;}
+.mini-h{font-weight:700;font-size:15px;letter-spacing:-0.01em;}
+.mini-p{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.5;}
+.btn{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;padding:8px 13px;border-radius:8px;border:1px solid transparent;cursor:pointer;}
+.btn-plain{background:#6E6A62;color:#fff;}
+.btn-accent{background:var(--accent);color:#fff;}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;}
+.eyebrow-sm{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);}
+
+/* 1 grain */
+.grain::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");}
+.grain .stage{background:#FBF8F2;}
+
+/* 2 patterns */
+.dotgrid .stage{background-image:radial-gradient(rgba(33,30,26,0.13) 1.1px,transparent 1.1px);background-size:14px 14px;background-position:center;}
+.flatbg .stage{background:#fff;}
+
+/* 3 display type */
+.head-plain{font-family:var(--font-ui);font-weight:700;font-size:22px;letter-spacing:-0.01em;line-height:1.1;}
+.head-disp{font-family:var(--font-display);font-weight:800;font-size:27px;letter-spacing:-0.03em;line-height:1.02;}
+.head-disp em{font-style:normal;color:var(--accent);}
+
+/* 5 edge treatments */
+.card-flat{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;width:100%;max-width:250px;}
+.card-edge{background:#fff;border:1.5px solid var(--ink);border-radius:4px;padding:16px;width:100%;max-width:250px;box-shadow:6px 6px 0 var(--accent);position:relative;}
+
+/* 6 mark */
+.lock{display:flex;align-items:center;gap:11px;}
+.mark-plain{width:34px;height:34px;border-radius:7px;background:#CFCABE;}
+.mark-sig{width:36px;height:36px;position:relative;flex-shrink:0;}
+.mark-sig .sq{position:absolute;width:22px;height:22px;border-radius:5px;background:var(--accent);left:0;top:7px;}
+.mark-sig .ci{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--ink);right:0;top:0;mix-blend-mode:multiply;}
+.word-plain{font-family:var(--font-ui);font-weight:700;font-size:17px;letter-spacing:-0.01em;}
+.word-sig{font-family:var(--font-display);font-weight:800;font-size:19px;letter-spacing:-0.03em;}
+
+/* 7 whitespace + asymmetry */
+.blk-cramped{text-align:center;}
+.blk-cramped .h{font-weight:700;font-size:15px;}
+.blk-cramped .p{font-size:12px;color:var(--muted);margin-top:4px;}
+.blk-air{align-self:stretch;width:100%;padding-left:6px;}
+.blk-air .e{margin-bottom:14px;}
+.blk-air .h{font-family:var(--font-display);font-weight:700;font-size:21px;letter-spacing:-0.02em;line-height:1.12;max-width:14ch;}
+.blk-air .p{font-size:12.5px;color:var(--muted);margin-top:12px;max-width:30ch;line-height:1.6;}
+
+/* 8 micro-detail */
+.md-plain .lab{font-size:11px;color:var(--muted);}
+.md-plain .h{font-weight:700;font-size:18px;margin-top:3px;}
+.md-plain .m{font-size:11.5px;color:var(--muted);margin-top:5px;}
+.md-rich{display:flex;flex-direction:column;align-items:flex-start;}
+.md-rich .e{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);display:inline-flex;align-items:center;gap:6px;}
+.md-rich .e .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);}
+.md-rich .h{font-family:var(--font-display);font-weight:700;font-size:20px;margin-top:9px;display:inline-block;background-image:linear-gradient(var(--accent),var(--accent));background-size:100% 2px;background-repeat:no-repeat;background-position:0 100%;padding-bottom:3px;}
+.md-rich .m{font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-top:9px;}
+
+.foot{margin-top:48px;font-family:var(--font-mono);font-size:11px;color:var(--subtle);text-transform:uppercase;letter-spacing:.06em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+@media(max-width:680px){.pair{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">A short illustrated guide</div>
+    <h1>Adding <em>personality</em> to UI</h1>
+    <p>Personality isn't decoration bolted on at the end — it's a handful of small, deliberate moves. Here are eight, each shown plain versus expressive, with a note on when it earns its place.</p>
+  </header>
+
+  <!-- 1 -->
+  <section class="tech">
+    <div class="tech-head"><span class="tnum">01</span><div><h2>Subtle surface texture</h2><div class="note"><b>Use when</b> — flat digital surfaces feel sterile; a fine grain warms them without noise.</div></div></div>
+    <div class="pair">
+      <div class="demo flatbg"><span class="dtag">Plain</span><div class="stage"><div class="mini-card"><div class="mini-h">Studio plan</div><div class="mini-p">Everything your team needs to ship, in one workspace.</div></div></div></div>
+      <div class="demo grain"><span class="dtag on">With grain</span><div class="stage"><div class="mini-card"><div class="mini-h">Studio plan</div><div class="mini-p">Everything your team needs to ship, in one workspace.</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="tech">
+    <div class="tech-head"><span class="tnum">02</span><div><h2>A background pattern</h2><div class="note"><b>Use when</b> — large empty grounds need quiet structure; a dot-grid reads as “considered,” never busy.</div></div></div>
+    <div class="pair">
+      <div class="demo flatbg"><span class="dtag">Plain</span><div class="stage"><div class="mini-card"><div class="eyebrow-sm">Canvas</div><div class="mini-h" style="margin-top:6px">Empty board</div></div></div></div>
+      <div class="demo dotgrid"><span class="dtag on">Dot-grid</span><div class="stage"><div class="mini-card"><div class="eyebrow-sm">Canvas</div><div class="mini-h" style="margin-top:6px">Empty board</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="tech">
+    <div class="tech-head"><span class="tnum">03</span><div><h2>An expressive display face</h2><div class="note"><b>Use when</b> — headings carry the brand; pick a characterful face for titles, keep body in a neutral workhorse.</div></div></div>
+    <div class="pair">
+      <div class="demo"><span class="dtag">Plain</span><div class="stage"><div style="max-width:260px"><div class="eyebrow-sm">Changelog</div><div class="head-plain" style="margin-top:8px">Version 2.4 is here</div></div></div></div>
+      <div class="demo"><span class="dtag on">Display type</span><div class="stage"><div style="max-width:260px"><div class="eyebrow-sm">Changelog</div><div class="head-disp" style="margin-top:8px">Version <em>2.4</em> is here</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="tech">
+    <div class="tech-head"><span class="tnum">04</span><div><h2>A confident accent + color story</h2><div class="note"><b>Use when</b> — all-gray UIs feel timid; commit to one accent and a few supporting tones used sparingly.</div></div></div>
+    <div class="pair">
+      <div class="demo"><span class="dtag">Plain</span><div class="stage"><div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start"><div style="display:flex;gap:7px"><span class="chip" style="background:#ECEAE3;color:#6E6A62">Design</span><span class="chip" style="background:#ECEAE3;color:#6E6A62">Shipped</span><span class="chip" style="background:#ECEAE3;color:#6E6A62">Beta</span></div><button class="btn btn-plain">Get started</button></div></div></div>
+      <div class="demo"><span class="dtag on">Accent + story</span><div class="stage"><div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start"><div style="display:flex;gap:7px"><span class="chip" style="background:var(--accent-tint);color:var(--accent-ink)">Design</span><span class="chip" style="background:rgba(92,122,85,0.14);color:var(--sage)">Shipped</span><span class="chip" style="background:rgba(181,135,42,0.16);color:var(--gold)">Beta</span></div><button class="btn btn-accent">Get started</button></div></div></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="tech">
+    <div class="tech-head"><span class="tnum">05</span><div><h2>A signature edge treatment</h2><div class="note"><b>Use when</b> — soft rounded cards blur together; a hard rule, tight radius and offset shadow give a memorable silhouette.</div></div></div>
+    <div class="pair">
+      <div class="demo"><span class="dtag">Plain</span><div class="stage"><div class="card-flat"><div class="mini-h">Featured</div><div class="mini-p">A standard rounded card with a hairline border.</div></div></div></div>
+      <div class="demo"><span class="dtag on">Signature edge</span><div class="stage"><div class="card-edge"><div class="mini-h">Featured</div><div class="mini-p">Square corners, an inked border and a hard offset shadow.</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="tech">
+    <div class="tech-head"><span class="tnum">06</span><div><h2>A distinctive mark</h2><div class="note"><b>Use when</b> — a generic blob says nothing; a simple geometric mark + display wordmark builds recognition.</div></div></div>
+    <div class="pair">
+      <div class="demo"><span class="dtag">Plain</span><div class="stage"><div class="lock"><span class="mark-plain"></span><span class="word-plain">Northwind</span></div></div></div>
+      <div class="demo"><span class="dtag on">Signature mark</span><div class="stage"><div class="lock"><span class="mark-sig"><span class="sq"></span><span class="ci"></span></span><span class="word-sig">Northwind</span></div></div></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="tech">
+    <div class="tech-head"><span class="tnum">07</span><div><h2>Editorial whitespace + asymmetry</h2><div class="note"><b>Use when</b> — centered, cramped blocks feel default; generous space and an off-axis layout feel intentional.</div></div></div>
+    <div class="pair">
+      <div class="demo"><span class="dtag">Plain</span><div class="stage"><div class="blk-cramped"><div class="h">Built for focus</div><div class="p">Fewer settings, clearer defaults.</div></div></div></div>
+      <div class="demo"><span class="dtag on">Editorial</span><div class="stage" style="justify-content:flex-start"><div class="blk-air"><div class="e eyebrow-sm">Why teams switch</div><div class="h">Built for focus</div><div class="p">Fewer settings, clearer defaults — and room to breathe between them.</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="tech" style="border-bottom:none;">
+    <div class="tech-head"><span class="tnum">08</span><div><h2>One tasteful micro-detail</h2><div class="note"><b>Use when</b> — a layout is correct but flat; a single accent underline, dot or line of mono metadata adds craft.</div></div></div>
+    <div class="pair">
+      <div class="demo"><span class="dtag">Plain</span><div class="stage"><div class="md-plain"><div class="lab">Article</div><div class="h">The spacing scale</div><div class="m">By Noa · 6 min read</div></div></div></div>
+      <div class="demo"><span class="dtag on">Micro-detail</span><div class="stage"><div class="md-rich"><div class="e"><span class="dot"></span>Article</div><div class="h">The spacing scale</div><div class="m">BY NOA · 6 MIN READ</div></div></div></div>
+    </div>
+  </section>
+
+  <footer class="foot"><span>Adding personality to UI</span><span>Eight techniques · used with restraint</span></footer>
+
+</div>
+</body>
+</html>

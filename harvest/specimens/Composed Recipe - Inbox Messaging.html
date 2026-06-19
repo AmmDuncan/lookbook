@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Inbox / messaging (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Inbox / messaging · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin (off-white page, white cards, hairline borders, slightly
+   rounded corners, one blue accent, system sans + tabular figures). Only
+   composition + interaction varies. WCAG AA throughout.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF; --bad:#C0392B; --bad-t:#F9E8E5;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input,textarea{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+
+.btn-pri{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:9px 15px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-sec{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+.iconbtn{width:34px;height:34px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;color:var(--mut);}
+.iconbtn:hover{background:var(--inset);color:var(--ink);} .iconbtn .ico{width:16px;height:16px;}
+
+/* badges/pills — always hug content */
+.badge{display:inline-flex;align-items:center;align-self:flex-start;width:fit-content;gap:5px;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:999px;}
+.badge.acc{color:var(--accent-ink);background:var(--accent-tint);}
+.badge.ok{color:var(--ok);background:var(--ok-t);}
+.badge.warn{color:var(--warn);background:var(--warn-t);}
+.count{display:inline-flex;align-items:center;justify-content:center;min-width:19px;height:18px;padding:0 6px;border-radius:999px;background:var(--accent);color:#fff;font-size:10.5px;font-weight:700;font-variant-numeric:tabular-nums;}
+.count.mut{background:var(--inset);color:var(--mut);}
+
+/* avatars */
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+.av.a1{background:var(--accent-tint);color:var(--accent-ink);} .av.a2{background:var(--ok-t);color:var(--ok);} .av.a3{background:var(--warn-t);color:var(--warn);} .av.a4{background:#ECE9FA;color:#5B4BC4;} .av.a5{background:#E2F1F1;color:#0F6E73;}
+
+/* search */
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:8px 11px;color:var(--faint);}
+.search .ico{width:15px;height:15px;} .search input{border:none;outline:none;background:none;font-size:13px;color:var(--ink);width:100%;}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4Z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2 9 9H2l5 4-2 7 6-4 6 4-2-7 5-4h-7z"/></symbol>
+  <symbol id="i-draft" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="5" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8M10 12h4"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-reply" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17 4 12l5-5"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></symbol>
+  <symbol id="i-forward" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 17 5-5-5-5"/><path d="M4 18v-2a4 4 0 0 1 4-4h12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></symbol>
+  <symbol id="i-paper" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></symbol>
+  <symbol id="i-kebab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></symbol>
+  <symbol id="i-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></symbol>
+  <symbol id="i-resolve" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-at" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Inbox / messaging · one skin, five compositions</div>
+    <h1>Same skin. Five ways to read a message.</h1>
+    <p>One conversation — the renewals thread between the team and Northwind — composed five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white surfaces with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. What changes is purely <em>composition and interaction</em>. The skin is the paint, the composition is the skeleton.</p>
+  </header>
+
+  <!-- ============== 1 · THREE-PANE EMAIL ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Three-pane email</div>
+      <p class="plate-recipe"><b>PULLS</b> — left folder/label rail (Inbox, Sent… with unread counts) + middle message list (sender, subject, preview, time, unread dot) + right reading pane with an open message and reply bar. &nbsp;<b>WHY</b> — the classic email layout: folders scope, the list scans, the pane reads — three densities side by side so you triage and read without navigating.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:188px 300px 1fr;min-height:520px">
+      <aside style="background:var(--surface);border-right:1px solid var(--line);padding:16px 12px;display:flex;flex-direction:column">
+        <button class="btn-pri" style="justify-content:center;margin:2px 4px 14px"><svg class="ico"><use href="#i-plus"/></svg>Compose</button>
+        <nav style="display:flex;flex-direction:column;gap:1px">
+          <a href="#" class="mnav on"><svg class="ico"><use href="#i-inbox"/></svg>Inbox<span class="count">8</span></a>
+          <a href="#" class="mnav"><svg class="ico"><use href="#i-star"/></svg>Starred</a>
+          <a href="#" class="mnav"><svg class="ico"><use href="#i-send"/></svg>Sent</a>
+          <a href="#" class="mnav"><svg class="ico"><use href="#i-draft"/></svg>Drafts<span class="count mut">2</span></a>
+          <a href="#" class="mnav"><svg class="ico"><use href="#i-archive"/></svg>Archive</a>
+        </nav>
+      </aside>
+      <div style="border-right:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;min-height:0">
+        <div style="padding:12px 14px;border-bottom:1px solid var(--line)"><div class="search"><svg class="ico"><use href="#i-search"/></svg><input placeholder="Search mail"></div></div>
+        <div style="overflow:auto">
+          <div class="mlist on"><span class="dotcol"><span class="udot"></span></span><div class="mbody"><div class="mtop"><span class="from">Dana Kessler</span><span class="when">9:41</span></div><div class="subj">Re: Northwind renewal agreement</div><div class="prev">Confirmed — the renewal is signed and countersigned. Attaching the final…</div></div></div>
+          <div class="mlist"><span class="dotcol"><span class="udot"></span></span><div class="mbody"><div class="mtop"><span class="from">Reza Pour</span><span class="when">8:20</span></div><div class="subj">Renewal playbook — v2 draft</div><div class="prev">Pushed a second draft with the new escalation path and discount…</div></div></div>
+          <div class="mlist read"><span class="dotcol"></span><div class="mbody"><div class="mtop"><span class="from">Finance</span><span class="when">Jun 12</span></div><div class="subj">Q3 renewal forecast ready</div><div class="prev">The Q3 renewal forecast is ready for review — $1.42M projected…</div></div></div>
+          <div class="mlist read"><span class="dotcol"></span><div class="mbody"><div class="mtop"><span class="from">Atlas Group</span><span class="when">Jun 10</span></div><div class="subj">Question about our renewal terms</div><div class="prev">Hi — could you clarify the proration if we add seats mid-cycle…</div></div></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;min-height:0">
+        <div style="padding:16px 22px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:12px">
+          <div style="flex:1"><div style="font-size:17px;font-weight:700;letter-spacing:-0.01em">Re: Northwind renewal agreement</div><div style="display:flex;align-items:center;gap:9px;margin-top:8px"><span class="av a1" style="width:30px;height:30px;font-size:11px">DK</span><div><div style="font-size:12.5px;font-weight:600">Dana Kessler <span style="color:var(--faint);font-weight:500">&lt;dana@harbor.app&gt;</span></div><div style="font-size:11.5px;color:var(--faint)">to me, Reza · 9:41 AM</div></div></div></div>
+          <div style="display:flex;gap:4px"><button class="iconbtn"><svg class="ico"><use href="#i-reply"/></svg></button><button class="iconbtn"><svg class="ico"><use href="#i-archive"/></svg></button><button class="iconbtn"><svg class="ico"><use href="#i-kebab"/></svg></button></div>
+        </div>
+        <div style="padding:20px 22px;overflow:auto;flex:1;font-size:13.5px;line-height:1.65;color:var(--mut)">
+          <p>Confirmed — the renewal is signed and countersigned. Attaching the final PDF for your records.</p>
+          <p style="margin-top:12px">The Scale plan renews at $1,920/yr plus the 8 additional seats. Auto-renew stays on with a 30-day cancellation window. Let me know if finance needs anything else before close.</p>
+          <p style="margin-top:12px">Thanks,<br>Dana</p>
+          <div style="display:flex;align-items:center;gap:9px;margin-top:16px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;width:fit-content"><svg class="ico" style="width:16px;height:16px;color:var(--bad)"><use href="#i-paper"/></svg><span style="font-size:12.5px;font-weight:600;color:var(--ink)">renewal-northwind.pdf</span><span style="font-size:11px;color:var(--faint)">240 KB</span></div>
+        </div>
+        <div style="padding:12px 22px;border-top:1px solid var(--line);display:flex;gap:9px"><button class="btn-sec"><svg class="ico"><use href="#i-reply"/></svg>Reply</button><button class="btn-sec"><svg class="ico"><use href="#i-forward"/></svg>Forward</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · TWO-PANE CHAT / DM ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Two-pane chat / DM</div>
+      <p class="plate-recipe"><b>PULLS</b> — left conversation list (avatar + name + last-message preview + time) + right open thread (message bubbles left/right, a day divider) + a composer at the bottom. &nbsp;<b>WHY</b> — for real-time messaging: bubbles convey turn-taking and direction at a glance, and a persistent composer keeps the conversation moving.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:300px 1fr;min-height:520px">
+      <div style="border-right:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;min-height:0">
+        <div style="padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between"><div style="font-size:15px;font-weight:700">Messages</div><button class="iconbtn" style="width:30px;height:30px"><svg class="ico"><use href="#i-draft"/></svg></button></div>
+        <div style="overflow:auto">
+          <div class="conv on"><span class="av a1" style="width:38px;height:38px;font-size:13px">DK</span><div class="cbody"><div class="ctop"><span class="cn">Dana Kessler</span><span class="cw">9:41</span></div><div class="cp">Confirmed — the renewal is signed…</div></div></div>
+          <div class="conv"><span class="av a2" style="width:38px;height:38px;font-size:13px">RP</span><div class="cbody"><div class="ctop"><span class="cn">Reza Pour</span><span class="cw">8:20</span></div><div class="cp">Pushed a second draft of the playbook.</div></div><span class="count">2</span></div>
+          <div class="conv"><span class="av a4" style="width:38px;height:38px;font-size:13px">NB</span><div class="cbody"><div class="ctop"><span class="cn">Noa Bergström</span><span class="cw">Yest</span></div><div class="cp">Sounds good, thanks!</div></div></div>
+          <div class="conv"><span class="av a5" style="width:38px;height:38px;font-size:13px">JC</span><div class="cbody"><div class="ctop"><span class="cn">Jerome Castillo</span><span class="cw">Mon</span></div><div class="cp">Let's sync on the forecast.</div></div></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;min-height:0">
+        <div style="padding:13px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:11px"><span class="av a1" style="width:34px;height:34px;font-size:12px">DK</span><div style="flex:1"><div style="font-size:14px;font-weight:700">Dana Kessler</div><div style="font-size:11.5px;color:var(--ok)">● Active now</div></div><button class="iconbtn"><svg class="ico"><use href="#i-kebab"/></svg></button></div>
+        <div style="flex:1;overflow:auto;padding:20px;display:flex;flex-direction:column;gap:10px;background:var(--page)">
+          <div class="daydiv"><span>Today</span></div>
+          <div class="bub them"><div class="bx">Morning! Did the Northwind renewal come back signed?</div><div class="bt">9:32 AM</div></div>
+          <div class="bub me"><div class="bx">Just checking now — give me a sec.</div><div class="bt">9:38 AM</div></div>
+          <div class="bub them"><div class="bx">Confirmed — signed and countersigned. I'll attach the final PDF in the email thread.</div><div class="bt">9:41 AM</div></div>
+          <div class="bub me"><div class="bx">Perfect, thank you! 🎉</div><div class="bt">9:42 AM</div></div>
+        </div>
+        <div style="padding:12px 16px;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px">
+          <div style="flex:1;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line-2);border-radius:999px;padding:9px 14px"><input placeholder="Message Dana…" style="flex:1;border:none;outline:none;background:none;font-size:13.5px;color:var(--ink)"><button style="color:var(--faint)"><svg class="ico" style="width:17px;height:17px"><use href="#i-emoji"/></svg></button></div>
+          <button class="btn-pri" style="width:40px;height:40px;border-radius:50%;justify-content:center;padding:0"><svg class="ico"><use href="#i-send"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · UNIFIED INBOX + FILTERS ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Unified inbox + filters</div>
+      <p class="plate-recipe"><b>PULLS</b> — a single full-width list with segmented tabs (All / Unread / Mentions) + row checkboxes that reveal a bulk-action bar (Archive, Mark read, Delete). &nbsp;<b>WHY</b> — when one queue mixes sources: tabs slice by state and multi-select makes clearing a backlog a batch operation rather than one-by-one.</p>
+    </div>
+    <div class="frame">
+      <div style="padding:14px 22px;border-bottom:1px solid var(--line);background:var(--surface);display:flex;align-items:center;gap:14px">
+        <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Inbox</div>
+        <div class="seg" id="u3seg" style="margin-left:6px"><button class="on" data-f="all">All</button><button data-f="unread">Unread <span class="count mut" style="margin-left:2px">5</span></button><button data-f="mentions">Mentions</button></div>
+        <div class="search" style="margin-left:auto;width:200px"><svg class="ico"><use href="#i-search"/></svg><input placeholder="Search"></div>
+      </div>
+      <div id="u3bulk" style="display:none;align-items:center;gap:14px;padding:9px 22px;background:var(--accent-ink);color:#fff">
+        <span style="font-size:13px;font-weight:600"><span id="u3cnt">0</span> selected</span>
+        <div style="margin-left:auto;display:flex;gap:6px"><button class="u3act"><svg class="ico" style="width:14px;height:14px"><use href="#i-archive"/></svg>Archive</button><button class="u3act"><svg class="ico" style="width:14px;height:14px"><use href="#i-check"/></svg>Mark read</button><button class="u3act"><svg class="ico" style="width:14px;height:14px"><use href="#i-trash"/></svg>Delete</button></div>
+        <button id="u3clear" style="color:#cfe0f6;font-size:12.5px">Clear</button>
+      </div>
+      <div id="u3list">
+        <div class="urow unread" data-type="mentions"><span class="cbx"><svg class="ico"><use href="#i-check"/></svg></span><span class="av a2" style="width:32px;height:32px;font-size:11px">RP</span><div class="ubody"><div class="utop"><span class="uf">Reza Pour</span><span class="badge acc"><svg class="ico" style="width:10px;height:10px"><use href="#i-at"/></svg>Mention</span><span class="uw">8:20</span></div><div class="us"><b>Renewal playbook — v2 draft</b> — @you should review the timing section…</div></div></div>
+        <div class="urow unread" data-type="unread"><span class="cbx"><svg class="ico"><use href="#i-check"/></svg></span><span class="av a1" style="width:32px;height:32px;font-size:11px">DK</span><div class="ubody"><div class="utop"><span class="uf">Dana Kessler</span><span class="uw">9:41</span></div><div class="us"><b>Re: Northwind renewal agreement</b> — Confirmed, signed and countersigned…</div></div></div>
+        <div class="urow" data-type="read"><span class="cbx"><svg class="ico"><use href="#i-check"/></svg></span><span class="av a3" style="width:32px;height:32px;font-size:11px">FN</span><div class="ubody"><div class="utop"><span class="uf">Finance</span><span class="uw">Jun 12</span></div><div class="us"><b>Q3 renewal forecast ready</b> — $1.42M projected across 88 accounts…</div></div></div>
+        <div class="urow" data-type="mentions"><span class="cbx"><svg class="ico"><use href="#i-check"/></svg></span><span class="av a5" style="width:32px;height:32px;font-size:11px">JC</span><div class="ubody"><div class="utop"><span class="uf">Jerome Castillo</span><span class="badge acc"><svg class="ico" style="width:10px;height:10px"><use href="#i-at"/></svg>Mention</span><span class="uw">Mon</span></div><div class="us"><b>#finance</b> — mentioned you about the forecast assumptions…</div></div></div>
+        <div class="urow" data-type="read"><span class="cbx"><svg class="ico"><use href="#i-check"/></svg></span><span class="av a4" style="width:32px;height:32px;font-size:11px">AG</span><div class="ubody"><div class="utop"><span class="uf">Atlas Group</span><span class="uw">Jun 10</span></div><div class="us"><b>Question about our renewal terms</b> — Could you clarify the proration…</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · FOCUSED CONVERSATION ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Focused conversation</div>
+      <p class="plate-recipe"><b>PULLS</b> — one centered conversation thread with an inline quick-reply box and thread actions (reply, forward, resolve) in a header. &nbsp;<b>WHY</b> — for support or single-issue threads: removing list chrome puts the whole exchange in one readable column, with resolve turning a conversation into a closeable task.</p>
+    </div>
+    <div class="frame" style="padding:24px 26px;background:var(--page)">
+      <div style="max-width:720px;margin:0 auto">
+        <div class="card" style="background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+          <div style="padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px">
+            <div style="flex:1"><div style="display:flex;align-items:center;gap:9px"><span style="font-size:15px;font-weight:700;letter-spacing:-0.01em">Renewal terms — proration question</span><span class="badge warn">Open</span></div><div style="font-size:11.5px;color:var(--faint);margin-top:3px">Ticket #5521 · Atlas Group · 3 messages</div></div>
+            <div style="display:flex;gap:4px"><button class="iconbtn"><svg class="ico"><use href="#i-reply"/></svg></button><button class="iconbtn"><svg class="ico"><use href="#i-forward"/></svg></button><button class="btn-pri" style="padding:8px 13px"><svg class="ico"><use href="#i-resolve"/></svg>Resolve</button></div>
+          </div>
+          <div style="padding:20px;display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;gap:12px"><span class="av a3" style="width:34px;height:34px;font-size:12px">AG</span><div style="flex:1"><div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:13px;font-weight:700">Atlas Group</span><span style="font-size:11px;color:var(--faint)">Jun 10 · 2:14 PM</span></div><p style="font-size:13.5px;line-height:1.6;color:var(--mut);margin-top:5px">Hi — could you clarify the proration if we add seats mid-cycle before renewal? We may expand by ~20 seats in August.</p></div></div>
+            <div style="display:flex;gap:12px"><span class="av a1" style="width:34px;height:34px;font-size:12px">DK</span><div style="flex:1"><div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:13px;font-weight:700">Dana Kessler</span><span style="font-size:11px;color:var(--faint)">Jun 10 · 3:02 PM</span></div><p style="font-size:13.5px;line-height:1.6;color:var(--mut);margin-top:5px">Great question. Mid-cycle seats are prorated to the current term end, then roll into the renewal at the standard rate. I'll send a worked example.</p></div></div>
+            <div style="display:flex;gap:12px"><span class="av a3" style="width:34px;height:34px;font-size:12px">AG</span><div style="flex:1"><div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:13px;font-weight:700">Atlas Group</span><span style="font-size:11px;color:var(--faint)">Jun 11 · 9:10 AM</span></div><p style="font-size:13.5px;line-height:1.6;color:var(--mut);margin-top:5px">Perfect, that's exactly what we needed. Thanks!</p></div></div>
+          </div>
+          <div style="padding:14px 20px;border-top:1px solid var(--line);background:var(--inset)">
+            <div style="display:flex;gap:11px"><span class="av a1" style="width:32px;height:32px;font-size:11px">ME</span><div style="flex:1;background:var(--surface);border:1px solid var(--line-2);border-radius:10px;padding:10px 13px"><textarea placeholder="Write a quick reply…" rows="2" style="width:100%;border:none;outline:none;resize:none;background:none;font-size:13.5px;color:var(--ink);line-height:1.5"></textarea><div style="display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--inset)"><button class="iconbtn" style="width:30px;height:30px;border:none"><svg class="ico"><use href="#i-paper"/></svg></button><button class="iconbtn" style="width:30px;height:30px;border:none"><svg class="ico"><use href="#i-emoji"/></svg></button><button class="btn-pri" style="margin-left:auto;padding:7px 14px"><svg class="ico"><use href="#i-send"/></svg>Send</button></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · INBOX ZERO (EMPTY) ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Inbox zero</div>
+      <p class="plate-recipe"><b>PULLS</b> — the empty / zero state: a friendly “inbox zero” message and a compose CTA. &nbsp;<b>WHY</b> — an empty inbox is a reward, not an error; a warm confirmation plus one clear next action keeps the moment positive instead of blank.</p>
+    </div>
+    <div class="frame">
+      <div style="padding:14px 22px;border-bottom:1px solid var(--line);background:var(--surface);display:flex;align-items:center;gap:14px"><div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Inbox</div><div class="seg" style="margin-left:6px"><button class="on">All</button><button>Unread</button><button>Mentions</button></div><button class="btn-pri" style="margin-left:auto"><svg class="ico"><use href="#i-plus"/></svg>Compose</button></div>
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:64px 24px">
+        <div style="width:74px;height:74px;border-radius:20px;background:var(--ok-t);display:flex;align-items:center;justify-content:center;color:var(--ok);margin-bottom:18px"><svg class="ico" style="width:34px;height:34px"><use href="#i-resolve"/></svg></div>
+        <h3 style="font-size:20px;font-weight:800;letter-spacing:-0.02em">You're all caught up</h3>
+        <p style="font-size:14px;color:var(--mut);margin-top:8px;max-width:42ch;line-height:1.55">No new messages — inbox zero. Anything new will land here. Why not start a conversation?</p>
+        <div style="display:flex;gap:10px;margin-top:20px"><button class="btn-pri"><svg class="ico"><use href="#i-plus"/></svg>Compose message</button><button class="btn-sec"><svg class="ico"><use href="#i-archive"/></svg>View archive</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.mnav{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:7px;font-size:13px;font-weight:500;color:var(--mut);text-decoration:none;}
+.mnav .ico{width:16px;height:16px;}
+.mnav:hover{background:var(--inset);color:var(--ink);}
+.mnav.on{background:var(--accent-tint);color:var(--accent-ink);font-weight:600;}
+.mnav .count{margin-left:auto;}
+.mlist{display:flex;gap:8px;padding:12px 14px;border-bottom:1px solid var(--inset);cursor:pointer;}
+.mlist:hover{background:var(--inset);}
+.mlist.on{background:var(--accent-tint);box-shadow:inset 3px 0 0 var(--accent);}
+.mlist .dotcol{width:8px;flex-shrink:0;display:flex;justify-content:center;padding-top:6px;}
+.mlist .udot{width:7px;height:7px;border-radius:50%;background:var(--accent);}
+.mlist .mtop{display:flex;align-items:baseline;justify-content:space-between;gap:8px;}
+.mlist .from{font-size:13px;font-weight:700;} .mlist.read .from{font-weight:600;color:var(--mut);}
+.mlist .when{font-size:11px;color:var(--faint);flex-shrink:0;}
+.mlist .subj{font-size:12.5px;font-weight:600;margin-top:2px;} .mlist.read .subj{font-weight:500;color:var(--mut);}
+.mlist .prev{font-size:11.5px;color:var(--faint);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* chat conv list */
+.conv{display:flex;align-items:center;gap:11px;padding:12px 16px;border-bottom:1px solid var(--inset);cursor:pointer;}
+.conv:hover{background:var(--inset);}
+.conv.on{background:var(--accent-tint);box-shadow:inset 3px 0 0 var(--accent);}
+.conv .cbody{flex:1;min-width:0;} .conv .ctop{display:flex;align-items:baseline;justify-content:space-between;gap:8px;}
+.conv .cn{font-size:13.5px;font-weight:700;} .conv .cw{font-size:11px;color:var(--faint);}
+.conv .cp{font-size:12px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
+.daydiv{display:flex;align-items:center;justify-content:center;margin:4px 0;}
+.daydiv span{font-size:11px;font-weight:600;color:var(--faint);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px 12px;}
+.bub{display:flex;flex-direction:column;max-width:74%;}
+.bub.them{align-self:flex-start;align-items:flex-start;} .bub.me{align-self:flex-end;align-items:flex-end;}
+.bub .bx{font-size:13.5px;line-height:1.5;padding:9px 13px;border-radius:14px;}
+.bub.them .bx{background:var(--surface);border:1px solid var(--line);color:var(--ink);border-bottom-left-radius:5px;}
+.bub.me .bx{background:var(--accent);color:#fff;border-bottom-right-radius:5px;}
+.bub .bt{font-size:10.5px;color:var(--faint);margin-top:4px;padding:0 4px;}
+/* unified rows */
+.seg{display:inline-flex;background:var(--inset);border:1px solid var(--line);border-radius:8px;padding:2px;}
+.seg button{font-size:12.5px;font-weight:600;color:var(--mut);padding:6px 12px;border-radius:6px;display:inline-flex;align-items:center;}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.07);}
+.u3act{display:inline-flex;align-items:center;gap:6px;color:#fff;font-size:12.5px;font-weight:500;padding:6px 11px;border-radius:7px;background:rgba(255,255,255,.14);} .u3act:hover{background:rgba(255,255,255,.24);}
+.urow{display:flex;align-items:center;gap:12px;padding:13px 22px;border-bottom:1px solid var(--inset);cursor:pointer;}
+.urow:hover{background:var(--inset);} .urow.sel{background:var(--accent-tint);}
+.urow.unread .uf{font-weight:700;} .urow.unread .us b{color:var(--ink);}
+.urow .cbx{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line-2);background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;}
+.urow .cbx .ico{width:11px;height:11px;opacity:0;} .urow.sel .cbx{background:var(--accent);border-color:var(--accent);} .urow.sel .cbx .ico{opacity:1;}
+.urow .ubody{flex:1;min-width:0;} .urow .utop{display:flex;align-items:center;gap:9px;}
+.urow .uf{font-size:13px;font-weight:600;} .urow .uw{margin-left:auto;font-size:11px;color:var(--faint);}
+.urow .us{font-size:12.5px;color:var(--faint);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* skin table */
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame[style*="188px"]{grid-template-columns:1fr!important;}
+  .frame[style*="grid-template-columns:300px 1fr"]{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script>
+/* 3 unified inbox: tabs filter + checkbox bulk */
+(function(){
+  var seg=document.getElementById('u3seg'),list=document.getElementById('u3list'),bulk=document.getElementById('u3bulk'),cnt=document.getElementById('u3cnt');
+  seg.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;seg.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');var f=b.dataset.f;
+    list.querySelectorAll('.urow').forEach(function(r){var t=r.dataset.type;var show=(f==='all')||(f==='unread'&&r.classList.contains('unread'))||(f==='mentions'&&t==='mentions');r.style.display=show?'':'none';});
+  });
+  function update(){var n=list.querySelectorAll('.urow.sel').length;cnt.textContent=n;bulk.style.display=n>0?'flex':'none';}
+  list.addEventListener('click',function(e){var r=e.target.closest('.urow');if(!r)return;r.classList.toggle('sel');update();});
+  document.getElementById('u3clear').addEventListener('click',function(){list.querySelectorAll('.urow.sel').forEach(function(r){r.classList.remove('sel');});update();});
+})();
+</script>
+</body>
+</html>

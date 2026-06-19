@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Data Display Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   MERIDIAN — "Grid System" skin. Swiss/technical data aesthetic.
+   Cool graph-paper ground · hard black rules · squared corners · cobalt accent.
+   Space Grotesk (display/figures) · Archivo (body) · IBM Plex Mono (labels).
+   The :root block IS the skin — swap the look by editing only :root.
+   ============================================================================ */
+:root{
+  --paper:#E7EAEC;        /* cool light-gray ground */
+  --surface:#FFFFFF;
+  --surface-2:#F2F4F6;    /* inset / striped */
+  --border:#D4D9DD;       /* hairline */
+  --rule:#14171B;         /* hard black rule (Swiss) */
+  --ink:#14171B;          /* near-black */
+  --muted:#535A62;        /* secondary — AA */
+  --subtle:#79818A;       /* faint tier — >=3:1 */
+
+  --accent:#2348E0;       /* cobalt */
+  --accent-ink:#1A38B4;
+  --accent-tint:rgba(35,72,224,0.10);
+
+  /* disciplined categorical chart palette */
+  --c1:#2348E0;  --c2:#101A40;  --c3:#7A84B8;  --c4:#E0A92F;
+  --ok:#1C7F4B;  --ok-tint:rgba(28,127,75,0.12);
+  --bad:#C5392B; --bad-tint:rgba(197,57,43,0.12);
+  --warn:#9A6608;--warn-tint:rgba(154,102,8,0.14);
+
+  --font-display:'Space Grotesk',system-ui,sans-serif;
+  --font-ui:'Archivo',system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+
+  --r:4px; --r-lg:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:var(--font-ui);
+  background:var(--paper);
+  background-image:linear-gradient(rgba(20,23,27,0.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(20,23,27,0.04) 1px,transparent 1px);
+  background-size:28px 28px;
+  color:var(--ink);font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+.tnum{font-variant-numeric:tabular-nums;}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 36px 96px;}
+
+/* masthead */
+.mast{padding:60px 0 30px;border-bottom:3px solid var(--rule);}
+.mast-top{display:flex;align-items:center;gap:14px;margin-bottom:34px;}
+.logo{width:36px;height:36px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo span{width:16px;height:16px;border:3px solid #fff;border-radius:50%;}
+.mast-name{font-family:var(--font-display);font-weight:700;font-size:16px;letter-spacing:-0.01em;}
+.mast-name b{color:var(--accent);}
+.mast-tag{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--subtle);text-transform:uppercase;letter-spacing:.1em;}
+.mast h1{font-family:var(--font-display);font-weight:700;font-size:clamp(40px,6.5vw,74px);line-height:0.96;letter-spacing:-0.03em;max-width:16ch;}
+.mast h1 mark{background:none;color:var(--accent);}
+.mast p{font-size:16px;color:var(--muted);max-width:58ch;margin-top:20px;}
+
+/* section */
+.section{padding:46px 0 6px;}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:24px;padding-bottom:10px;border-bottom:1.5px solid var(--rule);}
+.sec-num{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--accent);}
+.sec-title{font-family:var(--font-display);font-weight:600;font-size:20px;letter-spacing:-0.01em;text-transform:uppercase;}
+.sec-desc{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--subtle);text-transform:uppercase;letter-spacing:.06em;}
+
+.grid{display:grid;gap:16px;}
+.cols-2{grid-template-columns:repeat(2,1fr);}
+.cols-3{grid-template-columns:repeat(3,1fr);}
+.span2{grid-column:span 2;}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;}
+.panel-pad{padding:20px;}
+.cap{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--subtle);padding:13px 18px;border-bottom:1px solid var(--border);background:var(--surface-2);}
+.cap .tick{width:7px;height:7px;background:var(--accent);flex-shrink:0;}
+.chart-cap{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;}
+.chart-cap h3{font-family:var(--font-display);font-size:15px;font-weight:600;letter-spacing:-0.01em;}
+.chart-cap .v{font-family:var(--font-mono);font-size:12px;color:var(--muted);}
+.chart-cap .v b{color:var(--ink);font-weight:600;}
+
+/* ============================================================================ TABLES */
+table{width:100%;border-collapse:collapse;}
+.th{font-family:var(--font-mono);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--subtle);text-align:left;}
+.r{text-align:right;}
+.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;}
+
+/* striped */
+.t-striped th{padding:11px 18px;border-bottom:2px solid var(--rule);}
+.t-striped td{padding:11px 18px;font-size:13.5px;}
+.t-striped tbody tr:nth-child(even){background:var(--surface-2);}
+.t-striped tbody tr:hover{background:var(--accent-tint);}
+
+/* compact-bordered */
+.t-compact{border:1px solid var(--border);}
+.t-compact th{padding:8px 12px;background:var(--surface-2);border:1px solid var(--border);}
+.t-compact td{padding:6px 12px;font-size:12.5px;border:1px solid var(--border);height:30px;}
+.t-compact tbody tr:hover{background:var(--accent-tint);}
+
+/* card-rows */
+.t-cards{display:flex;flex-direction:column;gap:8px;padding:14px;}
+.t-card{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 14px;transition:border-color .14s,box-shadow .14s;}
+.t-card:hover{border-color:var(--accent);box-shadow:0 2px 0 var(--accent);}
+.t-card .cav{width:32px;height:32px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:600;font-size:12px;}
+.t-card .nm{font-size:13.5px;font-weight:600;}
+.t-card .sb{font-family:var(--font-mono);font-size:11px;color:var(--subtle);}
+.t-card .amt{font-family:var(--font-display);font-weight:600;font-size:15px;font-variant-numeric:tabular-nums;}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:3px;}
+.badge .bd{width:6px;height:6px;border-radius:50%;}
+.badge.ok{color:var(--ok);background:var(--ok-tint);} .badge.ok .bd{background:var(--ok);}
+.badge.warn{color:var(--warn);background:var(--warn-tint);} .badge.warn .bd{background:var(--warn);}
+.badge.bad{color:var(--bad);background:var(--bad-tint);} .badge.bad .bd{background:var(--bad);}
+
+/* ============================================================================ CHART HELPERS */
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;}
+.legend .li{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;color:var(--muted);}
+.legend .sw{width:11px;height:11px;border-radius:2px;flex-shrink:0;}
+.legend .li b{color:var(--ink);font-weight:600;}
+.axis{font-family:var(--font-mono);font-size:9px;fill:var(--subtle);}
+
+/* sparkline row */
+.spark-row{display:grid;grid-template-columns:repeat(5,1fr);gap:0;}
+.spark{padding:16px;border-right:1px solid var(--border);}
+.spark:last-child{border-right:none;}
+.spark .lbl{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);}
+.spark .val{font-family:var(--font-display);font-weight:600;font-size:22px;letter-spacing:-0.02em;margin:6px 0 10px;font-variant-numeric:tabular-nums;}
+.spark .d{font-family:var(--font-mono);font-size:11px;font-weight:500;}
+.spark .d.up{color:var(--ok);} .spark .d.down{color:var(--bad);}
+
+/* ============================================================================ STAT TILES */
+.tile{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;}
+.tile .lbl{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);}
+.tile .big{font-family:var(--font-display);font-weight:700;font-size:42px;letter-spacing:-0.03em;line-height:1;margin-top:14px;font-variant-numeric:tabular-nums;}
+/* A: underline accent */
+.tile-a{border-top:3px solid var(--accent);}
+.tile-a .sub{font-size:12.5px;color:var(--muted);margin-top:10px;}
+/* B: sparkline floor */
+.tile-b{position:relative;overflow:hidden;}
+.tile-b .spk{position:absolute;left:0;right:0;bottom:0;height:46px;}
+.tile-b .d{font-family:var(--font-mono);font-size:12px;color:var(--ok);font-weight:600;margin-top:8px;position:relative;}
+/* C: inverse cobalt */
+.tile-c{background:var(--accent);border-color:var(--accent);color:#fff;}
+.tile-c .lbl{color:#C5CFFA;}
+.tile-c .big{color:#fff;}
+.tile-c .sub{font-size:12.5px;color:#D5DCFB;margin-top:10px;font-family:var(--font-mono);}
+
+/* ============================================================================ PROGRESS */
+.pbar-row{display:flex;flex-direction:column;gap:16px;}
+.pbar .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;}
+.pbar .nm{font-size:13px;font-weight:600;}
+.pbar .pct{font-family:var(--font-mono);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;}
+.pbar .track{height:9px;background:var(--surface-2);border-radius:var(--pill,99px);overflow:hidden;}
+.pbar .fill{height:100%;border-radius:99px;}
+
+/* radial */
+.radial{display:flex;align-items:center;gap:22px;}
+.radial .ringwrap{position:relative;width:132px;height:132px;flex-shrink:0;}
+.radial .rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.radial .rc .p{font-family:var(--font-display);font-weight:700;font-size:30px;letter-spacing:-0.02em;line-height:1;font-variant-numeric:tabular-nums;}
+.radial .rc .t{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);margin-top:3px;}
+.radial .meta .nm{font-family:var(--font-display);font-weight:600;font-size:16px;}
+.radial .meta .ds{font-size:12.5px;color:var(--muted);margin-top:5px;max-width:22ch;}
+.radial .meta .leg{margin-top:13px;display:flex;flex-direction:column;gap:6px;}
+.radial .meta .leg .li{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;color:var(--muted);}
+.radial .meta .leg .sw{width:10px;height:10px;border-radius:2px;}
+
+/* metric-delta-trend block */
+.mdt{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.mdt .left{padding:24px;border-right:1px solid var(--border);}
+.mdt .lbl{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);}
+.mdt .big{font-family:var(--font-display);font-weight:700;font-size:46px;letter-spacing:-0.03em;line-height:1;margin-top:14px;font-variant-numeric:tabular-nums;}
+.mdt .deltarow{display:flex;align-items:center;gap:9px;margin-top:14px;}
+.delta{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:12.5px;font-weight:600;padding:3px 8px;border-radius:3px;}
+.delta svg{width:12px;height:12px;}
+.delta.up{color:var(--ok);background:var(--ok-tint);}
+.delta.down{color:var(--bad);background:var(--bad-tint);}
+.delta-note{font-size:12px;color:var(--muted);}
+.mdt .right{padding:18px 20px;display:flex;flex-direction:column;}
+.mdt .right .rh{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10.5px;color:var(--subtle);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+
+.foot{margin-top:64px;padding-top:20px;border-top:3px solid var(--rule);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--font-mono);font-size:11px;color:var(--subtle);text-transform:uppercase;letter-spacing:.06em;}
+
+@media(max-width:880px){.cols-3{grid-template-columns:1fr;}.cols-2,.span2{grid-template-columns:1fr;grid-column:auto;}.spark-row{grid-template-columns:repeat(2,1fr);}.mdt{grid-template-columns:1fr;}.mdt .left{border-right:none;border-bottom:1px solid var(--border);}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <div class="mast-top">
+      <div class="logo"><span></span></div>
+      <div class="mast-name">MERIDIAN<b>·</b>DATA</div>
+      <div class="mast-tag">grid-system register</div>
+    </div>
+    <h1>Data display <mark>specimens</mark></h1>
+    <p>Tables, charts, tiles and indicators for the Meridian system — a Swiss data grammar built on hard rules, squared surfaces and one cobalt accent. Every figure is set in tabular Space Grotesk.</p>
+  </header>
+
+  <!-- 01 TABLES -->
+  <section class="section">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">Tables</h2><span class="sec-desc">3 treatments</span></div>
+    <div class="grid cols-3">
+      <!-- striped -->
+      <div class="panel">
+        <div class="cap"><span class="tick"></span>Striped</div>
+        <table class="t-striped">
+          <thead><tr><th class="th">Region</th><th class="th r">Users</th><th class="th r">Δ</th></tr></thead>
+          <tbody>
+            <tr><td>North</td><td class="num r">12,480</td><td class="num r" style="color:var(--ok)">+4.2%</td></tr>
+            <tr><td>South</td><td class="num r">9,213</td><td class="num r" style="color:var(--ok)">+1.8%</td></tr>
+            <tr><td>East</td><td class="num r">7,884</td><td class="num r" style="color:var(--bad)">−0.6%</td></tr>
+            <tr><td>West</td><td class="num r">6,402</td><td class="num r" style="color:var(--ok)">+2.9%</td></tr>
+            <tr><td>Central</td><td class="num r">4,117</td><td class="num r" style="color:var(--bad)">−1.3%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- compact bordered -->
+      <div class="panel">
+        <div class="cap"><span class="tick"></span>Compact · bordered</div>
+        <div class="panel-pad" style="padding:14px;">
+          <table class="t-compact">
+            <thead><tr><th class="th">SKU</th><th class="th r">Qty</th><th class="th r">Net</th></tr></thead>
+            <tbody>
+              <tr><td class="num">MR-4401</td><td class="num r">128</td><td class="num r">$3,204</td></tr>
+              <tr><td class="num">MR-4402</td><td class="num r">96</td><td class="num r">$2,112</td></tr>
+              <tr><td class="num">MR-4403</td><td class="num r">74</td><td class="num r">$1,998</td></tr>
+              <tr><td class="num">MR-4404</td><td class="num r">61</td><td class="num r">$1,540</td></tr>
+              <tr><td class="num">MR-4405</td><td class="num r">53</td><td class="num r">$1,287</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- card rows -->
+      <div class="panel">
+        <div class="cap"><span class="tick"></span>Card rows</div>
+        <div class="t-cards">
+          <div class="t-card"><span class="cav" style="background:var(--accent-tint);color:var(--accent-ink)">AL</span><div><div class="nm">Ava Lindqvist</div><div class="sb">#INV-2241</div></div><span class="badge ok"><span class="bd"></span>Paid</span><span class="amt">$2,480</span></div>
+          <div class="t-card"><span class="cav" style="background:var(--warn-tint);color:var(--warn)">RP</span><div><div class="nm">Reza Pour</div><div class="sb">#INV-2240</div></div><span class="badge warn"><span class="bd"></span>Due</span><span class="amt">$640</span></div>
+          <div class="t-card"><span class="cav" style="background:var(--bad-tint);color:var(--bad)">JO</span><div><div class="nm">Jun Okada</div><div class="sb">#INV-2239</div></div><span class="badge bad"><span class="bd"></span>Failed</span><span class="amt">$1,189</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 CHARTS -->
+  <section class="section">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Charts</h2><span class="sec-desc">line · bar · stacked · donut</span></div>
+    <div class="grid cols-2">
+      <!-- line/area -->
+      <div class="panel"><div class="panel-pad">
+        <div class="chart-cap"><h3>Revenue trend</h3><span class="v">12 mo · <b>$1.42M</b></span></div>
+        <svg width="100%" height="190" viewBox="0 0 520 190" preserveAspectRatio="none" style="overflow:visible">
+          <defs><linearGradient id="ar" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2348E0" stop-opacity="0.16"/><stop offset="100%" stop-color="#2348E0" stop-opacity="0.01"/></linearGradient></defs>
+          <g stroke="#E7EAEC" stroke-width="1"><line x1="0" y1="20" x2="520" y2="20"/><line x1="0" y1="68" x2="520" y2="68"/><line x1="0" y1="116" x2="520" y2="116"/><line x1="0" y1="164" x2="520" y2="164"/></g>
+          <path d="M0,150 L47,138 L94,144 L141,120 L188,128 L235,98 L282,108 L329,74 L376,84 L423,52 L470,60 L520,34 L520,164 L0,164 Z" fill="url(#ar)"/>
+          <path d="M0,150 L47,138 L94,144 L141,120 L188,128 L235,98 L282,108 L329,74 L376,84 L423,52 L470,60 L520,34" fill="none" stroke="#2348E0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="520" cy="34" r="4" fill="#2348E0"/><circle cx="520" cy="34" r="8" fill="#2348E0" opacity="0.16"/>
+          <g class="axis"><text x="0" y="183">Jan</text><text x="160" y="183">Apr</text><text x="320" y="183">Jul</text><text x="495" y="183">Dec</text></g>
+        </svg>
+      </div></div>
+      <!-- bar -->
+      <div class="panel"><div class="panel-pad">
+        <div class="chart-cap"><h3>Orders by weekday</h3><span class="v">peak <b>Fri</b></span></div>
+        <svg width="100%" height="190" viewBox="0 0 520 190" preserveAspectRatio="none" style="overflow:visible">
+          <g stroke="#E7EAEC" stroke-width="1"><line x1="0" y1="20" x2="520" y2="20"/><line x1="0" y1="64" x2="520" y2="64"/><line x1="0" y1="108" x2="520" y2="108"/><line x1="0" y1="152" x2="520" y2="152"/></g>
+          <g fill="#2348E0">
+            <rect x="14" y="92" width="48" height="60"/>
+            <rect x="86" y="74" width="48" height="78"/>
+            <rect x="158" y="104" width="48" height="48"/>
+            <rect x="230" y="60" width="48" height="92"/>
+            <rect x="302" y="40" width="48" height="112" fill="#E0A92F"/>
+            <rect x="374" y="86" width="48" height="66"/>
+            <rect x="446" y="112" width="48" height="40"/>
+          </g>
+          <g class="axis" text-anchor="middle"><text x="38" y="170">Mon</text><text x="110" y="170">Tue</text><text x="182" y="170">Wed</text><text x="254" y="170">Thu</text><text x="326" y="170">Fri</text><text x="398" y="170">Sat</text><text x="470" y="170">Sun</text></g>
+        </svg>
+      </div></div>
+      <!-- stacked -->
+      <div class="panel"><div class="panel-pad">
+        <div class="chart-cap"><h3>Channel mix</h3><span class="v">stacked · 6 wk</span></div>
+        <svg width="100%" height="190" viewBox="0 0 520 190" preserveAspectRatio="none" style="overflow:visible">
+          <g stroke="#E7EAEC" stroke-width="1"><line x1="0" y1="20" x2="520" y2="20"/><line x1="0" y1="64" x2="520" y2="64"/><line x1="0" y1="108" x2="520" y2="108"/><line x1="0" y1="152" x2="520" y2="152"/></g>
+          <!-- each bar: c1 bottom, c3 mid, c4 top -->
+          <g>
+            <rect x="24" y="96" width="56" height="56" fill="#2348E0"/><rect x="24" y="64" width="56" height="32" fill="#7A84B8"/><rect x="24" y="44" width="56" height="20" fill="#E0A92F"/>
+            <rect x="104" y="84" width="56" height="68" fill="#2348E0"/><rect x="104" y="56" width="56" height="28" fill="#7A84B8"/><rect x="104" y="40" width="56" height="16" fill="#E0A92F"/>
+            <rect x="184" y="104" width="56" height="48" fill="#2348E0"/><rect x="184" y="72" width="56" height="32" fill="#7A84B8"/><rect x="184" y="54" width="56" height="18" fill="#E0A92F"/>
+            <rect x="264" y="78" width="56" height="74" fill="#2348E0"/><rect x="264" y="50" width="56" height="28" fill="#7A84B8"/><rect x="264" y="34" width="56" height="16" fill="#E0A92F"/>
+            <rect x="344" y="90" width="56" height="62" fill="#2348E0"/><rect x="344" y="58" width="56" height="32" fill="#7A84B8"/><rect x="344" y="42" width="56" height="16" fill="#E0A92F"/>
+            <rect x="424" y="70" width="56" height="82" fill="#2348E0"/><rect x="424" y="44" width="56" height="26" fill="#7A84B8"/><rect x="424" y="30" width="56" height="14" fill="#E0A92F"/>
+          </g>
+        </svg>
+        <div class="legend"><span class="li"><span class="sw" style="background:#2348E0"></span>Direct</span><span class="li"><span class="sw" style="background:#7A84B8"></span>Referral</span><span class="li"><span class="sw" style="background:#E0A92F"></span>Social</span></div>
+      </div></div>
+      <!-- donut -->
+      <div class="panel"><div class="panel-pad">
+        <div class="chart-cap"><h3>Plan distribution</h3><span class="v"><b>8,402</b> accounts</span></div>
+        <div style="display:flex;align-items:center;gap:26px;">
+          <svg width="150" height="150" viewBox="0 0 150 150">
+            <g transform="rotate(-90 75 75)" fill="none" stroke-width="26">
+              <circle cx="75" cy="75" r="56" stroke="#2348E0" stroke-dasharray="147.7 351.9" stroke-dashoffset="0"/>
+              <circle cx="75" cy="75" r="56" stroke="#7A84B8" stroke-dasharray="98.5 351.9" stroke-dashoffset="-147.7"/>
+              <circle cx="75" cy="75" r="56" stroke="#E0A92F" stroke-dasharray="63.3 351.9" stroke-dashoffset="-246.2"/>
+              <circle cx="75" cy="75" r="56" stroke="#101A40" stroke-dasharray="42.2 351.9" stroke-dashoffset="-309.5"/>
+            </g>
+            <text x="75" y="71" text-anchor="middle" font-family="'Space Grotesk'" font-weight="700" font-size="24" fill="#14171B">42%</text>
+            <text x="75" y="88" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="9" letter-spacing="1" fill="#79818A">PRO</text>
+          </svg>
+          <div class="legend" style="flex-direction:column;gap:9px;margin-top:0;">
+            <span class="li"><span class="sw" style="background:#2348E0"></span>Pro <b>42%</b></span>
+            <span class="li"><span class="sw" style="background:#7A84B8"></span>Team <b>28%</b></span>
+            <span class="li"><span class="sw" style="background:#E0A92F"></span>Starter <b>18%</b></span>
+            <span class="li"><span class="sw" style="background:#101A40"></span>Free <b>12%</b></span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- sparkline row -->
+    <div class="panel" style="margin-top:16px;">
+      <div class="cap"><span class="tick"></span>Sparklines</div>
+      <div class="spark-row">
+        <div class="spark">
+          <div class="lbl">Sessions</div><div class="val tnum">48.2k</div><div class="d up">▲ 6.1%</div>
+          <svg width="100%" height="30" viewBox="0 0 100 30" preserveAspectRatio="none" style="margin-top:8px"><path d="M0,24 L14,20 L28,22 L42,14 L56,17 L70,9 L85,11 L100,4" fill="none" stroke="#2348E0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="spark">
+          <div class="lbl">Revenue</div><div class="val tnum">$92k</div><div class="d up">▲ 3.4%</div>
+          <svg width="100%" height="30" viewBox="0 0 100 30" preserveAspectRatio="none" style="margin-top:8px"><defs><linearGradient id="sp2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2348E0" stop-opacity="0.2"/><stop offset="100%" stop-color="#2348E0" stop-opacity="0"/></linearGradient></defs><path d="M0,20 L14,22 L28,16 L42,18 L56,10 L70,13 L85,7 L100,9 L100,30 L0,30 Z" fill="url(#sp2)"/><path d="M0,20 L14,22 L28,16 L42,18 L56,10 L70,13 L85,7 L100,9" fill="none" stroke="#2348E0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="spark">
+          <div class="lbl">Churn</div><div class="val tnum">1.8%</div><div class="d down">▼ 0.4%</div>
+          <svg width="100%" height="30" viewBox="0 0 100 30" preserveAspectRatio="none" style="margin-top:8px"><path d="M0,8 L14,10 L28,7 L42,12 L56,11 L70,16 L85,15 L100,20" fill="none" stroke="#C5392B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="spark">
+          <div class="lbl">Signups</div><div class="val tnum">1,204</div><div class="d up">▲ 9.7%</div>
+          <svg width="100%" height="30" viewBox="0 0 100 30" preserveAspectRatio="none" style="margin-top:8px">
+            <g fill="#2348E0"><rect x="2" y="18" width="9" height="12"/><rect x="15" y="14" width="9" height="16"/><rect x="28" y="20" width="9" height="10"/><rect x="41" y="11" width="9" height="19"/><rect x="54" y="15" width="9" height="15"/><rect x="67" y="8" width="9" height="22"/><rect x="80" y="12" width="9" height="18"/><rect x="93" y="5" width="9" height="25"/></g>
+          </svg>
+        </div>
+        <div class="spark">
+          <div class="lbl">Latency</div><div class="val tnum">142ms</div><div class="d up" style="color:var(--muted)">— flat</div>
+          <svg width="100%" height="30" viewBox="0 0 100 30" preserveAspectRatio="none" style="margin-top:8px"><path d="M0,15 L14,13 L28,16 L42,14 L56,15 L70,13 L85,16 L100,14" fill="none" stroke="#7A84B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 STAT TILES -->
+  <section class="section">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">Stat tiles</h2><span class="sec-desc">3 styles</span></div>
+    <div class="grid cols-3">
+      <div class="tile tile-a">
+        <div class="lbl">Total revenue</div>
+        <div class="big tnum">$1.42M</div>
+        <div class="sub">Fiscal year to date · 92% of target</div>
+      </div>
+      <div class="tile tile-b">
+        <div class="lbl">Active accounts</div>
+        <div class="big tnum">8,402</div>
+        <div class="d">▲ 312 this week</div>
+        <svg class="spk" width="100%" height="46" viewBox="0 0 300 46" preserveAspectRatio="none">
+          <defs><linearGradient id="tb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2348E0" stop-opacity="0.18"/><stop offset="100%" stop-color="#2348E0" stop-opacity="0"/></linearGradient></defs>
+          <path d="M0,38 L40,34 L80,36 L120,26 L160,30 L200,18 L240,22 L300,8 L300,46 L0,46 Z" fill="url(#tb)"/>
+          <path d="M0,38 L40,34 L80,36 L120,26 L160,30 L200,18 L240,22 L300,8" fill="none" stroke="#2348E0" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="tile tile-c">
+        <div class="lbl">Conversion</div>
+        <div class="big tnum">3.9%</div>
+        <div class="sub">+0.6 pts vs last quarter</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 PROGRESS -->
+  <section class="section">
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">Progress</h2><span class="sec-desc">bars · radial</span></div>
+    <div class="grid cols-2">
+      <div class="panel"><div class="panel-pad">
+        <div class="chart-cap"><h3>Quarterly goals</h3><span class="v">Q3 2026</span></div>
+        <div class="pbar-row" style="margin-top:6px;">
+          <div class="pbar"><div class="top"><span class="nm">New revenue</span><span class="pct" style="color:var(--accent)">86%</span></div><div class="track"><div class="fill" style="width:86%;background:var(--accent)"></div></div></div>
+          <div class="pbar"><div class="top"><span class="nm">Retention</span><span class="pct" style="color:var(--ok)">94%</span></div><div class="track"><div class="fill" style="width:94%;background:var(--ok)"></div></div></div>
+          <div class="pbar"><div class="top"><span class="nm">Onboarding</span><span class="pct" style="color:var(--warn)">62%</span></div><div class="track"><div class="fill" style="width:62%;background:var(--warn)"></div></div></div>
+          <div class="pbar"><div class="top"><span class="nm">Support SLA</span><span class="pct" style="color:var(--bad)">41%</span></div><div class="track"><div class="fill" style="width:41%;background:var(--bad)"></div></div></div>
+        </div>
+      </div></div>
+      <div class="panel"><div class="panel-pad">
+        <div class="chart-cap"><h3>Storage used</h3><span class="v">plan · Studio</span></div>
+        <div class="radial" style="margin-top:8px;">
+          <div class="ringwrap">
+            <svg width="132" height="132" viewBox="0 0 132 132">
+              <circle cx="66" cy="66" r="52" fill="none" stroke="#F2F4F6" stroke-width="13"/>
+              <g transform="rotate(-90 66 66)"><circle cx="66" cy="66" r="52" fill="none" stroke="#2348E0" stroke-width="13" stroke-linecap="round" stroke-dasharray="235.2 326.7"/></g>
+            </svg>
+            <div class="rc"><div class="p tnum">72%</div><div class="t">of 2 TB</div></div>
+          </div>
+          <div class="meta">
+            <div class="nm">1.44 TB used</div>
+            <div class="ds">560 GB remaining across all projects.</div>
+            <div class="leg">
+              <span class="li"><span class="sw" style="background:#2348E0"></span>Used · 1.44 TB</span>
+              <span class="li"><span class="sw" style="background:#F2F4F6;border:1px solid var(--border)"></span>Free · 560 GB</span>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 05 METRIC + DELTA + TREND -->
+  <section class="section">
+    <div class="sec-head"><span class="sec-num">05</span><h2 class="sec-title">Metric · delta · trend</h2><span class="sec-desc">composite block</span></div>
+    <div class="grid cols-2">
+      <div class="panel mdt">
+        <div class="left">
+          <div class="lbl">Monthly recurring revenue</div>
+          <div class="big tnum">$248.6k</div>
+          <div class="deltarow"><span class="delta up"><svg><use href="#i-up"/></svg>14.2%</span><span class="delta-note">vs. previous month</span></div>
+        </div>
+        <div class="right">
+          <div class="rh"><span>30-day</span><span>$8.3k / day</span></div>
+          <svg width="100%" height="110" viewBox="0 0 240 110" preserveAspectRatio="none" style="flex:1;overflow:visible">
+            <defs><linearGradient id="m1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2348E0" stop-opacity="0.16"/><stop offset="100%" stop-color="#2348E0" stop-opacity="0.01"/></linearGradient></defs>
+            <path d="M0,86 L30,80 L60,84 L90,66 L120,72 L150,50 L180,56 L210,34 L240,22 L240,110 L0,110 Z" fill="url(#m1)"/>
+            <path d="M0,86 L30,80 L60,84 L90,66 L120,72 L150,50 L180,56 L210,34 L240,22" fill="none" stroke="#2348E0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="240" cy="22" r="3.5" fill="#2348E0"/>
+          </svg>
+        </div>
+      </div>
+      <div class="panel mdt">
+        <div class="left">
+          <div class="lbl">Net churn rate</div>
+          <div class="big tnum">2.1%</div>
+          <div class="deltarow"><span class="delta down"><svg><use href="#i-down"/></svg>0.5 pts</span><span class="delta-note">improvement vs. month</span></div>
+        </div>
+        <div class="right">
+          <div class="rh"><span>30-day</span><span>target ≤ 3%</span></div>
+          <svg width="100%" height="110" viewBox="0 0 240 110" preserveAspectRatio="none" style="flex:1;overflow:visible">
+            <line x1="0" y1="44" x2="240" y2="44" stroke="#C5392B" stroke-width="1.25" stroke-dasharray="4 4" opacity="0.6"/>
+            <text x="238" y="38" text-anchor="end" font-family="'IBM Plex Mono'" font-size="9" fill="#C5392B">target</text>
+            <path d="M0,40 L30,46 L60,52 L90,48 L120,58 L150,62 L180,70 L210,74 L240,80" fill="none" stroke="#101A40" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="240" cy="80" r="3.5" fill="#101A40"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>MERIDIAN — GRID-SYSTEM REGISTER</span>
+    <span>Space Grotesk · Archivo · IBM Plex Mono</span>
+  </footer>
+
+</div>
+</body>
+</html>

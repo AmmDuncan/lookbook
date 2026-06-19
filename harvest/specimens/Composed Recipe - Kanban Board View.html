@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Kanban / board view (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Kanban / board view · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin (off-white page, white cards, hairline borders, slightly
+   rounded corners, one blue accent, system sans + tabular figures). Only
+   composition + interaction varies. WCAG AA throughout.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5; --col-bg:#EFF1F4;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF; --bad:#C0392B; --bad-t:#F9E8E5;
+  --purple:#5B4BC4; --purple-t:#ECE9FA; --teal:#0F6E73; --teal-t:#E2F1F1;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05); --card-shadow:0 1px 2px rgba(20,24,31,.07);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+
+/* board toolbar */
+.btoolbar{display:flex;align-items:center;gap:12px;padding:15px 22px;background:var(--surface);border-bottom:1px solid var(--line);}
+.btoolbar h2{font-size:17px;font-weight:700;letter-spacing:-0.01em;}
+.btoolbar .crumb{font-size:11.5px;color:var(--faint);}
+.avstack{display:flex;}
+.avstack .av{width:26px;height:26px;border-radius:50%;border:2px solid var(--surface);margin-left:-7px;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.avstack .av:first-child{margin-left:0;}
+.btn-sec{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+.btn-pri{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:9px 15px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+
+/* board */
+.board{display:flex;gap:14px;padding:18px 22px;overflow-x:auto;align-items:flex-start;}
+.col{flex:1;min-width:0;background:var(--col-bg);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;}
+.col-h{display:flex;align-items:center;gap:8px;padding:12px 13px 10px;}
+.col-h .dot{width:8px;height:8px;border-radius:50%;}
+.col-h .nm{font-size:12.5px;font-weight:700;}
+.col-h .ct{font-size:11px;font-weight:700;color:var(--mut);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:1px 8px;min-width:22px;text-align:center;}
+.col-h .add{margin-left:auto;width:24px;height:24px;border-radius:6px;color:var(--mut);display:flex;align-items:center;justify-content:center;}
+.col-h .add:hover{background:var(--surface);color:var(--ink);}
+.col-h .add .ico{width:15px;height:15px;}
+.col-b{display:flex;flex-direction:column;gap:9px;padding:4px 10px 12px;}
+.dot.todo{background:var(--faint);} .dot.prog{background:var(--accent);} .dot.review{background:var(--warn);} .dot.done{background:var(--ok);}
+
+/* kard */
+.kard{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:11px 12px;box-shadow:var(--card-shadow);}
+.kard .tags{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
+.ktag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:2px 7px;border-radius:5px;}
+.ktag.feat{color:var(--accent-ink);background:var(--accent-tint);} .ktag.bug{color:var(--bad);background:var(--bad-t);} .ktag.chore{color:var(--mut);background:var(--inset);} .ktag.design{color:var(--purple);background:var(--purple-t);} .ktag.research{color:var(--teal);background:var(--teal-t);}
+.kard .tt{font-size:13px;font-weight:600;line-height:1.35;letter-spacing:-0.01em;}
+.kard .foot{display:flex;align-items:center;gap:10px;margin-top:10px;}
+.kard .av{width:22px;height:22px;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.kard .due{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--faint);}
+.kard .due.soon{color:var(--warn);}
+.kard .due .ico{width:12px;height:12px;}
+.kard .meta{margin-left:auto;display:flex;gap:9px;font-size:11px;color:var(--faint);align-items:center;}
+.kard .meta span{display:inline-flex;align-items:center;gap:3px;}
+.kard .meta .ico{width:12px;height:12px;}
+.av.a1{background:var(--accent-tint);color:var(--accent-ink);} .av.a2{background:var(--ok-t);color:var(--ok);} .av.a3{background:var(--warn-t);color:var(--warn);} .av.a4{background:var(--purple-t);color:var(--purple);} .av.a5{background:var(--teal-t);color:var(--teal);}
+
+.addcard{display:flex;align-items:center;gap:7px;padding:8px 10px;border:1px dashed var(--line-2);border-radius:8px;font-size:12px;font-weight:600;color:var(--faint);background:none;width:100%;}
+.addcard:hover{border-color:var(--accent);color:var(--accent-ink);background:var(--accent-tint);}
+.addcard .ico{width:14px;height:14px;}
+
+/* drag state */
+.kard.dragging{box-shadow:0 14px 30px -10px rgba(20,24,31,.4);border-color:var(--accent);transform:rotate(-1.5deg);opacity:.96;}
+.drop-gap{height:64px;border:1.5px dashed var(--accent);border-radius:9px;background:var(--accent-tint);}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}.board{overflow-x:auto;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-paper" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-collapse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-kebab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></symbol>
+  <symbol id="i-board" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18"/></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="18" r="1"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Kanban / board view · one skin, five compositions</div>
+    <h1>Same skin. Five ways to run a board.</h1>
+    <p>One sprint board — the same tasks across To do / In progress / Review / Done — composed five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white cards with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. What changes is purely <em>composition and interaction</em>. The skin is the paint, the composition is the skeleton.</p>
+  </header>
+
+  <!-- ============== 1 · CLASSIC BOARD ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Classic board</div>
+      <p class="plate-recipe"><b>PULLS</b> — horizontal columns (To do / In progress / Review / Done) with WIP counts in headers + cards (title, tag chip, avatar, due date) + add-card affordance · one card shown mid-drag with a drop-placeholder gap in the target column. &nbsp;<b>WHY</b> — the canonical kanban: columns make status spatial, and drag-to-move is the most direct way to advance work.</p>
+    </div>
+    <div class="frame">
+      <div class="btoolbar"><div><div class="crumb">Engineering / Sprint 24</div><h2>Sprint board</h2></div><div style="margin-left:auto;display:flex;align-items:center;gap:12px"><div class="avstack"><span class="av a1">AL</span><span class="av a2">RP</span><span class="av a3">JC</span><span class="av a4" style="background:var(--inset);color:var(--mut)">+3</span></div><button class="btn-sec"><svg class="ico"><use href="#i-filter"/></svg>Filter</button><button class="btn-pri"><svg class="ico"><use href="#i-plus"/></svg>Add task</button></div></div>
+      <div class="board">
+        <div class="col">
+          <div class="col-h"><span class="dot todo"></span><span class="nm">To do</span><span class="ct">4</span><button class="add"><svg class="ico"><use href="#i-plus"/></svg></button></div>
+          <div class="col-b">
+            <div class="kard"><div class="tags"><span class="ktag feat">Feature</span></div><div class="tt">Add CSV export to the reports page</div><div class="foot"><span class="av a1">AL</span><span class="due"><svg class="ico"><use href="#i-cal"/></svg>Jun 22</span><span class="meta"><span><svg class="ico"><use href="#i-msg"/></svg>2</span></span></div></div>
+            <div class="kard"><div class="tags"><span class="ktag chore">Chore</span></div><div class="tt">Upgrade auth dependency</div><div class="foot"><span class="av a2">RP</span><span class="due"><svg class="ico"><use href="#i-cal"/></svg>Jun 24</span></div></div>
+            <div class="kard"><div class="tags"><span class="ktag design">Design</span></div><div class="tt">Empty-state illustrations review</div><div class="foot"><span class="av a4">NB</span></div></div>
+            <button class="addcard"><svg class="ico"><use href="#i-plus"/></svg>Add card</button>
+          </div>
+        </div>
+        <div class="col">
+          <div class="col-h"><span class="dot prog"></span><span class="nm">In progress</span><span class="ct">3</span><button class="add"><svg class="ico"><use href="#i-plus"/></svg></button></div>
+          <div class="col-b">
+            <div class="kard"><div class="tags"><span class="ktag bug">Bug</span></div><div class="tt">Fix gateway timeout on renewals</div><div class="foot"><span class="av a2">RP</span><span class="due soon"><svg class="ico"><use href="#i-clock"/></svg>Today</span><span class="meta"><span><svg class="ico"><use href="#i-msg"/></svg>5</span></span></div></div>
+            <div class="kard"><div class="tags"><span class="ktag feat">Feature</span></div><div class="tt">Saved report scheduling UI</div><div class="foot"><span class="av a1">AL</span><span class="due"><svg class="ico"><use href="#i-cal"/></svg>Jun 21</span></div></div>
+            <!-- drop placeholder gap -->
+            <div class="drop-gap"></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="col-h"><span class="dot review"></span><span class="nm">Review</span><span class="ct">2</span><button class="add"><svg class="ico"><use href="#i-plus"/></svg></button></div>
+          <div class="col-b">
+            <!-- the dragging card -->
+            <div class="kard dragging"><div class="tags"><span class="ktag feat">Feature</span></div><div class="tt">Command palette (⌘K) search</div><div class="foot"><span class="av a3">JC</span><span class="due"><svg class="ico"><use href="#i-cal"/></svg>Jun 20</span><span class="meta"><span><svg class="ico"><use href="#i-msg"/></svg>3</span></span></div></div>
+            <div class="kard"><div class="tags"><span class="ktag research">Research</span></div><div class="tt">Benchmark table virtualization</div><div class="foot"><span class="av a5">TB</span></div></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="col-h"><span class="dot done"></span><span class="nm">Done</span><span class="ct">5</span><button class="add"><svg class="ico"><use href="#i-plus"/></svg></button></div>
+          <div class="col-b">
+            <div class="kard"><div class="tags"><span class="ktag feat">Feature</span></div><div class="tt">Status-by-shape badge system</div><div class="foot"><span class="av a1">AL</span><span class="meta"><span><svg class="ico"><use href="#i-check"/></svg>Done</span></span></div></div>
+            <div class="kard"><div class="tags"><span class="ktag bug">Bug</span></div><div class="tt">Fix pagination off-by-one</div><div class="foot"><span class="av a3">JC</span></div></div>
+            <div class="kard"><div class="tags"><span class="ktag chore">Chore</span></div><div class="tt">Migrate to tabular numerals</div><div class="foot"><span class="av a2">RP</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · SWIMLANES ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Swimlanes</div>
+      <p class="plate-recipe"><b>PULLS</b> — the same columns split into horizontal swimlanes (by priority) so each card sits at a lane × column intersection. &nbsp;<b>WHY</b> — when one axis isn't enough: lanes add a second dimension (owner, priority, epic) so you can read both “what stage” and “whose / how urgent” without filtering.</p>
+    </div>
+    <div class="frame">
+      <div class="btoolbar"><div><div class="crumb">Engineering / Sprint 24</div><h2>By priority</h2></div><div style="margin-left:auto;display:flex;align-items:center;gap:10px"><span style="font-size:12px;color:var(--faint)">Swimlanes:</span><button class="btn-sec">Priority<svg class="ico"><use href="#i-expand"/></svg></button></div></div>
+      <div style="padding:8px 22px 18px">
+        <!-- column header row -->
+        <div class="lane-cols"><div class="lh"><span class="dot todo"></span>To do <span class="lct">2</span></div><div class="lh"><span class="dot prog"></span>In progress <span class="lct">2</span></div><div class="lh"><span class="dot review"></span>Review <span class="lct">1</span></div><div class="lh"><span class="dot done"></span>Done <span class="lct">2</span></div></div>
+        <!-- lane: High -->
+        <div class="lane"><div class="lane-label"><span class="pri-dot bad"></span>High</div>
+          <div class="lane-grid">
+            <div class="lcell"><div class="kard"><div class="tags"><span class="ktag bug">Bug</span></div><div class="tt">Gateway timeout on renewals</div><div class="foot"><span class="av a2">RP</span><span class="due soon"><svg class="ico"><use href="#i-clock"/></svg>Today</span></div></div></div>
+            <div class="lcell"><div class="kard"><div class="tags"><span class="ktag feat">Feature</span></div><div class="tt">Report scheduling UI</div><div class="foot"><span class="av a1">AL</span></div></div></div>
+            <div class="lcell"></div>
+            <div class="lcell"><div class="kard"><div class="tags"><span class="ktag feat">Feature</span></div><div class="tt">Badge system</div><div class="foot"><span class="av a1">AL</span></div></div></div>
+          </div>
+        </div>
+        <!-- lane: Medium -->
+        <div class="lane"><div class="lane-label"><span class="pri-dot warn"></span>Medium</div>
+          <div class="lane-grid">
+            <div class="lcell"><div class="kard"><div class="tags"><span class="ktag feat">Feature</span></div><div class="tt">CSV export on reports</div><div class="foot"><span class="av a1">AL</span><span class="due"><svg class="ico"><use href="#i-cal"/></svg>Jun 22</span></div></div></div>
+            <div class="lcell"><div class="kard"><div class="tags"><span class="ktag feat">Feature</span></div><div class="tt">Command palette search</div><div class="foot"><span class="av a3">JC</span></div></div></div>
+            <div class="lcell"><div class="kard"><div class="tags"><span class="ktag research">Research</span></div><div class="tt">Table virtualization</div><div class="foot"><span class="av a5">TB</span></div></div></div>
+            <div class="lcell"><div class="kard"><div class="tags"><span class="ktag bug">Bug</span></div><div class="tt">Pagination off-by-one</div><div class="foot"><span class="av a3">JC</span></div></div></div>
+          </div>
+        </div>
+        <!-- lane: Low -->
+        <div class="lane"><div class="lane-label"><span class="pri-dot ok"></span>Low</div>
+          <div class="lane-grid">
+            <div class="lcell"><div class="kard"><div class="tags"><span class="ktag chore">Chore</span></div><div class="tt">Upgrade auth dependency</div><div class="foot"><span class="av a2">RP</span></div></div></div>
+            <div class="lcell"></div>
+            <div class="lcell"></div>
+            <div class="lcell"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · COMPACT + COLLAPSED ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Compact + collapsed columns</div>
+      <p class="plate-recipe"><b>PULLS</b> — a dense board where two columns are collapsed to vertical strips showing only title + count, while the active columns stay dense. &nbsp;<b>WHY</b> — for boards with many columns or stages: collapsing the ones you're not working in reclaims horizontal space so the active flow gets the room.</p>
+    </div>
+    <div class="frame">
+      <div class="btoolbar"><div><div class="crumb">Engineering / Sprint 24</div><h2>Focused view</h2></div><div style="margin-left:auto;display:flex;align-items:center;gap:10px"><span class="seg-lbl">Density</span><div class="seg"><button>Comfortable</button><button class="on">Compact</button></div></div></div>
+      <div class="board" style="padding:16px 22px">
+        <!-- collapsed -->
+        <div class="col collapsed"><button class="col-strip"><svg class="ico exp"><use href="#i-expand"/></svg><span class="vtxt">To do</span><span class="vct">4</span></button></div>
+        <div class="col" style="flex:2">
+          <div class="col-h"><span class="dot prog"></span><span class="nm">In progress</span><span class="ct">5</span><button class="add"><svg class="ico"><use href="#i-plus"/></svg></button></div>
+          <div class="col-b compact">
+            <div class="kard cmp"><div class="tt">Fix gateway timeout on renewals</div><div class="foot"><span class="ktag bug">Bug</span><span class="av a2">RP</span><span class="due soon"><svg class="ico"><use href="#i-clock"/></svg>Today</span></div></div>
+            <div class="kard cmp"><div class="tt">Saved report scheduling UI</div><div class="foot"><span class="ktag feat">Feat</span><span class="av a1">AL</span></div></div>
+            <div class="kard cmp"><div class="tt">Command palette (⌘K) search</div><div class="foot"><span class="ktag feat">Feat</span><span class="av a3">JC</span></div></div>
+            <div class="kard cmp"><div class="tt">Skeleton loading states</div><div class="foot"><span class="ktag chore">Chore</span><span class="av a5">TB</span></div></div>
+            <div class="kard cmp"><div class="tt">Filter rail facets</div><div class="foot"><span class="ktag feat">Feat</span><span class="av a4">NB</span></div></div>
+          </div>
+        </div>
+        <div class="col" style="flex:2">
+          <div class="col-h"><span class="dot review"></span><span class="nm">Review</span><span class="ct">3</span><button class="add"><svg class="ico"><use href="#i-plus"/></svg></button></div>
+          <div class="col-b compact">
+            <div class="kard cmp"><div class="tt">Benchmark table virtualization</div><div class="foot"><span class="ktag research">Res</span><span class="av a5">TB</span></div></div>
+            <div class="kard cmp"><div class="tt">Status-by-shape badges</div><div class="foot"><span class="ktag feat">Feat</span><span class="av a1">AL</span></div></div>
+            <div class="kard cmp"><div class="tt">Pivot subtotal rows</div><div class="foot"><span class="ktag feat">Feat</span><span class="av a3">JC</span></div></div>
+          </div>
+        </div>
+        <!-- collapsed -->
+        <div class="col collapsed"><button class="col-strip done-strip"><svg class="ico exp"><use href="#i-expand"/></svg><span class="vtxt">Done</span><span class="vct">12</span></button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · BOARD + DETAIL DRAWER ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Board + detail drawer</div>
+      <p class="plate-recipe"><b>PULLS</b> — the board with a right-side detail drawer open for a selected card (title, description, checklist, comments) while the board stays visible behind. &nbsp;<b>WHY</b> — cards hold more than fits on their face; a drawer lets you open one in depth without losing the board's context the way a full-page route would.</p>
+    </div>
+    <div class="frame" style="position:relative;overflow:hidden">
+      <div class="btoolbar"><div><div class="crumb">Engineering / Sprint 24</div><h2>Sprint board</h2></div></div>
+      <div style="display:grid;grid-template-columns:1fr 360px">
+        <div class="board" style="padding:16px 18px">
+          <div class="col"><div class="col-h"><span class="dot todo"></span><span class="nm">To do</span><span class="ct">2</span></div><div class="col-b">
+            <div class="kard"><div class="tags"><span class="ktag feat">Feature</span></div><div class="tt">Add CSV export</div><div class="foot"><span class="av a1">AL</span></div></div>
+            <div class="kard"><div class="tags"><span class="ktag chore">Chore</span></div><div class="tt">Upgrade auth dep</div><div class="foot"><span class="av a2">RP</span></div></div>
+          </div></div>
+          <div class="col"><div class="col-h"><span class="dot prog"></span><span class="nm">In progress</span><span class="ct">2</span></div><div class="col-b">
+            <div class="kard selected"><div class="tags"><span class="ktag bug">Bug</span></div><div class="tt">Fix gateway timeout on renewals</div><div class="foot"><span class="av a2">RP</span><span class="due soon"><svg class="ico"><use href="#i-clock"/></svg>Today</span></div></div>
+            <div class="kard"><div class="tags"><span class="ktag feat">Feature</span></div><div class="tt">Report scheduling UI</div><div class="foot"><span class="av a1">AL</span></div></div>
+          </div></div>
+          <div class="col"><div class="col-h"><span class="dot review"></span><span class="nm">Review</span><span class="ct">1</span></div><div class="col-b">
+            <div class="kard"><div class="tags"><span class="ktag research">Research</span></div><div class="tt">Table virtualization</div><div class="foot"><span class="av a5">TB</span></div></div>
+          </div></div>
+        </div>
+        <!-- drawer -->
+        <aside style="border-left:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;max-height:560px">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line)"><div style="display:flex;align-items:center;gap:9px"><span class="ktag bug">Bug</span><span style="font-size:11.5px;color:var(--faint)" class="tnum">TASK-241</span></div><div style="display:flex;gap:4px"><button class="dbtn"><svg class="ico"><use href="#i-kebab"/></svg></button><button class="dbtn"><svg class="ico"><use href="#i-x"/></svg></button></div></div>
+          <div style="padding:18px;overflow:auto">
+            <h3 style="font-size:17px;font-weight:700;letter-spacing:-0.01em;line-height:1.3">Fix gateway timeout on renewals</h3>
+            <div style="display:flex;gap:18px;margin-top:14px">
+              <div><div class="dk">Assignee</div><div style="display:flex;align-items:center;gap:7px;margin-top:5px"><span class="av a2" style="width:24px;height:24px">RP</span><span style="font-size:12.5px;font-weight:600">Reza Pour</span></div></div>
+              <div><div class="dk">Due</div><div style="font-size:12.5px;font-weight:600;color:var(--warn);margin-top:7px">Today</div></div>
+              <div><div class="dk">Status</div><div style="font-size:12.5px;font-weight:600;margin-top:7px">In progress</div></div>
+            </div>
+            <div class="dk" style="margin-top:18px">Description</div>
+            <p style="font-size:13px;color:var(--mut);line-height:1.55;margin-top:6px">Charges intermittently fail with a 504 when the payment gateway is slow. Add a retry with backoff and surface a clearer error to the customer.</p>
+            <div class="dk" style="margin-top:18px;display:flex;justify-content:space-between">Checklist<span style="color:var(--faint);font-weight:600" class="tnum">2/3</span></div>
+            <div style="margin-top:8px">
+              <div class="dchk done"><span class="box"><svg class="ico"><use href="#i-check"/></svg></span>Reproduce with slow-gateway mock</div>
+              <div class="dchk done"><span class="box"><svg class="ico"><use href="#i-check"/></svg></span>Add retry with exponential backoff</div>
+              <div class="dchk"><span class="box"><svg class="ico"><use href="#i-check"/></svg></span>Surface customer-facing error copy</div>
+            </div>
+            <div class="dk" style="margin-top:18px">Comments</div>
+            <div style="display:flex;gap:9px;margin-top:10px"><span class="av a1" style="width:26px;height:26px;flex-shrink:0">AL</span><div><div style="font-size:12.5px"><b>Ava Lindqvist</b> <span style="color:var(--faint)">· 1h</span></div><div style="font-size:12.5px;color:var(--mut);margin-top:2px">Backoff looks good — let's cap at 3 retries.</div></div></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · EMPTY BOARD (FIRST-RUN) ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Empty board</div>
+      <p class="plate-recipe"><b>PULLS</b> — columns present but empty with subtle add-card prompts + an overall first-run hint with a primary CTA. The <b>empty / first-run state</b>. &nbsp;<b>WHY</b> — a new board is intimidating blank space; keeping the column structure visible while one clear CTA seeds the first task turns the void into an obvious starting point.</p>
+    </div>
+    <div class="frame">
+      <div class="btoolbar"><div><div class="crumb">Engineering / New board</div><h2>Untitled board</h2></div><div style="margin-left:auto"><button class="btn-pri"><svg class="ico"><use href="#i-plus"/></svg>Add your first task</button></div></div>
+      <div style="position:relative">
+        <div class="board" style="filter:saturate(.96)">
+          <div class="col"><div class="col-h"><span class="dot todo"></span><span class="nm">To do</span><span class="ct">0</span></div><div class="col-b"><button class="addcard"><svg class="ico"><use href="#i-plus"/></svg>Add card</button></div></div>
+          <div class="col"><div class="col-h"><span class="dot prog"></span><span class="nm">In progress</span><span class="ct">0</span></div><div class="col-b"><button class="addcard"><svg class="ico"><use href="#i-plus"/></svg>Add card</button></div></div>
+          <div class="col"><div class="col-h"><span class="dot review"></span><span class="nm">Review</span><span class="ct">0</span></div><div class="col-b"><button class="addcard"><svg class="ico"><use href="#i-plus"/></svg>Add card</button></div></div>
+          <div class="col"><div class="col-h"><span class="dot done"></span><span class="nm">Done</span><span class="ct">0</span></div><div class="col-b"><button class="addcard"><svg class="ico"><use href="#i-plus"/></svg>Add card</button></div></div>
+        </div>
+        <!-- overall first-run hint -->
+        <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:6px 24px 40px">
+          <div style="width:60px;height:60px;border-radius:16px;background:var(--accent-tint);display:flex;align-items:center;justify-content:center;color:var(--accent-ink);margin-bottom:15px"><svg class="ico" style="width:28px;height:28px"><use href="#i-board"/></svg></div>
+          <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.01em">Your board is ready</h3>
+          <p style="font-size:13.5px;color:var(--mut);margin-top:7px;max-width:42ch;line-height:1.55">Add your first task to To do, then drag it across the columns as the work moves. You can rename or add columns anytime.</p>
+          <div style="display:flex;gap:10px;margin-top:16px"><button class="btn-pri"><svg class="ico"><use href="#i-plus"/></svg>Add a task</button><button class="btn-sec">Import from CSV</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.seg{display:inline-flex;background:var(--inset);border:1px solid var(--line);border-radius:8px;padding:2px;}
+.seg button{font-size:12px;font-weight:600;color:var(--mut);padding:5px 11px;border-radius:6px;}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.07);}
+.seg-lbl{font-size:12px;color:var(--faint);}
+/* swimlanes */
+.lane-cols{display:grid;grid-template-columns:120px repeat(4,1fr);gap:12px;padding:8px 0 4px;margin-left:0;}
+.lane-cols .lh{grid-column:auto;font-size:11.5px;font-weight:700;color:var(--mut);display:flex;align-items:center;gap:7px;}
+.lane-cols .lh:first-child{grid-column:2;}
+.lane-cols .lct{font-size:10.5px;color:var(--faint);background:var(--inset);border-radius:999px;padding:0 6px;}
+.lane{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:stretch;border-top:1px solid var(--line);padding:12px 0;}
+.lane-label{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--ink);padding-top:4px;}
+.pri-dot{width:8px;height:8px;border-radius:50%;} .pri-dot.bad{background:var(--bad);} .pri-dot.warn{background:var(--warn);} .pri-dot.ok{background:var(--ok);}
+.lane-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.lcell{background:var(--col-bg);border:1px solid var(--line);border-radius:9px;padding:8px;min-height:64px;}
+.lcell .kard{box-shadow:none;}
+/* compact */
+.col.collapsed{flex:0 0 44px;min-width:44px;background:var(--col-bg);}
+.col-strip{width:44px;height:100%;min-height:220px;display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px 0;color:var(--mut);}
+.col-strip .exp{width:15px;height:15px;}
+.col-strip .vtxt{writing-mode:vertical-rl;font-size:12px;font-weight:700;letter-spacing:.02em;}
+.col-strip .vct{font-size:11px;font-weight:700;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:2px 6px;}
+.col-strip:hover{color:var(--ink);}
+.col-b.compact{gap:6px;}
+.kard.cmp{padding:8px 10px;}
+.kard.cmp .tt{font-size:12.5px;}
+.kard.cmp .foot{margin-top:7px;align-items:center;}
+.kard.cmp .ktag{font-size:9px;padding:1px 5px;}
+.kard.cmp .av{width:18px;height:18px;font-size:8px;margin-left:auto;}
+.kard.cmp .due{margin-left:0;}
+/* drawer */
+.kard.selected{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-tint);}
+.dbtn{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--mut);} .dbtn:hover{background:var(--inset);color:var(--ink);} .dbtn .ico{width:16px;height:16px;}
+.dk{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);}
+.dchk{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink);padding:6px 0;}
+.dchk .box{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line-2);background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;}
+.dchk .box .ico{width:11px;height:11px;opacity:0;}
+.dchk.done .box{background:var(--accent);border-color:var(--accent);} .dchk.done .box .ico{opacity:1;} .dchk.done{color:var(--faint);text-decoration:line-through;}
+/* skin table */
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame [style*="grid-template-columns:1fr 360px"]{grid-template-columns:1fr!important;}
+  .lane-grid{grid-template-columns:repeat(2,1fr);} .lane-cols{display:none;}
+}
+</style>
+</body>
+</html>

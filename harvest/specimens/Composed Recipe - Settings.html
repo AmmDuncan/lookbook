@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Settings (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Settings · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin (off-white page, white surfaces, hairline borders, slightly
+   rounded corners, one blue accent, system sans + tabular figures). Only
+   composition + interaction varies. Toggles show a visible sliding thumb. AA.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF; --bad:#C0392B; --bad-t:#F9E8E5;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input,select{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+
+.btn-pri{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:9px 15px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-sec{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:12.5px;font-weight:600;padding:8px 13px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+.btn-danger{display:inline-flex;align-items:center;gap:7px;background:var(--bad);color:#fff;font-size:12.5px;font-weight:600;padding:8px 13px;border-radius:8px;}
+.btn-danger.outline{background:var(--surface);color:var(--bad);border:1px solid #e6bcb6;}
+.btn-danger .ico{width:14px;height:14px;}
+
+/* field */
+.fld{display:block;}
+.fld .lab{font-size:12.5px;font-weight:600;color:var(--mut);margin-bottom:6px;display:block;}
+.input,.selectw select{width:100%;font-size:13px;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:9px 11px;outline:none;}
+.input:focus,.selectw select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+.selectw{position:relative;}
+.selectw select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:30px;}
+.selectw .ico{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:12px;height:12px;color:var(--mut);pointer-events:none;}
+.hint{font-size:11.5px;color:var(--faint);margin-top:6px;}
+
+/* ===== TOGGLE — visible contrasting sliding thumb, left=off / right=on ===== */
+.tgl{display:inline-flex;align-items:center;width:42px;height:24px;border-radius:999px;background:#CDD2DA;border:1px solid var(--line-2);padding:2px;cursor:pointer;transition:background .15s,border-color .15s;flex-shrink:0;}
+.tgl .thumb{width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(20,24,31,.35);transition:transform .16s cubic-bezier(.3,.8,.4,1);}
+.tgl.on{background:var(--accent);border-color:var(--accent);}
+.tgl.on .thumb{transform:translateX(18px);}
+.tgl:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+
+/* setting row with toggle */
+.srow{display:flex;align-items:center;gap:16px;padding:15px 0;border-bottom:1px solid var(--inset);}
+.srow:last-child{border-bottom:none;}
+.srow .meta{flex:1;min-width:0;}
+.srow .st{font-size:13.5px;font-weight:600;}
+.srow .sd{font-size:12px;color:var(--faint);margin-top:2px;line-height:1.45;}
+
+.sec-t{font-size:15px;font-weight:700;letter-spacing:-0.01em;}
+.sec-sub{font-size:12.5px;color:var(--mut);margin-top:2px;}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></symbol>
+  <symbol id="i-account" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M7 15h4"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Settings · one skin, five compositions</div>
+    <h1>Same skin. Five ways to lay out settings.</h1>
+    <p>One settings surface — profile, notifications, billing, security — composed five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white surfaces with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. Toggles render a clearly visible sliding thumb (left = off, right = on). What changes is purely <em>composition and interaction</em>.</p>
+  </header>
+
+  <!-- ============== 1 · SECTION NAV + FORM ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Section nav + form</div>
+      <p class="plate-recipe"><b>PULLS</b> — a left settings nav (Profile / Account / Notifications / Billing / Security) + right grouped field sections + a sticky bottom Save bar (Save / Cancel). &nbsp;<b>WHY</b> — the standard settings layout: a persistent nav scopes a large surface into chapters, and a sticky save bar makes pending changes unmissable.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:212px 1fr;min-height:500px">
+      <aside style="border-right:1px solid var(--line);background:var(--surface);padding:18px 14px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);padding:6px 10px 9px">Settings</div>
+        <nav style="display:flex;flex-direction:column;gap:1px">
+          <a href="#" class="snav on"><svg class="ico"><use href="#i-user"/></svg>Profile</a>
+          <a href="#" class="snav"><svg class="ico"><use href="#i-account"/></svg>Account</a>
+          <a href="#" class="snav"><svg class="ico"><use href="#i-bell"/></svg>Notifications</a>
+          <a href="#" class="snav"><svg class="ico"><use href="#i-card"/></svg>Billing</a>
+          <a href="#" class="snav"><svg class="ico"><use href="#i-shield"/></svg>Security</a>
+        </nav>
+      </aside>
+      <div style="display:flex;flex-direction:column;min-height:0">
+        <div style="padding:22px 26px;overflow:auto;flex:1">
+          <div class="sec-t">Profile</div>
+          <div class="sec-sub" style="margin-bottom:20px">This information is visible to your teammates.</div>
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:22px">
+            <span style="width:60px;height:60px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center">MR</span>
+            <button class="btn-sec"><svg class="ico"><use href="#i-camera"/></svg>Change photo</button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:560px">
+            <label class="fld"><span class="lab">First name</span><input class="input" value="Mara"></label>
+            <label class="fld"><span class="lab">Last name</span><input class="input" value="Reyes"></label>
+            <label class="fld" style="grid-column:span 2"><span class="lab">Email</span><input class="input" value="mara@harbor.app"></label>
+            <label class="fld" style="grid-column:span 2"><span class="lab">Role title</span><input class="input" value="Product designer"></label>
+            <label class="fld" style="grid-column:span 2"><span class="lab">Time zone</span><div class="selectw"><select><option>(GMT−08:00) Pacific Time</option><option>(GMT+00:00) UTC</option></select><svg class="ico"><use href="#i-chev"/></svg></div></label>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:13px 26px;border-top:1px solid var(--line);background:var(--surface)">
+          <span style="font-size:12px;color:var(--warn);font-weight:600">● Unsaved changes</span>
+          <div style="margin-left:auto;display:flex;gap:9px"><button class="btn-sec">Cancel</button><button class="btn-pri"><svg class="ico"><use href="#i-check"/></svg>Save changes</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · TABBED SETTINGS ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Tabbed settings</div>
+      <p class="plate-recipe"><b>PULLS</b> — horizontal tabs across the top + grouped setting cards below. &nbsp;<b>WHY</b> — for a flatter surface with a handful of areas: tabs read as peers and keep the content full-width, which suits cards better than a narrow nav column.</p>
+    </div>
+    <div class="frame" style="padding:0">
+      <div style="padding:18px 24px 0;background:var(--surface);border-bottom:1px solid var(--line)">
+        <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em;margin-bottom:12px">Workspace settings</div>
+        <div class="tabs" id="t2tabs"><button class="on">General</button><button>Members</button><button>Notifications</button><button>Integrations</button><button>Billing</button></div>
+      </div>
+      <div style="padding:22px 24px;display:flex;flex-direction:column;gap:16px">
+        <div class="card" style="padding:20px 22px">
+          <div class="sec-t" style="margin-bottom:16px">General</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:620px">
+            <label class="fld"><span class="lab">Workspace name</span><input class="input" value="Harbor Inc"></label>
+            <label class="fld"><span class="lab">Workspace URL</span><input class="input" value="harbor.app/inc"></label>
+          </div>
+        </div>
+        <div class="card" style="padding:8px 22px">
+          <div class="srow"><div class="meta"><div class="st">Public workspace</div><div class="sd">Anyone with the link can view shared pages.</div></div><span class="tgl" role="switch" aria-checked="false"><span class="thumb"></span></span></div>
+          <div class="srow"><div class="meta"><div class="st">Allow member invites</div><div class="sd">Members can invite others without admin approval.</div></div><span class="tgl on" role="switch" aria-checked="true"><span class="thumb"></span></span></div>
+          <div class="srow"><div class="meta"><div class="st">Weekly digest email</div><div class="sd">Send a Monday summary of workspace activity.</div></div><span class="tgl on" role="switch" aria-checked="true"><span class="thumb"></span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · SINGLE SCROLL + ANCHORED NAV ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Single scroll + anchored nav</div>
+      <p class="plate-recipe"><b>PULLS</b> — a long single-page settings layout with a sticky left anchored sub-nav (scroll-spy highlights the active section). &nbsp;<b>WHY</b> — when settings are read more than navigated: one continuous page lets users skim everything, while the outline tracks position and jumps on click.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:184px 1fr;min-height:480px">
+      <nav style="border-right:1px solid var(--line);background:var(--surface);padding:22px 14px">
+        <div style="position:sticky;top:22px">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:11px;padding-left:10px">On this page</div>
+          <div id="a3nav" style="display:flex;flex-direction:column;gap:2px">
+            <button class="a3link on" data-s="a3-general">General</button>
+            <button class="a3link" data-s="a3-appearance">Appearance</button>
+            <button class="a3link" data-s="a3-privacy">Privacy</button>
+            <button class="a3link" data-s="a3-advanced">Advanced</button>
+          </div>
+        </div>
+      </nav>
+      <div id="a3scroll" style="overflow:auto;max-height:520px;padding:26px 30px">
+        <section id="a3-general" style="padding-bottom:28px;border-bottom:1px solid var(--line)">
+          <div class="sec-t">General</div><div class="sec-sub" style="margin-bottom:16px">Basic preferences for your account.</div>
+          <label class="fld" style="max-width:420px"><span class="lab">Display language</span><div class="selectw"><select><option>English (US)</option><option>Deutsch</option></select><svg class="ico"><use href="#i-chev"/></svg></div></label>
+          <div class="srow" style="max-width:520px;margin-top:8px"><div class="meta"><div class="st">Start week on Monday</div><div class="sd">Affects calendars and reports.</div></div><span class="tgl on"><span class="thumb"></span></span></div>
+        </section>
+        <section id="a3-appearance" style="padding:28px 0;border-bottom:1px solid var(--line)">
+          <div class="sec-t">Appearance</div><div class="sec-sub" style="margin-bottom:16px">How the app looks for you.</div>
+          <div class="srow" style="max-width:520px"><div class="meta"><div class="st">Compact density</div><div class="sd">Tighter spacing across tables and lists.</div></div><span class="tgl"><span class="thumb"></span></span></div>
+          <div class="srow" style="max-width:520px"><div class="meta"><div class="st">Reduce motion</div><div class="sd">Minimize animations and transitions.</div></div><span class="tgl"><span class="thumb"></span></span></div>
+        </section>
+        <section id="a3-privacy" style="padding:28px 0;border-bottom:1px solid var(--line)">
+          <div class="sec-t">Privacy</div><div class="sec-sub" style="margin-bottom:16px">Control what's shared.</div>
+          <div class="srow" style="max-width:520px"><div class="meta"><div class="st">Show online status</div><div class="sd">Let teammates see when you're active.</div></div><span class="tgl on"><span class="thumb"></span></span></div>
+          <div class="srow" style="max-width:520px"><div class="meta"><div class="st">Usage analytics</div><div class="sd">Share anonymous usage data to improve the product.</div></div><span class="tgl"><span class="thumb"></span></span></div>
+        </section>
+        <section id="a3-advanced" style="padding:28px 0 0">
+          <div class="sec-t">Advanced</div><div class="sec-sub" style="margin-bottom:16px">For power users.</div>
+          <div class="srow" style="max-width:520px"><div class="meta"><div class="st">Developer mode</div><div class="sd">Expose API tokens and webhooks.</div></div><span class="tgl"><span class="thumb"></span></span></div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · PREFERENCES TOGGLES ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Preferences toggles</div>
+      <p class="plate-recipe"><b>PULLS</b> — rows of preference toggles grouped by category, each row a label + description + a toggle with a visible thumb, mixing on and off states. &nbsp;<b>WHY</b> — for notification-style settings that are almost all booleans: a clean grouped list of toggles is the most direct mapping of “turn this on or off.”</p>
+    </div>
+    <div class="frame" style="padding:22px 24px">
+      <div style="max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:18px">
+        <div>
+          <div class="grp-t">Email notifications</div>
+          <div class="card" style="padding:6px 20px">
+            <div class="srow"><div class="meta"><div class="st">Mentions</div><div class="sd">When someone @mentions you.</div></div><span class="tgl on"><span class="thumb"></span></span></div>
+            <div class="srow"><div class="meta"><div class="st">Comments</div><div class="sd">Replies on threads you follow.</div></div><span class="tgl on"><span class="thumb"></span></span></div>
+            <div class="srow"><div class="meta"><div class="st">Weekly digest</div><div class="sd">A Monday summary of activity.</div></div><span class="tgl"><span class="thumb"></span></span></div>
+            <div class="srow"><div class="meta"><div class="st">Product updates</div><div class="sd">News about new features.</div></div><span class="tgl"><span class="thumb"></span></span></div>
+          </div>
+        </div>
+        <div>
+          <div class="grp-t">Push notifications</div>
+          <div class="card" style="padding:6px 20px">
+            <div class="srow"><div class="meta"><div class="st">Direct messages</div><div class="sd">Push when you get a DM.</div></div><span class="tgl on"><span class="thumb"></span></span></div>
+            <div class="srow"><div class="meta"><div class="st">Assigned to me</div><div class="sd">When a task is assigned to you.</div></div><span class="tgl on"><span class="thumb"></span></span></div>
+            <div class="srow"><div class="meta"><div class="st">Reminders</div><div class="sd">Upcoming due dates and events.</div></div><span class="tgl"><span class="thumb"></span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · DANGER ZONE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Danger zone</div>
+      <p class="plate-recipe"><b>PULLS</b> — an account section + a clearly separated danger-zone card (Delete account, Export data) with a confirm affordance. &nbsp;<b>WHY</b> — destructive actions need distance and friction: a red-bordered zone set apart from normal settings, plus a typed-confirm step, prevents costly mistakes.</p>
+    </div>
+    <div class="frame" style="padding:22px 24px">
+      <div style="max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:18px">
+        <div class="card" style="padding:8px 22px">
+          <div class="srow"><div class="meta"><div class="st">Two-factor authentication</div><div class="sd">Require a code at sign-in.</div></div><span class="tgl on"><span class="thumb"></span></span></div>
+          <div class="srow"><div class="meta"><div class="st">Active sessions</div><div class="sd">3 devices currently signed in.</div></div><button class="btn-sec">Manage</button></div>
+        </div>
+        <div style="border:1px solid #e6bcb6;border-radius:12px;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:9px;padding:13px 20px;background:var(--bad-t);border-bottom:1px solid #e6bcb6"><svg class="ico" style="width:16px;height:16px;color:var(--bad)"><use href="#i-warn"/></svg><span style="font-size:13px;font-weight:700;color:var(--bad)">Danger zone</span></div>
+          <div style="background:var(--surface)">
+            <div class="dz"><div class="meta"><div class="st">Export account data</div><div class="sd">Download a copy of all your data as a ZIP archive.</div></div><button class="btn-danger outline"><svg class="ico"><use href="#i-download"/></svg>Export data</button></div>
+            <div class="dz" style="border-top:1px solid var(--inset)"><div class="meta"><div class="st">Delete account</div><div class="sd">Permanently remove your account and all data. This cannot be undone.</div></div><button class="btn-danger" id="dzdel"><svg class="ico"><use href="#i-trash"/></svg>Delete account</button></div>
+            <div id="dzconfirm" style="display:none;border-top:1px solid var(--inset);background:var(--bad-t);padding:16px 20px">
+              <div style="font-size:12.5px;color:var(--ink);margin-bottom:9px">Type <b>DELETE</b> to confirm. This permanently removes your account.</div>
+              <div style="display:flex;gap:9px"><input class="input" placeholder="DELETE" style="max-width:200px"><button class="btn-danger">Permanently delete</button><button class="btn-sec" id="dzcancel">Cancel</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.snav{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:7px;font-size:13px;font-weight:500;color:var(--mut);text-decoration:none;}
+.snav .ico{width:16px;height:16px;}
+.snav:hover{background:var(--inset);color:var(--ink);}
+.snav.on{background:var(--accent-tint);color:var(--accent-ink);font-weight:600;}
+.tabs{display:flex;gap:22px;}
+.tabs button{font-size:13.5px;font-weight:600;color:var(--faint);padding:0 0 12px;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.tabs button:hover{color:var(--ink);} .tabs button.on{color:var(--accent);border-bottom-color:var(--accent);}
+.a3link{text-align:left;font-size:13px;font-weight:500;color:var(--mut);padding:7px 10px;border-radius:7px;border-left:2px solid transparent;}
+.a3link:hover{background:var(--inset);color:var(--ink);}
+.a3link.on{color:var(--accent-ink);background:var(--accent-tint);font-weight:600;border-left-color:var(--accent);}
+.grp-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin-bottom:9px;padding-left:2px;}
+.dz{display:flex;align-items:center;gap:16px;padding:16px 20px;}
+.dz .meta{flex:1;} .dz .st{font-size:13.5px;font-weight:600;} .dz .sd{font-size:12px;color:var(--faint);margin-top:2px;line-height:1.45;}
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame[style*="grid-template-columns:212px 1fr"],.frame[style*="grid-template-columns:184px 1fr"]{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script>
+/* all toggles flip on click */
+document.querySelectorAll('.tgl').forEach(function(t){
+  t.addEventListener('click',function(){var on=t.classList.toggle('on');t.setAttribute('aria-checked',on);});
+});
+/* tabbed */
+(function(){var t=document.getElementById('t2tabs');t.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;t.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');});})();
+/* anchored scroll-spy */
+(function(){
+  var scroll=document.getElementById('a3scroll'),nav=document.getElementById('a3nav');if(!scroll)return;
+  var links=[].slice.call(nav.querySelectorAll('.a3link')),ids=links.map(function(l){return l.dataset.s;});
+  nav.addEventListener('click',function(e){var b=e.target.closest('.a3link');if(!b)return;var t=document.getElementById(b.dataset.s);if(t)scroll.scrollTo({top:t.offsetTop-26,behavior:'smooth'});});
+  scroll.addEventListener('scroll',function(){var pos=scroll.scrollTop+60,active=ids[0];ids.forEach(function(id){var el=document.getElementById(id);if(el&&el.offsetTop<=pos)active=id;});links.forEach(function(l){l.classList.toggle('on',l.dataset.s===active);});});
+})();
+/* danger zone confirm */
+(function(){
+  var del=document.getElementById('dzdel'),c=document.getElementById('dzconfirm'),cancel=document.getElementById('dzcancel');
+  del.addEventListener('click',function(){c.style.display='block';del.style.display='none';});
+  cancel.addEventListener('click',function(){c.style.display='none';del.style.display='';});
+})();
+</script>
+</body>
+</html>

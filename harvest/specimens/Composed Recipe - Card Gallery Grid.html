@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — List / index, card &amp; gallery grid (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Card & gallery grid · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin (off-white page, white cards, hairline borders, one blue
+   accent, system sans + tabular figures). Only composition + interaction varies.
+   Loading + empty states covered. WCAG AA throughout.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF;
+  --bad:#C0392B; --bad-t:#F9E8E5; --neu:#586070; --neu-t:#EDEFF2;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --shadow-lift:0 12px 28px -12px rgba(20,24,31,.28);
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:10px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);}
+
+/* image placeholder — subtle hairline stripes + mono label */
+.ph{position:relative;background:var(--inset);background-image:repeating-linear-gradient(135deg,transparent,transparent 7px,rgba(27,30,35,0.035) 7px,rgba(27,30,35,0.035) 8px);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.ph span{font-family:var(--mono);font-size:10px;color:var(--faint);background:var(--surface);padding:2px 8px;border-radius:4px;border:1px solid var(--line);letter-spacing:.02em;}
+
+/* toolbar bits */
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:8px 11px;color:var(--faint);}
+.search .ico{width:15px;height:15px;}
+.search input{border:none;outline:none;background:none;font-size:13px;color:var(--ink);width:100%;}
+.drop{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:8px 11px;font-size:13px;font-weight:500;color:var(--ink);}
+.drop .lbl{color:var(--faint);}
+.drop .ico{width:13px;height:13px;color:var(--mut);}
+.btn-pri{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:9px 15px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-sec{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+.seg{display:inline-flex;background:var(--inset);border:1px solid var(--line);border-radius:8px;padding:2px;}
+.seg button{font-size:12.5px;font-weight:600;color:var(--mut);padding:6px 13px;border-radius:6px;}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.07);}
+.viewtog{display:inline-flex;background:var(--inset);border:1px solid var(--line);border-radius:8px;padding:2px;}
+.viewtog button{width:32px;height:30px;border-radius:6px;color:var(--mut);display:flex;align-items:center;justify-content:center;}
+.viewtog button .ico{width:16px;height:16px;}
+.viewtog button.on{background:var(--surface);color:var(--accent);box-shadow:0 1px 2px rgba(0,0,0,.07);}
+
+/* tag chip */
+.tagchip{display:inline-flex;align-items:center;align-self:flex-start;width:fit-content;font-size:11px;font-weight:600;color:var(--mut);background:var(--inset);border:1px solid var(--line);border-radius:6px;padding:2px 8px;}
+.tagchip.acc{color:var(--accent-ink);background:var(--accent-tint);border-color:#cdddf6;}
+
+/* price */
+.price{font-weight:700;letter-spacing:-0.01em;}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-chevr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chevl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-rows" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51 8.59 10.49"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.06 12.34a1 1 0 0 1 0-.68 10.94 10.94 0 0 1 19.88 0 1 1 0 0 1 0 .68 10.94 10.94 0 0 1-19.88 0Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Card &amp; gallery grid · one skin, five compositions</div>
+    <h1>Same skin. Five ways to grid it.</h1>
+    <p>Every frame wears the <em>same neutral skin</em> — off-white page, white cards with hairline borders, one restrained blue accent, system sans with tabular figures. What changes is purely <em>composition and interaction</em>: how cards are sized and grouped, where filters live, how you browse and select. Loading and empty states are covered; the skin is the paint, the composition is the skeleton.</p>
+  </header>
+
+  <!-- ============== 1 · GALLERY GRID ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Gallery grid</div>
+      <p class="plate-recipe"><b>PULLS</b> — top toolbar (search + sort dropdown + grid/list view toggle) + responsive 3–4-col card grid (thumbnail + title + meta + tag chip) + numbered pagination · one card hovered reveals a quick-action row. &nbsp;<b>WHY</b> — the everyday asset/library view: equal cards scan fast, the view toggle respects density preference, and hover actions keep cards calm until you reach for them.</p>
+    </div>
+    <div class="frame" style="padding:20px 24px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+        <div class="search" style="width:260px"><svg class="ico"><use href="#i-search"/></svg><input placeholder="Search assets…"></div>
+        <span class="drop"><span class="lbl">Sort:</span>Recently added<svg class="ico"><use href="#i-chev"/></svg></span>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+          <span style="font-size:12.5px;color:var(--faint)" class="tnum">128 items</span>
+          <div class="viewtog"><button class="on"><svg class="ico"><use href="#i-grid"/></svg></button><button><svg class="ico"><use href="#i-rows"/></svg></button></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px" id="g1grid">
+        <!-- card with hover quick-actions (shown active as the demo) -->
+        <div class="g1card hovered">
+          <div class="ph" style="aspect-ratio:4/3"><span>cover · 1600×1200</span>
+            <div class="g1quick">
+              <button title="Preview"><svg class="ico"><use href="#i-eye"/></svg></button>
+              <button title="Save"><svg class="ico"><use href="#i-heart"/></svg></button>
+              <button title="Share"><svg class="ico"><use href="#i-share"/></svg></button>
+              <button title="More"><svg class="ico"><use href="#i-more"/></svg></button>
+            </div>
+          </div>
+          <div class="g1meta"><div class="g1tt">Aurora landing hero</div><div class="g1sub">Updated 2h ago · 4 MB</div><span class="tagchip acc" style="margin-top:9px">Marketing</span></div>
+        </div>
+        <div class="g1card"><div class="ph" style="aspect-ratio:4/3"><span>cover</span></div><div class="g1meta"><div class="g1tt">Mobile onboarding</div><div class="g1sub">Updated 5h ago · 2 MB</div><span class="tagchip" style="margin-top:9px">Product</span></div></div>
+        <div class="g1card"><div class="ph" style="aspect-ratio:4/3"><span>cover</span></div><div class="g1meta"><div class="g1tt">Brand guidelines</div><div class="g1sub">Updated 1d ago · 8 MB</div><span class="tagchip" style="margin-top:9px">Brand</span></div></div>
+        <div class="g1card"><div class="ph" style="aspect-ratio:4/3"><span>cover</span></div><div class="g1meta"><div class="g1tt">Q3 campaign set</div><div class="g1sub">Updated 1d ago · 12 MB</div><span class="tagchip" style="margin-top:9px">Marketing</span></div></div>
+        <div class="g1card"><div class="ph" style="aspect-ratio:4/3"><span>cover</span></div><div class="g1meta"><div class="g1tt">Pricing illustrations</div><div class="g1sub">Updated 3d ago · 3 MB</div><span class="tagchip" style="margin-top:9px">Illustration</span></div></div>
+        <div class="g1card"><div class="ph" style="aspect-ratio:4/3"><span>cover</span></div><div class="g1meta"><div class="g1tt">Dashboard shots</div><div class="g1sub">Updated 4d ago · 6 MB</div><span class="tagchip" style="margin-top:9px">Product</span></div></div>
+        <div class="g1card"><div class="ph" style="aspect-ratio:4/3"><span>cover</span></div><div class="g1meta"><div class="g1tt">Event banners</div><div class="g1sub">Updated 5d ago · 5 MB</div><span class="tagchip" style="margin-top:9px">Marketing</span></div></div>
+        <div class="g1card"><div class="ph" style="aspect-ratio:4/3"><span>cover</span></div><div class="g1meta"><div class="g1tt">Icon library</div><div class="g1sub">Updated 1w ago · 1 MB</div><span class="tagchip" style="margin-top:9px">Brand</span></div></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+        <div style="font-size:12.5px;color:var(--mut)">Showing <b>1–8</b> of <b>128</b></div>
+        <div class="g1pag" id="g1pag" style="display:flex;gap:3px">
+          <button class="nav"><svg class="ico" style="width:14px;height:14px"><use href="#i-chevl"/></svg></button>
+          <button class="on">1</button><button>2</button><button>3</button><button>4</button>
+          <button style="color:var(--faint)">…</button><button>16</button>
+          <button class="nav"><svg class="ico" style="width:14px;height:14px"><use href="#i-chevr"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · FILTER-RAIL GALLERY ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Filter-rail gallery</div>
+      <p class="plate-recipe"><b>PULLS</b> — left faceted filter rail (category checkboxes, price &amp; size ranges) + even card grid + removable applied-filter chips above results + “load more” that reveals <b>skeleton cards</b> (the loading state). &nbsp;<b>WHY</b> — catalogs are narrowed by attributes; the rail and echoed chips keep the active query visible, and skeleton cards make incremental load feel instant rather than empty.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:240px 1fr;min-height:520px">
+      <aside style="background:var(--surface);border-right:1px solid var(--line);padding:22px 20px;display:flex;flex-direction:column;gap:24px">
+        <div style="font-size:15px;font-weight:700">Filters</div>
+        <div>
+          <div class="ft">Category</div>
+          <div class="f2check on" data-f="Photos"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Photos<span class="ct">82</span></div>
+          <div class="f2check on" data-f="Illustration"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Illustration<span class="ct">34</span></div>
+          <div class="f2check" data-f="3D"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>3D renders<span class="ct">12</span></div>
+          <div class="f2check" data-f="UI"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>UI kits<span class="ct">9</span></div>
+        </div>
+        <div>
+          <div class="ft">Price</div>
+          <input type="range" min="0" max="200" value="40" id="f2price" style="width:100%;accent-color:var(--accent)">
+          <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--mut);margin-top:7px" class="tnum"><span>Free</span><span>≤ <b id="f2pricev">$40</b></span><span>$200</span></div>
+        </div>
+        <div>
+          <div class="ft">Minimum size</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="f2size on">S</button><button class="f2size on">M</button><button class="f2size">L</button><button class="f2size">XL</button>
+          </div>
+        </div>
+      </aside>
+      <div style="padding:22px 24px;display:flex;flex-direction:column;gap:16px;min-width:0">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap" id="f2chips">
+          <span style="font-size:11.5px;color:var(--faint)">Applied:</span>
+          <span class="f2chip" data-f="Photos">Photos<button aria-label="Remove"><svg class="ico"><use href="#i-x"/></svg></button></span>
+          <span class="f2chip" data-f="Illustration">Illustration<button aria-label="Remove"><svg class="ico"><use href="#i-x"/></svg></button></span>
+          <span class="f2chip" data-f="price">≤ $40<button aria-label="Remove"><svg class="ico"><use href="#i-x"/></svg></button></span>
+          <button id="f2clear" style="font-size:12px;color:var(--mut);text-decoration:underline;text-underline-offset:2px">Clear all</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" id="f2grid">
+          <div class="g2card"><div class="ph" style="aspect-ratio:1/1"><span>asset</span></div><div class="g2meta"><div class="g2tt">Coastal series #4</div><div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px"><span class="g2sub">Photos</span><span class="price" style="font-size:13px">$24</span></div></div></div>
+          <div class="g2card"><div class="ph" style="aspect-ratio:1/1"><span>asset</span></div><div class="g2meta"><div class="g2tt">Abstract gradient</div><div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px"><span class="g2sub">Illustration</span><span class="price" style="font-size:13px">$18</span></div></div></div>
+          <div class="g2card"><div class="ph" style="aspect-ratio:1/1"><span>asset</span></div><div class="g2meta"><div class="g2tt">City at dusk</div><div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px"><span class="g2sub">Photos</span><span class="price" style="font-size:13px">$32</span></div></div></div>
+          <div class="g2card"><div class="ph" style="aspect-ratio:1/1"><span>asset</span></div><div class="g2meta"><div class="g2tt">Botanical line set</div><div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px"><span class="g2sub">Illustration</span><span class="price" style="font-size:13px">Free</span></div></div></div>
+          <div class="g2card"><div class="ph" style="aspect-ratio:1/1"><span>asset</span></div><div class="g2meta"><div class="g2tt">Studio portrait</div><div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px"><span class="g2sub">Photos</span><span class="price" style="font-size:13px">$28</span></div></div></div>
+          <div class="g2card"><div class="ph" style="aspect-ratio:1/1"><span>asset</span></div><div class="g2meta"><div class="g2tt">Texture pack</div><div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px"><span class="g2sub">Illustration</span><span class="price" style="font-size:13px">$12</span></div></div></div>
+        </div>
+        <button id="f2more" class="btn-sec" style="align-self:center"><svg class="ico"><use href="#i-chev"/></svg>Load more</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · COVER-FIRST / CATALOG ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Cover-first / catalog</div>
+      <p class="plate-recipe"><b>PULLS</b> — larger cover cards (image + title + price + secondary CTA) + category tabs across the top + a subtle hover lift. No dense data — a browse surface. &nbsp;<b>WHY</b> — commerce &amp; content catalogs lead with the image; big covers and a single secondary CTA invite browsing, while category tabs scope the shelf without a heavy filter UI.</p>
+    </div>
+    <div class="frame" style="padding:22px 24px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:6px">
+        <h2 style="font-size:21px;font-weight:700;letter-spacing:-0.01em">Marketplace</h2>
+        <button class="btn-sec"><svg class="ico"><use href="#i-sliders"/></svg>Filters</button>
+      </div>
+      <div style="display:flex;gap:24px;border-bottom:1px solid var(--line);margin-bottom:20px" id="g3tabs">
+        <button class="g3tab on">All</button><button class="g3tab">Templates</button><button class="g3tab">UI kits</button><button class="g3tab">Fonts</button><button class="g3tab">Icons</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+        <div class="g3card"><div class="ph" style="aspect-ratio:3/2"><span>product cover · 1200×800</span></div><div class="g3body"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px"><div><div class="g3tt">Horizon UI Kit</div><div class="g3sub">240 components · Figma</div></div><span class="g3rating"><svg class="ico" style="width:13px;height:13px;color:#C8901E"><use href="#i-star"/></svg>4.9</span></div><div class="g3foot"><span class="price" style="font-size:17px">$48</span><button class="btn-sec"><svg class="ico"><use href="#i-cart"/></svg>Add</button></div></div></div>
+        <div class="g3card"><div class="ph" style="aspect-ratio:3/2"><span>product cover</span></div><div class="g3body"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px"><div><div class="g3tt">Ledger Dashboard</div><div class="g3sub">Template · React</div></div><span class="g3rating"><svg class="ico" style="width:13px;height:13px;color:#C8901E"><use href="#i-star"/></svg>4.7</span></div><div class="g3foot"><span class="price" style="font-size:17px">$64</span><button class="btn-sec"><svg class="ico"><use href="#i-cart"/></svg>Add</button></div></div></div>
+        <div class="g3card"><div class="ph" style="aspect-ratio:3/2"><span>product cover</span></div><div class="g3body"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px"><div><div class="g3tt">Grotesk Display</div><div class="g3sub">Font family · 6 weights</div></div><span class="g3rating"><svg class="ico" style="width:13px;height:13px;color:#C8901E"><use href="#i-star"/></svg>5.0</span></div><div class="g3foot"><span class="price" style="font-size:17px">$29</span><button class="btn-sec"><svg class="ico"><use href="#i-cart"/></svg>Add</button></div></div></div>
+        <div class="g3card"><div class="ph" style="aspect-ratio:3/2"><span>product cover</span></div><div class="g3body"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px"><div><div class="g3tt">Motion Icons</div><div class="g3sub">320 animated · Lottie</div></div><span class="g3rating"><svg class="ico" style="width:13px;height:13px;color:#C8901E"><use href="#i-star"/></svg>4.8</span></div><div class="g3foot"><span class="price" style="font-size:17px">$39</span><button class="btn-sec"><svg class="ico"><use href="#i-cart"/></svg>Add</button></div></div></div>
+        <div class="g3card"><div class="ph" style="aspect-ratio:3/2"><span>product cover</span></div><div class="g3body"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px"><div><div class="g3tt">Atlas Charts</div><div class="g3sub">Template · Vue</div></div><span class="g3rating"><svg class="ico" style="width:13px;height:13px;color:#C8901E"><use href="#i-star"/></svg>4.6</span></div><div class="g3foot"><span class="price" style="font-size:17px">$54</span><button class="btn-sec"><svg class="ico"><use href="#i-cart"/></svg>Add</button></div></div></div>
+        <div class="g3card"><div class="ph" style="aspect-ratio:3/2"><span>product cover</span></div><div class="g3body"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px"><div><div class="g3tt">Canvas Pro Kit</div><div class="g3sub">180 components · Sketch</div></div><span class="g3rating"><svg class="ico" style="width:13px;height:13px;color:#C8901E"><use href="#i-star"/></svg>4.9</span></div><div class="g3foot"><span class="price" style="font-size:17px">$42</span><button class="btn-sec"><svg class="ico"><use href="#i-cart"/></svg>Add</button></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · COMPACT TILES / DENSE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Compact tiles / dense</div>
+      <p class="plate-recipe"><b>PULLS</b> — many small tiles per row (logo/avatar + short label + one stat) + segmented quick filters + tile multi-select (checkbox on hover) revealing a bulk-action bar. &nbsp;<b>WHY</b> — for scanning a large set fast (workspaces, integrations, repos): tiny tiles maximize how many you see at once, and hover-select keeps them clean until you act on several.</p>
+    </div>
+    <div class="frame" style="padding:20px 24px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div class="seg" id="t4seg"><button class="on" data-f="all">All</button><button data-f="connected">Connected</button><button data-f="available">Available</button></div>
+        <div class="search" style="width:200px;margin-left:auto"><svg class="ico"><use href="#i-search"/></svg><input placeholder="Filter…"></div>
+      </div>
+      <div id="t4bulk" style="display:none;align-items:center;gap:14px;margin-bottom:14px;padding:9px 14px;background:var(--accent-ink);color:#fff;border-radius:9px">
+        <span style="font-size:13px;font-weight:600"><span id="t4cnt">0</span> selected</span>
+        <div style="margin-left:auto;display:flex;gap:6px">
+          <button class="t4act">Connect</button><button class="t4act">Group</button><button class="t4act">Remove</button>
+        </div>
+        <button id="t4clear" style="color:#cfe0f6;font-size:12.5px">Clear</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px" id="t4grid">
+        <!-- tiles injected -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · SPOTLIGHT + GRID (EMPTY STATE) ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Spotlight + grid</div>
+      <p class="plate-recipe"><b>PULLS</b> — a featured hero card spanning full width on top, then a normal card grid below + (second panel) the <b>empty / first-run state</b>: a centered message, primary “Add” CTA, and a hint line. &nbsp;<b>WHY</b> — editorial &amp; home surfaces lead with one promoted item to set context, then the grid carries the rest; the empty state turns a blank first run into an obvious next step.</p>
+    </div>
+    <div class="frame" style="padding:22px 24px">
+      <div class="g5hero">
+        <div class="ph" style="aspect-ratio:auto"><span>featured cover · 2400×1000</span></div>
+        <div class="g5herobody">
+          <span class="tagchip acc">Featured</span>
+          <div class="g5herott">The 2026 Brand Refresh, end to end</div>
+          <p class="g5herosub">How the team rebuilt Harbor's identity system — tokens, components, and the rollout playbook — in one connected library.</p>
+          <div style="display:flex;gap:10px;margin-top:18px"><button class="btn-pri"><svg class="ico"><use href="#i-eye"/></svg>Open collection</button><button class="btn-sec">Save</button></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px">
+        <div class="g5card"><div class="ph" style="aspect-ratio:4/3"><span>cover</span></div><div class="g5meta"><div class="g5tt">Token reference</div><div class="g5sub">18 swatches</div></div></div>
+        <div class="g5card"><div class="ph" style="aspect-ratio:4/3"><span>cover</span></div><div class="g5meta"><div class="g5tt">Component specs</div><div class="g5sub">64 components</div></div></div>
+        <div class="g5card"><div class="ph" style="aspect-ratio:4/3"><span>cover</span></div><div class="g5meta"><div class="g5tt">Rollout playbook</div><div class="g5sub">12 pages</div></div></div>
+        <div class="g5card"><div class="ph" style="aspect-ratio:4/3"><span>cover</span></div><div class="g5meta"><div class="g5tt">Launch assets</div><div class="g5sub">26 files</div></div></div>
+      </div>
+      <div style="margin-top:24px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:8px">Empty / first-run state — shown when a collection has no items yet</div>
+        <div class="card" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:52px 24px">
+          <div style="width:72px;height:72px;border-radius:20px;background:var(--accent-tint);display:flex;align-items:center;justify-content:center;color:var(--accent-ink);margin-bottom:18px"><svg class="ico" style="width:32px;height:32px"><use href="#i-folder"/></svg></div>
+          <h3 style="font-size:19px;font-weight:700;letter-spacing:-0.01em">Start your first collection</h3>
+          <p style="font-size:14px;color:var(--mut);margin-top:8px;max-width:44ch;line-height:1.55">Collections group related covers, files, and links in one place. Add your first item to see it appear here.</p>
+          <button class="btn-pri" style="margin-top:20px"><svg class="ico"><use href="#i-plus"/></svg>Add an item</button>
+          <div style="font-size:12px;color:var(--faint);margin-top:12px">Tip — you can also drag files straight onto this panel.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is nothing more than a small set of <b>color + font tokens</b>. Pick ONE skin per product and apply it across whichever compositions you choose — the composition is the skeleton, the skin is the paint. Every composition above is drawn in the <b>Neutral</b> skin; swap the token row and the same skeletons render coherently in any of the others.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <div class="skin-row">
+        <div class="skin-name">Neutral<span>this page</span></div>
+        <div class="skin-chips">
+          <span class="tk"><b style="background:#F4F5F7"></b>bg<code>#F4F5F7</code></span>
+          <span class="tk"><b style="background:#FFFFFF;border-color:#D4D9DF"></b>surface<code>#FFFFFF</code></span>
+          <span class="tk"><b style="background:#1B1E23"></b>ink<code>#1B1E23</code></span>
+          <span class="tk"><b style="background:#2563CC"></b>accent<code>#2563CC</code></span>
+          <span class="tk font" style="font-family:system-ui">Aa<code>System sans</code></span>
+        </div>
+      </div>
+      <div class="skin-row">
+        <div class="skin-name">Warm<span>cream &amp; clay</span></div>
+        <div class="skin-chips">
+          <span class="tk"><b style="background:#F4EEE4"></b>bg<code>#F4EEE4</code></span>
+          <span class="tk"><b style="background:#FFFDF9;border-color:#DCCFB6"></b>surface<code>#FFFDF9</code></span>
+          <span class="tk"><b style="background:#2C2620"></b>ink<code>#2C2620</code></span>
+          <span class="tk"><b style="background:#A8502E"></b>accent<code>#A8502E</code></span>
+          <span class="tk font" style="font-family:'Hanken Grotesk'">Aa<code>Hanken Grotesk</code></span>
+        </div>
+      </div>
+      <div class="skin-row">
+        <div class="skin-name">Dark<span>ops console</span></div>
+        <div class="skin-chips">
+          <span class="tk"><b style="background:#0D1117"></b>bg<code>#0D1117</code></span>
+          <span class="tk"><b style="background:#161B22;border-color:#30363d"></b>surface<code>#161B22</code></span>
+          <span class="tk"><b style="background:#E6EDF3;border-color:#D4D9DF"></b>ink<code>#E6EDF3</code></span>
+          <span class="tk"><b style="background:#3FB950"></b>accent<code>#3FB950</code></span>
+          <span class="tk font" style="font-family:system-ui">Aa<code>System sans</code></span>
+        </div>
+      </div>
+      <div class="skin-row" style="border-bottom:none">
+        <div class="skin-name">Editorial-serif<span>printed report</span></div>
+        <div class="skin-chips">
+          <span class="tk"><b style="background:#F7F2E8"></b>bg<code>#F7F2E8</code></span>
+          <span class="tk"><b style="background:#FFFFFF;border-color:#C5B99F"></b>surface<code>#FFFFFF</code></span>
+          <span class="tk"><b style="background:#1F1B14"></b>ink<code>#1F1B14</code></span>
+          <span class="tk"><b style="background:#7A2E2A"></b>accent<code>#7A2E2A</code></span>
+          <span class="tk font" style="font-family:'Newsreader'">Aa<code>Newsreader</code></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<style>
+/* 1 gallery grid */
+.g1card{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .15s,transform .15s;}
+.g1card .ph{border-bottom:1px solid var(--line);border-radius:0;}
+.g1card:hover,.g1card.hovered{box-shadow:var(--shadow-lift);transform:translateY(-2px);}
+.g1quick{position:absolute;left:0;right:0;bottom:0;display:flex;gap:6px;justify-content:flex-end;padding:8px;background:linear-gradient(to top,rgba(20,24,31,.42),rgba(20,24,31,0));opacity:0;transition:opacity .15s;}
+.g1card:hover .g1quick,.g1card.hovered .g1quick{opacity:1;}
+.g1quick button{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,.95);color:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.18);}
+.g1quick button:hover{background:#fff;color:var(--accent);}
+.g1quick button .ico{width:15px;height:15px;}
+.g1meta{padding:12px 14px;}
+.g1tt{font-size:13.5px;font-weight:600;letter-spacing:-0.01em;}
+.g1sub{font-size:11.5px;color:var(--faint);margin-top:2px;}
+.g1pag button{min-width:32px;height:32px;border-radius:7px;font-size:13px;font-weight:600;color:var(--mut);border:1px solid transparent;}
+.g1pag button:hover{background:#fff;border-color:var(--line);} .g1pag button.on{background:var(--accent);color:#fff;}
+/* 2 filter rail gallery */
+.ft{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:11px;}
+.f2check{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:13px;color:var(--ink);cursor:pointer;}
+.f2check .bx{width:17px;height:17px;border-radius:5px;border:1.5px solid var(--line-2);background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;}
+.f2check .bx .ico{width:10px;height:10px;opacity:0;}
+.f2check.on .bx{background:var(--accent);border-color:var(--accent);} .f2check.on .bx .ico{opacity:1;}
+.f2check .ct{margin-left:auto;font-size:11.5px;color:var(--faint);}
+.f2size{width:38px;height:32px;border:1px solid var(--line-2);background:#fff;border-radius:7px;font-size:12px;font-weight:600;color:var(--mut);}
+.f2size.on{background:var(--accent-tint);border-color:var(--accent);color:var(--accent-ink);}
+.f2chip{display:inline-flex;align-items:center;gap:7px;background:var(--accent-tint);color:var(--accent-ink);border:1px solid #b9cef0;border-radius:7px;padding:5px 7px 5px 10px;font-size:12px;font-weight:600;}
+.f2chip button{width:16px;height:16px;display:flex;align-items:center;justify-content:center;color:var(--accent-ink);border-radius:4px;} .f2chip button:hover{background:rgba(37,99,204,.13);} .f2chip button .ico{width:11px;height:11px;}
+.g2card{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);}
+.g2card .ph{border-bottom:1px solid var(--line);}
+.g2meta{padding:11px 12px;} .g2tt{font-size:13px;font-weight:600;} .g2sub{font-size:11.5px;color:var(--faint);}
+.g2skel{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+@keyframes shimmer{0%{background-position:-360px 0;}100%{background-position:360px 0;}}
+.skel{background:linear-gradient(90deg,rgba(20,24,31,0.05) 25%,rgba(20,24,31,0.10) 37%,rgba(20,24,31,0.05) 63%);background-size:720px 100%;animation:shimmer 1.4s infinite linear;border-radius:5px;}
+/* 3 catalog */
+.g3tab{font-size:13.5px;font-weight:600;color:var(--faint);padding:0 0 12px;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.g3tab:hover{color:var(--ink);} .g3tab.on{color:var(--accent);border-bottom-color:var(--accent);}
+.g3card{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .15s,transform .15s;}
+.g3card:hover{box-shadow:var(--shadow-lift);transform:translateY(-3px);}
+.g3card .ph{border-bottom:1px solid var(--line);}
+.g3body{padding:14px 16px;}
+.g3tt{font-size:15px;font-weight:700;letter-spacing:-0.01em;}
+.g3sub{font-size:12px;color:var(--faint);margin-top:2px;}
+.g3rating{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--ink);flex-shrink:0;}
+.g3foot{display:flex;align-items:center;justify-content:space-between;margin-top:14px;}
+/* 4 compact tiles */
+.t4tile{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 14px;display:flex;align-items:center;gap:11px;box-shadow:var(--shadow);cursor:pointer;}
+.t4tile:hover{border-color:var(--line-2);}
+.t4tile.sel{border-color:var(--accent);background:var(--accent-tint);}
+.t4logo{width:34px;height:34px;border-radius:8px;background:var(--inset);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--mut);flex-shrink:0;}
+.t4tile.sel .t4logo{background:#fff;}
+.t4lab{min-width:0;flex:1;}
+.t4nm{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.t4stat{font-size:11.5px;color:var(--faint);} .t4stat b{color:var(--mut);font-weight:600;}
+.t4cbx{position:absolute;top:9px;right:9px;width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line-2);background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;opacity:0;transition:opacity .12s;}
+.t4tile:hover .t4cbx,.t4tile.sel .t4cbx{opacity:1;}
+.t4cbx .ico{width:11px;height:11px;opacity:0;} .t4cbx.ck{background:var(--accent);border-color:var(--accent);} .t4cbx.ck .ico{opacity:1;}
+.t4act{display:inline-flex;align-items:center;color:#fff;font-size:12.5px;font-weight:500;padding:6px 11px;border-radius:7px;background:rgba(255,255,255,.14);} .t4act:hover{background:rgba(255,255,255,.24);}
+/* 5 spotlight */
+.g5hero{display:grid;grid-template-columns:1.3fr 1fr;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
+.g5hero .ph{min-height:230px;border-right:1px solid var(--line);}
+.g5herobody{padding:26px 28px;display:flex;flex-direction:column;justify-content:center;}
+.g5herott{font-size:25px;font-weight:800;letter-spacing:-0.02em;line-height:1.12;margin-top:12px;}
+.g5herosub{font-size:14px;color:var(--mut);margin-top:10px;line-height:1.55;max-width:46ch;}
+.g5card{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .15s,transform .15s;}
+.g5card:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px);}
+.g5card .ph{border-bottom:1px solid var(--line);}
+.g5meta{padding:11px 13px;} .g5tt{font-size:13px;font-weight:600;} .g5sub{font-size:11.5px;color:var(--faint);margin-top:1px;}
+/* skins */
+.skin-row{display:flex;align-items:center;gap:24px;padding:18px 22px;border-bottom:1px solid var(--line);}
+.skin-name{width:150px;flex-shrink:0;font-size:15px;font-weight:700;color:var(--plate-ink);}
+.skin-name span{display:block;font-size:11.5px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skin-chips{display:flex;gap:10px;flex-wrap:wrap;}
+.skin-chips .tk{display:inline-flex;align-items:center;gap:8px;font-size:11px;color:var(--mut);background:var(--inset);border:1px solid var(--line);border-radius:8px;padding:7px 11px 7px 8px;}
+.skin-chips .tk b{width:20px;height:20px;border-radius:5px;border:1px solid rgba(0,0,0,.08);flex-shrink:0;}
+.skin-chips .tk code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skin-chips .tk.font{font-size:15px;font-weight:600;color:var(--ink);gap:7px;}
+@media(max-width:1180px){
+  #g1grid,#f2grid,.g5hero+div,#t4grid{grid-template-columns:repeat(2,1fr)!important;}
+  .g5hero{grid-template-columns:1fr;} .g5hero .ph{border-right:none;border-bottom:1px solid var(--line);}
+  .skin-row{flex-direction:column;align-items:flex-start;gap:12px;}.skin-name{width:auto;}
+}
+</style>
+
+<script>
+/* 2 filter-rail gallery: chips + ranges + load-more skeletons */
+(function(){
+  var checks=document.querySelectorAll('.f2check'),chips=document.getElementById('f2chips');
+  function sync(f,on){checks.forEach(function(c){if(c.dataset.f===f)c.classList.toggle('on',on);});}
+  chips.addEventListener('click',function(e){var btn=e.target.closest('.f2chip button');if(!btn)return;var chip=btn.closest('.f2chip');var f=chip.dataset.f;chip.remove();if(f!=='price')sync(f,false);});
+  document.getElementById('f2clear').addEventListener('click',function(){chips.querySelectorAll('.f2chip').forEach(function(c){c.remove();});checks.forEach(function(c){c.classList.remove('on');});});
+  checks.forEach(function(c){c.addEventListener('click',function(){c.classList.toggle('on');});});
+  var price=document.getElementById('f2price');price.addEventListener('input',function(){document.getElementById('f2pricev').textContent='$'+price.value;});
+  document.querySelectorAll('.f2size').forEach(function(b){b.addEventListener('click',function(){b.classList.toggle('on');});});
+  var more=document.getElementById('f2more'),grid=document.getElementById('f2grid'),loading=false;
+  var next=[['Mountain pass','Photos','$26'],['Gradient mesh','Illustration','$15'],['Quiet interior','Photos','$30']];
+  more.addEventListener('click',function(){
+    if(loading||!next.length)return;loading=true;more.style.visibility='hidden';
+    var skels=[];
+    for(var i=0;i<3;i++){var d=document.createElement('div');d.className='g2skel';d.innerHTML='<div class="skel" style="aspect-ratio:1/1;border-radius:0"></div><div style="padding:11px 12px"><div class="skel" style="height:12px;width:70%"></div><div class="skel" style="height:10px;width:40%;margin-top:8px"></div></div>';grid.appendChild(d);skels.push(d);}
+    setTimeout(function(){
+      skels.forEach(function(s){s.remove();});
+      next.forEach(function(r){var d=document.createElement('div');d.className='g2card';d.innerHTML='<div class="ph" style="aspect-ratio:1/1"><span>asset</span></div><div class="g2meta"><div class="g2tt">'+r[0]+'</div><div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px"><span class="g2sub">'+r[1]+'</span><span class="price" style="font-size:13px">'+r[2]+'</span></div></div>';grid.appendChild(d);});
+      next=[];loading=false;more.textContent='All caught up';more.style.visibility='visible';more.style.opacity='.55';
+    },1150);
+  });
+})();
+
+/* 3 catalog tabs */
+(function(){var tabs=document.getElementById('g3tabs');tabs.addEventListener('click',function(e){var b=e.target.closest('.g3tab');if(!b)return;tabs.querySelectorAll('.g3tab').forEach(function(x){x.classList.remove('on');});b.classList.add('on');});})();
+
+/* 4 compact tiles: build + segmented + multi-select bulk */
+(function(){
+  var data=[
+    ['SL','Slack','connected','12 channels'],['GH','GitHub','connected','8 repos'],['FG','Figma','connected','24 files'],['NT','Notion','available','—'],
+    ['LN','Linear','connected','3 teams'],['ZM','Zoom','available','—'],['ST','Stripe','connected','2 accounts'],['DR','Drive','connected','140 files'],
+    ['AS','Asana','available','—'],['IN','Intercom','connected','1 inbox'],['SG','Segment','available','—'],['AM','Amplitude','connected','5 charts']
+  ];
+  var grid=document.getElementById('t4grid'),seg=document.getElementById('t4seg'),bulk=document.getElementById('t4bulk'),cnt=document.getElementById('t4cnt');
+  function render(filter){
+    grid.innerHTML=data.filter(function(d){return filter==='all'||d[2]===filter;}).map(function(d){
+      return '<div class="t4tile" data-st="'+d[2]+'"><span class="t4cbx"><svg class="ico"><use href="#i-check"/></svg></span><span class="t4logo">'+d[0]+'</span><div class="t4lab"><div class="t4nm">'+d[1]+'</div><div class="t4stat">'+(d[2]==='connected'?'<b>'+d[3]+'</b>':'Not connected')+'</div></div></div>';
+    }).join('');
+    update();
+  }
+  function update(){var sel=grid.querySelectorAll('.t4tile.sel').length;cnt.textContent=sel;bulk.style.display=sel>0?'flex':'none';}
+  grid.addEventListener('click',function(e){var t=e.target.closest('.t4tile');if(!t)return;t.classList.toggle('sel');t.querySelector('.t4cbx').classList.toggle('ck',t.classList.contains('sel'));update();});
+  seg.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;seg.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');render(b.dataset.f);});
+  document.getElementById('t4clear').addEventListener('click',function(){grid.querySelectorAll('.t4tile.sel').forEach(function(t){t.classList.remove('sel');t.querySelector('.t4cbx').classList.remove('ck');});update();});
+  render('all');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Analytics / overview view (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Analytics overview · 5 COMPOSITIONS, ONE SKIN.
+   The skin is fixed (neutral: off-white page, white cards, hairline borders,
+   one restrained blue accent, system sans + tabular figures). The ONLY thing
+   that varies across the five is composition + interaction pattern.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  /* —— the one neutral skin —— */
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF;
+  --bad:#C0392B; --bad-t:#F9E8E5; --neu:#586070; --neu-t:#EDEFF2;
+  --grid:#ECEEF1; --baseline:#C3CAD3;
+  --d1:#2563CC; --d2:#6090E0; --d3:#A6C2EF; --d4:#D8E4F8;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:10px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+/* ====================== shared UI components (the skin) ================ */
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);}
+.card-pad{padding:18px 20px;}
+.card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.card-h .t{font-size:14px;font-weight:700;letter-spacing:-0.01em;}
+.card-h .leg{display:flex;gap:14px;font-size:11.5px;color:var(--mut);}
+.card-h .leg span{display:inline-flex;align-items:center;gap:6px;}
+.card-h .leg i{width:13px;height:0;border-top:2px solid var(--accent);border-radius:2px;}
+.card-h .leg .b i{border-top:1.5px dashed var(--baseline);}
+
+/* KPI */
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:15px 16px;box-shadow:var(--shadow);}
+.kpi .k{font-size:12px;color:var(--mut);font-weight:500;}
+.kpi .v{font-size:26px;font-weight:700;letter-spacing:-0.02em;margin-top:7px;color:var(--ink);}
+.kpi .row{display:flex;align-items:center;gap:7px;margin-top:9px;}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;padding:3px 7px;border-radius:6px;}
+.chip .ico{width:12px;height:12px;}
+.chip.up{color:var(--ok);background:var(--ok-t);}
+.chip.down{color:var(--bad);background:var(--bad-t);}
+.chip.flat{color:var(--neu);background:var(--neu-t);}
+.kpi .sub{font-size:11px;color:var(--faint);}
+
+/* segmented control */
+.seg{display:inline-flex;background:var(--inset);border:1px solid var(--line);border-radius:8px;padding:2px;}
+.seg button{font-size:12.5px;font-weight:600;color:var(--mut);padding:6px 13px;border-radius:6px;}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.07);}
+
+/* search + drop */
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:8px 11px;color:var(--faint);}
+.search .ico{width:15px;height:15px;}
+.search input{border:none;outline:none;background:none;font-size:13px;color:var(--ink);width:100%;}
+.drop{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:8px 11px;font-size:13px;font-weight:500;color:var(--ink);}
+.drop .lbl{color:var(--faint);}
+.drop .ico{width:13px;height:13px;color:var(--mut);}
+.btn-pri{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:9px 15px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+
+/* table */
+.u-table{width:100%;border-collapse:collapse;}
+.u-table th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);font-weight:600;text-align:left;padding:9px 14px;border-bottom:1px solid var(--line);white-space:nowrap;}
+.u-table td{font-size:13px;padding:11px 14px;border-bottom:1px solid var(--inset);color:var(--ink);}
+.u-table tbody tr:last-child td{border-bottom:none;}
+.u-table .r{text-align:right;font-weight:600;}
+.u-table th.r{text-align:right;}
+.u-table .muted{color:var(--faint);}
+.cust{display:flex;align-items:center;gap:10px;}
+.cust .av{width:28px;height:28px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cust .nm{font-weight:600;}
+.cust .em{font-size:11.5px;color:var(--faint);}
+
+/* status-by-shape badges */
+.sbadge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:3px 9px 3px 7px;border-radius:999px;border:1px solid;}
+.sbadge .gl{width:8px;height:8px;flex-shrink:0;}
+.sbadge.paid{color:var(--ok);border-color:#bcdcc9;background:var(--ok-t);} .sbadge.paid .gl{border-radius:50%;background:var(--ok);}
+.sbadge.pending{color:var(--warn);border-color:#e6d6b3;background:var(--warn-t);} .sbadge.pending .gl{border-radius:50%;border:2px solid var(--warn);}
+.sbadge.refunded{color:var(--neu);border-color:var(--line-2);background:var(--neu-t);} .sbadge.refunded .gl{border-radius:1px;background:var(--neu);}
+.sbadge.failed{color:var(--bad);border-color:#e6bcb6;background:var(--bad-t);} .sbadge.failed .gl{position:relative;} .sbadge.failed .gl::before,.sbadge.failed .gl::after{content:'';position:absolute;left:3px;top:0;width:2px;height:8px;background:var(--bad);} .sbadge.failed .gl::before{transform:rotate(45deg);} .sbadge.failed .gl::after{transform:rotate(-45deg);}
+
+.spark{display:block;width:100%;overflow:visible;}
+.axis{font-size:10.5px;fill:var(--faint);font-variant-numeric:tabular-nums;}
+
+/* ---------- shell primitives (sidebar / nav / rail) ---------- */
+.shell-side{background:var(--surface);border-right:1px solid var(--line);padding:18px 14px;display:flex;flex-direction:column;}
+.brand{display:flex;align-items:center;gap:9px;padding:6px 8px 16px;}
+.brand .mk{width:26px;height:26px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center;}
+.brand .mk .ico{width:15px;height:15px;color:#fff;}
+.brand b{font-size:15px;font-weight:700;letter-spacing:-0.01em;}
+.nav-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);padding:12px 8px 7px;}
+.nav{display:flex;flex-direction:column;gap:1px;}
+.nav a{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:7px;font-size:13.5px;font-weight:500;color:var(--mut);text-decoration:none;}
+.nav a .ico{width:16px;height:16px;}
+.nav a:hover{background:var(--inset);color:var(--ink);}
+.nav a.on{background:var(--accent-tint);color:var(--accent-ink);font-weight:600;}
+.topbar{display:flex;align-items:center;gap:14px;padding:14px 22px;background:var(--surface);border-bottom:1px solid var(--line);}
+.topbar h2{font-size:18px;font-weight:700;letter-spacing:-0.01em;}
+.topbar .crumb{font-size:12px;color:var(--faint);}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-anchor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M12 22V8M5 12H2a10 10 0 0 0 20 0h-3"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-tx" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M21 3l-7 7M8 21H3v-5M3 21l7-7"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></symbol>
+  <symbol id="i-report" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></symbol>
+  <symbol id="i-set" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7 17 17M17 9v8H9"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-chevr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+  <symbol id="i-cols" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18"/></symbol>
+  <symbol id="i-act" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Analytics overview · one skin, five compositions</div>
+    <h1>Same skin. Five ways to compose it.</h1>
+    <p>Every frame below wears the <em>same neutral skin</em> — off-white page, white cards with hairline borders, one restrained blue accent, system sans with tabular figures. What changes from one to the next is purely <em>composition and interaction</em>: where the nav lives, how filters are expressed, how the table and chart are arranged, how you drill in. The skin is the paint; the composition is the skeleton.</p>
+  </header>
+
+  <!-- ===================== 1 · CLASSIC CONSOLE ===================== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Classic console</div>
+      <p class="plate-recipe"><b>LAYOUT</b> — left sidebar shell + top filter bar · 4-up KPI strip with delta chips · one wide line chart (revenue vs 30-day baseline) + a compact donut · transactions table with status-by-shape badges. &nbsp;<b>INTERACTION</b> — a date-range segmented control re-scopes every widget at once. The familiar operator default: persistent nav, everything on one screen.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:218px 1fr;min-height:620px">
+      <aside class="shell-side">
+        <div class="brand"><span class="mk"><svg class="ico"><use href="#i-anchor"/></svg></span><b>Harbor</b></div>
+        <div class="nav-lbl">Workspace</div>
+        <nav class="nav">
+          <a href="#" class="on"><svg class="ico"><use href="#i-grid"/></svg>Overview</a>
+          <a href="#"><svg class="ico"><use href="#i-tx"/></svg>Transactions</a>
+          <a href="#"><svg class="ico"><use href="#i-users"/></svg>Customers</a>
+          <a href="#"><svg class="ico"><use href="#i-report"/></svg>Reports</a>
+          <a href="#"><svg class="ico"><use href="#i-set"/></svg>Settings</a>
+        </nav>
+      </aside>
+      <div style="display:flex;flex-direction:column;min-width:0">
+        <div class="topbar">
+          <div><div class="crumb">Workspace / Overview</div><h2>Overview</h2></div>
+          <div class="seg" id="c1seg" style="margin-left:auto">
+            <button data-r="7D">7D</button><button data-r="30D" class="on">30D</button><button data-r="QTD">QTD</button><button data-r="YTD">YTD</button>
+          </div>
+        </div>
+        <div style="padding:20px 22px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px" id="c1kpis">
+            <div class="kpi"><div class="k">Revenue</div><div class="v tnum" data-k="rev">$128,400</div><div class="row"><span class="chip up" data-k="revd"><svg class="ico"><use href="#i-up"/></svg>12.4%</span><span class="sub">vs prev</span></div></div>
+            <div class="kpi"><div class="k">Active users</div><div class="v tnum" data-k="usr">3,842</div><div class="row"><span class="chip up" data-k="usrd"><svg class="ico"><use href="#i-up"/></svg>4.1%</span><span class="sub">vs prev</span></div></div>
+            <div class="kpi"><div class="k">Conversion</div><div class="v tnum" data-k="cnv">3.2%</div><div class="row"><span class="chip down" data-k="cnvd"><svg class="ico"><use href="#i-down"/></svg>0.3%</span><span class="sub">vs prev</span></div></div>
+            <div class="kpi"><div class="k">Open tickets</div><div class="v tnum" data-k="tik">17</div><div class="row"><span class="chip flat" data-k="tikd">3 new</span></div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 290px;gap:14px">
+            <div class="card card-pad">
+              <div class="card-h"><div class="t">Revenue — <span id="c1range">last 30 days</span></div><div class="leg"><span><i></i>Revenue</span><span class="b"><i></i>30-day avg</span></div></div>
+              <svg class="spark" id="c1chart" viewBox="0 0 760 230" height="210" aria-label="Revenue trend"></svg>
+            </div>
+            <div class="card card-pad">
+              <div class="card-h"><div class="t">By channel</div></div>
+              <svg class="spark" viewBox="0 0 160 160" style="max-width:150px;margin:2px auto 0;display:block">
+                <g transform="rotate(-90 80 80)" fill="none" stroke-width="10" stroke-linecap="butt">
+                  <circle cx="80" cy="80" r="60" stroke="var(--d1)" stroke-dasharray="155.3 376.99" stroke-dashoffset="0"/>
+                  <circle cx="80" cy="80" r="60" stroke="var(--d2)" stroke-dasharray="102.6 376.99" stroke-dashoffset="-158.3"/>
+                  <circle cx="80" cy="80" r="60" stroke="var(--d3)" stroke-dasharray="64.9 376.99" stroke-dashoffset="-263.9"/>
+                  <circle cx="80" cy="80" r="60" stroke="var(--d4)" stroke-dasharray="42.2 376.99" stroke-dashoffset="-331.8"/>
+                </g>
+                <text x="80" y="76" text-anchor="middle" font-size="21" font-weight="700" fill="var(--ink)" style="font-variant-numeric:tabular-nums">$128K</text>
+                <text x="80" y="95" text-anchor="middle" font-size="9" fill="var(--faint)" letter-spacing="1">TOTAL</text>
+              </svg>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">
+                <div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="width:9px;height:9px;border-radius:2px;background:var(--d1)"></span>Direct<span class="tnum" style="margin-left:auto;font-weight:600">42%</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="width:9px;height:9px;border-radius:2px;background:var(--d2)"></span>Marketplace<span class="tnum" style="margin-left:auto;font-weight:600">28%</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="width:9px;height:9px;border-radius:2px;background:var(--d3)"></span>Referral<span class="tnum" style="margin-left:auto;font-weight:600">18%</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="width:9px;height:9px;border-radius:2px;background:var(--d4)"></span>Affiliate<span class="tnum" style="margin-left:auto;font-weight:600">12%</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-pad" style="padding-bottom:6px"><div class="t" style="font-size:14px;font-weight:700">Recent transactions</div></div>
+            <table class="u-table">
+              <thead><tr><th>ID</th><th>Customer</th><th>Date</th><th>Status</th><th class="r">Amount</th></tr></thead>
+              <tbody>
+                <tr><td class="muted tnum">#TX-4821</td><td>Northwind LLC</td><td class="muted">Jun 18</td><td><span class="sbadge paid"><span class="gl"></span>Paid</span></td><td class="r tnum">$2,480.00</td></tr>
+                <tr><td class="muted tnum">#TX-4820</td><td>Meridian Co</td><td class="muted">Jun 18</td><td><span class="sbadge pending"><span class="gl"></span>Pending</span></td><td class="r tnum">$640.00</td></tr>
+                <tr><td class="muted tnum">#TX-4819</td><td>Lattice Inc</td><td class="muted">Jun 17</td><td><span class="sbadge paid"><span class="gl"></span>Paid</span></td><td class="r tnum">$1,189.00</td></tr>
+                <tr><td class="muted tnum">#TX-4818</td><td>Canopy Studio</td><td class="muted">Jun 17</td><td><span class="sbadge refunded"><span class="gl"></span>Refunded</span></td><td class="r tnum">$924.00</td></tr>
+                <tr><td class="muted tnum">#TX-4817</td><td>Beacon Labs</td><td class="muted">Jun 16</td><td><span class="sbadge failed"><span class="gl"></span>Failed</span></td><td class="r tnum">$310.00</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 2 · FILTER-RAIL ===================== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Filter-rail</div>
+      <p class="plate-recipe"><b>LAYOUT</b> — top-nav + a left faceted filter rail (status checkboxes, date range, amount) · fewer, bigger stat cards each with a sparkline (no dense KPI strip) · a results table. &nbsp;<b>INTERACTION</b> — the rail drives the view; applied filters echo as removable chips above the results, and the list grows with “load more” rather than pages.</p>
+    </div>
+    <div class="frame" style="display:flex;flex-direction:column;min-height:620px">
+      <nav class="topbar" style="gap:28px">
+        <div class="brand" style="padding:0"><span class="mk"><svg class="ico"><use href="#i-anchor"/></svg></span><b>Harbor</b></div>
+        <div style="display:flex;gap:4px">
+          <a href="#" style="font-size:13.5px;font-weight:600;color:var(--ink);text-decoration:none;padding:8px 12px;border-radius:7px;background:var(--inset)">Transactions</a>
+          <a href="#" style="font-size:13.5px;font-weight:500;color:var(--mut);text-decoration:none;padding:8px 12px">Customers</a>
+          <a href="#" style="font-size:13.5px;font-weight:500;color:var(--mut);text-decoration:none;padding:8px 12px">Reports</a>
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:14px"><svg class="ico" style="width:19px;height:19px;color:var(--mut)"><use href="#i-search"/></svg><svg class="ico" style="width:19px;height:19px;color:var(--mut)"><use href="#i-bell"/></svg><span style="width:31px;height:31px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">DK</span></div>
+      </nav>
+      <div style="display:grid;grid-template-columns:244px 1fr;flex:1;min-height:0">
+        <aside style="background:var(--surface);border-right:1px solid var(--line);padding:22px 20px;display:flex;flex-direction:column;gap:24px">
+          <div style="font-size:15px;font-weight:700">Filters</div>
+          <div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:11px">Status</div>
+            <div class="f2check on" data-f="Settled"><span class="bx"><svg class="ico"><use href="#i-up"/></svg></span>Settled<span class="ct">2,104</span></div>
+            <div class="f2check on" data-f="In transit"><span class="bx"><svg class="ico"><use href="#i-up"/></svg></span>In transit<span class="ct">86</span></div>
+            <div class="f2check" data-f="Returned"><span class="bx"><svg class="ico"><use href="#i-up"/></svg></span>Returned<span class="ct">14</span></div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:11px">Date range</div>
+            <div style="display:flex;gap:8px"><input class="f2date" value="Jun 1"><input class="f2date" value="Jun 30"></div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:11px">Minimum amount</div>
+            <input type="range" min="0" max="25000" value="500" id="f2range" style="width:100%;accent-color:var(--accent)">
+            <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--mut);margin-top:7px" class="tnum"><span>$0</span><span>≥ <b id="f2min">$500</b></span><span>$25K</span></div>
+          </div>
+        </aside>
+        <div style="padding:22px 26px;display:flex;flex-direction:column;gap:16px;min-width:0">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="card card-pad">
+              <div style="font-size:12.5px;color:var(--mut);font-weight:500">Net revenue</div>
+              <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;margin-top:6px" class="tnum">$128,400</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:8px"><span class="chip up"><svg class="ico"><use href="#i-up"/></svg>12.4%</span><span class="sub" style="font-size:11.5px;color:var(--faint)">vs last period</span></div>
+              <svg class="spark" data-spark data-area="1" data-points="20,28,22,40,36,52,58,70,66,82,90,100" viewBox="0 0 300 60" height="56" style="margin-top:14px"></svg>
+            </div>
+            <div class="card card-pad">
+              <div style="font-size:12.5px;color:var(--mut);font-weight:500">Active customers</div>
+              <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;margin-top:6px" class="tnum">3,842</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:8px"><span class="chip up"><svg class="ico"><use href="#i-up"/></svg>4.1%</span><span class="sub" style="font-size:11.5px;color:var(--faint)">vs last period</span></div>
+              <svg class="spark" data-spark data-area="1" data-stroke="#6090E0" data-points="40,44,38,50,46,58,54,66,70,74,82,88" viewBox="0 0 300 60" height="56" style="margin-top:14px"></svg>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap" id="f2chips">
+            <span style="font-size:11.5px;color:var(--faint)">Applied:</span>
+            <span class="f2chip" data-f="Settled">Settled<button aria-label="Remove"><svg class="ico"><use href="#i-x"/></svg></button></span>
+            <span class="f2chip" data-f="In transit">In transit<button aria-label="Remove"><svg class="ico"><use href="#i-x"/></svg></button></span>
+            <span class="f2chip" data-f="min">≥ $500<button aria-label="Remove"><svg class="ico"><use href="#i-x"/></svg></button></span>
+            <button id="f2clear" style="font-size:12px;color:var(--mut);text-decoration:underline;text-underline-offset:2px">Clear all</button>
+          </div>
+          <div class="card">
+            <table class="u-table">
+              <thead><tr><th>Reference</th><th>Counterparty</th><th>Date</th><th>Status</th><th class="r">Amount</th></tr></thead>
+              <tbody id="f2body">
+                <tr><td class="muted tnum">SET-90412</td><td>Northwind LLC</td><td class="muted">Jun 18</td><td><span class="sbadge paid"><span class="gl"></span>Settled</span></td><td class="r tnum">$24,800.00</td></tr>
+                <tr><td class="muted tnum">SET-90411</td><td>Meridian Co</td><td class="muted">Jun 18</td><td><span class="sbadge pending"><span class="gl"></span>In transit</span></td><td class="r tnum">$6,400.00</td></tr>
+                <tr><td class="muted tnum">SET-90410</td><td>Lattice Inc</td><td class="muted">Jun 17</td><td><span class="sbadge paid"><span class="gl"></span>Settled</span></td><td class="r tnum">$11,890.00</td></tr>
+                <tr><td class="muted tnum">SET-90408</td><td>Atlas Group</td><td class="muted">Jun 17</td><td><span class="sbadge paid"><span class="gl"></span>Settled</span></td><td class="r tnum">$3,120.00</td></tr>
+              </tbody>
+            </table>
+            <div style="padding:12px;display:flex;justify-content:center;border-top:1px solid var(--inset)"><button id="f2more" class="drop" style="font-weight:600"><svg class="ico"><use href="#i-chev"/></svg>Load more</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 3 · COMMAND / DENSE ===================== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Command / dense</div>
+      <p class="plate-recipe"><b>LAYOUT</b> — a keyboard-first command + search bar (“/” hint) over a dense body · 6 tight KPIs · a small-multiples grid (4 sparkline tiles) beside one main chart · a compact log-style table. &nbsp;<b>INTERACTION</b> — metric-group tabs swap the whole console; a density toggle trades breathing room for rows-on-screen.</p>
+    </div>
+    <div class="frame" id="c3" style="display:flex;flex-direction:column;min-height:600px">
+      <div style="display:flex;align-items:center;gap:12px;padding:13px 20px;background:var(--surface);border-bottom:1px solid var(--line)">
+        <div style="flex:1;display:flex;align-items:center;gap:10px;background:var(--inset);border:1px solid var(--line);border-radius:9px;padding:9px 12px">
+          <svg class="ico" style="width:15px;height:15px;color:var(--faint)"><use href="#i-search"/></svg>
+          <span style="font-size:13px;color:var(--mut)">Jump to a metric, customer, or command…</span>
+          <span style="margin-left:auto;font-size:11px;color:var(--faint);border:1px solid var(--line-2);border-radius:5px;padding:2px 7px">/</span>
+        </div>
+        <div class="seg" id="c3dens"><button data-d="comfy" class="on">Comfortable</button><button data-d="compact">Compact</button></div>
+      </div>
+      <div style="display:flex;gap:22px;padding:11px 20px;border-bottom:1px solid var(--line);background:var(--surface)" id="c3tabs">
+        <button class="c3tab on" data-g="revenue">Revenue</button>
+        <button class="c3tab" data-g="traffic">Traffic</button>
+        <button class="c3tab" data-g="system">System</button>
+      </div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden" id="c3kpis"></div>
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:14px">
+          <div class="card card-pad">
+            <div class="card-h"><div class="t" id="c3maintitle">Revenue throughput — 24h</div><div class="leg" style="color:var(--faint)">hourly</div></div>
+            <svg class="spark" id="c3chart" viewBox="0 0 620 200" height="190" aria-label="Throughput"></svg>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden" id="c3tiles"></div>
+        </div>
+        <div class="card">
+          <div style="padding:12px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><div class="t" style="font-size:13.5px;font-weight:700">Recent events</div><div style="font-size:11px;color:var(--faint)" class="tnum">2,847 total</div></div>
+          <table class="u-table c3log">
+            <thead><tr><th>Time</th><th>ID</th><th>Customer</th><th>Status</th><th class="r">Amount</th></tr></thead>
+            <tbody>
+              <tr><td class="muted tnum">08:42:11</td><td class="tnum" style="color:var(--accent-ink)">TX-4821</td><td>northwind.llc</td><td><span class="sbadge paid"><span class="gl"></span>paid</span></td><td class="r tnum">$2,480.00</td></tr>
+              <tr><td class="muted tnum">08:41:55</td><td class="tnum" style="color:var(--accent-ink)">TX-4820</td><td>meridian.co</td><td><span class="sbadge pending"><span class="gl"></span>pending</span></td><td class="r tnum">$640.00</td></tr>
+              <tr><td class="muted tnum">08:41:02</td><td class="tnum" style="color:var(--accent-ink)">TX-4819</td><td>lattice.inc</td><td><span class="sbadge paid"><span class="gl"></span>paid</span></td><td class="r tnum">$1,189.00</td></tr>
+              <tr><td class="muted tnum">08:40:33</td><td class="tnum" style="color:var(--accent-ink)">TX-4818</td><td>canopy.studio</td><td><span class="sbadge refunded"><span class="gl"></span>refund</span></td><td class="r tnum">$924.00</td></tr>
+              <tr><td class="muted tnum">08:39:48</td><td class="tnum" style="color:var(--accent-ink)">TX-4817</td><td>beacon.labs</td><td><span class="sbadge failed"><span class="gl"></span>failed</span></td><td class="r tnum">$310.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 4 · MASTER-DETAIL ===================== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Master-detail</div>
+      <p class="plate-recipe"><b>LAYOUT</b> — a list/table on the left paired with a detail panel on the right · the KPI summary and chart belong to whichever row is selected. &nbsp;<b>INTERACTION</b> — selecting a row on the left updates the entire right panel in place; no navigation, no modal. Best when each record has enough depth to inspect.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:360px 1fr;min-height:560px">
+      <div style="border-right:1px solid var(--line);display:flex;flex-direction:column;background:var(--surface)">
+        <div style="padding:15px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between">
+          <div style="font-size:15px;font-weight:700">Customers</div>
+          <div class="search" style="width:120px;padding:6px 9px"><svg class="ico"><use href="#i-search"/></svg><input placeholder="Find…"></div>
+        </div>
+        <div id="mdlist" style="overflow:auto">
+          <!-- rows injected -->
+        </div>
+      </div>
+      <div id="mddetail" style="padding:24px 26px;display:flex;flex-direction:column;gap:18px;background:var(--page)">
+        <!-- detail injected -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 5 · REPORT / LEDGER ===================== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Report / ledger</div>
+      <p class="plate-recipe"><b>LAYOUT</b> — content-first single column with generous whitespace · a big lede number beside a measured column of supporting metrics · one elegant area chart · a prose-flanked table. &nbsp;<b>INTERACTION</b> — lightweight anchored tabs scroll the reader through the report. Built to be read, not operated.</p>
+    </div>
+    <div class="frame" id="c5" style="padding:44px 56px 46px;min-height:560px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:14px"><div style="font-size:15px;font-weight:700;letter-spacing:.01em">Harbor — Monthly review</div><div style="font-size:11px;color:var(--faint)" class="tnum">June 2026</div></div>
+      <div style="display:flex;gap:26px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);z-index:5" id="c5tabs">
+        <button class="c5tab on" data-s="c5-sum">Summary</button>
+        <button class="c5tab" data-s="c5-trend">Trend</button>
+        <button class="c5tab" data-s="c5-detail">Detail</button>
+      </div>
+      <div id="c5-sum" style="display:grid;grid-template-columns:1.4fr 1fr;gap:46px;padding:34px 0 30px;border-bottom:1px solid var(--line)">
+        <div>
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--accent)">Net revenue · June</div>
+          <div style="font-size:64px;font-weight:700;letter-spacing:-0.03em;line-height:1;margin-top:14px" class="tnum">$128,400</div>
+          <p style="font-size:16px;line-height:1.55;color:var(--mut);margin-top:16px;max-width:42ch">Revenue closed the month <b style="color:var(--ink);font-weight:600">12.4% ahead</b> of May and stayed above its trailing 30-day average for 21 of 30 days — the strongest run since the quarter opened.</p>
+        </div>
+        <div style="align-self:center">
+          <div class="c5measure"><span>Active users</span><b class="tnum">3,842</b><i class="up">+4.1%</i></div>
+          <div class="c5measure"><span>Conversion</span><b class="tnum">3.2%</b><i style="color:var(--mut)">−0.3%</i></div>
+          <div class="c5measure"><span>Avg. order value</span><b class="tnum">$86.40</b><i class="up">+2.6%</i></div>
+          <div class="c5measure"><span>Open tickets</span><b class="tnum">17</b><i style="color:var(--mut)">3 new</i></div>
+        </div>
+      </div>
+      <div id="c5-trend" style="padding:30px 0;border-bottom:1px solid var(--line)">
+        <div style="font-size:22px;font-weight:700;letter-spacing:-0.01em">Revenue against its baseline</div>
+        <div style="font-size:13.5px;color:var(--mut);margin-top:4px">Daily net revenue versus the trailing 30-day average.</div>
+        <svg class="spark" id="c5chart" viewBox="0 0 980 280" height="250" style="margin-top:20px" aria-label="Revenue area chart"></svg>
+        <div style="display:flex;gap:18px;font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.05em;margin-top:10px"><span style="display:flex;align-items:center;gap:6px"><i style="width:13px;border-top:2px solid var(--accent);display:inline-block"></i>Daily revenue</span><span style="display:flex;align-items:center;gap:6px"><i style="width:13px;border-top:1.5px dashed var(--baseline);display:inline-block"></i>30-day average</span><span style="margin-left:auto" class="tnum">Fig. 1</span></div>
+      </div>
+      <div id="c5-detail" style="padding:30px 0 0">
+        <div style="font-size:22px;font-weight:700;letter-spacing:-0.01em">The month in transactions</div>
+        <div style="display:grid;grid-template-columns:200px 1fr;gap:38px;margin-top:20px">
+          <div style="font-size:14px;line-height:1.6;color:var(--mut)">
+            <p style="margin-bottom:12px">The five accounts at right represent <b style="color:var(--ink);font-weight:600">38%</b> of monthly net revenue.</p>
+            <p>Renewals drove most volume; a single refund partially offset an otherwise clean month.</p>
+          </div>
+          <table class="u-table" style="border:1px solid var(--line);border-radius:10px;overflow:hidden">
+            <thead><tr><th>Account</th><th>Date</th><th>Status</th><th class="r">Amount</th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:600">Northwind LLC</td><td class="muted">Jun 18</td><td><span class="sbadge paid"><span class="gl"></span>Paid</span></td><td class="r tnum">$24,800.00</td></tr>
+              <tr><td style="font-weight:600">Lattice Inc</td><td class="muted">Jun 17</td><td><span class="sbadge paid"><span class="gl"></span>Paid</span></td><td class="r tnum">$11,890.00</td></tr>
+              <tr><td style="font-weight:600">Canopy Studio</td><td class="muted">Jun 17</td><td><span class="sbadge refunded"><span class="gl"></span>Refunded</span></td><td class="r tnum">$9,240.00</td></tr>
+              <tr><td style="font-weight:600">Meridian Co</td><td class="muted">Jun 16</td><td><span class="sbadge pending"><span class="gl"></span>In transit</span></td><td class="r tnum">$6,400.00</td></tr>
+              <tr><td style="font-weight:600">Beacon Labs</td><td class="muted">Jun 15</td><td><span class="sbadge paid"><span class="gl"></span>Paid</span></td><td class="r tnum">$4,310.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is nothing more than a small set of <b>color + font tokens</b>. Pick ONE skin per product and apply it across whichever compositions you choose — the composition is the skeleton, the skin is the paint. Every composition above is drawn in the <b>Neutral</b> skin; swap the token row and the same skeletons render coherently in any of the others.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <div class="skin-row" data-skin="neutral">
+        <div class="skin-name">Neutral<span>this page</span></div>
+        <div class="skin-chips">
+          <span class="tk"><b style="background:#F4F5F7"></b>bg<code>#F4F5F7</code></span>
+          <span class="tk"><b style="background:#FFFFFF;border-color:#D4D9DF"></b>surface<code>#FFFFFF</code></span>
+          <span class="tk"><b style="background:#1B1E23"></b>ink<code>#1B1E23</code></span>
+          <span class="tk"><b style="background:#2563CC"></b>accent<code>#2563CC</code></span>
+          <span class="tk font" style="font-family:system-ui">Aa<code>System sans</code></span>
+        </div>
+      </div>
+      <div class="skin-row" data-skin="warm">
+        <div class="skin-name">Warm<span>cream &amp; clay</span></div>
+        <div class="skin-chips">
+          <span class="tk"><b style="background:#F4EEE4"></b>bg<code>#F4EEE4</code></span>
+          <span class="tk"><b style="background:#FFFDF9;border-color:#DCCFB6"></b>surface<code>#FFFDF9</code></span>
+          <span class="tk"><b style="background:#2C2620"></b>ink<code>#2C2620</code></span>
+          <span class="tk"><b style="background:#A8502E"></b>accent<code>#A8502E</code></span>
+          <span class="tk font" style="font-family:'Hanken Grotesk'">Aa<code>Hanken Grotesk</code></span>
+        </div>
+      </div>
+      <div class="skin-row" data-skin="dark">
+        <div class="skin-name">Dark<span>ops console</span></div>
+        <div class="skin-chips">
+          <span class="tk"><b style="background:#0D1117"></b>bg<code>#0D1117</code></span>
+          <span class="tk"><b style="background:#161B22;border-color:#30363d"></b>surface<code>#161B22</code></span>
+          <span class="tk"><b style="background:#E6EDF3;border-color:#D4D9DF"></b>ink<code>#E6EDF3</code></span>
+          <span class="tk"><b style="background:#3FB950"></b>accent<code>#3FB950</code></span>
+          <span class="tk font" style="font-family:system-ui">Aa<code>System sans</code></span>
+        </div>
+      </div>
+      <div class="skin-row" data-skin="editorial" style="border-bottom:none">
+        <div class="skin-name">Editorial-serif<span>printed report</span></div>
+        <div class="skin-chips">
+          <span class="tk"><b style="background:#F7F2E8"></b>bg<code>#F7F2E8</code></span>
+          <span class="tk"><b style="background:#FFFFFF;border-color:#C5B99F"></b>surface<code>#FFFFFF</code></span>
+          <span class="tk"><b style="background:#1F1B14"></b>ink<code>#1F1B14</code></span>
+          <span class="tk"><b style="background:#7A2E2A"></b>accent<code>#7A2E2A</code></span>
+          <span class="tk font" style="font-family:'Newsreader'">Aa<code>Newsreader</code></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<style>
+/* filter-rail checks/chips */
+.f2check{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:13px;color:var(--ink);cursor:pointer;}
+.f2check .bx{width:17px;height:17px;border-radius:5px;border:1.5px solid var(--line-2);background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;}
+.f2check .bx .ico{width:10px;height:10px;opacity:0;}
+.f2check.on .bx{background:var(--accent);border-color:var(--accent);}
+.f2check.on .bx .ico{opacity:1;}
+.f2check .ct{margin-left:auto;font-size:11.5px;color:var(--faint);}
+.f2date{flex:1;background:#fff;border:1px solid var(--line-2);border-radius:7px;padding:8px 9px;font-size:12px;color:var(--ink);width:100%;}
+.f2chip{display:inline-flex;align-items:center;gap:7px;background:var(--accent-tint);color:var(--accent-ink);border:1px solid #b9cef0;border-radius:7px;padding:5px 7px 5px 10px;font-size:12px;font-weight:600;}
+.f2chip button{width:16px;height:16px;display:flex;align-items:center;justify-content:center;color:var(--accent-ink);border-radius:4px;}
+.f2chip button:hover{background:rgba(37,99,204,.13);}
+.f2chip button .ico{width:11px;height:11px;}
+/* c3 */
+.c3tab{font-size:13px;font-weight:600;color:var(--faint);padding:0 0 11px;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.c3tab:hover{color:var(--ink);}
+.c3tab.on{color:var(--accent);border-bottom-color:var(--accent);}
+.c3kpi{background:var(--surface);padding:13px 14px;}
+.c3kpi .k{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);font-weight:600;}
+.c3kpi .v{font-size:20px;font-weight:700;margin-top:6px;letter-spacing:-0.01em;}
+.c3kpi .d{font-size:11px;margin-top:4px;font-weight:600;}
+.c3kpi .d.up{color:var(--ok);} .c3kpi .d.down{color:var(--bad);} .c3kpi .d.flat{color:var(--faint);}
+.c3tile{background:var(--surface);padding:12px 13px;}
+.c3tile .tk{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--faint);font-weight:600;}
+.c3tile .tv{font-size:16px;font-weight:700;margin-top:4px;}
+#c3.compact .c3log td{padding:5px 14px;}
+#c3.compact .c3kpi{padding:9px 14px;}
+/* master-detail */
+.mdrow{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid var(--inset);cursor:pointer;}
+.mdrow:hover{background:var(--inset);}
+.mdrow.on{background:var(--accent-tint);box-shadow:inset 3px 0 0 var(--accent);}
+.mdrow .av{width:32px;height:32px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mdrow.on .av{background:#fff;}
+.mdrow .nm{font-size:13.5px;font-weight:600;}
+.mdrow .sub{font-size:11.5px;color:var(--faint);}
+.mdrow .amt{margin-left:auto;font-size:13px;font-weight:600;}
+.c5measure{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);}
+.c5measure:first-child{padding-top:0;}
+.c5measure:last-child{border-bottom:none;}
+.c5measure span{font-size:12.5px;color:var(--mut);}
+.c5measure b{font-size:24px;font-weight:700;letter-spacing:-0.01em;margin-left:auto;}
+.c5measure i{font-size:11.5px;font-weight:600;font-style:normal;width:54px;text-align:right;}
+.c5measure i.up{color:var(--ok);}
+.c5tab{font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--faint);padding:13px 0;border-bottom:2px solid transparent;margin-bottom:-1px;text-transform:uppercase;}
+.c5tab:hover{color:var(--ink);}
+.c5tab.on{color:var(--accent);border-bottom-color:var(--accent);}
+/* skins */
+.skin-row{display:flex;align-items:center;gap:24px;padding:18px 22px;border-bottom:1px solid var(--line);}
+.skin-name{width:150px;flex-shrink:0;font-size:15px;font-weight:700;color:var(--plate-ink);}
+.skin-name span{display:block;font-size:11.5px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skin-chips{display:flex;gap:10px;flex-wrap:wrap;}
+.skin-chips .tk{display:inline-flex;align-items:center;gap:8px;font-size:11px;color:var(--mut);background:var(--inset);border:1px solid var(--line);border-radius:8px;padding:7px 11px 7px 8px;}
+.skin-chips .tk b{width:20px;height:20px;border-radius:5px;border:1px solid rgba(0,0,0,.08);flex-shrink:0;}
+.skin-chips .tk code{font-family:ui-monospace,'SF Mono',monospace;font-size:10.5px;color:var(--faint);}
+.skin-chips .tk.font{font-size:15px;font-weight:600;color:var(--ink);gap:7px;}
+@media(max-width:1180px){.skin-row{flex-direction:column;align-items:flex-start;gap:12px}.skin-name{width:auto}}
+</style>
+
+<script>
+/* ============ smooth path helper (Catmull-Rom → bezier) ============ */
+function smooth(pts,t){
+  t=t||0.18; if(pts.length<2)return '';
+  var d='M'+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1);
+  for(var i=0;i<pts.length-1;i++){
+    var p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
+    var c1x=p1[0]+(p2[0]-p0[0])*t,c1y=p1[1]+(p2[1]-p0[1])*t;
+    var c2x=p2[0]-(p3[0]-p1[0])*t,c2y=p2[1]-(p3[1]-p1[1])*t;
+    d+='C'+c1x.toFixed(1)+','+c1y.toFixed(1)+' '+c2x.toFixed(1)+','+c2y.toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1);
+  }
+  return d;
+}
+function vb(svg){var a=svg.getAttribute('viewBox').split(/\s+/).map(Number);return {w:a[2],h:a[3]};}
+function ptsFrom(values,w,h,padX,padTop,padBot){
+  var max=Math.max.apply(null,values),min=Math.min.apply(null,values),span=(max-min)||1;
+  var n=values.length,innerW=w-padX*2,innerH=h-padTop-padBot;
+  return values.map(function(v,i){return [padX+innerW*(i/(n-1)),padTop+innerH*(1-(v-min)/span)];});
+}
+function el(tag,attrs){var e=document.createElementNS('http://www.w3.org/2000/svg',tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
+
+/* generic sparkline svgs */
+function initSparks(root){
+  (root||document).querySelectorAll('[data-spark]').forEach(function(svg){
+    if(svg.dataset.done)return; svg.dataset.done=1;
+    var d=vb(svg),vals=svg.dataset.points.split(',').map(Number);
+    var stroke=svg.dataset.stroke||'var(--accent)';
+    var p=ptsFrom(vals,d.w,d.h,3,6,6),path=smooth(p);
+    if(svg.dataset.area){
+      var fill=svg.dataset.fill||'rgba(37,99,204,0.09)';
+      svg.appendChild(el('path',{d:path+' L'+d.w+','+d.h+' L0,'+d.h+' Z',fill:fill,stroke:'none'}));
+    }
+    svg.appendChild(el('path',{d:path,fill:'none',stroke:stroke,'stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'}));
+  });
+}
+
+/* ============ 1 · classic console ============ */
+(function(){
+  var seg=document.getElementById('c1seg'),svg=document.getElementById('c1chart'),d=vb(svg);
+  var data={
+    '7D':{rev:[40,46,43,52,49,60,72],base:[55,54,53,52,52,51,50],revL:'$31,200',revd:['up','8.1%'],usr:'1,204',usrd:['up','2.2%'],cnv:'3.4%',cnvd:['up','0.2%'],tik:'6',tikd:'1 new',label:'last 7 days'},
+    '30D':{rev:[36,40,34,46,42,54,50,62,58,72,80,92],base:[44,45,46,47,48,49,50,51,52,53,54,55],revL:'$128,400',revd:['up','12.4%'],usr:'3,842',usrd:['up','4.1%'],cnv:'3.2%',cnvd:['down','0.3%'],tik:'17',tikd:'3 new',label:'last 30 days'},
+    'QTD':{rev:[30,36,40,44,52,50,60,64,74,78,88,96],base:[40,42,44,46,48,50,52,54,56,58,60,62],revL:'$372,900',revd:['up','18.6%'],usr:'9,610',usrd:['up','6.4%'],cnv:'3.3%',cnvd:['up','0.1%'],tik:'42',tikd:'9 new',label:'this quarter'},
+    'YTD':{rev:[26,32,30,42,46,54,58,66,72,80,86,98],base:[34,38,42,46,50,54,58,62,66,70,74,78],revL:'$1.42M',revd:['up','24.0%'],usr:'31,280',usrd:['up','11.2%'],cnv:'3.1%',cnvd:['down','0.4%'],tik:'88',tikd:'12 new',label:'year to date'}
+  };
+  function chip(node,arr){if(Array.isArray(arr)){node.className='chip '+arr[0];node.innerHTML='<svg class="ico"><use href="#i-'+arr[0]+'"/></svg>'+arr[1];}else{node.className='chip flat';node.textContent=arr;}}
+  function render(k){
+    var s=data[k];svg.innerHTML='';
+    // gridlines
+    [0.25,0.5,0.75].forEach(function(g){svg.appendChild(el('line',{x1:0,y1:(8+(d.h-16)*g).toFixed(1),x2:d.w,y2:(8+(d.h-16)*g).toFixed(1),stroke:'var(--grid)','stroke-width':1}));});
+    var all=s.rev.concat(s.base),max=Math.max.apply(null,all),min=Math.min.apply(null,all);
+    function P(v){return v.map(function(val,i){var span=(max-min)||1;return [6+(d.w-12)*(i/(v.length-1)),8+(d.h-26)*(1-(val-min)/span)];});}
+    var pb=P(s.base),pr=P(s.rev);
+    svg.appendChild(el('path',{d:smooth(pb),fill:'none',stroke:'var(--baseline)','stroke-width':1.5,'stroke-dasharray':'5 5','stroke-linecap':'round'}));
+    svg.appendChild(el('path',{d:smooth(pr)+' L'+pr[pr.length-1][0].toFixed(1)+','+(d.h-6)+' L6,'+(d.h-6)+' Z',fill:'rgba(37,99,204,0.08)',stroke:'none'}));
+    svg.appendChild(el('path',{d:smooth(pr),fill:'none',stroke:'var(--accent)','stroke-width':2.5,'stroke-linecap':'round','stroke-linejoin':'round'}));
+    var last=pr[pr.length-1];svg.appendChild(el('circle',{cx:last[0].toFixed(1),cy:last[1].toFixed(1),r:4,fill:'var(--accent)',stroke:'#fff','stroke-width':2}));
+    document.getElementById('c1range').textContent=s.label;
+    var kp=document.getElementById('c1kpis');
+    kp.querySelector('[data-k=rev]').textContent=s.revL;kp.querySelector('[data-k=usr]').textContent=s.usr;kp.querySelector('[data-k=cnv]').textContent=s.cnv;kp.querySelector('[data-k=tik]').textContent=s.tik;
+    chip(kp.querySelector('[data-k=revd]'),s.revd);chip(kp.querySelector('[data-k=usrd]'),s.usrd);chip(kp.querySelector('[data-k=cnvd]'),s.cnvd);chip(kp.querySelector('[data-k=tikd]'),s.tikd);
+  }
+  seg.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;seg.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');render(b.dataset.r);});
+  render('30D');
+})();
+
+/* ============ 2 · filter-rail ============ */
+(function(){
+  var checks=document.querySelectorAll('.f2check'),chips=document.getElementById('f2chips'),range=document.getElementById('f2range'),minlbl=document.getElementById('f2min');
+  function sync(f,on){checks.forEach(function(c){if(c.dataset.f===f)c.classList.toggle('on',on);});}
+  chips.addEventListener('click',function(e){var btn=e.target.closest('.f2chip button');if(!btn)return;var chip=btn.closest('.f2chip');var f=chip.dataset.f;chip.remove();if(f!=='min')sync(f,false);});
+  document.getElementById('f2clear').addEventListener('click',function(){chips.querySelectorAll('.f2chip').forEach(function(c){c.remove();});checks.forEach(function(c){c.classList.remove('on');});});
+  checks.forEach(function(c){c.addEventListener('click',function(){c.classList.toggle('on');});});
+  range.addEventListener('input',function(){minlbl.textContent='$'+(+range.value).toLocaleString();});
+  var more=document.getElementById('f2more'),body=document.getElementById('f2body'),loaded=false;
+  more.addEventListener('click',function(){
+    if(loaded)return;loaded=true;
+    [['SET-90407','Orbit Media','Jun 16','pending','In transit','$1,540.00'],['SET-90405','Beacon Labs','Jun 15','paid','Settled','$4,310.00'],['SET-90402','Vertex Co','Jun 14','paid','Settled','$2,090.00']].forEach(function(r){
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td class="muted tnum">'+r[0]+'</td><td>'+r[1]+'</td><td class="muted">'+r[2]+'</td><td><span class="sbadge '+r[3]+'"><span class="gl"></span>'+r[4]+'</span></td><td class="r tnum">'+r[5]+'</td>';
+      body.appendChild(tr);
+    });
+    more.textContent='All caught up';more.style.opacity='.55';
+  });
+})();
+
+/* ============ 3 · command / dense ============ */
+(function(){
+  var groups={
+    revenue:{title:'Revenue throughput — 24h',
+      kpis:[['MRR','$42.8K','up','+3.1%'],['Net today','$4,820','up','+12%'],['Refunds','$924','down','+2'],['Payout queue','$18.6K','flat','3 pend'],['Disputes','2','flat','0 new'],['Fees','$1,204','up','+0.4%']],
+      bars:[42,46,40,52,48,58,54,64,60,72,68,80],
+      tiles:[['Charges/min','38',[12,14,11,16,13,18]],['Auth rate','98.4%',[90,92,91,94,95,97]],['Latency p95','142ms',[60,55,58,52,54,50]],['Decline','1.6%',[20,18,16,14,15,12]]]},
+    traffic:{title:'Request volume — 24h',
+      kpis:[['Sessions','12,840','up','+6.2%'],['Active now','1,204','up','+88'],['Bounce','38.1%','down','−1.2%'],['Dwell','4m12s','up','+9s'],['Errors 5xx','3','flat','0'],['Uptime','99.98%','flat','30d']],
+      bars:[50,54,48,60,56,52,64,68,62,74,70,78],
+      tiles:[['Req/min','2,410',[40,44,42,48,46,52]],['Cache hit','94.2%',[88,90,89,93,94,96]],['p99','310ms',[70,66,68,62,64,60]],['Queue','22',[30,28,32,26,24,20]]]},
+    system:{title:'System load — 24h',
+      kpis:[['CPU','42%','flat','steady'],['Memory','61%','up','+4%'],['Disk I/O','118MB/s','up','+12%'],['Workers','24/24','flat','ok'],['Jobs','7','down','−3'],['DB conns','188','up','+14']],
+      bars:[60,58,62,59,64,61,63,60,66,62,65,63],
+      tiles:[['CPU %','42',[40,42,41,43,42,44]],['Mem %','61',[55,57,58,60,61,63]],['Net out','88MB',[50,52,51,54,53,56]],['Threads','512',[60,58,62,59,61,63]]]}
+  };
+  function spark(values){
+    var w=120,h=34,p=ptsFrom(values,w,h,3,5,5);
+    return '<svg class="spark" viewBox="0 0 '+w+' '+h+'" height="'+h+'" style="margin-top:7px"><path d="'+smooth(p)+'" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  }
+  function renderGroup(k){
+    var g=groups[k];document.getElementById('c3maintitle').textContent=g.title;
+    document.getElementById('c3kpis').innerHTML=g.kpis.map(function(r){return '<div class="c3kpi"><div class="k">'+r[0]+'</div><div class="v tnum">'+r[1]+'</div><div class="d '+r[2]+'">'+r[3]+'</div></div>';}).join('');
+    document.getElementById('c3tiles').innerHTML=g.tiles.map(function(t){return '<div class="c3tile"><div class="tk">'+t[0]+'</div><div class="tv tnum">'+t[1]+'</div>'+spark(t[2])+'</div>';}).join('');
+    // main bar chart
+    var svg=document.getElementById('c3chart'),d=vb(svg);svg.innerHTML='';
+    [0.25,0.5,0.75].forEach(function(gl){svg.appendChild(el('line',{x1:0,y1:(6+(d.h-24)*gl).toFixed(1),x2:d.w,y2:(6+(d.h-24)*gl).toFixed(1),stroke:'var(--grid)','stroke-width':1}));});
+    var max=Math.max.apply(null,g.bars),n=g.bars.length,gap=10,bw=(d.w-2-(n-1)*gap)/n,base=d.h-18;
+    svg.appendChild(el('line',{x1:0,y1:base,x2:d.w,y2:base,stroke:'var(--line-2)','stroke-width':1}));
+    g.bars.forEach(function(v,i){var hh=(v/max)*(d.h-30),x=1+i*(bw+gap),y=base-hh;svg.appendChild(el('rect',{x:x.toFixed(1),y:y.toFixed(1),width:bw.toFixed(1),height:hh.toFixed(1),rx:3,fill:i===n-1?'var(--accent)':'var(--d3)'}));});
+  }
+  var tabs=document.getElementById('c3tabs');
+  tabs.addEventListener('click',function(e){var b=e.target.closest('.c3tab');if(!b)return;tabs.querySelectorAll('.c3tab').forEach(function(x){x.classList.remove('on');});b.classList.add('on');renderGroup(b.dataset.g);});
+  var dens=document.getElementById('c3dens'),frame=document.getElementById('c3');
+  dens.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;dens.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');frame.classList.toggle('compact',b.dataset.d==='compact');});
+  renderGroup('revenue');
+})();
+
+/* ============ 4 · master-detail ============ */
+(function(){
+  var customers=[
+    {id:'NL',name:'Northwind LLC',email:'billing@northwind.co',plan:'Scale',mrr:'$2,480',mrrN:'$2,480',status:'paid',statusL:'Active',spark:[40,44,42,50,48,58,62,70],users:'128',inv:[['#TX-4821','Jun 18','paid','Paid','$2,480'],['#TX-4790','May 18','paid','Paid','$2,480'],['#TX-4761','Apr 18','paid','Paid','$2,320']]},
+    {id:'MC',name:'Meridian Co',email:'ops@meridian.io',plan:'Growth',mrr:'$640',mrrN:'$640',status:'pending',statusL:'Trial',spark:[20,24,22,30,28,34,38,44],users:'36',inv:[['#TX-4820','Jun 18','pending','Pending','$640'],['#TX-4788','May 18','paid','Paid','$640']]},
+    {id:'LI',name:'Lattice Inc',email:'finance@lattice.app',plan:'Scale',mrr:'$1,189',mrrN:'$1,189',status:'paid',statusL:'Active',spark:[30,34,38,36,44,48,52,60],users:'74',inv:[['#TX-4819','Jun 17','paid','Paid','$1,189'],['#TX-4787','May 17','paid','Paid','$1,189']]},
+    {id:'CS',name:'Canopy Studio',email:'hi@canopy.design',plan:'Growth',mrr:'$924',mrrN:'$924',status:'refunded',statusL:'Paused',spark:[50,46,48,42,40,38,34,30],users:'52',inv:[['#TX-4818','Jun 17','refunded','Refunded','$924'],['#TX-4786','May 17','paid','Paid','$924']]},
+    {id:'AG',name:'Atlas Group',email:'accounts@atlas.co',plan:'Enterprise',mrr:'$3,120',mrrN:'$3,120',status:'paid',statusL:'Active',spark:[44,50,48,56,60,66,72,82],users:'210',inv:[['#TX-4815','Jun 16','paid','Paid','$3,120'],['#TX-4783','May 16','paid','Paid','$3,120']]}
+  ];
+  var list=document.getElementById('mdlist'),detail=document.getElementById('mddetail');
+  list.innerHTML=customers.map(function(c,i){return '<div class="mdrow'+(i===0?' on':'')+'" data-i="'+i+'"><span class="av">'+c.id+'</span><div><div class="nm">'+c.name+'</div><div class="sub">'+c.plan+'</div></div><span class="amt tnum">'+c.mrr+'</span></div>';}).join('');
+  function renderDetail(c){
+    detail.innerHTML=
+      '<div style="display:flex;align-items:center;gap:14px">'+
+        '<span style="width:52px;height:52px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center">'+c.id+'</span>'+
+        '<div><div style="font-size:20px;font-weight:700;letter-spacing:-0.01em">'+c.name+'</div><div style="font-size:12.5px;color:var(--mut);display:flex;align-items:center;gap:6px;margin-top:2px"><svg class="ico" style="width:13px;height:13px"><use href="#i-mail"/></svg>'+c.email+'</div></div>'+
+        '<span class="sbadge '+c.status+'" style="margin-left:auto"><span class="gl"></span>'+c.statusL+'</span>'+
+      '</div>'+
+      '<div style="display:grid;grid-template-columns:1.3fr 1fr;gap:14px">'+
+        '<div class="card card-pad"><div style="font-size:12px;color:var(--mut)">Monthly recurring</div><div style="font-size:30px;font-weight:700;letter-spacing:-0.02em;margin-top:6px" class="tnum">'+c.mrrN+'</div>'+
+          '<svg class="spark" data-spark data-area="1" data-points="'+c.spark.join(',')+'" viewBox="0 0 320 56" height="52" style="margin-top:12px"></svg></div>'+
+        '<div style="display:flex;flex-direction:column;gap:14px">'+
+          '<div class="card card-pad" style="flex:1"><div style="font-size:12px;color:var(--mut)">Plan</div><div style="font-size:17px;font-weight:700;margin-top:5px">'+c.plan+'</div></div>'+
+          '<div class="card card-pad" style="flex:1"><div style="font-size:12px;color:var(--mut)">Seats</div><div style="font-size:17px;font-weight:700;margin-top:5px" class="tnum">'+c.users+'</div></div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="card"><div class="card-pad" style="padding-bottom:6px"><div style="font-size:13.5px;font-weight:700">Recent invoices</div></div>'+
+        '<table class="u-table"><tbody>'+c.inv.map(function(r){return '<tr><td class="muted tnum">'+r[0]+'</td><td class="muted">'+r[1]+'</td><td><span class="sbadge '+r[2]+'"><span class="gl"></span>'+r[3]+'</span></td><td class="r tnum">'+r[4]+'</td></tr>';}).join('')+'</tbody></table></div>';
+    initSparks(detail);
+  }
+  list.addEventListener('click',function(e){var r=e.target.closest('.mdrow');if(!r)return;list.querySelectorAll('.mdrow').forEach(function(x){x.classList.remove('on');});r.classList.add('on');renderDetail(customers[+r.dataset.i]);});
+  renderDetail(customers[0]);
+})();
+
+/* ============ 5 · report area chart + scroll tabs ============ */
+(function(){
+  var svg=document.getElementById('c5chart'),d=vb(svg);
+  var rev=[42,46,40,52,48,44,56,52,60,58,66,62,72,68,78,74,84,80,90,96];
+  var base=rev.map(function(_,i){return 44+i*1.8;});
+  var all=rev.concat(base),max=Math.max.apply(null,all),min=Math.min.apply(null,all);
+  function P(v){return v.map(function(val,i){var span=(max-min)||1;return [10+(d.w-20)*(i/(v.length-1)),10+(d.h-34)*(1-(val-min)/span)];});}
+  [0.25,0.5,0.75].forEach(function(g){svg.appendChild(el('line',{x1:0,y1:(10+(d.h-34)*g).toFixed(1),x2:d.w,y2:(10+(d.h-34)*g).toFixed(1),stroke:'var(--grid)','stroke-width':1}));});
+  var pb=P(base),pr=P(rev);
+  svg.appendChild(el('path',{d:smooth(pb),fill:'none',stroke:'var(--baseline)','stroke-width':1.5,'stroke-dasharray':'6 6'}));
+  svg.appendChild(el('path',{d:smooth(pr)+' L'+pr[pr.length-1][0].toFixed(1)+','+(d.h-8)+' L10,'+(d.h-8)+' Z',fill:'rgba(37,99,204,0.08)',stroke:'none'}));
+  svg.appendChild(el('path',{d:smooth(pr),fill:'none',stroke:'var(--accent)','stroke-width':2.5,'stroke-linecap':'round','stroke-linejoin':'round'}));
+  var last=pr[pr.length-1];svg.appendChild(el('circle',{cx:last[0].toFixed(1),cy:last[1].toFixed(1),r:4.5,fill:'var(--accent)'}));
+  var tabs=document.getElementById('c5tabs');
+  tabs.addEventListener('click',function(e){var b=e.target.closest('.c5tab');if(!b)return;tabs.querySelectorAll('.c5tab').forEach(function(x){x.classList.remove('on');});b.classList.add('on');var t=document.getElementById(b.dataset.s);if(t){var top=t.getBoundingClientRect().top+window.pageYOffset-70;window.scrollTo({top:top,behavior:'smooth'});}});
+})();
+
+initSparks();
+</script>
+</body>
+</html>

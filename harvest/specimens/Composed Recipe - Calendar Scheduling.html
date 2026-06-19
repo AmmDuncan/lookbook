@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Calendar / scheduling (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Calendar / scheduling · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin (off-white page, white surfaces, hairline borders, slightly
+   rounded corners, one blue accent, system sans + tabular figures). Only
+   composition + interaction varies. WCAG AA throughout.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF; --bad:#C0392B; --bad-t:#F9E8E5;
+  --purple:#5B4BC4; --purple-t:#ECE9FA; --teal:#0F6E73; --teal-t:#E2F1F1;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+
+.btn-pri{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:9px 15px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-sec{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+.iconbtn{width:32px;height:32px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;color:var(--mut);}
+.iconbtn:hover{background:var(--inset);color:var(--ink);} .iconbtn .ico{width:16px;height:16px;}
+.seg{display:inline-flex;background:var(--inset);border:1px solid var(--line);border-radius:8px;padding:2px;}
+.seg button{font-size:12.5px;font-weight:600;color:var(--mut);padding:6px 12px;border-radius:6px;}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.07);}
+
+/* calendar toolbar */
+.caltop{display:flex;align-items:center;gap:14px;padding:14px 22px;background:var(--surface);border-bottom:1px solid var(--line);}
+.caltop h2{font-size:18px;font-weight:700;letter-spacing:-0.01em;}
+.navbtns{display:inline-flex;align-items:center;gap:2px;}
+
+/* event chip — hug content */
+.evt{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 7px;border-radius:5px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:2px solid;}
+.evt .t{font-variant-numeric:tabular-nums;opacity:.85;font-weight:600;}
+.evt.blue{background:var(--accent-tint);color:var(--accent-ink);border-color:var(--accent);}
+.evt.green{background:var(--ok-t);color:var(--ok);border-color:var(--ok);}
+.evt.amber{background:var(--warn-t);color:var(--warn);border-color:var(--warn);}
+.evt.purple{background:var(--purple-t);color:var(--purple);border-color:var(--purple);}
+.evt.teal{background:var(--teal-t);color:var(--teal);border-color:var(--teal);}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-chevl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-chevr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Calendar / scheduling · one skin, five compositions</div>
+    <h1>Same skin. Five ways to show time.</h1>
+    <p>One week of meetings — the team's June schedule — composed five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white surfaces with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. What changes is purely <em>composition and interaction</em>. The skin is the paint, the composition is the skeleton.</p>
+  </header>
+
+  <!-- ============== 1 · MONTH GRID ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Month grid</div>
+      <p class="plate-recipe"><b>PULLS</b> — a month calendar grid with event chips in day cells + a header (prev / next / Today + Month / Week / Day view switcher). &nbsp;<b>WHY</b> — the default overview: a month at a glance shows density and free days, while the view switcher hands off to finer-grained views when needed.</p>
+    </div>
+    <div class="frame">
+      <div class="caltop">
+        <h2>June 2026</h2>
+        <div class="navbtns"><button class="iconbtn"><svg class="ico"><use href="#i-chevl"/></svg></button><button class="iconbtn"><svg class="ico"><use href="#i-chevr"/></svg></button></div>
+        <button class="btn-sec">Today</button>
+        <div class="seg" style="margin-left:auto" id="m1view"><button class="on">Month</button><button>Week</button><button>Day</button></div>
+        <button class="btn-pri"><svg class="ico"><use href="#i-plus"/></svg>New event</button>
+      </div>
+      <div class="mgrid-head"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+      <div class="mgrid" id="m1grid"></div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · WEEK TIMELINE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Week timeline</div>
+      <p class="plate-recipe"><b>PULLS</b> — a week view: day columns × hour rows, events as time-spanning blocks, and a current-time line. &nbsp;<b>WHY</b> — when duration and overlap matter: positioning events on a time axis makes length, gaps, and conflicts legible in a way a grid of chips can't.</p>
+    </div>
+    <div class="frame">
+      <div class="caltop">
+        <h2>Jun 15 – 21</h2>
+        <div class="navbtns"><button class="iconbtn"><svg class="ico"><use href="#i-chevl"/></svg></button><button class="iconbtn"><svg class="ico"><use href="#i-chevr"/></svg></button></div>
+        <button class="btn-sec">Today</button>
+        <div class="seg" style="margin-left:auto"><button>Month</button><button class="on">Week</button><button>Day</button></div>
+      </div>
+      <div class="wk-daysrow">
+        <div class="wk-gutter"></div>
+        <div class="wk-day"><span class="dn">MON</span><span class="dnum">15</span></div>
+        <div class="wk-day"><span class="dn">TUE</span><span class="dnum">16</span></div>
+        <div class="wk-day"><span class="dn">WED</span><span class="dnum">17</span></div>
+        <div class="wk-day today"><span class="dn">THU</span><span class="dnum">18</span></div>
+        <div class="wk-day"><span class="dn">FRI</span><span class="dnum">19</span></div>
+      </div>
+      <div class="wk-body" id="w2body">
+        <div class="wk-grid">
+          <div class="wk-gutter" id="w2gutter"></div>
+          <div class="wk-cols" id="w2cols"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · CALENDAR + SIDE AGENDA ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Calendar + side agenda</div>
+      <p class="plate-recipe"><b>PULLS</b> — a month grid + a right agenda list of the selected day's events. &nbsp;<b>WHY</b> — pairs overview with detail: the grid keeps the month in context while the agenda reads one day in full, so picking a date never loses your place.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:1fr 300px;min-height:460px">
+      <div style="border-right:1px solid var(--line);display:flex;flex-direction:column">
+        <div class="caltop"><h2>June 2026</h2><div class="navbtns" style="margin-left:auto"><button class="iconbtn"><svg class="ico"><use href="#i-chevl"/></svg></button><button class="iconbtn"><svg class="ico"><use href="#i-chevr"/></svg></button></div></div>
+        <div class="mgrid-head"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+        <div class="mgrid mini" id="m3grid" style="flex:1"></div>
+      </div>
+      <aside style="background:var(--surface);display:flex;flex-direction:column;min-height:0">
+        <div style="padding:16px 18px;border-bottom:1px solid var(--line)"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--faint)">Thursday</div><div style="font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:2px">June 18</div><div style="font-size:12px;color:var(--mut);margin-top:2px">4 events</div></div>
+        <div style="padding:12px 16px;overflow:auto;display:flex;flex-direction:column;gap:9px">
+          <div class="ag"><div class="agtime tnum">09:00</div><div class="agcard blue"><div class="agt">Standup</div><div class="agm"><svg class="ico"><use href="#i-video"/></svg>Zoom · 15m</div></div></div>
+          <div class="ag"><div class="agtime tnum">10:00</div><div class="agcard purple"><div class="agt">Pipeline review</div><div class="agm"><svg class="ico"><use href="#i-users"/></svg>6 people · 45m</div></div></div>
+          <div class="ag"><div class="agtime tnum">14:00</div><div class="agcard green"><div class="agt">1:1 with Reza</div><div class="agm"><svg class="ico"><use href="#i-pin"/></svg>Room 4 · 30m</div></div></div>
+          <div class="ag"><div class="agtime tnum">15:30</div><div class="agcard amber"><div class="agt">Atlas customer call</div><div class="agm"><svg class="ico"><use href="#i-video"/></svg>Meet · 30m</div></div></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============== 4 · SCHEDULING / AVAILABILITY ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Scheduling / availability</div>
+      <p class="plate-recipe"><b>PULLS</b> — a booking grid of time slots (available vs booked) for picking a slot, with a confirm panel. &nbsp;<b>WHY</b> — the Calendly pattern: reducing the calendar to bookable slots removes ambiguity, and a confirm panel turns a tap into a committed meeting.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:1fr 300px;min-height:440px">
+      <div style="padding:20px 24px;border-right:1px solid var(--line)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Pick a time</div><div class="navbtns"><button class="iconbtn"><svg class="ico"><use href="#i-chevl"/></svg></button><button class="iconbtn"><svg class="ico"><use href="#i-chevr"/></svg></button></div></div>
+        <div style="font-size:12.5px;color:var(--mut);margin-bottom:16px">Week of June 15 · 30-minute meetings · times in your local zone</div>
+        <div class="bookgrid" id="s4grid"></div>
+        <div style="display:flex;gap:16px;margin-top:16px;font-size:11.5px;color:var(--mut)"><span style="display:inline-flex;align-items:center;gap:6px"><span class="lg av"></span>Available</span><span style="display:inline-flex;align-items:center;gap:6px"><span class="lg bk"></span>Booked</span><span style="display:inline-flex;align-items:center;gap:6px"><span class="lg sel"></span>Selected</span></div>
+      </div>
+      <aside style="background:var(--surface);padding:22px 20px;display:flex;flex-direction:column">
+        <div style="font-size:14px;font-weight:700">Confirm booking</div>
+        <div class="card" style="background:var(--inset);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:14px">
+          <div style="display:flex;align-items:center;gap:9px"><span style="width:36px;height:36px;border-radius:50%;background:var(--accent-tint);color:var(--accent-ink);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13px">DK</span><div><div style="font-size:13px;font-weight:700">Dana Kessler</div><div style="font-size:11.5px;color:var(--faint)">Account review</div></div></div>
+          <div style="height:1px;background:var(--line);margin:14px 0"></div>
+          <div style="display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600"><svg class="ico" style="width:15px;height:15px;color:var(--mut)"><use href="#i-cal"/></svg><span id="s4day">Thursday, June 18</span></div>
+          <div style="display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;margin-top:9px"><svg class="ico" style="width:15px;height:15px;color:var(--mut)"><use href="#i-clock"/></svg><span id="s4time" class="tnum">2:00 – 2:30 PM</span></div>
+        </div>
+        <button class="btn-pri" style="justify-content:center;margin-top:16px"><svg class="ico"><use href="#i-check"/></svg>Confirm 2:00 PM</button>
+        <div style="font-size:11.5px;color:var(--faint);margin-top:10px;text-align:center;line-height:1.5">You'll get a calendar invite and a reminder 10 minutes before.</div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============== 5 · EMPTY (NO EVENTS) ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Empty calendar</div>
+      <p class="plate-recipe"><b>PULLS</b> — the empty / no-events state: a clear month frame with no events, plus an add-event CTA. &nbsp;<b>WHY</b> — a blank calendar should feel like open space, not a broken view; keeping the grid visible with one inviting CTA makes scheduling the obvious first move.</p>
+    </div>
+    <div class="frame">
+      <div class="caltop"><h2>June 2026</h2><div class="navbtns"><button class="iconbtn"><svg class="ico"><use href="#i-chevl"/></svg></button><button class="iconbtn"><svg class="ico"><use href="#i-chevr"/></svg></button></div><button class="btn-sec">Today</button><div class="seg" style="margin-left:auto"><button class="on">Month</button><button>Week</button><button>Day</button></div><button class="btn-pri"><svg class="ico"><use href="#i-plus"/></svg>New event</button></div>
+      <div style="position:relative">
+        <div class="mgrid-head"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+        <div class="mgrid empty" id="m5grid"></div>
+        <div style="position:absolute;inset:34px 0 0 0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none">
+          <div style="background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 30px -14px rgba(20,24,31,.3);padding:32px 36px;display:flex;flex-direction:column;align-items:center;pointer-events:auto">
+            <div style="width:60px;height:60px;border-radius:16px;background:var(--accent-tint);display:flex;align-items:center;justify-content:center;color:var(--accent-ink);margin-bottom:15px"><svg class="ico" style="width:28px;height:28px"><use href="#i-cal"/></svg></div>
+            <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.01em">Nothing scheduled this month</h3>
+            <p style="font-size:13.5px;color:var(--mut);margin-top:7px;max-width:38ch;line-height:1.55">Your calendar is clear. Add an event or connect another calendar to see everything in one place.</p>
+            <div style="display:flex;gap:10px;margin-top:16px"><button class="btn-pri"><svg class="ico"><use href="#i-plus"/></svg>Add event</button><button class="btn-sec"><svg class="ico"><use href="#i-cal"/></svg>Connect calendar</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+/* month grid */
+.mgrid-head{display:grid;grid-template-columns:repeat(7,1fr);background:var(--surface);border-bottom:1px solid var(--line);}
+.mgrid-head span{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--faint);padding:8px 10px;text-align:left;}
+.mgrid{display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:96px;background:var(--line);gap:1px;}
+.mgrid.mini{grid-auto-rows:74px;}
+.mcell{background:var(--surface);padding:6px 7px;display:flex;flex-direction:column;gap:3px;overflow:hidden;cursor:pointer;}
+.mcell:hover{background:var(--inset);}
+.mcell.out{background:#FAFBFC;}
+.mcell .dn{font-size:12px;font-weight:600;color:var(--mut);font-variant-numeric:tabular-nums;}
+.mcell.out .dn{color:var(--faint);}
+.mcell.today .dn{background:var(--accent);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.mcell.sel{box-shadow:inset 0 0 0 2px var(--accent);}
+.mcell .more{font-size:10.5px;color:var(--faint);font-weight:600;padding-left:2px;}
+/* week timeline */
+.wk-daysrow{display:grid;grid-template-columns:54px repeat(5,1fr);background:var(--surface);border-bottom:1px solid var(--line);}
+.wk-day{padding:10px 8px;text-align:center;border-left:1px solid var(--line);}
+.wk-day .dn{display:block;font-size:10px;font-weight:700;color:var(--faint);letter-spacing:.05em;}
+.wk-day .dnum{font-size:17px;font-weight:700;}
+.wk-day.today .dnum{color:var(--accent);}
+.wk-body{max-height:380px;overflow:auto;background:var(--surface);}
+.wk-grid{position:relative;display:grid;grid-template-columns:54px 1fr;}
+.wk-gutter{display:flex;flex-direction:column;}
+.wk-gutter .hr{height:52px;font-size:10.5px;color:var(--faint);text-align:right;padding:2px 8px 0 0;font-variant-numeric:tabular-nums;}
+.wk-cols{display:grid;grid-template-columns:repeat(5,1fr);position:relative;}
+.wk-col{border-left:1px solid var(--line);position:relative;}
+.wk-col .slot{height:52px;border-bottom:1px solid var(--inset);}
+.wk-evt{position:absolute;left:3px;right:3px;border-radius:6px;padding:4px 7px;font-size:11px;font-weight:600;overflow:hidden;border-left:2px solid;}
+.wk-evt .et{font-size:10px;opacity:.85;font-variant-numeric:tabular-nums;}
+.wk-evt.blue{background:var(--accent-tint);color:var(--accent-ink);border-color:var(--accent);}
+.wk-evt.green{background:var(--ok-t);color:var(--ok);border-color:var(--ok);}
+.wk-evt.purple{background:var(--purple-t);color:var(--purple);border-color:var(--purple);}
+.wk-evt.amber{background:var(--warn-t);color:var(--warn);border-color:var(--warn);}
+.nowline{position:absolute;left:0;right:0;height:2px;background:var(--bad);z-index:5;}
+.nowline::before{content:'';position:absolute;left:-4px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--bad);}
+/* agenda */
+.ag{display:flex;gap:11px;}
+.agtime{font-size:11.5px;font-weight:600;color:var(--faint);width:42px;flex-shrink:0;padding-top:9px;}
+.agcard{flex:1;border-radius:9px;padding:9px 12px;border-left:3px solid;}
+.agcard.blue{background:var(--accent-tint);border-color:var(--accent);} .agcard.green{background:var(--ok-t);border-color:var(--ok);} .agcard.purple{background:var(--purple-t);border-color:var(--purple);} .agcard.amber{background:var(--warn-t);border-color:var(--warn);}
+.agt{font-size:13px;font-weight:700;color:var(--ink);} .agm{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--mut);margin-top:3px;} .agm .ico{width:12px;height:12px;}
+/* booking grid */
+.bookgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.bookgrid .bcolh{font-size:11px;font-weight:700;color:var(--mut);text-align:center;padding-bottom:4px;}
+.bookgrid .slot{font-size:12px;font-weight:600;text-align:center;padding:8px 4px;border-radius:7px;border:1px solid var(--line-2);background:var(--surface);color:var(--accent-ink);cursor:pointer;font-variant-numeric:tabular-nums;}
+.bookgrid .slot:hover{border-color:var(--accent);background:var(--accent-tint);}
+.bookgrid .slot.booked{color:var(--faint);background:var(--inset);border-color:var(--line);text-decoration:line-through;cursor:not-allowed;}
+.bookgrid .slot.sel{background:var(--accent);color:#fff;border-color:var(--accent);}
+.bookgrid .slot.empty{visibility:hidden;}
+.lg{width:12px;height:12px;border-radius:4px;display:inline-block;border:1px solid var(--line-2);}
+.lg.av{background:var(--surface);} .lg.bk{background:var(--inset);} .lg.sel{background:var(--accent);border-color:var(--accent);}
+/* skin table */
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame[style*="grid-template-columns:1fr 300px"]{grid-template-columns:1fr!important;}
+  .wk-daysrow{grid-template-columns:44px repeat(5,1fr);}
+}
+</style>
+
+<script>
+/* event data keyed by day-of-month */
+var EVENTS={
+  3:[['blue','Kickoff','9:00']],
+  9:[['green','Design review','11:00'],['amber','Vendor call','15:00']],
+  12:[['purple','Forecast','10:00']],
+  16:[['blue','Standup','9:00'],['green','1:1 Ava','14:00']],
+  18:[['blue','Standup','9:00'],['purple','Pipeline','10:00'],['green','1:1 Reza','14:00'],['amber','Atlas call','15:30']],
+  19:[['teal','Sprint demo','13:00']],
+  23:[['amber','Board sync','10:00']],
+  25:[['blue','Standup','9:00'],['purple','Roadmap','13:00']],
+  30:[['green','Month close','16:00']]
+};
+/* build a month grid: June 2026 starts Mon Jun 1; 30 days */
+function buildMonth(el,opts){
+  opts=opts||{};
+  el.innerHTML='';
+  // June 1 2026 is a Monday -> grid starts at Mon, no leading blanks; 30 days; trailing to fill 35
+  var cells=[];
+  for(var d=1;d<=30;d++)cells.push(d);
+  var trailing=35-cells.length; // 5
+  var html='';
+  cells.forEach(function(d){
+    var evs=opts.empty?[]:(EVENTS[d]||[]);
+    var cls='mcell'+(d===18?' today':'')+((opts.sel===d)?' sel':'');
+    var inner='<span class="dn">'+d+'</span>';
+    if(!opts.mini){
+      evs.slice(0,opts.empty?0:3).forEach(function(e){inner+='<div class="evt '+e[0]+'"><span class="t">'+e[2]+'</span> '+e[1]+'</div>';});
+      if(evs.length>3)inner+='<span class="more">+'+(evs.length-3)+' more</span>';
+    }else{
+      if(evs.length){inner+='<div style="display:flex;gap:3px;margin-top:2px">';evs.slice(0,4).forEach(function(e){inner+='<span style="width:6px;height:6px;border-radius:50%;background:var(--'+(e[0]==='blue'?'accent':e[0]==='green'?'ok':e[0]==='amber'?'warn':e[0]==='purple'?'purple':'teal')+')"></span>';});inner+='</div>';}
+    }
+    html+='<div class="'+cls+'" data-d="'+d+'">'+inner+'</div>';
+  });
+  for(var t=1;t<=trailing;t++)html+='<div class="mcell out"><span class="dn">'+t+'</span></div>';
+  el.innerHTML=html;
+}
+buildMonth(document.getElementById('m1grid'),{});
+buildMonth(document.getElementById('m5grid'),{empty:true});
+(function(){
+  var g=document.getElementById('m3grid');
+  buildMonth(g,{mini:true,sel:18});
+  g.addEventListener('click',function(e){var c=e.target.closest('.mcell');if(!c||c.classList.contains('out'))return;g.querySelectorAll('.mcell').forEach(function(x){x.classList.remove('sel');});c.classList.add('sel');});
+})();
+
+/* week timeline: hours 8..18 */
+(function(){
+  var gutter=document.getElementById('w2gutter'),cols=document.getElementById('w2cols');
+  var startH=8,endH=18,rowH=52;
+  for(var h=startH;h<=endH;h++){var lab=(h<12?h+' AM':h===12?'12 PM':(h-12)+' PM');var d=document.createElement('div');d.className='hr';d.textContent=lab;gutter.appendChild(d);}
+  // events per column [day0..4]: [startHour, durationHours, class, title]
+  var dayEvents=[
+    [[9,1,'blue','Standup'],[13,1.5,'green','Design sync']],
+    [[10,1,'purple','Pipeline'],[15,1,'amber','Vendor call']],
+    [[9,0.5,'blue','Standup'],[11,2,'green','Workshop']],
+    [[9,0.5,'blue','Standup'],[10,1,'purple','Pipeline review'],[14,0.5,'green','1:1 Reza'],[15.5,0.5,'amber','Atlas call']],
+    [[13,1,'teal','Sprint demo']]
+  ];
+  for(var c=0;c<5;c++){
+    var col=document.createElement('div');col.className='wk-col';
+    for(var s=startH;s<=endH;s++){var sl=document.createElement('div');sl.className='slot';col.appendChild(sl);}
+    dayEvents[c].forEach(function(ev){
+      var top=(ev[0]-startH)*rowH, height=ev[1]*rowH-4;
+      var e=document.createElement('div');e.className='wk-evt '+ev[2];e.style.top=top+'px';e.style.height=height+'px';
+      var sh=ev[0],eh=ev[0]+ev[1];
+      function fmt(x){var hh=Math.floor(x),mm=(x%1)*60;return hh+(mm?':'+('0'+mm).slice(-2):'');}
+      e.innerHTML='<div>'+ev[3]+'</div><div class="et">'+fmt(sh)+'–'+fmt(eh)+'</div>';
+      col.appendChild(e);
+    });
+    if(c===3){var now=document.createElement('div');now.className='nowline';now.style.top=((14.4-startH)*rowH)+'px';col.appendChild(now);}
+    cols.appendChild(col);
+  }
+})();
+
+/* booking grid */
+(function(){
+  var g=document.getElementById('s4grid');if(!g)return;
+  var days=['Mon 15','Tue 16','Wed 17','Thu 18','Fri 19'];
+  var times=['9:00','9:30','10:00','11:00','13:00','14:00','15:00'];
+  // booked map: day index -> set of times
+  var booked={0:['10:00','14:00'],1:['9:00','15:00'],2:['11:00'],3:['9:00','9:30','10:00'],4:['13:00','15:00']};
+  var html='';
+  days.forEach(function(d){html+='<div class="bcolh">'+d+'</div>';});
+  times.forEach(function(t){
+    days.forEach(function(d,di){
+      var isB=(booked[di]||[]).indexOf(t)>-1;
+      var sel=(di===3&&t==='14:00');
+      html+='<button class="slot'+(isB?' booked':'')+(sel?' sel':'')+'" data-d="'+di+'" data-t="'+t+'"'+(isB?' disabled':'')+'>'+t+'</button>';
+    });
+  });
+  g.innerHTML=html;
+  g.addEventListener('click',function(e){var s=e.target.closest('.slot');if(!s||s.classList.contains('booked'))return;g.querySelectorAll('.slot').forEach(function(x){x.classList.remove('sel');});s.classList.add('sel');
+    var daynames=['Monday, June 15','Tuesday, June 16','Wednesday, June 17','Thursday, June 18','Friday, June 19'];
+    document.getElementById('s4day').textContent=daynames=daynames[+s.dataset.d];
+    var t=s.dataset.t;document.getElementById('s4time').textContent=t+' – '+t.replace(/^(\d+):?(\d+)?$/,function(_,h,m){m=m||'00';var mm=(+m+30);var hh=+h;if(mm>=60){mm-=60;hh+=1;}return hh+':'+('0'+mm).slice(-2);})+' PM';
+  });
+})();
+</script>
+</body>
+</html>

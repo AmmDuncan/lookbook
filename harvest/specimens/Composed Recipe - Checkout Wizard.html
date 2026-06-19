@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Checkout / multi-step wizard (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Checkout / multi-step wizard · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin. Only composition + interaction varies. Placeholder labels
+   only — no real payment data. WCAG AA throughout.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF; --bad:#C0392B; --bad-t:#F9E8E5;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input,select{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+
+.btn-pri{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:600;padding:11px 18px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-sec{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:13px;font-weight:600;padding:10px 15px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+
+.fld{display:block;margin-bottom:14px;}
+.fld .lab{font-size:12px;font-weight:600;color:var(--mut);margin-bottom:6px;display:block;}
+.input,.selectw select{width:100%;font-size:13.5px;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:9px 12px;outline:none;}
+.input::placeholder{color:var(--faint);}
+.input:focus,.selectw select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+.selectw{position:relative;} .selectw select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:30px;}
+.selectw .ico{position:absolute;right:11px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--mut);pointer-events:none;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.row3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px;}
+
+/* order summary */
+.osum .item{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--inset);}
+.osum .item:last-of-type{border-bottom:none;}
+.osum .thumb{width:42px;height:42px;border-radius:8px;background:var(--inset);background-image:repeating-linear-gradient(135deg,transparent,transparent 6px,rgba(27,30,35,.04) 6px,rgba(27,30,35,.04) 7px);flex-shrink:0;position:relative;}
+.osum .thumb .q{position:absolute;top:-7px;right:-7px;min-width:18px;height:18px;border-radius:999px;background:var(--mut);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 5px;}
+.osum .nm{font-size:12.5px;font-weight:600;} .osum .vr{font-size:11px;color:var(--faint);}
+.osum .pr{margin-left:auto;font-size:12.5px;font-weight:600;}
+.osum .tot{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mut);padding:5px 0;}
+.osum .tot.grand{font-size:16px;font-weight:800;color:var(--ink);padding-top:10px;margin-top:6px;border-top:1px solid var(--line);}
+.promo{display:flex;gap:8px;margin:10px 0;}
+.promo input{flex:1;font-size:12.5px;border:1px solid var(--line-2);border-radius:7px;padding:8px 10px;outline:none;}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-chevr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chevl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3M20 17h2v-5l-3-4h-4v9h2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Checkout / multi-step wizard · one skin, five compositions</div>
+    <h1>Same skin. Five ways to check out.</h1>
+    <p>One purchase — two items, shipping, payment, review — composed five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white surfaces with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. Fields use placeholder labels only — no real payment data. What changes is purely <em>composition and interaction</em>.</p>
+  </header>
+
+  <!-- ============== 1 · STEPPER + SUMMARY RAIL ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Stepper + summary rail</div>
+      <p class="plate-recipe"><b>PULLS</b> — a horizontal stepper (Cart → Shipping → Payment → Review) + the current step panel on the left + a sticky order-summary rail on the right (line items, subtotal, tax, total). &nbsp;<b>WHY</b> — the conversion-tested default: explicit steps set expectations and the ever-present total reassures buyers there are no surprises before they pay.</p>
+    </div>
+    <div class="frame" style="padding:24px 26px">
+      <div style="display:flex;align-items:flex-start;max-width:680px;margin:0 auto 24px">
+        <div class="wstep done"><span class="sc"><svg class="ico"><use href="#i-check"/></svg></span><span class="sl">Cart</span></div>
+        <div class="wstep cur"><span class="sc">2</span><span class="sl">Shipping</span></div>
+        <div class="wstep"><span class="sc">3</span><span class="sl">Payment</span></div>
+        <div class="wstep"><span class="sc">4</span><span class="sl">Review</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start">
+        <div class="card" style="padding:22px 24px">
+          <div style="font-size:15px;font-weight:700;letter-spacing:-0.01em;margin-bottom:16px">Shipping address</div>
+          <div class="row2"><label class="fld"><span class="lab">First name</span><input class="input" placeholder="First name"></label><label class="fld"><span class="lab">Last name</span><input class="input" placeholder="Last name"></label></div>
+          <label class="fld"><span class="lab">Address line 1</span><input class="input" placeholder="Street address"></label>
+          <div class="row3"><label class="fld"><span class="lab">City</span><input class="input" placeholder="City"></label><label class="fld"><span class="lab">State</span><input class="input" placeholder="State"></label><label class="fld"><span class="lab">ZIP</span><input class="input" placeholder="ZIP"></label></div>
+          <div style="font-size:13px;font-weight:700;margin:8px 0 10px">Shipping method</div>
+          <label class="shipopt sel"><input type="radio" name="ship1" checked><span class="rd"></span><div><div class="so-t">Standard · 5–7 days</div><div class="so-s">Free</div></div><span class="so-p tnum">$0.00</span></label>
+          <label class="shipopt"><input type="radio" name="ship1"><span class="rd"></span><div><div class="so-t">Express · 2 days</div><div class="so-s">Faster delivery</div></div><span class="so-p tnum">$12.00</span></label>
+          <div style="display:flex;justify-content:space-between;margin-top:20px"><button class="btn-sec"><svg class="ico"><use href="#i-chevl"/></svg>Back to cart</button><button class="btn-pri">Continue to payment<svg class="ico"><use href="#i-chevr"/></svg></button></div>
+        </div>
+        <aside style="position:sticky;top:0">
+          <div class="card" style="padding:18px 18px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">Order summary</div>
+            <div class="osum">
+              <div class="item"><span class="thumb"><span class="q">1</span></span><div><div class="nm">Horizon UI Kit</div><div class="vr">Single seat</div></div><span class="pr tnum">$48.00</span></div>
+              <div class="item"><span class="thumb"><span class="q">2</span></span><div><div class="nm">Motion Icons</div><div class="vr">Team license</div></div><span class="pr tnum">$78.00</span></div>
+              <div style="margin-top:8px">
+                <div class="tot"><span>Subtotal</span><span class="tnum">$126.00</span></div>
+                <div class="tot"><span>Shipping</span><span class="tnum">$0.00</span></div>
+                <div class="tot"><span>Tax</span><span class="tnum">$10.08</span></div>
+                <div class="tot grand"><span>Total</span><span class="tnum">$136.08</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--faint);margin-top:10px"><svg class="ico" style="width:13px;height:13px"><use href="#i-lock"/></svg>Secure checkout</div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · ACCORDION CHECKOUT ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Accordion checkout</div>
+      <p class="plate-recipe"><b>PULLS</b> — a single page with collapsible sections (Contact / Shipping / Payment / Review); completed sections collapse to a summary line; order summary on the side. &nbsp;<b>WHY</b> — keeps everything on one URL: finished steps fold up to confirmation lines so the page stays short while the whole flow remains visible and editable.</p>
+    </div>
+    <div class="frame" style="padding:24px 26px;display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="acc done">
+          <div class="acc-h"><span class="acc-n"><svg class="ico"><use href="#i-check"/></svg></span><div class="acc-t">Contact</div><div class="acc-sum">you@example.com</div><button class="acc-edit"><svg class="ico"><use href="#i-edit"/></svg>Edit</button></div>
+        </div>
+        <div class="acc done">
+          <div class="acc-h"><span class="acc-n"><svg class="ico"><use href="#i-check"/></svg></span><div class="acc-t">Shipping</div><div class="acc-sum">123 Placeholder St · Standard (free)</div><button class="acc-edit"><svg class="ico"><use href="#i-edit"/></svg>Edit</button></div>
+        </div>
+        <div class="acc open">
+          <div class="acc-h"><span class="acc-n">3</span><div class="acc-t">Payment</div></div>
+          <div class="acc-b">
+            <label class="fld"><span class="lab">Name on card</span><input class="input" placeholder="Cardholder name"></label>
+            <label class="fld"><span class="lab">Card number</span><input class="input" placeholder="•••• •••• •••• ••••"></label>
+            <div class="row2"><label class="fld"><span class="lab">Expiry</span><input class="input" placeholder="MM / YY"></label><label class="fld"><span class="lab">CVC</span><input class="input" placeholder="•••"></label></div>
+            <button class="btn-pri" style="width:100%;margin-top:4px">Continue to review</button>
+          </div>
+        </div>
+        <div class="acc">
+          <div class="acc-h"><span class="acc-n">4</span><div class="acc-t" style="color:var(--faint)">Review</div></div>
+        </div>
+      </div>
+      <aside style="position:sticky;top:0"><div class="card" style="padding:18px"><div style="font-size:13px;font-weight:700;margin-bottom:8px">Order summary</div><div class="osum"><div class="item"><span class="thumb"><span class="q">1</span></span><div><div class="nm">Horizon UI Kit</div></div><span class="pr tnum">$48.00</span></div><div class="item"><span class="thumb"><span class="q">2</span></span><div><div class="nm">Motion Icons</div></div><span class="pr tnum">$78.00</span></div><div style="margin-top:8px"><div class="tot"><span>Subtotal</span><span class="tnum">$126.00</span></div><div class="tot"><span>Tax</span><span class="tnum">$10.08</span></div><div class="tot grand"><span>Total</span><span class="tnum">$136.08</span></div></div></div></div></aside>
+    </div>
+  </section>
+
+  <!-- ============== 3 · TWO-COLUMN CLASSIC ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Two-column classic</div>
+      <p class="plate-recipe"><b>PULLS</b> — all fields in a left column + a persistent order-summary card on the right, single page. &nbsp;<b>WHY</b> — fastest for short forms: no steps to click through, everything visible at once, with the summary anchored beside the fields the whole way down.</p>
+    </div>
+    <div class="frame" style="padding:24px 26px;display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div class="card" style="padding:20px 22px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px"><svg class="ico" style="width:15px;height:15px;color:var(--mut);margin-right:6px"><use href="#i-mail"/></svg>Contact</div>
+          <label class="fld" style="margin-bottom:0"><span class="lab">Email</span><input class="input" placeholder="you@example.com"></label>
+        </div>
+        <div class="card" style="padding:20px 22px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px"><svg class="ico" style="width:15px;height:15px;color:var(--mut);margin-right:6px"><use href="#i-truck"/></svg>Shipping</div>
+          <div class="row2"><label class="fld"><span class="lab">First name</span><input class="input" placeholder="First name"></label><label class="fld"><span class="lab">Last name</span><input class="input" placeholder="Last name"></label></div>
+          <label class="fld"><span class="lab">Address</span><input class="input" placeholder="Street address"></label>
+          <div class="row3" style="margin-bottom:0"><label class="fld" style="margin-bottom:0"><span class="lab">City</span><input class="input" placeholder="City"></label><label class="fld" style="margin-bottom:0"><span class="lab">State</span><input class="input" placeholder="State"></label><label class="fld" style="margin-bottom:0"><span class="lab">ZIP</span><input class="input" placeholder="ZIP"></label></div>
+        </div>
+        <div class="card" style="padding:20px 22px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px"><svg class="ico" style="width:15px;height:15px;color:var(--mut);margin-right:6px"><use href="#i-card"/></svg>Payment</div>
+          <label class="fld"><span class="lab">Card number</span><input class="input" placeholder="•••• •••• •••• ••••"></label>
+          <div class="row2" style="margin-bottom:0"><label class="fld" style="margin-bottom:0"><span class="lab">Expiry</span><input class="input" placeholder="MM / YY"></label><label class="fld" style="margin-bottom:0"><span class="lab">CVC</span><input class="input" placeholder="•••"></label></div>
+        </div>
+      </div>
+      <aside style="position:sticky;top:0">
+        <div class="card" style="padding:18px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:8px">Order summary</div>
+          <div class="osum">
+            <div class="item"><span class="thumb"><span class="q">1</span></span><div><div class="nm">Horizon UI Kit</div><div class="vr">Single seat</div></div><span class="pr tnum">$48.00</span></div>
+            <div class="item"><span class="thumb"><span class="q">2</span></span><div><div class="nm">Motion Icons</div><div class="vr">Team license</div></div><span class="pr tnum">$78.00</span></div>
+          </div>
+          <div class="promo"><input placeholder="Promo code"><button class="btn-sec" style="padding:8px 12px">Apply</button></div>
+          <div class="tot"><span>Subtotal</span><span class="tnum">$126.00</span></div>
+          <div class="tot"><span>Shipping</span><span class="tnum">$0.00</span></div>
+          <div class="tot"><span>Tax</span><span class="tnum">$10.08</span></div>
+          <div class="tot grand"><span>Total</span><span class="tnum">$136.08</span></div>
+          <button class="btn-pri" style="width:100%;margin-top:14px"><svg class="ico"><use href="#i-lock"/></svg>Pay $136.08</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============== 4 · EXPRESS / MINIMAL ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Express / minimal</div>
+      <p class="plate-recipe"><b>PULLS</b> — a compact one-step express checkout card (saved address + saved card + pay button) for returning users. &nbsp;<b>WHY</b> — for known customers the whole form is friction: showing saved details with an edit link and a single pay button turns checkout into one confident tap.</p>
+    </div>
+    <div class="frame" style="padding:34px 26px;background:var(--page);display:flex;justify-content:center">
+      <div class="card" style="width:400px;max-width:100%;padding:24px 24px">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:18px"><svg class="ico" style="width:18px;height:18px;color:var(--accent)"><use href="#i-bag"/></svg><div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Express checkout</div></div>
+        <div class="exprow"><span class="exic"><svg class="ico"><use href="#i-pin"/></svg></span><div class="exb"><div class="ex-t">Ship to</div><div class="ex-v">Mara Reyes · 123 Placeholder St, City</div></div><button class="exedit">Edit</button></div>
+        <div class="exprow"><span class="exic"><svg class="ico"><use href="#i-card"/></svg></span><div class="exb"><div class="ex-t">Pay with</div><div class="ex-v">Card ending •••• 4242</div></div><button class="exedit">Edit</button></div>
+        <div class="exprow"><span class="exic"><svg class="ico"><use href="#i-truck"/></svg></span><div class="exb"><div class="ex-t">Delivery</div><div class="ex-v">Standard · free · 5–7 days</div></div><button class="exedit">Edit</button></div>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line)">
+          <div class="tot"><span>Subtotal</span><span class="tnum">$126.00</span></div>
+          <div class="tot"><span>Tax</span><span class="tnum">$10.08</span></div>
+          <div class="tot grand"><span>Total</span><span class="tnum">$136.08</span></div>
+        </div>
+        <button class="btn-pri" style="width:100%;margin-top:16px"><svg class="ico"><use href="#i-lock"/></svg>Place order · $136.08</button>
+        <div style="text-align:center;font-size:11.5px;color:var(--faint);margin-top:10px">By placing this order you agree to the placeholder terms.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · ORDER CONFIRMED ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Order confirmed</div>
+      <p class="plate-recipe"><b>PULLS</b> — the success state: confirmation, order number, item summary, and next-steps actions. &nbsp;<b>WHY</b> — the moment of relief deserves clarity: a clear confirmation with the order number and what-happens-next reduces anxiety and post-purchase support requests.</p>
+    </div>
+    <div class="frame" style="padding:40px 26px;background:var(--page)">
+      <div class="card" style="max-width:520px;margin:0 auto;padding:32px 30px;text-align:center">
+        <div style="width:64px;height:64px;border-radius:50%;background:var(--ok-t);color:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 18px"><svg class="ico" style="width:32px;height:32px"><use href="#i-check"/></svg></div>
+        <h3 style="font-size:22px;font-weight:800;letter-spacing:-0.02em">Order confirmed</h3>
+        <p style="font-size:14px;color:var(--mut);margin-top:8px;line-height:1.55">Thanks! A confirmation has been sent to <b style="color:var(--ink)">you@example.com</b>.</p>
+        <div style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:8px 14px;background:var(--inset);border-radius:8px;font-size:13px"><span style="color:var(--mut)">Order</span><b class="tnum" style="font-family:var(--mono)">#HRB-20614</b></div>
+        <div style="text-align:left;border:1px solid var(--line);border-radius:10px;margin-top:22px;padding:6px 16px">
+          <div class="osum">
+            <div class="item"><span class="thumb"><span class="q">1</span></span><div><div class="nm">Horizon UI Kit</div><div class="vr">Single seat</div></div><span class="pr tnum">$48.00</span></div>
+            <div class="item"><span class="thumb"><span class="q">2</span></span><div><div class="nm">Motion Icons</div><div class="vr">Team license</div></div><span class="pr tnum">$78.00</span></div>
+          </div>
+          <div style="padding:6px 0"><div class="tot grand" style="border-top:none;padding-top:6px"><span>Total paid</span><span class="tnum">$136.08</span></div></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:22px"><button class="btn-pri" style="flex:1"><svg class="ico"><use href="#i-truck"/></svg>Track order</button><button class="btn-sec" style="flex:1;justify-content:center">View receipt</button></div>
+        <a href="#" style="display:inline-block;margin-top:16px;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none">Continue shopping →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.wstep{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;}
+.wstep .sc{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:var(--surface);border:2px solid var(--line-2);color:var(--faint);z-index:1;font-variant-numeric:tabular-nums;}
+.wstep .sc .ico{width:15px;height:15px;}
+.wstep.done .sc{background:var(--accent);border-color:var(--accent);color:#fff;}
+.wstep.cur .sc{background:var(--surface);border-color:var(--accent);color:var(--accent-ink);box-shadow:0 0 0 4px var(--accent-tint);}
+.wstep .sl{font-size:12px;font-weight:600;margin-top:8px;color:var(--mut);}
+.wstep.cur .sl,.wstep.done .sl{color:var(--ink);}
+.wstep::before,.wstep::after{content:'';position:absolute;top:15px;height:2px;background:var(--line-2);width:50%;}
+.wstep::before{left:0;}.wstep::after{right:0;}
+.wstep:first-child::before{display:none;}.wstep:last-child::after{display:none;}
+.wstep.done::before,.wstep.done::after,.wstep.cur::before{background:var(--accent);}
+.shipopt{display:flex;align-items:center;gap:11px;padding:11px 13px;border:1px solid var(--line-2);border-radius:9px;cursor:pointer;margin-bottom:8px;}
+.shipopt input{position:absolute;opacity:0;}
+.shipopt .rd{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line-2);flex-shrink:0;position:relative;}
+.shipopt.sel{border-color:var(--accent);background:var(--accent-tint);} .shipopt.sel .rd{border-color:var(--accent);} .shipopt.sel .rd::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--accent);}
+.shipopt .so-t{font-size:13px;font-weight:600;} .shipopt .so-s{font-size:11.5px;color:var(--faint);} .shipopt .so-p{margin-left:auto;font-size:13px;font-weight:700;}
+/* accordion */
+.acc{border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden;}
+.acc.open{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+.acc-h{display:flex;align-items:center;gap:11px;padding:14px 18px;}
+.acc-n{width:24px;height:24px;border-radius:50%;background:var(--inset);color:var(--mut);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.acc.done .acc-n{background:var(--ok);color:#fff;} .acc.done .acc-n .ico{width:13px;height:13px;}
+.acc.open .acc-n{background:var(--accent);color:#fff;}
+.acc-t{font-size:13.5px;font-weight:700;}
+.acc-sum{font-size:12.5px;color:var(--faint);margin-left:8px;}
+.acc-edit{margin-left:auto;font-size:12px;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:5px;} .acc-edit .ico{width:13px;height:13px;}
+.acc-b{padding:4px 18px 18px;}
+/* express */
+.exprow{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--inset);}
+.exprow:last-of-type{border-bottom:none;}
+.exic{width:34px;height:34px;border-radius:9px;background:var(--inset);color:var(--mut);display:flex;align-items:center;justify-content:center;flex-shrink:0;} .exic .ico{width:16px;height:16px;}
+.exb{flex:1;min-width:0;} .ex-t{font-size:11px;color:var(--faint);font-weight:600;text-transform:uppercase;letter-spacing:.04em;} .ex-v{font-size:13px;font-weight:600;margin-top:1px;}
+.exedit{font-size:12px;font-weight:600;color:var(--accent);}
+/* skin table */
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame[style*="grid-template-columns:1fr 300px"],.frame[style*="grid-template-columns:1fr 320px"]{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script>
+/* shipping radio (comp 1) */
+document.querySelectorAll('.shipopt').forEach(function(o){o.addEventListener('click',function(){o.parentNode.querySelectorAll('.shipopt').forEach(function(x){x.classList.remove('sel');});o.classList.add('sel');o.querySelector('input').checked=true;});});
+</script>
+</body>
+</html>

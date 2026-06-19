@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumen — Overlays &amp; Navigation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   LUMEN — "Midnight" skin. Sleek dark product UI, plum-charcoal base,
+   elevation by lightness, one warm amber/gold accent.
+   Sora (display) · Hanken Grotesk (UI) · JetBrains Mono (shortcuts).
+   The :root block IS the skin — swap the look by editing only :root.
+   ============================================================================ */
+:root{
+  --bg:#121016;          /* deep plum-charcoal */
+  --surface:#1A1922;     /* panel */
+  --surface-2:#23222F;   /* elevated / overlay */
+  --surface-3:#2C2B3B;   /* hover */
+  --border:rgba(255,255,255,0.075);
+  --border-2:rgba(255,255,255,0.14);
+  --ink:#ECEAF2;         /* near-white */
+  --muted:#A8A5B6;       /* secondary — AA on dark */
+  --subtle:#827F92;      /* faint tier — >=3:1 on dark */
+
+  --accent:#F2B441;      /* amber / gold */
+  --accent-2:#FFC65C;
+  --accent-tint:rgba(242,180,65,0.14);
+  --on-accent:#1A1305;   /* dark text on gold */
+
+  --ok:#49C77E;   --ok-tint:rgba(73,199,126,0.15);
+  --bad:#F26A5C;  --bad-tint:rgba(242,106,92,0.15);
+  --info:#8090FF; --info-tint:rgba(128,144,255,0.15);
+
+  --font-display:'Sora',system-ui,sans-serif;
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+
+  --r-sm:8px; --r:11px; --r-lg:16px; --pill:999px;
+  --shadow:0 1px 2px rgba(0,0,0,0.4);
+  --shadow-pop:0 16px 40px -14px rgba(0,0,0,0.7),0 2px 8px rgba(0,0,0,0.4);
+  --shadow-modal:0 32px 70px -22px rgba(0,0,0,0.8),0 4px 14px rgba(0,0,0,0.5);
+  --motion:160ms; --ease:cubic-bezier(0.2,0,0,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:var(--font-ui);background:var(--bg);color:var(--ink);
+  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(900px 500px at 78% -8%,rgba(242,180,65,0.07),transparent 60%),
+             radial-gradient(700px 500px at 10% 0%,rgba(128,144,255,0.06),transparent 55%);}
+.tnum{font-variant-numeric:tabular-nums;}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:6px;}
+svg{display:block;}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 36px 96px;position:relative;z-index:1;}
+
+/* masthead */
+.mast{padding:60px 0 34px;border-bottom:1px solid var(--border);margin-bottom:6px;}
+.mast-top{display:flex;align-items:center;gap:13px;margin-bottom:32px;}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(150deg,#FFC65C,#E89B1E);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 10px rgba(242,180,65,0.35);}
+.logo svg{width:19px;height:19px;color:#1A1305;}
+.mast-name{font-family:var(--font-display);font-weight:700;font-size:16px;letter-spacing:-0.01em;}
+.mast-name span{color:var(--subtle);font-weight:400;}
+.mast-tag{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--subtle);text-transform:uppercase;letter-spacing:.12em;}
+.mast h1{font-family:var(--font-display);font-weight:700;font-size:clamp(42px,7vw,80px);line-height:0.96;letter-spacing:-0.035em;max-width:15ch;}
+.mast h1 em{font-style:normal;background:linear-gradient(100deg,#FFC65C,#F2B441);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.mast p{font-size:16px;color:var(--muted);max-width:56ch;margin-top:20px;}
+
+/* section */
+.section{padding:48px 0 6px;}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:24px;}
+.sec-num{font-family:var(--font-mono);font-size:12px;color:var(--accent);}
+.sec-title{font-family:var(--font-display);font-weight:600;font-size:22px;letter-spacing:-0.02em;}
+.sec-rule{flex:1;height:1px;background:var(--border);align-self:center;}
+.sec-desc{font-family:var(--font-mono);font-size:11px;color:var(--subtle);text-transform:uppercase;letter-spacing:.06em;}
+
+.grid{display:grid;gap:18px;}
+.cols-2{grid-template-columns:repeat(2,1fr);}
+.cols-3{grid-template-columns:repeat(3,1fr);}
+.span2{grid-column:span 2;}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;}
+.cap{font-family:var(--font-mono);font-size:10.5px;font-weight:500;text-transform:uppercase;letter-spacing:.09em;color:var(--subtle);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.cap .tick{width:7px;height:7px;border-radius:2px;background:var(--accent);}
+
+/* stage (in-context backdrop) */
+.stage{position:relative;border-radius:var(--r);overflow:hidden;background:#0D0C11;border:1px solid var(--border);min-height:280px;}
+.app-sk{position:absolute;inset:0;padding:18px;opacity:.5;}
+.sk{height:9px;border-radius:99px;background:rgba(255,255,255,0.10);margin-bottom:11px;}
+.sk.t{height:13px;width:42%;background:rgba(255,255,255,0.16);margin-bottom:16px;}
+.sk.s{width:88%;} .sk.m{width:74%;} .sk.sh{width:54%;}
+.skrow{display:flex;gap:10px;margin:16px 0;}
+.skcard{flex:1;height:54px;border-radius:10px;background:rgba(255,255,255,0.07);}
+.scrim{position:absolute;inset:0;background:rgba(8,7,11,0.62);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}
+
+/* buttons */
+.btn{font-family:var(--font-ui);font-size:13px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 15px;border-radius:var(--r-sm);border:1px solid transparent;cursor:pointer;transition:all var(--motion) var(--ease);}
+.btn svg{width:15px;height:15px;}
+.btn-primary{background:var(--accent);color:var(--on-accent);box-shadow:0 1px 0 rgba(255,255,255,0.2) inset;}
+.btn-primary:hover{background:var(--accent-2);}
+.btn-ghost{background:var(--surface-2);color:var(--ink);border-color:var(--border-2);}
+.btn-ghost:hover{background:var(--surface-3);}
+.btn-quiet{background:transparent;color:var(--muted);}
+.btn-quiet:hover{background:var(--surface-2);color:var(--ink);}
+.btn-danger{background:var(--bad);color:#1A0907;}
+.btn-danger:hover{filter:brightness(1.08);}
+.btn-sm{padding:6px 11px;font-size:12px;}
+.iconbtn{width:30px;height:30px;border-radius:8px;border:none;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--motion) var(--ease);}
+.iconbtn:hover{background:var(--surface-3);color:var(--ink);}
+.iconbtn svg{width:16px;height:16px;}
+
+.kbd{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);background:var(--surface-2);border:1px solid var(--border-2);border-radius:5px;padding:2px 6px;line-height:1.4;}
+
+/* ============================================================================ MODAL */
+.modal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(370px,86%);background:var(--surface-2);border:1px solid var(--border-2);border-radius:var(--r-lg);box-shadow:var(--shadow-modal);overflow:hidden;}
+.modal-h{display:flex;align-items:flex-start;gap:12px;padding:20px 20px 0;}
+.modal-ic{width:38px;height:38px;border-radius:10px;background:var(--bad-tint);color:var(--bad);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.modal-ic svg{width:19px;height:19px;}
+.modal-h .x{margin-left:auto;}
+.modal-title{font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:-0.01em;}
+.modal-body{padding:6px 20px 18px;font-size:13.5px;color:var(--muted);line-height:1.55;}
+.modal-foot{display:flex;justify-content:flex-end;gap:9px;padding:14px 20px;background:rgba(0,0,0,0.18);border-top:1px solid var(--border);}
+
+/* ============================================================================ DRAWER */
+.drawer{position:absolute;top:0;right:0;bottom:0;width:62%;background:var(--surface-2);border-left:1px solid var(--border-2);box-shadow:-20px 0 50px -18px rgba(0,0,0,0.7);display:flex;flex-direction:column;}
+.drawer-h{display:flex;align-items:center;padding:16px 18px;border-bottom:1px solid var(--border);}
+.drawer-h .t{font-family:var(--font-display);font-weight:600;font-size:15px;}
+.drawer-h .x{margin-left:auto;}
+.drawer-b{padding:16px 18px;display:flex;flex-direction:column;gap:14px;overflow:auto;}
+.dfield{display:flex;flex-direction:column;gap:7px;}
+.dfield label{font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+.inp{background:var(--bg);border:1px solid var(--border-2);border-radius:var(--r-sm);padding:9px 11px;color:var(--ink);font-family:var(--font-ui);font-size:13px;}
+.inp::placeholder{color:var(--subtle);}
+.inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+.drawer-f{margin-top:auto;display:flex;gap:9px;padding:14px 18px;border-top:1px solid var(--border);}
+
+/* ============================================================================ TOAST */
+.toast{display:flex;gap:12px;align-items:flex-start;background:var(--surface-2);border:1px solid var(--border-2);border-left-width:3px;border-radius:var(--r);padding:13px 14px;box-shadow:var(--shadow-pop);}
+.toast.ok{border-left-color:var(--ok);}
+.toast.err{border-left-color:var(--bad);}
+.toast .ti{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.toast.ok .ti{background:var(--ok-tint);color:var(--ok);}
+.toast.err .ti{background:var(--bad-tint);color:var(--bad);}
+.toast .ti svg{width:17px;height:17px;}
+.toast .tt{font-weight:600;font-size:13.5px;}
+.toast .tm{font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.5;}
+.toast .x{margin-left:auto;}
+
+/* ============================================================================ MENU (dropdown / context) */
+.menu{width:230px;background:var(--surface-2);border:1px solid var(--border-2);border-radius:var(--r);padding:6px;box-shadow:var(--shadow-pop);}
+.menu .grp{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);padding:8px 9px 5px;}
+.mi{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:7px;font-size:13px;color:var(--ink);cursor:pointer;transition:background var(--motion) var(--ease);}
+.mi svg{width:15px;height:15px;color:var(--muted);}
+.mi:hover{background:var(--surface-3);}
+.mi.sel{background:var(--accent-tint);}
+.mi.sel svg{color:var(--accent);}
+.mi .sc{margin-left:auto;font-family:var(--font-mono);font-size:10.5px;color:var(--subtle);}
+.mi .chk{margin-left:auto;color:var(--accent);}
+.mi .chev{margin-left:auto;color:var(--subtle);}
+.mi.danger{color:var(--bad);} .mi.danger svg{color:var(--bad);}
+.mi.danger:hover{background:var(--bad-tint);}
+.msep{height:1px;background:var(--border);margin:6px 4px;}
+
+/* ============================================================================ COMMAND PALETTE */
+.cmd{position:absolute;left:50%;top:46px;transform:translateX(-50%);width:min(460px,90%);background:var(--surface-2);border:1px solid var(--border-2);border-radius:var(--r-lg);box-shadow:var(--shadow-modal);overflow:hidden;}
+.cmd-in{display:flex;align-items:center;gap:11px;padding:15px 16px;border-bottom:1px solid var(--border);}
+.cmd-in svg{width:18px;height:18px;color:var(--subtle);}
+.cmd-in input{flex:1;background:transparent;border:none;outline:none;color:var(--ink);font-family:var(--font-ui);font-size:15px;}
+.cmd-in input::placeholder{color:var(--subtle);}
+.cmd-list{padding:6px;max-height:230px;overflow:auto;}
+.cmd-foot{display:flex;align-items:center;gap:16px;padding:9px 14px;border-top:1px solid var(--border);background:rgba(0,0,0,0.2);font-family:var(--font-mono);font-size:10.5px;color:var(--subtle);}
+.cmd-foot .fk{display:flex;align-items:center;gap:5px;}
+
+/* ============================================================================ POPOVER */
+.pop-demo{position:relative;display:flex;justify-content:center;padding-top:78px;}
+.popover{position:absolute;top:0;left:50%;transform:translateX(-50%);width:248px;background:var(--surface-2);border:1px solid var(--border-2);border-radius:var(--r);box-shadow:var(--shadow-pop);padding:15px;}
+.popover::after{content:'';position:absolute;left:50%;bottom:-7px;transform:translateX(-50%) rotate(45deg);width:12px;height:12px;background:var(--surface-2);border-right:1px solid var(--border-2);border-bottom:1px solid var(--border-2);}
+.popover .ph{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.popover .pa{width:34px;height:34px;border-radius:50%;background:var(--info-tint);color:var(--info);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;}
+.popover .pn{font-family:var(--font-display);font-weight:600;font-size:14px;}
+.popover .pr{font-size:11.5px;color:var(--subtle);}
+.popover .pt{font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:12px;}
+
+/* ============================================================================ TABS */
+.tabs-u{display:flex;gap:0;border-bottom:1px solid var(--border);}
+.tab-u{position:relative;border:none;background:transparent;color:var(--muted);font-family:var(--font-ui);font-size:13.5px;font-weight:600;padding:11px 4px;margin:0 13px;cursor:pointer;transition:color var(--motion) var(--ease);}
+.tab-u:first-child{margin-left:2px;}
+.tab-u.on{color:var(--ink);}
+.tab-u.on::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2.5px;background:var(--accent);border-radius:2px;}
+.tab-u:hover:not(.on){color:var(--ink);}
+.tabs-p{display:inline-flex;gap:3px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--pill);padding:4px;}
+.tab-p{border:none;background:transparent;color:var(--muted);font-family:var(--font-ui);font-size:12.5px;font-weight:600;padding:7px 15px;border-radius:var(--pill);cursor:pointer;transition:all var(--motion) var(--ease);}
+.tab-p.on{background:var(--accent);color:var(--on-accent);}
+.tab-p:not(.on):hover{color:var(--ink);}
+
+/* ============================================================================ BREADCRUMBS */
+.crumbs{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:13px;}
+.crumbs a{color:var(--muted);display:inline-flex;align-items:center;gap:7px;cursor:pointer;border-radius:5px;padding:2px 4px;transition:color var(--motion) var(--ease);}
+.crumbs a:hover{color:var(--ink);}
+.crumbs svg{width:14px;height:14px;color:var(--subtle);}
+.crumbs .cur{color:var(--ink);font-weight:600;}
+
+/* ============================================================================ PAGINATION */
+.pager{display:flex;align-items:center;gap:6px;}
+.pg{min-width:34px;height:34px;padding:0 8px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--surface-2);color:var(--muted);font-family:var(--font-ui);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--motion) var(--ease);}
+.pg:hover{background:var(--surface-3);color:var(--ink);}
+.pg.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent);}
+.pg.dots{border:none;background:transparent;cursor:default;}
+.pg.nav svg{width:15px;height:15px;}
+.pg:disabled{opacity:.4;cursor:not-allowed;}
+
+.foot{margin-top:64px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--font-mono);font-size:11px;color:var(--subtle);text-transform:uppercase;letter-spacing:.06em;}
+
+@media(max-width:880px){.cols-3,.cols-2,.span2{grid-template-columns:1fr;grid-column:auto;}.drawer{width:78%;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-check-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chev-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-chev-d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v5h5"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+  <symbol id="i-corner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 10 4 15 9 20"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <div class="mast-top">
+      <div class="logo"><svg><use href="#i-zap"/></svg></div>
+      <div class="mast-name">Lumen <span>/ overlays</span></div>
+      <div class="mast-tag">midnight register</div>
+    </div>
+    <h1>Overlays &amp; <em>navigation</em></h1>
+    <p>Layered surfaces and wayfinding for the Lumen system — modals, drawers, menus and palettes rendered in context over dimmed backdrops. Warm gold on midnight, set in Sora.</p>
+  </header>
+
+  <!-- 01 LAYERED SURFACES -->
+  <section class="section">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">Layered surfaces</h2><span class="sec-rule"></span><span class="sec-desc">over dimmed backdrop</span></div>
+    <div class="grid cols-2">
+      <!-- modal -->
+      <div class="cell">
+        <div class="cap"><span class="tick"></span>Modal dialog</div>
+        <div class="stage">
+          <div class="app-sk"><div class="sk t"></div><div class="sk s"></div><div class="sk m"></div><div class="skrow"><div class="skcard"></div><div class="skcard"></div></div><div class="sk s"></div><div class="sk sh"></div></div>
+          <div class="scrim"></div>
+          <div class="modal">
+            <div class="modal-h">
+              <div class="modal-ic"><svg><use href="#i-warn"/></svg></div>
+              <div style="flex:1"><div class="modal-title">Delete project?</div></div>
+              <button class="iconbtn x" aria-label="Close"><svg><use href="#i-x"/></svg></button>
+            </div>
+            <div class="modal-body">“Aurora Mobile” and its 42 files will be permanently removed. This action can't be undone.</div>
+            <div class="modal-foot"><button class="btn btn-ghost btn-sm">Cancel</button><button class="btn btn-danger btn-sm"><svg><use href="#i-trash"/></svg>Delete</button></div>
+          </div>
+        </div>
+      </div>
+      <!-- drawer -->
+      <div class="cell">
+        <div class="cap"><span class="tick"></span>Slide-over drawer</div>
+        <div class="stage">
+          <div class="app-sk"><div class="sk t"></div><div class="sk s"></div><div class="sk m"></div><div class="sk s"></div><div class="sk sh"></div></div>
+          <div class="scrim"></div>
+          <aside class="drawer">
+            <div class="drawer-h"><span class="t">Edit member</span><button class="iconbtn x" aria-label="Close"><svg><use href="#i-x"/></svg></button></div>
+            <div class="drawer-b">
+              <div class="dfield"><label>Full name</label><input class="inp" value="Noa Bergström"></div>
+              <div class="dfield"><label>Role</label><input class="inp" value="Product Designer"></div>
+              <div class="dfield"><label>Email</label><input class="inp" placeholder="name@team.com"></div>
+            </div>
+            <div class="drawer-f"><button class="btn btn-ghost btn-sm" style="flex:1">Cancel</button><button class="btn btn-primary btn-sm" style="flex:1">Save</button></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <!-- command palette -->
+    <div class="cell" style="margin-top:18px;">
+      <div class="cap"><span class="tick"></span>Command palette · ⌘K</div>
+      <div class="stage" style="min-height:320px;">
+        <div class="app-sk"><div class="sk t"></div><div class="sk s"></div><div class="skrow"><div class="skcard"></div><div class="skcard"></div><div class="skcard"></div></div><div class="sk m"></div><div class="sk sh"></div></div>
+        <div class="scrim"></div>
+        <div class="cmd">
+          <div class="cmd-in"><svg><use href="#i-search"/></svg><input value="proj" placeholder="Type a command or search…" readonly><span class="kbd">esc</span></div>
+          <div class="cmd-list">
+            <div class="menu" style="width:auto;background:transparent;border:none;box-shadow:none;padding:2px;">
+              <div class="grp">Actions</div>
+              <div class="mi sel"><svg><use href="#i-folder"/></svg>Create new project<span class="sc">⌘N</span></div>
+              <div class="mi"><svg><use href="#i-user"/></svg>Invite teammate<span class="sc">⌘I</span></div>
+              <div class="msep"></div>
+              <div class="grp">Recent projects</div>
+              <div class="mi"><svg><use href="#i-file"/></svg>Aurora Mobile</div>
+              <div class="mi"><svg><use href="#i-file"/></svg>Project Meridian</div>
+            </div>
+          </div>
+          <div class="cmd-foot"><span class="fk"><span class="kbd">↑</span><span class="kbd">↓</span> navigate</span><span class="fk"><span class="kbd">↵</span> select</span><span class="fk" style="margin-left:auto"><svg width="12" height="12" style="opacity:.6"><use href="#i-corner"/></svg> Lumen</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 MENUS & MESSAGING -->
+  <section class="section">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Menus &amp; messaging</h2><span class="sec-rule"></span><span class="sec-desc">dropdown · context · popover · toast</span></div>
+    <div class="grid cols-2">
+      <!-- toasts -->
+      <div class="cell">
+        <div class="cap"><span class="tick"></span>Toasts · success + error</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="toast ok">
+            <div class="ti"><svg><use href="#i-check-c"/></svg></div>
+            <div><div class="tt">Changes published</div><div class="tm">Your design system is live for the team.</div></div>
+            <button class="iconbtn x" aria-label="Dismiss"><svg><use href="#i-x"/></svg></button>
+          </div>
+          <div class="toast err">
+            <div class="ti"><svg><use href="#i-alert"/></svg></div>
+            <div><div class="tt">Upload failed</div><div class="tm">“cover.png” exceeds the 10 MB limit. Try again.</div></div>
+            <button class="iconbtn x" aria-label="Dismiss"><svg><use href="#i-x"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <!-- popover -->
+      <div class="cell">
+        <div class="cap"><span class="tick"></span>Popover</div>
+        <div class="pop-demo">
+          <div class="popover">
+            <div class="ph"><div class="pa">NB</div><div><div class="pn">Noa Bergström</div><div class="pr">noa@lumen.design</div></div></div>
+            <div class="pt">Product Designer · joined March 2026. Owns the overlays &amp; navigation track.</div>
+            <button class="btn btn-ghost btn-sm" style="width:100%"><svg><use href="#i-user"/></svg>View profile</button>
+          </div>
+          <button class="btn btn-ghost btn-sm">@noa <svg style="width:13px;height:13px"><use href="#i-chev-d"/></svg></button>
+        </div>
+      </div>
+      <!-- dropdown -->
+      <div class="cell">
+        <div class="cap"><span class="tick"></span>Dropdown menu</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+          <button class="btn btn-ghost btn-sm">Actions <svg style="width:13px;height:13px"><use href="#i-chev-d"/></svg></button>
+          <div class="menu">
+            <div class="mi"><svg><use href="#i-edit"/></svg>Rename<span class="sc">⌘R</span></div>
+            <div class="mi"><svg><use href="#i-copy"/></svg>Duplicate<span class="sc">⌘D</span></div>
+            <div class="mi"><svg><use href="#i-share"/></svg>Share…</div>
+            <div class="msep"></div>
+            <div class="mi danger"><svg><use href="#i-trash"/></svg>Delete<span class="sc">⌫</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- context menu -->
+      <div class="cell">
+        <div class="cap"><span class="tick"></span>Context menu · right-click</div>
+        <div style="display:flex;justify-content:center;padding:8px 0;">
+          <div class="menu">
+            <div class="grp">Aurora Mobile</div>
+            <div class="mi"><svg><use href="#i-file"/></svg>Open</div>
+            <div class="mi"><svg><use href="#i-pin"/></svg>Pin to sidebar<span class="chk"><svg style="width:15px;height:15px"><use href="#i-check"/></svg></span></div>
+            <div class="mi"><svg><use href="#i-folder"/></svg>Move to<span class="chev"><svg style="width:14px;height:14px"><use href="#i-chev-r"/></svg></span></div>
+            <div class="msep"></div>
+            <div class="mi"><svg><use href="#i-copy"/></svg>Copy link</div>
+            <div class="mi danger"><svg><use href="#i-trash"/></svg>Delete</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 NAVIGATION -->
+  <section class="section">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">Navigation</h2><span class="sec-rule"></span><span class="sec-desc">tabs · breadcrumbs · pagination</span></div>
+    <div class="grid cols-2">
+      <div class="cell">
+        <div class="cap"><span class="tick"></span>Tabs · underline</div>
+        <div class="tabs-u" data-tabs>
+          <button class="tab-u on" type="button">Overview</button>
+          <button class="tab-u" type="button">Components</button>
+          <button class="tab-u" type="button">Tokens</button>
+          <button class="tab-u" type="button">Changelog</button>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cap"><span class="tick"></span>Tabs · pill</div>
+        <div class="tabs-p" data-tabs>
+          <button class="tab-p on" type="button">Day</button>
+          <button class="tab-p" type="button">Week</button>
+          <button class="tab-p" type="button">Month</button>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cap"><span class="tick"></span>Breadcrumbs</div>
+        <nav class="crumbs">
+          <a><svg><use href="#i-home"/></svg>Home</a><svg style="width:14px;height:14px;color:var(--subtle)"><use href="#i-chev-r"/></svg>
+          <a>Projects</a><svg style="width:14px;height:14px;color:var(--subtle)"><use href="#i-chev-r"/></svg>
+          <a>Aurora Mobile</a><svg style="width:14px;height:14px;color:var(--subtle)"><use href="#i-chev-r"/></svg>
+          <span class="cur">Settings</span>
+        </nav>
+      </div>
+      <div class="cell">
+        <div class="cap"><span class="tick"></span>Pagination</div>
+        <div class="pager">
+          <button class="pg nav" aria-label="Previous"><svg><use href="#i-chev-l"/></svg></button>
+          <button class="pg">1</button>
+          <button class="pg on">2</button>
+          <button class="pg">3</button>
+          <button class="pg">4</button>
+          <span class="pg dots">…</span>
+          <button class="pg">12</button>
+          <button class="pg nav" aria-label="Next"><svg><use href="#i-chev-r"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>LUMEN — MIDNIGHT REGISTER</span>
+    <span>Sora · Hanken Grotesk · JetBrains Mono</span>
+  </footer>
+
+</div>
+
+<script>
+document.querySelectorAll('[data-tabs]').forEach(function(g){
+  g.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b)return;
+    g.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+  });
+});
+</script>
+</body>
+</html>

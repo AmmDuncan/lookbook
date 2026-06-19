@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harbor — Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   HARBOR — Overview. The :root block below IS the skin. Every colour, font,
+   radius and space is a token; swap the look by editing only :root.
+   Cool-technical register — Geist + Geist Mono, off-axis indigo accent.
+   ============================================================================ */
+:root{
+  /* palette — cool-slate neutral ramp (tinted, never pure gray/white) */
+  --bg:#F6F7F9;          /* off-white page */
+  --surface:#FFFFFF;     /* cards */
+  --surface-2:#FBFBFD;   /* inset wells */
+  --border:#E7E9ED;      /* hairline divider */
+  --border-strong:#D6DAE0;
+  --ink:#16181D;         /* near-black, cool undertone */
+  --muted:#5E6672;       /* body-secondary — meets 4.5:1 */
+  --subtle:#828A95;      /* faint tier — meets 3:1 */
+
+  --accent:#5B5BD6;      /* indigo-violet, off the default axis */
+  --accent-ink:#4848C4;
+  --accent-tint:rgba(91,91,214,0.08);
+
+  /* status — used ONLY where state maps to status */
+  --ok:#1A7F4B;          --ok-tint:rgba(26,127,75,0.10);
+  --warn:#92600A;        --warn-tint:rgba(146,96,10,0.12);
+  --idle:#5E6672;        --idle-tint:rgba(94,102,114,0.10);
+  --bad:#C8412E;         --bad-tint:rgba(200,65,46,0.10);
+
+  /* type */
+  --font-ui:'Geist','Inter',system-ui,sans-serif;
+  --font-mono:'Geist Mono',ui-monospace,monospace;
+  --tr-display:-0.025em;
+  --tr-figure:-0.02em;
+
+  /* craft */
+  --radius:8px;
+  --radius-lg:14px;
+  --radius-pill:999px;
+  --row-h:46px;
+  --motion:140ms;
+  --ease:cubic-bezier(0.2,0,0,1);
+
+  --shadow:0 1px 2px rgba(16,18,29,0.04), 0 1px 1px rgba(16,18,29,0.03);
+  --shadow-lg:0 8px 28px -10px rgba(16,18,29,0.16), 0 2px 6px rgba(16,18,29,0.05);
+}
+.tnum{font-variant-numeric:tabular-nums;}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:var(--font-ui);
+  background:var(--bg);
+  color:var(--ink);
+  font-size:14px;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+a{color:inherit;text-decoration:none;}
+
+/* visible focus ring on every interactive element (>=3:1 vs bg) */
+a:focus-visible,button:focus-visible,input:focus-visible,.item:focus-visible,
+.cmdk:focus-visible,.seg:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+  border-radius:6px;
+}
+
+/* ============================================================================ SHELL */
+.frame{display:flex;min-height:100vh;}
+
+/* rail */
+.rail{
+  width:240px;flex-shrink:0;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;
+}
+.brand{
+  display:flex;align-items:center;gap:11px;
+  height:60px;padding:0 20px;
+  border-bottom:1px solid var(--border);
+}
+.mark{
+  width:30px;height:30px;border-radius:8px;flex-shrink:0;
+  background:linear-gradient(150deg,#6E6EE6,#4A4AC4);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 1px 2px rgba(74,74,196,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
+}
+.brandname{font-size:16px;font-weight:600;letter-spacing:-0.02em;}
+.brandtag{font-size:10.5px;font-weight:500;color:var(--subtle);font-family:var(--font-mono);letter-spacing:0.02em;}
+
+.nav{flex:1;padding:14px 12px;overflow-y:auto;}
+.navsec-label{
+  font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--subtle);padding:14px 10px 6px;
+}
+.navsec-label:first-child{padding-top:4px;}
+.item{
+  display:flex;align-items:center;gap:11px;
+  padding:9px 10px;border-radius:7px;
+  font-size:13.5px;font-weight:500;color:var(--muted);
+  cursor:pointer;position:relative;
+  transition:background var(--motion) var(--ease),color var(--motion) var(--ease);
+}
+.item:hover{background:var(--bg);color:var(--ink);}
+.item svg{width:17px;height:17px;opacity:.65;flex-shrink:0;}
+.item.active{background:var(--accent-tint);color:var(--accent-ink);font-weight:600;}
+.item.active svg{opacity:1;color:var(--accent);}
+.item.active::before{
+  content:'';position:absolute;left:-12px;top:8px;bottom:8px;width:3px;
+  background:var(--accent);border-radius:0 2px 2px 0;
+}
+.item .count{
+  margin-left:auto;font-family:var(--font-mono);font-size:11px;font-weight:500;
+  color:var(--muted);background:var(--bg);padding:1px 7px;border-radius:var(--radius-pill);
+}
+.item.active .count{background:rgba(91,91,214,0.12);color:var(--accent-ink);}
+
+.railfoot{border-top:1px solid var(--border);padding:12px;}
+.userchip{
+  display:flex;align-items:center;gap:11px;padding:8px;border-radius:9px;cursor:pointer;
+  transition:background var(--motion) var(--ease);
+}
+.userchip:hover{background:var(--bg);}
+.uava{
+  width:32px;height:32px;border-radius:8px;flex-shrink:0;
+  background:linear-gradient(150deg,#D7DBE2,#C2C8D2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:#4A4F59;
+}
+.uname{font-size:13px;font-weight:600;line-height:1.2;}
+.umeta{font-size:11px;color:var(--subtle);}
+.userchip .chev{margin-left:auto;color:var(--subtle);}
+
+/* main */
+.main{flex:1;display:flex;flex-direction:column;min-width:0;}
+.topbar{
+  height:60px;flex-shrink:0;
+  border-bottom:1px solid var(--border);
+  background:rgba(246,247,249,0.82);
+  backdrop-filter:saturate(160%) blur(8px);
+  display:flex;align-items:center;gap:14px;padding:0 28px;
+  position:sticky;top:0;z-index:10;
+}
+.pgtitle{font-size:18px;font-weight:600;letter-spacing:-0.02em;}
+.spacer{flex:1;}
+.cmdk{
+  display:flex;align-items:center;gap:9px;width:248px;padding:8px 12px;
+  background:var(--surface);border:1px solid var(--border);border-radius:9px;cursor:text;
+  transition:border-color var(--motion) var(--ease),box-shadow var(--motion) var(--ease);
+}
+.cmdk:hover{border-color:var(--border-strong);}
+.cmdk svg{width:15px;height:15px;color:var(--subtle);flex-shrink:0;}
+.cmdk .ph{font-size:13px;color:var(--subtle);flex:1;}
+.kbd{
+  font-family:var(--font-mono);font-size:10.5px;color:var(--muted);
+  background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:2px 6px;
+}
+.iconbtn{
+  position:relative;width:36px;height:36px;border:1px solid var(--border);
+  background:var(--surface);color:var(--muted);border-radius:9px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--motion) var(--ease),color var(--motion) var(--ease),border-color var(--motion) var(--ease);
+}
+.iconbtn:hover{background:var(--bg);color:var(--ink);border-color:var(--border-strong);}
+.iconbtn svg{width:17px;height:17px;}
+.iconbtn .pip{
+  position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;
+  background:var(--accent);border:2px solid var(--surface);
+}
+.avatar{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(150deg,#D7DBE2,#C2C8D2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700;color:#4A4F59;cursor:pointer;
+}
+
+.well{flex:1;padding:30px 36px 44px;max-width:1320px;width:100%;margin:0 auto;}
+
+/* page header */
+.pagehead{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px;gap:20px;}
+.kicker{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);margin-bottom:7px;}
+.h1{font-size:30px;font-weight:600;letter-spacing:var(--tr-display);line-height:1.1;}
+.subline{font-size:13.5px;color:var(--muted);margin-top:6px;}
+.seg{
+  display:inline-flex;background:var(--surface);border:1px solid var(--border);
+  border-radius:9px;padding:3px;box-shadow:var(--shadow);
+}
+.seg button{
+  border:none;background:transparent;cursor:pointer;
+  font-family:var(--font-ui);font-size:12.5px;font-weight:500;color:var(--muted);
+  padding:6px 13px;border-radius:6px;transition:all var(--motion) var(--ease);
+}
+.seg button.on{background:var(--accent);color:#fff;font-weight:600;box-shadow:0 1px 2px rgba(74,74,196,0.4);}
+.seg button:not(.on):hover{color:var(--ink);}
+
+/* ============================================================================ HERO — focal: revenue + 30-day trend */
+.hero{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-lg);
+  display:grid;grid-template-columns:300px 1fr;
+  overflow:hidden;margin-bottom:22px;
+}
+.hero-side{
+  padding:28px 30px;border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  background:linear-gradient(180deg,rgba(91,91,214,0.035),rgba(91,91,214,0) 60%);
+}
+.eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);}
+.eyebrow .accent-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:7px;vertical-align:middle;}
+.figure{
+  font-size:52px;font-weight:600;letter-spacing:var(--tr-figure);line-height:1;
+  color:var(--ink);font-variant-numeric:tabular-nums;margin-top:16px;
+}
+.figure .cents{font-size:30px;color:var(--subtle);font-weight:500;}
+.hero-delta{display:flex;align-items:center;gap:9px;margin-top:14px;}
+.delta{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;
+  padding:4px 9px;border-radius:var(--radius-pill);
+}
+.delta svg{width:13px;height:13px;}
+.delta.up{color:var(--ok);background:var(--ok-tint);}
+.delta.down{color:var(--bad);background:var(--bad-tint);}
+.delta-note{font-size:12.5px;color:var(--muted);}
+.hero-foot{margin-top:auto;padding-top:24px;display:flex;flex-direction:column;gap:11px;}
+.legend{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--muted);}
+.legend .swatch{width:16px;height:0;border-top:2px solid var(--accent);}
+.legend .swatch.dash{border-top:2px dashed var(--border-strong);}
+.legend .v{margin-left:auto;font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums;}
+
+.hero-chart{padding:22px 26px 16px;display:flex;flex-direction:column;}
+.chart-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;}
+.chart-title{font-size:13px;font-weight:600;}
+.chart-meta{font-size:12px;color:var(--muted);font-family:var(--font-mono);}
+.chart-meta b{color:var(--ink);font-weight:600;}
+.chartwrap{position:relative;flex:1;min-height:208px;}
+.tip{
+  position:absolute;left:0;top:0;transform:translate(-50%,-118%);
+  background:var(--ink);color:#fff;border-radius:7px;padding:6px 9px;pointer-events:none;
+  font-family:var(--font-mono);font-size:11px;white-space:nowrap;box-shadow:var(--shadow-lg);
+  opacity:0;transition:opacity 90ms var(--ease);
+}
+.tip::after{content:'';position:absolute;left:50%;top:100%;transform:translateX(-50%);
+  border:5px solid transparent;border-top-color:var(--ink);}
+.tip .tip-d{color:#B9BCD9;}
+
+/* ============================================================================ METRIC CARDS */
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:22px;}
+.metric{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow);padding:20px 22px;
+  display:flex;flex-direction:column;gap:3px;position:relative;overflow:hidden;
+  transition:border-color var(--motion) var(--ease),box-shadow var(--motion) var(--ease);
+}
+.metric:hover{border-color:var(--border-strong);box-shadow:var(--shadow-lg);}
+.metric-top{display:flex;align-items:center;gap:9px;color:var(--muted);}
+.metric-top svg{width:16px;height:16px;color:var(--subtle);}
+.metric-top .lbl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+.metric-fig{font-size:32px;font-weight:600;letter-spacing:var(--tr-figure);line-height:1.05;font-variant-numeric:tabular-nums;margin-top:8px;}
+.metric-sub{display:flex;align-items:center;gap:7px;margin-top:7px;}
+.mini-delta{display:inline-flex;align-items:center;gap:3px;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;}
+.mini-delta svg{width:12px;height:12px;}
+.mini-delta.up{color:var(--ok);}
+.mini-delta.down{color:var(--bad);}
+.mini-delta.flat{color:var(--muted);}
+.metric-sub .note{font-size:12.5px;color:var(--muted);}
+.spark{position:absolute;right:18px;bottom:16px;opacity:.9;}
+
+/* ============================================================================ BOTTOM ROW: table + activity */
+.bottom{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;}
+.panel{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);}
+.panel-title{font-size:14px;font-weight:600;}
+.panel-title .n{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--subtle);margin-left:7px;}
+.panel-link{font-size:12.5px;font-weight:600;color:var(--accent-ink);display:inline-flex;align-items:center;gap:4px;cursor:pointer;}
+.panel-link svg{width:13px;height:13px;}
+
+.tbl{width:100%;border-collapse:collapse;}
+.tbl thead th{
+  font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);
+  text-align:left;padding:11px 20px;background:var(--surface-2);border-bottom:1px solid var(--border);
+}
+.tbl thead th.r{text-align:right;}
+.tbl tbody tr{border-bottom:1px solid var(--border);transition:background var(--motion) var(--ease);}
+.tbl tbody tr:last-child{border-bottom:none;}
+.tbl tbody tr:hover{background:var(--surface-2);}
+.tbl td{padding:0 20px;height:var(--row-h);vertical-align:middle;white-space:nowrap;}
+.oid{font-family:var(--font-mono);font-size:12.5px;font-weight:500;color:var(--accent-ink);}
+.cust{display:flex;align-items:center;gap:11px;}
+.cust .cava{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#4A4F59;background:#E7E9EE;
+}
+.cust .cname{font-size:13.5px;font-weight:500;color:var(--ink);line-height:1.2;}
+.cust .cmail{font-size:11.5px;color:var(--subtle);}
+.cdate{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;}
+.amt{font-size:13.5px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right;}
+
+/* status badges */
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:600;line-height:1;
+  padding:5px 10px 5px 8px;border-radius:var(--radius-pill);
+}
+.badge .bdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.badge.paid{color:var(--ok);background:var(--ok-tint);}
+.badge.paid .bdot{background:var(--ok);}
+.badge.pending{color:var(--warn);background:var(--warn-tint);}
+.badge.pending .bdot{background:var(--warn);}
+.badge.refunded{color:var(--idle);background:var(--idle-tint);}
+.badge.refunded .bdot{background:var(--idle);}
+.badge.failed{color:var(--bad);background:var(--bad-tint);}
+.badge.failed .bdot{background:var(--bad);}
+
+/* activity — empty state */
+.activity{display:flex;flex-direction:column;height:100%;}
+.empty{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:40px 28px;gap:4px;
+}
+.empty-ico{
+  width:52px;height:52px;border-radius:13px;background:var(--surface-2);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  color:var(--subtle);margin-bottom:14px;
+}
+.empty-ico svg{width:23px;height:23px;}
+.empty-title{font-size:14px;font-weight:600;color:var(--ink);}
+.empty-line{font-size:12.5px;color:var(--muted);line-height:1.5;max-width:210px;}
+.empty-act{
+  margin-top:16px;display:inline-flex;align-items:center;gap:6px;
+  font-size:12.5px;font-weight:600;color:var(--accent-ink);cursor:pointer;
+  padding:7px 13px;border:1px solid var(--border);border-radius:8px;background:var(--surface);
+  transition:background var(--motion) var(--ease),border-color var(--motion) var(--ease);
+}
+.empty-act:hover{background:var(--bg);border-color:var(--border-strong);}
+.empty-act svg{width:14px;height:14px;}
+
+@media (max-width:1080px){
+  .hero{grid-template-columns:1fr;}
+  .hero-side{border-right:none;border-bottom:1px solid var(--border);}
+  .metrics{grid-template-columns:1fr;}
+  .bottom{grid-template-columns:1fr;}
+  .rail{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- icon sprite (Lucide, ISC) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></symbol>
+  <symbol id="i-report" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+</svg>
+
+<div class="frame">
+
+  <!-- RAIL -->
+  <aside class="rail">
+    <div class="brand">
+      <div class="mark">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 1.5 13.5 4.2v4.3c0 3.2-2.3 5.4-5.5 6.5C4.8 13.9 2.5 11.7 2.5 8.5V4.2L8 1.5Z" fill="#fff" opacity=".95"/>
+          <path d="M8 5.2v5.6M5.4 8h5.2" stroke="#4A4AC4" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brandname">Harbor</div>
+        <div class="brandtag">operations</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="navsec-label">General</div>
+      <a class="item active" tabindex="0"><svg><use href="#i-grid"/></svg>Overview</a>
+      <a class="item" tabindex="0"><svg><use href="#i-card"/></svg>Transactions<span class="count">128</span></a>
+      <a class="item" tabindex="0"><svg><use href="#i-users"/></svg>Customers</a>
+      <a class="item" tabindex="0"><svg><use href="#i-report"/></svg>Reports</a>
+      <div class="navsec-label">Workspace</div>
+      <a class="item" tabindex="0"><svg><use href="#i-receipt"/></svg>Payouts</a>
+      <a class="item" tabindex="0"><svg><use href="#i-settings"/></svg>Settings</a>
+    </nav>
+
+    <div class="railfoot">
+      <div class="userchip" tabindex="0">
+        <div class="uava">AM</div>
+        <div>
+          <div class="uname">Ana Marlowe</div>
+          <div class="umeta">Owner · Harbor Inc</div>
+        </div>
+        <svg class="chev" width="15" height="15"><use href="#i-chev"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <span class="pgtitle">Overview</span>
+      <span class="spacer"></span>
+      <div class="cmdk" tabindex="0">
+        <svg><use href="#i-search"/></svg>
+        <span class="ph">Search transactions, customers…</span>
+        <span class="kbd">⌘K</span>
+      </div>
+      <button class="iconbtn" aria-label="Notifications"><svg><use href="#i-bell"/></svg><span class="pip"></span></button>
+      <div class="avatar" tabindex="0">AM</div>
+    </div>
+
+    <div class="well">
+
+      <!-- page header -->
+      <div class="pagehead">
+        <div>
+          <div class="kicker">Wed, June 18, 2026</div>
+          <h1 class="h1">Good afternoon, Ana</h1>
+          <div class="subline">Here's how Harbor is performing this month.</div>
+        </div>
+        <div class="seg" role="tablist" aria-label="Time range">
+          <button type="button">7d</button>
+          <button type="button" class="on">30d</button>
+          <button type="button">90d</button>
+          <button type="button">YTD</button>
+        </div>
+      </div>
+
+      <!-- HERO: revenue + trend -->
+      <section class="hero">
+        <div class="hero-side">
+          <div class="eyebrow"><span class="accent-dot"></span>Total revenue · last 30 days</div>
+          <div class="figure tnum">$128,400<span class="cents">.00</span></div>
+          <div class="hero-delta">
+            <span class="delta up"><svg><use href="#i-up"/></svg>12.4%</span>
+            <span class="delta-note">vs. previous 30 days</span>
+          </div>
+          <div class="hero-foot">
+            <div class="legend"><span class="swatch"></span>Daily revenue<span class="v">$4,280 avg</span></div>
+            <div class="legend"><span class="swatch dash"></span>30-day average<span class="v">$3,810</span></div>
+          </div>
+        </div>
+
+        <div class="hero-chart">
+          <div class="chart-head">
+            <span class="chart-title">Revenue — last 30 days</span>
+            <span class="chart-meta">peak <b>$6,120</b> · Jun 11</span>
+          </div>
+          <div class="chartwrap" id="chartwrap">
+            <svg id="chart" width="100%" height="100%" viewBox="0 0 760 224" preserveAspectRatio="none" style="display:block;overflow:visible">
+              <defs>
+                <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#5B5BD6" stop-opacity="0.20"/>
+                  <stop offset="100%" stop-color="#5B5BD6" stop-opacity="0.012"/>
+                </linearGradient>
+              </defs>
+              <!-- gridlines -->
+              <g stroke="#EDEFF2" stroke-width="1">
+                <line x1="0" y1="20"  x2="760" y2="20"/>
+                <line x1="0" y1="74"  x2="760" y2="74"/>
+                <line x1="0" y1="128" x2="760" y2="128"/>
+                <line x1="0" y1="182" x2="760" y2="182"/>
+              </g>
+              <!-- groups filled by JS -->
+              <path id="area" fill="url(#fill)"></path>
+              <path id="line" fill="none" stroke="#5B5BD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <!-- 30-day average baseline (the relationship) -->
+              <line id="avg" x1="0" x2="760" stroke="#C4C8D2" stroke-width="1.5" stroke-dasharray="5 4"></line>
+              <text id="avglbl" x="756" text-anchor="end" font-size="10" font-family="'Geist Mono',monospace" fill="#828A95">avg $3,810</text>
+              <circle id="end" r="4" fill="#5B5BD6"/>
+              <circle id="endhalo" r="8" fill="#5B5BD6" opacity="0.14"/>
+              <!-- hover marker -->
+              <line id="hx" y1="0" y2="200" stroke="#C4C8D2" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>
+              <circle id="hpt" r="4.5" fill="#fff" stroke="#5B5BD6" stroke-width="2" opacity="0"/>
+            </svg>
+            <div class="tip" id="tip"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:var(--subtle);margin-top:8px;padding:0 2px;">
+            <span>May 20</span><span>May 27</span><span>Jun 3</span><span>Jun 10</span><span>Jun 18</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- METRIC CARDS -->
+      <section class="metrics">
+        <div class="metric">
+          <div class="metric-top"><svg><use href="#i-users"/></svg><span class="lbl">Active users</span></div>
+          <div class="metric-fig tnum">3,842</div>
+          <div class="metric-sub">
+            <span class="mini-delta up"><svg><use href="#i-up"/></svg>4.1%</span>
+            <span class="note">vs last month</span>
+          </div>
+          <svg class="spark" width="92" height="34" viewBox="0 0 92 34" fill="none" preserveAspectRatio="none">
+            <path d="M0,26 L13,24 L26,27 L39,20 L52,22 L65,14 L78,11 L92,6" stroke="#1A7F4B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+          </svg>
+        </div>
+        <div class="metric">
+          <div class="metric-top"><svg><use href="#i-report"/></svg><span class="lbl">Conversion</span></div>
+          <div class="metric-fig tnum">3.2%</div>
+          <div class="metric-sub">
+            <span class="mini-delta down"><svg><use href="#i-down"/></svg>0.3%</span>
+            <span class="note">vs last month</span>
+          </div>
+          <svg class="spark" width="92" height="34" viewBox="0 0 92 34" fill="none" preserveAspectRatio="none">
+            <path d="M0,10 L13,8 L26,14 L39,12 L52,18 L65,16 L78,22 L92,24" stroke="#C8412E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+          </svg>
+        </div>
+        <div class="metric">
+          <div class="metric-top"><svg><use href="#i-ticket"/></svg><span class="lbl">Open tickets</span></div>
+          <div class="metric-fig tnum">17</div>
+          <div class="metric-sub">
+            <span class="mini-delta flat">3 new</span>
+            <span class="note">2 awaiting reply</span>
+          </div>
+          <svg class="spark" width="92" height="34" viewBox="0 0 92 34" fill="none" preserveAspectRatio="none">
+            <path d="M0,18 L13,16 L26,20 L39,15 L52,19 L65,17 L78,21 L92,18" stroke="#92600A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+          </svg>
+        </div>
+      </section>
+
+      <!-- BOTTOM: transactions + activity -->
+      <section class="bottom">
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">Recent transactions<span class="n">128 total</span></span>
+            <span class="panel-link" tabindex="0">View all<svg><use href="#i-arrow-right"/></svg></span>
+          </div>
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>ID</th><th>Customer</th><th>Date</th><th>Status</th><th class="r">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="oid">#TX-4821</span></td>
+                <td><div class="cust"><span class="cava" style="background:#E3E6F5;color:#4848C4">MD</span><div><div class="cname">Margot Delacroix</div><div class="cmail">margot@northwind.co</div></div></div></td>
+                <td><span class="cdate">Jun 18, 2:41 PM</span></td>
+                <td><span class="badge paid"><span class="bdot"></span>Paid</span></td>
+                <td class="amt">$2,480.00</td>
+              </tr>
+              <tr>
+                <td><span class="oid">#TX-4820</span></td>
+                <td><div class="cust"><span class="cava" style="background:#FBEFD9;color:#92600A">TB</span><div><div class="cname">Tom Brinkley</div><div class="cmail">t.brinkley@meridian.io</div></div></div></td>
+                <td><span class="cdate">Jun 18, 1:18 PM</span></td>
+                <td><span class="badge pending"><span class="bdot"></span>Pending</span></td>
+                <td class="amt">$640.50</td>
+              </tr>
+              <tr>
+                <td><span class="oid">#TX-4819</span></td>
+                <td><div class="cust"><span class="cava" style="background:#DDEEE5;color:#1A7F4B">SW</span><div><div class="cname">Suki Watanabe</div><div class="cmail">suki.w@studio.design</div></div></div></td>
+                <td><span class="cdate">Jun 17, 6:02 PM</span></td>
+                <td><span class="badge paid"><span class="bdot"></span>Paid</span></td>
+                <td class="amt">$5,212.75</td>
+              </tr>
+              <tr>
+                <td><span class="oid">#TX-4818</span></td>
+                <td><div class="cust"><span class="cava" style="background:#F5DEDA;color:#C8412E">AP</span><div><div class="cname">Alicia Pemberton</div><div class="cmail">a.pemberton@vantage.uk</div></div></div></td>
+                <td><span class="cdate">Jun 17, 11:47 AM</span></td>
+                <td><span class="badge refunded"><span class="bdot"></span>Refunded</span></td>
+                <td class="amt">$380.00</td>
+              </tr>
+              <tr>
+                <td><span class="oid">#TX-4817</span></td>
+                <td><div class="cust"><span class="cava" style="background:#E3E6F5;color:#4848C4">FN</span><div><div class="cname">Fabian Nkrumah</div><div class="cmail">fabian@coreline.gh</div></div></div></td>
+                <td><span class="cdate">Jun 16, 9:30 AM</span></td>
+                <td><span class="badge failed"><span class="bdot"></span>Failed</span></td>
+                <td class="amt">$1,189.25</td>
+              </tr>
+              <tr>
+                <td><span class="oid">#TX-4816</span></td>
+                <td><div class="cust"><span class="cava" style="background:#DDEEE5;color:#1A7F4B">JC</span><div><div class="cname">Jerome Castillo</div><div class="cmail">jerome@lattice.app</div></div></div></td>
+                <td><span class="cdate">Jun 16, 8:05 AM</span></td>
+                <td><span class="badge paid"><span class="bdot"></span>Paid</span></td>
+                <td class="amt">$924.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- activity — empty state -->
+        <div class="panel activity">
+          <div class="panel-head">
+            <span class="panel-title">Activity</span>
+          </div>
+          <div class="empty">
+            <div class="empty-ico"><svg><use href="#i-activity"/></svg></div>
+            <div class="empty-title">No activity yet</div>
+            <div class="empty-line">Team actions and system events from today will appear here as they happen.</div>
+            <span class="empty-act" tabindex="0"><svg><use href="#i-plus"/></svg>Invite a teammate</span>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /well -->
+  </div><!-- /main -->
+</div><!-- /frame -->
+
+<script>
+(function(){
+  // 30 daily revenue points (May 20 → Jun 18). Trend up with realistic noise.
+  var data = [3120,2980,3340,3010,3560,3280,2890,3620,3410,3980,3720,4260,3880,4510,6120,4180,4620,4390,4870,4540,5020,4760,5180,4980,5360,4210,4880,4620,5240,4980];
+  var W=760, H=224, top=16, bot=192;            // plot band
+  var max=Math.max.apply(null,data), min=Math.min.apply(null,data);
+  var pad=(max-min)*0.12;
+  var lo=min-pad, hi=max+pad;
+  var avg=data.reduce(function(a,b){return a+b;},0)/data.length;
+  function X(i){ return i*(W/(data.length-1)); }
+  function Y(v){ return bot-((v-lo)/(hi-lo))*(bot-top); }
+
+  // smooth path (Catmull-Rom -> bezier)
+  function smooth(pts){
+    var d="M"+pts[0][0]+","+pts[0][1];
+    for(var i=0;i<pts.length-1;i++){
+      var p0=pts[i-1]||pts[i], p1=pts[i], p2=pts[i+1], p3=pts[i+2]||p2;
+      var c1x=p1[0]+(p2[0]-p0[0])/6, c1y=p1[1]+(p2[1]-p0[1])/6;
+      var c2x=p2[0]-(p3[0]-p1[0])/6, c2y=p2[1]-(p3[1]-p1[1])/6;
+      d+=" C"+c1x+","+c1y+" "+c2x+","+c2y+" "+p2[0]+","+p2[1];
+    }
+    return d;
+  }
+  var pts=data.map(function(v,i){return [X(i),Y(v)];});
+  var line=smooth(pts);
+  document.getElementById('line').setAttribute('d',line);
+  document.getElementById('area').setAttribute('d',line+" L"+W+","+bot+" L0,"+bot+" Z");
+  var ay=Y(avg);
+  var avgEl=document.getElementById('avg'); avgEl.setAttribute('y1',ay); avgEl.setAttribute('y2',ay);
+  document.getElementById('avglbl').setAttribute('y',ay-6);
+  var lastX=X(data.length-1), lastY=Y(data[data.length-1]);
+  document.getElementById('end').setAttribute('cx',lastX); document.getElementById('end').setAttribute('cy',lastY);
+  document.getElementById('endhalo').setAttribute('cx',lastX); document.getElementById('endhalo').setAttribute('cy',lastY);
+
+  // hover interaction
+  var svg=document.getElementById('chart'), wrap=document.getElementById('chartwrap');
+  var hx=document.getElementById('hx'), hpt=document.getElementById('hpt'), tip=document.getElementById('tip');
+  var dates=[]; var start=new Date(2026,4,20);
+  for(var i=0;i<30;i++){ var d=new Date(start); d.setDate(start.getDate()+i); dates.push(d.toLocaleDateString('en-US',{month:'short',day:'numeric'})); }
+  function fmt(n){ return '$'+n.toLocaleString('en-US'); }
+  wrap.addEventListener('mousemove',function(e){
+    var r=svg.getBoundingClientRect();
+    var rel=(e.clientX-r.left)/r.width;
+    var i=Math.round(rel*(data.length-1)); i=Math.max(0,Math.min(data.length-1,i));
+    var px=X(i)/W*r.width, py=Y(data[i])/H*r.height;
+    hx.setAttribute('x1',X(i)); hx.setAttribute('x2',X(i)); hx.setAttribute('opacity','0.9');
+    hpt.setAttribute('cx',X(i)); hpt.setAttribute('cy',Y(data[i])); hpt.setAttribute('opacity','1');
+    tip.style.left=px+'px'; tip.style.top=py+'px'; tip.style.opacity='1';
+    tip.innerHTML='<span class="tip-d">'+dates[i]+'</span>  '+fmt(data[i]);
+  });
+  wrap.addEventListener('mouseleave',function(){
+    hx.setAttribute('opacity','0'); hpt.setAttribute('opacity','0'); tip.style.opacity='0';
+  });
+
+  // segmented control toggle (visual)
+  document.querySelectorAll('.seg button').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.seg button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+    });
+  });
+})();
+</script>
+</body>
+</html>

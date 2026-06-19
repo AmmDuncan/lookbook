@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Error pages (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Error pages · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin. Only composition + interaction varies. Restrained visuals
+   — a large quiet status number or simple line glyph, no imagery. WCAG AA.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF; --bad:#C0392B; --bad-t:#F9E8E5;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+
+.btn-pri{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:600;padding:11px 18px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-sec{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:13px;font-weight:600;padding:10px 16px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+.linkbtn{font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;}
+
+.bignum{font-size:clamp(96px,16vw,168px);font-weight:800;letter-spacing:-0.05em;line-height:.9;color:var(--ink);font-variant-numeric:tabular-nums;}
+.glyph{display:flex;align-items:center;justify-content:center;border-radius:18px;width:72px;height:72px;}
+.glyph .ico{width:32px;height:32px;}
+.glyph.accent{background:var(--accent-tint);color:var(--accent-ink);}
+.glyph.warn{background:var(--warn-t);color:var(--warn);}
+.glyph.bad{background:var(--bad-t);color:var(--bad);}
+.glyph.mut{background:var(--inset);color:var(--faint);}
+
+.estatus{font-size:18px;font-weight:700;letter-spacing:-0.01em;}
+.emsg{font-size:14px;color:var(--mut);line-height:1.55;}
+
+.chip{display:inline-flex;width:fit-content;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:4px 11px;border-radius:999px;}
+.chip .gl{width:7px;height:7px;border-radius:50%;}
+.chip.warn{color:var(--warn);background:var(--warn-t);} .chip.warn .gl{background:var(--warn);}
+.chip.bad{color:var(--bad);background:var(--bad-t);} .chip.bad .gl{background:var(--bad);}
+
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:10px 13px;color:var(--faint);}
+.search .ico{width:16px;height:16px;} .search input{border:none;outline:none;background:none;font-size:13.5px;color:var(--ink);width:100%;}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2.1-2.1z"/></symbol>
+  <symbol id="i-offline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l20 20M8.5 16.5a5 5 0 0 1 7 0M5 13a10 10 0 0 1 3-2M2 8.8a16 16 0 0 1 4.5-2.7M16.7 11A10 10 0 0 1 19 13M22 8.8a16 16 0 0 0-6-3.3M12 20h.01"/></symbol>
+  <symbol id="i-retry" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></symbol>
+  <symbol id="i-life" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="m4.9 4.9 4.2 4.2M14.9 14.9l4.2 4.2M14.9 9.1l4.2-4.2M14.9 9.1l3.5-3.5M4.9 19.1l4.2-4.2"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Error pages · one skin, five compositions</div>
+    <h1>Same skin. Five ways things go wrong.</h1>
+    <p>The pages users hit when something fails — composed five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white surfaces with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. Visuals stay quiet — a large status number or a single line glyph, never illustration. What changes is purely <em>composition and interaction</em>.</p>
+  </header>
+
+  <!-- ============== 1 · 404 NOT FOUND ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">404 — Not found</div>
+      <p class="plate-recipe"><b>PULLS</b> — a big quiet “404” + “page not found” message + a search box + primary “Back home” + a few helpful links. &nbsp;<b>WHY</b> — the most common error: a recognizable number reassures it's just a dead URL, and search plus shortcuts give a way forward instead of a wall.</p>
+    </div>
+    <div class="frame" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:60px 24px;min-height:440px">
+      <div class="bignum">404</div>
+      <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:14px">This page can't be found</h2>
+      <p class="emsg" style="margin-top:8px;max-width:44ch">The page you're looking for may have been moved, renamed, or never existed. Try a search or head back home.</p>
+      <div class="search" style="margin-top:22px;width:340px;max-width:100%"><svg class="ico"><use href="#i-search"/></svg><input placeholder="Search Harbor…"></div>
+      <div style="display:flex;gap:10px;margin-top:18px"><button class="btn-pri"><svg class="ico"><use href="#i-home"/></svg>Back home</button><button class="btn-sec">Contact support</button></div>
+      <div style="display:flex;gap:18px;margin-top:24px;font-size:12.5px">
+        <a href="#" class="linkbtn">Dashboard</a><a href="#" class="linkbtn">Docs</a><a href="#" class="linkbtn">Status</a><a href="#" class="linkbtn">Help center</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · 403 FORBIDDEN ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">403 — Forbidden</div>
+      <p class="plate-recipe"><b>PULLS</b> — a lock line-glyph + “you don't have access” + a request-access CTA + a “switch account” secondary; calm, not alarming. &nbsp;<b>WHY</b> — access denials shouldn't feel like a crash: a calm lock and a clear request path treat it as a permissions gap to resolve, not a failure.</p>
+    </div>
+    <div class="frame" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:60px 24px;min-height:420px">
+      <div class="glyph accent"><svg class="ico"><use href="#i-lock"/></svg></div>
+      <h2 style="font-size:21px;font-weight:800;letter-spacing:-0.02em;margin-top:20px">You don't have access to this page</h2>
+      <p class="emsg" style="margin-top:8px;max-width:46ch">This workspace is restricted. Ask an admin for access, or switch to an account that has permission.</p>
+      <div style="display:flex;gap:10px;margin-top:22px"><button class="btn-pri"><svg class="ico"><use href="#i-user"/></svg>Request access</button><button class="btn-sec">Switch account</button></div>
+      <div style="font-size:12px;color:var(--faint);margin-top:18px;font-family:var(--mono)">Reference · 403 · workspace/northwind</div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · 500 SERVER ERROR ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">500 — Server error</div>
+      <p class="plate-recipe"><b>PULLS</b> — “something went wrong” + a collapsible technical detail (error id / timestamp, mono) + Retry + Report buttons. &nbsp;<b>WHY</b> — for unexpected failures: a plain apology serves most users, while a tucked-away detail block gives the ID support actually needs without alarming anyone.</p>
+    </div>
+    <div class="frame" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:54px 24px;min-height:420px">
+      <div class="glyph bad"><svg class="ico"><use href="#i-alert"/></svg></div>
+      <h2 style="font-size:21px;font-weight:800;letter-spacing:-0.02em;margin-top:20px">Something went wrong on our end</h2>
+      <p class="emsg" style="margin-top:8px;max-width:46ch">An unexpected error occurred while loading this page. We've logged it — try again in a moment.</p>
+      <div style="display:flex;gap:10px;margin-top:22px"><button class="btn-pri"><svg class="ico"><use href="#i-retry"/></svg>Try again</button><button class="btn-sec"><svg class="ico"><use href="#i-flag"/></svg>Report problem</button></div>
+      <div style="width:420px;max-width:100%;margin-top:24px;text-align:left">
+        <button class="detbtn" id="errdet"><svg class="ico chev"><use href="#i-chev"/></svg>Technical details</button>
+        <div class="detbox" id="errbox">
+          <div class="detrow"><span class="dk">Error ID</span><span class="dv">err_8a41c0e2f9</span></div>
+          <div class="detrow"><span class="dk">Timestamp</span><span class="dv">2026-06-19 08:42:11 UTC</span></div>
+          <div class="detrow"><span class="dk">Request</span><span class="dv">GET /api/v2/reports/482</span></div>
+          <div class="detrow"><span class="dk">Status</span><span class="dv" style="color:var(--bad)">500 Internal Server Error</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · MAINTENANCE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Maintenance</div>
+      <p class="plate-recipe"><b>PULLS</b> — a scheduled-maintenance state: status message + estimated-back-by time + a subtle status pill (chip hugs content) + a status-page link. &nbsp;<b>WHY</b> — planned downtime is reassuring when it's framed as planned: an ETA and a live status pill tell users it's temporary and tracked, not broken.</p>
+    </div>
+    <div class="frame" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:56px 24px;min-height:420px">
+      <div class="glyph warn"><svg class="ico"><use href="#i-wrench"/></svg></div>
+      <span class="chip warn" style="margin-top:18px"><span class="gl"></span>Scheduled maintenance</span>
+      <h2 style="font-size:21px;font-weight:800;letter-spacing:-0.02em;margin-top:14px">We'll be back shortly</h2>
+      <p class="emsg" style="margin-top:8px;max-width:46ch">Harbor is undergoing scheduled maintenance to ship some improvements. Your data is safe and nothing is lost.</p>
+      <div class="card" style="margin-top:20px;padding:14px 20px;display:flex;align-items:center;gap:12px">
+        <span style="font-size:12px;color:var(--mut)">Estimated back by</span>
+        <span style="font-size:15px;font-weight:700" class="tnum">09:30 UTC</span>
+        <span style="font-size:12px;color:var(--faint)">· about 25 minutes</span>
+      </div>
+      <div style="margin-top:20px"><a href="#" class="linkbtn"><svg class="ico" style="width:14px;height:14px"><use href="#i-life"/></svg> View status page</a></div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · OFFLINE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Offline / connection lost</div>
+      <p class="plate-recipe"><b>PULLS</b> — an offline glyph + “you're offline” + an auto-retry indicator (a small spinner / countdown) + a manual Retry. &nbsp;<b>WHY</b> — connectivity loss is usually transient: an auto-retry countdown does the waiting for the user, while a manual button respects those who'd rather not wait.</p>
+    </div>
+    <div class="frame" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:60px 24px;min-height:400px">
+      <div class="glyph mut"><svg class="ico"><use href="#i-offline"/></svg></div>
+      <h2 style="font-size:21px;font-weight:800;letter-spacing:-0.02em;margin-top:20px">You're offline</h2>
+      <p class="emsg" style="margin-top:8px;max-width:44ch">We can't reach the network right now. We'll keep trying automatically — your work will sync once you're back.</p>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:22px;font-size:13px;color:var(--mut)">
+        <span class="spinner"></span>Reconnecting in <b class="tnum" id="offt">5</b>s…
+      </div>
+      <button class="btn-sec" style="margin-top:16px"><svg class="ico"><use href="#i-retry"/></svg>Retry now</button>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.detbtn{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--mut);padding:8px 0;}
+.detbtn .chev{width:14px;height:14px;color:var(--faint);transition:transform .18s;}
+.detbtn.open .chev{transform:rotate(180deg);}
+.detbox{display:none;margin-top:8px;border:1px solid var(--line);border-radius:9px;background:#FBFCFD;padding:6px 14px;}
+.detbox.open{display:block;}
+.detrow{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid var(--inset);font-family:var(--mono);font-size:11.5px;}
+.detrow:last-child{border-bottom:none;}
+.detrow .dk{color:var(--faint);} .detrow .dv{color:var(--ink);font-weight:500;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner{width:15px;height:15px;border-radius:50%;border:2px solid var(--line-2);border-top-color:var(--accent);animation:spin .8s linear infinite;display:inline-block;}
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+</style>
+
+<script>
+/* 500 collapsible detail */
+(function(){
+  var b=document.getElementById('errdet'),box=document.getElementById('errbox');
+  b.addEventListener('click',function(){b.classList.toggle('open');box.classList.toggle('open');});
+})();
+/* offline countdown loop */
+(function(){
+  var el=document.getElementById('offt');if(!el)return;var t=5;
+  setInterval(function(){t--;if(t<0)t=5;el.textContent=t;},1000);
+})();
+</script>
+</body>
+</html>

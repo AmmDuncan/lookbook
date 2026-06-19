@@ -29,6 +29,18 @@ Lookbook is mid-transition to an **evidence-grounded** core. Two artifacts now s
 
 Everything below (fundamentals, patterns, the render-and-look loop, the sweeps) still applies and is **additive** to the spine — the render-and-look discipline in particular is Lookbook's unique value and is kept in full.
 
+## Compose-then-skin — the composed-recipe catalog (START HERE for app screens)
+
+The newest empirical layer sits **above** the brain and cookbooks as the *fastest correct start* for a full screen. It encodes one idea proven across 20 archetypes:
+
+> **A screen = COMPOSITION × SKIN.** Composition is the skeleton (shell · where filters/actions/nav live · table-vs-cards · what's pinned · how it reads · the interaction pattern). Skin is the paint (color · type · radius · elevation · density · border · accent-discipline tokens). They are **orthogonal** — pick a composition, drop a skin on it, change either without disturbing the other. **Variety lives in composition; consistency lives in skin.** Five palette reskins of one layout = one design, not five.
+
+- **`harvest/HARVEST.md` — the catalog.** A by-component-family dictionary PLUS a `COMPOSED RECIPES` section: **20 page archetypes** (analytics · list-table · list-grid · detail · dashboard-home · search · reports · kanban · inbox · calendar · activity-feed · admin · settings · create/edit · checkout · auth/onboarding · pricing · profile · empty-states · error-pages), each with **5 composition-distinct variations** named + the families each pulls + **why the pieces team up** (the recommended-pairing rationale) + a recurring-team-ups line. Plus a `SKINS & how to apply` section defining the full skin token set. A weak model can read this, pick an archetype, and **pull** a coherent page instead of cold-deriving it.
+- **`harvest/specimens/` — the worked HTML** for every recipe + the atom/molecule galleries the recipes pull from (App Shell / Sidebar / Header / Tabs / Input / Badge / Card / Data Display / Overlay / List-Avatar-Timeline / Usage Examples) + the skin sources. Copy a specimen as the starting skeleton.
+- **`RESKIN.md` — the command.** Interview-driven build: **compose first → skin second → iterate on two independent levers (`reskin` = swap skin, layout fixed · `relayout` = swap composition, skin carried).** Invoke for "build me a <archetype>", "reskin/restyle this", "same look, different layout", or any rebrand/restructure. It bakes in the guardrails (visible toggle thumb · content-hugging pills · designer-drawn charts · scope controls per composition-frame · anti-slop · AA).
+
+**The build flow (recipe-first):** identify archetype → pull the matching **composition** from `HARVEST.md` (HTML in `specimens/`) → lock it in a neutral skin → pick ONE **skin** and apply uniformly → assemble any extra pieces from the galleries → render + run the gates below → iterate via `reskin`/`relayout`. This is *additive*: `the-design-brain.md` is still the **why** (principles), `cookbooks/` are the deeper per-surface **earned** recipes, and every gate/sweep below still runs. The catalog is the **pull-from starting point**; the brain and cookbooks are how you judge and deepen what you pulled.
+
 ## Read this first — every time
 
 **Before any UI work** (design, mockup, code, exploration), load `fundamentals.md` from this skill directory. It is the hard floor — measurable rules with concrete numbers, cited by ID (`F1`, `F2`, …). Keep the rule IDs in mind while designing and cite them in narration when applying or evaluating choices ("body 16px/1.55 [F3]; section padding 96px [F11]; one accent at 5 instances max [F17]").

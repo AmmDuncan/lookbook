@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Activity feed / notifications (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Activity feed / notifications · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin (off-white page, white surfaces, hairline borders, slightly
+   rounded corners, one blue accent, system sans + tabular figures). Only
+   composition + interaction varies. WCAG AA throughout.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF; --bad:#C0392B; --bad-t:#F9E8E5;
+  --purple:#5B4BC4; --purple-t:#ECE9FA; --teal:#0F6E73; --teal-t:#E2F1F1;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+
+.btn-pri{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:9px 15px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-sec{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+.linkbtn{font-size:12.5px;font-weight:600;color:var(--accent);}
+.seg{display:inline-flex;background:var(--inset);border:1px solid var(--line);border-radius:8px;padding:2px;}
+.seg button{font-size:12.5px;font-weight:600;color:var(--mut);padding:6px 12px;border-radius:6px;display:inline-flex;align-items:center;gap:6px;}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.07);}
+
+.count{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:17px;padding:0 6px;border-radius:999px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;font-variant-numeric:tabular-nums;}
+.count.mut{background:var(--inset);color:var(--mut);}
+
+/* avatar + action icon badge */
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;position:relative;}
+.av.a1{background:var(--accent-tint);color:var(--accent-ink);} .av.a2{background:var(--ok-t);color:var(--ok);} .av.a3{background:var(--warn-t);color:var(--warn);} .av.a4{background:var(--purple-t);color:var(--purple);} .av.a5{background:var(--teal-t);color:var(--teal);}
+.av .vb{position:absolute;right:-3px;bottom:-3px;width:16px;height:16px;border-radius:50%;border:2px solid var(--surface);display:flex;align-items:center;justify-content:center;}
+.av .vb .ico{width:8px;height:8px;color:#fff;}
+.vb.blue{background:var(--accent);} .vb.green{background:var(--ok);} .vb.amber{background:var(--warn);} .vb.purple{background:var(--purple);} .vb.red{background:var(--bad);}
+
+.atext{font-size:13px;color:var(--ink);line-height:1.45;} .atext b{font-weight:700;} .atext .tg{color:var(--accent-ink);font-weight:600;}
+.atime{font-size:11.5px;color:var(--faint);}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-comment" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></symbol>
+  <symbol id="i-at" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 7l4-4 4 4M3 21h18"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+  <symbol id="i-belloff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8.7 3A6 6 0 0 1 18 8c0 1.5.2 2.7.5 3.7M17 17H4a1 1 0 0 1-.7-1.7C4.6 14 6 12.5 6 8a6 6 0 0 1 .3-2M10.3 21a2 2 0 0 0 3.4 0M2 2l20 20"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></symbol>
+  <symbol id="i-kebab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></symbol>
+  <symbol id="i-merge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Activity feed / notifications · one skin, five compositions</div>
+    <h1>Same skin. Five ways to say “here's what happened.”</h1>
+    <p>One stream of events — comments, mentions, approvals, uploads across the workspace — composed five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white surfaces with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. What changes is purely <em>composition and interaction</em>. The skin is the paint, the composition is the skeleton.</p>
+  </header>
+
+  <!-- ============== 1 · GROUPED TIMELINE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Grouped timeline</div>
+      <p class="plate-recipe"><b>PULLS</b> — a vertical timeline grouped by date (Today / Yesterday / Earlier) with rows of actor avatar + action text + target + relative time, joined by a connecting rail line. &nbsp;<b>WHY</b> — for a history you read top-to-bottom: date groups give rhythm and the rail makes the sequence feel continuous rather than a flat list.</p>
+    </div>
+    <div class="frame" style="padding:24px 28px">
+      <div style="max-width:680px;margin:0 auto">
+        <div class="tl-group">Today</div>
+        <div class="tl-rail">
+          <div class="tl-row"><span class="av a1" style="width:36px;height:36px;font-size:12px">DK<span class="vb green"><svg class="ico"><use href="#i-check"/></svg></span></span><div class="tl-b"><div class="atext"><b>Dana Kessler</b> approved the <span class="tg">Q3 budget</span>.</div><div class="atime">12 minutes ago</div></div></div>
+          <div class="tl-row"><span class="av a2" style="width:36px;height:36px;font-size:12px">RP<span class="vb blue"><svg class="ico"><use href="#i-comment"/></svg></span></span><div class="tl-b"><div class="atext"><b>Reza Pour</b> commented on <span class="tg">Renewal playbook</span>.</div><div class="atime">1 hour ago</div></div></div>
+          <div class="tl-row"><span class="av a4" style="width:36px;height:36px;font-size:12px">NB<span class="vb amber"><svg class="ico"><use href="#i-upload"/></svg></span></span><div class="tl-b"><div class="atext"><b>Noa Bergström</b> uploaded 3 files to <span class="tg">Brand assets</span>.</div><div class="atime">3 hours ago</div></div></div>
+        </div>
+        <div class="tl-group">Yesterday</div>
+        <div class="tl-rail">
+          <div class="tl-row"><span class="av a5" style="width:36px;height:36px;font-size:12px">JC<span class="vb purple"><svg class="ico"><use href="#i-at"/></svg></span></span><div class="tl-b"><div class="atext"><b>Jerome Castillo</b> mentioned you in <span class="tg">#finance</span>.</div><div class="atime">Yesterday · 4:08 PM</div></div></div>
+          <div class="tl-row"><span class="av a3" style="width:36px;height:36px;font-size:12px">AL<span class="vb blue"><svg class="ico"><use href="#i-edit"/></svg></span></span><div class="tl-b"><div class="atext"><b>Ava Lindqvist</b> edited <span class="tg">Invoice #TX-4821</span>.</div><div class="atime">Yesterday · 1:22 PM</div></div></div>
+        </div>
+        <div class="tl-group">Earlier</div>
+        <div class="tl-rail">
+          <div class="tl-row"><span class="av a2" style="width:36px;height:36px;font-size:12px">RP<span class="vb green"><svg class="ico"><use href="#i-merge"/></svg></span></span><div class="tl-b"><div class="atext"><b>Reza Pour</b> merged <span class="tg">feat/command-palette</span>.</div><div class="atime">Jun 16</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · NOTIFICATIONS CENTER ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Notifications center</div>
+      <p class="plate-recipe"><b>PULLS</b> — a list of notifications with read/unread states (unread dot + tint) + filter tabs (All / Mentions / Following) + a “Mark all read” action. &nbsp;<b>WHY</b> — the inbox model for alerts: unread state plus a one-click clear turns a noisy stream into a queue you can actually get to zero.</p>
+    </div>
+    <div class="frame">
+      <div style="display:flex;align-items:center;gap:14px;padding:15px 22px;border-bottom:1px solid var(--line);background:var(--surface)">
+        <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Notifications</div>
+        <span class="count" id="n2cnt">4</span>
+        <div class="seg" id="n2seg" style="margin-left:6px"><button class="on" data-f="all">All</button><button data-f="mentions">Mentions</button><button data-f="following">Following</button></div>
+        <button class="linkbtn" id="n2mark" style="margin-left:auto"><svg class="ico" style="width:13px;height:13px"><use href="#i-check"/></svg> Mark all read</button>
+      </div>
+      <div id="n2list">
+        <div class="nrow unread" data-type="mentions"><span class="nud"></span><span class="av a5" style="width:36px;height:36px;font-size:12px">JC<span class="vb purple"><svg class="ico"><use href="#i-at"/></svg></span></span><div class="nb"><div class="atext"><b>Jerome Castillo</b> mentioned you in <span class="tg">#finance</span>: “can you confirm the forecast assumptions?”</div><div class="atime">8 minutes ago</div></div><button class="nkebab"><svg class="ico"><use href="#i-kebab"/></svg></button></div>
+        <div class="nrow unread" data-type="following"><span class="nud"></span><span class="av a2" style="width:36px;height:36px;font-size:12px">RP<span class="vb blue"><svg class="ico"><use href="#i-comment"/></svg></span></span><div class="nb"><div class="atext"><b>Reza Pour</b> commented on <span class="tg">Renewal playbook</span>, which you follow.</div><div class="atime">1 hour ago</div></div><button class="nkebab"><svg class="ico"><use href="#i-kebab"/></svg></button></div>
+        <div class="nrow unread" data-type="mentions"><span class="nud"></span><span class="av a1" style="width:36px;height:36px;font-size:12px">DK<span class="vb green"><svg class="ico"><use href="#i-check"/></svg></span></span><div class="nb"><div class="atext"><b>Dana Kessler</b> approved your request and tagged <span class="tg">@you</span>.</div><div class="atime">2 hours ago</div></div><button class="nkebab"><svg class="ico"><use href="#i-kebab"/></svg></button></div>
+        <div class="nrow unread" data-type="following"><span class="nud"></span><span class="av a4" style="width:36px;height:36px;font-size:12px">NB<span class="vb amber"><svg class="ico"><use href="#i-upload"/></svg></span></span><div class="nb"><div class="atext"><b>Noa Bergström</b> added files to <span class="tg">Brand assets</span>.</div><div class="atime">3 hours ago</div></div><button class="nkebab"><svg class="ico"><use href="#i-kebab"/></svg></button></div>
+        <div class="nrow" data-type="following"><span class="nud"></span><span class="av a3" style="width:36px;height:36px;font-size:12px">AL<span class="vb blue"><svg class="ico"><use href="#i-edit"/></svg></span></span><div class="nb"><div class="atext"><b>Ava Lindqvist</b> edited <span class="tg">Invoice #TX-4821</span>.</div><div class="atime">Yesterday</div></div><button class="nkebab"><svg class="ico"><use href="#i-kebab"/></svg></button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · FEED + FILTERS ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Feed + filters</div>
+      <p class="plate-recipe"><b>PULLS</b> — a central activity feed column + a left filter rail (by type / by actor) + a right summary card. &nbsp;<b>WHY</b> — for a busy shared stream: filters narrow the firehose by what or who, while the summary gives a quick pulse of the day's volume.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:212px 1fr 248px;min-height:460px">
+      <aside style="border-right:1px solid var(--line);background:var(--surface);padding:20px 16px;display:flex;flex-direction:column;gap:22px">
+        <div><div class="frt">By type</div>
+          <button class="fchk on"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Comments<span class="fc">14</span></button>
+          <button class="fchk on"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Mentions<span class="fc">5</span></button>
+          <button class="fchk on"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Approvals<span class="fc">3</span></button>
+          <button class="fchk"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Uploads<span class="fc">8</span></button>
+        </div>
+        <div><div class="frt">By actor</div>
+          <button class="fact on"><span class="av a1" style="width:22px;height:22px;font-size:9px">DK</span>Dana</button>
+          <button class="fact on"><span class="av a2" style="width:22px;height:22px;font-size:9px">RP</span>Reza</button>
+          <button class="fact"><span class="av a4" style="width:22px;height:22px;font-size:9px">NB</span>Noa</button>
+        </div>
+      </aside>
+      <div style="padding:18px 22px;overflow:auto">
+        <div class="card" style="padding:6px 16px">
+          <div class="frow"><span class="av a1" style="width:32px;height:32px;font-size:11px">DK<span class="vb green"><svg class="ico"><use href="#i-check"/></svg></span></span><div class="frb"><div class="atext"><b>Dana Kessler</b> approved the <span class="tg">Q3 budget</span>.</div><div class="atime">12m ago</div></div></div>
+          <div class="frow"><span class="av a2" style="width:32px;height:32px;font-size:11px">RP<span class="vb blue"><svg class="ico"><use href="#i-comment"/></svg></span></span><div class="frb"><div class="atext"><b>Reza Pour</b> commented on <span class="tg">Renewal playbook</span>.</div><div class="qt">“Pushed a v2 — take a look at the timing section.”</div><div class="atime">1h ago</div></div></div>
+          <div class="frow"><span class="av a1" style="width:32px;height:32px;font-size:11px">DK<span class="vb blue"><svg class="ico"><use href="#i-edit"/></svg></span></span><div class="frb"><div class="atext"><b>Dana Kessler</b> edited <span class="tg">Invoice #TX-4821</span>.</div><div class="atime">2h ago</div></div></div>
+          <div class="frow"><span class="av a2" style="width:32px;height:32px;font-size:11px">RP<span class="vb green"><svg class="ico"><use href="#i-merge"/></svg></span></span><div class="frb"><div class="atext"><b>Reza Pour</b> merged <span class="tg">feat/command-palette</span>.</div><div class="atime">4h ago</div></div></div>
+        </div>
+      </div>
+      <aside style="border-left:1px solid var(--line);background:var(--surface);padding:20px 18px;display:flex;flex-direction:column;gap:14px">
+        <div style="font-size:13px;font-weight:700">Today's activity</div>
+        <div class="card" style="padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="color:var(--mut)">Total events</span><b class="tnum">30</b></div>
+          <div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="color:var(--mut)">Mentioning you</span><b class="tnum">5</b></div>
+          <div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="color:var(--mut)">Awaiting you</span><b class="tnum" style="color:var(--warn)">2</b></div>
+        </div>
+        <div class="card" style="padding:14px 16px">
+          <div style="font-size:12px;color:var(--mut);margin-bottom:8px">Most active</div>
+          <div style="display:flex;align-items:center;gap:9px"><span class="av a2" style="width:30px;height:30px;font-size:11px">RP</span><div><div style="font-size:13px;font-weight:700">Reza Pour</div><div style="font-size:11px;color:var(--faint)">11 events today</div></div></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============== 4 · COMPACT AUDIT LOG ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Compact audit log</div>
+      <p class="plate-recipe"><b>PULLS</b> — dense rows (timestamp, actor, action, target) in a monospace-numerals table style for scanning many events fast. &nbsp;<b>WHY</b> — for compliance &amp; debugging: when you need precise times and high volume, a tight table with mono timestamps beats a roomy feed for scanning and grepping.</p>
+    </div>
+    <div class="frame" style="padding:18px 22px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><div style="font-size:15px;font-weight:700;letter-spacing:-0.01em">Audit log</div><span style="font-size:12px;color:var(--faint)" class="tnum">2,847 events</span><div style="margin-left:auto;display:flex;gap:8px"><button class="btn-sec"><svg class="ico"><use href="#i-search"/></svg>Search</button><button class="btn-sec"><svg class="ico"><use href="#i-filter"/></svg>Filter</button></div></div>
+      <div class="card" style="overflow:hidden">
+        <table class="auditt">
+          <thead><tr><th>Timestamp</th><th>Actor</th><th>Action</th><th>Target</th><th>IP</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">2026-06-18 09:41:12</td><td>dana.kessler</td><td><span class="atag green">approve</span></td><td class="mono">budget/q3</td><td class="mono">10.4.2.18</td></tr>
+            <tr><td class="mono">2026-06-18 09:22:48</td><td>reza.pour</td><td><span class="atag blue">comment</span></td><td class="mono">doc/renewal-playbook</td><td class="mono">10.4.2.31</td></tr>
+            <tr><td class="mono">2026-06-18 08:54:03</td><td>ava.lindqvist</td><td><span class="atag amber">update</span></td><td class="mono">invoice/TX-4821</td><td class="mono">10.4.2.07</td></tr>
+            <tr><td class="mono">2026-06-18 08:40:33</td><td>noa.bergstrom</td><td><span class="atag blue">upload</span></td><td class="mono">assets/brand/×3</td><td class="mono">10.4.2.44</td></tr>
+            <tr><td class="mono">2026-06-18 08:12:55</td><td>system</td><td><span class="atag mut">reconcile</span></td><td class="mono">ledger/batch-4471</td><td class="mono">—</td></tr>
+            <tr><td class="mono">2026-06-18 07:58:21</td><td>jerome.castillo</td><td><span class="atag purple">mention</span></td><td class="mono">channel/finance</td><td class="mono">10.4.2.12</td></tr>
+            <tr><td class="mono">2026-06-17 18:30:09</td><td>reza.pour</td><td><span class="atag green">merge</span></td><td class="mono">repo/feat-command-palette</td><td class="mono">10.4.2.31</td></tr>
+            <tr><td class="mono">2026-06-17 16:04:40</td><td>dana.kessler</td><td><span class="atag red">delete</span></td><td class="mono">draft/old-forecast</td><td class="mono">10.4.2.18</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · ALL CAUGHT UP (EMPTY) ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">All caught up</div>
+      <p class="plate-recipe"><b>PULLS</b> — the empty / zero state: a friendly “all caught up” message with a calm illustration-free mark and a secondary link to settings. &nbsp;<b>WHY</b> — clearing notifications is a win; a warm confirmation rewards reaching zero instead of leaving a blank panel.</p>
+    </div>
+    <div class="frame">
+      <div style="display:flex;align-items:center;gap:14px;padding:15px 22px;border-bottom:1px solid var(--line);background:var(--surface)"><div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Notifications</div><div class="seg" style="margin-left:6px"><button class="on">All</button><button>Mentions</button><button>Following</button></div><button class="linkbtn" style="margin-left:auto">Settings</button></div>
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:64px 24px">
+        <div style="width:74px;height:74px;border-radius:20px;background:var(--ok-t);display:flex;align-items:center;justify-content:center;color:var(--ok);margin-bottom:18px"><svg class="ico" style="width:34px;height:34px"><use href="#i-check"/></svg></div>
+        <h3 style="font-size:20px;font-weight:800;letter-spacing:-0.02em">You're all caught up</h3>
+        <p style="font-size:14px;color:var(--mut);margin-top:8px;max-width:42ch;line-height:1.55">No new notifications. We'll let you know when something needs your attention.</p>
+        <div style="display:flex;gap:10px;margin-top:20px"><button class="btn-sec"><svg class="ico"><use href="#i-bell"/></svg>Notification settings</button><button class="btn-sec"><svg class="ico"><use href="#i-belloff"/></svg>Snooze for today</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+/* timeline */
+.tl-group{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin:20px 0 12px;}
+.tl-group:first-child{margin-top:0;}
+.tl-rail{position:relative;padding-left:0;}
+.tl-row{position:relative;display:flex;gap:13px;padding:8px 0;}
+.tl-row::before{content:'';position:absolute;left:17px;top:42px;bottom:-10px;width:2px;background:var(--line);}
+.tl-row:last-child::before{display:none;}
+.tl-b{padding-top:2px;}
+/* notifications center */
+.nrow{display:flex;align-items:flex-start;gap:13px;padding:14px 22px;border-bottom:1px solid var(--inset);position:relative;cursor:pointer;}
+.nrow:hover{background:var(--inset);}
+.nrow.unread{background:var(--accent-tint);}
+.nrow.unread:hover{background:#dfeafb;}
+.nrow .nud{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:14px;flex-shrink:0;opacity:0;}
+.nrow.unread .nud{opacity:1;}
+.nrow .nb{flex:1;min-width:0;padding-top:1px;}
+.nkebab{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--faint);flex-shrink:0;}
+.nkebab:hover{background:var(--surface);color:var(--ink);} .nkebab .ico{width:16px;height:16px;}
+/* feed + filters */
+.frt{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin-bottom:9px;}
+.fchk{display:flex;align-items:center;gap:9px;width:100%;text-align:left;padding:6px 4px;font-size:13px;color:var(--ink);}
+.fchk .bx{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--line-2);background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;}
+.fchk .bx .ico{width:10px;height:10px;opacity:0;}
+.fchk.on .bx{background:var(--accent);border-color:var(--accent);} .fchk.on .bx .ico{opacity:1;}
+.fchk .fc{margin-left:auto;font-size:11px;color:var(--faint);}
+.fact{display:flex;align-items:center;gap:9px;width:100%;text-align:left;padding:6px 4px;font-size:13px;font-weight:500;color:var(--mut);border-radius:7px;}
+.fact.on{color:var(--ink);font-weight:600;} .fact:hover{background:var(--inset);}
+.frow{display:flex;gap:12px;padding:13px 6px;border-bottom:1px solid var(--inset);}
+.frow:last-child{border-bottom:none;}
+.frb{flex:1;min-width:0;} .frb .qt{font-size:12.5px;color:var(--mut);font-style:italic;margin-top:4px;padding:7px 11px;background:var(--inset);border-radius:8px;border-left:2px solid var(--line-2);} .frb .atime{margin-top:4px;}
+/* audit log */
+.auditt{width:100%;border-collapse:collapse;}
+.auditt th{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);font-weight:600;text-align:left;padding:9px 14px;border-bottom:1px solid var(--line);}
+.auditt td{font-size:12.5px;padding:7px 14px;border-bottom:1px solid var(--inset);color:var(--ink);white-space:nowrap;}
+.auditt tbody tr:last-child td{border-bottom:none;}
+.auditt tbody tr:hover{background:var(--inset);}
+.auditt .mono{font-family:var(--mono);font-size:11.5px;color:var(--mut);font-variant-numeric:tabular-nums;}
+.atag{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:5px;}
+.atag.blue{color:var(--accent-ink);background:var(--accent-tint);} .atag.green{color:var(--ok);background:var(--ok-t);} .atag.amber{color:var(--warn);background:var(--warn-t);} .atag.purple{color:var(--purple);background:var(--purple-t);} .atag.red{color:var(--bad);background:var(--bad-t);} .atag.mut{color:var(--mut);background:var(--inset);}
+/* skin table */
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame[style*="grid-template-columns:212px 1fr 248px"]{grid-template-columns:1fr!important;}
+  .auditt .mono{white-space:normal;}
+}
+</style>
+
+<script>
+/* notifications center: tabs filter + mark all read */
+(function(){
+  var seg=document.getElementById('n2seg'),list=document.getElementById('n2list'),cnt=document.getElementById('n2cnt');
+  function update(){var n=list.querySelectorAll('.nrow.unread:not([style*="display: none"])').length;cnt.textContent=n;cnt.style.display=n>0?'':'none';}
+  seg.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;seg.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');var f=b.dataset.f;
+    list.querySelectorAll('.nrow').forEach(function(r){r.style.display=(f==='all'||r.dataset.type===f)?'':'none';});update();
+  });
+  list.addEventListener('click',function(e){if(e.target.closest('.nkebab'))return;var r=e.target.closest('.nrow');if(!r)return;r.classList.remove('unread');update();});
+  document.getElementById('n2mark').addEventListener('click',function(){list.querySelectorAll('.nrow.unread').forEach(function(r){r.classList.remove('unread');});update();});
+  update();
+})();
+/* feed filters: toggle visual */
+document.querySelectorAll('.fchk,.fact').forEach(function(b){b.addEventListener('click',function(){b.classList.toggle('on');});});
+</script>
+</body>
+</html>

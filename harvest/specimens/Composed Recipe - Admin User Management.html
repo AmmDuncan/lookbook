@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Admin / user management (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Admin / user management · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin (off-white page, white surfaces, hairline borders, slightly
+   rounded corners, one blue accent, system sans + tabular figures). Only
+   composition + interaction varies. WCAG AA throughout.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF; --bad:#C0392B; --bad-t:#F9E8E5;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input,select{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+
+.btn-pri{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:9px 15px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-sec{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:12.5px;font-weight:600;padding:8px 13px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+.btn-danger{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--bad);border:1px solid #e6bcb6;font-size:12.5px;font-weight:600;padding:8px 13px;border-radius:8px;}
+.btn-danger .ico{width:14px;height:14px;}
+.iconbtn{width:32px;height:32px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;color:var(--mut);}
+.iconbtn:hover{background:var(--inset);color:var(--ink);} .iconbtn .ico{width:16px;height:16px;}
+
+/* search + select */
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:8px 11px;color:var(--faint);}
+.search .ico{width:15px;height:15px;} .search input{border:none;outline:none;background:none;font-size:13px;color:var(--ink);width:100%;}
+.selectw{position:relative;display:inline-block;}
+.selectw select{appearance:none;-webkit-appearance:none;font-size:12.5px;font-weight:600;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:7px;padding:6px 28px 6px 10px;cursor:pointer;outline:none;}
+.selectw select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+.selectw .ico{position:absolute;right:9px;top:50%;transform:translateY(-50%);width:12px;height:12px;color:var(--mut);pointer-events:none;}
+.input{width:100%;font-size:13px;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:9px 11px;outline:none;}
+.input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+
+/* status badge — hug content */
+.sbadge{display:inline-flex;align-items:center;gap:6px;width:fit-content;font-size:11.5px;font-weight:600;padding:3px 9px 3px 8px;border-radius:999px;}
+.sbadge .gl{width:7px;height:7px;border-radius:50%;}
+.sbadge.active{color:var(--ok);background:var(--ok-t);} .sbadge.active .gl{background:var(--ok);}
+.sbadge.invited{color:var(--accent-ink);background:var(--accent-tint);} .sbadge.invited .gl{background:var(--accent);}
+.sbadge.suspended{color:var(--bad);background:var(--bad-t);} .sbadge.suspended .gl{background:var(--bad);}
+.rolepill{display:inline-flex;align-items:center;width:fit-content;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--inset);color:var(--mut);}
+.rolepill.admin{background:var(--accent-tint);color:var(--accent-ink);}
+
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+.av.a1{background:var(--accent-tint);color:var(--accent-ink);} .av.a2{background:var(--ok-t);color:var(--ok);} .av.a3{background:var(--warn-t);color:var(--warn);} .av.a4{background:#ECE9FA;color:#5B4BC4;} .av.a5{background:#E2F1F1;color:#0F6E73;}
+
+/* toggle — visible sliding thumb */
+.tgl{display:inline-flex;width:38px;height:22px;border-radius:999px;background:var(--inset);border:1px solid var(--line-2);padding:2px;cursor:pointer;transition:background .15s,border-color .15s;flex-shrink:0;}
+.tgl .thumb{width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(20,24,31,.3);transition:transform .15s;}
+.tgl.on{background:var(--accent);border-color:var(--accent);}
+.tgl.on .thumb{transform:translateX(16px);}
+
+/* table */
+.utable{width:100%;border-collapse:collapse;}
+.utable th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);font-weight:600;text-align:left;padding:10px 16px;border-bottom:1px solid var(--line);white-space:nowrap;}
+.utable td{font-size:13px;padding:11px 16px;border-bottom:1px solid var(--inset);color:var(--ink);}
+.utable tbody tr:last-child td{border-bottom:none;}
+.utable .r{text-align:right;}
+.uname{display:flex;align-items:center;gap:11px;}
+.uname .nm{font-weight:600;} .uname .em{font-size:11.5px;color:var(--faint);}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-kebab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Admin / user management · one skin, five compositions</div>
+    <h1>Same skin. Five ways to run a team.</h1>
+    <p>One workspace's people — members, roles, invites, and seats — composed five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white surfaces with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. What changes is purely <em>composition and interaction</em>. The skin is the paint, the composition is the skeleton.</p>
+  </header>
+
+  <!-- ============== 1 · MEMBERS TABLE + ROLES ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Members table + roles</div>
+      <p class="plate-recipe"><b>PULLS</b> — a members table (avatar, name, email, role dropdown, status badge, last active) + a toolbar with search and an Invite button. &nbsp;<b>WHY</b> — the everyday admin view: an inline role dropdown makes the most common change one click, and a status column surfaces who's active, invited, or suspended at a glance.</p>
+    </div>
+    <div class="frame" style="padding:20px 24px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Members</div>
+        <span style="font-size:12px;color:var(--faint)" class="tnum">14 people</span>
+        <div class="search" style="margin-left:auto;width:200px"><svg class="ico"><use href="#i-search"/></svg><input placeholder="Search members"></div>
+        <button class="btn-pri"><svg class="ico"><use href="#i-plus"/></svg>Invite</button>
+      </div>
+      <div class="card" style="overflow:hidden">
+        <table class="utable">
+          <thead><tr><th>Member</th><th>Role</th><th>Status</th><th>Last active</th><th class="r"></th></tr></thead>
+          <tbody>
+            <tr><td><div class="uname"><span class="av a1" style="width:32px;height:32px;font-size:11px">MR</span><div><div class="nm">Mara Reyes</div><div class="em">mara@harbor.app</div></div></div></td><td><div class="selectw"><select><option>Owner</option><option>Admin</option><option>Member</option></select><svg class="ico"><use href="#i-chev"/></svg></div></td><td><span class="sbadge active"><span class="gl"></span>Active</span></td><td style="color:var(--mut)">2h ago</td><td class="r"><button class="iconbtn"><svg class="ico"><use href="#i-kebab"/></svg></button></td></tr>
+            <tr><td><div class="uname"><span class="av a2" style="width:32px;height:32px;font-size:11px">JC</span><div><div class="nm">Jerome Castillo</div><div class="em">jerome@harbor.app</div></div></div></td><td><div class="selectw"><select><option>Admin</option><option>Owner</option><option>Member</option></select><svg class="ico"><use href="#i-chev"/></svg></div></td><td><span class="sbadge active"><span class="gl"></span>Active</span></td><td style="color:var(--mut)">5h ago</td><td class="r"><button class="iconbtn"><svg class="ico"><use href="#i-kebab"/></svg></button></td></tr>
+            <tr><td><div class="uname"><span class="av a4" style="width:32px;height:32px;font-size:11px">NB</span><div><div class="nm">Noa Bergström</div><div class="em">noa@harbor.app</div></div></div></td><td><div class="selectw"><select><option>Member</option><option>Admin</option><option>Owner</option></select><svg class="ico"><use href="#i-chev"/></svg></div></td><td><span class="sbadge invited"><span class="gl"></span>Invited</span></td><td style="color:var(--mut)">—</td><td class="r"><button class="iconbtn"><svg class="ico"><use href="#i-kebab"/></svg></button></td></tr>
+            <tr><td><div class="uname"><span class="av a5" style="width:32px;height:32px;font-size:11px">RP</span><div><div class="nm">Reza Pour</div><div class="em">reza@harbor.app</div></div></div></td><td><div class="selectw"><select><option>Member</option><option>Admin</option><option>Owner</option></select><svg class="ico"><use href="#i-chev"/></svg></div></td><td><span class="sbadge active"><span class="gl"></span>Active</span></td><td style="color:var(--mut)">1d ago</td><td class="r"><button class="iconbtn"><svg class="ico"><use href="#i-kebab"/></svg></button></td></tr>
+            <tr><td><div class="uname"><span class="av a3" style="width:32px;height:32px;font-size:11px">TB</span><div><div class="nm">Tomas Berg</div><div class="em">tomas@harbor.app</div></div></div></td><td><div class="selectw"><select><option>Member</option><option>Admin</option><option>Owner</option></select><svg class="ico"><use href="#i-chev"/></svg></div></td><td><span class="sbadge suspended"><span class="gl"></span>Suspended</span></td><td style="color:var(--mut)">2w ago</td><td class="r"><button class="iconbtn"><svg class="ico"><use href="#i-kebab"/></svg></button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · ROLES & PERMISSIONS MATRIX ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Roles &amp; permissions matrix</div>
+      <p class="plate-recipe"><b>PULLS</b> — a matrix with roles as columns, capability rows, and toggles at each intersection (with a visible sliding thumb). &nbsp;<b>WHY</b> — for fine-grained access control: a grid makes the whole policy legible at once, so you can see exactly what each role can do and tune it in place.</p>
+    </div>
+    <div class="frame" style="padding:20px 24px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Roles &amp; permissions</div><div style="margin-left:auto;display:flex;gap:8px"><button class="btn-sec"><svg class="ico"><use href="#i-plus"/></svg>New role</button></div></div>
+      <div class="card" style="overflow:hidden">
+        <table class="matrix" id="permmatrix">
+          <thead><tr><th class="cap">Capability</th><th>Owner</th><th>Admin</th><th>Member</th><th>Viewer</th></tr></thead>
+          <tbody>
+            <tr class="grp"><td colspan="5">Workspace</td></tr>
+            <tr><td class="cap">View dashboards</td><td data-locked><span class="tgl on locked"><span class="thumb"></span></span></td><td><span class="tgl on"><span class="thumb"></span></span></td><td><span class="tgl on"><span class="thumb"></span></span></td><td><span class="tgl on"><span class="thumb"></span></span></td></tr>
+            <tr><td class="cap">Edit content</td><td data-locked><span class="tgl on locked"><span class="thumb"></span></span></td><td><span class="tgl on"><span class="thumb"></span></span></td><td><span class="tgl on"><span class="thumb"></span></span></td><td><span class="tgl"><span class="thumb"></span></span></td></tr>
+            <tr><td class="cap">Delete records</td><td data-locked><span class="tgl on locked"><span class="thumb"></span></span></td><td><span class="tgl on"><span class="thumb"></span></span></td><td><span class="tgl"><span class="thumb"></span></span></td><td><span class="tgl"><span class="thumb"></span></span></td></tr>
+            <tr class="grp"><td colspan="5">Administration</td></tr>
+            <tr><td class="cap">Manage members</td><td data-locked><span class="tgl on locked"><span class="thumb"></span></span></td><td><span class="tgl on"><span class="thumb"></span></span></td><td><span class="tgl"><span class="thumb"></span></span></td><td><span class="tgl"><span class="thumb"></span></span></td></tr>
+            <tr><td class="cap">Manage billing</td><td data-locked><span class="tgl on locked"><span class="thumb"></span></span></td><td><span class="tgl"><span class="thumb"></span></span></td><td><span class="tgl"><span class="thumb"></span></span></td><td><span class="tgl"><span class="thumb"></span></span></td></tr>
+            <tr><td class="cap">Configure SSO</td><td data-locked><span class="tgl on locked"><span class="thumb"></span></span></td><td><span class="tgl"><span class="thumb"></span></span></td><td><span class="tgl"><span class="thumb"></span></span></td><td><span class="tgl"><span class="thumb"></span></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:11.5px;color:var(--faint);margin-top:10px;display:flex;align-items:center;gap:6px"><svg class="ico" style="width:13px;height:13px"><use href="#i-shield"/></svg>Owner permissions are fixed and cannot be reduced.</div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · INVITE FLOW + PENDING ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Invite flow + pending</div>
+      <p class="plate-recipe"><b>PULLS</b> — an invite form (email + role select) + a list of pending invites with Resend / Revoke actions. &nbsp;<b>WHY</b> — onboarding is its own task: pairing the send form with the outstanding queue keeps “who haven't I heard back from” visible right where you invite.</p>
+    </div>
+    <div class="frame" style="padding:22px 24px;display:grid;grid-template-columns:340px 1fr;gap:20px">
+      <div class="card" style="padding:20px 22px;align-self:start">
+        <div style="font-size:15px;font-weight:700">Invite people</div>
+        <div style="font-size:12.5px;color:var(--mut);margin-top:3px;margin-bottom:16px">They'll get an email to join your workspace.</div>
+        <label style="display:block"><span style="font-size:12px;font-weight:600;color:var(--mut);margin-bottom:6px;display:block">Email address</span><input class="input" value="alex@northwind.co"></label>
+        <label style="display:block;margin-top:14px"><span style="font-size:12px;font-weight:600;color:var(--mut);margin-bottom:6px;display:block">Role</span><div class="selectw" style="display:block"><select style="width:100%;padding:9px 28px 9px 11px;font-weight:500"><option>Member</option><option>Admin</option><option>Viewer</option></select><svg class="ico"><use href="#i-chev"/></svg></div></label>
+        <button class="btn-pri" style="justify-content:center;width:100%;margin-top:18px"><svg class="ico"><use href="#i-mail"/></svg>Send invite</button>
+      </div>
+      <div class="card" style="overflow:hidden;align-self:start">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between"><div style="font-size:14px;font-weight:700">Pending invites</div><span style="font-size:12px;color:var(--faint)" class="tnum">3</span></div>
+        <div class="prow"><span class="av a1" style="width:34px;height:34px;font-size:11px">AL</span><div class="pb"><div class="pe">alex@northwind.co</div><div class="pm"><span class="rolepill">Member</span><span class="psep">·</span>Sent 2 days ago</div></div><div class="pa"><button class="btn-sec" style="padding:6px 10px"><svg class="ico"><use href="#i-refresh"/></svg>Resend</button><button class="iconbtn" style="border-color:#e6bcb6;color:var(--bad)"><svg class="ico"><use href="#i-x"/></svg></button></div></div>
+        <div class="prow"><span class="av a3" style="width:34px;height:34px;font-size:11px">SM</span><div class="pb"><div class="pe">sam@meridian.io</div><div class="pm"><span class="rolepill admin">Admin</span><span class="psep">·</span>Sent 4 days ago</div></div><div class="pa"><button class="btn-sec" style="padding:6px 10px"><svg class="ico"><use href="#i-refresh"/></svg>Resend</button><button class="iconbtn" style="border-color:#e6bcb6;color:var(--bad)"><svg class="ico"><use href="#i-x"/></svg></button></div></div>
+        <div class="prow"><span class="av a5" style="width:34px;height:34px;font-size:11px">KL</span><div class="pb"><div class="pe">kim@lattice.app</div><div class="pm"><span class="rolepill">Viewer</span><span class="psep">·</span>Sent 1 week ago</div></div><div class="pa"><button class="btn-sec" style="padding:6px 10px"><svg class="ico"><use href="#i-refresh"/></svg>Resend</button><button class="iconbtn" style="border-color:#e6bcb6;color:var(--bad)"><svg class="ico"><use href="#i-x"/></svg></button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · MEMBER DETAIL DRAWER ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Member detail drawer</div>
+      <p class="plate-recipe"><b>PULLS</b> — a members list + a right drawer for the selected member (role, teams, recent activity, and a danger-zone Remove). &nbsp;<b>WHY</b> — managing one person needs more than a row holds; a drawer opens their full context — and the irreversible action — without leaving the list.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:1fr 340px;min-height:480px">
+      <div style="padding:18px 22px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:12px">Members</div>
+        <div class="card" style="overflow:hidden">
+          <div class="mrow on"><span class="av a1" style="width:34px;height:34px;font-size:12px">MR</span><div class="mb"><div class="mn">Mara Reyes</div><div class="me">Product designer</div></div><span class="rolepill admin">Admin</span></div>
+          <div class="mrow"><span class="av a2" style="width:34px;height:34px;font-size:12px">JC</span><div class="mb"><div class="mn">Jerome Castillo</div><div class="me">Engineering lead</div></div><span class="rolepill admin">Admin</span></div>
+          <div class="mrow"><span class="av a5" style="width:34px;height:34px;font-size:12px">RP</span><div class="mb"><div class="mn">Reza Pour</div><div class="me">Data analyst</div></div><span class="rolepill">Member</span></div>
+          <div class="mrow"><span class="av a3" style="width:34px;height:34px;font-size:12px">TB</span><div class="mb"><div class="mn">Tomas Berg</div><div class="me">Support</div></div><span class="rolepill">Member</span></div>
+        </div>
+      </div>
+      <aside style="border-left:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;max-height:560px">
+        <div style="padding:20px 20px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:13px">
+          <span class="av a1" style="width:48px;height:48px;font-size:16px">MR</span>
+          <div style="flex:1"><div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Mara Reyes</div><div style="font-size:12px;color:var(--faint)">mara@harbor.app</div><div style="margin-top:7px"><span class="sbadge active"><span class="gl"></span>Active</span></div></div>
+          <button class="iconbtn"><svg class="ico"><use href="#i-x"/></svg></button>
+        </div>
+        <div style="padding:18px 20px;overflow:auto;display:flex;flex-direction:column;gap:18px">
+          <div><div class="dk">Role</div><div class="selectw" style="display:block;margin-top:7px"><select style="width:100%;padding:8px 28px 8px 11px;font-weight:500"><option>Admin</option><option>Owner</option><option>Member</option><option>Viewer</option></select><svg class="ico"><use href="#i-chev"/></svg></div></div>
+          <div><div class="dk">Teams</div><div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:8px"><span class="teampill">Design</span><span class="teampill">Brand</span><span class="teampill">Leadership</span></div></div>
+          <div><div class="dk">Recent activity</div><div style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
+            <div class="ar"><span class="ad"></span><div><div class="at">Approved the Q3 budget</div><div class="atm">12 min ago</div></div></div>
+            <div class="ar"><span class="ad"></span><div><div class="at">Edited Brand guidelines</div><div class="atm">Yesterday</div></div></div>
+            <div class="ar"><span class="ad"></span><div><div class="at">Invited Noa Bergström</div><div class="atm">3 days ago</div></div></div>
+          </div></div>
+          <div style="margin-top:4px;padding:14px 16px;border:1px solid #e6bcb6;border-radius:10px;background:var(--bad-t)">
+            <div style="font-size:12.5px;font-weight:700;color:var(--bad)">Danger zone</div>
+            <div style="font-size:12px;color:var(--mut);margin-top:4px;line-height:1.5">Removing a member revokes all access immediately. This can't be undone.</div>
+            <button class="btn-danger" style="margin-top:11px"><svg class="ico"><use href="#i-trash"/></svg>Remove from workspace</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============== 5 · SEATS / EMPTY ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Seats / empty</div>
+      <p class="plate-recipe"><b>PULLS</b> — a seats-usage summary card + the empty state when no members exist beyond the owner (invite CTA). &nbsp;<b>WHY</b> — a brand-new workspace has nothing to manage yet; leading with seat capacity and one invite CTA turns an empty roster into the obvious first action.</p>
+    </div>
+    <div class="frame" style="padding:22px 24px;display:grid;grid-template-columns:300px 1fr;gap:20px">
+      <div class="card" style="padding:20px 22px;align-self:start">
+        <div style="font-size:13px;font-weight:700">Seats</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-top:10px"><span style="font-size:34px;font-weight:800;letter-spacing:-0.03em" class="tnum">1</span><span style="font-size:14px;color:var(--mut);font-weight:600">/ 10 used</span></div>
+        <div class="seatbar"><i style="width:10%"></i></div>
+        <div style="font-size:12px;color:var(--mut);margin-top:10px">9 seats available on the <b style="color:var(--ink)">Scale</b> plan.</div>
+        <button class="btn-sec" style="width:100%;justify-content:center;margin-top:14px">Manage plan</button>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:52px 24px;align-self:start">
+        <div style="width:72px;height:72px;border-radius:20px;background:var(--accent-tint);display:flex;align-items:center;justify-content:center;color:var(--accent-ink);margin-bottom:18px"><svg class="ico" style="width:32px;height:32px"><use href="#i-users"/></svg></div>
+        <h3 style="font-size:19px;font-weight:700;letter-spacing:-0.01em">It's just you so far</h3>
+        <p style="font-size:14px;color:var(--mut);margin-top:8px;max-width:42ch;line-height:1.55">Invite teammates to collaborate. Assign roles to control what each person can see and do.</p>
+        <div style="display:flex;gap:10px;margin-top:20px"><button class="btn-pri"><svg class="ico"><use href="#i-plus"/></svg>Invite teammates</button><button class="btn-sec"><svg class="ico"><use href="#i-shield"/></svg>Set up roles</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+/* matrix */
+.matrix{width:100%;border-collapse:collapse;}
+.matrix th{font-size:11.5px;font-weight:700;color:var(--ink);text-align:center;padding:12px 10px;border-bottom:1px solid var(--line);}
+.matrix th.cap{text-align:left;width:40%;color:var(--faint);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;}
+.matrix td{padding:10px 10px;border-bottom:1px solid var(--inset);text-align:center;}
+.matrix td.cap{text-align:left;font-size:13px;color:var(--ink);}
+.matrix tbody tr:last-child td{border-bottom:none;}
+.matrix tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);text-align:left;padding:7px 12px;}
+.tgl.locked{opacity:.55;cursor:not-allowed;}
+/* pending */
+.prow{display:flex;align-items:center;gap:13px;padding:13px 18px;border-bottom:1px solid var(--inset);}
+.prow:last-child{border-bottom:none;}
+.prow .pb{flex:1;min-width:0;} .prow .pe{font-size:13px;font-weight:600;} .prow .pm{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--faint);margin-top:3px;} .prow .psep{color:var(--line-2);}
+.prow .pa{display:flex;align-items:center;gap:7px;}
+/* member rows + drawer */
+.mrow{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--inset);cursor:pointer;}
+.mrow:last-child{border-bottom:none;} .mrow:hover{background:var(--inset);}
+.mrow.on{background:var(--accent-tint);box-shadow:inset 3px 0 0 var(--accent);}
+.mrow .mb{flex:1;min-width:0;} .mrow .mn{font-size:13.5px;font-weight:600;} .mrow .me{font-size:11.5px;color:var(--faint);}
+.dk{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);}
+.teampill{display:inline-flex;align-items:center;width:fit-content;font-size:11.5px;font-weight:600;color:var(--mut);background:var(--inset);border:1px solid var(--line);border-radius:7px;padding:3px 10px;}
+.ar{display:flex;gap:10px;} .ar .ad{width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:6px;flex-shrink:0;} .ar .at{font-size:12.5px;color:var(--ink);} .ar .atm{font-size:11px;color:var(--faint);margin-top:1px;}
+/* seats */
+.seatbar{height:8px;border-radius:999px;background:var(--inset);overflow:hidden;margin-top:14px;}
+.seatbar i{display:block;height:100%;background:var(--accent);border-radius:999px;}
+/* skin table */
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame[style*="grid-template-columns:340px 1fr"]{grid-template-columns:1fr!important;}
+  .frame[style*="grid-template-columns:1fr 340px"]{grid-template-columns:1fr!important;}
+  .frame[style*="grid-template-columns:300px 1fr"]{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script>
+/* permission matrix toggles (locked column stays) */
+document.querySelectorAll('#permmatrix .tgl').forEach(function(t){
+  if(t.classList.contains('locked'))return;
+  t.addEventListener('click',function(){t.classList.toggle('on');});
+});
+/* member detail list select */
+(function(){
+  var rows=document.querySelectorAll('.mrow');
+  rows.forEach(function(r){r.addEventListener('click',function(){rows.forEach(function(x){x.classList.remove('on');});r.classList.add('on');});});
+})();
+</script>
+</body>
+</html>

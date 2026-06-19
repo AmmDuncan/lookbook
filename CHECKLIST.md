@@ -22,7 +22,7 @@ The standalone, runnable verification pass. Run top to bottom after building any
 
 ## 2 · Completeness (states & copy)
 - [ ] Interactive atoms ship rest/hover/focus-visible/active/disabled (F32); focus ring visible (F34)
-- [ ] Data views ship loading/empty/error/populated (F33)
+- [ ] Data views ship loading/empty/error/populated (F33) — plus the **per-archetype** easy-to-miss pieces from `archetype-completeness.md` (e.g. list: first-run-empty *vs* filtered-no-results *vs* error are three distinct states; bulk-selection bar; form: unsaved-changes guard + submitting state)
 - [ ] One primary action per region (F16)
 - [ ] Copy: sentence case (F67); buttons are verbs (F68); errors say problem + fix (F69); no jargon (F73)
 

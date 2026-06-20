@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CARD VARIATIONS — tasteful, shippable card patterns on a neutral ground.
+   One restrained forest-green accent. Radius + border-vs-shadow vary on purpose.
+   No glass / neon / neumorphism / purple-blue gradients.
+   ============================================================================ */
+:root{
+  --bg:#F2F1ED; --surface:#FFFFFF; --surface-2:#F7F6F2;
+  --border:#E5E3DC; --border-2:#D8D5CB;
+  --ink:#1C1D20; --muted:#5A5C63; --subtle:#8B8C92;
+  --accent:#2C6E49; --accent-ink:#235838; --accent-tint:rgba(44,110,73,0.10);
+  --ok:#2C6E49; --ok-tint:rgba(44,110,73,0.12);
+  --warn:#8A5A12; --warn-tint:rgba(138,90,18,0.13);
+  --bad:#AE3B2C; --bad-tint:rgba(174,59,44,0.11);
+  --info:#2B557F; --info-tint:rgba(43,85,127,0.11);
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --shadow-sm:0 1px 2px rgba(28,29,32,0.05);
+  --shadow:0 6px 20px -8px rgba(28,29,32,0.16),0 1px 3px rgba(28,29,32,0.05);
+  --shadow-lg:0 16px 36px -14px rgba(28,29,32,0.22),0 2px 6px rgba(28,29,32,0.05);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+.tnum{font-variant-numeric:tabular-nums;}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:6px;}
+button{font-family:inherit;cursor:pointer;}
+
+.wrap{max-width:1180px;margin:0 auto;padding:56px 36px 96px;}
+.head{margin-bottom:40px;padding-bottom:24px;border-bottom:1.5px solid var(--ink);}
+.eyebrow{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--subtle);margin-bottom:13px;}
+.head h1{font-size:clamp(34px,5.5vw,54px);font-weight:700;letter-spacing:-0.03em;line-height:1;}
+.head p{font-size:15.5px;color:var(--muted);max-width:62ch;margin-top:14px;}
+
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:26px 22px;align-items:start;}
+.spec{display:flex;flex-direction:column;gap:11px;}
+.lab{font-family:var(--font-mono);font-size:10.5px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);}
+.lab b{color:var(--accent);font-weight:500;}
+.bento-spec{grid-column:1/-1;}
+
+/* shared bits */
+.title{font-weight:600;font-size:15.5px;letter-spacing:-0.01em;}
+.meta{font-size:12.5px;color:var(--muted);}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;}
+.chip.up{color:var(--ok);background:var(--ok-tint);}
+.chip svg{width:12px;height:12px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:600;padding:9px 15px;border-radius:9px;border:1px solid transparent;transition:all .15s;}
+.btn svg{width:15px;height:15px;}
+.btn-acc{background:var(--accent);color:#fff;}
+.btn-acc:hover{background:var(--accent-ink);}
+.btn-out{background:var(--surface);color:var(--ink);border-color:var(--border-2);}
+.btn-out:hover{background:var(--surface-2);}
+.stars{display:inline-flex;gap:1px;color:#C8902B;}
+.stars svg{width:14px;height:14px;}
+
+/* image placeholder */
+.imgph{position:relative;width:100%;background:#E7E4DB;background-image:repeating-linear-gradient(45deg,rgba(28,29,32,0.045) 0 9px,transparent 9px 18px);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.imgph .tag{font-family:var(--font-mono);font-size:10px;color:var(--subtle);background:var(--surface);padding:3px 8px;border-radius:5px;border:1px solid var(--border);}
+
+/* ============================ 01 STAT / KPI — bordered, soft ============================ */
+.c-stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow-sm);}
+.c-stat .k{font-size:12.5px;color:var(--muted);font-weight:500;}
+.c-stat .big{font-size:34px;font-weight:700;letter-spacing:-0.025em;margin-top:10px;font-variant-numeric:tabular-nums;}
+.c-stat .foot{display:flex;align-items:center;gap:9px;margin-top:12px;}
+.c-stat .foot .n{font-size:12px;color:var(--subtle);}
+.c-stat .spark{margin-top:14px;}
+
+/* ============================ 02 PROFILE — elevated, round ============================ */
+.c-profile{background:var(--surface);border-radius:16px;padding:22px;box-shadow:var(--shadow);}
+.c-profile .top{display:flex;align-items:center;gap:14px;}
+.ava{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+.ava.lg{width:52px;height:52px;font-size:17px;background:#D8E4DC;color:var(--accent-ink);}
+.c-profile .nm{font-size:16px;font-weight:600;letter-spacing:-0.01em;}
+.c-profile .ro{font-size:12.5px;color:var(--muted);margin-top:1px;}
+.c-profile .stats{display:flex;gap:22px;margin:16px 0;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.c-profile .stats .v{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;}
+.c-profile .stats .l{font-size:11px;color:var(--subtle);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+.c-profile .acts{display:flex;gap:9px;}
+.c-profile .acts .btn{flex:1;}
+
+/* ============================ 03 PRODUCT w/ IMAGE — bordered ============================ */
+.c-prod{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-sm);}
+.c-prod .imgph{height:150px;}
+.c-prod .body{padding:15px 16px 16px;}
+.c-prod .nm{font-weight:600;font-size:14.5px;}
+.c-prod .desc{font-size:12px;color:var(--muted);margin-top:3px;}
+.c-prod .row{display:flex;align-items:center;justify-content:space-between;margin-top:13px;}
+.c-prod .price{font-size:18px;font-weight:700;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;}
+.c-prod .iconbtn{width:38px;height:38px;border-radius:10px;background:var(--accent);color:#fff;border:none;display:flex;align-items:center;justify-content:center;}
+.c-prod .iconbtn:hover{background:var(--accent-ink);}
+.c-prod .iconbtn svg{width:18px;height:18px;}
+
+/* ============================ 04 PRICING — bordered, round ============================ */
+.c-price{background:var(--surface);border:1px solid var(--border-2);border-radius:16px;padding:22px;}
+.c-price .plan{font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);}
+.c-price .amt{font-size:38px;font-weight:700;letter-spacing:-0.03em;margin-top:10px;font-variant-numeric:tabular-nums;}
+.c-price .amt small{font-size:14px;font-weight:500;color:var(--muted);letter-spacing:0;}
+.c-price ul{list-style:none;margin:18px 0;display:flex;flex-direction:column;gap:10px;}
+.c-price li{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink);}
+.c-price li svg{width:15px;height:15px;color:var(--accent);flex-shrink:0;}
+.c-price .btn{width:100%;}
+
+/* ============================ 05 FEATURE w/ ICON — flat bordered ============================ */
+.c-feat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;}
+.c-feat .ic{width:42px;height:42px;border-radius:11px;background:var(--accent-tint);color:var(--accent);display:flex;align-items:center;justify-content:center;}
+.c-feat .ic svg{width:21px;height:21px;}
+.c-feat h3{font-size:15.5px;font-weight:600;letter-spacing:-0.01em;margin-top:15px;}
+.c-feat p{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.55;}
+
+/* ============================ 06 ALERT / NOTIFICATION — tinted, accent edge ============================ */
+.c-alert{background:var(--warn-tint);border:1px solid rgba(138,90,18,0.22);border-left:3px solid var(--warn);border-radius:10px;padding:15px 16px;display:flex;gap:12px;}
+.c-alert .ic{color:var(--warn);flex-shrink:0;margin-top:1px;}
+.c-alert .ic svg{width:19px;height:19px;}
+.c-alert .h{font-weight:600;font-size:13.5px;color:#5E3D0A;}
+.c-alert .m{font-size:12.5px;color:#6F551F;margin-top:2px;line-height:1.5;}
+.c-alert .acts{display:flex;gap:14px;margin-top:11px;}
+.c-alert .acts a{font-size:12.5px;font-weight:600;color:var(--warn);cursor:pointer;}
+.c-alert .acts a.q{color:#7A6230;}
+
+/* ============================ 07 MEDIA — elevated, image-led ============================ */
+.c-media{background:var(--surface);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
+.c-media .imgph{height:128px;}
+.c-media .play{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);}
+.c-media .play svg{width:17px;height:17px;color:var(--ink);margin-left:2px;}
+.c-media .body{padding:14px 16px 16px;}
+.c-media .cat{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);}
+.c-media .ti{font-weight:600;font-size:15px;letter-spacing:-0.01em;margin-top:6px;line-height:1.25;}
+.c-media .mt{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;color:var(--subtle);}
+.c-media .mt .dot{width:3px;height:3px;border-radius:50%;background:var(--subtle);}
+
+/* ============================ 08 LIST-ROW — bordered, divided ============================ */
+.c-list{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm);}
+.c-list .lh{padding:14px 16px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.c-list .lh .t{font-weight:600;font-size:13.5px;}
+.c-list .lh a{font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;}
+.lr{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--border);}
+.lr:last-child{border-bottom:none;}
+.lr .lav{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;}
+.lr .nm{font-size:13.5px;font-weight:600;}
+.lr .sb{font-size:11.5px;color:var(--subtle);}
+.lr .val{margin-left:auto;font-weight:600;font-size:13.5px;font-variant-numeric:tabular-nums;}
+
+/* ============================ 09 DARK — highlight surface ============================ */
+.c-dark{background:#1A1B1F;border-radius:16px;padding:22px;color:#ECECEE;box-shadow:var(--shadow-lg);}
+.c-dark .k{font-size:12.5px;color:#A6A7AD;font-weight:500;}
+.c-dark .big{font-size:32px;font-weight:700;letter-spacing:-0.025em;margin-top:10px;font-variant-numeric:tabular-nums;}
+.c-dark .chip{background:rgba(78,189,128,0.18);color:#7FD3A1;margin-top:2px;}
+.c-dark .bar{display:flex;gap:4px;align-items:flex-end;height:40px;margin-top:18px;}
+.c-dark .bar i{flex:1;background:rgba(255,255,255,0.13);border-radius:2px;}
+.c-dark .bar i.on{background:#4EBD80;}
+.c-dark .ft{font-size:12px;color:#8A8B91;margin-top:14px;}
+
+/* ============================ 10 FLAT-BORDERED — no shadow, small radius ============================ */
+.c-flat{background:var(--surface);border:1.5px solid var(--ink);border-radius:8px;padding:20px;}
+.c-flat .ov{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);}
+.c-flat h3{font-size:16px;font-weight:700;letter-spacing:-0.01em;margin-top:9px;}
+.c-flat p{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.55;}
+.c-flat .link{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:var(--ink);margin-top:14px;cursor:pointer;border-bottom:1.5px solid var(--ink);padding-bottom:1px;}
+.c-flat .link svg{width:14px;height:14px;}
+
+/* ============================ 11 SUBTLY ELEVATED — borderless, shadow ============================ */
+.c-elev{background:var(--surface);border-radius:14px;padding:20px;box-shadow:var(--shadow);}
+.c-elev .rowtop{display:flex;align-items:center;justify-content:space-between;}
+.c-elev .ic{width:38px;height:38px;border-radius:10px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--muted);}
+.c-elev .ic svg{width:19px;height:19px;}
+.c-elev h3{font-size:15.5px;font-weight:600;letter-spacing:-0.01em;margin-top:15px;}
+.c-elev p{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.55;}
+.c-elev .ft{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:12.5px;color:var(--subtle);}
+.c-elev .ft b{color:var(--ink);font-weight:600;}
+
+/* ============================ 12 BENTO CLUSTER ============================ */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:118px;gap:12px;}
+.bt{border-radius:14px;padding:18px;display:flex;flex-direction:column;}
+.bt.b-main{grid-column:span 2;grid-row:span 2;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.bt.b-acc{grid-column:span 2;background:var(--accent);color:#fff;}
+.bt.b-w{background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.bt.b-dk{background:#1A1B1F;color:#ECECEE;}
+.bt .bk{font-size:12px;font-weight:500;opacity:.9;}
+.bt .bk.mut{color:var(--muted);opacity:1;}
+.bt .bn{font-weight:700;letter-spacing:-0.025em;font-variant-numeric:tabular-nums;margin-top:auto;}
+.bt.b-main .bn{font-size:42px;}
+.bt .bn.sm{font-size:26px;}
+.bt .bsub{font-size:11.5px;margin-top:4px;}
+.bt .bsub.mut{color:var(--subtle);}
+.bt.b-main .spark{margin-top:14px;}
+.bt .bars{display:flex;gap:4px;align-items:flex-end;height:38px;margin-top:auto;}
+.bt .bars i{flex:1;background:var(--accent-tint);border-radius:2px;}
+.bt .bars i.on{background:var(--accent);}
+
+@media(max-width:920px){.gallery{grid-template-columns:repeat(2,1fr);}.bento{grid-template-columns:repeat(2,1fr);}.bt.b-main,.bt.b-acc{grid-column:span 2;}}
+@media(max-width:560px){.gallery{grid-template-columns:1fr;}.bento{grid-auto-rows:auto;}.bt{min-height:118px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4v16l14-8z"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <header class="head">
+    <div class="eyebrow">Specimen · surfaces</div>
+    <h1>Card variations</h1>
+    <p>Twelve card patterns a product team would actually ship — each varies corner radius, the choice of border versus shadow, and a single restrained green accent. No glass, glow, neumorphism or loud gradients.</p>
+  </header>
+
+  <div class="gallery">
+
+    <!-- 01 STAT -->
+    <div class="spec">
+      <div class="lab">01 · Stat / KPI <b>· bordered</b></div>
+      <div class="c-stat">
+        <div class="k">Monthly revenue</div>
+        <div class="big tnum">$128,400</div>
+        <div class="foot"><span class="chip up"><svg><use href="#i-up"/></svg>12.4%</span><span class="n">vs last month</span></div>
+        <svg class="spark" width="100%" height="36" viewBox="0 0 240 36" preserveAspectRatio="none"><path d="M0,28 L34,24 L68,26 L102,18 L136,21 L170,12 L204,15 L240,5" fill="none" stroke="#2C6E49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+    <!-- 02 PROFILE -->
+    <div class="spec">
+      <div class="lab">02 · Profile <b>· elevated</b></div>
+      <div class="c-profile">
+        <div class="top"><span class="ava lg">NB</span><div><div class="nm">Noa Bergström</div><div class="ro">Product Designer · Stockholm</div></div></div>
+        <div class="stats">
+          <div><div class="v tnum">248</div><div class="l">Posts</div></div>
+          <div><div class="v tnum">12.4k</div><div class="l">Followers</div></div>
+          <div><div class="v tnum">186</div><div class="l">Following</div></div>
+        </div>
+        <div class="acts"><button class="btn btn-acc">Follow</button><button class="btn btn-out">Message</button></div>
+      </div>
+    </div>
+
+    <!-- 03 PRODUCT -->
+    <div class="spec">
+      <div class="lab">03 · Product <b>· image</b></div>
+      <div class="c-prod">
+        <div class="imgph"><span class="tag">product · 4:3</span></div>
+        <div class="body">
+          <div class="nm">Linen Throw Blanket</div>
+          <div class="desc">Stonewashed · 130×170 cm</div>
+          <div class="row"><span class="price">$89</span><button class="iconbtn" aria-label="Add to cart"><svg><use href="#i-plus"/></svg></button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 PRICING -->
+    <div class="spec">
+      <div class="lab">04 · Pricing <b>· bordered</b></div>
+      <div class="c-price">
+        <div class="plan">Studio</div>
+        <div class="amt tnum">$24<small> /month</small></div>
+        <ul>
+          <li><svg><use href="#i-check"/></svg>Unlimited projects</li>
+          <li><svg><use href="#i-check"/></svg>Shared component library</li>
+          <li><svg><use href="#i-check"/></svg>Version history</li>
+        </ul>
+        <button class="btn btn-acc">Choose Studio</button>
+      </div>
+    </div>
+
+    <!-- 05 FEATURE -->
+    <div class="spec">
+      <div class="lab">05 · Feature <b>· icon</b></div>
+      <div class="c-feat">
+        <div class="ic"><svg><use href="#i-layers"/></svg></div>
+        <h3>Composable tokens</h3>
+        <p>Theme once at the root and every surface inherits — no per-component overrides to maintain.</p>
+      </div>
+    </div>
+
+    <!-- 06 ALERT -->
+    <div class="spec">
+      <div class="lab">06 · Alert <b>· notification</b></div>
+      <div class="c-alert">
+        <span class="ic"><svg><use href="#i-info"/></svg></span>
+        <div>
+          <div class="h">Storage almost full</div>
+          <div class="m">You've used 92% of your 2 TB plan. Upgrade to avoid interruptions.</div>
+          <div class="acts"><a>Upgrade plan</a><a class="q">Dismiss</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 MEDIA -->
+    <div class="spec">
+      <div class="lab">07 · Media <b>· elevated</b></div>
+      <div class="c-media">
+        <div class="imgph"><span class="play"><svg><use href="#i-play"/></svg></span></div>
+        <div class="body">
+          <div class="cat">Podcast</div>
+          <div class="ti">Designing systems that scale</div>
+          <div class="mt"><span>Episode 24</span><span class="dot"></span><span>38 min</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 LIST-ROW -->
+    <div class="spec">
+      <div class="lab">08 · List-row <b>· divided</b></div>
+      <div class="c-list">
+        <div class="lh"><span class="t">Top customers</span><a>View all</a></div>
+        <div class="lr"><span class="lav" style="background:#D8E4DC;color:#235838">AL</span><div><div class="nm">Ava Lindqvist</div><div class="sb">12 orders</div></div><span class="val tnum">$4,280</span></div>
+        <div class="lr"><span class="lav" style="background:#E5E0D4;color:#7A5E12">RP</span><div><div class="nm">Reza Pour</div><div class="sb">9 orders</div></div><span class="val tnum">$3,110</span></div>
+        <div class="lr"><span class="lav" style="background:#E2DDE8;color:#4A3D63">JO</span><div><div class="nm">Jun Okada</div><div class="sb">7 orders</div></div><span class="val tnum">$2,640</span></div>
+      </div>
+    </div>
+
+    <!-- 09 DARK -->
+    <div class="spec">
+      <div class="lab">09 · Dark <b>· highlight</b></div>
+      <div class="c-dark">
+        <div class="k">Active deployments</div>
+        <div class="big tnum">2,481</div>
+        <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg>8.2% this week</span>
+        <div class="bar"><i style="height:45%"></i><i style="height:60%"></i><i style="height:40%"></i><i style="height:72%"></i><i style="height:55%"></i><i style="height:88%"></i><i class="on" style="height:100%"></i></div>
+        <div class="ft">Across 14 regions</div>
+      </div>
+    </div>
+
+    <!-- 10 FLAT BORDERED -->
+    <div class="spec">
+      <div class="lab">10 · Flat-bordered <b>· no shadow</b></div>
+      <div class="c-flat">
+        <div class="ov">Changelog</div>
+        <h3>Version 2.4 is here</h3>
+        <p>Refined spacing scale, two new card layouts and a faster token compiler.</p>
+        <span class="link">Read the notes<svg><use href="#i-arrow"/></svg></span>
+      </div>
+    </div>
+
+    <!-- 11 SUBTLY ELEVATED -->
+    <div class="spec">
+      <div class="lab">11 · Subtly elevated <b>· borderless</b></div>
+      <div class="c-elev">
+        <div class="rowtop"><div class="ic"><svg><use href="#i-clock"/></svg></div><span class="chip up"><svg><use href="#i-up"/></svg>On track</span></div>
+        <h3>Q3 onboarding</h3>
+        <p>62% of new accounts completed setup within the first week.</p>
+        <div class="ft"><span>Updated 2h ago</span><span><b>62%</b> complete</span></div>
+      </div>
+    </div>
+
+    <!-- 12 BENTO -->
+    <div class="spec bento-spec">
+      <div class="lab">12 · Bento cluster <b>· mixed tiles</b></div>
+      <div class="bento">
+        <div class="bt b-main">
+          <div class="bk mut">Total revenue · YTD</div>
+          <div class="bn tnum">$1.42M</div>
+          <svg class="spark" width="100%" height="40" viewBox="0 0 300 40" preserveAspectRatio="none"><defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2C6E49" stop-opacity="0.14"/><stop offset="100%" stop-color="#2C6E49" stop-opacity="0"/></linearGradient></defs><path d="M0,32 L43,28 L86,30 L129,20 L172,24 L215,12 L258,16 L300,4 L300,40 L0,40 Z" fill="url(#bg1)"/><path d="M0,32 L43,28 L86,30 L129,20 L172,24 L215,12 L258,16 L300,4" fill="none" stroke="#2C6E49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="bt b-acc">
+          <div class="bk">Conversion</div>
+          <div class="bn sm tnum">3.9%</div>
+          <div class="bsub">+0.6 pts vs Q2</div>
+        </div>
+        <div class="bt b-w">
+          <div class="bk mut">Accounts</div>
+          <div class="bn sm tnum">8,402</div>
+          <div class="bsub mut">+312 this week</div>
+        </div>
+        <div class="bt b-dk">
+          <div class="bk">Uptime</div>
+          <div class="bars"><i style="height:60%"></i><i style="height:75%"></i><i style="height:55%"></i><i style="height:85%"></i><i style="height:70%;background:#4EBD80"></i><i style="height:95%;background:#4EBD80"></i></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

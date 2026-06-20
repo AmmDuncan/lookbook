@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Badge, chip &amp; tag variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   BADGE · CHIP · TAG VARIATIONS — grouped by purpose.
+   Neutral professional language; one slate-blue accent. Accessible fills.
+   ============================================================================ */
+:root{
+  --bg:#EEEEEA; --surface:#FFFFFF; --inset:#F2F2EE;
+  --border:#E5E4DE; --border-2:#D4D1C7;
+  --ink:#1C1D21; --muted:#585A61; --subtle:#8B8D94;
+  --a:#3858C4; --a-tint:rgba(56,88,196,0.11); --a-ink:#2c46a0;
+  --ok:#2C6E49; --ok-tint:rgba(44,110,73,0.13);
+  --warn:#8A5A12; --warn-tint:rgba(138,90,18,0.14);
+  --bad:#B23A2E; --bad-tint:rgba(178,58,46,0.11);
+  --info:#355C7D; --info-tint:rgba(53,92,125,0.12);
+  --gold:#9A6B12; --gold-tint:rgba(154,107,18,0.14);
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --shadow-sm:0 1px 2px rgba(28,29,32,0.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:2.5px solid var(--a);outline-offset:2px;border-radius:5px;}
+button{font-family:inherit;cursor:pointer;}
+
+.wrap{max-width:1140px;margin:0 auto;padding:56px 36px 96px;}
+.head{margin-bottom:34px;padding-bottom:24px;border-bottom:1.5px solid var(--ink);}
+.eyebrow{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--subtle);margin-bottom:13px;}
+.head h1{font-size:clamp(32px,5vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1;}
+.head p{font-size:15.5px;color:var(--muted);max-width:62ch;margin-top:14px;}
+
+.group{margin-top:40px;}
+.group-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.group-head h2{font-family:var(--font-mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--ink);}
+.group-head .rule{flex:1;height:1px;background:var(--border-2);}
+
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:20px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;}
+.cell.full{grid-column:1/-1;}
+.clab{margin-bottom:16px;}
+.clab .nm{font-size:13.5px;font-weight:700;letter-spacing:-0.01em;}
+.clab .uw{font-size:12px;color:var(--muted);margin-top:3px;}
+.clab .uw b{color:var(--ink);font-weight:600;}
+.demo{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+
+/* ===== badges ===== */
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;line-height:1;padding:5px 10px;border-radius:999px;white-space:nowrap;}
+.badge .bd{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.badge svg{width:13px;height:13px;}
+/* dot + tint */
+.tint.ok{color:var(--ok);background:var(--ok-tint);} .tint.ok .bd{background:var(--ok);}
+.tint.warn{color:var(--warn);background:var(--warn-tint);} .tint.warn .bd{background:var(--warn);}
+.tint.bad{color:var(--bad);background:var(--bad-tint);} .tint.bad .bd{background:var(--bad);}
+.tint.info{color:var(--info);background:var(--info-tint);} .tint.info .bd{background:var(--info);}
+.tint.neutral{color:var(--muted);background:var(--inset);} .tint.neutral .bd{background:var(--subtle);}
+/* solid */
+.solid{color:#fff;}
+.solid.acc{background:var(--a);} .solid.ok{background:var(--ok);} .solid.bad{background:var(--bad);} .solid.info{background:var(--info);}
+/* outline */
+.outline{background:var(--surface);border:1px solid;}
+.outline.acc{color:var(--a-ink);border-color:#aab4e0;}
+.outline.ok{color:var(--ok);border-color:#a9c8b5;}
+.outline.bad{color:var(--bad);border-color:#dcb0aa;}
+.outline.neutral{color:var(--muted);border-color:var(--border-2);}
+
+/* new/beta labels */
+.tag{font-family:var(--font-ui);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 7px;border-radius:4px;line-height:1;}
+.tag.new{background:var(--a);color:#fff;}
+.tag.beta{background:var(--surface);border:1px solid #aab4e0;color:var(--a-ink);}
+.tag.pro{background:var(--gold-tint);color:var(--gold);}
+.tag.soon{background:var(--inset);color:var(--muted);border:1px solid var(--border);}
+
+/* count badge */
+.count{min-width:19px;height:19px;border-radius:999px;background:var(--a);color:#fff;font-size:11px;font-weight:700;padding:0 6px;display:inline-flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;}
+.count.neutral{background:var(--inset);color:var(--muted);}
+.count.bad{background:var(--bad);}
+.navrow{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--ink);background:var(--inset);padding:7px 12px;border-radius:8px;}
+.navrow .count{margin-left:4px;}
+
+/* notification dot on icon */
+.iconwrap{position:relative;width:38px;height:38px;border:1px solid var(--border);background:var(--surface);border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--muted);}
+.iconwrap svg{width:18px;height:18px;}
+.iconwrap .pip{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--bad);border:2px solid var(--surface);}
+.iconwrap .pipc{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;border-radius:999px;background:var(--bad);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--surface);font-variant-numeric:tabular-nums;}
+
+/* removable filter chip */
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border-2);border-radius:8px;padding:6px 7px 6px 11px;font-size:12.5px;font-weight:500;color:var(--ink);}
+.chip .k{color:var(--muted);font-weight:500;}
+.chip .x{width:18px;height:18px;border:none;background:none;color:var(--subtle);display:flex;align-items:center;justify-content:center;border-radius:5px;flex-shrink:0;}
+.chip .x:hover{background:var(--inset);color:var(--ink);}
+.chip .x svg{width:13px;height:13px;}
+.chip.applied{background:var(--a-tint);border-color:#aab4e0;color:var(--a-ink);}
+.chip.applied .x{color:var(--a-ink);}
+.chip.applied .x:hover{background:rgba(56,88,196,.14);}
+
+/* selectable toggle chip */
+.tchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border-2);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:600;color:var(--muted);transition:all .12s;}
+.tchip:hover{border-color:#B6B2A6;color:var(--ink);}
+.tchip .ck{width:13px;height:13px;display:none;}
+.tchip.on{background:var(--a-tint);border-color:var(--a);color:var(--a-ink);}
+.tchip.on .ck{display:block;}
+
+/* input token field */
+.tokenfield{display:flex;flex-wrap:wrap;gap:7px;align-items:center;width:100%;background:var(--surface);border:1px solid var(--border-2);border-radius:9px;padding:8px 10px;min-height:44px;transition:border-color .14s,box-shadow .14s;}
+.tokenfield:focus-within{border-color:var(--a);box-shadow:0 0 0 3px var(--a-tint);}
+.token{display:inline-flex;align-items:center;gap:6px;background:var(--a-tint);color:var(--a-ink);border-radius:6px;padding:4px 5px 4px 9px;font-size:12.5px;font-weight:600;}
+.token .x{width:16px;height:16px;border:none;background:none;color:var(--a-ink);display:flex;align-items:center;justify-content:center;border-radius:4px;opacity:.75;}
+.token .x:hover{opacity:1;background:rgba(56,88,196,.14);}
+.token .x svg{width:12px;height:12px;}
+.tokenfield .ti{flex:1;min-width:70px;border:none;outline:none;background:none;font-family:var(--font-ui);font-size:13px;color:var(--ink);padding:3px;}
+
+/* avatar + label chip */
+.achip{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border-2);border-radius:999px;padding:3px 12px 3px 3px;font-size:12.5px;font-weight:600;color:var(--ink);}
+.achip .av{width:24px;height:24px;border-radius:50%;background:#DCE1EE;color:var(--a-ink);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+.achip.removable{padding-right:5px;}
+.achip .x{width:18px;height:18px;border:none;background:none;color:var(--subtle);display:flex;align-items:center;justify-content:center;border-radius:50%;}
+.achip .x:hover{background:var(--inset);color:var(--ink);}
+.achip .x svg{width:12px;height:12px;}
+
+/* sizes */
+.badge.sm{font-size:10.5px;padding:3px 8px;gap:5px;}.badge.sm .bd{width:5px;height:5px;}
+.badge.lg{font-size:13.5px;padding:7px 13px;gap:7px;}.badge.lg .bd{width:7px;height:7px;}
+.sizecol{display:flex;flex-direction:column;align-items:center;gap:9px;}
+.sizecol .slab{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);}
+
+@media(max-width:720px){.gallery{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-check-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <header class="head">
+    <div class="eyebrow">Specimen · indicators</div>
+    <h1>Badge, chip &amp; tag variations</h1>
+    <p>The small labels that carry state, filters, tokens and counts — grouped by the job they do, each with a note on when to reach for it. Every label is readable on its fill.</p>
+  </header>
+
+  <!-- STATUS -->
+  <div class="group">
+    <div class="group-head"><h2>Status &amp; labels</h2><span class="rule"></span></div>
+    <div class="gallery">
+      <div class="cell">
+        <div class="clab"><div class="nm">Status badge — dot + tinted pill</div><div class="uw"><b>Use when</b> — showing the state of a record; the quietest, most flexible default.</div></div>
+        <div class="demo">
+          <span class="badge tint ok"><span class="bd"></span>Active</span>
+          <span class="badge tint warn"><span class="bd"></span>Pending</span>
+          <span class="badge tint bad"><span class="bd"></span>Failed</span>
+          <span class="badge tint info"><span class="bd"></span>Scheduled</span>
+          <span class="badge tint neutral"><span class="bd"></span>Draft</span>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="clab"><div class="nm">Solid badge</div><div class="uw"><b>Use when</b> — the status needs to shout; reserve for one important state per view.</div></div>
+        <div class="demo">
+          <span class="badge solid acc">Featured</span>
+          <span class="badge solid ok">Paid</span>
+          <span class="badge solid bad">Overdue</span>
+          <span class="badge solid info">Live</span>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="clab"><div class="nm">Outline badge</div><div class="uw"><b>Use when</b> — on busy or coloured surfaces where a fill would compete.</div></div>
+        <div class="demo">
+          <span class="badge outline acc">Internal</span>
+          <span class="badge outline ok">Verified</span>
+          <span class="badge outline bad">Blocked</span>
+          <span class="badge outline neutral">Archived</span>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="clab"><div class="nm">Icon-leading badge</div><div class="uw"><b>Use when</b> — an icon adds instant meaning beyond the word.</div></div>
+        <div class="demo">
+          <span class="badge tint ok"><svg><use href="#i-check-c"/></svg>Verified</span>
+          <span class="badge tint warn"><svg><use href="#i-clock"/></svg>Pending</span>
+          <span class="badge tint info"><svg><use href="#i-star"/></svg>Featured</span>
+        </div>
+      </div>
+      <div class="cell full">
+        <div class="clab"><div class="nm">“New / beta” label</div><div class="uw"><b>Use when</b> — flagging a feature's maturity beside a nav item or title.</div></div>
+        <div class="demo">
+          <span class="tag new">New</span>
+          <span class="tag beta">Beta</span>
+          <span class="tag pro">Pro</span>
+          <span class="tag soon">Soon</span>
+          <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--muted);margin-left:8px">Automations <span class="tag beta">Beta</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER -->
+  <div class="group">
+    <div class="group-head"><h2>Filter &amp; selection</h2><span class="rule"></span></div>
+    <div class="gallery">
+      <div class="cell">
+        <div class="clab"><div class="nm">Removable filter chip</div><div class="uw"><b>Use when</b> — showing applied filters the user can clear individually.</div></div>
+        <div class="demo" data-removable>
+          <span class="chip applied"><span><span class="k">Status:</span> Active</span><button class="x" aria-label="Remove filter"><svg><use href="#i-x"/></svg></button></span>
+          <span class="chip applied"><span><span class="k">Plan:</span> Pro</span><button class="x" aria-label="Remove filter"><svg><use href="#i-x"/></svg></button></span>
+          <span class="chip"><span><span class="k">Region:</span> EU</span><button class="x" aria-label="Remove filter"><svg><use href="#i-x"/></svg></button></span>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="clab"><div class="nm">Selectable toggle chip</div><div class="uw"><b>Use when</b> — letting users pick from a set; click to toggle on and off.</div></div>
+        <div class="demo" data-toggle>
+          <button class="tchip on"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Design</button>
+          <button class="tchip on"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Engineering</button>
+          <button class="tchip">Product</button>
+          <button class="tchip">Marketing</button>
+          <button class="tchip">Sales</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INPUT TOKENS -->
+  <div class="group">
+    <div class="group-head"><h2>Input tokens</h2><span class="rule"></span></div>
+    <div class="gallery">
+      <div class="cell">
+        <div class="clab"><div class="nm">Input token / tag inside a field</div><div class="uw"><b>Use when</b> — capturing multiple values (recipients, tags) in one field.</div></div>
+        <div class="demo" data-removable style="display:block">
+          <div class="tokenfield">
+            <span class="token">design<button class="x" aria-label="Remove tag"><svg><use href="#i-x"/></svg></button></span>
+            <span class="token">systems<button class="x" aria-label="Remove tag"><svg><use href="#i-x"/></svg></button></span>
+            <span class="token">tokens<button class="x" aria-label="Remove tag"><svg><use href="#i-x"/></svg></button></span>
+            <input class="ti" placeholder="Add a tag…">
+          </div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="clab"><div class="nm">Avatar + label chip</div><div class="uw"><b>Use when</b> — representing a person: assignee, recipient or collaborator.</div></div>
+        <div class="demo" data-removable>
+          <span class="achip"><span class="av">NB</span>Noa Bergström</span>
+          <span class="achip"><span class="av" style="background:#D8E4DC;color:#235838">AL</span>Ava Lindqvist</span>
+          <span class="achip removable"><span class="av" style="background:#E5E0D4;color:#7A5E12">RP</span>Reza Pour<button class="x" aria-label="Remove"><svg><use href="#i-x"/></svg></button></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COUNTERS -->
+  <div class="group">
+    <div class="group-head"><h2>Counters &amp; indicators</h2><span class="rule"></span></div>
+    <div class="gallery">
+      <div class="cell">
+        <div class="clab"><div class="nm">Count / number badge</div><div class="uw"><b>Use when</b> — quantifying items behind a label or nav item.</div></div>
+        <div class="demo">
+          <span class="count">3</span>
+          <span class="count neutral">12</span>
+          <span class="count bad">99+</span>
+          <span class="navrow">Inbox<span class="count">24</span></span>
+          <span class="navrow">Drafts<span class="count neutral">8</span></span>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="clab"><div class="nm">Notification dot</div><div class="uw"><b>Use when</b> — signalling “something's new” without a precise number.</div></div>
+        <div class="demo">
+          <span class="iconwrap"><svg><use href="#i-bell"/></svg><span class="pip"></span></span>
+          <span class="iconwrap"><svg><use href="#i-bell"/></svg><span class="pipc">5</span></span>
+          <span class="navrow" style="position:relative;padding-right:14px">Mentions<span class="pip" style="position:static;width:8px;height:8px;border:none;margin-left:2px"></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIZES -->
+  <div class="group">
+    <div class="group-head"><h2>Sizes</h2><span class="rule"></span></div>
+    <div class="gallery">
+      <div class="cell full">
+        <div class="clab"><div class="nm">Small · medium · large</div><div class="uw"><b>Use when</b> — match the badge weight to its context: dense tables vs. headers.</div></div>
+        <div class="demo" style="gap:34px;align-items:flex-end;">
+          <div class="sizecol"><span class="badge tint ok sm"><span class="bd"></span>Active</span><span class="slab">Small</span></div>
+          <div class="sizecol"><span class="badge tint ok"><span class="bd"></span>Active</span><span class="slab">Medium</span></div>
+          <div class="sizecol"><span class="badge tint ok lg"><span class="bd"></span>Active</span><span class="slab">Large</span></div>
+          <div class="sizecol"><span class="badge solid acc sm">Pro</span><span class="slab">Small</span></div>
+          <div class="sizecol"><span class="badge solid acc">Pro</span><span class="slab">Medium</span></div>
+          <div class="sizecol"><span class="badge solid acc lg">Pro</span><span class="slab">Large</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// remove chips/tokens/avatar chips
+document.querySelectorAll('[data-removable]').forEach(function(g){
+  g.addEventListener('click',function(e){
+    var x=e.target.closest('.x'); if(!x)return;
+    var el=x.closest('.chip,.token,.achip'); if(el)el.remove();
+  });
+});
+// toggle chips
+document.querySelectorAll('[data-toggle]').forEach(function(g){
+  g.addEventListener('click',function(e){
+    var b=e.target.closest('.tchip'); if(!b)return;
+    b.classList.toggle('on');
+  });
+});
+</script>
+</body>
+</html>

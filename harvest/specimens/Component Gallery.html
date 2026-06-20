@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier — Component Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   ATELIER — "Warm Studio" skin. Cream paper, warm ink, one clay accent.
+   Bricolage Grotesque (display) · Geist (UI) · Geist Mono (labels).
+   The :root block is the whole skin; swap the look by editing only :root.
+   ============================================================================ */
+:root{
+  --paper:#F1EADD;        /* warm cream canvas */
+  --surface:#FBF7EF;      /* card */
+  --surface-2:#F6EFE2;    /* inset / hover well */
+  --border:#E2D7C4;       /* warm hairline */
+  --border-strong:#CFC2A9;
+  --ink:#22201C;          /* warm near-black */
+  --muted:#6B6256;        /* secondary text — AA on paper */
+  --subtle:#8E8472;       /* faint tier — >=3:1 on paper */
+
+  --accent:#B8492A;       /* clay terracotta */
+  --accent-ink:#963A20;   /* pressed */
+  --accent-tint:rgba(184,73,42,0.10);
+
+  --ok:#3A6B43;     --ok-tint:rgba(58,107,67,0.13);
+  --warn:#8A5A12;   --warn-tint:rgba(138,90,18,0.14);
+  --bad:#A8362A;    --bad-tint:rgba(168,54,42,0.12);
+  --info:#3C5A7A;   --info-tint:rgba(60,90,122,0.12);
+
+  --font-display:'Bricolage Grotesque','Geist',system-ui,sans-serif;
+  --font-ui:'Geist','Inter',system-ui,sans-serif;
+  --font-mono:'Geist Mono',ui-monospace,monospace;
+
+  --r-sm:7px;
+  --r:10px;
+  --r-lg:16px;
+  --pill:999px;
+  --motion:150ms;
+  --ease:cubic-bezier(0.2,0,0,1);
+  --shadow:0 1px 2px rgba(58,44,28,0.05);
+  --shadow-md:0 4px 16px -6px rgba(58,44,28,0.16),0 1px 3px rgba(58,44,28,0.06);
+  --shadow-lg:0 18px 40px -16px rgba(58,44,28,0.28),0 3px 8px rgba(58,44,28,0.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:var(--font-ui);
+  background:var(--paper);
+  background-image:radial-gradient(rgba(58,44,28,0.035) 1px,transparent 1px);
+  background-size:22px 22px;
+  color:var(--ink);
+  font-size:14px;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  line-height:1.5;
+}
+.tnum{font-variant-numeric:tabular-nums;}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:6px;}
+
+/* ---- shell ---- */
+.wrap{max-width:1160px;margin:0 auto;padding:0 40px 100px;}
+
+/* masthead */
+.masthead{padding:64px 0 40px;border-bottom:1.5px solid var(--ink);margin-bottom:8px;}
+.brandrow{display:flex;align-items:center;gap:13px;margin-bottom:30px;}
+.logo{
+  width:38px;height:38px;border-radius:10px;flex-shrink:0;
+  background:var(--accent);color:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:800;font-size:21px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.18);
+}
+.brandtxt{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:-0.01em;}
+.brandtxt span{color:var(--subtle);font-weight:500;}
+.mast-meta{margin-left:auto;font-family:var(--font-mono);font-size:11.5px;color:var(--subtle);text-align:right;line-height:1.7;}
+.display{
+  font-family:var(--font-display);font-weight:800;
+  font-size:clamp(48px,8vw,92px);line-height:0.94;letter-spacing:-0.035em;
+  max-width:14ch;
+}
+.display em{font-style:normal;color:var(--accent);}
+.lede{font-size:17px;color:var(--muted);max-width:54ch;margin-top:22px;line-height:1.55;}
+
+/* section scaffold */
+.section{padding:54px 0 8px;}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px;}
+.sec-num{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:500;padding-top:4px;}
+.sec-title{font-family:var(--font-display);font-weight:700;font-size:26px;letter-spacing:-0.02em;}
+.sec-rule{flex:1;height:1.5px;background:var(--border-strong);align-self:center;}
+.sec-desc{font-size:13.5px;color:var(--muted);max-width:46ch;}
+
+/* specimen grid + cell */
+.grid{display:grid;gap:18px;}
+.cols-2{grid-template-columns:repeat(2,1fr);}
+.cols-3{grid-template-columns:repeat(3,1fr);}
+.cols-4{grid-template-columns:repeat(4,1fr);}
+.cell{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+  padding:22px;box-shadow:var(--shadow);
+}
+.cap{
+  font-family:var(--font-mono);font-size:10.5px;font-weight:500;text-transform:uppercase;
+  letter-spacing:.09em;color:var(--subtle);margin-bottom:16px;display:block;
+}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
+.col{display:flex;flex-direction:column;gap:14px;}
+.statelbl{font-family:var(--font-mono);font-size:10px;color:var(--subtle);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;display:block;}
+
+/* ============================================================================ BUTTONS */
+.btn{
+  font-family:var(--font-ui);font-size:13.5px;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:9px 16px;border-radius:var(--r);border:1px solid transparent;cursor:pointer;
+  transition:background var(--motion) var(--ease),border-color var(--motion) var(--ease),
+             color var(--motion) var(--ease),transform var(--motion) var(--ease),box-shadow var(--motion) var(--ease);
+}
+.btn svg{width:15px;height:15px;}
+.btn:active{transform:translateY(1px);}
+.btn-primary{background:var(--accent);color:#FCF7EF;box-shadow:0 1px 2px rgba(150,58,32,0.35),inset 0 1px 0 rgba(255,255,255,0.16);}
+.btn-primary:hover,.btn-primary.is-hover{background:var(--accent-ink);}
+.btn-secondary{background:var(--surface);color:var(--ink);border-color:var(--border-strong);box-shadow:var(--shadow);}
+.btn-secondary:hover,.btn-secondary.is-hover{background:var(--surface-2);border-color:#BCAE92;}
+.btn-ghost{background:transparent;color:var(--ink);}
+.btn-ghost:hover,.btn-ghost.is-hover{background:var(--surface-2);}
+.btn-destructive{background:var(--bad);color:#FCF3F1;box-shadow:0 1px 2px rgba(168,54,42,0.3);}
+.btn-destructive:hover,.btn-destructive.is-hover{background:#8E2A20;}
+.btn:disabled,.btn.is-disabled{
+  background:var(--surface-2);color:var(--subtle);border-color:var(--border);
+  box-shadow:none;cursor:not-allowed;opacity:.85;transform:none;
+}
+.btn-sm{padding:6px 11px;font-size:12px;border-radius:var(--r-sm);}
+
+/* ============================================================================ FIELDS */
+.label{font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:7px;display:block;}
+.field{
+  width:100%;font-family:var(--font-ui);font-size:13.5px;color:var(--ink);
+  background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--r);
+  padding:10px 13px;transition:border-color var(--motion) var(--ease),box-shadow var(--motion) var(--ease),background var(--motion) var(--ease);
+}
+.field::placeholder{color:var(--subtle);}
+.field:hover{border-color:#BCAE92;}
+.field:focus,.field.is-focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+.field.is-error{border-color:var(--bad);box-shadow:0 0 0 3px var(--bad-tint);}
+.field:disabled,.field.is-disabled{background:var(--surface-2);color:var(--subtle);cursor:not-allowed;border-color:var(--border);}
+.field.area{resize:none;min-height:84px;line-height:1.5;}
+.help{font-size:11.5px;margin-top:7px;display:flex;align-items:center;gap:5px;color:var(--muted);}
+.help.err{color:var(--bad);}
+.help svg{width:13px;height:13px;}
+
+.select-wrap{position:relative;}
+.select-wrap svg{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--muted);pointer-events:none;}
+select.field{appearance:none;-webkit-appearance:none;padding-right:36px;cursor:pointer;}
+
+.search-wrap{position:relative;}
+.search-wrap > svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--subtle);}
+.search-wrap .field{padding-left:38px;}
+
+/* ============================================================================ CHECKBOX / RADIO */
+.opt{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13.5px;color:var(--ink);user-select:none;}
+.opt input{position:absolute;opacity:0;width:0;height:0;}
+.box{
+  width:19px;height:19px;border-radius:5px;border:1.5px solid var(--border-strong);
+  background:var(--surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  transition:all var(--motion) var(--ease);color:#FCF7EF;
+}
+.box svg{width:12px;height:12px;opacity:0;transform:scale(.6);transition:all var(--motion) var(--ease);}
+.opt input:checked + .box{background:var(--accent);border-color:var(--accent);}
+.opt input:checked + .box svg{opacity:1;transform:scale(1);}
+.opt input:focus-visible + .box{outline:2.5px solid var(--accent);outline-offset:2px;}
+.opt input:disabled + .box{background:var(--surface-2);border-color:var(--border);}
+.opt input:disabled ~ .opt-t,.opt.is-disabled{color:var(--subtle);cursor:not-allowed;}
+.radio{border-radius:50%;}
+.radio .rdot{width:8px;height:8px;border-radius:50%;background:#FCF7EF;opacity:0;transform:scale(.5);transition:all var(--motion) var(--ease);}
+.opt input:checked + .radio{background:var(--accent);border-color:var(--accent);}
+.opt input:checked + .radio .rdot{opacity:1;transform:scale(1);}
+
+/* ============================================================================ TOGGLE */
+.switch{position:relative;display:inline-flex;align-items:center;gap:11px;cursor:pointer;font-size:13.5px;}
+.switch input{position:absolute;opacity:0;width:0;height:0;}
+.track{
+  width:42px;height:24px;border-radius:var(--pill);background:var(--border-strong);
+  flex-shrink:0;padding:3px;transition:background var(--motion) var(--ease);
+}
+.knob{width:18px;height:18px;border-radius:50%;background:#FCF7EF;box-shadow:var(--shadow);transition:transform var(--motion) var(--ease);}
+.switch input:checked + .track{background:var(--accent);}
+.switch input:checked + .track .knob{transform:translateX(18px);}
+.switch input:focus-visible + .track{outline:2.5px solid var(--accent);outline-offset:2px;}
+.switch input:disabled + .track{opacity:.5;}
+.switch.is-disabled{cursor:not-allowed;color:var(--subtle);}
+
+/* ============================================================================ SEGMENTED */
+.segmented{display:inline-flex;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r);padding:3px;gap:2px;}
+.segmented button{
+  border:none;background:transparent;cursor:pointer;font-family:var(--font-ui);
+  font-size:12.5px;font-weight:600;color:var(--muted);padding:7px 15px;border-radius:7px;
+  transition:all var(--motion) var(--ease);
+}
+.segmented button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-md);}
+.segmented button:not(.on):hover{color:var(--ink);}
+
+/* ============================================================================ TABS */
+.tabs{display:flex;gap:4px;border-bottom:1.5px solid var(--border);}
+.tab{
+  border:none;background:transparent;cursor:pointer;font-family:var(--font-ui);
+  font-size:13.5px;font-weight:600;color:var(--muted);padding:11px 4px;margin:0 12px;
+  position:relative;transition:color var(--motion) var(--ease);
+}
+.tab:first-child{margin-left:2px;}
+.tab.on{color:var(--ink);}
+.tab.on::after{content:'';position:absolute;left:0;right:0;bottom:-1.5px;height:2.5px;background:var(--accent);border-radius:2px;}
+.tab:hover:not(.on){color:var(--ink);}
+.tab .pip{font-family:var(--font-mono);font-size:10px;color:var(--accent);margin-left:5px;}
+
+/* ============================================================================ BADGES */
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;line-height:1;padding:5px 11px 5px 9px;border-radius:var(--pill);}
+.badge .bd{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.badge.solid{padding:5px 11px;color:#FCF7EF;}
+.badge.success{color:var(--ok);background:var(--ok-tint);} .badge.success .bd{background:var(--ok);}
+.badge.pending{color:var(--warn);background:var(--warn-tint);} .badge.pending .bd{background:var(--warn);}
+.badge.failed{color:var(--bad);background:var(--bad-tint);} .badge.failed .bd{background:var(--bad);}
+.badge.info{color:var(--info);background:var(--info-tint);} .badge.info .bd{background:var(--info);}
+.badge.neutral{color:var(--muted);background:var(--surface-2);border:1px solid var(--border);} .badge.neutral .bd{background:var(--subtle);}
+.badge.accent{color:#FCF7EF;background:var(--accent);}
+
+/* ============================================================================ AVATARS */
+.ava{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-family:var(--font-ui);overflow:hidden;}
+.ava-sm{width:30px;height:30px;font-size:11px;}
+.ava-md{width:40px;height:40px;font-size:14px;}
+.ava-lg{width:54px;height:54px;font-size:18px;}
+.ava.clay{background:#E9CDBF;color:#963A20;}
+.ava.sage{background:#CFDCC8;color:#3A6B43;}
+.ava.sky{background:#CAD7E6;color:#3C5A7A;}
+.ava.sand{background:#E8DCC0;color:#8A5A12;}
+.ava-ring{position:relative;}
+.ava-dot{position:absolute;right:-1px;bottom:-1px;width:12px;height:12px;border-radius:50%;background:var(--ok);border:2.5px solid var(--surface);}
+.ava-stack{display:flex;}
+.ava-stack .ava{border:2.5px solid var(--surface);margin-left:-10px;}
+.ava-stack .ava:first-child{margin-left:0;}
+.ava-more{background:var(--surface-2);color:var(--muted);font-size:11px;border:2.5px solid var(--surface);margin-left:-10px;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;}
+
+/* ============================================================================ TOOLTIP */
+.tip-demo{position:relative;display:inline-flex;}
+.tip-bubble{
+  position:absolute;left:50%;bottom:calc(100% + 11px);transform:translateX(-50%);
+  background:var(--ink);color:var(--surface);font-size:12px;font-weight:500;
+  padding:7px 11px;border-radius:8px;white-space:nowrap;box-shadow:var(--shadow-lg);
+}
+.tip-bubble::after{content:'';position:absolute;left:50%;top:100%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--ink);}
+.tip-bubble .k{font-family:var(--font-mono);font-size:10.5px;color:#C9A99A;margin-left:6px;}
+
+/* ============================================================================ CARDS */
+.imgph{
+  width:100%;height:128px;border-radius:var(--r);overflow:hidden;position:relative;
+  background:#E8DCC8;
+  background-image:repeating-linear-gradient(45deg,rgba(58,44,28,0.05) 0 10px,transparent 10px 20px);
+  display:flex;align-items:center;justify-content:center;
+}
+.imgph span{font-family:var(--font-mono);font-size:10.5px;color:var(--subtle);background:var(--surface);padding:3px 8px;border-radius:5px;border:1px solid var(--border);}
+
+/* stat card */
+.c-stat{display:flex;flex-direction:column;gap:0;}
+.c-stat .eyebrow{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);}
+.c-stat .fig{font-family:var(--font-display);font-weight:700;font-size:40px;letter-spacing:-0.03em;line-height:1.05;margin-top:12px;font-variant-numeric:tabular-nums;}
+.c-stat .delta{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:var(--ok);margin-top:10px;}
+.c-stat .delta svg{width:14px;height:14px;}
+.c-stat .bar{display:flex;gap:3px;align-items:flex-end;height:34px;margin-top:18px;}
+.c-stat .bar i{flex:1;background:var(--accent-tint);border-radius:2px;}
+.c-stat .bar i.hot{background:var(--accent);}
+
+/* profile card */
+.c-profile{text-align:left;}
+.c-profile .ph{display:flex;align-items:center;gap:13px;}
+.c-profile .nm{font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:-0.01em;}
+.c-profile .ro{font-size:12.5px;color:var(--muted);margin-top:1px;}
+.c-profile .bio{font-size:13px;color:var(--muted);margin:15px 0 17px;line-height:1.55;}
+.c-profile .acts{display:flex;gap:9px;}
+
+/* feature card */
+.c-feature{padding:0;overflow:hidden;}
+.c-feature .body{padding:20px 22px 22px;}
+.c-feature .eyebrow{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);}
+.c-feature h4{font-family:var(--font-display);font-weight:700;font-size:20px;letter-spacing:-0.02em;margin-top:9px;line-height:1.15;}
+.c-feature p{font-size:13px;color:var(--muted);margin-top:9px;line-height:1.55;}
+.c-feature .lnk{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:var(--accent-ink);margin-top:15px;cursor:pointer;}
+.c-feature .lnk svg{width:14px;height:14px;transition:transform var(--motion) var(--ease);}
+.c-feature .lnk:hover svg{transform:translateX(3px);}
+
+/* pricing card */
+.c-price{position:relative;border:1.5px solid var(--ink);}
+.c-price .tag{position:absolute;top:16px;right:16px;}
+.c-price .plan{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);}
+.c-price .amt{font-family:var(--font-display);font-weight:800;font-size:42px;letter-spacing:-0.03em;margin-top:10px;line-height:1;}
+.c-price .amt small{font-size:15px;font-weight:500;color:var(--muted);letter-spacing:0;}
+.c-price ul{list-style:none;margin:20px 0;display:flex;flex-direction:column;gap:11px;}
+.c-price li{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink);}
+.c-price li svg{width:15px;height:15px;color:var(--accent);flex-shrink:0;}
+
+.foot{margin-top:72px;padding-top:24px;border-top:1.5px solid var(--ink);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-family:var(--font-mono);font-size:11.5px;color:var(--subtle);}
+
+@media(max-width:900px){
+  .cols-4{grid-template-columns:repeat(2,1fr);}
+  .cols-3{grid-template-columns:repeat(2,1fr);}
+  .wrap{padding:0 24px 80px;}
+}
+@media(max-width:560px){
+  .cols-4,.cols-3,.cols-2{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <!-- MASTHEAD -->
+  <header class="masthead">
+    <div class="brandrow">
+      <div class="logo">A</div>
+      <div class="brandtxt">Atelier <span>/ design system</span></div>
+      <div class="mast-meta">v2.4 · 2026<br>warm-studio register</div>
+    </div>
+    <h1 class="display">Component <em>gallery</em></h1>
+    <p class="lede">A working specimen sheet for the Atelier system — controls, inputs, indicators and surfaces, each shown in the states that matter. Warm paper, one clay accent, Bricolage Grotesque for voice.</p>
+  </header>
+
+  <!-- 01 BUTTONS -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">Buttons</h2>
+      <span class="sec-rule"></span>
+      <span class="sec-desc">Four intents · default, hover &amp; disabled.</span>
+    </div>
+    <div class="grid cols-4">
+      <div class="cell">
+        <span class="cap">Primary</span>
+        <div class="col">
+          <div><span class="statelbl">Default</span><button class="btn btn-primary">Save changes</button></div>
+          <div><span class="statelbl">Hover</span><button class="btn btn-primary is-hover">Save changes</button></div>
+          <div><span class="statelbl">Disabled</span><button class="btn btn-primary is-disabled" disabled>Save changes</button></div>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="cap">Secondary</span>
+        <div class="col">
+          <div><span class="statelbl">Default</span><button class="btn btn-secondary">Preview</button></div>
+          <div><span class="statelbl">Hover</span><button class="btn btn-secondary is-hover">Preview</button></div>
+          <div><span class="statelbl">Disabled</span><button class="btn btn-secondary is-disabled" disabled>Preview</button></div>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="cap">Ghost</span>
+        <div class="col">
+          <div><span class="statelbl">Default</span><button class="btn btn-ghost">Cancel</button></div>
+          <div><span class="statelbl">Hover</span><button class="btn btn-ghost is-hover">Cancel</button></div>
+          <div><span class="statelbl">Disabled</span><button class="btn btn-ghost is-disabled" disabled>Cancel</button></div>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="cap">Destructive</span>
+        <div class="col">
+          <div><span class="statelbl">Default</span><button class="btn btn-destructive"><svg><use href="#i-trash"/></svg>Delete</button></div>
+          <div><span class="statelbl">Hover</span><button class="btn btn-destructive is-hover"><svg><use href="#i-trash"/></svg>Delete</button></div>
+          <div><span class="statelbl">Disabled</span><button class="btn btn-destructive is-disabled" disabled><svg><use href="#i-trash"/></svg>Delete</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 INPUTS -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Form fields</h2>
+      <span class="sec-rule"></span>
+      <span class="sec-desc">Text, select, search &amp; textarea across four states.</span>
+    </div>
+    <div class="grid cols-4">
+      <div class="cell">
+        <span class="cap">Text input</span>
+        <div class="col">
+          <div><span class="statelbl">Default</span><input class="field" placeholder="Full name" value="Mira Halloran"></div>
+          <div><span class="statelbl">Focus</span><input class="field is-focus" value="Mira Halloran"></div>
+          <div><span class="statelbl">Error</span><input class="field is-error" value="mira@"><div class="help err"><svg><use href="#i-alert"/></svg>Enter a valid email.</div></div>
+          <div><span class="statelbl">Disabled</span><input class="field is-disabled" value="Locked field" disabled></div>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="cap">Select</span>
+        <div class="col">
+          <div><span class="statelbl">Default</span><div class="select-wrap"><select class="field"><option>United States</option><option>Portugal</option></select><svg><use href="#i-chev"/></svg></div></div>
+          <div><span class="statelbl">Focus</span><div class="select-wrap"><select class="field is-focus"><option>Portugal</option></select><svg><use href="#i-chev"/></svg></div></div>
+          <div><span class="statelbl">Error</span><div class="select-wrap"><select class="field is-error"><option>Select a region…</option></select><svg><use href="#i-chev"/></svg></div><div class="help err"><svg><use href="#i-alert"/></svg>Required.</div></div>
+          <div><span class="statelbl">Disabled</span><div class="select-wrap"><select class="field is-disabled" disabled><option>Unavailable</option></select><svg><use href="#i-chev"/></svg></div></div>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="cap">Search</span>
+        <div class="col">
+          <div><span class="statelbl">Default</span><div class="search-wrap"><svg><use href="#i-search"/></svg><input class="field" placeholder="Search…"></div></div>
+          <div><span class="statelbl">Focus</span><div class="search-wrap"><svg><use href="#i-search"/></svg><input class="field is-focus" value="invoices"></div></div>
+          <div><span class="statelbl">Error</span><div class="search-wrap"><svg><use href="#i-search"/></svg><input class="field is-error" value="!!"></div><div class="help err"><svg><use href="#i-alert"/></svg>No results.</div></div>
+          <div><span class="statelbl">Disabled</span><div class="search-wrap"><svg><use href="#i-search"/></svg><input class="field is-disabled" placeholder="Search…" disabled></div></div>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="cap">Textarea</span>
+        <div class="col">
+          <div><span class="statelbl">Default</span><textarea class="field area" placeholder="Add a note…">Ship the warm-studio palette this week.</textarea></div>
+          <div><span class="statelbl">Error</span><textarea class="field area is-error">x</textarea><div class="help err"><svg><use href="#i-alert"/></svg>Too short — add detail.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 SELECTION CONTROLS -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Selection &amp; controls</h2>
+      <span class="sec-rule"></span>
+      <span class="sec-desc">Checkbox, radio, toggle, segmented, tabs.</span>
+    </div>
+    <div class="grid cols-4">
+      <div class="cell">
+        <span class="cap">Checkbox</span>
+        <div class="col">
+          <label class="opt"><input type="checkbox" checked><span class="box"><svg><use href="#i-check"/></svg></span>Email receipts</label>
+          <label class="opt"><input type="checkbox"><span class="box"><svg><use href="#i-check"/></svg></span>Weekly digest</label>
+          <label class="opt is-disabled"><input type="checkbox" checked disabled><span class="box"><svg><use href="#i-check"/></svg></span>Locked (on)</label>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="cap">Radio</span>
+        <div class="col">
+          <label class="opt"><input type="radio" name="r" checked><span class="box radio"><span class="rdot"></span></span>Monthly</label>
+          <label class="opt"><input type="radio" name="r"><span class="box radio"><span class="rdot"></span></span>Annual</label>
+          <label class="opt is-disabled"><input type="radio" name="r" disabled><span class="box radio"><span class="rdot"></span></span>Enterprise</label>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="cap">Toggle</span>
+        <div class="col">
+          <label class="switch"><input type="checkbox" checked><span class="track"><span class="knob"></span></span>Notifications</label>
+          <label class="switch"><input type="checkbox"><span class="track"><span class="knob"></span></span>Public profile</label>
+          <label class="switch is-disabled"><input type="checkbox" disabled><span class="track"><span class="knob"></span></span>Beta features</label>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="cap">Segmented</span>
+        <div class="col" style="gap:18px;">
+          <div class="segmented" data-seg><button class="on" type="button">Day</button><button type="button">Week</button><button type="button">Month</button></div>
+          <div class="segmented" data-seg><button type="button">List</button><button class="on" type="button">Grid</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid" style="margin-top:18px;">
+      <div class="cell">
+        <span class="cap">Tabs</span>
+        <div class="tabs" data-tabs>
+          <button class="tab on" type="button">Overview</button>
+          <button class="tab" type="button">Activity<span class="pip">12</span></button>
+          <button class="tab" type="button">Members</button>
+          <button class="tab" type="button">Settings</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 INDICATORS -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Indicators</h2>
+      <span class="sec-rule"></span>
+      <span class="sec-desc">Status badges, avatars &amp; tooltip.</span>
+    </div>
+    <div class="grid cols-3">
+      <div class="cell">
+        <span class="cap">Status badges</span>
+        <div class="row">
+          <span class="badge success"><span class="bd"></span>Active</span>
+          <span class="badge pending"><span class="bd"></span>Pending</span>
+          <span class="badge failed"><span class="bd"></span>Failed</span>
+          <span class="badge info"><span class="bd"></span>Review</span>
+          <span class="badge neutral"><span class="bd"></span>Draft</span>
+          <span class="badge accent"><svg width="11" height="11" style="margin-right:1px"><use href="#i-star"/></svg>New</span>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="cap">Avatars</span>
+        <div class="row" style="gap:16px;">
+          <span class="ava ava-sm clay">MH</span>
+          <span class="ava-ring"><span class="ava ava-md sage">JC</span><span class="ava-dot"></span></span>
+          <span class="ava ava-lg sky">SW</span>
+          <div class="ava-stack">
+            <span class="ava ava-md clay">AM</span>
+            <span class="ava ava-md sand">TB</span>
+            <span class="ava ava-md sage">FN</span>
+            <span class="ava-more">+5</span>
+          </div>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="cap">Tooltip</span>
+        <div class="row" style="padding-top:30px;">
+          <div class="tip-demo">
+            <div class="tip-bubble">Duplicate layer <span class="k">⌘D</span></div>
+            <button class="btn btn-secondary btn-sm"><svg><use href="#i-info"/></svg>Hover target</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 CARDS -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2 class="sec-title">Cards</h2>
+      <span class="sec-rule"></span>
+      <span class="sec-desc">Four distinct surface treatments.</span>
+    </div>
+    <div class="grid cols-4">
+      <!-- stat -->
+      <div class="cell c-stat">
+        <span class="cap">Metric</span>
+        <span class="eyebrow">Revenue · 30d</span>
+        <div class="fig tnum">$128.4k</div>
+        <span class="delta"><svg><use href="#i-up"/></svg>12.4% vs prior</span>
+        <div class="bar"><i style="height:40%"></i><i style="height:55%"></i><i style="height:35%"></i><i style="height:70%"></i><i style="height:50%"></i><i style="height:85%"></i><i class="hot" style="height:100%"></i></div>
+      </div>
+      <!-- profile -->
+      <div class="cell c-profile">
+        <span class="cap">Profile</span>
+        <div class="ph">
+          <span class="ava-ring"><span class="ava ava-lg clay">MH</span><span class="ava-dot"></span></span>
+          <div><div class="nm">Mira Halloran</div><div class="ro">Lead Designer · Atelier</div></div>
+        </div>
+        <p class="bio">Builds the systems behind the product — type, tokens and the parts in between.</p>
+        <div class="acts"><button class="btn btn-primary btn-sm">Follow</button><button class="btn btn-secondary btn-sm">Message</button></div>
+      </div>
+      <!-- feature -->
+      <div class="cell c-feature">
+        <span class="cap" style="padding:22px 22px 0;margin-bottom:14px;">Feature</span>
+        <div style="padding:0 22px;"><div class="imgph"><span>image · 16:9</span></div></div>
+        <div class="body">
+          <span class="eyebrow">Workflow</span>
+          <h4>Tokens that travel</h4>
+          <p>One source of truth, themed at the root and shipped to every surface.</p>
+          <span class="lnk">Read the guide<svg><use href="#i-arrow"/></svg></span>
+        </div>
+      </div>
+      <!-- pricing -->
+      <div class="cell c-price">
+        <span class="cap">Pricing</span>
+        <span class="tag"><span class="badge accent">Popular</span></span>
+        <div class="plan">Studio</div>
+        <div class="amt">$24<small>/mo</small></div>
+        <ul>
+          <li><svg><use href="#i-check"/></svg>Unlimited projects</li>
+          <li><svg><use href="#i-check"/></svg>Shared token library</li>
+          <li><svg><use href="#i-check"/></svg>Version history</li>
+        </ul>
+        <button class="btn btn-primary" style="width:100%;">Choose Studio</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>ATELIER — WARM-STUDIO REGISTER</span>
+    <span>Bricolage Grotesque · Geist · Geist Mono</span>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('[data-seg]').forEach(function(seg){
+    seg.addEventListener('click',function(e){
+      var b=e.target.closest('button'); if(!b)return;
+      seg.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+    });
+  });
+  document.querySelectorAll('[data-tabs]').forEach(function(t){
+    t.addEventListener('click',function(e){
+      var b=e.target.closest('.tab'); if(!b)return;
+      t.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+    });
+  });
+})();
+</script>
+</body>
+</html>

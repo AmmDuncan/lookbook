@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Pricing / plans (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Pricing / plans · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin. Only composition + interaction varies. Toggles show a
+   visible sliding thumb. WCAG AA throughout.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --bad:#C0392B;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+
+.btn-pri{display:inline-flex;align-items:center;justify-content:center;gap:7px;width:100%;background:var(--accent);color:#fff;font-size:13.5px;font-weight:600;padding:11px 16px;border-radius:8px;}
+.btn-pri.ghost{background:var(--surface);color:var(--accent-ink);border:1px solid #aab4e0;}
+.btn-pri .ico{width:15px;height:15px;}
+
+/* monthly/annual segmented */
+.billseg{display:inline-flex;background:var(--inset);border:1px solid var(--line);border-radius:999px;padding:3px;}
+.billseg button{font-size:12.5px;font-weight:600;color:var(--mut);padding:7px 16px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;}
+.billseg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08);}
+.savepill{display:inline-flex;width:fit-content;font-size:10.5px;font-weight:700;color:var(--ok);background:var(--ok-t);border-radius:999px;padding:1px 7px;}
+
+/* plan card */
+.plan{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px 22px;box-shadow:var(--shadow);}
+.plan.pop{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint),0 12px 30px -16px rgba(37,99,204,.4);position:relative;}
+.poppill{position:absolute;top:-11px;left:50%;transform:translateX(-50%);display:inline-flex;width:fit-content;align-items:center;gap:5px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:var(--accent);border-radius:999px;padding:4px 11px;}
+.plan .pn{font-size:14px;font-weight:700;}
+.plan .pd{font-size:12px;color:var(--faint);margin-top:2px;min-height:32px;}
+.plan .price{display:flex;align-items:baseline;gap:3px;margin:12px 0 2px;}
+.plan .price .amt{font-size:38px;font-weight:800;letter-spacing:-0.03em;}
+.plan .price .per{font-size:12.5px;color:var(--faint);font-weight:600;}
+.plan .feats{list-style:none;margin:16px 0 20px;display:flex;flex-direction:column;gap:9px;}
+.plan .feats li{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--mut);}
+.plan .feats .ck{width:16px;height:16px;color:var(--ok);flex-shrink:0;margin-top:1px;}
+.plan .feats .ck.off{color:var(--line-2);}
+.plan .ctawrap{margin-top:auto;}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-dash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M3 12h4M17 12h4M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Pricing / plans · one skin, five compositions</div>
+    <h1>Same skin. Five ways to price it.</h1>
+    <p>One set of plans — Starter, Pro, Scale — presented five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white surfaces with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. What changes is purely <em>composition and interaction</em>. The skin is the paint, the composition is the skeleton.</p>
+  </header>
+
+  <!-- ============== 1 · TIER CARDS ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Tier cards</div>
+      <p class="plate-recipe"><b>PULLS</b> — three plan cards side by side (Starter / Pro / Scale), the middle highlighted as “Most popular” with a ring + badge; each has price, feature bullets, CTA; a monthly/annual segmented toggle above. &nbsp;<b>WHY</b> — the conversion default: parallel cards make plans easy to compare, and one anchored “popular” tier guides the choice without removing it.</p>
+    </div>
+    <div class="frame" style="padding:30px 26px">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:26px">
+        <div class="billseg" id="t1seg"><button class="on" data-b="mo">Monthly</button><button data-b="yr">Annual <span class="savepill">Save 20%</span></button></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:920px;margin:0 auto;align-items:start">
+        <div class="plan">
+          <div class="pn">Starter</div><div class="pd">For individuals getting going.</div>
+          <div class="price"><span class="amt tnum" data-mo="$12" data-yr="$10">$12</span><span class="per">/mo</span></div>
+          <div style="font-size:11.5px;color:var(--faint)" class="t1note">billed monthly</div>
+          <ul class="feats"><li><svg class="ico ck"><use href="#i-check"/></svg>1 workspace</li><li><svg class="ico ck"><use href="#i-check"/></svg>5 projects</li><li><svg class="ico ck"><use href="#i-check"/></svg>Community support</li><li><svg class="ico ck off"><use href="#i-dash"/></svg>Advanced reports</li></ul>
+          <div class="ctawrap"><button class="btn-pri ghost">Choose Starter</button></div>
+        </div>
+        <div class="plan pop">
+          <span class="poppill"><svg class="ico" style="width:11px;height:11px"><use href="#i-star"/></svg>Most popular</span>
+          <div class="pn">Pro</div><div class="pd">For growing teams that need more.</div>
+          <div class="price"><span class="amt tnum" data-mo="$32" data-yr="$26">$32</span><span class="per">/mo</span></div>
+          <div style="font-size:11.5px;color:var(--faint)" class="t1note">billed monthly</div>
+          <ul class="feats"><li><svg class="ico ck"><use href="#i-check"/></svg>5 workspaces</li><li><svg class="ico ck"><use href="#i-check"/></svg>Unlimited projects</li><li><svg class="ico ck"><use href="#i-check"/></svg>Priority support</li><li><svg class="ico ck"><use href="#i-check"/></svg>Advanced reports</li></ul>
+          <div class="ctawrap"><button class="btn-pri">Choose Pro</button></div>
+        </div>
+        <div class="plan">
+          <div class="pn">Scale</div><div class="pd">For organizations at scale.</div>
+          <div class="price"><span class="amt tnum" data-mo="$64" data-yr="$52">$64</span><span class="per">/mo</span></div>
+          <div style="font-size:11.5px;color:var(--faint)" class="t1note">billed monthly</div>
+          <ul class="feats"><li><svg class="ico ck"><use href="#i-check"/></svg>Unlimited workspaces</li><li><svg class="ico ck"><use href="#i-check"/></svg>SSO &amp; SAML</li><li><svg class="ico ck"><use href="#i-check"/></svg>Dedicated CSM</li><li><svg class="ico ck"><use href="#i-check"/></svg>Audit log</li></ul>
+          <div class="ctawrap"><button class="btn-pri ghost">Contact sales</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · COMPARISON TABLE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Comparison table</div>
+      <p class="plate-recipe"><b>PULLS</b> — a feature-matrix table (feature rows × plan columns) with check/dash cells + a sticky plan header row + per-column CTA. &nbsp;<b>WHY</b> — for feature-rich products: a matrix answers “what exactly do I get” precisely, which a card's short bullet list can't, and is the deciding view for considered buyers.</p>
+    </div>
+    <div class="frame" style="padding:20px 24px">
+      <div class="card" style="overflow:hidden">
+        <table class="cmp">
+          <thead><tr>
+            <th class="feat">Compare plans</th>
+            <th><div class="ch-n">Starter</div><div class="ch-p tnum">$12<span>/mo</span></div><button class="ch-cta">Choose</button></th>
+            <th class="pop"><div class="ch-badge">Popular</div><div class="ch-n">Pro</div><div class="ch-p tnum">$32<span>/mo</span></div><button class="ch-cta on">Choose</button></th>
+            <th><div class="ch-n">Scale</div><div class="ch-p tnum">$64<span>/mo</span></div><button class="ch-cta">Choose</button></th>
+          </tr></thead>
+          <tbody>
+            <tr class="grp"><td colspan="4">Workspace</td></tr>
+            <tr><td class="feat">Workspaces</td><td class="tnum">1</td><td class="pop tnum">5</td><td class="tnum">Unlimited</td></tr>
+            <tr><td class="feat">Projects</td><td class="tnum">5</td><td class="pop tnum">Unlimited</td><td class="tnum">Unlimited</td></tr>
+            <tr><td class="feat">Team members</td><td class="tnum">3</td><td class="pop tnum">25</td><td class="tnum">Unlimited</td></tr>
+            <tr class="grp"><td colspan="4">Features</td></tr>
+            <tr><td class="feat">Advanced reports</td><td><svg class="ico cdash"><use href="#i-dash"/></svg></td><td class="pop"><svg class="ico cck"><use href="#i-check"/></svg></td><td><svg class="ico cck"><use href="#i-check"/></svg></td></tr>
+            <tr><td class="feat">API access</td><td><svg class="ico cdash"><use href="#i-dash"/></svg></td><td class="pop"><svg class="ico cck"><use href="#i-check"/></svg></td><td><svg class="ico cck"><use href="#i-check"/></svg></td></tr>
+            <tr><td class="feat">SSO &amp; SAML</td><td><svg class="ico cdash"><use href="#i-dash"/></svg></td><td class="pop"><svg class="ico cdash"><use href="#i-dash"/></svg></td><td><svg class="ico cck"><use href="#i-check"/></svg></td></tr>
+            <tr><td class="feat">Audit log</td><td><svg class="ico cdash"><use href="#i-dash"/></svg></td><td class="pop"><svg class="ico cdash"><use href="#i-dash"/></svg></td><td><svg class="ico cck"><use href="#i-check"/></svg></td></tr>
+            <tr class="grp"><td colspan="4">Support</td></tr>
+            <tr><td class="feat">Support</td><td>Community</td><td class="pop">Priority</td><td>Dedicated CSM</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · SINGLE FEATURED + ADD-ONS ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Single featured + add-ons</div>
+      <p class="plate-recipe"><b>PULLS</b> — one hero plan card + a list of optional add-ons (each a row with a toggle showing a visible sliding thumb + price delta), with a running total. &nbsp;<b>WHY</b> — for one-plan products that upsell: a single clear price plus opt-in add-ons lets buyers build exactly what they need and watch the total update.</p>
+    </div>
+    <div class="frame" style="padding:24px 26px;display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start">
+      <div class="plan pop" style="box-shadow:0 0 0 3px var(--accent-tint)">
+        <div class="pn">Pro plan</div><div class="pd">Everything most teams need.</div>
+        <div class="price"><span class="amt tnum">$32</span><span class="per">/mo</span></div>
+        <ul class="feats"><li><svg class="ico ck"><use href="#i-check"/></svg>Unlimited projects</li><li><svg class="ico ck"><use href="#i-check"/></svg>25 team members</li><li><svg class="ico ck"><use href="#i-check"/></svg>Priority support</li></ul>
+      </div>
+      <div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px">Optional add-ons</div>
+        <div style="font-size:12.5px;color:var(--mut);margin-bottom:14px">Toggle extras on or off — your total updates live.</div>
+        <div class="card" style="padding:6px 18px" id="addons">
+          <div class="addon"><div class="meta"><div class="at">Extra workspaces</div><div class="ad">Add 5 more workspaces.</div></div><div class="ap tnum">+$8/mo</div><span class="tgl on" data-price="8"><span class="thumb"></span></span></div>
+          <div class="addon"><div class="meta"><div class="at">Advanced analytics</div><div class="ad">Cohorts, funnels &amp; exports.</div></div><div class="ap tnum">+$12/mo</div><span class="tgl" data-price="12"><span class="thumb"></span></span></div>
+          <div class="addon"><div class="meta"><div class="at">Premium support</div><div class="ad">1-hour response SLA.</div></div><div class="ap tnum">+$20/mo</div><span class="tgl" data-price="20"><span class="thumb"></span></span></div>
+          <div class="addon"><div class="meta"><div class="at">Extra storage</div><div class="ad">+500 GB of file storage.</div></div><div class="ap tnum">+$6/mo</div><span class="tgl on" data-price="6"><span class="thumb"></span></span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;margin-top:16px;padding:16px 18px;background:var(--accent-tint);border:1px solid #cdddf6;border-radius:10px">
+          <div><div style="font-size:11.5px;color:var(--accent-ink);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Your total</div><div style="font-size:26px;font-weight:800;letter-spacing:-0.02em;color:var(--accent-ink)"><span class="tnum" id="ad-total">$46</span><span style="font-size:13px;font-weight:600">/mo</span></div></div>
+          <button class="btn-pri" style="width:auto;margin-left:auto;padding:11px 20px">Continue<svg class="ico"><use href="#i-arrow"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · USAGE CALCULATOR ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Usage calculator</div>
+      <p class="plate-recipe"><b>PULLS</b> — an interactive estimator: a slider + a couple of inputs that drive a live monthly price readout + which tier it lands in. &nbsp;<b>WHY</b> — for usage-based pricing: letting buyers model their own numbers turns an abstract rate card into a concrete, personal price and the right recommended tier.</p>
+    </div>
+    <div class="frame" style="padding:24px 26px;display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start">
+      <div class="card" style="padding:24px 26px">
+        <div style="font-size:15px;font-weight:700;letter-spacing:-0.01em;margin-bottom:18px">Estimate your monthly cost</div>
+        <div style="margin-bottom:22px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:10px"><span style="font-size:12.5px;font-weight:600;color:var(--mut)">Monthly active users</span><b class="tnum" id="cu-seats">2,500</b></div>
+          <input type="range" min="100" max="20000" step="100" value="2500" id="cu-range" style="width:100%;accent-color:var(--accent)">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--faint);margin-top:6px" class="tnum"><span>100</span><span>20,000</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <label style="display:block"><span style="font-size:12px;font-weight:600;color:var(--mut);margin-bottom:6px;display:block">Team seats</span><input class="cinput tnum" id="cu-team" type="number" value="8"></label>
+          <label style="display:block"><span style="font-size:12px;font-weight:600;color:var(--mut);margin-bottom:6px;display:block">Data retention</span><div style="position:relative"><select class="cinput" id="cu-ret" style="appearance:none;-webkit-appearance:none;cursor:pointer;width:100%"><option value="0">30 days</option><option value="20">1 year (+$20)</option><option value="40">3 years (+$40)</option></select><svg class="ico" style="position:absolute;right:11px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--mut);pointer-events:none"><use href="#i-chev"/></svg></div></label>
+        </div>
+        <div style="font-size:11.5px;color:var(--faint);margin-top:16px;line-height:1.5">Base $0.008 per active user + $4 per seat, billed monthly. Estimate only.</div>
+      </div>
+      <aside>
+        <div class="card" style="padding:22px 22px;text-align:center;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint)">
+          <div style="font-size:11.5px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.05em">Estimated monthly</div>
+          <div style="font-size:42px;font-weight:800;letter-spacing:-0.03em;margin-top:6px"><span class="tnum" id="cu-total">$52</span></div>
+          <div style="font-size:12px;color:var(--faint);margin-top:2px" id="cu-break">2,500 users · 8 seats</div>
+          <div style="height:1px;background:var(--line);margin:16px 0"></div>
+          <div style="font-size:12px;color:var(--mut)">Recommended plan</div>
+          <div style="display:inline-flex;width:fit-content;align-items:center;gap:6px;margin:8px auto 0;font-size:13px;font-weight:700;color:var(--accent-ink);background:var(--accent-tint);border:1px solid #cdddf6;border-radius:999px;padding:5px 14px" id="cu-tier"><svg class="ico" style="width:13px;height:13px"><use href="#i-star"/></svg>Pro</div>
+          <button class="btn-pri" style="margin-top:18px">Start with this plan</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============== 5 · FAQ-LED / MINIMAL ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">FAQ-led / minimal</div>
+      <p class="plate-recipe"><b>PULLS</b> — a compact price statement + a prominent FAQ accordion (expand / collapse rows). &nbsp;<b>WHY</b> — for simple, single-price products: when there's little to compare, the real conversion blocker is unanswered questions, so the FAQ takes the lead and pricing stays a one-liner.</p>
+    </div>
+    <div class="frame" style="padding:34px 26px;display:grid;grid-template-columns:300px 1fr;gap:32px;align-items:start">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em">Simple pricing</div>
+        <div style="display:flex;align-items:baseline;gap:4px;margin-top:12px"><span style="font-size:52px;font-weight:800;letter-spacing:-0.03em" class="tnum">$32</span><span style="font-size:14px;color:var(--faint);font-weight:600">/user · mo</span></div>
+        <p style="font-size:13.5px;color:var(--mut);margin-top:10px;line-height:1.55">One plan, everything included. No tiers, no surprises. 14-day free trial — cancel anytime.</p>
+        <button class="btn-pri" style="margin-top:18px">Start free trial</button>
+        <div style="font-size:12px;color:var(--faint);margin-top:10px;text-align:center">No credit card required</div>
+      </div>
+      <div id="faq">
+        <div class="faqrow open"><button class="faqq">What's included in the plan?<svg class="ico faqi"><use href="#i-chev"/></svg></button><div class="faqa">Everything — unlimited projects, all integrations, advanced reports, and priority support. There are no feature gates between users.</div></div>
+        <div class="faqrow"><button class="faqq">Can I change my plan later?<svg class="ico faqi"><use href="#i-chev"/></svg></button><div class="faqa">Yes. Add or remove seats anytime; changes are prorated to your billing cycle automatically.</div></div>
+        <div class="faqrow"><button class="faqq">Do you offer annual billing?<svg class="ico faqi"><use href="#i-chev"/></svg></button><div class="faqa">Annual billing saves 20% versus monthly and can be switched on at any time from billing settings.</div></div>
+        <div class="faqrow"><button class="faqq">Is there a free trial?<svg class="ico faqi"><use href="#i-chev"/></svg></button><div class="faqa">All accounts start with a 14-day free trial of the full product. No card is required to begin.</div></div>
+        <div class="faqrow"><button class="faqq">What payment methods do you accept?<svg class="ico faqi"><use href="#i-chev"/></svg></button><div class="faqa">All major cards, plus invoicing and ACH for annual plans over a set seat count.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+/* comparison table */
+.cmp{width:100%;border-collapse:collapse;}
+.cmp thead th{position:sticky;top:0;background:var(--surface);padding:16px 16px 18px;text-align:center;border-bottom:1px solid var(--line);vertical-align:top;z-index:2;}
+.cmp thead th.feat{text-align:left;font-size:15px;font-weight:800;letter-spacing:-0.01em;color:var(--ink);vertical-align:bottom;}
+.cmp thead th.pop{background:var(--accent-tint);}
+.cmp .ch-badge{display:inline-flex;width:fit-content;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:var(--accent);border-radius:999px;padding:2px 8px;margin-bottom:6px;}
+.cmp .ch-n{font-size:13px;font-weight:700;}
+.cmp .ch-p{font-size:20px;font-weight:800;letter-spacing:-0.02em;margin-top:3px;}
+.cmp .ch-p span{font-size:11px;font-weight:600;color:var(--faint);}
+.cmp .ch-cta{margin-top:10px;font-size:12px;font-weight:700;color:var(--accent-ink);background:var(--surface);border:1px solid #aab4e0;border-radius:7px;padding:6px 14px;}
+.cmp .ch-cta.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+.cmp tbody td{padding:11px 16px;text-align:center;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);}
+.cmp tbody td.feat{text-align:left;color:var(--mut);font-weight:500;}
+.cmp tbody td.pop{background:var(--accent-tint);font-weight:600;}
+.cmp tr.grp td{background:var(--inset);text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.cmp .cck{width:17px;height:17px;color:var(--ok);} .cmp .cdash{width:15px;height:15px;color:var(--line-2);}
+/* add-ons */
+.addon{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--inset);}
+.addon:last-child{border-bottom:none;}
+.addon .meta{flex:1;} .addon .at{font-size:13px;font-weight:600;} .addon .ad{font-size:12px;color:var(--faint);margin-top:1px;}
+.addon .ap{font-size:12.5px;font-weight:700;color:var(--accent-ink);}
+.tgl{display:inline-flex;align-items:center;width:42px;height:24px;border-radius:999px;background:#CDD2DA;border:1px solid var(--line-2);padding:2px;cursor:pointer;transition:background .15s,border-color .15s;flex-shrink:0;}
+.tgl .thumb{width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(20,24,31,.35);transition:transform .16s cubic-bezier(.3,.8,.4,1);}
+.tgl.on{background:var(--accent);border-color:var(--accent);} .tgl.on .thumb{transform:translateX(18px);}
+/* calculator */
+.cinput{width:100%;font-size:13.5px;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:9px 11px;outline:none;}
+.cinput:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+/* faq */
+.faqrow{border-bottom:1px solid var(--line);}
+.faqrow:first-child{border-top:1px solid var(--line);}
+.faqq{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;font-size:14.5px;font-weight:600;color:var(--ink);padding:16px 2px;}
+.faqi{width:17px;height:17px;color:var(--faint);transition:transform .18s;flex-shrink:0;}
+.faqrow.open .faqi{transform:rotate(180deg);color:var(--accent);}
+.faqa{font-size:13.5px;color:var(--mut);line-height:1.6;max-height:0;overflow:hidden;transition:max-height .22s ease,padding .22s ease;padding:0 2px;}
+.faqrow.open .faqa{max-height:200px;padding:0 2px 18px;}
+/* skin table */
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame[style*="grid-template-columns:300px 1fr"],.frame[style*="grid-template-columns:1fr 320px"]{grid-template-columns:1fr!important;}
+  .cmp thead th{position:static;}
+}
+</style>
+
+<script>
+/* 1 monthly/annual */
+(function(){
+  var seg=document.getElementById('t1seg'),frame=seg.closest('.frame');
+  seg.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;seg.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');
+    var yr=b.dataset.b==='yr';
+    frame.querySelectorAll('.plan .amt[data-mo]').forEach(function(a){a.textContent=yr?a.dataset.yr:a.dataset.mo;});
+    frame.querySelectorAll('.t1note').forEach(function(n){n.textContent=yr?'billed annually':'billed monthly';});
+  });
+})();
+/* 3 add-ons total */
+(function(){
+  var base=32,wrap=document.getElementById('addons'),out=document.getElementById('ad-total');
+  function upd(){var t=base;wrap.querySelectorAll('.tgl.on').forEach(function(g){t+=+g.dataset.price;});out.textContent='$'+t;}
+  wrap.querySelectorAll('.tgl').forEach(function(g){g.addEventListener('click',function(){g.classList.toggle('on');upd();});});
+  upd();
+})();
+/* 4 calculator */
+(function(){
+  var range=document.getElementById('cu-range'),team=document.getElementById('cu-team'),ret=document.getElementById('cu-ret');
+  var total=document.getElementById('cu-total'),seats=document.getElementById('cu-seats'),brk=document.getElementById('cu-break'),tier=document.getElementById('cu-tier');
+  function upd(){
+    var u=+range.value,t=Math.max(0,+team.value||0),r=+ret.value;
+    var price=Math.round(u*0.008+t*4+r);
+    seats.textContent=u.toLocaleString();
+    total.textContent='$'+price.toLocaleString();
+    brk.textContent=u.toLocaleString()+' users · '+t+' seats';
+    var name=price<30?'Starter':price<80?'Pro':'Scale';
+    tier.innerHTML='<svg class="ico" style="width:13px;height:13px"><use href="#i-star"/></svg>'+name;
+  }
+  [range,team].forEach(function(el){el.addEventListener('input',upd);});ret.addEventListener('change',upd);
+  upd();
+})();
+/* 5 faq accordion */
+(function(){
+  document.querySelectorAll('#faq .faqq').forEach(function(q){q.addEventListener('click',function(){var row=q.closest('.faqrow');var open=row.classList.contains('open');document.querySelectorAll('#faq .faqrow').forEach(function(r){r.classList.remove('open');});if(!open)row.classList.add('open');});});
+})();
+</script>
+</body>
+</html>

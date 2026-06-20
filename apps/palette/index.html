@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lookbook · Palette generator</title>
+<style>
+  :root{
+    --ui-bg:#fafafa; --ui-panel:#ffffff; --ui-line:#e7e7e9; --ui-line2:#d9d9dd;
+    --ui-ink:#16181c; --ui-ink2:#5a6069; --ui-faint:#878d96;
+    --ui-accent:#3a6df0; --ok:#1f8f5f; --ok-bg:#e8f6ef; --warn:#9a6a00; --warn-bg:#fbf1da;
+    --bad:#c23b3b; --bad-bg:#fbe9e9;
+    --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;
+    --sans:"Geist","Inter",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--ui-bg);color:var(--ui-ink);font-family:var(--sans);
+    line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .page{max-width:1000px;margin:0 auto;padding:40px 28px 80px;}
+  .kick{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ui-faint);margin:0 0 8px;}
+  h1{font-size:30px;font-weight:600;letter-spacing:-.02em;margin:0 0 6px;}
+  .sub{font-size:15px;color:var(--ui-ink2);margin:0 0 26px;max-width:64ch;}
+
+  .bar{display:flex;flex-wrap:wrap;align-items:center;gap:18px;background:var(--ui-panel);
+    border:1px solid var(--ui-line);border-radius:14px;padding:16px 20px;margin:0 0 26px;
+    box-shadow:0 1px 2px rgb(15 17 23/.04);}
+  .ctrl{display:flex;align-items:center;gap:10px;}
+  .ctrl label{font-size:13px;font-weight:500;color:var(--ui-ink2);}
+  input[type=color]{width:38px;height:38px;border:1px solid var(--ui-line2);border-radius:9px;padding:0;background:none;cursor:pointer;}
+  input.hex{font-family:var(--mono);font-size:14px;width:108px;padding:8px 11px;border:1px solid var(--ui-line2);
+    border-radius:9px;color:var(--ui-ink);text-transform:uppercase;}
+
+  /* Focus — the forms-cookbook discipline (F34): :focus on inputs, :focus-visible on buttons. */
+  .hex:focus, input[type=color]:focus{outline:none;border-color:var(--ui-accent);
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--ui-accent) 28%, transparent);}
+  .seg button:focus-visible, .btn:focus-visible, .preset:focus-visible, .x:focus-visible,
+  .addbtn:focus-visible, .rm:focus-visible, .name:focus-visible{outline:2px solid var(--ui-accent);outline-offset:2px;}
+  .name:focus{outline:none;border-color:var(--ui-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-accent) 28%,transparent);}
+  .hex:focus-visible, input[type=color]:focus-visible{outline:none;}
+
+  .seg{display:inline-flex;background:var(--ui-bg);border:1px solid var(--ui-line2);border-radius:10px;padding:3px;}
+  .seg button{border:none;background:none;font:inherit;font-size:13px;font-weight:500;color:var(--ui-ink2);
+    padding:6px 16px;border-radius:7px;cursor:pointer;}
+  .seg button[aria-pressed=true]{background:var(--ui-panel);color:var(--ui-ink);box-shadow:0 1px 2px rgb(15 17 23/.08);}
+  .spacer{flex:1;}
+  .btn{font:inherit;font-size:13px;font-weight:500;border-radius:9px;padding:9px 15px;cursor:pointer;border:1px solid transparent;}
+  .btn.primary{background:var(--ui-ink);color:#fff;}
+  .btn.ghost{background:none;border-color:var(--ui-line2);color:var(--ui-ink);}
+  .presets{display:flex;gap:7px;}
+  .preset{width:24px;height:24px;border-radius:6px;border:1px solid rgb(0 0 0/.12);cursor:pointer;padding:0;}
+
+  .sectionhead{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ui-faint);margin:28px 4px 10px;}
+  .panel{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:16px;overflow:hidden;
+    box-shadow:0 1px 2px rgb(15 17 23/.04);}
+  .panelhead,.row{display:grid;grid-template-columns:52px minmax(0,1fr) 186px 206px;gap:16px;align-items:center;}
+  .panelhead{padding:12px 22px;border-bottom:1px solid var(--ui-line);font-family:var(--mono);font-size:11px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ui-faint);}
+  .panelhead .r{text-align:right;}
+  .row{padding:13px 22px;border-bottom:1px solid #f0f0f2;}
+  .row:last-child{border-bottom:none;}
+  .row.empty{padding:18px 22px;}
+  .sw{height:42px;border-radius:9px;border:1px solid rgb(0 0 0/.10);}
+  .sw.statusw{display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;}
+  .role{font-size:15px;font-weight:550;line-height:1.3;min-width:0;}
+  .role .vn{font-family:var(--mono);font-size:11.5px;color:var(--ui-accent);font-weight:500;}
+  .role small{display:block;font-size:12.5px;color:var(--ui-faint);font-weight:400;margin-top:2px;}
+  .role .step{display:inline-block;font-size:11px;color:var(--ui-faint);border:1px solid var(--ui-line2);
+    border-radius:20px;padding:1px 8px;margin-left:7px;vertical-align:1px;font-weight:500;}
+  .vals{font-family:var(--mono);font-size:12.5px;color:var(--ui-ink2);line-height:1.6;}
+  .vals b{color:var(--ui-ink);font-weight:600;}
+  .gradecell{display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;padding:5px 10px;
+    border-radius:20px;font-weight:500;white-space:nowrap;}
+  .badge.apca{font-size:11px;padding:3px 9px;}
+  .badge .rl{font-size:10.5px;opacity:.7;}
+  .b-ok{color:var(--ok);background:var(--ok-bg);} .b-warn{color:var(--warn);background:var(--warn-bg);}
+  .b-bad{color:var(--bad);background:var(--bad-bg);} .b-mute{color:var(--ui-faint);background:var(--ui-bg);}
+  .rm{border:none;background:none;color:var(--ui-faint);font-size:16px;line-height:1;cursor:pointer;padding:2px 4px;border-radius:5px;}
+
+  .note{font-size:13px;color:var(--ui-faint);margin:14px 2px 0;}
+  .note b{color:var(--ui-ink2);font-weight:600;}
+
+  .addrow{display:flex;gap:10px;align-items:center;padding:14px 22px;border-top:1px solid var(--ui-line);background:#fcfcfd;}
+  .name{font-size:13px;padding:8px 11px;border:1px solid var(--ui-line2);border-radius:9px;width:150px;color:var(--ui-ink);}
+  .addbtn{font:inherit;font-size:13px;font-weight:500;border:1px solid var(--ui-line2);background:var(--ui-panel);
+    color:var(--ui-ink);border-radius:9px;padding:8px 14px;cursor:pointer;}
+
+  .preview{margin-top:26px;border-radius:16px;overflow:hidden;border:1px solid var(--ui-line);}
+  .pv-pad{padding:30px 32px;}
+  .pv-ey{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 12px;}
+  .pv-h{font-size:26px;font-weight:600;letter-spacing:-.02em;margin:0 0 8px;}
+  .pv-p{font-size:15px;margin:0 0 18px;max-width:54ch;}
+  .pv-actions{display:flex;gap:12px;align-items:center;}
+  .pv-btn{font:inherit;font-size:14px;font-weight:550;border-radius:9px;padding:10px 18px;border:1px solid transparent;cursor:default;}
+  .pv-card{border-radius:12px;padding:16px 18px;font-size:14px;margin-top:20px;display:inline-block;}
+
+  .modal-scrim{position:fixed;inset:0;background:rgb(10 12 16/.46);display:none;align-items:center;justify-content:center;padding:32px;z-index:50;}
+  .modal-scrim.open{display:flex;}
+  .modal{background:var(--ui-panel);border-radius:16px;max-width:760px;width:100%;max-height:84vh;display:flex;
+    flex-direction:column;box-shadow:0 24px 60px rgb(10 12 16/.34);overflow:hidden;}
+  .modal h2{font-size:18px;font-weight:600;margin:0;}
+  .modal .mh{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--ui-line);}
+  .modal pre{margin:0;overflow:auto;padding:20px 22px;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ui-ink);background:var(--ui-bg);flex:1;}
+  .modal .mf{display:flex;gap:10px;justify-content:flex-end;padding:14px 22px;border-top:1px solid var(--ui-line);}
+  .x{border:none;background:none;font-size:20px;cursor:pointer;color:var(--ui-faint);line-height:1;}
+</style>
+</head>
+<body>
+<div class="page">
+  <p class="kick">Lookbook · tokens</p>
+  <h1>Palette generator</h1>
+  <p class="sub">One brand colour → the 7-step ramp mapped onto the Lookbook semantic roles, each graded against the surface it sits on (WCAG + APCA), with the F66 white-on-accent check. Status colours and your own additions are graded the same way. Toggle light ⇄ dark; export a drop-in skin.</p>
+
+  <div class="bar">
+    <div class="ctrl">
+      <label for="picker">Brand</label>
+      <input type="color" id="picker" value="#3A6DF0">
+      <input type="text" class="hex" id="hex" value="#3A6DF0" maxlength="7" spellcheck="false" aria-label="Brand hex">
+    </div>
+    <div class="ctrl presets" id="presets"></div>
+    <div class="spacer"></div>
+    <div class="seg" role="group" aria-label="Theme mode">
+      <button id="m-light" aria-pressed="true">Light</button>
+      <button id="m-dark" aria-pressed="false">Dark</button>
+    </div>
+    <button class="btn primary" id="export">Export skin →</button>
+  </div>
+
+  <div class="panel">
+    <div class="panelhead"><span>Swatch</span><span>Role · token · usage</span><span>OKLCH · hex</span><span class="r">Contrast</span></div>
+    <div id="rows"></div>
+  </div>
+  <p class="note" id="note"></p>
+
+  <p class="sectionhead">Status colours · F19 / F55</p>
+  <div class="panel"><div id="status-rows"></div></div>
+
+  <p class="sectionhead">Add your own</p>
+  <div class="panel">
+    <div id="custom-rows"></div>
+    <div class="addrow">
+      <input class="name" id="custom-name" placeholder="name (e.g. brand-2)" spellcheck="false" aria-label="Custom colour name">
+      <input class="hex" id="custom-hex" placeholder="#hex" maxlength="7" spellcheck="false" aria-label="Custom colour hex">
+      <button class="addbtn" id="custom-add">Add colour</button>
+    </div>
+  </div>
+
+  <div class="preview" id="preview"></div>
+</div>
+
+<div class="modal-scrim" id="scrim">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Export skin">
+    <div class="mh"><h2>skin.css <span id="skinname" style="color:var(--ui-faint);font-weight:400;font-size:14px"></span></h2><button class="x" id="close" aria-label="Close">×</button></div>
+    <pre id="code"></pre>
+    <div class="mf">
+      <button class="btn ghost" id="copy">Copy</button>
+      <button class="btn primary" id="download">Download .css</button>
+    </div>
+  </div>
+</div>
+
+<script src="color.js"></script>
+<script src="palette.js"></script>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sidebar variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   SIDEBAR VARIATIONS — eight nav-rail structures, each beside a faint page hint.
+   Neutral professional language; one restrained slate-blue accent.
+   ============================================================================ */
+:root{
+  --bg:#EEEEEA; --surface:#FFFFFF; --hint:#FAFAF8; --inset:#F2F2EE;
+  --border:#E5E4DE; --border-2:#D6D4CB;
+  --ink:#1C1D21; --muted:#5A5C63; --subtle:#8B8D94;
+  --a:#3858C4; --a-tint:rgba(56,88,196,0.11); --a-ink:#2c46a0;
+  --ok:#2C6E49; --warn:#8A5A12; --bad:#B23A2E;
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:2.5px solid var(--a);outline-offset:2px;border-radius:5px;}
+button{font-family:inherit;cursor:pointer;}
+
+.wrap{max-width:1240px;margin:0 auto;padding:56px 36px 96px;}
+.head{margin-bottom:38px;padding-bottom:24px;border-bottom:1.5px solid var(--ink);}
+.eyebrow{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--subtle);margin-bottom:13px;}
+.head h1{font-size:clamp(34px,5.5vw,54px);font-weight:700;letter-spacing:-0.03em;line-height:1;}
+.head p{font-size:15.5px;color:var(--muted);max-width:62ch;margin-top:14px;}
+
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 24px;}
+.spec{display:flex;flex-direction:column;gap:12px;}
+.lab .nm{font-size:14px;font-weight:700;letter-spacing:-0.01em;}
+.lab .nm span{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--a);margin-right:8px;}
+.lab .uw{font-size:12.5px;color:var(--muted);margin-top:3px;}
+.lab .uw b{color:var(--ink);font-weight:600;}
+
+/* frame */
+.frame{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 8px 24px -12px rgba(28,29,32,0.2),0 1px 3px rgba(28,29,32,0.05);height:404px;display:flex;}
+.sb{display:flex;flex-direction:column;flex-shrink:0;border-right:1px solid var(--border);height:100%;}
+
+/* faint page hint */
+.pg{flex:1;background:var(--hint);padding:16px 16px;min-width:0;display:flex;flex-direction:column;gap:12px;}
+.pg .ph{display:flex;align-items:center;gap:10px;}
+.pg .ph .t{height:13px;width:120px;border-radius:5px;background:#E6E5DF;}
+.pg .ph .a{width:22px;height:22px;border-radius:50%;background:#E6E5DF;margin-left:auto;}
+.pg .cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.pg .ca{height:52px;border-radius:8px;border:1px solid #ECEBE5;background:#fff;}
+.pg .blk{height:96px;border-radius:8px;border:1px solid #ECEBE5;background:#fff;}
+.pg .ln{height:9px;border-radius:5px;background:#ECEBE5;}
+.pg .ln.s{width:70%;} .pg .ln.m{width:88%;}
+
+/* shared nav bits */
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;letter-spacing:-0.01em;padding:13px 14px;}
+.brand .mk{width:22px;height:22px;border-radius:6px;background:var(--a);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.brand .mk b{width:8px;height:8px;border-radius:2px;background:#fff;}
+.nav{flex:1;padding:8px 10px;overflow:hidden;display:flex;flex-direction:column;gap:1px;}
+.shdr{font-family:var(--font-mono);font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--subtle);padding:12px 8px 5px;}
+.ni{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:7px;color:var(--muted);font-size:12.5px;font-weight:500;border:none;background:none;width:100%;text-align:left;transition:background .12s,color .12s;position:relative;}
+.ni svg{width:15px;height:15px;flex-shrink:0;opacity:.8;}
+.ni:hover:not(.on){background:var(--inset);color:var(--ink);}
+.ni.on{background:var(--a-tint);color:var(--a-ink);font-weight:600;}
+.ni.on svg{opacity:1;color:var(--a);}
+.ni .cnt{margin-left:auto;font-family:var(--font-mono);font-size:10px;font-weight:500;color:var(--muted);background:var(--inset);padding:1px 7px;border-radius:999px;}
+.ni.on .cnt{background:rgba(56,88,196,.14);color:var(--a-ink);}
+.foot{border-top:1px solid var(--border);padding:10px;}
+
+/* user chip */
+.uchip{display:flex;align-items:center;gap:9px;padding:7px;border-radius:8px;}
+.uchip:hover{background:var(--inset);}
+.uchip .av{width:28px;height:28px;border-radius:50%;background:#DCE1EE;color:var(--a);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+.uchip .n{font-size:11.5px;font-weight:600;line-height:1.2;}
+.uchip .m{font-size:10px;color:var(--subtle);}
+.uchip .cv{margin-left:auto;color:var(--subtle);}
+.uchip .cv svg{width:13px;height:13px;}
+
+/* ---- 1 labeled (default styles already cover) ---- */
+.sb1{width:198px;}
+
+/* ---- 2 icon rail + tooltip ---- */
+.sb2{width:60px;align-items:center;padding:0;}
+.sb2 .brand{padding:13px 0;justify-content:center;}
+.sb2 .nav{align-items:center;padding:8px 0;gap:5px;}
+.ri{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--muted);border:none;background:none;position:relative;transition:background .12s,color .12s;}
+.ri svg{width:18px;height:18px;}
+.ri.on{background:var(--a-tint);color:var(--a);}
+.ri:hover:not(.on){background:var(--inset);color:var(--ink);}
+.ri .tip{position:absolute;left:calc(100% + 12px);top:50%;transform:translateY(-50%);background:#1C1D21;color:#fff;font-size:11px;font-weight:500;padding:5px 9px;border-radius:6px;white-space:nowrap;z-index:5;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);}
+.ri .tip::before{content:'';position:absolute;right:100%;top:50%;transform:translateY(-50%);border:5px solid transparent;border-right-color:#1C1D21;}
+.sb2 .foot{padding:10px 0;display:flex;justify-content:center;}
+.sb2 .foot .av{width:30px;height:30px;border-radius:50%;background:#DCE1EE;color:var(--a);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;}
+
+/* ---- 3 search pinned ---- */
+.sb3{width:208px;}
+.sb3 .srch{margin:4px 10px 6px;display:flex;align-items:center;gap:7px;background:var(--inset);border:1px solid var(--border);border-radius:8px;padding:7px 9px;color:var(--subtle);font-size:11.5px;}
+.sb3 .srch svg{width:13px;height:13px;}
+.sb3 .srch .k{margin-left:auto;font-family:var(--font-mono);font-size:9px;border:1px solid var(--border-2);border-radius:4px;padding:0 4px;}
+
+/* ---- 4 nested ---- */
+.sb4{width:204px;}
+.disc{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:7px;color:var(--muted);font-size:12.5px;font-weight:500;border:none;background:none;width:100%;text-align:left;}
+.disc:hover{background:var(--inset);color:var(--ink);}
+.disc svg.ic{width:15px;height:15px;opacity:.8;flex-shrink:0;}
+.disc .cv{margin-left:auto;transition:transform .15s;}
+.disc .cv svg{width:13px;height:13px;}
+.disc.open .cv{transform:rotate(90deg);}
+.children{margin:1px 0 2px 18px;border-left:1px solid var(--border);padding-left:6px;display:flex;flex-direction:column;gap:1px;}
+.children.hide{display:none;}
+.cni{display:block;padding:6px 9px;border-radius:6px;color:var(--muted);font-size:12px;border:none;background:none;width:100%;text-align:left;transition:background .12s,color .12s;}
+.cni:hover{background:var(--inset);color:var(--ink);}
+.cni.on{background:var(--a-tint);color:var(--a-ink);font-weight:600;}
+
+/* ---- 5 switcher + profile ---- */
+.sb5{width:206px;}
+.switch{display:flex;align-items:center;gap:9px;margin:10px;padding:8px;border:1px solid var(--border);border-radius:9px;background:#fff;}
+.switch .ws{width:28px;height:28px;border-radius:7px;background:#2C6E49;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.switch .n{font-size:12px;font-weight:700;line-height:1.2;}
+.switch .m{font-size:10px;color:var(--subtle);}
+.switch .cv{margin-left:auto;color:var(--subtle);}
+.switch .cv svg{width:14px;height:14px;}
+
+/* ---- 6 dark ---- */
+.sb6{width:198px;background:#1B1C20;border-right-color:#2A2B30;}
+.sb6 .brand{color:#ECECEE;}
+.sb6 .brand .mk{background:#6E84E8;}
+.sb6 .shdr{color:#7E808A;}
+.sb6 .ni{color:#A6A8B0;}
+.sb6 .ni:hover:not(.on){background:rgba(255,255,255,0.05);color:#fff;}
+.sb6 .ni.on{background:rgba(110,132,232,0.18);color:#C5CFF6;}
+.sb6 .ni.on svg{color:#9DB0F4;}
+.sb6 .ni .cnt{background:rgba(255,255,255,0.08);color:#A6A8B0;}
+.sb6 .foot{border-top-color:#2A2B30;}
+.sb6 .uchip:hover{background:rgba(255,255,255,0.05);}
+.sb6 .uchip .av{background:#33353D;color:#C5CFF6;}
+.sb6 .uchip .n{color:#ECECEE;}
+.sb6 .uchip .m{color:#7E808A;}
+
+/* ---- 7 dense + badges ---- */
+.sb7{width:188px;}
+.sb7 .brand{padding:11px 13px;font-size:12.5px;}
+.sb7 .nav{padding:6px 8px;gap:0;}
+.sb7 .ni{padding:5px 8px;font-size:12px;border-radius:6px;gap:9px;}
+.sb7 .ni svg{width:14px;height:14px;}
+.sb7 .shdr{padding:9px 7px 3px;}
+
+/* ---- 8 primary action ---- */
+.sb8{width:204px;}
+.actbtn{margin:11px 11px 4px;display:flex;align-items:center;justify-content:center;gap:7px;background:var(--a);color:#fff;border:none;border-radius:8px;padding:9px 12px;font-size:12.5px;font-weight:600;box-shadow:0 1px 2px rgba(56,88,196,.35);transition:background .12s;}
+.actbtn:hover{background:var(--a-ink);}
+.actbtn svg{width:14px;height:14px;}
+
+@media(max-width:880px){.gallery{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chev-d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-chev-ud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></symbol>
+  <symbol id="i-life" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <header class="head">
+    <div class="eyebrow">Specimen · navigation</div>
+    <h1>Sidebar variations</h1>
+    <p>Eight nav-rail structures for app shells — differing in how items are grouped, where search, switching and actions live, and whether the rail is labeled, collapsed or dark. Each shown beside a faint hint of the page it frames.</p>
+  </header>
+
+  <div class="gallery">
+
+    <!-- 1 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>01</span>Labeled with section headers</div><div class="uw"><b>Use when</b> — many destinations that group into a few clear areas.</div></div>
+      <div class="frame">
+        <aside class="sb sb1">
+          <div class="brand"><span class="mk"><b></b></span>Northwind</div>
+          <nav class="nav">
+            <div class="shdr">General</div>
+            <button class="ni on"><svg><use href="#i-grid"/></svg>Dashboard</button>
+            <button class="ni"><svg><use href="#i-chart"/></svg>Analytics</button>
+            <div class="shdr">Commerce</div>
+            <button class="ni"><svg><use href="#i-inbox"/></svg>Orders</button>
+            <button class="ni"><svg><use href="#i-users"/></svg>Customers</button>
+            <div class="shdr">Account</div>
+            <button class="ni"><svg><use href="#i-settings"/></svg>Settings</button>
+          </nav>
+        </aside>
+        <div class="pg"><div class="ph"><span class="t"></span><span class="a"></span></div><div class="cards"><span class="ca"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>02</span>Collapsed icon rail + tooltips</div><div class="uw"><b>Use when</b> — screen space is precious and items are familiar.</div></div>
+      <div class="frame">
+        <aside class="sb sb2">
+          <div class="brand"><span class="mk"><b></b></span></div>
+          <nav class="nav">
+            <button class="ri on" aria-label="Dashboard"><svg><use href="#i-grid"/></svg></button>
+            <button class="ri" aria-label="Orders"><svg><use href="#i-inbox"/></svg><span class="tip">Orders</span></button>
+            <button class="ri" aria-label="Analytics"><svg><use href="#i-chart"/></svg></button>
+            <button class="ri" aria-label="Customers"><svg><use href="#i-users"/></svg></button>
+            <button class="ri" aria-label="Settings"><svg><use href="#i-settings"/></svg></button>
+          </nav>
+          <div class="foot"><span class="av">AM</span></div>
+        </aside>
+        <div class="pg"><div class="ph"><span class="t"></span><span class="a"></span></div><div class="cards"><span class="ca"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>03</span>Search pinned at top</div><div class="uw"><b>Use when</b> — finding is faster than browsing a long nav.</div></div>
+      <div class="frame">
+        <aside class="sb sb3">
+          <div class="brand"><span class="mk"><b></b></span>Northwind</div>
+          <div class="srch"><svg><use href="#i-search"/></svg>Search<span class="k">⌘K</span></div>
+          <nav class="nav">
+            <button class="ni on"><svg><use href="#i-grid"/></svg>Dashboard</button>
+            <button class="ni"><svg><use href="#i-inbox"/></svg>Orders</button>
+            <button class="ni"><svg><use href="#i-users"/></svg>Customers</button>
+            <button class="ni"><svg><use href="#i-chart"/></svg>Reports</button>
+            <button class="ni"><svg><use href="#i-settings"/></svg>Settings</button>
+          </nav>
+        </aside>
+        <div class="pg"><div class="ph"><span class="t"></span><span class="a"></span></div><div class="cards"><span class="ca"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>04</span>Nested expandable groups</div><div class="uw"><b>Use when</b> — deep IA with parent areas and many sub-pages.</div></div>
+      <div class="frame">
+        <aside class="sb sb4">
+          <div class="brand"><span class="mk"><b></b></span>Northwind</div>
+          <nav class="nav" data-tree>
+            <button class="ni"><svg><use href="#i-home"/></svg>Home</button>
+            <button class="disc open" data-disc><svg class="ic"><use href="#i-chart"/></svg>Analytics<span class="cv"><svg><use href="#i-chev-r"/></svg></span></button>
+            <div class="children">
+              <button class="cni on">Overview</button>
+              <button class="cni">Funnels</button>
+              <button class="cni">Cohorts</button>
+            </div>
+            <button class="disc" data-disc><svg class="ic"><use href="#i-inbox"/></svg>Commerce<span class="cv"><svg><use href="#i-chev-r"/></svg></span></button>
+            <div class="children hide">
+              <button class="cni">Orders</button>
+              <button class="cni">Products</button>
+            </div>
+            <button class="ni"><svg><use href="#i-settings"/></svg>Settings</button>
+          </nav>
+        </aside>
+        <div class="pg"><div class="ph"><span class="t"></span><span class="a"></span></div><div class="cards"><span class="ca"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>05</span>Workspace switcher + profile</div><div class="uw"><b>Use when</b> — users move between orgs and need their account at hand.</div></div>
+      <div class="frame">
+        <aside class="sb sb5">
+          <div class="switch"><span class="ws">NW</span><div><div class="n">Northwind</div><div class="m">Pro plan</div></div><span class="cv"><svg><use href="#i-chev-ud"/></svg></span></div>
+          <nav class="nav">
+            <button class="ni on"><svg><use href="#i-grid"/></svg>Dashboard</button>
+            <button class="ni"><svg><use href="#i-inbox"/></svg>Orders</button>
+            <button class="ni"><svg><use href="#i-users"/></svg>Customers</button>
+            <button class="ni"><svg><use href="#i-settings"/></svg>Settings</button>
+          </nav>
+          <div class="foot"><div class="uchip"><span class="av">AM</span><div><div class="n">Ana Marlowe</div><div class="m">ana@northwind.co</div></div><span class="cv"><svg><use href="#i-chev-d"/></svg></span></div></div>
+        </aside>
+        <div class="pg"><div class="ph"><span class="t"></span><span class="a"></span></div><div class="cards"><span class="ca"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>06</span>Dark sidebar</div><div class="uw"><b>Use when</b> — content is bright/media-heavy and the rail should recede.</div></div>
+      <div class="frame">
+        <aside class="sb sb6">
+          <div class="brand"><span class="mk"><b></b></span>Northwind</div>
+          <nav class="nav">
+            <div class="shdr">General</div>
+            <button class="ni on"><svg><use href="#i-grid"/></svg>Dashboard</button>
+            <button class="ni"><svg><use href="#i-chart"/></svg>Analytics</button>
+            <button class="ni"><svg><use href="#i-inbox"/></svg>Orders<span class="cnt">12</span></button>
+            <div class="shdr">Account</div>
+            <button class="ni"><svg><use href="#i-settings"/></svg>Settings</button>
+          </nav>
+          <div class="foot"><div class="uchip"><span class="av">AM</span><div><div class="n">Ana Marlowe</div><div class="m">Owner</div></div></div></div>
+        </aside>
+        <div class="pg"><div class="ph"><span class="t"></span><span class="a"></span></div><div class="cards"><span class="ca"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>07</span>Compact dense + count badges</div><div class="uw"><b>Use when</b> — power users scan many items and live counts matter.</div></div>
+      <div class="frame">
+        <aside class="sb sb7">
+          <div class="brand"><span class="mk"><b></b></span>Northwind</div>
+          <nav class="nav">
+            <div class="shdr">Work</div>
+            <button class="ni on"><svg><use href="#i-inbox"/></svg>Inbox<span class="cnt">24</span></button>
+            <button class="ni"><svg><use href="#i-tag"/></svg>Assigned<span class="cnt">8</span></button>
+            <button class="ni"><svg><use href="#i-bell"/></svg>Mentions<span class="cnt">3</span></button>
+            <button class="ni"><svg><use href="#i-folder"/></svg>Projects<span class="cnt">12</span></button>
+            <div class="shdr">Manage</div>
+            <button class="ni"><svg><use href="#i-users"/></svg>Team<span class="cnt">9</span></button>
+            <button class="ni"><svg><use href="#i-card"/></svg>Billing</button>
+            <button class="ni"><svg><use href="#i-settings"/></svg>Settings</button>
+          </nav>
+        </aside>
+        <div class="pg"><div class="ph"><span class="t"></span><span class="a"></span></div><div class="cards"><span class="ca"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>08</span>Primary action above nav</div><div class="uw"><b>Use when</b> — one create action dominates the workflow.</div></div>
+      <div class="frame">
+        <aside class="sb sb8">
+          <div class="brand"><span class="mk"><b></b></span>Northwind</div>
+          <button class="actbtn"><svg><use href="#i-plus"/></svg>New project</button>
+          <nav class="nav">
+            <button class="ni on"><svg><use href="#i-grid"/></svg>Dashboard</button>
+            <button class="ni"><svg><use href="#i-folder"/></svg>Projects</button>
+            <button class="ni"><svg><use href="#i-users"/></svg>Team</button>
+            <button class="ni"><svg><use href="#i-life"/></svg>Support</button>
+            <button class="ni"><svg><use href="#i-settings"/></svg>Settings</button>
+          </nav>
+        </aside>
+        <div class="pg"><div class="ph"><span class="t"></span><span class="a"></span></div><div class="cards"><span class="ca"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('[data-disc]').forEach(function(d){
+  d.addEventListener('click',function(){
+    d.classList.toggle('open');
+    var kids=d.nextElementSibling;
+    if(kids&&kids.classList.contains('children'))kids.classList.toggle('hide');
+  });
+});
+</script>
+</body>
+</html>

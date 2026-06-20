@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Empty / first-run states (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Empty / first-run states · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin. Only composition + interaction varies. Minimal abstract
+   glyphs only (no fake imagery). WCAG AA throughout.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --bad:#C0392B;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+
+.btn-pri{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:600;padding:11px 18px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-sec{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:13px;font-weight:600;padding:9px 15px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+.linkbtn{font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;}
+
+/* the abstract empty glyph — minimal line, on a soft disc */
+.glyph{display:flex;align-items:center;justify-content:center;border-radius:18px;background:var(--accent-tint);color:var(--accent-ink);}
+.glyph.lg{width:76px;height:76px;} .glyph.lg .ico{width:34px;height:34px;}
+.glyph.md{width:56px;height:56px;border-radius:14px;} .glyph.md .ico{width:26px;height:26px;}
+.glyph.ok{background:var(--ok-t);color:var(--ok);}
+.glyph.mut{background:var(--inset);color:var(--faint);}
+
+/* toolbar bits */
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:8px 11px;color:var(--faint);}
+.search .ico{width:15px;height:15px;} .search input{border:none;outline:none;background:none;font-size:13px;color:var(--ink);width:100%;}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--accent-ink);background:var(--accent-tint);border:1px solid #cdddf6;border-radius:7px;padding:5px 7px 5px 10px;}
+.chip button{width:16px;height:16px;display:flex;align-items:center;justify-content:center;color:var(--accent-ink);border-radius:4px;} .chip button:hover{background:rgba(37,99,204,.13);} .chip button .ico{width:11px;height:11px;}
+.optchip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:8px 13px;}
+.optchip:hover{border-color:var(--accent);background:var(--accent-tint);color:var(--accent-ink);}
+.optchip .ico{width:14px;height:14px;color:var(--mut);}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5M9 8V2M15 8V2M18 8v4a6 6 0 0 1-12 0V8Z"/></symbol>
+  <symbol id="i-import" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4M3 21h18"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Empty / first-run states · one skin, five compositions</div>
+    <h1>Same skin. Five kinds of nothing.</h1>
+    <p>The states that greet a user when there's nothing to show — composed five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white surfaces with hairline borders, slightly-rounded corners, one restrained blue accent, system sans. Illustrations stay minimal — a single line glyph on a soft disc, never fake imagery. What changes is purely <em>composition and interaction</em>.</p>
+  </header>
+
+  <!-- ============== 1 · FIRST-RUN WELCOME ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">First-run welcome</div>
+      <p class="plate-recipe"><b>PULLS</b> — a full-surface welcome for a brand-new account: short headline + supporting line + primary CTA + a quiet secondary link. &nbsp;<b>WHY</b> — the very first screen sets the tone: one centered message and a single clear action beat a dashboard full of zeros for getting someone started.</p>
+    </div>
+    <div class="frame" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:72px 24px;min-height:420px">
+      <div class="glyph lg"><svg class="ico"><use href="#i-rocket"/></svg></div>
+      <h2 style="font-size:27px;font-weight:800;letter-spacing:-0.02em;margin-top:22px">Welcome to Harbor</h2>
+      <p style="font-size:15px;color:var(--mut);margin-top:10px;max-width:44ch;line-height:1.55">Your workspace is ready. Let's set up your first project — it takes about a minute.</p>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:24px">
+        <button class="btn-pri" style="padding:12px 26px">Create your first project</button>
+        <a href="#" class="linkbtn" style="color:var(--mut)">Take a tour instead</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · EMPTY COLLECTION (CREATE) ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Empty collection</div>
+      <p class="plate-recipe"><b>PULLS</b> — an empty list/grid surface (toolbar present, zero rows) with a centered empty card (glyph + message + Create CTA) and a couple of “start from template” option chips. &nbsp;<b>WHY</b> — keeping the real toolbar visible signals where you are, while the centered card and template chips offer both a blank start and a faster head-start.</p>
+    </div>
+    <div class="frame" style="padding:0">
+      <div style="display:flex;align-items:center;gap:10px;padding:15px 22px;border-bottom:1px solid var(--line);background:var(--surface)">
+        <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Projects</div>
+        <div class="search" style="margin-left:auto;width:200px"><svg class="ico"><use href="#i-search"/></svg><input placeholder="Search projects"></div>
+        <button class="btn-pri" style="padding:9px 15px"><svg class="ico"><use href="#i-plus"/></svg>New project</button>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:56px 24px">
+        <div class="glyph md mut"><svg class="ico"><use href="#i-folder"/></svg></div>
+        <h3 style="font-size:18px;font-weight:700;margin-top:16px">No projects yet</h3>
+        <p style="font-size:13.5px;color:var(--mut);margin-top:7px;max-width:40ch;line-height:1.5">Projects hold your boards, files, and reports. Create one from scratch or start from a template.</p>
+        <button class="btn-pri" style="margin-top:18px"><svg class="ico"><use href="#i-plus"/></svg>Create project</button>
+        <div style="margin-top:20px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin-bottom:10px">Or start from a template</div>
+          <div style="display:flex;gap:9px;justify-content:center;flex-wrap:wrap">
+            <button class="optchip"><svg class="ico"><use href="#i-grid"/></svg>Kanban board</button>
+            <button class="optchip"><svg class="ico"><use href="#i-doc"/></svg>Docs &amp; wiki</button>
+            <button class="optchip"><svg class="ico"><use href="#i-db"/></svg>Tracker</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · FILTERED TO ZERO ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Filtered to zero</div>
+      <p class="plate-recipe"><b>PULLS</b> — a list <em>with</em> active filter chips applied that match nothing: a “no matches” message + “Clear filters” CTA — distinct from a true no-data state. &nbsp;<b>WHY</b> — the data exists; the query is just too narrow. Echoing the active filters and offering to clear them points at the real cause instead of implying the list is empty.</p>
+    </div>
+    <div class="frame" style="padding:0">
+      <div style="display:flex;align-items:center;gap:10px;padding:15px 22px;border-bottom:1px solid var(--line);background:var(--surface)">
+        <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Transactions</div>
+        <div class="search" style="margin-left:auto;width:180px"><svg class="ico"><use href="#i-search"/></svg><input value="refund" ></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 22px;border-bottom:1px solid var(--inset);background:#FBFCFD">
+        <span style="font-size:11.5px;color:var(--faint);display:inline-flex;align-items:center;gap:5px"><svg class="ico" style="width:13px;height:13px"><use href="#i-filter"/></svg>Filters:</span>
+        <span class="chip">Status: Failed<button aria-label="Remove"><svg class="ico"><use href="#i-x"/></svg></button></span>
+        <span class="chip">Amount: &gt; $10,000<button aria-label="Remove"><svg class="ico"><use href="#i-x"/></svg></button></span>
+        <span class="chip">Date: Today<button aria-label="Remove"><svg class="ico"><use href="#i-x"/></svg></button></span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:54px 24px">
+        <div class="glyph md mut"><svg class="ico"><use href="#i-search"/></svg></div>
+        <h3 style="font-size:18px;font-weight:700;margin-top:16px">No transactions match these filters</h3>
+        <p style="font-size:13.5px;color:var(--mut);margin-top:7px;max-width:42ch;line-height:1.5">There are 2,204 transactions in total — none match all three filters at once. Try removing one.</p>
+        <div style="display:flex;gap:10px;margin-top:18px"><button class="btn-pri"><svg class="ico"><use href="#i-x"/></svg>Clear all filters</button><button class="btn-sec">Edit filters</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · CONNECT A SOURCE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Connect a source</div>
+      <p class="plate-recipe"><b>PULLS</b> — an empty dashboard prompting setup: 3 connect-cards (data source / integration / import) each with a Connect button, plus a skip link. &nbsp;<b>WHY</b> — a dashboard with no data is blocked on one thing — input. Offering the concrete connection paths as equal cards turns the dead end into a choice of next steps.</p>
+    </div>
+    <div class="frame" style="padding:28px 26px;text-align:center">
+      <div class="glyph md" style="margin:0 auto"><svg class="ico"><use href="#i-grid"/></svg></div>
+      <h3 style="font-size:19px;font-weight:700;letter-spacing:-0.01em;margin-top:16px">Bring in your data to get started</h3>
+      <p style="font-size:13.5px;color:var(--mut);margin-top:7px;max-width:46ch;margin-left:auto;margin-right:auto;line-height:1.5">Connect a source or import a file and your dashboards fill in automatically.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:720px;margin:24px auto 0">
+        <div class="card" style="padding:20px 18px;display:flex;flex-direction:column;align-items:center;text-align:center">
+          <div class="glyph md mut"><svg class="ico"><use href="#i-db"/></svg></div>
+          <div style="font-size:13.5px;font-weight:700;margin-top:12px">Data source</div>
+          <p style="font-size:12px;color:var(--faint);margin-top:5px;line-height:1.45;flex:1">Link a database or warehouse.</p>
+          <button class="btn-sec" style="width:100%;margin-top:14px"><svg class="ico"><use href="#i-plug"/></svg>Connect</button>
+        </div>
+        <div class="card" style="padding:20px 18px;display:flex;flex-direction:column;align-items:center;text-align:center">
+          <div class="glyph md mut"><svg class="ico"><use href="#i-plug"/></svg></div>
+          <div style="font-size:13.5px;font-weight:700;margin-top:12px">Integration</div>
+          <p style="font-size:12px;color:var(--faint);margin-top:5px;line-height:1.45;flex:1">Sync Stripe, HubSpot &amp; more.</p>
+          <button class="btn-sec" style="width:100%;margin-top:14px"><svg class="ico"><use href="#i-plug"/></svg>Connect</button>
+        </div>
+        <div class="card" style="padding:20px 18px;display:flex;flex-direction:column;align-items:center;text-align:center">
+          <div class="glyph md mut"><svg class="ico"><use href="#i-import"/></svg></div>
+          <div style="font-size:13.5px;font-weight:700;margin-top:12px">Import a file</div>
+          <p style="font-size:12px;color:var(--faint);margin-top:5px;line-height:1.45;flex:1">Upload a CSV or spreadsheet.</p>
+          <button class="btn-sec" style="width:100%;margin-top:14px"><svg class="ico"><use href="#i-import"/></svg>Import</button>
+        </div>
+      </div>
+      <div style="margin-top:20px"><a href="#" class="linkbtn" style="color:var(--mut)">Skip — I'll add data later</a></div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · ALL DONE (POSITIVE EMPTY) ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">All done</div>
+      <p class="plate-recipe"><b>PULLS</b> — a restrained celebratory cleared state (inbox-zero / all-tasks-done): a check glyph + “you're all caught up” + a subtle secondary action. &nbsp;<b>WHY</b> — emptiness can be an achievement; a calm, positive confirmation rewards reaching zero without resorting to confetti or noise.</p>
+    </div>
+    <div class="frame" style="padding:0">
+      <div style="display:flex;align-items:center;gap:10px;padding:15px 22px;border-bottom:1px solid var(--line);background:var(--surface)">
+        <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Inbox</div>
+        <span style="font-size:11.5px;color:var(--faint)">0 unread</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:64px 24px">
+        <div class="glyph lg ok"><svg class="ico"><use href="#i-check"/></svg></div>
+        <h3 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;margin-top:20px">You're all caught up</h3>
+        <p style="font-size:14px;color:var(--mut);margin-top:8px;max-width:40ch;line-height:1.55">No items need your attention right now. Nicely done — enjoy the quiet.</p>
+        <div style="display:flex;gap:10px;margin-top:20px"><button class="btn-sec"><svg class="ico"><use href="#i-inbox"/></svg>View archived</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script>
+/* filtered-to-zero: clear chips */
+document.querySelectorAll('.chip button').forEach(function(b){b.addEventListener('click',function(){b.closest('.chip').remove();});});
+</script>
+</body>
+</html>

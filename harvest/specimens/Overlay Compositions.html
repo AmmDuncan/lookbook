@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Overlay compositions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   OVERLAY COMPOSITIONS — one dialog, eight compositional patterns.
+   Neutral professional language; one slate-blue accent. Dimmed backdrops.
+   ============================================================================ */
+:root{
+  --bg:#EEEEEA; --surface:#FFFFFF; --inset:#F2F2EE; --app:#FAFAF8;
+  --border:#E5E4DE; --border-2:#D5D2C8;
+  --ink:#1C1D21; --muted:#585A61; --subtle:#8B8D94;
+  --a:#3858C4; --a-tint:rgba(56,88,196,0.11); --a-ink:#2c46a0;
+  --bad:#B23A2E; --bad-tint:rgba(178,58,46,0.11);
+  --scrim:rgba(22,23,28,0.46);
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --shadow-pop:0 16px 40px -14px rgba(22,23,28,0.3),0 2px 8px rgba(22,23,28,0.12);
+  --shadow-modal:0 30px 64px -22px rgba(22,23,28,0.42),0 4px 12px rgba(22,23,28,0.14);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:2.5px solid var(--a);outline-offset:2px;border-radius:5px;}
+button{font-family:inherit;cursor:pointer;}
+
+.wrap{max-width:1180px;margin:0 auto;padding:56px 36px 96px;}
+.head{margin-bottom:36px;padding-bottom:24px;border-bottom:1.5px solid var(--ink);}
+.eyebrow{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--subtle);margin-bottom:13px;}
+.head h1{font-size:clamp(32px,5vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1;}
+.head p{font-size:15.5px;color:var(--muted);max-width:62ch;margin-top:14px;}
+
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+.spec{display:flex;flex-direction:column;gap:12px;}
+.spec.full{grid-column:1/-1;}
+.lab{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
+.lab .nm{font-size:14px;font-weight:700;letter-spacing:-0.01em;}
+.lab .nm span{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--a);margin-right:8px;}
+.lab .uw{font-size:12.5px;color:var(--muted);}
+.lab .uw b{color:var(--ink);font-weight:600;}
+
+/* stage = app window backdrop */
+.stage{position:relative;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--app);height:320px;}
+.stage.tall{height:360px;}
+.appsk{position:absolute;inset:0;padding:16px;opacity:.6;}
+.app-top{display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+.app-top .t{height:11px;width:120px;border-radius:5px;background:#E4E3DD;}
+.app-top .a{margin-left:auto;width:22px;height:22px;border-radius:50%;background:#E4E3DD;}
+.sk{height:9px;border-radius:5px;background:#E9E8E2;margin-bottom:11px;}
+.sk.s{width:88%;}.sk.m{width:72%;}.sk.sh{width:54%;}
+.skrow{display:flex;gap:10px;margin:14px 0;}
+.skcard{flex:1;height:50px;border-radius:8px;background:#EDECE6;}
+.scrim{position:absolute;inset:0;background:var(--scrim);}
+
+/* dialog content (shared) */
+.dlg{background:var(--surface);display:flex;flex-direction:column;}
+.dlg-h{display:flex;align-items:flex-start;gap:10px;padding:18px 18px 0;}
+.dlg-h .tt{font-size:15.5px;font-weight:700;letter-spacing:-0.01em;flex:1;}
+.dlg-h .ds{font-size:12.5px;color:var(--muted);margin-top:2px;font-weight:400;}
+.xbtn{width:30px;height:30px;border:none;background:none;color:var(--muted);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin:-4px -4px 0 0;}
+.xbtn:hover{background:var(--inset);color:var(--ink);}
+.xbtn svg{width:16px;height:16px;}
+.dlg-b{padding:14px 18px 4px;display:flex;flex-direction:column;gap:12px;}
+.f label{display:block;font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;}
+.f input,.f select{width:100%;font-family:var(--font-ui);font-size:13.5px;color:var(--ink);background:#fff;border:1px solid var(--border-2);border-radius:8px;padding:9px 11px;}
+.f select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23585A61' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;padding-right:32px;cursor:pointer;}
+.f input:focus,.f select:focus{outline:none;border-color:var(--a);box-shadow:0 0 0 3px var(--a-tint);}
+.dlg-f{display:flex;justify-content:flex-end;gap:9px;padding:16px 18px;margin-top:8px;border-top:1px solid var(--border);}
+.btn{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;padding:9px 15px;border-radius:8px;border:1px solid transparent;}
+.btn svg{width:15px;height:15px;}
+.btn-a{background:var(--a);color:#fff;}
+.btn-a:hover{background:var(--a-ink);}
+.btn-ghost{background:var(--surface);color:var(--ink);border-color:var(--border-2);}
+.btn-ghost:hover{background:var(--inset);}
+.btn-danger{background:var(--bad);color:#fff;}
+.btn-danger:hover{filter:brightness(1.07);}
+.btn-sm{padding:7px 12px;font-size:12.5px;}
+
+/* 1 modal */
+.modal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(330px,86%);border:1px solid var(--border-2);border-radius:14px;box-shadow:var(--shadow-modal);overflow:hidden;}
+/* 2 bottom sheet */
+.sheet{position:absolute;left:0;right:0;bottom:0;border-top:1px solid var(--border-2);border-radius:16px 16px 0 0;box-shadow:0 -16px 40px -18px rgba(22,23,28,.4);overflow:hidden;}
+.sheet .grab{width:36px;height:4px;border-radius:99px;background:var(--border-2);margin:9px auto 2px;}
+/* 3/4 drawers */
+.drawer{position:absolute;top:0;bottom:0;width:64%;box-shadow:0 0 50px -14px rgba(22,23,28,.4);overflow:hidden;}
+.drawer.right{right:0;border-left:1px solid var(--border-2);}
+.drawer.left{left:0;border-right:1px solid var(--border-2);}
+/* 5 fullscreen */
+.full{position:absolute;inset:0;background:var(--surface);display:flex;flex-direction:column;}
+.full .ft{display:flex;align-items:center;gap:12px;padding:0 18px;height:52px;border-bottom:1px solid var(--border);}
+.full .ft .tt{font-size:14.5px;font-weight:700;}
+.full .ft .sp{flex:1;}
+.full .fbody{flex:1;display:flex;align-items:center;justify-content:center;padding:20px;}
+.full .fcard{width:min(360px,100%);}
+.full .fcard .dlg-h{padding-left:0;padding-right:0;}
+.full .fcard .dlg-b{padding-left:0;padding-right:0;}
+.full .fcard .dlg-f{padding-left:0;padding-right:0;border-top:none;justify-content:flex-start;}
+/* 6 inline expand (no scrim) */
+.inlinepanel{border:1px solid var(--a);border-radius:10px;background:#fff;box-shadow:var(--shadow-pop);overflow:hidden;margin:2px 0;}
+.inlinepanel .dlg-h{padding-top:14px;}
+/* 7 popover (no scrim) */
+.pop-stage{display:flex;align-items:flex-end;justify-content:center;}
+.popover{position:absolute;bottom:74px;left:50%;transform:translateX(-50%);width:260px;background:var(--surface);border:1px solid var(--border-2);border-radius:12px;box-shadow:var(--shadow-pop);overflow:hidden;}
+.popover::after{content:'';position:absolute;left:50%;bottom:-7px;transform:translateX(-50%) rotate(45deg);width:12px;height:12px;background:var(--surface);border-right:1px solid var(--border-2);border-bottom:1px solid var(--border-2);}
+.trigger{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);}
+/* 8 alert */
+.alert{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(300px,86%);background:var(--surface);border:1px solid var(--border-2);border-radius:14px;box-shadow:var(--shadow-modal);padding:22px 20px 18px;text-align:center;}
+.alert .ic{width:42px;height:42px;border-radius:11px;background:var(--bad-tint);color:var(--bad);display:flex;align-items:center;justify-content:center;margin:0 auto 13px;}
+.alert .ic svg{width:21px;height:21px;}
+.alert .at{font-size:15.5px;font-weight:700;}
+.alert .am{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5;}
+.alert .af{display:flex;gap:9px;margin-top:18px;}
+.alert .af .btn{flex:1;justify-content:center;}
+
+@media(max-width:760px){.gallery{grid-template-columns:1fr;}.spec.full{grid-column:auto;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.54 21.69a.5.5 0 0 0 .94-.02l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.94l7.93 3.18a2 2 0 0 1 1.11 1.11z"/><path d="m21.85 2.15-10.94 10.94"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-chev-u" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <header class="head">
+    <div class="eyebrow">Specimen · overlays</div>
+    <h1>Overlay compositions</h1>
+    <p>One “Invite teammate” dialog placed eight ways — the content stays the same, only where and how it appears changes. Each is shown in context with a dimmed backdrop and a clear way out.</p>
+  </header>
+
+  <div class="gallery">
+
+    <!-- 1 MODAL -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>01</span>Centered modal dialog</div><div class="uw"><b>Use when</b> — a focused task that should pause everything else.</div></div>
+      <div class="stage">
+        <div class="appsk"><div class="app-top"><span class="t"></span><span class="a"></span></div><div class="sk s"></div><div class="sk m"></div><div class="skrow"><div class="skcard"></div><div class="skcard"></div></div><div class="sk s"></div><div class="sk sh"></div></div>
+        <div class="scrim"></div>
+        <div class="modal dlg">
+          <div class="dlg-h"><div><div class="tt">Invite teammate</div></div><button class="xbtn" aria-label="Close"><svg><use href="#i-x"/></svg></button></div>
+          <div class="dlg-b"><div class="f"><label>Email</label><input value="noa@team.com"></div><div class="f"><label>Role</label><select><option>Editor</option><option>Admin</option><option>Viewer</option></select></div></div>
+          <div class="dlg-f"><button class="btn btn-ghost btn-sm">Cancel</button><button class="btn btn-a btn-sm"><svg><use href="#i-send"/></svg>Send invite</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 BOTTOM SHEET -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>02</span>Bottom sheet</div><div class="uw"><b>Use when</b> — mobile or touch contexts; thumb-reachable from the bottom.</div></div>
+      <div class="stage">
+        <div class="appsk"><div class="app-top"><span class="t"></span><span class="a"></span></div><div class="sk s"></div><div class="sk m"></div><div class="skrow"><div class="skcard"></div><div class="skcard"></div></div><div class="sk sh"></div></div>
+        <div class="scrim"></div>
+        <div class="sheet dlg">
+          <div class="grab"></div>
+          <div class="dlg-h"><div><div class="tt">Invite teammate</div></div><button class="xbtn" aria-label="Close"><svg><use href="#i-x"/></svg></button></div>
+          <div class="dlg-b"><div class="f"><label>Email</label><input value="noa@team.com"></div><div class="f"><label>Role</label><select><option>Editor</option><option>Admin</option></select></div></div>
+          <div class="dlg-f"><button class="btn btn-ghost btn-sm">Cancel</button><button class="btn btn-a btn-sm"><svg><use href="#i-send"/></svg>Send</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 RIGHT DRAWER -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>03</span>Right side-drawer</div><div class="uw"><b>Use when</b> — editing alongside the list you came from (details, settings).</div></div>
+      <div class="stage">
+        <div class="appsk"><div class="app-top"><span class="t"></span><span class="a"></span></div><div class="sk s"></div><div class="sk m"></div><div class="sk s"></div><div class="sk sh"></div></div>
+        <div class="scrim"></div>
+        <aside class="drawer right dlg">
+          <div class="dlg-h"><div><div class="tt">Invite teammate</div><div class="ds">They'll get an email to join.</div></div><button class="xbtn" aria-label="Close"><svg><use href="#i-x"/></svg></button></div>
+          <div class="dlg-b"><div class="f"><label>Email</label><input value="noa@team.com"></div><div class="f"><label>Role</label><select><option>Editor</option><option>Admin</option></select></div></div>
+          <div class="dlg-f" style="margin-top:auto"><button class="btn btn-ghost btn-sm">Cancel</button><button class="btn btn-a btn-sm">Send</button></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- 4 LEFT DRAWER -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>04</span>Left side-drawer</div><div class="uw"><b>Use when</b> — navigation or a secondary panel that pairs with primary nav.</div></div>
+      <div class="stage">
+        <div class="appsk"><div class="app-top"><span class="t"></span><span class="a"></span></div><div class="sk s"></div><div class="sk m"></div><div class="sk s"></div><div class="sk sh"></div></div>
+        <div class="scrim"></div>
+        <aside class="drawer left dlg">
+          <div class="dlg-h"><div><div class="tt">Invite teammate</div></div><button class="xbtn" aria-label="Close"><svg><use href="#i-x"/></svg></button></div>
+          <div class="dlg-b"><div class="f"><label>Email</label><input value="noa@team.com"></div><div class="f"><label>Role</label><select><option>Editor</option><option>Admin</option></select></div></div>
+          <div class="dlg-f" style="margin-top:auto"><button class="btn btn-ghost btn-sm">Cancel</button><button class="btn btn-a btn-sm">Send</button></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- 5 FULLSCREEN -->
+    <div class="spec full">
+      <div class="lab"><div class="nm"><span>05</span>Full-screen takeover</div><div class="uw"><b>Use when</b> — a complex multi-step flow that deserves the whole canvas.</div></div>
+      <div class="stage tall">
+        <div class="full">
+          <div class="ft"><div class="tt">Invite teammate</div><span class="sp"></span><button class="xbtn" aria-label="Close"><svg><use href="#i-x"/></svg></button></div>
+          <div class="fbody">
+            <div class="fcard dlg">
+              <div class="dlg-h" style="padding-top:0"><div><div class="tt" style="font-size:19px">Bring someone on board</div><div class="ds">Send an invite and choose what they can do.</div></div></div>
+              <div class="dlg-b"><div class="f"><label>Email</label><input value="noa@team.com"></div><div class="f"><label>Role</label><select><option>Editor</option><option>Admin</option><option>Viewer</option></select></div></div>
+              <div class="dlg-f"><button class="btn btn-a"><svg><use href="#i-send"/></svg>Send invite</button><button class="btn btn-ghost">Cancel</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 INLINE EXPAND -->
+    <div class="spec full">
+      <div class="lab"><div class="nm"><span>06</span>Inline-expand (in-place panel)</div><div class="uw"><b>Use when</b> — the form belongs to a row/section; no need to dim the page.</div></div>
+      <div class="stage tall" style="height:300px">
+        <div class="appsk" style="opacity:1;padding:18px">
+          <div class="app-top"><span class="t"></span><span class="a"></span></div>
+          <div class="sk s"></div><div class="sk m"></div>
+          <div class="inlinepanel dlg">
+            <div class="dlg-h"><div><div class="tt">Invite teammate</div></div><button class="xbtn" aria-label="Collapse"><svg><use href="#i-chev-u"/></svg></button></div>
+            <div class="dlg-b"><div class="f"><label>Email</label><input value="noa@team.com"></div><div class="f"><label>Role</label><select><option>Editor</option><option>Admin</option></select></div></div>
+            <div class="dlg-f"><button class="btn btn-ghost btn-sm">Cancel</button><button class="btn btn-a btn-sm">Send invite</button></div>
+          </div>
+          <div class="sk s" style="margin-top:14px"></div><div class="sk sh"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 POPOVER -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>07</span>Popover anchored to a button</div><div class="uw"><b>Use when</b> — a quick action tied to its trigger; light-dismiss, no backdrop.</div></div>
+      <div class="stage">
+        <div class="appsk" style="opacity:1"><div class="app-top"><span class="t"></span><span class="a"></span></div><div class="sk s"></div><div class="sk m"></div><div class="skrow"><div class="skcard"></div><div class="skcard"></div></div><div class="sk sh"></div></div>
+        <div class="popover dlg">
+          <div class="dlg-h" style="padding-bottom:0"><div><div class="tt" style="font-size:14px">Invite teammate</div></div></div>
+          <div class="dlg-b" style="padding-bottom:12px"><div class="f"><label>Email</label><input placeholder="name@team.com"></div></div>
+          <div class="dlg-f" style="margin-top:0;padding:12px 16px"><button class="btn btn-a btn-sm" style="width:100%;justify-content:center">Send invite</button></div>
+        </div>
+        <button class="btn btn-a trigger"><svg><use href="#i-plus"/></svg>Invite</button>
+      </div>
+    </div>
+
+    <!-- 8 ALERT -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>08</span>Alert / confirm (compact)</div><div class="uw"><b>Use when</b> — a single yes/no decision, often destructive.</div></div>
+      <div class="stage">
+        <div class="appsk"><div class="app-top"><span class="t"></span><span class="a"></span></div><div class="sk s"></div><div class="sk m"></div><div class="skrow"><div class="skcard"></div><div class="skcard"></div></div><div class="sk sh"></div></div>
+        <div class="scrim"></div>
+        <div class="alert">
+          <div class="ic"><svg><use href="#i-alert"/></svg></div>
+          <div class="at">Remove access?</div>
+          <div class="am">Noa will lose access to this workspace immediately. You can re-invite them later.</div>
+          <div class="af"><button class="btn btn-ghost btn-sm">Cancel</button><button class="btn btn-danger btn-sm">Remove</button></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

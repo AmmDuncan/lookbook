@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Reports / export builder (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Reports / export builder · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin (off-white page, white cards, hairline borders, slightly
+   rounded corners, one blue accent, system sans + tabular figures). Only
+   composition + interaction varies. Charts smooth, muted gridlines. WCAG AA.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --warn-t:#F4EDDF;
+  --grid:#ECEEF1; --baseline:#C3CAD3; --d1:#2563CC; --d2:#6090E0; --d3:#A6C2EF; --d4:#D8E4F8;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input,select{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+
+.btn-pri{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:9px 15px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-sec{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:13px;font-weight:600;padding:8px 13px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+
+label.fld{display:block;}
+.fld .lab{font-size:12px;font-weight:600;color:var(--mut);margin-bottom:6px;display:block;}
+.input,.selectw select{width:100%;font-size:13px;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:9px 11px;outline:none;}
+.input:focus,.selectw select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+.selectw{position:relative;}
+.selectw select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:32px;}
+.selectw .ico{position:absolute;right:11px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--mut);pointer-events:none;}
+
+/* chips for dimensions/metrics */
+.optchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-2);background:var(--surface);border-radius:7px;padding:7px 11px;font-size:12.5px;font-weight:600;color:var(--mut);cursor:pointer;}
+.optchip .bx{width:15px;height:15px;border-radius:4px;border:1.5px solid var(--line-2);display:flex;align-items:center;justify-content:center;color:#fff;}
+.optchip .bx .ico{width:10px;height:10px;opacity:0;}
+.optchip.on{color:var(--accent-ink);background:var(--accent-tint);border-color:#cdddf6;}
+.optchip.on .bx{background:var(--accent);border-color:var(--accent);} .optchip.on .bx .ico{opacity:1;}
+
+/* report table */
+.rtable{width:100%;border-collapse:collapse;}
+.rtable th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);font-weight:600;text-align:left;padding:9px 13px;border-bottom:1px solid var(--line);white-space:nowrap;}
+.rtable td{font-size:13px;padding:10px 13px;border-bottom:1px solid var(--inset);color:var(--ink);}
+.rtable tbody tr:last-child td{border-bottom:none;}
+.rtable .r{text-align:right;font-variant-numeric:tabular-nums;}
+.rtable th.r{text-align:right;}
+.rtable .grp td{background:var(--inset);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);padding:8px 13px;}
+.rtable .sub td{font-weight:700;border-top:1px solid var(--line-2);border-bottom:none;background:#FBFCFD;}
+.rtable .grand td{font-weight:800;background:var(--accent-tint);color:var(--accent-ink);border-top:1.5px solid var(--accent);}
+.rtable .delta-up{color:var(--ok);font-weight:600;} .rtable .delta-dn{color:#C0392B;font-weight:600;}
+
+.sched-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--accent-tint);color:var(--accent-ink);}
+.sched-badge.off{background:var(--inset);color:var(--mut);}
+.sched-badge .ico{width:11px;height:11px;}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-chevr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-csv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.06 12.34a1 1 0 0 1 0-.68 10.94 10.94 0 0 1 19.88 0 1 1 0 0 1 0 .68 10.94 10.94 0 0 1-19.88 0Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-rep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></symbol>
+  <symbol id="i-kebab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></symbol>
+  <symbol id="i-src" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></symbol>
+  <symbol id="i-cols" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18"/></symbol>
+  <symbol id="i-fmt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2M9 20h6M12 4v16"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Reports / export builder · one skin, five compositions</div>
+    <h1>Same skin. Five ways to build a report.</h1>
+    <p>One job — configure, preview, and export a revenue report — composed five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white cards with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. What changes is purely <em>composition and interaction</em>. The skin is the paint, the composition is the skeleton.</p>
+  </header>
+
+  <!-- ============== 1 · BUILDER + LIVE PREVIEW ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Builder + live preview</div>
+      <p class="plate-recipe"><b>PULLS</b> — left config form (date range, dimensions, metrics, group-by) + right live preview of the resulting report table that reflects the config. &nbsp;<b>WHY</b> — the classic report-builder split: changes apply instantly so users tune the query against real output instead of guessing, then export with confidence.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:320px 1fr;min-height:520px">
+      <aside style="border-right:1px solid var(--line);background:var(--surface);padding:22px 22px;display:flex;flex-direction:column;gap:20px;overflow:auto">
+        <div style="font-size:15px;font-weight:700">Configure report</div>
+        <label class="fld"><span class="lab">Date range</span><div class="selectw"><select id="b1range"><option>Last 30 days</option><option>This quarter</option><option>Year to date</option></select><svg class="ico"><use href="#i-chev"/></svg></div></label>
+        <label class="fld"><span class="lab">Group by</span><div class="selectw"><select id="b1group"><option value="plan">Plan</option><option value="region">Region</option><option value="channel">Channel</option></select><svg class="ico"><use href="#i-chev"/></svg></div></label>
+        <div><span class="lab" style="font-size:12px;font-weight:600;color:var(--mut);margin-bottom:8px;display:block">Metrics</span>
+          <div style="display:flex;flex-wrap:wrap;gap:8px" id="b1metrics">
+            <button class="optchip on" data-m="rev"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Revenue</button>
+            <button class="optchip on" data-m="acct"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Accounts</button>
+            <button class="optchip on" data-m="aov"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Avg. value</button>
+            <button class="optchip" data-m="churn"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Churn</button>
+          </div>
+        </div>
+        <div style="margin-top:auto;display:flex;gap:9px;padding-top:8px"><button class="btn-pri" style="flex:1;justify-content:center"><svg class="ico"><use href="#i-eye"/></svg>Update preview</button><button class="btn-sec"><svg class="ico"><use href="#i-dl"/></svg></button></div>
+      </aside>
+      <div style="padding:22px 24px;background:var(--page);display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:15px;font-weight:700">Revenue by <span id="b1grouplbl">plan</span></div><div style="font-size:12px;color:var(--faint);margin-top:2px" id="b1sub">Last 30 days · 4 metrics</div></div><span style="font-size:11.5px;color:var(--accent-ink);background:var(--accent-tint);border:1px solid #cdddf6;border-radius:999px;padding:3px 10px;font-weight:600">Live preview</span></div>
+        <div class="card" style="overflow:hidden">
+          <table class="rtable" id="b1table"></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · PIVOT + GROUPED TOTALS ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Pivot + grouped totals</div>
+      <p class="plate-recipe"><b>PULLS</b> — a report output table grouped by a dimension with subtotal rows per group + a grand-total row + a toolbar with a group-by control and export buttons (CSV / PDF / XLSX). Tabular, right-aligned numerals. &nbsp;<b>WHY</b> — for financial reporting that gets read and exported: subtotals and a grand total let the numbers reconcile at a glance, the way a spreadsheet would.</p>
+    </div>
+    <div class="frame" style="padding:20px 24px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+        <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Revenue — Q2 2026</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-left:6px"><span style="font-size:12px;color:var(--faint)">Group by</span><div class="selectw" style="width:130px"><select><option>Region → Plan</option><option>Plan → Region</option></select><svg class="ico"><use href="#i-chev"/></svg></div></div>
+        <div style="margin-left:auto;display:flex;gap:8px"><button class="btn-sec"><svg class="ico"><use href="#i-csv"/></svg>CSV</button><button class="btn-sec"><svg class="ico"><use href="#i-rep"/></svg>PDF</button><button class="btn-sec"><svg class="ico"><use href="#i-csv"/></svg>XLSX</button></div>
+      </div>
+      <div class="card" style="overflow:hidden">
+        <table class="rtable">
+          <thead><tr><th>Account</th><th>Plan</th><th class="r">Accounts</th><th class="r">Revenue</th><th class="r">Δ vs Q1</th></tr></thead>
+          <tbody>
+            <tr class="grp"><td colspan="5">North America</td></tr>
+            <tr><td>Northwind LLC</td><td>Scale</td><td class="r">1</td><td class="r">$24,800.00</td><td class="r delta-up">+12.4%</td></tr>
+            <tr><td>Atlas Group</td><td>Enterprise</td><td class="r">1</td><td class="r">$37,440.00</td><td class="r delta-up">+8.1%</td></tr>
+            <tr><td>Beacon Labs</td><td>Starter</td><td class="r">1</td><td class="r">$3,720.00</td><td class="r delta-dn">−2.0%</td></tr>
+            <tr class="sub"><td colspan="2">Subtotal — North America</td><td class="r">3</td><td class="r">$65,960.00</td><td class="r delta-up">+9.2%</td></tr>
+            <tr class="grp"><td colspan="5">Europe</td></tr>
+            <tr><td>Meridian Co</td><td>Growth</td><td class="r">1</td><td class="r">$7,680.00</td><td class="r delta-up">+4.1%</td></tr>
+            <tr><td>Lattice Inc</td><td>Scale</td><td class="r">1</td><td class="r">$14,268.00</td><td class="r delta-up">+6.6%</td></tr>
+            <tr class="sub"><td colspan="2">Subtotal — Europe</td><td class="r">2</td><td class="r">$21,948.00</td><td class="r delta-up">+5.7%</td></tr>
+            <tr class="grand"><td colspan="2">Grand total</td><td class="r">5</td><td class="r">$87,908.00</td><td class="r">+8.3%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · STEPPED BUILDER (WIZARD) ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Stepped builder (wizard)</div>
+      <p class="plate-recipe"><b>PULLS</b> — a horizontal stepper (Source → Filters → Columns → Format) with the current step's panel shown + a running summary of choices on the side. &nbsp;<b>WHY</b> — for first-time or complex exports: breaking the build into ordered steps lowers the chance of a misconfigured report, and the summary keeps earlier decisions visible.</p>
+    </div>
+    <div class="frame" style="padding:24px 26px">
+      <div style="display:flex;align-items:flex-start;margin-bottom:22px" id="w3steps">
+        <div class="w3step done"><span class="sc"><svg class="ico"><use href="#i-check"/></svg></span><span class="sl">Source</span></div>
+        <div class="w3step done"><span class="sc"><svg class="ico"><use href="#i-check"/></svg></span><span class="sl">Filters</span></div>
+        <div class="w3step cur"><span class="sc">3</span><span class="sl">Columns</span></div>
+        <div class="w3step"><span class="sc">4</span><span class="sl">Format</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 280px;gap:20px">
+        <div class="card" style="padding:22px 24px">
+          <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Choose columns</div>
+          <div style="font-size:13px;color:var(--mut);margin-top:4px;margin-bottom:18px">Pick the fields to include and drag to reorder.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:9px">
+            <button class="optchip on"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Account</button>
+            <button class="optchip on"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Plan</button>
+            <button class="optchip on"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Region</button>
+            <button class="optchip on"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Revenue</button>
+            <button class="optchip"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Seats</button>
+            <button class="optchip"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Renewal date</button>
+            <button class="optchip"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Owner</button>
+            <button class="optchip"><span class="bx"><svg class="ico"><use href="#i-check"/></svg></span>Δ vs prior</button>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:26px;padding-top:18px;border-top:1px solid var(--inset)"><button class="btn-sec">Back</button><button class="btn-pri">Continue<svg class="ico"><use href="#i-chevr"/></svg></button></div>
+        </div>
+        <aside class="card" style="padding:18px 20px;align-self:start">
+          <div style="font-size:13px;font-weight:700;margin-bottom:12px">Summary</div>
+          <div class="w3sum"><span class="k"><svg class="ico"><use href="#i-src"/></svg>Source</span><span class="v">Transactions</span></div>
+          <div class="w3sum"><span class="k"><svg class="ico"><use href="#i-filter"/></svg>Filters</span><span class="v">Q2 · Paid</span></div>
+          <div class="w3sum"><span class="k"><svg class="ico"><use href="#i-cols"/></svg>Columns</span><span class="v">4 selected</span></div>
+          <div class="w3sum" style="opacity:.5"><span class="k"><svg class="ico"><use href="#i-fmt"/></svg>Format</span><span class="v">—</span></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · SAVED REPORTS LIBRARY ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Saved reports library</div>
+      <p class="plate-recipe"><b>PULLS</b> — a list of saved report definitions (name + last-run + owner + schedule badge) with run/preview actions, plus a primary “New report” CTA. &nbsp;<b>WHY</b> — once reports are reusable, the home becomes a library: people re-run known reports far more often than they build new ones, so running and scheduling come first.</p>
+    </div>
+    <div class="frame" style="padding:20px 24px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Saved reports</div><button class="btn-pri"><svg class="ico"><use href="#i-plus"/></svg>New report</button></div>
+      <div class="card" style="overflow:hidden">
+        <table class="rtable">
+          <thead><tr><th>Report</th><th>Owner</th><th>Last run</th><th>Schedule</th><th class="r">Actions</th></tr></thead>
+          <tbody>
+            <tr><td><div style="display:flex;align-items:center;gap:10px"><span class="rico"><svg class="ico"><use href="#i-rep"/></svg></span><div><div style="font-weight:600">Monthly revenue by plan</div><div style="font-size:11.5px;color:var(--faint)">Pivot · 5 columns</div></div></div></td><td>Dana Kessler</td><td class="muted" style="color:var(--faint)">2h ago</td><td><span class="sched-badge"><svg class="ico"><use href="#i-clock"/></svg>Monthly</span></td><td class="r"><div class="actrow"><button class="btn-sec" style="padding:6px 11px"><svg class="ico"><use href="#i-play"/></svg>Run</button><button class="iconbtn"><svg class="ico"><use href="#i-kebab"/></svg></button></div></td></tr>
+            <tr><td><div style="display:flex;align-items:center;gap:10px"><span class="rico"><svg class="ico"><use href="#i-rep"/></svg></span><div><div style="font-weight:600">Renewal forecast — Q3</div><div style="font-size:11.5px;color:var(--faint)">Table · 8 columns</div></div></div></td><td>Finance</td><td class="muted" style="color:var(--faint)">Yesterday</td><td><span class="sched-badge"><svg class="ico"><use href="#i-clock"/></svg>Weekly</span></td><td class="r"><div class="actrow"><button class="btn-sec" style="padding:6px 11px"><svg class="ico"><use href="#i-play"/></svg>Run</button><button class="iconbtn"><svg class="ico"><use href="#i-kebab"/></svg></button></div></td></tr>
+            <tr><td><div style="display:flex;align-items:center;gap:10px"><span class="rico"><svg class="ico"><use href="#i-rep"/></svg></span><div><div style="font-weight:600">Churn by cohort</div><div style="font-size:11.5px;color:var(--faint)">Chart + table</div></div></div></td><td>Reza Pour</td><td class="muted" style="color:var(--faint)">3d ago</td><td><span class="sched-badge off">Manual</span></td><td class="r"><div class="actrow"><button class="btn-sec" style="padding:6px 11px"><svg class="ico"><use href="#i-play"/></svg>Run</button><button class="iconbtn"><svg class="ico"><use href="#i-kebab"/></svg></button></div></td></tr>
+            <tr><td><div style="display:flex;align-items:center;gap:10px"><span class="rico"><svg class="ico"><use href="#i-rep"/></svg></span><div><div style="font-weight:600">Seats &amp; expansion</div><div style="font-size:11.5px;color:var(--faint)">Pivot · 6 columns</div></div></div></td><td>Dana Kessler</td><td class="muted" style="color:var(--faint)">1w ago</td><td><span class="sched-badge off">Manual</span></td><td class="r"><div class="actrow"><button class="btn-sec" style="padding:6px 11px"><svg class="ico"><use href="#i-play"/></svg>Run</button><button class="iconbtn"><svg class="ico"><use href="#i-kebab"/></svg></button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · SCHEDULED EXPORTS (+ EMPTY) ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Scheduled exports</div>
+      <p class="plate-recipe"><b>PULLS</b> — a schedule config card (frequency, recipients, format) + a list of upcoming scheduled exports, plus the <b>empty state</b> (no schedules yet → prompt + CTA). &nbsp;<b>WHY</b> — recurring delivery is its own surface: a clear config beside the queue makes it obvious what's set up, and the empty state turns a blank schedule list into a first action.</p>
+    </div>
+    <div class="frame" style="padding:22px 24px;display:grid;grid-template-columns:1fr 1fr;gap:18px">
+      <div class="card" style="padding:22px 24px">
+        <div style="font-size:15px;font-weight:700">New scheduled export</div>
+        <div style="display:flex;flex-direction:column;gap:16px;margin-top:18px">
+          <label class="fld"><span class="lab">Report</span><div class="selectw"><select><option>Monthly revenue by plan</option><option>Renewal forecast — Q3</option></select><svg class="ico"><use href="#i-chev"/></svg></div></label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <label class="fld"><span class="lab">Frequency</span><div class="selectw"><select><option>Monthly</option><option>Weekly</option><option>Daily</option></select><svg class="ico"><use href="#i-chev"/></svg></div></label>
+            <label class="fld"><span class="lab">Format</span><div class="selectw"><select><option>CSV</option><option>XLSX</option><option>PDF</option></select><svg class="ico"><use href="#i-chev"/></svg></div></label>
+          </div>
+          <label class="fld"><span class="lab">Recipients</span><input class="input" value="finance@harbor.app, dana@harbor.app"></label>
+          <button class="btn-pri" style="justify-content:center;margin-top:4px"><svg class="ico"><use href="#i-clock"/></svg>Schedule export</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div class="card" style="padding:18px 20px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px">Upcoming</div>
+          <div class="schrow"><span class="ic"><svg class="ico"><use href="#i-cal"/></svg></span><div><div class="nm">Monthly revenue by plan</div><div class="mt">CSV · to finance@harbor.app</div></div><span class="when">Jul 1, 9:00 AM</span></div>
+          <div class="schrow"><span class="ic"><svg class="ico"><use href="#i-cal"/></svg></span><div><div class="nm">Renewal forecast — Q3</div><div class="mt">PDF · to 3 recipients</div></div><span class="when">Mon, 8:00 AM</span></div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin:0 2px 8px">Empty state — when no schedules exist</div>
+          <div class="card" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:36px 24px">
+            <div style="width:60px;height:60px;border-radius:16px;background:var(--accent-tint);display:flex;align-items:center;justify-content:center;color:var(--accent-ink);margin-bottom:15px"><svg class="ico" style="width:28px;height:28px"><use href="#i-clock"/></svg></div>
+            <h3 style="font-size:16px;font-weight:700">No scheduled exports yet</h3>
+            <p style="font-size:13px;color:var(--mut);margin-top:6px;max-width:38ch;line-height:1.5">Set a report to deliver automatically and it'll show up here with its next run time.</p>
+            <button class="btn-pri" style="margin-top:16px"><svg class="ico"><use href="#i-plus"/></svg>Schedule your first export</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div class="card" style="overflow:hidden;padding:0">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.w3step{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;}
+.w3step .sc{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:var(--surface);border:2px solid var(--line-2);color:var(--faint);z-index:1;font-variant-numeric:tabular-nums;}
+.w3step .sc .ico{width:16px;height:16px;}
+.w3step.done .sc{background:var(--accent);border-color:var(--accent);color:#fff;}
+.w3step.cur .sc{background:var(--surface);border-color:var(--accent);color:var(--accent-ink);box-shadow:0 0 0 4px var(--accent-tint);}
+.w3step .sl{font-size:12.5px;font-weight:600;margin-top:9px;color:var(--mut);}
+.w3step.cur .sl,.w3step.done .sl{color:var(--ink);}
+.w3step::before,.w3step::after{content:'';position:absolute;top:16px;height:2px;background:var(--line-2);width:50%;}
+.w3step::before{left:0;} .w3step::after{right:0;}
+.w3step:first-child::before{display:none;} .w3step:last-child::after{display:none;}
+.w3step.done::before,.w3step.done::after,.w3step.cur::before{background:var(--accent);}
+.w3sum{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--inset);}
+.w3sum:last-child{border-bottom:none;}
+.w3sum .k{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--mut);} .w3sum .k .ico{width:14px;height:14px;color:var(--faint);}
+.w3sum .v{font-size:12.5px;font-weight:600;}
+.rico{width:32px;height:32px;border-radius:8px;background:var(--accent-tint);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.rico .ico{width:16px;height:16px;}
+.actrow{display:inline-flex;align-items:center;gap:6px;}
+.iconbtn{width:32px;height:32px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;color:var(--mut);}
+.iconbtn:hover{background:var(--inset);color:var(--ink);} .iconbtn .ico{width:16px;height:16px;}
+.schrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--inset);}
+.schrow:last-child{border-bottom:none;}
+.schrow .ic{width:32px;height:32px;border-radius:8px;background:var(--inset);color:var(--mut);display:flex;align-items:center;justify-content:center;flex-shrink:0;} .schrow .ic .ico{width:15px;height:15px;}
+.schrow .nm{font-size:13px;font-weight:600;} .schrow .mt{font-size:11.5px;color:var(--faint);margin-top:1px;}
+.schrow .when{margin-left:auto;font-size:11.5px;font-weight:600;color:var(--accent-ink);}
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame[style*="grid-template-columns:320px 1fr"]{grid-template-columns:1fr!important;}
+  .frame[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script>
+/* 1 builder live preview */
+(function(){
+  var table=document.getElementById('b1table');
+  var groups={
+    plan:{lbl:'plan',rows:[['Enterprise','$37,440','1','$37,440','+8.1%','up'],['Scale','$39,068','2','$19,534','+9.5%','up'],['Growth','$7,680','1','$7,680','+4.1%','up'],['Starter','$3,720','1','$3,720','−2.0%','dn']]},
+    region:{lbl:'region',rows:[['North America','$65,960','3','$21,987','+9.2%','up'],['Europe','$21,948','2','$10,974','+5.7%','up'],['APAC','$8,420','1','$8,420','+11.0%','up']]},
+    channel:{lbl:'channel',rows:[['Direct','$54,200','3','$18,067','+10.1%','up'],['Marketplace','$26,900','2','$13,450','+6.4%','up'],['Referral','$6,808','1','$6,808','−1.2%','dn']]}
+  };
+  function metricsOn(){return [].slice.call(document.querySelectorAll('#b1metrics .optchip.on')).map(function(b){return b.dataset.m;});}
+  function render(){
+    var g=document.getElementById('b1group').value,data=groups[g],ms=metricsOn();
+    document.getElementById('b1grouplbl').textContent=data.lbl;
+    document.getElementById('b1sub').textContent=document.getElementById('b1range').value+' · '+ms.length+' metrics';
+    var head='<thead><tr><th>'+data.lbl.charAt(0).toUpperCase()+data.lbl.slice(1)+'</th>';
+    if(ms.indexOf('rev')>-1)head+='<th class="r">Revenue</th>';
+    if(ms.indexOf('acct')>-1)head+='<th class="r">Accounts</th>';
+    if(ms.indexOf('aov')>-1)head+='<th class="r">Avg. value</th>';
+    if(ms.indexOf('churn')>-1)head+='<th class="r">Churn Δ</th>';
+    head+='</tr></thead>';
+    var body='<tbody>'+data.rows.map(function(r){
+      var tds='<td style="font-weight:600">'+r[0]+'</td>';
+      if(ms.indexOf('rev')>-1)tds+='<td class="r">'+r[1]+'</td>';
+      if(ms.indexOf('acct')>-1)tds+='<td class="r">'+r[2]+'</td>';
+      if(ms.indexOf('aov')>-1)tds+='<td class="r">'+r[3]+'</td>';
+      if(ms.indexOf('churn')>-1)tds+='<td class="r '+(r[5]==='up'?'delta-up':'delta-dn')+'">'+r[4]+'</td>';
+      return '<tr>'+tds+'</tr>';
+    }).join('')+'</tbody>';
+    table.innerHTML=head+body;
+  }
+  document.getElementById('b1group').addEventListener('change',render);
+  document.getElementById('b1range').addEventListener('change',render);
+  document.querySelectorAll('#b1metrics .optchip').forEach(function(b){b.addEventListener('click',function(){if(b.classList.contains('on')&&metricsOn().length<=1)return;b.classList.toggle('on');render();});});
+  render();
+})();
+</script>
+</body>
+</html>

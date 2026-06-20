@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Header / topbar variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   HEADER / TOPBAR VARIATIONS — eight toolbar structures, each above a faint
+   page hint. Neutral professional language; one restrained slate-blue accent.
+   ============================================================================ */
+:root{
+  --bg:#EEEEEA; --surface:#FFFFFF; --hint:#FAFAF8; --inset:#F2F2EE;
+  --border:#E5E4DE; --border-2:#D6D4CB;
+  --ink:#1C1D21; --muted:#5A5C63; --subtle:#8B8D94;
+  --a:#3858C4; --a-tint:rgba(56,88,196,0.11); --a-ink:#2c46a0;
+  --ok:#2C6E49; --bad:#B23A2E;
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:2.5px solid var(--a);outline-offset:2px;border-radius:5px;}
+button{font-family:inherit;cursor:pointer;}
+
+.wrap{max-width:1080px;margin:0 auto;padding:56px 36px 96px;}
+.head{margin-bottom:38px;padding-bottom:24px;border-bottom:1.5px solid var(--ink);}
+.eyebrow{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--subtle);margin-bottom:13px;}
+.head h1{font-size:clamp(34px,5.5vw,54px);font-weight:700;letter-spacing:-0.03em;line-height:1;}
+.head p{font-size:15.5px;color:var(--muted);max-width:62ch;margin-top:14px;}
+
+.gallery{display:flex;flex-direction:column;gap:30px;}
+.spec{display:flex;flex-direction:column;gap:12px;}
+.lab{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
+.lab .nm{font-size:14px;font-weight:700;letter-spacing:-0.01em;}
+.lab .nm span{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--a);margin-right:8px;}
+.lab .uw{font-size:12.5px;color:var(--muted);}
+.lab .uw b{color:var(--ink);font-weight:600;}
+
+/* frame */
+.frame{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 8px 24px -12px rgba(28,29,32,0.2),0 1px 3px rgba(28,29,32,0.05);}
+.hb{display:flex;align-items:center;gap:14px;min-height:58px;padding:0 18px;border-bottom:1px solid var(--border);}
+.hbx{border-bottom:1px solid var(--border);}
+.hbx .hb{border-bottom:none;min-height:54px;}
+
+/* faint page hint */
+.pg{background:var(--hint);padding:18px;display:flex;flex-direction:column;gap:13px;}
+.pg .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
+.pg .ca{height:50px;border-radius:8px;border:1px solid #ECEBE5;background:#fff;}
+.pg .blk{height:84px;border-radius:8px;border:1px solid #ECEBE5;background:#fff;}
+.pg .ln{height:9px;border-radius:5px;background:#ECEBE5;}
+.pg .ln.s{width:62%;}
+
+/* shared bits */
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;letter-spacing:-0.01em;flex-shrink:0;}
+.brand .mk{width:24px;height:24px;border-radius:6px;background:var(--a);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.brand .mk b{width:9px;height:9px;border-radius:2px;background:#fff;}
+.title{font-weight:700;font-size:16px;letter-spacing:-0.015em;}
+.subtitle{font-size:12px;color:var(--subtle);margin-top:1px;}
+.spacer{flex:1;}
+.search{display:flex;align-items:center;gap:8px;background:var(--inset);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--subtle);font-size:12.5px;width:200px;transition:border-color .15s,box-shadow .15s;cursor:text;}
+.search:hover{border-color:var(--border-2);}
+.search svg{width:14px;height:14px;flex-shrink:0;}
+.search .k{margin-left:auto;font-family:var(--font-mono);font-size:9.5px;border:1px solid var(--border-2);border-radius:4px;padding:1px 4px;}
+.search.lg{width:min(440px,100%);background:#fff;border-color:var(--border-2);}
+.iconbtn{width:36px;height:36px;border:1px solid var(--border);background:#fff;color:var(--muted);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;transition:background .12s,color .12s,border-color .12s;}
+.iconbtn:hover{background:var(--inset);color:var(--ink);}
+.iconbtn svg{width:17px;height:17px;}
+.iconbtn .pip{position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:var(--a);border:2px solid #fff;}
+.btn{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;padding:9px 14px;border-radius:9px;border:1px solid transparent;transition:all .12s;}
+.btn svg{width:15px;height:15px;}
+.btn-a{background:var(--a);color:#fff;box-shadow:0 1px 2px rgba(56,88,196,.32);}
+.btn-a:hover{background:var(--a-ink);}
+.btn-o{background:#fff;color:var(--ink);border-color:var(--border-2);}
+.btn-o:hover{background:var(--inset);}
+.av{width:34px;height:34px;border-radius:50%;background:#DCE1EE;color:var(--a);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+
+/* breadcrumb */
+.crumbs{display:flex;align-items:center;gap:8px;font-size:13.5px;}
+.crumbs a{color:var(--muted);cursor:pointer;}
+.crumbs a:hover{color:var(--ink);}
+.crumbs .sep{color:var(--subtle);display:flex;}
+.crumbs .sep svg{width:13px;height:13px;}
+.crumbs .cur{font-weight:600;}
+
+/* tabs */
+.htabs{display:flex;gap:0;padding:0 14px;}
+.htab{position:relative;border:none;background:none;font-size:13px;font-weight:600;color:var(--muted);padding:12px 4px;margin:0 12px;cursor:pointer;}
+.htab.on{color:var(--ink);}
+.htab.on::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2.5px;background:var(--a);border-radius:2px;}
+.htab:hover:not(.on){color:var(--ink);}
+.htab .cnt{font-family:var(--font-mono);font-size:10px;color:var(--subtle);margin-left:5px;}
+
+/* segmented */
+.seg{display:inline-flex;background:var(--inset);border:1px solid var(--border);border-radius:8px;padding:3px;gap:2px;}
+.seg button{border:none;background:none;font-size:12px;font-weight:600;color:var(--muted);padding:6px 12px;border-radius:6px;transition:all .12s;}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(28,29,32,.08);}
+.seg button:not(.on):hover{color:var(--ink);}
+
+/* filter chips */
+.fchip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--ink);background:#fff;border:1px solid var(--border-2);border-radius:8px;padding:6px 10px;}
+.fchip svg{width:13px;height:13px;color:var(--muted);}
+.fchip.add{color:var(--muted);border-style:dashed;}
+
+/* selection header */
+.hb.sel{background:var(--a-tint);border-bottom-color:rgba(56,88,196,.2);}
+.selcb{width:18px;height:18px;border-radius:5px;background:var(--a);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.selcb svg{width:12px;height:12px;color:#fff;}
+.seltxt{font-weight:700;font-size:13.5px;color:var(--a-ink);}
+.selclear{font-size:12px;color:var(--a-ink);display:inline-flex;align-items:center;gap:4px;background:none;border:none;font-weight:600;}
+.selclear svg{width:13px;height:13px;}
+.bulk{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--border-2);border-radius:8px;padding:7px 11px;}
+.bulk svg{width:14px;height:14px;color:var(--muted);}
+.bulk.danger{color:var(--bad);} .bulk.danger svg{color:var(--bad);}
+
+/* dark header */
+.hb.dark{background:#1B1C20;border-bottom-color:#2A2B30;}
+.hb.dark .title{color:#ECECEE;}
+.hb.dark .brand{color:#ECECEE;}
+.hb.dark .brand .mk{background:#6E84E8;}
+.hb.dark .search{background:#26272D;border-color:#33353D;color:#9A9CA3;}
+.hb.dark .search .k{border-color:#3C3E47;}
+.hb.dark .iconbtn{background:#26272D;border-color:#33353D;color:#A6A8B0;}
+.hb.dark .iconbtn:hover{background:#30323A;color:#fff;}
+.hb.dark .iconbtn .pip{border-color:#1B1C20;}
+.hb.dark .av{background:#33353D;color:#C5CFF6;}
+
+@media(max-width:680px){
+  .search{width:150px;} .search.lg{width:100%;}
+  .lab{flex-direction:column;gap:3px;}
+  .pg .cards{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chev-d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></symbol>
+  <symbol id="i-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <header class="head">
+    <div class="eyebrow">Specimen · navigation</div>
+    <h1>Header / topbar variations</h1>
+    <p>Eight toolbar structures for the top of an app workspace — differing in what anchors the bar: a title, a breadcrumb, tabs, search, a view switcher, or a contextual selection state. Each sits above a faint hint of its page.</p>
+  </header>
+
+  <div class="gallery">
+
+    <!-- 1 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>01</span>Page title + search + actions</div><div class="uw"><b>Use when</b> — the workhorse default for a content page.</div></div>
+      <div class="frame">
+        <div class="hb">
+          <div><div class="title">Dashboard</div></div>
+          <span class="spacer"></span>
+          <div class="search"><svg><use href="#i-search"/></svg>Search<span class="k">⌘K</span></div>
+          <button class="iconbtn" aria-label="Notifications"><svg><use href="#i-bell"/></svg><span class="pip"></span></button>
+          <button class="btn btn-a"><svg><use href="#i-plus"/></svg>New</button>
+          <span class="av">AM</span>
+        </div>
+        <div class="pg"><div class="cards"><span class="ca"></span><span class="ca"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>02</span>Breadcrumb + actions</div><div class="uw"><b>Use when</b> — users sit deep in a hierarchy and need their place.</div></div>
+      <div class="frame">
+        <div class="hb">
+          <nav class="crumbs"><a>Projects</a><span class="sep"><svg><use href="#i-chev-r"/></svg></span><a>Aurora Mobile</a><span class="sep"><svg><use href="#i-chev-r"/></svg></span><span class="cur">Settings</span></nav>
+          <span class="spacer"></span>
+          <button class="btn btn-o"><svg><use href="#i-share"/></svg>Share</button>
+          <button class="btn btn-a">Save</button>
+          <span class="av">AM</span>
+        </div>
+        <div class="pg"><span class="ln"></span><span class="ln s"></span><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>03</span>Tabbed header</div><div class="uw"><b>Use when</b> — one object has several views (overview, activity…).</div></div>
+      <div class="frame">
+        <div class="hbx">
+          <div class="hb">
+            <div><div class="title">Aurora Mobile</div><div class="subtitle">Updated 2 hours ago</div></div>
+            <span class="spacer"></span>
+            <button class="btn btn-o"><svg><use href="#i-share"/></svg>Share</button>
+            <button class="btn btn-a"><svg><use href="#i-plus"/></svg>Invite</button>
+          </div>
+          <div class="htabs" data-tabs>
+            <button class="htab on">Overview</button>
+            <button class="htab">Activity<span class="cnt">12</span></button>
+            <button class="htab">Members</button>
+            <button class="htab">Settings</button>
+          </div>
+        </div>
+        <div class="pg"><div class="cards"><span class="ca"></span><span class="ca"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>04</span>Search-centric</div><div class="uw"><b>Use when</b> — search is the primary action (docs, catalogues, help).</div></div>
+      <div class="frame">
+        <div class="hb">
+          <div class="brand"><span class="mk"><b></b></span>Northwind</div>
+          <span class="spacer"></span>
+          <div class="search lg"><svg><use href="#i-search"/></svg>Search articles, people and files…<span class="k">⌘K</span></div>
+          <span class="spacer"></span>
+          <button class="iconbtn" aria-label="Notifications"><svg><use href="#i-bell"/></svg></button>
+          <span class="av">AM</span>
+        </div>
+        <div class="pg"><span class="ln"></span><span class="ln s"></span><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>05</span>Minimal</div><div class="uw"><b>Use when</b> — focus pages (reading, editing) that want quiet chrome.</div></div>
+      <div class="frame">
+        <div class="hb">
+          <div class="title">Account</div>
+          <span class="spacer"></span>
+          <span class="av">AM</span>
+        </div>
+        <div class="pg"><span class="ln"></span><span class="ln s"></span><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>06</span>View switcher + filters</div><div class="uw"><b>Use when</b> — one dataset, many lenses and filter combinations.</div></div>
+      <div class="frame">
+        <div class="hb" style="flex-wrap:wrap;gap:10px 12px;padding-top:11px;padding-bottom:11px;">
+          <div class="title" style="font-size:15px;">Tasks</div>
+          <div class="seg" data-seg><button class="on" type="button">Board</button><button type="button">List</button><button type="button">Calendar</button></div>
+          <span class="spacer"></span>
+          <button class="fchip"><svg><use href="#i-filter"/></svg>Status: Open<svg><use href="#i-chev-d"/></svg></button>
+          <button class="fchip">Assignee<svg><use href="#i-chev-d"/></svg></button>
+          <button class="fchip add"><svg><use href="#i-plus"/></svg>Filter</button>
+        </div>
+        <div class="pg"><div class="cards"><span class="ca"></span><span class="ca"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>07</span>Contextual selection</div><div class="uw"><b>Use when</b> — items are selected and bulk actions take over the bar.</div></div>
+      <div class="frame">
+        <div class="hb sel">
+          <span class="selcb"><svg><use href="#i-check"/></svg></span>
+          <span class="seltxt">3 selected</span>
+          <button class="selclear"><svg><use href="#i-x"/></svg>Clear</button>
+          <span class="spacer"></span>
+          <button class="bulk"><svg><use href="#i-archive"/></svg>Archive</button>
+          <button class="bulk"><svg><use href="#i-tag"/></svg>Tag</button>
+          <button class="bulk danger"><svg><use href="#i-trash"/></svg>Delete</button>
+        </div>
+        <div class="pg"><div class="cards"><span class="ca" style="border-color:var(--a);box-shadow:0 0 0 2px var(--a-tint)"></span><span class="ca" style="border-color:var(--a);box-shadow:0 0 0 2px var(--a-tint)"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="spec">
+      <div class="lab"><div class="nm"><span>08</span>Dark header</div><div class="uw"><b>Use when</b> — bright/media content benefits from a grounded top bar.</div></div>
+      <div class="frame">
+        <div class="hb dark">
+          <div class="brand"><span class="mk"><b></b></span>Northwind</div>
+          <span class="spacer"></span>
+          <div class="search"><svg><use href="#i-search"/></svg>Search<span class="k">⌘K</span></div>
+          <button class="iconbtn" aria-label="Notifications"><svg><use href="#i-bell"/></svg><span class="pip"></span></button>
+          <span class="av">AM</span>
+        </div>
+        <div class="pg"><div class="cards"><span class="ca"></span><span class="ca"></span><span class="ca"></span></div><span class="blk"></span></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('[data-seg],[data-tabs]').forEach(function(g){
+  g.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b)return;
+    g.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composed Recipe — Profile / public page (5 compositions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@12..36,400;12..36,500;12..36,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   COMPOSED RECIPE — Profile / public page · 5 COMPOSITIONS, ONE SKIN.
+   Fixed neutral skin. Only composition + interaction varies. Avatars/covers use
+   the hairline-striped placeholder. Toggles show a visible sliding thumb. AA.
+   ============================================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --page:#F4F5F7; --surface:#FFFFFF; --inset:#F0F2F5;
+  --line:#E4E7EB; --line-2:#D4D9DF;
+  --ink:#1B1E23; --mut:#586070; --faint:#79808C;
+  --accent:#2563CC; --accent-ink:#1E50A8; --accent-tint:#EAF1FC;
+  --ok:#1F7A48; --ok-t:#E6F1EA; --warn:#8A5A12; --bad:#C0392B;
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(20,24,31,.05);
+  --radius:10px;
+  --plate-ink:#1A1B1F; --plate-sub:#6A6C72; --plate-faint:#9498A0;
+}
+body{font-family:var(--font);background:#E7E5DE;color:var(--plate-ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input,textarea{font-family:inherit;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+.deck{max-width:1320px;margin:0 auto;padding:64px 40px 120px;}
+.deck-head{border-bottom:2.5px solid var(--plate-ink);padding-bottom:26px;}
+.deck-head .kx{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--plate-faint);font-weight:600;}
+.deck-head h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin-top:14px;}
+.deck-head p{font-size:15.5px;color:var(--plate-sub);max-width:76ch;margin-top:14px;line-height:1.55;}
+.deck-head p em{color:var(--plate-ink);font-style:normal;font-weight:600;}
+
+.plate{margin-top:54px;}
+.plate-head{margin-bottom:16px;}
+.plate-no{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.plate-name{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-top:5px;color:var(--plate-ink);}
+.plate-recipe{font-size:12.5px;line-height:1.6;color:var(--plate-sub);margin-top:9px;max-width:120ch;border-left:2px solid var(--plate-ink);padding-left:13px;}
+.plate-recipe b{color:var(--plate-ink);font-weight:600;}
+.frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 50px -30px rgba(20,20,30,.4);background:var(--page);color:var(--ink);font-family:var(--font);}
+
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+
+/* placeholder fills */
+.ph{background:var(--inset);background-image:repeating-linear-gradient(135deg,transparent,transparent 8px,rgba(27,30,35,.04) 8px,rgba(27,30,35,.04) 9px);position:relative;}
+.ph .lbl{position:absolute;top:8px;left:8px;font-family:var(--mono);font-size:9.5px;color:var(--faint);background:var(--surface);padding:2px 7px;border-radius:4px;border:1px solid var(--line);}
+.av-ph{border-radius:50%;background:var(--inset);background-image:repeating-linear-gradient(135deg,transparent,transparent 6px,rgba(27,30,35,.05) 6px,rgba(27,30,35,.05) 7px);border:3px solid var(--surface);flex-shrink:0;}
+
+/* buttons */
+.btn-pri{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:9px 16px;border-radius:8px;}
+.btn-pri .ico{width:15px;height:15px;}
+.btn-sec{display:inline-flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;}
+.btn-sec .ico{width:14px;height:14px;color:var(--mut);}
+.iconbtn{width:36px;height:36px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;color:var(--mut);}
+.iconbtn:hover{background:var(--inset);color:var(--ink);} .iconbtn .ico{width:16px;height:16px;}
+
+/* stats */
+.statrow{display:flex;gap:26px;}
+.statrow .s .v{font-size:18px;font-weight:800;letter-spacing:-0.01em;} .statrow .s .k{font-size:11.5px;color:var(--faint);}
+
+.bio{font-size:13.5px;color:var(--mut);line-height:1.55;}
+.handle{font-size:13px;color:var(--faint);}
+.pname{font-size:20px;font-weight:800;letter-spacing:-0.02em;}
+.chip{display:inline-flex;width:fit-content;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--mut);background:var(--inset);border:1px solid var(--line);border-radius:999px;padding:3px 10px;}
+.chip .ico{width:12px;height:12px;color:var(--faint);}
+
+@media(max-width:1180px){.deck{padding:48px 22px 90px;}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-brief" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-kebab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+</svg>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="kx">Composed Recipe · Profile / public page · one skin, five compositions</div>
+    <h1>Same skin. Five ways to be a profile.</h1>
+    <p>One person — Mara Reyes, product designer — presented five ways. Every frame wears the <em>same neutral skin</em>: off-white page, white surfaces with hairline borders, slightly-rounded corners, one restrained blue accent, system sans with tabular figures. Avatars and covers use the hairline-striped placeholder. What changes is purely <em>composition and interaction</em>.</p>
+  </header>
+
+  <!-- ============== 1 · HEADER + STATS ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 1</div>
+      <div class="plate-name">Header + stats</div>
+      <p class="plate-recipe"><b>PULLS</b> — a full-width cover band + overlapping avatar + name/handle/bio + a stat row (followers / following / posts, tabular) + Follow/Message actions; content cards below. &nbsp;<b>WHY</b> — the social default: the cover and overlapping avatar create identity at a glance, and the stat row plus primary action answer “who is this, and what can I do.”</p>
+    </div>
+    <div class="frame">
+      <div class="ph" style="height:120px"><span class="lbl">cover · 1600×400</span></div>
+      <div style="padding:0 26px 24px">
+        <div style="display:flex;align-items:flex-end;gap:18px;margin-top:-40px">
+          <div class="av-ph" style="width:92px;height:92px"></div>
+          <div style="flex:1;padding-bottom:4px"><div class="pname">Mara Reyes</div><div class="handle">@mara · Product designer</div></div>
+          <div style="display:flex;gap:9px;padding-bottom:4px"><button class="btn-sec"><svg class="ico"><use href="#i-mail"/></svg>Message</button><button class="btn-pri"><svg class="ico"><use href="#i-plus"/></svg>Follow</button></div>
+        </div>
+        <p class="bio" style="margin-top:14px;max-width:60ch">Designing calm, legible product interfaces. Building a specimen library of UI compositions. Previously at Northwind &amp; Lattice.</p>
+        <div style="display:flex;gap:16px;margin-top:12px">
+          <span class="chip"><svg class="ico"><use href="#i-pin"/></svg>Seattle, WA</span>
+          <span class="chip"><svg class="ico"><use href="#i-link"/></svg>mara.design</span>
+          <span class="chip"><svg class="ico"><use href="#i-cal"/></svg>Joined 2024</span>
+        </div>
+        <div class="statrow" style="margin-top:18px;padding-top:18px;border-top:1px solid var(--inset)">
+          <div class="s"><div class="v tnum">4,820</div><div class="k">Followers</div></div>
+          <div class="s"><div class="v tnum">312</div><div class="k">Following</div></div>
+          <div class="s"><div class="v tnum">148</div><div class="k">Posts</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px">
+          <div class="card" style="overflow:hidden"><div class="ph" style="height:84px"></div><div style="padding:12px 14px"><div style="font-size:13px;font-weight:700">Specimen library</div><div style="font-size:11.5px;color:var(--faint);margin-top:2px">Updated 2h ago</div></div></div>
+          <div class="card" style="overflow:hidden"><div class="ph" style="height:84px"></div><div style="padding:12px 14px"><div style="font-size:13px;font-weight:700">Token system v2</div><div style="font-size:11.5px;color:var(--faint);margin-top:2px">Updated 1d ago</div></div></div>
+          <div class="card" style="overflow:hidden"><div class="ph" style="height:84px"></div><div style="padding:12px 14px"><div style="font-size:13px;font-weight:700">Motion studies</div><div style="font-size:11.5px;color:var(--faint);margin-top:2px">Updated 3d ago</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 · TABBED CONTENT ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 2</div>
+      <div class="plate-name">Tabbed content</div>
+      <p class="plate-recipe"><b>PULLS</b> — a profile header + horizontal tabs (Overview / Posts / About / Activity) + the active tab's content. &nbsp;<b>WHY</b> — for profiles with depth: tabs keep a rich, multi-faceted page navigable so the first view stays calm while everything remains one click away.</p>
+    </div>
+    <div class="frame" style="padding:0">
+      <div style="padding:22px 26px 0;display:flex;align-items:center;gap:16px">
+        <div class="av-ph" style="width:60px;height:60px;border-width:0"></div>
+        <div style="flex:1"><div class="pname">Mara Reyes</div><div class="handle">@mara · Product designer · Seattle</div></div>
+        <button class="btn-pri"><svg class="ico"><use href="#i-plus"/></svg>Follow</button>
+      </div>
+      <div class="tabs" id="p2tabs" style="padding:0 26px;margin-top:18px"><button class="on" data-t="ov">Overview</button><button data-t="po">Posts</button><button data-t="ab">About</button><button data-t="ac">Activity</button></div>
+      <div style="padding:22px 26px;background:var(--page)">
+        <div data-pane="ov" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="card" style="padding:16px 18px"><div style="font-size:13px;font-weight:700;margin-bottom:8px">Pinned</div><div style="font-size:13px;color:var(--mut);line-height:1.5">“The skin is the paint, the composition is the skeleton.” — a working note on building a reusable UI library.</div></div>
+          <div class="card" style="padding:16px 18px"><div style="font-size:13px;font-weight:700;margin-bottom:10px">Highlights</div><div style="display:flex;flex-direction:column;gap:9px"><div style="display:flex;gap:9px;font-size:12.5px;color:var(--mut)"><svg class="ico" style="width:14px;height:14px;color:var(--accent)"><use href="#i-check"/></svg>Shipped specimen library v2</div><div style="display:flex;gap:9px;font-size:12.5px;color:var(--mut)"><svg class="ico" style="width:14px;height:14px;color:var(--accent)"><use href="#i-check"/></svg>Spoke at Layout Conf</div></div></div>
+        </div>
+        <div data-pane="po" style="display:none;flex-direction:column;gap:10px">
+          <div class="card" style="padding:14px 16px"><div style="font-size:13px;font-weight:700">Building a composition library</div><div style="font-size:12px;color:var(--faint);margin-top:3px">2 days ago · 48 likes</div></div>
+          <div class="card" style="padding:14px 16px"><div style="font-size:13px;font-weight:700">Why one skin, many compositions</div><div style="font-size:12px;color:var(--faint);margin-top:3px">5 days ago · 112 likes</div></div>
+        </div>
+        <div data-pane="ab" style="display:none" class="card"><div style="padding:18px 20px;font-size:13.5px;color:var(--mut);line-height:1.6;max-width:62ch">Product designer focused on systems and legibility. I care about tabular numerals, calm color, and interfaces that get out of the way. Currently building a public specimen library.</div></div>
+        <div data-pane="ac" style="display:none" class="card"><div style="padding:8px 18px"><div class="actl"><span class="ad"></span>Published <b>Token system v2</b><span class="at">2h</span></div><div class="actl"><span class="ad"></span>Followed <b>Reza Pour</b><span class="at">1d</span></div><div class="actl"><span class="ad"></span>Liked <b>3 posts</b><span class="at">2d</span></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 3 · SIDEBAR BIO + MAIN ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 3</div>
+      <div class="plate-name">Sidebar bio + main</div>
+      <p class="plate-recipe"><b>PULLS</b> — a left sidebar (avatar, bio, details list: location / role / links) + a right main column (a feed/list of the person's items). &nbsp;<b>WHY</b> — when the work matters more than the persona: a fixed identity sidebar frees the main column to lead with output, the way a portfolio or author page does.</p>
+    </div>
+    <div class="frame" style="display:grid;grid-template-columns:268px 1fr;min-height:440px">
+      <aside style="border-right:1px solid var(--line);background:var(--surface);padding:24px 22px">
+        <div class="av-ph" style="width:72px;height:72px;border-width:0;margin-bottom:14px"></div>
+        <div class="pname" style="font-size:18px">Mara Reyes</div>
+        <div class="handle" style="margin-top:2px">@mara</div>
+        <p class="bio" style="margin-top:12px;font-size:13px">Product designer building a UI specimen library.</p>
+        <button class="btn-pri" style="width:100%;margin-top:14px"><svg class="ico"><use href="#i-plus"/></svg>Follow</button>
+        <div style="margin-top:20px;display:flex;flex-direction:column;gap:11px">
+          <div class="dl"><svg class="ico"><use href="#i-brief"/></svg>Product designer</div>
+          <div class="dl"><svg class="ico"><use href="#i-pin"/></svg>Seattle, WA</div>
+          <div class="dl"><svg class="ico"><use href="#i-link"/></svg><a href="#" style="color:var(--accent-ink);text-decoration:none">mara.design</a></div>
+          <div class="dl"><svg class="ico"><use href="#i-cal"/></svg>Joined March 2024</div>
+        </div>
+      </aside>
+      <div style="padding:20px 24px">
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px">Recent work</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="card workrow"><div class="ph" style="width:64px;height:64px;border-radius:8px;flex-shrink:0"></div><div style="flex:1"><div style="font-size:13.5px;font-weight:700">Specimen library — v2</div><div style="font-size:12px;color:var(--mut);margin-top:2px">A reusable set of UI compositions across one neutral skin.</div><div style="font-size:11.5px;color:var(--faint);margin-top:5px">Updated 2h ago</div></div></div>
+          <div class="card workrow"><div class="ph" style="width:64px;height:64px;border-radius:8px;flex-shrink:0"></div><div style="flex:1"><div style="font-size:13.5px;font-weight:700">Token system</div><div style="font-size:12px;color:var(--mut);margin-top:2px">Color, type, radius, elevation &amp; density tokens.</div><div style="font-size:11.5px;color:var(--faint);margin-top:5px">Updated 1d ago</div></div></div>
+          <div class="card workrow"><div class="ph" style="width:64px;height:64px;border-radius:8px;flex-shrink:0"></div><div style="flex:1"><div style="font-size:13.5px;font-weight:700">Motion studies</div><div style="font-size:12px;color:var(--mut);margin-top:2px">Entrance and transition explorations.</div><div style="font-size:11.5px;color:var(--faint);margin-top:5px">Updated 3d ago</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 4 · ACTIVITY GRID ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 4</div>
+      <div class="plate-name">Activity grid</div>
+      <p class="plate-recipe"><b>PULLS</b> — a profile header + a contribution/activity heat-grid (GitHub-style cells) + a recent-activity list. &nbsp;<b>WHY</b> — for output-driven profiles: a heat-grid turns months of work into one legible picture of consistency, then the list gives the latest specifics.</p>
+    </div>
+    <div class="frame" style="padding:24px 26px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+        <div class="av-ph" style="width:60px;height:60px;border-width:0"></div>
+        <div style="flex:1"><div class="pname">Mara Reyes</div><div class="handle">@mara · 1,284 contributions this year</div></div>
+        <button class="btn-sec"><svg class="ico"><use href="#i-heart"/></svg>Sponsor</button>
+      </div>
+      <div class="card" style="padding:18px 20px;overflow:hidden">
+        <div style="font-size:12.5px;font-weight:600;color:var(--mut);margin-bottom:12px">Activity · last 26 weeks</div>
+        <div id="heat" style="display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px;overflow-x:auto"></div>
+        <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;margin-top:12px;font-size:11px;color:var(--faint)">Less<span class="hl l0"></span><span class="hl l1"></span><span class="hl l2"></span><span class="hl l3"></span><span class="hl l4"></span>More</div>
+      </div>
+      <div style="font-size:13px;font-weight:700;margin:18px 0 8px">Recent activity</div>
+      <div class="card" style="padding:6px 18px">
+        <div class="actl"><span class="ad"></span>Pushed <b>12 commits</b> to specimen-library<span class="at">2h</span></div>
+        <div class="actl"><span class="ad"></span>Opened PR <b>#204</b> — token system v2<span class="at">5h</span></div>
+        <div class="actl"><span class="ad"></span>Reviewed <b>3 pull requests</b><span class="at">1d</span></div>
+        <div class="actl"><span class="ad"></span>Created repo <b>motion-studies</b><span class="at">3d</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 5 · EDIT-MODE PROFILE ============== -->
+  <section class="plate">
+    <div class="plate-head">
+      <div class="plate-no">Composition 5</div>
+      <div class="plate-name">Edit-mode profile</div>
+      <p class="plate-recipe"><b>PULLS</b> — the editable version: inline-editable fields (name, bio), an avatar-upload affordance, a visibility toggle (visible sliding thumb), and a sticky Save bar. &nbsp;<b>WHY</b> — editing your own profile is a distinct mode: in-place fields and an obvious upload target keep it direct, while the sticky bar makes saving unmissable.</p>
+    </div>
+    <div class="frame" id="ed5" style="display:flex;flex-direction:column;min-height:440px">
+      <div class="ph" style="height:96px"><span class="lbl">cover</span><button class="coverbtn"><svg class="ico"><use href="#i-camera"/></svg>Change cover</button></div>
+      <div style="padding:0 26px 20px;flex:1">
+        <div style="display:flex;align-items:flex-end;gap:18px;margin-top:-36px">
+          <div style="position:relative"><div class="av-ph" style="width:84px;height:84px"></div><button class="avbtn"><svg class="ico"><use href="#i-camera"/></svg></button></div>
+        </div>
+        <div style="max-width:520px;margin-top:18px">
+          <label class="edfld"><span class="edlab">Display name</span><input class="edinput" value="Mara Reyes"></label>
+          <label class="edfld"><span class="edlab">Handle</span><div class="edwrap"><span class="edprefix">@</span><input class="edinput" value="mara" style="padding-left:26px"></div></label>
+          <label class="edfld"><span class="edlab">Bio</span><textarea class="edinput" rows="3" style="resize:vertical;line-height:1.5">Designing calm, legible product interfaces. Building a specimen library of UI compositions.</textarea><span class="edcount"><span id="ed-count">92</span>/160</span></label>
+          <div class="togrow"><div class="meta"><div class="tt">Public profile</div><div class="td">Anyone can view this page and your posts.</div></div><span class="tgl on" id="ed-vis"><span class="thumb"></span></span></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:13px 26px;border-top:1px solid var(--line);background:var(--surface);position:sticky;bottom:0">
+        <span style="font-size:12px;color:var(--warn);font-weight:600">● Unsaved changes</span>
+        <div style="margin-left:auto;display:flex;gap:9px"><button class="btn-sec">Cancel</button><button class="btn-pri"><svg class="ico"><use href="#i-check"/></svg>Save profile</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENRICHED SKINS ===================== -->
+  <section class="plate" style="margin-top:72px">
+    <div class="plate-head">
+      <div class="plate-no">Apply</div>
+      <div class="plate-name">Skins &amp; how to apply them</div>
+      <p class="plate-recipe">A skin is the <b>full set of visual tokens</b> — color, type, radius, elevation, and density — applied uniformly. Pick ONE skin per product and apply it across whichever compositions you choose: the composition is the skeleton, the skin is the paint, so any composition above renders coherently in any skin. Every frame on this page uses the <b>Neutral</b> column.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+      <table class="skintab">
+        <thead><tr><th class="rowh">Token</th><th>Neutral <span>this page</span></th><th>Warm <span>cream &amp; clay</span></th><th>Dark <span>ops console</span></th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Color</td></tr>
+          <tr><td class="rowh">Background</td><td><span class="sw" style="background:#F4F5F7"></span><code>#F4F5F7</code></td><td><span class="sw" style="background:#F4EEE4"></span><code>#F4EEE4</code></td><td><span class="sw" style="background:#0D1117"></span><code>#0D1117</code></td></tr>
+          <tr><td class="rowh">Surface</td><td><span class="sw" style="background:#FFFFFF;border-color:#D4D9DF"></span><code>#FFFFFF</code></td><td><span class="sw" style="background:#FFFDF9;border-color:#DCCFB6"></span><code>#FFFDF9</code></td><td><span class="sw" style="background:#161B22;border-color:#30363d"></span><code>#161B22</code></td></tr>
+          <tr><td class="rowh">Ink</td><td><span class="sw" style="background:#1B1E23"></span><code>#1B1E23</code></td><td><span class="sw" style="background:#2C2620"></span><code>#2C2620</code></td><td><span class="sw" style="background:#E6EDF3;border-color:#D4D9DF"></span><code>#E6EDF3</code></td></tr>
+          <tr><td class="rowh">Accent</td><td><span class="sw" style="background:#2563CC"></span><code>#2563CC</code></td><td><span class="sw" style="background:#A8502E"></span><code>#A8502E</code></td><td><span class="sw" style="background:#3FB950"></span><code>#3FB950</code></td></tr>
+          <tr><td class="rowh">Border</td><td><span class="sw" style="background:#E4E7EB"></span><code>#E4E7EB</code></td><td><span class="sw" style="background:#E8DECB"></span><code>#E8DECB</code></td><td><span class="sw" style="background:#30363D"></span><code>#30363D</code></td></tr>
+          <tr class="grp"><td colspan="4">Type</td></tr>
+          <tr><td class="rowh">Font family</td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td><td><span style="font-family:'Hanken Grotesk';font-size:15px;font-weight:600">Aa</span> <code>Hanken Grotesk</code></td><td><span style="font-family:system-ui;font-size:15px;font-weight:600">Aa</span> <code>System sans</code></td></tr>
+          <tr class="grp"><td colspan="4">Radius</td></tr>
+          <tr><td class="rowh">Corner</td>
+            <td><span class="rdemo" style="border-radius:8px"></span><code>Slightly-rounded · 10px</code></td>
+            <td><span class="rdemo" style="border-radius:16px"></span><code>Rounded · 16px</code></td>
+            <td><span class="rdemo" style="border-radius:4px"></span><code>Sharp · 4px</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Elevation</td></tr>
+          <tr><td class="rowh">Surfaces</td>
+            <td><span class="edemo" style="border:1px solid #E4E7EB"></span><code>Hairline border</code></td>
+            <td><span class="edemo" style="border:1px solid #E8DECB;box-shadow:0 6px 16px -8px rgba(90,60,30,.3)"></span><code>Soft shadow</code></td>
+            <td><span class="edemo" style="background:#1C2230;border:1px solid #30363D"></span><code>Flat · lighter panel</code></td>
+          </tr>
+          <tr class="grp"><td colspan="4">Density</td></tr>
+          <tr><td class="rowh">Spacing</td><td><code>Comfortable</code></td><td><code>Spacious</code></td><td><code>Compact</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--line);}
+.tabs button{font-size:13.5px;font-weight:600;color:var(--faint);padding:0 0 12px;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.tabs button:hover{color:var(--ink);} .tabs button.on{color:var(--accent);border-bottom-color:var(--accent);}
+.dl{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--mut);} .dl .ico{width:15px;height:15px;color:var(--faint);}
+.workrow{display:flex;gap:13px;padding:13px 15px;align-items:center;}
+.actl{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mut);padding:10px 0;border-bottom:1px solid var(--inset);}
+.actl:last-child{border-bottom:none;} .actl b{color:var(--ink);font-weight:600;} .actl .ad{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0;} .actl .at{margin-left:auto;font-size:11px;color:var(--faint);}
+/* heat grid */
+.hcell{width:13px;height:13px;border-radius:3px;background:var(--inset);}
+.hl{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:-1px;}
+.l0{background:var(--inset);} .l1{background:#cdddf6;} .l2{background:#8fb3ec;} .l3{background:#4f84dc;} .l4{background:var(--accent);}
+.hcell.l1{background:#cdddf6;} .hcell.l2{background:#8fb3ec;} .hcell.l3{background:#4f84dc;} .hcell.l4{background:var(--accent);}
+/* edit mode */
+.coverbtn{position:absolute;right:12px;bottom:12px;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:6px 11px;box-shadow:var(--shadow);} .coverbtn .ico{width:14px;height:14px;color:var(--mut);}
+.avbtn{position:absolute;right:-2px;bottom:-2px;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;border:2px solid var(--surface);display:flex;align-items:center;justify-content:center;} .avbtn .ico{width:14px;height:14px;}
+.edfld{display:block;margin-bottom:14px;position:relative;}
+.edlab{font-size:12px;font-weight:600;color:var(--mut);margin-bottom:6px;display:block;}
+.edinput{width:100%;font-size:13.5px;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:9px 12px;outline:none;font-family:var(--font);}
+.edinput:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint);}
+.edwrap{position:relative;}
+.edprefix{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--faint);font-size:13.5px;}
+.edcount{position:absolute;right:4px;bottom:-18px;font-size:11px;color:var(--faint);}
+.togrow{display:flex;align-items:center;gap:16px;padding:10px 0;margin-top:6px;}
+.togrow .meta{flex:1;} .togrow .tt{font-size:13px;font-weight:600;} .togrow .td{font-size:12px;color:var(--faint);margin-top:1px;}
+.tgl{display:inline-flex;align-items:center;width:42px;height:24px;border-radius:999px;background:#CDD2DA;border:1px solid var(--line-2);padding:2px;cursor:pointer;transition:background .15s,border-color .15s;flex-shrink:0;}
+.tgl .thumb{width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(20,24,31,.35);transition:transform .16s cubic-bezier(.3,.8,.4,1);}
+.tgl.on{background:var(--accent);border-color:var(--accent);} .tgl.on .thumb{transform:translateX(18px);}
+/* skin table */
+.skintab{width:100%;border-collapse:collapse;}
+.skintab th{text-align:left;font-size:13px;font-weight:700;color:var(--plate-ink);padding:14px 16px;border-bottom:1.5px solid var(--ink);}
+.skintab th span{display:block;font-size:11px;font-weight:500;color:var(--plate-faint);margin-top:2px;}
+.skintab th.rowh,.skintab td.rowh{width:130px;}
+.skintab td{padding:11px 16px;border-bottom:1px solid var(--inset);font-size:12.5px;color:var(--ink);vertical-align:middle;}
+.skintab td.rowh{color:var(--mut);font-weight:600;}
+.skintab tr.grp td{background:var(--inset);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 16px;}
+.skintab code{font-family:var(--mono);font-size:10.5px;color:var(--faint);}
+.skintab .sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08);vertical-align:-4px;margin-right:8px;}
+.skintab .rdemo{display:inline-block;width:30px;height:22px;background:var(--accent-tint);border:1.5px solid var(--accent);vertical-align:-6px;margin-right:8px;}
+.skintab .edemo{display:inline-block;width:30px;height:22px;background:#fff;border-radius:5px;vertical-align:-6px;margin-right:8px;}
+@media(max-width:1180px){
+  .frame[style*="grid-template-columns:268px 1fr"]{grid-template-columns:1fr!important;}
+  .deck [data-pane="ov"]{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script>
+/* 2 tabs */
+(function(){
+  var tabs=document.getElementById('p2tabs'),scope=tabs.closest('.frame');
+  tabs.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;tabs.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');scope.querySelectorAll('[data-pane]').forEach(function(p){p.style.display=p.dataset.pane===b.dataset.t?(p.dataset.pane==='po'?'flex':''):'none';});});
+})();
+/* 4 heat grid */
+(function(){
+  var grid=document.getElementById('heat');if(!grid)return;var lv=[0,0,1,1,1,2,2,2,3,3,4];var html='';
+  for(var i=0;i<182;i++){var l=lv[Math.floor(Math.random()*lv.length)];html+='<span class="hcell'+(l?' l'+l:'')+'"></span>';}
+  grid.innerHTML=html;
+})();
+/* 5 edit: toggle, bio counter */
+(function(){
+  var t=document.getElementById('ed-vis');if(t)t.addEventListener('click',function(){t.classList.toggle('on');});
+  var ta=document.querySelector('#ed5 textarea'),c=document.getElementById('ed-count');
+  if(ta&&c)ta.addEventListener('input',function(){c.textContent=ta.value.length;});
+})();
+</script>
+</body>
+</html>

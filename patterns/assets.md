@@ -30,7 +30,7 @@ Operationalizes `P-M-07`. **Where to get one:** real product screenshots (render
 At the build step, when a surface needs an asset, pick by class — don't wait to be told:
 - **An affordance icon?** → `P-AS-01`: one set (Lucide), inline sprite, `currentColor`. Reuse `kits/cool-technical/_icons.svg` or pull from `lucide-static`.
 - **An empty state / first-run / marketing spot?** → `P-AS-02`: recolorable open illustration (Popsy/unDraw) remapped to tokens, OR a large Lucide mark for product registers.
-- **The type voice?** → `P-AS-03`: a display + sans pairing via `identity.md` tokens, never Inter-only.
+- **The type voice?** → `P-AS-03`: a display + sans pairing via `identity.md` tokens, never Inter-only. **Pick the faces from the curated by-voice menu — `patterns/typefaces.md` (`P-TY`), visual specimen `apps/typefaces/index.html`** — and remember most free *character* lives on Fontshare, not Google.
 - **A hero visual / logo / social proof?** → `P-AS-04`: product-true imagery, bespoke mark, monochromed logo wall.
 
 ## Forbidden moves

@@ -116,6 +116,20 @@ These numbers are a v1 starting set, grounded in classical sources and Lookbook'
 
 ---
 
+## Depth / elevation
+
+**F75. Elevation is a system, not a per-element shadow. Three semantic levels — resting / raised / overlay — drawn from the four shipped shadow tokens (`--shadow-sm` resting · `--shadow-md`/`--shadow-lg` raised · `--shadow-xl` overlay). Light comes from directly above (offset-y positive, offset-x = 0); shadow colour is the darkest *neutral* at low alpha, never `#000`. Colour alone can carry elevation — a lighter surface on a darker / tinted ground reads as raised with no shadow. Density gates it.**
+*Why:* Depth is a hierarchy channel — but only when *quantized*. Ad-hoc per-element shadows produce a muddy z-order where nothing clearly sits "above" anything; a fixed ramp makes elevation legible the way the modular scale (F2) makes size legible. Pure-black shadows read as dirty smudges because a real shadow is the *ground darkened*, not black — tying it to the darkest neutral keeps it in-palette. On an off-white ground (F20) a white card is already raised, so its resting shadow only *confirms* the lift and can be near-invisible.
+*The three levels:*
+- **Resting** (`--shadow-sm`) — cards, inputs, the default surface step. Often just the F20 surface-vs-ground tone + an F21 hairline; the shadow is optional confirmation, not the separator.
+- **Raised** (`--shadow-md` / `--shadow-lg`) — a hover lift, the one emphasized card, a popover or dropdown anchored to content.
+- **Overlay** (`--shadow-xl`) — modal, command palette, toast: the layer over a scrim. The shadow is paired *with* the scrim (a real dim, not a faint wash) and does not compete with it.
+*Density gate (corollary of F36):* Compact / data-dense surfaces — **resting only**, separate by border + surface tone, not stacked shadows. Medium — resting + one raised on the focal element. Spacious / marketing / any overlay context — all three in play.
+*Check:* Every shadow resolves to one of the shipped tokens (no bespoke per-element blur/offset); shadow colour is a darkened neutral, not `#000`; offset-x is 0; on a dense surface the count of distinct drop-shadowed layers is ≤1 (everything else separates by border / tone). An overlay always rides a real scrim. Elevation **supplements** size / weight / position (F13) — never the only hierarchy channel.
+*Earned by:* battle-test 2026-06-08 (baseline vs brain+F75 on a depth-heavy settings brief) — the F75 arm produced a real dimming scrim under the modal + lifted overlays while keeping resting cards flat; the baseline's overlay tier failed to read against a too-weak scrim. User-gated HELP.
+
+---
+
 ## Alignment
 
 **F22. Every element sits on the spacing grid AND a typographic baseline. No off-grid placements.**

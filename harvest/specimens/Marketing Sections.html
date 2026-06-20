@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing sections</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   MARKETING SECTIONS — tasteful landing building blocks.
+   Confident emerald accent · Bricolage Grotesque + Hanken Grotesk + JetBrains Mono.
+   ============================================================================ */
+:root{
+  --paper:#FBFAF7; --surface:#FFFFFF; --tint:#F2F5F2; --dark:#15211C;
+  --border:#E7E5DE; --border-2:#D8D5CB;
+  --ink:#181B19; --muted:#545A55; --subtle:#858A83;
+  --accent:#15795A; --accent-ink:#0E5E46; --accent-tint:rgba(21,121,90,0.10);
+  --gold:#B5872A;
+  --font-display:'Bricolage Grotesque','Hanken Grotesk',sans-serif;
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --shadow-sm:0 1px 2px rgba(24,27,25,0.05);
+  --shadow:0 12px 32px -14px rgba(24,27,25,0.2),0 2px 6px rgba(24,27,25,0.05);
+  --shadow-lg:0 28px 60px -26px rgba(24,27,25,0.32),0 4px 12px rgba(24,27,25,0.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:3px;border-radius:6px;}
+button{font-family:inherit;cursor:pointer;}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:500;}
+
+.page{max-width:1120px;margin:0 auto;padding:0 32px;}
+.spec{padding:18px 0;}
+.spec-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);margin-bottom:14px;}
+.spec-tag::before{content:'';width:18px;height:1.5px;background:var(--accent);}
+.section{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;}
+.section.tinted{background:var(--tint);}
+.pad{padding:clamp(32px,5vw,60px);}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14.5px;font-weight:600;padding:12px 20px;border-radius:10px;border:1px solid transparent;transition:all .14s;}
+.btn svg{width:16px;height:16px;}
+.btn-a{background:var(--accent);color:#fff;box-shadow:0 1px 2px rgba(14,94,70,.35);}
+.btn-a:hover{background:var(--accent-ink);}
+.btn-o{background:var(--surface);color:var(--ink);border-color:var(--border-2);}
+.btn-o:hover{background:var(--tint);}
+.btn-ghost{background:transparent;color:var(--ink);}
+.btn-ghost:hover{color:var(--accent-ink);}
+.link{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--accent-ink);font-size:14px;}
+.link svg{width:15px;height:15px;transition:transform .14s;}
+.link:hover svg{transform:translateX(3px);}
+
+/* headings */
+.h-eyebrow{margin-bottom:16px;}
+.h1{font-family:var(--font-display);font-weight:800;font-size:clamp(38px,5.4vw,60px);line-height:1.02;letter-spacing:-0.035em;}
+.h1 em{font-style:normal;color:var(--accent);}
+.h2{font-family:var(--font-display);font-weight:700;font-size:clamp(28px,3.6vw,40px);line-height:1.06;letter-spacing:-0.025em;}
+.lead{font-size:17.5px;color:var(--muted);line-height:1.55;}
+
+/* window mock */
+.window{background:#fff;border:1px solid var(--border);border-radius:13px;overflow:hidden;box-shadow:var(--shadow-lg);}
+.win-chrome{height:34px;display:flex;align-items:center;gap:7px;padding:0 13px;border-bottom:1px solid var(--border);background:#FAFAF8;}
+.win-chrome i{width:9px;height:9px;border-radius:50%;background:#DDDBD3;}
+.win-chrome .addr{margin-left:12px;height:13px;flex:1;max-width:200px;border-radius:4px;background:#EEEDE7;}
+.win-body{display:flex;min-height:230px;}
+.win-rail{width:54px;border-right:1px solid var(--border);padding:14px 0;display:flex;flex-direction:column;align-items:center;gap:10px;background:#FCFBF8;}
+.win-rail .d{width:20px;height:20px;border-radius:6px;background:#EBEAE3;}
+.win-rail .d.on{background:var(--accent-tint);}
+.win-main{flex:1;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0;}
+.win-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.win-stat{border:1px solid var(--border);border-radius:9px;padding:11px;}
+.win-stat .l{height:7px;width:60%;border-radius:4px;background:#EBEAE3;}
+.win-stat .v{height:15px;width:75%;border-radius:4px;background:#D8D6CD;margin-top:9px;}
+.win-stat.hot .v{background:var(--accent);opacity:.85;}
+.win-chart{flex:1;border:1px solid var(--border);border-radius:9px;padding:12px;min-height:96px;display:flex;flex-direction:column;}
+.win-chart .l{height:7px;width:34%;border-radius:4px;background:#EBEAE3;margin-bottom:6px;}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.02fr 1fr;gap:44px;align-items:center;}
+.hero .cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;}
+.hero .note{font-size:13px;color:var(--subtle);margin-top:16px;display:flex;align-items:center;gap:7px;}
+.hero .note svg{width:15px;height:15px;color:var(--accent);}
+
+/* social proof */
+.proof{text-align:center;}
+.proof .t{font-family:var(--font-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle);}
+.proof .row{display:flex;align-items:center;justify-content:center;gap:clamp(22px,5vw,48px);flex-wrap:wrap;margin-top:22px;}
+.proof .lg{font-family:var(--font-display);font-weight:700;font-size:21px;letter-spacing:-0.02em;color:#9A9D96;}
+
+/* features */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.feat{}
+.feat .ic{width:46px;height:46px;border-radius:12px;background:var(--accent-tint);color:var(--accent);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.feat .ic svg{width:23px;height:23px;}
+.feat h3{font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:-0.015em;}
+.feat p{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.55;}
+
+/* spotlight */
+.spotlight{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center;}
+.spotlight ul{list-style:none;margin:22px 0 24px;display:flex;flex-direction:column;gap:12px;}
+.spotlight li{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;}
+.spotlight li svg{width:19px;height:19px;color:var(--accent);flex-shrink:0;margin-top:1px;}
+.spotlight li b{font-weight:600;}
+
+/* pricing */
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;}
+.plan{background:#fff;border:1px solid var(--border);border-radius:15px;padding:26px 24px;display:flex;flex-direction:column;}
+.plan.hot{border:2px solid var(--accent);box-shadow:var(--shadow);position:relative;}
+.plan .pop{position:absolute;top:-12px;left:24px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:4px 11px;border-radius:999px;}
+.plan .pn{font-family:var(--font-mono);font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);}
+.plan .price{font-family:var(--font-display);font-weight:800;font-size:44px;letter-spacing:-0.03em;line-height:1;margin-top:14px;font-variant-numeric:tabular-nums;}
+.plan .price small{font-family:var(--font-ui);font-size:14px;font-weight:500;color:var(--muted);letter-spacing:0;}
+.plan .pd{font-size:13px;color:var(--muted);margin-top:8px;min-height:38px;}
+.plan ul{list-style:none;margin:18px 0 22px;display:flex;flex-direction:column;gap:11px;}
+.plan li{display:flex;align-items:center;gap:10px;font-size:13.5px;}
+.plan li svg{width:16px;height:16px;color:var(--accent);flex-shrink:0;}
+.plan .btn{width:100%;margin-top:auto;}
+
+/* testimonial */
+.quote{text-align:center;max-width:760px;margin:0 auto;}
+.quote .mark{font-family:var(--font-display);font-size:60px;line-height:0;color:var(--accent);height:34px;display:block;}
+.quote blockquote{font-family:var(--font-display);font-weight:600;font-size:clamp(22px,3vw,30px);line-height:1.3;letter-spacing:-0.02em;margin:8px 0 26px;}
+.quote .who{display:flex;align-items:center;justify-content:center;gap:13px;}
+.quote .av{width:48px;height:48px;border-radius:50%;background:#D7E3DC;color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;}
+.quote .nm{font-weight:700;font-size:14.5px;text-align:left;}
+.quote .ro{font-size:13px;color:var(--muted);text-align:left;}
+
+/* faq */
+.faq{max-width:760px;margin:0 auto;}
+.faq .qa{border-bottom:1px solid var(--border);}
+.faq .q{width:100%;display:flex;align-items:center;gap:14px;padding:20px 4px;border:none;background:none;text-align:left;font-family:var(--font-ui);font-size:16.5px;font-weight:600;color:var(--ink);}
+.faq .q .ic{margin-left:auto;color:var(--accent);transition:transform .2s;flex-shrink:0;}
+.faq .q .ic svg{width:20px;height:20px;}
+.faq .qa.open .q .ic{transform:rotate(45deg);}
+.faq .a{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+.faq .a .inner{padding:0 4px 20px;font-size:14.5px;color:var(--muted);line-height:1.6;max-width:64ch;}
+.faq .qa.open .a{max-height:200px;}
+
+/* cta band */
+.ctaband{background:var(--dark);border-radius:18px;padding:clamp(40px,5vw,64px);text-align:center;color:#F3F1EC;position:relative;overflow:hidden;}
+.ctaband::after{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);background-size:18px 18px;}
+.ctaband .e{font-family:var(--font-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em;color:#7FB89F;position:relative;}
+.ctaband h2{font-family:var(--font-display);font-weight:800;font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-0.03em;margin:14px 0 14px;position:relative;}
+.ctaband p{font-size:16.5px;color:#B9C2BC;max-width:46ch;margin:0 auto 28px;position:relative;}
+.ctaband .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;}
+.btn-light{background:#F3F1EC;color:var(--dark);}
+.btn-light:hover{background:#fff;}
+.btn-dline{background:transparent;color:#F3F1EC;border-color:rgba(255,255,255,0.28);}
+.btn-dline:hover{background:rgba(255,255,255,0.07);}
+
+.foot{padding:36px 0 20px;border-top:1px solid var(--border);margin-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--font-mono);font-size:11px;color:var(--subtle);text-transform:uppercase;letter-spacing:.06em;}
+
+@media(max-width:860px){
+  .hero,.spotlight{grid-template-columns:1fr;gap:32px;}
+  .feat-grid,.pricing{grid-template-columns:1fr;}
+  .plan.hot{order:-1;}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-check-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></symbol>
+</svg>
+
+<div class="page">
+
+  <!-- 1 HERO -->
+  <div class="spec">
+    <div class="spec-tag">01 · Hero</div>
+    <div class="section"><div class="pad">
+      <div class="hero">
+        <div>
+          <div class="eyebrow h-eyebrow">Ship with confidence</div>
+          <h1 class="h1">Your product analytics, finally <em>calm</em>.</h1>
+          <p class="lead" style="margin-top:20px;max-width:30ch;">Northwind turns scattered events into clear answers — so your team decides faster and ships sooner.</p>
+          <div class="cta"><button class="btn btn-a">Start free<svg><use href="#i-arrow"/></svg></button><button class="btn btn-o">Book a demo</button></div>
+          <div class="note"><svg><use href="#i-check-c"/></svg>No credit card required · 14-day trial</div>
+        </div>
+        <div class="window" aria-hidden="true">
+          <div class="win-chrome"><i></i><i></i><i></i><span class="addr"></span></div>
+          <div class="win-body">
+            <div class="win-rail"><span class="d on"></span><span class="d"></span><span class="d"></span><span class="d"></span></div>
+            <div class="win-main">
+              <div class="win-stats"><div class="win-stat hot"><div class="l"></div><div class="v"></div></div><div class="win-stat"><div class="l"></div><div class="v"></div></div><div class="win-stat"><div class="l"></div><div class="v"></div></div></div>
+              <div class="win-chart"><div class="l"></div>
+                <svg width="100%" height="100%" viewBox="0 0 360 90" preserveAspectRatio="none" style="flex:1"><defs><linearGradient id="ha" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#15795A" stop-opacity="0.16"/><stop offset="100%" stop-color="#15795A" stop-opacity="0"/></linearGradient></defs><path d="M0,72 L51,64 L102,68 L153,50 L204,56 L255,34 L306,40 L360,20 L360,90 L0,90 Z" fill="url(#ha)"/><path d="M0,72 L51,64 L102,68 L153,50 L204,56 L255,34 L306,40 L360,20" fill="none" stroke="#15795A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2 SOCIAL PROOF -->
+  <div class="spec">
+    <div class="spec-tag">02 · Social proof strip</div>
+    <div class="section tinted"><div class="pad" style="padding-top:36px;padding-bottom:36px;">
+      <div class="proof">
+        <div class="t">Trusted by product teams at</div>
+        <div class="row"><span class="lg">Meridian</span><span class="lg">Lumen</span><span class="lg">Canopy</span><span class="lg">Harbor</span><span class="lg">Atelier</span><span class="lg">Vantage</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3 FEATURE GRID -->
+  <div class="spec">
+    <div class="spec-tag">03 · Feature grid (3-up)</div>
+    <div class="section"><div class="pad">
+      <div style="max-width:46ch;margin-bottom:36px;"><div class="eyebrow h-eyebrow">Why Northwind</div><h2 class="h2">Everything you need, nothing you don't.</h2></div>
+      <div class="feat-grid">
+        <div class="feat"><div class="ic"><svg><use href="#i-zap"/></svg></div><h3>Real-time events</h3><p>See behaviour as it happens with sub-second ingestion and live dashboards.</p></div>
+        <div class="feat"><div class="ic"><svg><use href="#i-layers"/></svg></div><h3>Composable funnels</h3><p>Build any funnel from your own events — no SQL, no waiting on data.</p></div>
+        <div class="feat"><div class="ic"><svg><use href="#i-shield"/></svg></div><h3>Privacy-first</h3><p>EU-hosted, GDPR-ready, and SOC 2 Type II from day one.</p></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4 SPOTLIGHT -->
+  <div class="spec">
+    <div class="spec-tag">04 · Feature spotlight</div>
+    <div class="section"><div class="pad">
+      <div class="spotlight">
+        <div>
+          <div class="eyebrow h-eyebrow">Funnels</div>
+          <h2 class="h2">From signup to “aha”, mapped.</h2>
+          <ul>
+            <li><svg><use href="#i-check-c"/></svg><span><b>Drag-and-drop steps</b> — assemble a funnel in seconds.</span></li>
+            <li><svg><use href="#i-check-c"/></svg><span><b>Cohort breakdowns</b> — compare plans, channels and regions.</span></li>
+            <li><svg><use href="#i-check-c"/></svg><span><b>Drop-off alerts</b> — get pinged when a step slips.</span></li>
+          </ul>
+          <a class="link">Explore funnels<svg><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="window" aria-hidden="true">
+          <div class="win-chrome"><i></i><i></i><i></i><span class="addr"></span></div>
+          <div class="win-body" style="min-height:250px;">
+            <div class="win-main" style="padding:18px;">
+              <div style="display:flex;gap:10px;align-items:flex-end;height:140px;">
+                <div style="flex:1;background:var(--accent);opacity:.9;height:100%;border-radius:7px 7px 0 0;"></div>
+                <div style="flex:1;background:var(--accent);opacity:.7;height:74%;border-radius:7px 7px 0 0;"></div>
+                <div style="flex:1;background:var(--accent);opacity:.5;height:52%;border-radius:7px 7px 0 0;"></div>
+                <div style="flex:1;background:var(--accent);opacity:.34;height:33%;border-radius:7px 7px 0 0;"></div>
+              </div>
+              <div style="display:flex;gap:10px;"><div class="win-stat" style="flex:1"><div class="l"></div><div class="v"></div></div><div class="win-stat" style="flex:1"><div class="l"></div><div class="v"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5 PRICING -->
+  <div class="spec">
+    <div class="spec-tag">05 · Pricing (3-tier)</div>
+    <div class="section tinted"><div class="pad">
+      <div style="text-align:center;max-width:44ch;margin:0 auto 40px;"><div class="eyebrow h-eyebrow">Pricing</div><h2 class="h2">Simple plans that scale with you.</h2></div>
+      <div class="pricing">
+        <div class="plan">
+          <div class="pn">Starter</div><div class="price">$0<small>/mo</small></div><div class="pd">For side projects and first experiments.</div>
+          <ul><li><svg><use href="#i-check"/></svg>1 project</li><li><svg><use href="#i-check"/></svg>50k events / mo</li><li><svg><use href="#i-check"/></svg>7-day history</li></ul>
+          <button class="btn btn-o">Get started</button>
+        </div>
+        <div class="plan hot">
+          <span class="pop">Most popular</span>
+          <div class="pn">Pro</div><div class="price">$49<small>/mo</small></div><div class="pd">For growing teams that ship weekly.</div>
+          <ul><li><svg><use href="#i-check"/></svg>Unlimited projects</li><li><svg><use href="#i-check"/></svg>2M events / mo</li><li><svg><use href="#i-check"/></svg>Unlimited history</li><li><svg><use href="#i-check"/></svg>Funnels &amp; cohorts</li></ul>
+          <button class="btn btn-a">Start free trial</button>
+        </div>
+        <div class="plan">
+          <div class="pn">Enterprise</div><div class="price">Custom</div><div class="pd">For orgs with scale and compliance needs.</div>
+          <ul><li><svg><use href="#i-check"/></svg>SSO &amp; SAML</li><li><svg><use href="#i-check"/></svg>Dedicated support</li><li><svg><use href="#i-check"/></svg>Custom retention</li></ul>
+          <button class="btn btn-o">Contact sales</button>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6 TESTIMONIAL -->
+  <div class="spec">
+    <div class="spec-tag">06 · Testimonial</div>
+    <div class="section"><div class="pad">
+      <div class="quote">
+        <span class="mark">“</span>
+        <blockquote>We replaced three tools with Northwind and cut our reporting time from a day to a coffee break. The team actually trusts the numbers now.</blockquote>
+        <div class="who"><span class="av">SC</span><div><div class="nm">Suki Chen</div><div class="ro">Head of Product · Canopy</div></div></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7 FAQ -->
+  <div class="spec">
+    <div class="spec-tag">07 · FAQ accordion</div>
+    <div class="section"><div class="pad">
+      <div style="text-align:center;margin-bottom:30px;"><div class="eyebrow h-eyebrow">FAQ</div><h2 class="h2">Questions, answered.</h2></div>
+      <div class="faq" data-faq>
+        <div class="qa open"><button class="q">Do I need to install an SDK?<span class="ic"><svg><use href="#i-plus"/></svg></span></button><div class="a"><div class="inner">No SDK required to start — drop in a single snippet or send events from your backend. SDKs for web, iOS and Android are available when you want them.</div></div></div>
+        <div class="qa"><button class="q">Can I export my data?<span class="ic"><svg><use href="#i-plus"/></svg></span></button><div class="a"><div class="inner">Always. Export to CSV, pipe to your warehouse, or use the API. Your data is yours.</div></div></div>
+        <div class="qa"><button class="q">How does billing work?<span class="ic"><svg><use href="#i-plus"/></svg></span></button><div class="a"><div class="inner">Plans are monthly or annual, billed by event volume. Upgrade, downgrade or cancel anytime — no contracts on Starter and Pro.</div></div></div>
+        <div class="qa"><button class="q">Is my data secure?<span class="ic"><svg><use href="#i-plus"/></svg></span></button><div class="a"><div class="inner">EU-hosted, encrypted in transit and at rest, SOC 2 Type II and GDPR-ready. SSO and SAML are available on Enterprise.</div></div></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 8 CTA BAND -->
+  <div class="spec">
+    <div class="spec-tag">08 · Closing CTA band</div>
+    <div class="ctaband">
+      <div class="e">Get started today</div>
+      <h2>Bring calm to your numbers.</h2>
+      <p>Set up in minutes. See your first funnel before your coffee gets cold.</p>
+      <div class="cta"><button class="btn btn-light">Start free<svg><use href="#i-arrow"/></svg></button><button class="btn btn-dline">Talk to sales</button></div>
+    </div>
+  </div>
+
+  <footer class="foot"><span>Marketing sections — specimen</span><span>Bricolage Grotesque · Hanken Grotesk · JetBrains Mono</span></footer>
+
+</div>
+
+<script>
+document.querySelectorAll('[data-faq]').forEach(function(f){
+  f.addEventListener('click',function(e){
+    var q=e.target.closest('.q'); if(!q)return;
+    var qa=q.parentElement, wasOpen=qa.classList.contains('open');
+    f.querySelectorAll('.qa').forEach(function(x){x.classList.remove('open');});
+    if(!wasOpen)qa.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>

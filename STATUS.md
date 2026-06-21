@@ -1,6 +1,15 @@
 # Lookbook — build status
 
-_Last updated: 2026-06-08 (F75 elevation adopted, battle-tested; palette generator tool shipped)_
+_Last updated: 2026-06-18 (cool-technical specimens re-earned against the contrast gate via Claude Design audit)_
+
+## 2026-06-18 — Specimen audit via Claude Design (cool-technical contrast re-earn)
+
+Pushed all 33 kit specimens to a Claude Design project (`Lookbook Specimens`) as `@dsCard`-tagged cards, render-looked them, and ran the three deterministic gates. Findings:
+
+- **Render-look verdict: the specimen layer is largely healthy** — well-composed, on-system, real depth (infra-monitoring's throughput-vs-baseline deviation band; the recipe sheets `recipe-table`/`recipe-form`/`recipe-cta` are strong anti-fake-variety exemplars, each packing genuinely distinct compositions). Not the flat/AP28 layer the "untrusted" flag implied.
+- **One real contrast bug, fixed.** The 4 cool-technical organisms each **inline their own `:root`** (duplicating `_tokens.css`) with `--subtle: #9AA1AC` (2.60:1) and **hardcode raw `#9AA1AC`** on faint chart-axis labels — banned raw-hex *and* below the 3:1 faint floor → `check-contrast` BLOCKING on all 4. Fixed: `--subtle`/`#9AA1AC` → `#838A95` (3.27:1 bg / 3.48 surface) in the 4 organisms **and** in `_tokens.css` (light); dark-theme `--subtle #5C626C` → `#6A7079` (latent 2.89:1-on-surface failure). All 4 now `check-contrast` **PASS**; `check-focus` PASS throughout; re-rendered, no visual regression.
+- **Two gate false-positives confirmed (left as-is):** `#C7C7F5` (active-nav text on the dark sidebar) and `#8A909B` (badge text on dark `#24262C`/`#2A2D35`) — both correct/high-contrast on their *real* dark backgrounds; the gate only flags them because it measures against the lightest page surface, not local bg. Worth noting as a `check-contrast.mjs` limitation (no local-bg resolution).
+- Marketing + warm-editorial specimens use var-chains/rgba the static checker can't resolve → unverified-by-tool, verified visually (clean). Lone soft note: warm-editorial uses gradient blocks as photo stand-ins (asset-rule tension, not fixed — would need real imagery).
 
 ## 2026-06-08 — F75 elevation adopted (battle-tested) + palette generator
 

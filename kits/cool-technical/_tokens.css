@@ -15,8 +15,8 @@
   --border-strong: #D6DAE0; /* checkbox/radio/toggle edges — a half-step up from --border */
   --ink:       #16181D;   /* near-black w/ cool undertone, never #000 (AD-6) */
   --muted:     #6B7280;
-  --subtle:    #9AA1AC;   /* DECORATIVE ONLY (icon strokes, dots) — never readable text: 2.60:1.
-                            Readable small/uppercase text (nav labels, table headers, axis) uses --muted. */
+  --subtle:    #838A95;   /* faint tier — icon strokes, dots, faint labels. Meets 3:1 (3.27 bg / 3.48 surface).
+                            Readable body/small text (nav labels, table headers, axis) still uses --muted. */
 
   --accent:        #5B5BD6;             /* indigo-violet, off the default blue/indigo axis (AD-1/2a) */
   --accent-ink:    #4A4AC4;             /* pressed/ink step */
@@ -67,7 +67,7 @@
   --border:  #24262C;
   --ink:     #ECEDEF;
   --muted:   #8A909B;
-  --subtle:  #5C626C;
+  --subtle:  #6A7079;   /* faint tier — meets 3:1 on dark (3.84 bg / 3.56 surface) */
 }
 
 /* tabular numerals helper — every figure/number register opts in (T-1) */

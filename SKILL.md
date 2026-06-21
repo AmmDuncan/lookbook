@@ -46,7 +46,19 @@ The newest empirical layer sits **above** the brain and cookbooks as the *fastes
 
 **Once the page archetype is identified** (per the composing-a-page protocol below), additionally load `patterns/<archetype>.md` if it exists. Patterns inherit from fundamentals and add surface-specific calibrations.
 
-**Also load the cross-cutting patterns** for whatever the surface actually involves, not just its archetype: `patterns/states.md` (loading / error / empty / partial-failure / optimistic / offline — any data view or async action), `patterns/motion.md`, `patterns/mobile.md` (the three-width reflow), `patterns/containers.md` (modal vs slideover vs page), `patterns/typefaces.md` (the curated by-voice font menu — load when picking a type voice; visual specimen `apps/typefaces/index.html`), `patterns/usability.md` (the ease-of-use layer — recognition-over-recall, cognitive-load budget, good defaults, progressive disclosure, error-prevention, forgiveness-over-confirm, the 0.1/1/10s + Doherty latency budget, perceived performance; load on any surface a human *operates*, i.e. nearly all), `patterns/engagement.md` (the behavioural layer — motivation/habit mechanics AND the dark-pattern floor: its ethical floor **P-EN-10** (the five manipulation tests) + **P-EN-11** (deceptive-patterns taxonomy) applies to *every* product that ships to real users; the habit mechanics P-EN-01..09 only when the product genuinely benefits from users returning), and `patterns/accessibility.md` (the non-color a11y floor — see the always-run checks below). For a new product or site, the framing step also loads `patterns/approach.md`, `patterns/identity.md`, and `patterns/site-archetypes.md`.
+**Also load the cross-cutting patterns** the surface actually involves (not just its archetype) — each only when its trigger applies:
+
+| Pattern | Load when the surface… |
+|---|---|
+| `patterns/accessibility.md` | **always** — the non-color a11y floor (see the always-run checks below) |
+| `patterns/states.md` | is a data view or fires any async action (loading · error · empty · partial-failure · optimistic · offline) |
+| `patterns/usability.md` | a human *operates* it (≈ nearly all) — recognition-over-recall, cognitive-load budget, good defaults, error-prevention, the latency budget |
+| `patterns/engagement.md` | ships to real users — the **P-EN-10/11 ethical floor** (manipulation tests + deceptive-pattern taxonomy) applies to *every* such product; the habit mechanics (P-EN-01..09) only when return-visits genuinely benefit the user |
+| `patterns/mobile.md` | needs the three-width reflow (≈ always) |
+| `patterns/motion.md` | has animation or transitions |
+| `patterns/containers.md` | uses a modal / slideover / full page |
+| `patterns/typefaces.md` | is picking a type voice (the by-voice font menu; specimen `apps/typefaces/index.html`) |
+| `patterns/approach.md` · `identity.md` · `site-archetypes.md` | is a **new product or site** (the framing step) |
 
 **If the project has a `personality.md`** (at project root or `design/personality.md`), load it too. It lists declared deviations from the fundamentals + the project's signature move. Anything not declared there must follow the floor.
 
@@ -281,7 +293,9 @@ The gallery ships a grouped chapter switcher (top-right, `G` shortcut).
 
 ---
 
-## Worked example — DVLA service-detail hero
+## Worked example — adopting Lookbook on an existing component (Mode B)
+
+*The component-level lens: bringing one hand-rolled component up to the gallery spec. For the page-level **compose-then-skin** flow on a DVLA detail page, see the README's worked example — this one is its complement, not a repeat.*
 
 **Before** (`VehicleServiceDetailHero.vue`): the status pill is ~40 lines of inline conditional Tailwind using raw default colors — `bg-emerald-500/20 text-emerald-100`, `bg-rose-400/20`, `bg-amber-300/20`. Tabs and the key-facts grid are hand-rolled too.
 
@@ -289,6 +303,5 @@ The gallery ships a grouped chapter switcher (top-right, `G` shortcut).
 - Status pill → `<Badge :tone="status.tone" dot>{{ status.label }}</Badge>`, driven by `--success/warning/danger-bg/-fg`. No stock Tailwind colors.
 - Tabs → the Tabs primitive (underline variant).
 - Key-facts strip → a shared `KeyFacts`/description-list primitive.
-- The page composition follows the **Record detail** recipe; alternate directions come from the Layout grammar.
 
-Result: the hero re-skins with the brand for free, and three other detail pages can each pick a *different* composition direction while sharing the exact same Badge, tabs, and tokens.
+Result: the hero re-skins with the brand for free, and the same Badge / Tabs / tokens carry to every other detail page — each free to pick a *different* composition (per the compose-then-skin section) without forking the parts.

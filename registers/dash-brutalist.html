@@ -1,0 +1,156 @@
+<!-- @dsCard group="Voice Bank · Dashboards" -->
+<!DOCTYPE html>
+<html lang="en" data-voice="brutalist-mono">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harbor — Overview · Brutalist-mono voice</title>
+<style>
+  /* ============================================================
+     VOICE: BRUTALIST / MONO  (the :root block IS the skin)
+     Art direction: stark, monospace, hard 1.5px ink borders, zero
+     shadow, zero radius, an exposed grid (cells share borders, no
+     gaps), one LOUD accent. Engineer-grade, raw, precise.
+     Vercel / PlanetScale / dev-tools lineage.
+     ============================================================ */
+  @font-face { font-family:'Geist'; src:url('fonts/Geist-400.woff2') format('woff2'); font-weight:400; font-display:swap; }
+  @font-face { font-family:'Geist'; src:url('fonts/Geist-500.woff2') format('woff2'); font-weight:500; font-display:swap; }
+  @font-face { font-family:'Geist'; src:url('fonts/Geist-600.woff2') format('woff2'); font-weight:600; font-display:swap; }
+  @font-face { font-family:'Geist Mono'; src:url('fonts/GeistMono-400.woff2') format('woff2'); font-weight:400; font-display:swap; }
+  @font-face { font-family:'Geist Mono'; src:url('fonts/GeistMono-500.woff2') format('woff2'); font-weight:500; font-display:swap; }
+  @font-face { font-family:'Geist Mono'; src:url('fonts/GeistMono-600.woff2') format('woff2'); font-weight:600; font-display:swap; }
+
+  :root {
+    --bg:        #eceae3;   /* stark warm-grey paper */
+    --surface:   #ffffff;
+    --surface-2: #f3f1ea;
+    --ink:       #16150f;   /* near-black ink */
+    --muted:     #4a4940;
+    --faint:     #5e5d52;
+    --border:    #16150f;   /* HARD ink border */
+    --border-2:  #c9c7bc;   /* secondary rule */
+    --accent:    #d6400a;   /* loud signal orange */
+    --accent-ink:#a83208;   /* darker — for text on light (5.0:1) */
+    --on-accent: #ffffff;
+    --pos:       #1c6b1c;  --pos-bg:#e4efe0;
+    --neg:       #b21f1f;  --neg-bg:#f6e4e1;
+    --warn:      #8a5300;  --warn-bg:#f6ecd6;
+    --info:      #a83208;  --info-bg:#f7e6dd;
+    --focus:     #d6400a;
+    --mono:      'Geist Mono', ui-monospace, "SF Mono", monospace;
+    --font:      'Geist', -apple-system, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 13.5px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .num, .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .shell { max-width: 1320px; margin: 24px auto; border: 1.5px solid var(--border); background: var(--surface); }
+
+  /* top bar */
+  .top { display: flex; align-items: center; gap: 0; border-bottom: 1.5px solid var(--border); }
+  .brand { font-family: var(--mono); font-weight: 600; font-size: 15px; letter-spacing: -0.01em; padding: 14px 18px; border-right: 1.5px solid var(--border); display: flex; align-items: center; gap: 9px; }
+  .brand .mk { width: 18px; height: 18px; background: var(--accent); }
+  .top nav { display: flex; }
+  .tab { font-family: var(--mono); font-size: 12.5px; padding: 14px 16px; color: var(--muted); border-right: 1px solid var(--border-2); }
+  .tab:hover { background: var(--surface-2); color: var(--ink); }
+  .tab[aria-current="page"] { color: var(--ink); background: var(--surface-2); box-shadow: inset 0 -3px 0 var(--accent); font-weight: 500; }
+  .top .util { margin-left: auto; display: flex; align-items: stretch; }
+  .top .search { display: flex; align-items: center; gap: 8px; padding: 0 14px; border-left: 1.5px solid var(--border); }
+  .top .search svg { width: 14px; height: 14px; color: var(--faint); }
+  .top .search input { border: none; background: none; font-family: var(--mono); font-size: 12.5px; width: 150px; color: var(--ink); }
+  .top .search input::placeholder { color: var(--faint); }
+  .top .av { font-family: var(--mono); font-weight: 600; font-size: 12px; padding: 0 16px; display: flex; align-items: center; border-left: 1.5px solid var(--border); background: var(--ink); color: #fff; }
+
+  .pagebar { display: flex; align-items: baseline; gap: 12px; padding: 14px 18px; border-bottom: 1.5px solid var(--border); }
+  .pagebar h1 { font-family: var(--mono); font-size: 16px; font-weight: 600; margin: 0; }
+  .pagebar .meta { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+  .pagebar .meta::before { content: "// "; }
+
+  /* exposed KPI grid — cells share hard borders, no gaps */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1.5px solid var(--border); }
+  .kpi { padding: 16px 18px; border-right: 1px solid var(--border-2); }
+  .kpi:last-child { border-right: none; }
+  .kpi .lab { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--faint); }
+  .kpi .v { font-family: var(--mono); font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin: 8px 0 6px; }
+  .kpi .d { font-family: var(--mono); font-size: 12px; font-weight: 500; } .kpi .d.up { color: var(--pos); } .kpi .d.down { color: var(--neg); } .kpi .d.flat { color: var(--faint); }
+
+  /* chart */
+  .chart-sec { padding: 18px; border-bottom: 1.5px solid var(--border); }
+  .chart-h { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+  .chart-h h2 { font-family: var(--mono); font-size: 13px; font-weight: 600; margin: 0; text-transform: uppercase; letter-spacing: 0.03em; }
+  .legend { display: flex; gap: 16px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .legend i { display: inline-block; width: 16px; height: 0; vertical-align: middle; margin-right: 6px; }
+  .lg-a i { border-top: 2.5px solid var(--accent); } .lg-b i { border-top: 2px dashed var(--faint); }
+  svg.chart { width: 100%; height: 150px; display: block; }
+
+  /* table */
+  .tbl-h { font-family: var(--mono); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; padding: 14px 18px; display: flex; justify-content: space-between; }
+  .tbl-h a { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); text-transform: none; letter-spacing: 0; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; color: var(--faint); text-align: left; padding: 9px 18px; border-top: 1.5px solid var(--border); border-bottom: 1px solid var(--border-2); }
+  thead th.r, td.r { text-align: right; }
+  tbody td { padding: 11px 18px; border-bottom: 1px solid var(--border-2); font-size: 13px; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--surface-2); }
+  .id { font-family: var(--mono); font-weight: 600; color: var(--accent-ink); }
+  .cust b { display: block; } .cust span { font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
+  td.amt { font-family: var(--mono); font-weight: 600; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); padding: 2px 8px; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.03em; border: 1px solid currentColor; }
+  .b-paid { color: var(--pos); } .b-pend { color: var(--warn); } .b-ref { color: var(--info); } .b-fail { color: var(--neg); }
+
+  @media (max-width: 920px) { .kpis { grid-template-columns: repeat(2, 1fr); } .kpi:nth-child(2) { border-right: none; } }
+</style>
+</head>
+<body>
+  <div class="shell">
+    <div class="top">
+      <span class="brand"><span class="mk"></span>HARBOR</span>
+      <nav>
+        <a class="tab" aria-current="page">overview</a>
+        <a class="tab">transactions</a>
+        <a class="tab">customers</a>
+        <a class="tab">reports</a>
+        <a class="tab">settings</a>
+      </nav>
+      <div class="util">
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" placeholder="search…" aria-label="Search"></div>
+        <span class="av">AY</span>
+      </div>
+    </div>
+
+    <div class="pagebar"><h1>OVERVIEW</h1><span class="mono meta">fri 30 may 2026 · 14:22 utc</span></div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="lab">revenue</div><div class="v">$128,400</div><div class="d up">↑ 12.4% mom</div></div>
+      <div class="kpi"><div class="lab">active users</div><div class="v">3,842</div><div class="d up">↑ 4.1% mom</div></div>
+      <div class="kpi"><div class="lab">conversion</div><div class="v">3.2%</div><div class="d down">↓ 0.3% mom</div></div>
+      <div class="kpi"><div class="lab">open tickets</div><div class="v">17</div><div class="d flat">+3 new</div></div>
+    </div>
+
+    <div class="chart-sec">
+      <div class="chart-h"><h2>revenue · last 30 days</h2><div class="legend"><span class="lg-a"><i></i>actual</span><span class="lg-b"><i></i>30d avg</span></div></div>
+      <svg class="chart" viewBox="0 0 1000 150" preserveAspectRatio="none" role="img" aria-label="Daily revenue trending above the 30-day average">
+        <line x1="0" y1="96" x2="1000" y2="80" stroke="#5e5d52" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <path d="M0,122 L66,116 L133,121 L200,103 L266,109 L333,86 L400,96 L466,70 L533,80 L600,50 L666,64 L733,44 L800,58 L866,34 L933,48 L1000,28 L1000,150 L0,150 Z" fill="#d6400a" fill-opacity="0.07"/>
+        <path d="M0,122 L66,116 L133,121 L200,103 L266,109 L333,86 L400,96 L466,70 L533,80 L600,50 L666,64 L733,44 L800,58 L866,34 L933,48 L1000,28" fill="none" stroke="#d6400a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div class="tbl-h">RECENT TRANSACTIONS <a href="#">view all 1,204 →</a></div>
+    <table>
+      <thead><tr><th>id</th><th>customer</th><th>date</th><th>status</th><th class="r">amount</th></tr></thead>
+      <tbody>
+        <tr><td class="id">#10842</td><td class="cust"><b>Margot Delacroix</b><span>margot@email.co</span></td><td class="num">2026-05-30</td><td><span class="badge b-paid">paid</span></td><td class="r amt">$124.00</td></tr>
+        <tr><td class="id">#10841</td><td class="cust"><b>Tom Brinkley</b><span>t.brinkley@me.com</span></td><td class="num">2026-05-30</td><td><span class="badge b-pend">pending</span></td><td class="r amt">$48.50</td></tr>
+        <tr><td class="id">#10840</td><td class="cust"><b>Suki Watanabe</b><span>suki.w@studio.io</span></td><td class="num">2026-05-29</td><td><span class="badge b-paid">paid</span></td><td class="r amt">$212.75</td></tr>
+        <tr><td class="id">#10839</td><td class="cust"><b>Fabian Nkrumah</b><span>fabian.n@corp.gh</span></td><td class="num">2026-05-29</td><td><span class="badge b-ref">refunded</span></td><td class="r amt">$67.00</td></tr>
+        <tr><td class="id">#10838</td><td class="cust"><b>Alicia Pemberton</b><span>a.pemberton@net.uk</span></td><td class="num">2026-05-28</td><td><span class="badge b-fail">failed</span></td><td class="r amt">$38.00</td></tr>
+        <tr><td class="id">#10837</td><td class="cust"><b>Jerome Castillo</b><span>jerome@gmail.com</span></td><td class="num">2026-05-28</td><td><span class="badge b-paid">paid</span></td><td class="r amt">$189.25</td></tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

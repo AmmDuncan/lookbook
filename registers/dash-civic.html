@@ -1,0 +1,205 @@
+<!-- @dsCard group="Voice Bank · Dashboards" -->
+<!DOCTYPE html>
+<html lang="en" data-voice="civic">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harbor — Overview · Civic voice</title>
+<style>
+  /* ============================================================
+     VOICE: CIVIC / HIGH-TRUST  (the :root block IS the skin)
+     Art direction: a filled navy masthead anchors the page; one
+     dominant hero metric fused with its chart; a quiet secondary
+     stat strip; a chunky, legible table. GOV.UK lineage, elevated.
+     ============================================================ */
+  :root {
+    --bg:        #eaeef2;
+    --surface:   #ffffff;
+    --surface-2: #f4f6f9;
+    --border:    #ccd3dc;
+    --border-2:  #dde2e9;
+    --navy:      #0b2545;   /* masthead — the anchor */
+    --navy-2:    #143256;
+    --on-navy:   #ffffff;
+    --on-navy-dim:rgba(255,255,255,0.74);  /* dim text on navy (~7:1 on --navy); rgba so it's read on its real bg */
+    --ink:       #142033;
+    --muted:     #4c5667;   /* 7.3:1 on surface */
+    --faint:     #5e6876;   /* 5.6:1 on surface, 5.0:1 on bg */
+    --accent:    #1d4e89;
+    --accent-2:  #2f6fc4;   /* brighter — chart line, on white only (4.5:1) */
+    --on-accent: #ffffff;
+    --pos:       #146434;  --pos-bg: #e2f0e8;
+    --neg:       #9a1c1c;  --neg-bg: #f7e4e4;
+    --warn:      #855400;  --warn-bg: #f6ecd6;
+    --info:      #1d4e89;  --info-bg: #e1e9f3;
+    --focus:     #ffbf47;
+    --r:         5px;
+    --font:      "Inter var", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+  .num { font-variant-numeric: tabular-nums; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; box-shadow: 0 0 0 1px var(--navy); border-radius: 2px; }
+
+  /* ---------- masthead (the anchor) ---------- */
+  .masthead { background: var(--navy); color: var(--on-navy); }
+  .mh-top { display: flex; align-items: center; gap: 16px; padding: 0 28px; height: 60px; max-width: 1440px; margin: 0 auto; }
+  .mh-brand { display: flex; align-items: center; gap: 11px; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  .mh-brand .mark { width: 30px; height: 30px; border-radius: var(--r); background: var(--accent-2); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 15px; }
+  .mh-util { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .mh-search { position: relative; }
+  .mh-search svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--on-navy-dim); }
+  .mh-search input { width: 256px; padding: 8px 12px 8px 34px; border: 1px solid var(--navy-2); border-radius: var(--r); background: #0d2b50; color: #fff; font: inherit; font-size: 13px; }
+  .mh-search input::placeholder { color: var(--on-navy-dim); }
+  .mh-icon { width: 36px; height: 36px; border: 1px solid var(--navy-2); border-radius: var(--r); background: var(--navy-2); color: var(--on-navy); display: grid; place-items: center; cursor: pointer; }
+  .mh-icon svg { width: 18px; height: 18px; }
+  .mh-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--accent-2); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+  /* signature accent stripe under masthead */
+  .mh-stripe { height: 4px; background: var(--accent-2); }
+  /* nav tabs */
+  .mh-nav { background: var(--navy); border-top: 1px solid var(--navy-2); }
+  .mh-nav-inner { display: flex; gap: 2px; padding: 0 28px; max-width: 1440px; margin: 0 auto; }
+  .tab { padding: 13px 16px 12px; color: var(--on-navy-dim); font-weight: 600; font-size: 13.5px; border-bottom: 3px solid transparent; }
+  .tab:hover { color: #fff; }
+  .tab[aria-current="page"] { color: #fff; border-bottom-color: var(--accent-2); }
+
+  /* ---------- content ---------- */
+  .wrap { max-width: 1440px; margin: 0 auto; padding: 26px 28px 48px; display: flex; flex-direction: column; gap: 18px; }
+  .page-h { display: flex; align-items: baseline; gap: 12px; }
+  .page-h h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+  .page-h .sub { color: var(--faint); font-size: 13px; }
+
+  /* HERO: dominant metric fused with chart */
+  .hero { display: grid; grid-template-columns: 300px 1fr; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .hero-fig { padding: 26px 28px; border-right: 1px solid var(--border-2); background: linear-gradient(180deg, #f7f9fb, #ffffff); display: flex; flex-direction: column; justify-content: center; }
+  .hero-fig .lab { font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
+  .hero-fig .big { font-size: 52px; font-weight: 800; letter-spacing: -0.035em; line-height: 1; margin: 12px 0 12px; color: var(--ink); }
+  .hero-fig .delta { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--pos); }
+  .hero-fig .delta svg { width: 16px; height: 16px; }
+  .hero-fig .delta .ctx { color: var(--faint); font-weight: 500; }
+  .hero-fig .peak { margin-top: 16px; font-size: 12.5px; color: var(--muted); padding-top: 14px; border-top: 1px solid var(--border-2); }
+  .hero-fig .peak b { color: var(--ink); }
+  .hero-chart { padding: 20px 24px; display: flex; flex-direction: column; }
+  .hero-chart .ch-h { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .hero-chart h2 { font-size: 14px; font-weight: 700; margin: 0; }
+  .legend { display: flex; gap: 14px; font-size: 11.5px; color: var(--muted); }
+  .legend i { display: inline-block; width: 16px; height: 0; vertical-align: middle; margin-right: 6px; }
+  .lg-a i { border-top: 2.5px solid var(--accent-2); }
+  .lg-b i { border-top: 2px dashed var(--faint); }
+  svg.chart { width: 100%; height: 168px; display: block; }
+
+  /* secondary stat strip — deliberately quiet */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .stat { padding: 16px 22px; border-right: 1px solid var(--border-2); display: flex; align-items: baseline; gap: 12px; }
+  .stat:last-child { border-right: none; }
+  .stat .lab { font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); min-width: 92px; }
+  .stat .v { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+  .stat .d { font-size: 12.5px; font-weight: 700; margin-left: auto; }
+  .stat .d.up { color: var(--pos); } .stat .d.down { color: var(--neg); } .stat .d.flat { color: var(--faint); }
+
+  /* table */
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+  .panel-h { display: flex; align-items: baseline; justify-content: space-between; padding: 16px 22px; border-bottom: 1px solid var(--border); }
+  .panel-h h2 { font-size: 15px; font-weight: 700; margin: 0; }
+  .panel-h a { color: var(--accent); font-size: 13px; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--faint); text-align: left; padding: 11px 22px; background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  thead th.r, td.r { text-align: right; }
+  tbody td { padding: 13px 22px; border-bottom: 1px solid var(--border-2); font-size: 13.5px; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: var(--surface-2); }
+  .id { font-weight: 700; color: var(--accent); }
+  .cust b { display: block; color: var(--ink); } .cust span { font-size: 12px; color: var(--faint); }
+  td.amt { font-weight: 800; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 100px; font-size: 11.5px; font-weight: 700; }
+  .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .b-paid { color: var(--pos); background: var(--pos-bg); }
+  .b-pend { color: var(--warn); background: var(--warn-bg); }
+  .b-ref  { color: var(--info); background: var(--info-bg); }
+  .b-fail { color: var(--neg); background: var(--neg-bg); }
+
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; } .hero-fig { border-right: none; border-bottom: 1px solid var(--border-2); }
+    .stats { grid-template-columns: 1fr; } .stat { border-right: none; border-bottom: 1px solid var(--border-2); }
+  }
+</style>
+</head>
+<body>
+  <!-- masthead anchor -->
+  <header class="masthead">
+    <div class="mh-top">
+      <a class="mh-brand"><span class="mark">H</span>Harbor</a>
+      <div class="mh-util">
+        <div class="mh-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="search" placeholder="Search transactions, customers…" aria-label="Search">
+        </div>
+        <button class="mh-icon" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></button>
+        <span class="mh-avatar">AY</span>
+      </div>
+    </div>
+    <nav class="mh-nav">
+      <div class="mh-nav-inner">
+        <a class="tab" href="#" aria-current="page">Overview</a>
+        <a class="tab" href="#">Transactions</a>
+        <a class="tab" href="#">Customers</a>
+        <a class="tab" href="#">Reports</a>
+        <a class="tab" href="#">Settings</a>
+      </div>
+    </nav>
+    <div class="mh-stripe"></div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-h"><h1>Overview</h1><span class="sub">Friday, 30 May 2026</span></div>
+
+    <!-- HERO: dominant metric fused with its chart -->
+    <section class="hero">
+      <div class="hero-fig">
+        <div class="lab">Total revenue · May</div>
+        <div class="big num">$128,400</div>
+        <div class="delta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg><span class="num">12.4%</span><span class="ctx">vs last month</span></div>
+        <div class="peak">Peak day <b class="num">$6,120</b> · 22 May. Tracking <b>9%</b> above the 30-day average.</div>
+      </div>
+      <div class="hero-chart">
+        <div class="ch-h">
+          <h2>Revenue — last 30 days</h2>
+          <div class="legend"><span class="lg-a"><i></i>Actual</span><span class="lg-b"><i></i>30-day average</span></div>
+        </div>
+        <svg class="chart" viewBox="0 0 760 168" preserveAspectRatio="none" role="img" aria-label="Daily revenue trending above the 30-day average">
+          <line x1="0" y1="108" x2="760" y2="92" stroke="#5e6876" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <path d="M0,138 L51,131 L101,136 L152,117 L203,123 L253,99 L304,108 L355,82 L405,92 L456,58 L507,74 L557,52 L608,66 L659,44 L709,58 L760,38 L760,168 L0,168 Z" fill="#2f6fc4" fill-opacity="0.10"/>
+          <path d="M0,138 L51,131 L101,136 L152,117 L203,123 L253,99 L304,108 L355,82 L405,92 L456,58 L507,74 L557,52 L608,66 L659,44 L709,58 L760,38" fill="none" stroke="#2f6fc4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="760" cy="38" r="4" fill="#2f6fc4"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- quiet secondary stats -->
+    <section class="stats" aria-label="Secondary metrics">
+      <div class="stat"><span class="lab">Active users</span><span class="v num">3,842</span><span class="d up num">↑ 4.1%</span></div>
+      <div class="stat"><span class="lab">Conversion</span><span class="v num">3.2%</span><span class="d down num">↓ 0.3%</span></div>
+      <div class="stat"><span class="lab">Open tickets</span><span class="v num">17</span><span class="d flat num">3 new</span></div>
+    </section>
+
+    <!-- table -->
+    <section class="panel">
+      <div class="panel-h"><h2>Recent transactions</h2><a href="#">View all 1,204 →</a></div>
+      <table>
+        <thead><tr><th>ID</th><th>Customer</th><th>Date</th><th>Status</th><th class="r">Amount</th></tr></thead>
+        <tbody>
+          <tr><td class="id num">#10842</td><td class="cust"><b>Margot Delacroix</b><span>margot@email.co</span></td><td class="num">30 May 2026</td><td><span class="badge b-paid">Paid</span></td><td class="r amt num">$124.00</td></tr>
+          <tr><td class="id num">#10841</td><td class="cust"><b>Tom Brinkley</b><span>t.brinkley@me.com</span></td><td class="num">30 May 2026</td><td><span class="badge b-pend">Pending</span></td><td class="r amt num">$48.50</td></tr>
+          <tr><td class="id num">#10840</td><td class="cust"><b>Suki Watanabe</b><span>suki.w@studio.io</span></td><td class="num">29 May 2026</td><td><span class="badge b-paid">Paid</span></td><td class="r amt num">$212.75</td></tr>
+          <tr><td class="id num">#10839</td><td class="cust"><b>Fabian Nkrumah</b><span>fabian.n@corp.gh</span></td><td class="num">29 May 2026</td><td><span class="badge b-ref">Refunded</span></td><td class="r amt num">$67.00</td></tr>
+          <tr><td class="id num">#10838</td><td class="cust"><b>Alicia Pemberton</b><span>a.pemberton@net.uk</span></td><td class="num">28 May 2026</td><td><span class="badge b-fail">Failed</span></td><td class="r amt num">$38.00</td></tr>
+          <tr><td class="id num">#10837</td><td class="cust"><b>Jerome Castillo</b><span>jerome@gmail.com</span></td><td class="num">28 May 2026</td><td><span class="badge b-paid">Paid</span></td><td class="r amt num">$189.25</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

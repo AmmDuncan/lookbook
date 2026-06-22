@@ -1,0 +1,206 @@
+<!-- @dsCard group="Voice Bank · Dashboards" -->
+<!DOCTYPE html>
+<html lang="en" data-voice="soft-admin">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harbor — Overview · Soft-admin voice</title>
+<style>
+  /* ============================================================
+     VOICE: SOFT / HUMANE ADMIN  (v2 — full + crisp, not sparse)
+     Warm but fresh off-white, rounded soft-shadow cards, a greeting
+     anchor, a featured revenue card whose chart FILLS and whose
+     footer carries a breakdown, and stat cards with sparklines so
+     nothing reads empty. Approachable, not corporate.
+     ============================================================ */
+  @font-face { font-family:'Geist'; src:url('fonts/Geist-400.woff2') format('woff2'); font-weight:400; font-display:swap; }
+  @font-face { font-family:'Geist'; src:url('fonts/Geist-500.woff2') format('woff2'); font-weight:500; font-display:swap; }
+  @font-face { font-family:'Geist'; src:url('fonts/Geist-600.woff2') format('woff2'); font-weight:600; font-display:swap; }
+  @font-face { font-family:'Geist'; src:url('fonts/Geist-700.woff2') format('woff2'); font-weight:700; font-display:swap; }
+
+  :root {
+    --bg:        #f1ede6;   /* warm, a touch deeper so white cards pop */
+    --surface:   #ffffff;
+    --surface-2: #f7f4ef;
+    --ink:       #26221c;
+    --muted:     #645b50;
+    --faint:     #6f6456;
+    --accent:    #0d7d72;   /* teal */
+    --accent-soft:#16a394;
+    --accent-deep:#0a5d55;
+    --accent-wash:#e1f0ee;
+    --on-accent: #ffffff;
+    --pos:       #15734a;  --pos-bg:#e3f1ea;
+    --neg:       #a52a1e;  --neg-bg:#f8e6e3;
+    --warn:      #8a5300;  --warn-bg:#f7edd9;
+    --info:      #0d7d72;  --info-bg:#e1f0ee;
+    --focus:     #0d7d72;
+    --r:         18px;  --r-sm: 12px;
+    --cardline:  #e9e2d7;  /* warm hairline — defines edges so shadow needn't shout */
+    --shadow:    0 1px 2px rgba(38,28,14,.035);
+    --shadow-sm: 0 1px 1px rgba(38,28,14,.03);
+    --font:      'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+  .num { font-variant-numeric: tabular-nums; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+  .app { display: grid; grid-template-columns: 236px 1fr; min-height: 100vh; }
+
+  /* ---- sidebar ---- */
+  .side { padding: 22px 16px; display: flex; flex-direction: column; }
+  .brand { display: flex; align-items: center; gap: 11px; padding: 4px 8px 24px; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  .brand .mark { width: 33px; height: 33px; border-radius: 11px; background: var(--accent); color: #fff; display: grid; place-items: center; font-weight: 800; box-shadow: 0 2px 6px rgba(13,125,114,.35); }
+  .nav { display: flex; flex-direction: column; gap: 3px; }
+  .nav-i { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--r-sm); color: var(--muted); font-weight: 500; font-size: 14px; }
+  .nav-i svg { width: 18px; height: 18px; }
+  .nav-i:hover { background: #e9e3d9; color: var(--ink); }
+  .nav-i[aria-current="page"] { background: var(--surface); color: var(--accent-deep); font-weight: 600; box-shadow: var(--shadow-sm); }
+  .side .card-me { margin-top: auto; display: flex; align-items: center; gap: 11px; padding: 11px; background: var(--surface); border-radius: var(--r-sm); box-shadow: var(--shadow-sm); }
+  .card-me .av { width: 34px; height: 34px; border-radius: 50%; background: var(--accent-wash); color: var(--accent-deep); display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+  .card-me .who b { display: block; font-size: 13px; } .card-me .who span { font-size: 12px; color: var(--faint); }
+
+  /* ---- main ---- */
+  .main { padding: 26px 30px 40px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .greet { display: flex; align-items: center; gap: 16px; }
+  .greet h1 { margin: 0; font-size: 23px; font-weight: 700; letter-spacing: -0.02em; }
+  .greet p { margin: 3px 0 0; color: var(--faint); font-size: 13.5px; }
+  .greet .search { margin-left: auto; position: relative; }
+  .greet .search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--faint); }
+  .greet .search input { width: 250px; padding: 11px 14px 11px 40px; border: none; border-radius: 999px; background: var(--surface); box-shadow: var(--shadow-sm); font: inherit; font-size: 13.5px; color: var(--ink); }
+  .greet .search input::placeholder { color: var(--faint); }
+
+  .row { display: grid; grid-template-columns: 1.85fr 1fr; gap: 18px; align-items: stretch; }
+
+  /* featured anchor — fills, no dead space */
+  .feat { background: var(--surface); border: 1px solid var(--cardline); border-radius: var(--r); box-shadow: var(--shadow); padding: 24px 26px 20px; display: flex; flex-direction: column; }
+  .feat .lab { font-size: 12px; font-weight: 600; color: var(--faint); letter-spacing: 0.03em; }
+  .feat .big { font-size: 48px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.02; margin: 8px 0 9px; }
+  .feat .delta { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 700; color: var(--pos); }
+  .feat .delta svg { width: 15px; height: 15px; } .feat .delta .ctx { color: var(--faint); font-weight: 500; }
+  .feat .chart-wrap { flex: 1; min-height: 150px; margin-top: 16px; display: flex; flex-direction: column; }
+  .feat .legend { display: flex; gap: 14px; font-size: 11.5px; color: var(--muted); margin-bottom: 6px; }
+  .feat .legend i { display: inline-block; width: 16px; height: 0; vertical-align: middle; margin-right: 6px; }
+  .lg-a i { border-top: 2.5px solid var(--accent-soft); } .lg-b i { border-top: 2px dashed var(--faint); }
+  svg.chart { width: 100%; flex: 1; min-height: 0; display: block; }
+  .feat .breakdown { display: flex; gap: 8px; margin-top: 18px; padding-top: 16px; border-top: 1px solid #efe9e0; }
+  .bd { flex: 1; }
+  .bd .k { font-size: 11.5px; color: var(--faint); font-weight: 600; }
+  .bd .v { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; margin-top: 2px; }
+  .bd .v.neg { color: var(--neg); }
+
+  /* stat cards with sparklines */
+  .summary { background: var(--surface); border: 1px solid var(--cardline); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; }
+  .srow { display: grid; grid-template-columns: 1fr 92px; align-items: center; gap: 3px 16px; padding: 18px 22px; flex: 1; }
+  .srow + .srow { border-top: 1px solid #efe9e0; }
+  .srow .lab { font-size: 12px; font-weight: 600; color: var(--faint); }
+  .srow .d { font-size: 12px; font-weight: 700; text-align: right; } .srow .d.up { color: var(--pos); } .srow .d.down { color: var(--neg); } .srow .d.flat { color: var(--faint); }
+  .srow .v { font-size: 27px; font-weight: 800; letter-spacing: -0.025em; }
+  .spark { width: 92px; height: 30px; display: block; align-self: center; }
+
+  /* table */
+  .panel { background: var(--surface); border: 1px solid var(--cardline); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+  .panel-h { display: flex; align-items: baseline; justify-content: space-between; padding: 18px 24px; }
+  .panel-h h2 { font-size: 15.5px; font-weight: 700; margin: 0; }
+  .panel-h a { color: var(--accent-deep); font-size: 13px; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--faint); text-align: left; padding: 8px 24px 10px; }
+  thead th.r, td.r { text-align: right; }
+  tbody td { padding: 13px 24px; border-top: 1px solid #f0eae1; font-size: 13.5px; }
+  tbody tr:hover { background: var(--surface-2); }
+  .id { font-weight: 700; color: var(--accent-deep); }
+  .cust b { display: block; } .cust span { font-size: 12px; color: var(--faint); }
+  td.amt { font-weight: 800; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; font-size: 11.5px; font-weight: 700; }
+  .badge::before { content:""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .b-paid { color: var(--pos); background: var(--pos-bg); } .b-pend { color: var(--warn); background: var(--warn-bg); }
+  .b-ref { color: var(--info); background: var(--info-bg); } .b-fail { color: var(--neg); background: var(--neg-bg); }
+
+  @media (max-width: 1040px) { .row { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { .app { grid-template-columns: 1fr; } .side { display: none; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark">H</span>Harbor</div>
+    <nav class="nav">
+      <a class="nav-i" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Overview</a>
+      <a class="nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>Transactions</a>
+      <a class="nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1M19 8v6M22 11h-6"/></svg>Customers</a>
+      <a class="nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>Reports</a>
+      <a class="nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a>
+    </nav>
+    <div class="card-me"><span class="av">AY</span><span class="who"><b>A. Yawson</b><span>Administrator</span></span></div>
+  </aside>
+
+  <main class="main">
+    <div class="greet">
+      <div><h1>Good afternoon, Ammiel</h1><p>Here's how Harbor's doing today — Friday, 30 May.</p></div>
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="search" placeholder="Search anything…" aria-label="Search">
+      </div>
+    </div>
+
+    <div class="row">
+      <section class="feat">
+        <span class="lab">Total revenue · May</span>
+        <span class="big num">$128,400</span>
+        <span class="delta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg><span class="num">12.4%</span><span class="ctx">vs last month · 9% above average</span></span>
+        <div class="chart-wrap">
+          <div class="legend"><span class="lg-a"><i></i>Actual</span><span class="lg-b"><i></i>30-day average</span></div>
+          <svg class="chart" viewBox="0 0 640 200" preserveAspectRatio="none" role="img" aria-label="Daily revenue trending above the 30-day average">
+            <line x1="0" y1="128" x2="640" y2="108" stroke="#6f6456" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <path d="M0,164 L43,156 L85,162 L128,138 L171,146 L213,116 L256,128 L299,94 L341,106 L384,66 L427,86 L469,58 L512,76 L555,46 L597,66 L640,40 L640,200 L0,200 Z" fill="#16a394" fill-opacity="0.13"/>
+            <path d="M0,164 L43,156 L85,162 L128,138 L171,146 L213,116 L256,128 L299,94 L341,106 L384,66 L427,86 L469,58 L512,76 L555,46 L597,66 L640,40" fill="none" stroke="#16a394" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="640" cy="40" r="4.5" fill="#0d7d72"/>
+          </svg>
+        </div>
+        <div class="breakdown">
+          <div class="bd"><div class="k">New customers</div><div class="v num">$74,200</div></div>
+          <div class="bd"><div class="k">Returning</div><div class="v num">$58,300</div></div>
+          <div class="bd"><div class="k">Refunds</div><div class="v neg num">−$4,100</div></div>
+        </div>
+      </section>
+
+      <div class="summary">
+        <div class="srow">
+          <span class="lab">Active users</span><span class="d up num">↑ 4.1%</span>
+          <span class="v num">3,842</span>
+          <svg class="spark" viewBox="0 0 200 34" preserveAspectRatio="none"><path d="M0,26 L25,24 L50,27 L75,20 L100,22 L125,14 L150,17 L175,9 L200,7" fill="none" stroke="#16a394" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="srow">
+          <span class="lab">Conversion</span><span class="d down num">↓ 0.3%</span>
+          <span class="v num">3.2%</span>
+          <svg class="spark" viewBox="0 0 200 34" preserveAspectRatio="none"><path d="M0,12 L25,10 L50,15 L75,13 L100,18 L125,16 L150,21 L175,19 L200,24" fill="none" stroke="#a52a1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="srow">
+          <span class="lab">Open tickets</span><span class="d flat num">3 new</span>
+          <span class="v num">17</span>
+          <svg class="spark" viewBox="0 0 200 34" preserveAspectRatio="none"><path d="M0,18 L25,16 L50,20 L75,17 L100,15 L125,19 L150,16 L175,18 L200,14" fill="none" stroke="#6f6456" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <section class="panel">
+      <div class="panel-h"><h2>Recent transactions</h2><a href="#">View all 1,204 →</a></div>
+      <table>
+        <thead><tr><th>ID</th><th>Customer</th><th>Date</th><th>Status</th><th class="r">Amount</th></tr></thead>
+        <tbody>
+          <tr><td class="id num">#10842</td><td class="cust"><b>Margot Delacroix</b><span>margot@email.co</span></td><td class="num">30 May 2026</td><td><span class="badge b-paid">Paid</span></td><td class="r amt num">$124.00</td></tr>
+          <tr><td class="id num">#10841</td><td class="cust"><b>Tom Brinkley</b><span>t.brinkley@me.com</span></td><td class="num">30 May 2026</td><td><span class="badge b-pend">Pending</span></td><td class="r amt num">$48.50</td></tr>
+          <tr><td class="id num">#10840</td><td class="cust"><b>Suki Watanabe</b><span>suki.w@studio.io</span></td><td class="num">29 May 2026</td><td><span class="badge b-paid">Paid</span></td><td class="r amt num">$212.75</td></tr>
+          <tr><td class="id num">#10839</td><td class="cust"><b>Fabian Nkrumah</b><span>fabian.n@corp.gh</span></td><td class="num">29 May 2026</td><td><span class="badge b-ref">Refunded</span></td><td class="r amt num">$67.00</td></tr>
+          <tr><td class="id num">#10838</td><td class="cust"><b>Alicia Pemberton</b><span>a.pemberton@net.uk</span></td><td class="num">28 May 2026</td><td><span class="badge b-fail">Failed</span></td><td class="r amt num">$38.00</td></tr>
+          <tr><td class="id num">#10837</td><td class="cust"><b>Jerome Castillo</b><span>jerome@gmail.com</span></td><td class="num">28 May 2026</td><td><span class="badge b-paid">Paid</span></td><td class="r amt num">$189.25</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</div>
+</body>
+</html>

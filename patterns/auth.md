@@ -23,6 +23,9 @@ Refines: F4. *Why:* the heading anchors the moment; bigger looks try-hard, small
 **P-A-04. Email + password (or OTP) and nothing else above the primary CTA.** No marketing copy, no "why sign up" pitch.
 New. *Why:* every word above the CTA is a delay; the pitch belongs on the marketing page, not here.
 
+**P-A-04a. For a NON-marketing app (internal tool, back-office console, targeted/restricted product), the split-screen's SECOND PANEL must NOT market either.** The default reflex — fill the side panel with value-props, stats, testimonials, a hero pitch — is wrong for any app whose users are required to be there (staff, partners, operators); they don't need selling. Fill the panel with something *operational or neutral* instead, or drop it: (a) **nothing** — a centered card or full-bleed-minimal layout; (b) **wordless brand presence** — a mark/texture/pattern panel with zero copy; (c) **a masked product preview** — a hairline-striped screenshot of the console they're signing into; (d) **system/security context** — org name, environment (Production), SSO/IdP button, last-sign-in, identity provider, system-status dot. Microcopy under the form is *audit/security* ("Authorised personnel only · activity is logged"), never a pitch.
+New 2026-06-28 (Ammiel — the split-auth specimens defaulted to marketing the side panel; wrong for internal apps). *Why:* a required user is not a prospect. **Pull these from `harvest/specimens/Internal Auth Studies.html`** (the five non-marketing fills) rather than adapting a marketing split. (Wren: internal-auth-no-marketing-pitch.)
+
 **P-A-05. Primary CTA full-width inside the card, height 44–48px, weight 500–600, the same accent as the rest of the product.**
 Refines: F16, P-F-04. *Why:* full-width inside a 400px card centers attention without ambiguity.
 

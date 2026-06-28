@@ -52,6 +52,7 @@ Refines: F19, F72. *Why:* Mixpanel's wall of "undefined"/"(not set)" and monday'
 - **Selection layer**: header + per-row checkboxes; bulk-action bar appears on selection (P-L-06).
 - **Footer**: pagination + count (P-L-08), or nothing if infinite-scroll.
 - **Mobile** (F50): the table reflows — either horizontal scroll within the table region (header sticky, nothing dropped) OR each row collapses to a stacked "card" (identity + key facts + a ⋯); the toolbar collapses search into an icon and filters into a single "Filter" sheet; the primary "New X" becomes a sticky FAB or bottom bar. Quick-filter tabs become a scrollable strip. Selection + bulk bar stay (bottom sheet). Nothing reachable on desktop is hidden on mobile.
+- **Shell surfaces → pull each from its variation library; none generic.** The rail, header band, and especially the **table chrome** are primary surfaces — don't leave them at a default while you style the rows (that's `AP29`). Rail → `Sidebar Variations.html`. Header/toolbar → `Header Topbar Variations.html`. Whole shell → `App Shell Variations.html`. Table treatment (row rhythm, sticky header, zebra-vs-hairline, selection layer, density) → `Data Display Gallery.html`. Name the pick for each in the *Surface deliberateness* receipt (SKILL.md step 4).
 
 ## Forbidden moves
 - **Action soup in the toolbar** — more than one primary, or row-set verbs (Publish/Archive/Delete) living in the resting toolbar instead of the bulk bar (P-L-01; the Salesforce cautionary case).

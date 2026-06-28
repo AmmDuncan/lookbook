@@ -3,6 +3,8 @@
 > A "register" is the *voice* of an interface — cool-technical, warm-editorial, bold-expressive, and infinitely more. The trap (the one that makes everything you build look the same): treating registers as a **fixed list of named presets**. They aren't. A voice is a **point in a space of independent dials**, and the named registers are just three coherent points. Learn the dials and you can compose a voice for any brief — and stop shipping the same three looks.
 >
 > **Earned by:** the register exercise (`registers/float-*.html`) — the same product and copy ("Float") rendered in four voices from the spine alone. Because the content was held constant, every difference is *purely voice*. This replaces the old self-judged `kits/` (cool-technical / marketing / warm-editorial) with an empirical, composable model.
+>
+> **The fixed-preset built dashboards are retired (2026-06-28).** The old per-voice built dashboards (`registers/dash-{civic,soft,darkops,premium,brutalist,calm,free}.html`) and the cool-technical `Harbor Dashboard.html` were removed — they presented a *fixed menu of looks*, the exact trap this cookbook exists to kill. The forward model: pull a **composition** from the variation layer (the `* Variations` sheets + `* Studies` drill-downs + composed recipes) and apply **any skin** (a point in this dial space — Lookbook-listed or not). Skins are an open set; the `float-*` exercise stays as proof the dials move.
 
 ## The mistake this fixes
 

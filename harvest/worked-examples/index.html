@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lookbook validation test — pull-from-dictionary</title>
+<style>
+:root{
+  --bg:#F6F6F9;--surface:#fff;--border:#E4E4EC;--ink:#191923;--muted:#5A5A6B;--faint:#67677A;
+  --accent:#5B5BD6;--accent-hover:#4A4AC4;--accent-tint:#ECECFB;
+  --success-fg:#136F47;--success-bg:#E5F4EC;--danger-fg:#B42318;--danger-bg:#FDEBEA;
+  --font:'Geist','Inter',system-ui,-apple-system,sans-serif;--mono:'Geist Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.55;padding:64px 32px}
+.wrap{max-width:880px;margin:0 auto}
+.eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-hover);font-weight:600}
+h1{font-size:39px;font-weight:600;letter-spacing:-.025em;margin:8px 0 12px}
+.lede{font-size:20px;color:var(--muted);max-width:60ch}
+.grid{display:flex;flex-direction:column;gap:16px;margin-top:48px}
+.card{display:flex;gap:24px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;text-decoration:none;color:inherit;transition:border-color .12s}
+.card:hover{border-color:var(--accent)}
+.tag{flex:none;width:64px;height:64px;border-radius:12px;display:grid;place-items:center;font-weight:700;font-size:25px;font-family:var(--mono)}
+.tag.a{background:var(--accent-tint);color:var(--accent-hover)}
+.tag.b{background:var(--danger-bg);color:var(--danger-fg)}
+.tag.c{background:var(--success-bg);color:var(--success-fg)}
+.card h3{font-size:20px;font-weight:600}
+.card p{font-size:15px;color:var(--muted);margin-top:4px}
+.card .pill{display:inline-block;font-size:12px;font-weight:600;color:var(--faint);border:1px solid var(--border);border-radius:999px;padding:2px 9px;margin-top:8px}
+.go{margin-left:auto;color:var(--faint);font-size:24px}
+.note{margin-top:48px;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;font-size:15px;color:var(--muted)}
+.note b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Lookbook · validation test</div>
+  <h1>Pulling from the variation dictionary</h1>
+  <p class="lede">Three app screens built by following the hardened skill protocol — manifesting every shell surface from a named specimen variant, locking the type + spacing ramps, on the cool-technical skin (Geist · indigo · hairline).</p>
+
+  <div class="grid">
+    <a class="card" href="console-pulled.html">
+      <div class="tag a">A</div>
+      <div>
+        <h3>Operator console — deliberate pulls</h3>
+        <p>Dashboard + dark sectioned rail + filter-chip topbar + gridlined table. Every shell surface pulled from a specimen.</p>
+        <span class="pill">dark rail · status-by-shape · accent-topped KPIs</span>
+      </div>
+      <div class="go">→</div>
+    </a>
+    <a class="card" href="console-baseline.html">
+      <div class="tag b">A′</div>
+      <div>
+        <h3>Same console — no-pull baseline</h3>
+        <p>Identical KPIs/chart, but shell left at generic defaults: bare white rail, plain topbar, default table. The AP29 before/after.</p>
+        <span class="pill">demonstrates generic shell chrome</span>
+      </div>
+      <div class="go">→</div>
+    </a>
+    <a class="card" href="detail-inspo.html">
+      <div class="tag c">B</div>
+      <div>
+        <h3>Vehicle record — inspo, not clone</h3>
+        <p>Same vocabulary, divergent shell (collapsed icon-rail + breadcrumb bar). Blends the detail recipe's side-rail with the activity-timeline composition.</p>
+        <span class="pill">icon-rail · two-column + timeline blend</span>
+      </div>
+      <div class="go">→</div>
+    </a>
+  </div>
+
+  <div class="note">
+    <b>What this tests:</b> whether the hardened SKILL.md step-4 shell-surface manifest + locked scales actually force deliberate, varied, non-generic output. Compare <b>A vs A′</b> — same body, the only difference is whether the shell was pulled from the dictionary or left at a default. <b>B</b> shows the same system spent a different way.
+  </div>
+</div>
+</body>
+</html>

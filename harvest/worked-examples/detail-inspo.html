@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DVLA Vehicle Record — inspo-not-clone</title>
+<style>
+:root{
+  --bg:#F6F6F9; --surface:#FFFFFF; --surface-2:#FBFBFD;
+  --border:#E4E4EC; --border-strong:#D2D2DD;
+  --ink:#191923; --muted:#5A5A6B; --faint:#67677A;
+  --accent:#5B5BD6; --accent-hover:#4A4AC4; --accent-tint:#ECECFB;
+  --success-fg:#136F47; --success-bg:#E5F4EC;
+  --warning-fg:#8A5A00; --warning-bg:#FBF0D6;
+  --danger-fg:#B42318; --danger-bg:#FDEBEA;
+  --rail-bg:#15151F; --rail-ink:#E7E7F0; --rail-muted:#9A9AAB; --rail-accent:#9B9BF4; --rail-active:rgba(139,139,240,.16);
+  --t-eyebrow:13px; --t-body:16px; --t-h3:20px; --t-h2:25px; --t-h1:31px; --t-display:39px;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s6:24px;--s8:32px;--s12:48px;--s16:64px;
+  --r-sm:6px;--r-md:8px;--r-lg:12px;
+  --font:'Geist','Inter',system-ui,-apple-system,sans-serif; --mono:'Geist Mono','SF Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);font-size:var(--t-body);line-height:1.55;-webkit-font-smoothing:antialiased}
+.tnum{font-variant-numeric:tabular-nums}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.app{display:grid;grid-template-columns:64px 1fr;min-height:100vh}
+
+/* RAIL — Sidebar Variations · collapsed icon-rail + tooltips (DIVERGENT shell vs Screen A, same vocabulary) */
+.rail{background:var(--rail-bg);display:flex;flex-direction:column;align-items:center;gap:var(--s4);padding:var(--s4) 0}
+.rail .mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#7A7AE8);display:grid;place-items:center;color:#fff;font-weight:700;margin-bottom:var(--s2)}
+.rail .ico{width:40px;height:40px;border-radius:var(--r-md);display:grid;place-items:center;color:var(--rail-muted);cursor:pointer;position:relative}
+.rail .ico svg{width:19px;height:19px}
+.rail .ico:hover{color:var(--rail-ink);background:rgba(255,255,255,.06)}
+.rail .ico.active{background:var(--rail-active);color:#fff}      /* bg-tint only (Wren rule) */
+.rail .ico.active svg{color:var(--rail-accent)}
+.rail .ico .tip{position:absolute;left:48px;top:50%;transform:translateY(-50%);background:var(--ink);color:#fff;font-size:12px;padding:4px 8px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s;z-index:9}
+.rail .ico:hover .tip{opacity:1}
+.rail .spacer{margin-top:auto}
+.rail .av{width:34px;height:34px;border-radius:50%;background:#33334A;display:grid;place-items:center;font-size:12px;font-weight:600;color:#C9C9F0}
+
+.main{display:flex;flex-direction:column;min-width:0}
+/* TOPBAR — Header Topbar Variations · breadcrumb + actions (DIVERGENT vs Screen A's title+search+chips) */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:var(--s4) var(--s8);display:flex;align-items:center;gap:var(--s4);position:sticky;top:0;z-index:5}
+.crumbs{display:flex;align-items:center;gap:var(--s2);font-size:14px;color:var(--faint)}
+.crumbs a:hover{color:var(--ink)} .crumbs .sep{opacity:.5} .crumbs .here{color:var(--ink);font-weight:500;font-family:var(--mono)}
+.topbar .acts{margin-left:auto;display:flex;gap:var(--s2)}
+.btn{display:inline-flex;align-items:center;gap:var(--s2);height:38px;padding:0 var(--s4);border-radius:var(--r-md);font-size:14px;font-weight:600;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:#fff}
+.btn:hover{background:var(--accent-hover)} .btn svg{width:16px;height:16px}
+.btn.ghost{background:var(--surface);color:var(--muted);border-color:var(--border)}
+.btn.ghost:hover{border-color:var(--border-strong);color:var(--ink)}
+
+.content{padding:var(--s8);display:flex;flex-direction:column;gap:var(--s6);max-width:1180px;width:100%}
+
+/* RECORD HERO — adapted (status-by-shape badge + plate as identity) */
+.hero{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s6) var(--s8);display:flex;align-items:center;gap:var(--s6)}
+.hero .plate{font-family:var(--mono);font-size:var(--t-h1);font-weight:700;letter-spacing:.01em;background:var(--ink);color:#fff;padding:var(--s2) var(--s4);border-radius:var(--r-md)}
+.hero .who h1{font-size:var(--t-h2);font-weight:600;letter-spacing:-.01em}
+.hero .who p{color:var(--muted);font-size:14px;margin-top:2px}
+.hero .badge{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--success-bg);color:var(--success-fg);margin-left:var(--s4)}
+.hero .badge .gl{width:9px;height:9px;border-radius:50%;background:var(--success-fg)}
+.hero .meta{margin-left:auto;text-align:right;font-size:13px;color:var(--faint)}
+.hero .meta b{display:block;color:var(--ink);font-size:var(--t-body);font-weight:600;font-variant-numeric:tabular-nums}
+
+/* BODY — two-column + side rail (composition 2) BLENDED with activity timeline (composition 5) */
+.grid{display:grid;grid-template-columns:1fr 340px;gap:var(--s6);align-items:start}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.card+.card{margin-top:var(--s6)}
+.card .ch{padding:var(--s4) var(--s6);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card .ch h3{font-size:var(--t-h3);font-weight:600;letter-spacing:-.01em}
+.card .ch .edit{font-size:13px;color:var(--accent);font-weight:600;cursor:pointer}
+.dl{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.dl .row{padding:var(--s4) var(--s6);border-bottom:1px solid var(--border)}
+.dl .row:nth-child(odd){border-right:1px solid var(--border)}
+.dl dt{font-size:13px;color:var(--faint);margin-bottom:3px}
+.dl dd{font-size:var(--t-body);font-weight:500}
+.dl dd.mono{font-family:var(--mono);font-weight:600;letter-spacing:.01em}
+.full{grid-column:1 / -1}
+
+/* compliance strip — single accent carrier (status), tinted surface not a candy-stripe edge */
+.notice{display:flex;align-items:flex-start;gap:var(--s3);padding:var(--s4) var(--s6);background:var(--warning-bg);color:var(--warning-fg)}
+.notice svg{width:18px;height:18px;flex:none;margin-top:2px}
+.notice b{font-weight:600} .notice p{font-size:14px;margin-top:2px;color:#7A5200}
+
+/* side rail: owner + metadata + activity timeline (blend) */
+.side .card{margin-top:0}
+.owner{display:flex;align-items:center;gap:var(--s3);padding:var(--s6)}
+.owner .av{width:44px;height:44px;border-radius:50%;background:var(--accent-tint);color:var(--accent-hover);display:grid;place-items:center;font-weight:700}
+.owner h4{font-size:var(--t-body);font-weight:600} .owner small{color:var(--muted);font-size:13px}
+.kv{padding:var(--s2) var(--s6) var(--s6)}
+.kv .r{display:flex;justify-content:space-between;padding:var(--s2) 0;font-size:14px;border-bottom:1px solid var(--border)}
+.kv .r:last-child{border-bottom:0} .kv .r span{color:var(--faint)} .kv .r b{font-weight:500;font-variant-numeric:tabular-nums}
+/* timeline (composition 5 grafted) — dots+rail, no rounded-card+side-border */
+.tl{padding:var(--s6)}
+.tl .ev{position:relative;padding:0 0 var(--s6) var(--s6);border-left:2px solid var(--border)}
+.tl .ev:last-child{padding-bottom:0;border-left-color:transparent}
+.tl .ev::before{content:"";position:absolute;left:-5px;top:2px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.tl .ev.muted::before{background:var(--border-strong)}
+.tl .ev .act{font-size:14px;font-weight:500}
+.tl .ev .meta{font-size:12px;color:var(--faint);margin-top:2px;font-variant-numeric:tabular-nums}
+
+@media (max-width:1000px){.grid{grid-template-columns:1fr}.side{order:-1}}
+@media (max-width:640px){
+  .content{padding:var(--s4)}.topbar{padding:var(--s4)}
+  .hero{flex-wrap:wrap;gap:var(--s4);padding:var(--s6)}.hero .meta{margin-left:0;text-align:left;width:100%}.hero .badge{margin-left:0}
+  .dl{grid-template-columns:1fr}.dl .row:nth-child(odd){border-right:0}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- RAIL — collapsed icon-rail + tooltips -->
+  <aside class="rail">
+    <div class="mark">D</div>
+    <a class="ico" aria-label="Overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span class="tip">Overview</span></a>
+    <a class="ico active" aria-label="Vehicles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17h14M6 17V9a6 6 0 0 1 12 0v8M3 17h18"/></svg><span class="tip">Vehicles</span></a>
+    <a class="ico" aria-label="Applications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4zM4 9h16M9 4v16"/></svg><span class="tip">Applications</span></a>
+    <a class="ico" aria-label="Compliance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/></svg><span class="tip">Compliance</span></a>
+    <a class="ico" aria-label="Reports"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4zM8 10h8M8 14h5"/></svg><span class="tip">Reports</span></a>
+    <div class="spacer"></div>
+    <div class="av">AO</div>
+  </aside>
+
+  <div class="main">
+    <!-- TOPBAR — breadcrumb + actions -->
+    <header class="topbar">
+      <nav class="crumbs"><a>Vehicles</a><span class="sep">/</span><a>Saloon</a><span class="sep">/</span><span class="here">GR-4821-24</span></nav>
+      <div class="acts">
+        <button class="btn ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>Print V5C</button>
+        <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Edit record</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <!-- HERO -->
+      <section class="hero">
+        <div class="plate">GR-4821-24</div>
+        <div class="who">
+          <h1>Toyota Corolla <span class="badge"><span class="gl"></span>Active</span></h1>
+          <p>2021 · Saloon · Petrol · Silver</p>
+        </div>
+        <div class="meta">Registered<b class="tnum">14 Aug 2021</b></div>
+      </section>
+
+      <div class="grid">
+        <!-- LEFT: detail sections -->
+        <div class="leftcol">
+          <div class="card">
+            <div class="ch"><h3>Registration details</h3><span class="edit">Edit</span></div>
+            <div class="notice">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+              <div><b>Road tax due in 27 days</b><p>Renewal of GH₵ 420 falls due on 14 Aug 2026.</p></div>
+            </div>
+            <dl class="dl">
+              <div class="row"><dt>VIN / Chassis</dt><dd class="mono">JTDBR32E230081742</dd></div>
+              <div class="row"><dt>Engine number</dt><dd class="mono">2ZR-7841552</dd></div>
+              <div class="row"><dt>Registration class</dt><dd>Private (Saloon)</dd></div>
+              <div class="row"><dt>Date of entry</dt><dd>14 Aug 2021</dd></div>
+              <div class="row"><dt>Cubic capacity</dt><dd>1,798 cc</dd></div>
+              <div class="row"><dt>Seating capacity</dt><dd>5</dd></div>
+            </dl>
+          </div>
+
+          <div class="card">
+            <div class="ch"><h3>Tax &amp; inspection</h3></div>
+            <dl class="dl">
+              <div class="row"><dt>Road tax status</dt><dd style="color:var(--success-fg);font-weight:600">Paid · valid to 14 Aug 2026</dd></div>
+              <div class="row"><dt>Last payment</dt><dd class="tnum">GH₵ 420 · 14 Aug 2025</dd></div>
+              <div class="row"><dt>Roadworthy (MOT)</dt><dd>Valid to 02 Feb 2027</dd></div>
+              <div class="row"><dt>Insurance</dt><dd>Star Assurance · active</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <!-- RIGHT: owner + metadata + activity timeline (blend) -->
+        <div class="side">
+          <div class="card">
+            <div class="owner">
+              <div class="av">KM</div>
+              <div><h4>Kwame Mensah</h4><small>Registered keeper</small></div>
+            </div>
+            <div class="kv">
+              <div class="r"><span>Licence no.</span><b>GHA-DL-882041</b></div>
+              <div class="r"><span>Phone</span><b>+233 24 118 4420</b></div>
+              <div class="r"><span>Region</span><b>Greater Accra</b></div>
+              <div class="r"><span>Vehicles held</span><b>2</b></div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:var(--s6)">
+            <div class="ch"><h3>Activity</h3></div>
+            <div class="tl">
+              <div class="ev"><div class="act">Road tax renewed</div><div class="meta">A. Owusu · 14 Aug 2025 · 11:04</div></div>
+              <div class="ev"><div class="act">Roadworthy certificate issued</div><div class="meta">Accra VLTC · 02 Feb 2025</div></div>
+              <div class="ev muted"><div class="act">Ownership transfer recorded</div><div class="meta">14 Aug 2021 · from dealer</div></div>
+              <div class="ev muted"><div class="act">Vehicle first registered</div><div class="meta">14 Aug 2021</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

@@ -49,6 +49,7 @@ New.
 - **Filter / scope** lives in a left filter rail, a right `~280px` rail, OR a sticky top scope bar — all three are real (Apollo uses a *left* filter rail). Filter-heavy → a dedicated rail.
 - **Tabs are fine to switch report views/categories** (Overview · Reports · Goals — Apollo does this well). The real tell is cramming *unrelated KPIs* into one hero; that's two dashboards. Ban the number-salad, not the tabs.
 - **Scope** (date range, segment) always visible — a dashboard without scope context is a number salad.
+- **Shell surfaces → pull each from its variation library; none generic.** Don't let the rail/topbar/table fall to a default while you skin the cards and charts (that's `AP29`). Rail → `Sidebar Variations.html` (8 treatments: labeled section-headers · collapsed icon-rail · search-pinned · nested groups · workspace switcher · dark rail · compact+count-badges · primary-action-above-nav). Top/scope bar → `Header Topbar Variations.html`. Whole shell → `App Shell Variations.html`. Table/data chrome → `Data Display Gallery.html`. KPI & chart treatment → `Data Display Gallery.html` + the chart standard. Name the pick for each in the *Surface deliberateness* receipt (SKILL.md step 4).
 
 ## Forbidden moves
 - Pie charts with >4 slices. Use a bar.

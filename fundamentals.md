@@ -22,6 +22,7 @@ These numbers are a v1 starting set, grounded in classical sources and Lookbook'
 
 **F2. Modular type scale only. Pick one ratio (1.2 minor third, 1.25 major third, or 1.333 perfect fourth) and stick to it. No off-scale sizes.**
 *Why:* Mathematical relationships between sizes produce visual harmony; arbitrary sizes produce noise.
+*Worked ramp (lock this up front per protocol step 4, then every `font-size` reduces to it):* base 16, ratio **1.25** → `13 · 16 · 20 · 25 · 31 · 39` (px), mapping eyebrow/caption · body · h3 · h2 · h1 · display. 13px is the floor — eyebrows go uppercase+tracked at 13, not a sub-13 one-off. Other ratios: 1.2 → `13 · 16 · 19 · 23 · 28 · 33`; 1.333 → `14 · 18 · 24 · 32 · 43 · 57`. Pick ONE row; mixing ramps is the drift `F2` exists to stop. (Paired spacing ramp lives in `F9`.)
 *Check:* All `font-size` values reduce to base × ratio^n.
 
 **F3. Body text 15–17px desktop, 16px mobile. Line-height 1.5–1.6.**

@@ -175,6 +175,7 @@
 | Looks | src |
 |---|---|
 | centered-card login (social + or-divider + remember/forgot) · split-screen (form + brand panel) · sign-up + password-strength meter · forgot/reset · check-your-inbox verification · 2FA segmented OTP | `Auth Screens.html` |
+| **INTERNAL / NON-MARKETING auth** (the default for any targeted/back-office app — no value-props, stats, testimonials, hero pitch): centered-card + audit microcopy · split w/ wordless brand panel · split w/ masked product preview · split w/ system/security context (org · environment · SSO · last-sign-in · status) · full-bleed minimal | `Internal Auth Studies.html` |
 
 ### Skins / aesthetics — an OPEN set, NOT a menu
 

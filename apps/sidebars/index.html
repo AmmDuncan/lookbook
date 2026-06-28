@@ -1,0 +1,739 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lookbook · the sidebar cookbook — a dozen app shells</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Lookbook — sidebar cookbook gallery
+   Hex-encoded mirror of @lookbook/tokens (oklch source) so the
+   deterministic contrast gate can actually read the pairs.
+   ============================================================ */
+:root{
+  /* light page surfaces */
+  --bg:#f6f7f9; --surface:#ffffff; --surface-sunken:#eceef2; --surface-hover:#f1f3f6;
+  --border:#e2e5ea; --border-strong:#cdd2db;
+  /* light text tiers */
+  --text-primary:#1b1d22; --text-secondary:#535a64; --text-muted:#656b74;
+  /* accent (calm blue, hue 252) */
+  --accent:#3d5ee0; --accent-hover:#3450c8; --accent-subtle:#eef1fe; --on-accent:#ffffff;
+  --focus:#4e6ae6;
+  /* status fg (on light) */
+  --success:#2f7d44; --warning:#8a5d0e; --danger:#bd342a;
+  --success-bg:#e6f4ea; --warning-bg:#f7eedd; --danger-bg:#f9e7e5;
+  /* radii / shadow / motion */
+  --r-sm:4px; --r-md:8px; --r-lg:12px; --r-xl:16px;
+  --sh-sm:0 1px 2px rgb(15 17 23/.05);
+  --sh-md:0 2px 4px -1px rgb(15 17 23/.07),0 1px 2px -1px rgb(15 17 23/.05);
+  --sh-lg:0 10px 22px -6px rgb(15 17 23/.13),0 4px 8px -3px rgb(15 17 23/.07);
+  --ease:cubic-bezier(.2,0,0,1); --dur:.18s;
+  --ui:"Geist",system-ui,-apple-system,sans-serif; --mono:"Geist Mono",ui-monospace,monospace;
+}
+/* The dark + tinted rail families live in a dark scope so the single-polarity
+   contrast gate measures them dark-on-dark (their real context) instead of
+   against the light page bg — a pairing that never renders. The dark/tinted/ops/dual
+   shells carry data-theme="dark"; glass (10) stays on the light page. */
+[data-theme="dark"]{
+  --bg:#0e1014; --surface:#15181e; --surface-sunken:#0b0d11; --surface-hover:#1d212a;
+  --text-primary:#f2f4f7; --text-secondary:#b8bec9; --text-muted:#9298a3;
+  --accent:#8aa0f4; --accent-hover:#9fb0f6; --warning:#e7b53f;
+  --d-bg:#0e1014; --d-rail:#15181e; --d-raised:#1d212a; --d-sunken:#0b0d11;
+  --d-border:#272b33; --d-border-strong:#373c46;
+  --d-ink:#f2f4f7; --d-ink2:#b8bec9; --d-quiet:#9298a3; --d-accent:#8aa0f4;
+  --t-rail:#191d2e; --t-raised:#222843; --t-border:#2c3350;
+  --t-ink:#eef0f7; --t-ink2:#c5cae0; --t-quiet:#9aa0bd; --t-accent:#aab6ff;
+}
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;}
+body{background:var(--bg);color:var(--text-primary);font-family:var(--ui);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-feature-settings:"cv11","ss01";}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;}
+:focus:not(:focus-visible){outline:none;}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:3px;}
+
+/* ---------- page chrome ---------- */
+.page{max-width:1060px;margin:0 auto;padding:64px 40px 120px;}
+.kick{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);margin:0 0 14px;}
+h1.title{font-size:46px;font-weight:600;letter-spacing:-.028em;line-height:1.05;margin:0 0 16px;max-width:18ch;}
+.lede{font-size:19px;line-height:1.55;color:var(--text-secondary);max-width:64ch;margin:0 0 8px;}
+.lede b{color:var(--text-primary);font-weight:600;}
+.lede .ac{color:var(--accent);font-weight:600;}
+
+/* dial legend */
+.legend{margin:36px 0 8px;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface);box-shadow:var(--sh-sm);overflow:hidden;}
+.legend-h{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:12px;}
+.legend-h b{font-size:14px;font-weight:600;}
+.legend-h span{font-size:13px;color:var(--text-muted);}
+.dials{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.dial{background:var(--surface);padding:16px 22px;}
+.dial .dn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 6px;}
+.dial .dv{font-size:13.5px;color:var(--text-secondary);line-height:1.5;}
+.dial .dv b{color:var(--text-primary);font-weight:600;}
+
+/* ---------- specimen ---------- */
+.spec{margin-top:72px;}
+.spec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px;}
+.spec-num{font-family:var(--mono);font-size:13px;color:var(--text-muted);font-weight:500;}
+.spec-head h2{font-size:25px;font-weight:600;letter-spacing:-.02em;margin:0;}
+.spec-head .ess{font-size:15px;color:var(--text-secondary);flex:1;min-width:240px;}
+.grounding{font-family:var(--mono);font-size:11.5px;color:var(--text-muted);margin:2px 0 16px;letter-spacing:.01em;}
+.grounding b{color:var(--text-secondary);font-weight:500;}
+
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px;}
+.chip{font-size:11.5px;font-family:var(--mono);letter-spacing:.02em;padding:4px 9px;border-radius:var(--r-full,20px);border:1px solid var(--border);color:var(--text-secondary);background:var(--surface);white-space:nowrap;}
+.chip b{color:var(--text-primary);font-weight:600;}
+.chip.dyn{border-color:transparent;background:var(--accent-subtle);color:var(--accent-hover);}
+
+/* browser frame */
+.frame{border:1px solid var(--border-strong);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-lg);background:var(--surface);}
+.frame-bar{height:38px;display:flex;align-items:center;gap:8px;padding:0 14px;background:var(--surface-sunken);border-bottom:1px solid var(--border);}
+.frame-bar .dot{width:11px;height:11px;border-radius:50%;background:var(--border-strong);}
+.frame-bar .url{margin-left:10px;font-family:var(--mono);font-size:12px;color:var(--text-muted);}
+.frame-stage{overflow-x:auto;}
+
+/* shell skeleton: rail + content well */
+.shell{display:flex;min-height:430px;min-width:760px;}
+.well{flex:1;background:var(--bg);padding:22px 26px;min-width:0;}
+.well-top{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+.well-crumb{font-size:13px;color:var(--text-muted);font-family:var(--mono);}
+.well-crumb b{color:var(--text-secondary);font-weight:500;}
+.well-spacer{flex:1;}
+.well-pill{height:30px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface);min-width:150px;display:flex;align-items:center;padding:0 10px;gap:7px;color:var(--text-muted);font-size:12.5px;}
+.well-av{width:28px;height:28px;border-radius:50%;background:var(--surface-sunken);border:1px solid var(--border);}
+.well h3{font-size:19px;font-weight:600;letter-spacing:-.015em;margin:0 0 4px;color:var(--text-primary);}
+.well p{font-size:13.5px;color:var(--text-muted);margin:0 0 20px;}
+.skel{height:11px;border-radius:5px;background:var(--surface-sunken);}
+.skel.s-card{height:64px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface);}
+.skel-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px;}
+
+/* ---------- rail base ---------- */
+.rail{width:236px;flex:none;display:flex;flex-direction:column;background:var(--surface);border-right:1px solid var(--border);padding:12px 10px;gap:2px;}
+.sw{display:flex;align-items:center;gap:9px;padding:8px 8px;border-radius:var(--r-md);margin-bottom:8px;width:100%;text-align:left;}
+.sw:hover{background:var(--surface-hover);}
+.sw-logo{width:26px;height:26px;border-radius:7px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none;}
+.sw-name{font-size:14px;font-weight:600;line-height:1.2;min-width:0;}
+.sw-sub{font-size:11.5px;color:var(--text-muted);}
+.sw .cv{margin-left:auto;width:15px;height:15px;color:var(--text-muted);flex:none;}
+.gl{font-size:11px;font-family:var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--text-muted);padding:12px 10px 5px;}
+.ni{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:var(--r-md);color:var(--text-secondary);font-size:14px;font-weight:450;line-height:1.2;position:relative;}
+.ni:hover{background:var(--surface-hover);color:var(--text-primary);}
+.ni .ic{width:17px;height:17px;flex:none;opacity:.85;}
+.ni .lbl{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ni .ct{margin-left:auto;font-size:11px;font-family:var(--mono);color:var(--text-muted);background:var(--surface-sunken);padding:1px 7px;border-radius:10px;}
+.ni.on{background:var(--accent-subtle);color:var(--accent-hover);font-weight:600;}
+.ni.on .ic{opacity:1;color:var(--accent);}
+.spring{flex:1;}
+.foot{margin-top:8px;padding-top:10px;border-top:1px solid var(--border);}
+.acct{display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:var(--r-md);width:100%;text-align:left;}
+.acct:hover{background:var(--surface-hover);}
+.acct .av{width:27px;height:27px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#7a4ad0);flex:none;}
+.acct .nm{font-size:13px;font-weight:600;line-height:1.15;}
+.acct .rl{font-size:11px;color:var(--text-muted);}
+
+/* ============================================================
+   01 — DARK OPERATOR RAIL  (value-anchor · subtle fill active)
+   ============================================================ */
+.k-operator .rail{background:var(--d-rail);border-right-color:var(--d-border);}
+.k-operator .well{background:#101319;}
+.k-operator .sw-name{color:var(--d-ink);} .k-operator .sw-sub{color:var(--d-quiet);}
+.k-operator .sw:hover{background:var(--d-raised);} .k-operator .sw .cv{color:var(--d-quiet);}
+.k-operator .gl{color:var(--d-quiet);}
+.k-operator .ni{color:var(--d-ink2);}
+.k-operator .ni:hover{background:var(--d-raised);color:var(--d-ink);}
+.k-operator .ni.on{background:var(--d-raised);color:var(--d-ink);font-weight:600;}
+.k-operator .ni.on .ic{color:var(--d-accent);}
+.k-operator .ni .ct{background:var(--d-sunken);color:var(--d-quiet);}
+.k-operator .foot{border-top-color:var(--d-border);}
+.k-operator .acct:hover{background:var(--d-raised);}
+.k-operator .acct .nm{color:var(--d-ink);} .k-operator .acct .rl{color:var(--d-quiet);}
+.k-operator .cmdk{display:flex;align-items:center;gap:9px;padding:7px 10px;margin-bottom:6px;border-radius:var(--r-md);
+  background:var(--d-sunken);border:1px solid var(--d-border);color:var(--d-quiet);font-size:13px;}
+.k-operator .cmdk .kbd{margin-left:auto;font-family:var(--mono);font-size:11px;border:1px solid var(--d-border-strong);border-radius:4px;padding:1px 5px;}
+.k-operator .well-crumb{color:var(--d-quiet);} .k-operator .well-crumb b{color:var(--d-ink2);}
+.k-operator .well h3{color:var(--d-ink);} .k-operator .well p{color:var(--d-quiet);}
+.k-operator .well-pill{background:var(--d-rail);border-color:var(--d-border);color:var(--d-quiet);}
+.k-operator .well-av{background:var(--d-rail);border-color:var(--d-border);}
+.k-operator .skel{background:var(--d-raised);}
+.k-operator .skel.s-card{background:var(--d-rail);border-color:var(--d-border);}
+
+/* ============================================================
+   02 — LIGHT GROUPED NAV  (seam-anchor · accent-text + left bar)
+   ============================================================ */
+.k-light .rail{background:var(--surface);}
+.k-light .banner{display:flex;align-items:center;gap:8px;margin:-2px 0 10px;padding:6px 10px;border-radius:var(--r-md);
+  background:var(--warning-bg);color:var(--warning);font-size:12px;font-weight:600;}
+.k-light .banner .pdot{width:7px;height:7px;border-radius:50%;background:var(--warning);}
+.k-light .ni{border-radius:var(--r-sm);padding-left:13px;}
+.k-light .ni.on{background:transparent;color:var(--accent-hover);}
+.k-light .ni.on .ic{color:var(--accent);opacity:1;}
+.k-light .ni.on::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:3px;border-radius:2px;background:var(--accent);}
+
+/* ============================================================
+   03 — ICON RAIL + HOVER-EXPAND  (width as a resource)
+   ============================================================ */
+.k-icon .rail{width:60px;padding:12px 8px;transition:width var(--dur) var(--ease);overflow:hidden;align-items:stretch;}
+.k-icon .rail:hover{width:230px;box-shadow:var(--sh-lg);}
+.k-icon .sw{justify-content:center;padding:8px 0;}
+.k-icon .rail:hover .sw{justify-content:flex-start;padding:8px;}
+.k-icon .sw-text,.k-icon .sw .cv,.k-icon .ni .lbl,.k-icon .ni .ct,.k-icon .gl,.k-icon .acct .meta{opacity:0;transition:opacity var(--dur) var(--ease);white-space:nowrap;}
+.k-icon .rail:hover .sw-text,.k-icon .rail:hover .sw .cv,.k-icon .rail:hover .ni .lbl,.k-icon .rail:hover .ni .ct,.k-icon .rail:hover .gl,.k-icon .rail:hover .acct .meta{opacity:1;}
+.k-icon .gl{height:0;padding:0 10px;overflow:hidden;}
+.k-icon .rail:hover .gl{height:auto;padding:12px 10px 5px;}
+.k-icon .ni{padding:9px 0;justify-content:center;}
+.k-icon .rail:hover .ni{padding:7px 10px;justify-content:flex-start;}
+.k-icon .ni .ic{opacity:1;}
+.k-icon .ni.on{background:none;}
+.k-icon .ni.on::before{content:"";position:absolute;left:-8px;top:8px;bottom:8px;width:3px;border-radius:0 2px 2px 0;background:var(--accent);}
+.k-icon .ni.on .ic{color:var(--accent);}
+.k-icon .rail:hover .ni.on{background:var(--accent-subtle);}
+.k-icon .acct{justify-content:center;padding:7px 0;}
+.k-icon .rail:hover .acct{justify-content:flex-start;padding:7px 8px;}
+.k-icon .peekhint{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--text-muted);text-transform:uppercase;transition:opacity var(--dur);}
+.k-icon .rail:hover .peekhint{opacity:0;}
+.k-icon .rail{position:relative;}
+
+/* ============================================================
+   04 — DUAL RAIL (communicator)  icon-rail + channel panel
+   ============================================================ */
+.k-dual .rail{flex-direction:row;width:auto;padding:0;border:none;background:none;gap:0;}
+.k-dual .iconrail{width:66px;background:var(--d-sunken);border-right:1px solid var(--d-border);display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 0;}
+.k-dual .wsicon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px;position:relative;transition:border-radius var(--dur) var(--ease);}
+.k-dual .wsicon:hover{border-radius:12px;}
+.k-dual .wsicon.on{border-radius:13px;box-shadow:0 0 0 2px var(--d-sunken),0 0 0 4px var(--d-accent);}
+.k-dual .wsicon.add{background:var(--d-raised);color:var(--d-accent);font-weight:500;}
+.k-dual .panel{width:218px;background:var(--d-rail);display:flex;flex-direction:column;padding:0;}
+.k-dual .panel-h{padding:15px 16px;border-bottom:1px solid var(--d-border);font-size:15px;font-weight:700;color:var(--d-ink);display:flex;align-items:center;gap:7px;}
+.k-dual .panel-h .cv{width:14px;height:14px;color:var(--d-quiet);margin-left:auto;}
+.k-dual .plist{padding:10px 8px;display:flex;flex-direction:column;gap:1px;}
+.k-dual .gl{color:var(--d-quiet);}
+.k-dual .ch{display:flex;align-items:center;gap:8px;padding:5px 9px;border-radius:var(--r-sm);color:var(--d-ink2);font-size:13.5px;}
+.k-dual .ch .h{color:var(--d-quiet);font-weight:500;}
+.k-dual .ch:hover{background:var(--d-raised);color:var(--d-ink);}
+.k-dual .ch.on{background:var(--d-accent);color:#0c0e13;font-weight:600;}
+.k-dual .ch.on .h{color:#0c0e13;}
+.k-dual .ch.unread{color:var(--d-ink);font-weight:600;}
+.k-dual .ch .ct{margin-left:auto;font-size:10.5px;background:var(--danger);color:#fff;border-radius:9px;padding:0 6px;font-weight:700;}
+.k-dual .well{background:#0f1217;}
+.k-dual .well-crumb{color:var(--d-quiet);}.k-dual .well-crumb b{color:var(--d-ink2);}
+.k-dual .well h3{color:var(--d-ink);}.k-dual .well p{color:var(--d-quiet);}
+.k-dual .well-pill{background:var(--d-rail);border-color:var(--d-border);color:var(--d-quiet);}
+.k-dual .well-av{background:var(--d-rail);border-color:var(--d-border);}
+.k-dual .skel{background:var(--d-raised);}.k-dual .skel.s-card{background:var(--d-rail);border-color:var(--d-border);}
+
+/* ============================================================
+   05 — PRIMARY + CONTEXTUAL SECONDARY  (depth without a tree)
+   ============================================================ */
+.k-context .rail{flex-direction:row;width:auto;padding:0;gap:0;border:none;}
+.k-context .prim{width:58px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 0;}
+.k-context .prim .sw-logo{margin-bottom:8px;}
+.k-context .pi{width:40px;height:40px;border-radius:var(--r-md);display:grid;place-items:center;color:var(--text-muted);position:relative;}
+.k-context .pi:hover{background:var(--surface-hover);color:var(--text-primary);}
+.k-context .pi .ic{width:19px;height:19px;}
+.k-context .pi.on{background:var(--accent-subtle);color:var(--accent);}
+.k-context .sec{width:188px;background:var(--surface);border-right:1px solid var(--border);padding:14px 10px;display:flex;flex-direction:column;}
+.k-context .sec-h{font-size:15px;font-weight:600;padding:4px 10px 12px;color:var(--text-primary);}
+.k-context .sec-h .sub{font-size:11.5px;font-weight:400;color:var(--text-muted);font-family:var(--mono);}
+
+/* ============================================================
+   06 — COLLAPSIBLE CONTENT TREE  (the nav IS the content)
+   ============================================================ */
+.k-tree .rail{background:#fbfbfc;width:248px;}
+.k-tree .ni{padding:5px 8px;font-size:13.5px;color:var(--text-secondary);}
+.k-tree .ni .ic{width:15px;height:15px;}
+.k-tree .ni .dis{width:14px;height:14px;color:var(--text-muted);transition:transform var(--dur);flex:none;}
+.k-tree .ni.open .dis{transform:rotate(90deg);}
+.k-tree .ni .hover-act{margin-left:auto;display:flex;gap:1px;opacity:0;transition:opacity var(--dur);}
+.k-tree .ni:hover .hover-act{opacity:1;}
+.k-tree .ni .ha{width:20px;height:20px;border-radius:4px;display:grid;place-items:center;color:var(--text-muted);}
+.k-tree .ni .ha:hover{background:var(--border);color:var(--text-primary);}
+.k-tree .ni.on{background:var(--surface-sunken);color:var(--text-primary);font-weight:600;}
+.k-tree .child{padding-left:14px;margin-left:13px;border-left:1px solid var(--border);display:flex;flex-direction:column;gap:1px;}
+.k-tree .pg .ic{opacity:.7;}
+.k-tree .gl{display:flex;align-items:center;}
+.k-tree .gl .add{margin-left:auto;width:16px;height:16px;color:var(--text-muted);}
+
+/* ============================================================
+   07 — TINTED / BRAND RAIL  (colour as the anchor)
+   ============================================================ */
+.k-tint .rail{background:var(--t-rail);border-right-color:var(--t-border);}
+.k-tint .well{background:#0f1320;}
+.k-tint .sw-logo{background:var(--t-accent);color:#161a2b;}
+.k-tint .sw-name{color:var(--t-ink);}.k-tint .sw-sub{color:var(--t-quiet);}
+.k-tint .sw:hover{background:var(--t-raised);}.k-tint .sw .cv{color:var(--t-quiet);}
+.k-tint .gl{color:var(--t-quiet);}
+.k-tint .ni{color:var(--t-ink2);}
+.k-tint .ni:hover{background:var(--t-raised);color:var(--t-ink);}
+.k-tint .ni.on{background:var(--t-raised);color:var(--t-ink);font-weight:600;}
+.k-tint .ni.on::before{content:"";position:absolute;left:-10px;top:7px;bottom:7px;width:3px;border-radius:0 2px 2px 0;background:var(--t-accent);}
+.k-tint .ni.on .ic{color:var(--t-accent);}
+.k-tint .ni .ct{background:var(--t-rail);color:var(--t-quiet);}
+.k-tint .foot{border-top-color:var(--t-border);}
+.k-tint .acct:hover{background:var(--t-raised);}
+.k-tint .acct .nm{color:var(--t-ink);}.k-tint .acct .rl{color:var(--t-quiet);}
+.k-tint .well-crumb{color:var(--t-quiet);}.k-tint .well-crumb b{color:var(--t-ink2);}
+.k-tint .well h3{color:var(--t-ink);}.k-tint .well p{color:var(--t-quiet);}
+.k-tint .well-pill{background:var(--t-rail);border-color:var(--t-border);color:var(--t-quiet);}
+.k-tint .well-av{background:var(--t-rail);border-color:var(--t-border);}
+.k-tint .skel{background:var(--t-raised);}.k-tint .skel.s-card{background:var(--t-rail);border-color:var(--t-border);}
+
+/* ============================================================
+   08 — FLOATING / INSET CARD  (elevation-anchor)
+   ============================================================ */
+.k-inset .shell{background:var(--surface-sunken);padding:14px;gap:14px;}
+.k-inset .rail{border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh-md);background:var(--surface);}
+.k-inset .well{border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh-md);background:var(--surface);}
+.k-inset .ni.on{background:var(--accent-subtle);color:var(--accent-hover);}
+
+/* ============================================================
+   09 — KEYBOARD-FIRST MINIMAL  (rail as index, ⌘K as nav)
+   ============================================================ */
+.k-keys .rail{width:230px;}
+.k-keys .cmdk{display:flex;align-items:center;gap:9px;padding:9px 11px;margin-bottom:14px;border-radius:var(--r-md);
+  background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-secondary);font-size:13.5px;font-weight:500;}
+.k-keys .cmdk .ic{width:15px;height:15px;color:var(--text-muted);}
+.k-keys .cmdk .kbd{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--text-muted);border:1px solid var(--border-strong);border-radius:4px;padding:1px 6px;}
+.k-keys .ni{padding:8px 10px;}
+.k-keys .ni .kb{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--text-muted);}
+.k-keys .ni.on{background:var(--surface-sunken);color:var(--text-primary);}
+.k-keys .ni.on .ic{color:var(--accent);}
+.k-keys .hint{font-size:12px;color:var(--text-muted);padding:14px 10px 4px;line-height:1.5;}
+.k-keys .hint b{color:var(--text-secondary);font-weight:500;}
+
+/* ============================================================
+   10 — TRANSLUCENT / GLASS  (the earned exception)
+   ============================================================ */
+.k-glass .shell{position:relative;background:linear-gradient(135deg,#dfe6f5 0%,#eadcef 45%,#f3e7dc 100%);}
+.k-glass .rail{background:rgba(255,255,255,.62);backdrop-filter:blur(22px) saturate(1.2);-webkit-backdrop-filter:blur(22px) saturate(1.2);
+  border-right:1px solid rgba(255,255,255,.7);box-shadow:1px 0 0 rgba(15,17,23,.04);}
+.k-glass .well{background:rgba(255,255,255,.34);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.k-glass .ni{color:var(--text-secondary);}
+.k-glass .ni:hover{background:rgba(255,255,255,.6);color:var(--text-primary);}
+.k-glass .ni.on{background:rgba(255,255,255,.82);color:var(--accent-hover);box-shadow:var(--sh-sm);font-weight:600;}
+.k-glass .gl{color:var(--text-secondary);}
+.k-glass .sw-name,.k-glass .acct .nm{color:var(--text-primary);}
+.k-glass .foot{border-top-color:rgba(15,17,23,.1);}
+.k-glass .well-pill{background:rgba(255,255,255,.55);}
+
+/* ============================================================
+   11 — DENSE NESTED-SECTION STATUS  (the ops/admin spine)
+   ============================================================ */
+.k-ops .rail{background:var(--d-rail);border-right-color:var(--d-border);width:228px;padding:10px 8px;font-size:13px;}
+.k-ops .well{background:#0c0f14;}
+.k-ops .sw-name{color:var(--d-ink);}.k-ops .sw-sub{color:var(--d-quiet);}
+.k-ops .sw:hover{background:var(--d-raised);}.k-ops .sw .cv{color:var(--d-quiet);}
+.k-ops .gl{color:var(--d-quiet);padding:9px 9px 4px;display:flex;align-items:center;gap:6px;}
+.k-ops .gl .cv{width:12px;height:12px;margin-left:auto;}
+.k-ops .ni{padding:5px 9px;font-size:13px;color:var(--d-ink2);font-family:var(--ui);}
+.k-ops .ni .ic{width:15px;height:15px;}
+.k-ops .ni:hover{background:var(--d-raised);color:var(--d-ink);}
+.k-ops .ni.on{background:var(--d-raised);color:var(--d-ink);font-weight:600;}
+.k-ops .ni.on .ic{color:var(--d-accent);}
+.k-ops .sd{margin-left:auto;width:7px;height:7px;border-radius:50%;flex:none;}
+.k-ops .sd.ok{background:#3fc26a;} .k-ops .sd.warn{background:#e7b53f;} .k-ops .sd.down{background:#ef5b54;}
+.k-ops .ni .ct{background:var(--danger);color:#fff;margin-left:auto;font-weight:700;}
+.k-ops .foot{border-top-color:var(--d-border);}
+.k-ops .acct .nm{color:var(--d-ink);}.k-ops .acct .rl{color:var(--d-quiet);}
+.k-ops .well-crumb{color:var(--d-quiet);}.k-ops .well-crumb b{color:var(--d-ink2);}
+.k-ops .well h3{color:var(--d-ink);}.k-ops .well p{color:var(--d-quiet);}
+.k-ops .well-pill{background:var(--d-rail);border-color:var(--d-border);color:var(--d-quiet);}
+.k-ops .well-av{background:var(--d-rail);border-color:var(--d-border);}
+.k-ops .skel{background:var(--d-raised);}.k-ops .skel.s-card{background:var(--d-rail);border-color:var(--d-border);}
+
+/* ============================================================
+   12 — STANDARD SAAS DEFAULT  (the safe baseline · collapse)
+   ============================================================ */
+.k-default .ni.on{background:var(--accent);color:var(--on-accent);}
+.k-default .ni.on .ic{color:var(--on-accent);opacity:1;}
+.k-default .ni.on .ct{background:rgba(255,255,255,.22);color:#fff;}
+.k-default .collapse{margin-left:auto;width:26px;height:26px;border-radius:6px;display:grid;place-items:center;color:var(--text-muted);}
+.k-default .collapse:hover{background:var(--surface-hover);color:var(--text-primary);}
+.k-default .upsell{margin:6px 4px 8px;padding:12px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface-sunken);}
+.k-default .upsell .ut{font-size:12.5px;font-weight:600;margin-bottom:2px;}
+.k-default .upsell .us{font-size:11.5px;color:var(--text-muted);margin-bottom:9px;line-height:1.4;}
+.k-default .upsell .ub{display:block;text-align:center;font-size:12.5px;font-weight:600;padding:6px;border-radius:var(--r-sm);background:var(--accent);color:var(--on-accent);}
+
+/* notes under each spec */
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;margin-top:18px;}
+.note .nt{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 5px;}
+.note p{font-size:13.5px;color:var(--text-secondary);margin:0;line-height:1.55;}
+.note p b{color:var(--text-primary);font-weight:600;}
+
+@media (max-width:720px){
+  .page{padding:48px 18px 90px;} h1.title{font-size:34px;} .dials{grid-template-columns:1fr;} .notes{grid-template-columns:1fr;}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style></head>
+<body>
+
+<!-- Lucide sprite (ISC) · 1.75 stroke · currentColor -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+<symbol id="i-layout-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+<symbol id="i-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+<symbol id="i-file-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+<symbol id="i-line-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></symbol>
+<symbol id="i-credit-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-chevrons-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+<symbol id="i-more-horizontal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></symbol>
+<symbol id="i-hash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></symbol>
+<symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+<symbol id="i-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+<symbol id="i-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></symbol>
+<symbol id="i-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></symbol>
+<symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+<symbol id="i-git-branch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6a9 9 0 0 0-9 9V3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/></symbol>
+<symbol id="i-message-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6l-4 4V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol>
+<symbol id="i-command" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></symbol>
+<symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+</svg>
+
+<div class="page">
+  <p class="kick">Lookbook · app shell</p>
+  <h1 class="title">A sidebar is six dials, not one look</h1>
+  <p class="lede">The left rail is the spine of nearly every product app — and the most <b>defaulted</b> surface in the system. The depth rubric's running joke is true: <span class="ac">a dark sidebar is one option, not the answer.</span> Here are the other eleven. Each is the <b>same six dials</b> set differently — on one token contract, no new colour, no one-off parts. Earned from real shipped rails: Linear, Stripe, Slack, Notion, Supabase, Sentry, Superhuman, the macOS Finder, Grafana.</p>
+
+  <div class="legend">
+    <div class="legend-h"><b>The six dials</b><span>every rail below resolves to these — "not dynamic enough" almost always means dial 6 is set to <i>static</i> on a shell that needed motion</span></div>
+    <div class="dials">
+      <div class="dial"><p class="dn">1 · Width</p><p class="dv"><b>icon-rail</b> 56px · <b>standard</b> 220–260 · <b>wide</b> 280–320 · <b>dual</b> · <b>collapsible</b></p></div>
+      <div class="dial"><p class="dn">2 · Surface</p><p class="dv"><b>dark</b> (value-anchor) · <b>light</b> (seam-anchor) · <b>tinted</b> · <b>glass</b> · <b>inset card</b></p></div>
+      <div class="dial"><p class="dn">3 · Active carrier</p><p class="dv">filled pill · left bar · tinted-bg + accent text · subtle fill · dot. <b>Exactly one</b> — never all three.</p></div>
+      <div class="dial"><p class="dn">4 · Grouping</p><p class="dv">flat · <b>labelled sections</b> · collapsible tree · pinned + sections</p></div>
+      <div class="dial"><p class="dn">5 · The sandwich</p><p class="dv">top: <b>switcher</b> / ⌘K · bottom: <b>account</b> / upgrade / status</p></div>
+      <div class="dial"><p class="dn">6 · Dynamism</p><p class="dv">static · collapse · <b>hover-peek</b> · contextual-secondary · switch · tree-expand</p></div>
+    </div>
+  </div>
+
+  <!-- ============ 01 DARK OPERATOR ============ -->
+  <section class="spec">
+    <div class="spec-head"><span class="spec-num">01</span><h2>Dark operator rail</h2><span class="ess">The canon — and the stamp. A value cliff to the content well is the anchor; one subtle fill carries active.</span></div>
+    <p class="grounding">grounded in <b>Linear · Vercel · Resend · Railway</b></p>
+    <div class="chips"><span class="chip">width · <b>standard</b></span><span class="chip">surface · <b>dark</b></span><span class="chip">active · <b>subtle fill</b></span><span class="chip">group · <b>sections</b></span><span class="chip dyn">⌘K-led</span><span class="chip dyn">collapsible</span></div>
+    <div class="frame"><div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.northwind.io/issues</span></div><div class="frame-stage">
+      <div class="shell k-operator" data-theme="dark">
+        <nav class="rail" aria-label="Primary">
+          <button class="sw"><span class="sw-logo">N</span><span><span class="sw-name">Northwind</span><br><span class="sw-sub">Operations</span></span><svg class="cv"><use href="#i-chevron-down"/></svg></button>
+          <div class="cmdk"><svg style="width:15px;height:15px"><use href="#i-search"/></svg>Search<span class="kbd">⌘K</span></div>
+          <a class="ni on" href="#"><svg class="ic"><use href="#i-layout-dashboard"/></svg><span class="lbl">Issues</span><span class="ct">24</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-git-branch"/></svg><span class="lbl">Cycles</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-inbox"/></svg><span class="lbl">Inbox</span><span class="ct">3</span></a>
+          <div class="gl">Your teams</div>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-zap"/></svg><span class="lbl">Platform</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-activity"/></svg><span class="lbl">Growth</span></a>
+          <div class="spring"></div>
+          <div class="foot"><button class="acct"><span class="av"></span><span><span class="nm">Ama Mensah</span><br><span class="rl">Admin</span></span></button></div>
+        </nav>
+        <main class="well"><div class="well-top"><span class="well-crumb"><b>Issues</b> · All</span><span class="well-spacer"></span><span class="well-pill"><svg style="width:14px;height:14px"><use href="#i-search"/></svg>Filter…</span><span class="well-av"></span></div><h3>Active issues</h3><p>24 open across 2 teams</p><div class="skel-row"><div class="skel s-card"></div><div class="skel s-card"></div><div class="skel s-card"></div></div><div class="skel" style="width:70%;margin-bottom:10px"></div><div class="skel" style="width:55%;margin-bottom:10px"></div><div class="skel" style="width:62%"></div></main>
+      </div>
+    </div></div>
+    <div class="notes"><div class="note"><p class="nt">Why it works</p><p>The rail sits at a <b>decisively different value</b> from the well with a hairline seam — that value jump is the composition (depth #1), not the darkness itself. The accent is spent on <b>one</b> thing.</p></div><div class="note"><p class="nt">Reach for it when</p><p>Dev tool or dense SaaS where ⌘K does the real navigating. The default AI reflex — so <b>vary it deliberately</b> rather than letting it become the stamp.</p></div></div>
+  </section>
+
+  <!-- ============ 02 LIGHT GROUPED ============ -->
+  <section class="spec">
+    <div class="spec-head"><span class="spec-num">02</span><h2>Light grouped nav</h2><span class="ess">Quiet but dense. No free value-anchor, so grouping discipline + the border seam carry it.</span></div>
+    <p class="grounding">grounded in <b>Stripe · Mercury · Intercom · QuickBooks</b></p>
+    <div class="chips"><span class="chip">width · <b>standard</b></span><span class="chip">surface · <b>light</b></span><span class="chip">active · <b>accent text + left bar</b></span><span class="chip">group · <b>sections</b></span><span class="chip">mode banner</span></div>
+    <div class="frame"><div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">dashboard.northwind.io</span></div><div class="frame-stage">
+      <div class="shell k-light">
+        <nav class="rail" aria-label="Primary">
+          <button class="sw"><span class="sw-logo">N</span><span class="sw-name">Northwind</span><svg class="cv"><use href="#i-chevron-down"/></svg></button>
+          <div class="banner"><span class="pdot"></span>Test mode</div>
+          <a class="ni on" href="#"><svg class="ic"><use href="#i-home"/></svg><span class="lbl">Home</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-credit-card"/></svg><span class="lbl">Payments</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-users"/></svg><span class="lbl">Customers</span></a>
+          <div class="gl">Reporting</div>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-line-chart"/></svg><span class="lbl">Revenue</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-file-text"/></svg><span class="lbl">Reports</span></a>
+          <div class="gl">Settings</div>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-settings"/></svg><span class="lbl">Business</span></a>
+          <div class="spring"></div>
+          <div class="foot"><button class="acct"><span class="av"></span><span><span class="nm">Kofi Asante</span><br><span class="rl">kofi@northwind.io</span></span></button></div>
+        </nav>
+        <main class="well"><div class="well-top"><span class="well-crumb"><b>Home</b></span><span class="well-spacer"></span><span class="well-pill"><svg style="width:14px;height:14px"><use href="#i-search"/></svg>Search…</span><span class="well-av"></span></div><h3>Today</h3><p>Gross volume · last 7 days</p><div class="skel s-card" style="height:96px;margin-bottom:16px"></div><div class="skel-row" style="grid-template-columns:1fr 1fr"><div class="skel s-card"></div><div class="skel s-card"></div></div></main>
+      </div>
+    </div></div>
+    <div class="notes"><div class="note"><p class="nt">Why it works</p><p>A light rail anchors by a <b>crisp border + faint surface shift</b>, not a value cliff. The eye is steadied by quiet section overlines so 8 destinations don't read as an undifferentiated AP20 grey list.</p></div><div class="note"><p class="nt">Reach for it when</p><p>Financial / admin SaaS — calm, dense, many destinations, long sessions. The persistent <b>mode banner</b> is a real pattern, not decoration.</p></div></div>
+  </section>
+
+  <!-- ============ 03 ICON RAIL ============ -->
+  <section class="spec">
+    <div class="spec-head"><span class="spec-num">03</span><h2>Icon rail + hover-expand</h2><span class="ess">Width as a resource. Trade labels for screen; hover peeks the labels back, click pins them.</span></div>
+    <p class="grounding">grounded in <b>VS Code · Figma · Height · Linear (collapsed)</b></p>
+    <div class="chips"><span class="chip">width · <b>icon ↔ standard</b></span><span class="chip">surface · <b>light</b></span><span class="chip">active · <b>left bar</b></span><span class="chip dyn">hover-peek →</span><span class="chip">tooltips required</span></div>
+    <div class="frame"><div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.northwind.io · hover the rail →</span></div><div class="frame-stage">
+      <div class="shell k-icon">
+        <nav class="rail" aria-label="Primary">
+          <button class="sw" aria-label="Workspace"><span class="sw-logo">N</span><span class="sw-text sw-name">Northwind</span><svg class="cv"><use href="#i-chevron-down"/></svg></button>
+          <div class="gl">Workspace</div>
+          <a class="ni on" href="#" aria-label="Dashboard"><svg class="ic"><use href="#i-layout-dashboard"/></svg><span class="lbl">Dashboard</span></a>
+          <a class="ni" href="#" aria-label="Inbox"><svg class="ic"><use href="#i-inbox"/></svg><span class="lbl">Inbox</span><span class="ct">3</span></a>
+          <a class="ni" href="#" aria-label="Reports"><svg class="ic"><use href="#i-line-chart"/></svg><span class="lbl">Reports</span></a>
+          <a class="ni" href="#" aria-label="Customers"><svg class="ic"><use href="#i-users"/></svg><span class="lbl">Customers</span></a>
+          <a class="ni" href="#" aria-label="Settings"><svg class="ic"><use href="#i-settings"/></svg><span class="lbl">Settings</span></a>
+          <div class="spring"></div>
+          <div class="foot"><button class="acct" aria-label="Account"><span class="av"></span><span class="meta"><span class="nm">Ama Mensah</span><br><span class="rl">Admin</span></span></button></div>
+          <span class="peekhint">hover</span>
+        </nav>
+        <main class="well"><div class="well-top"><span class="well-crumb"><b>Dashboard</b></span><span class="well-spacer"></span><span class="well-pill"><svg style="width:14px;height:14px"><use href="#i-search"/></svg>Search…</span><span class="well-av"></span></div><h3>Overview</h3><p>The rail collapsed to 60px — more canvas for the work</p><div class="skel-row"><div class="skel s-card"></div><div class="skel s-card"></div><div class="skel s-card"></div></div><div class="skel s-card" style="height:120px"></div></main>
+      </div>
+    </div></div>
+    <div class="notes"><div class="note"><p class="nt">Why it works</p><p>The collapsed state is a <b>designed</b> 60px form — active left-bar, group hairlines, a centred switcher — not a CSS afterthought. <b>Tooltips + aria-label are non-negotiable</b> (P-AY-01): the labels the icons dropped.</p></div><div class="note"><p class="nt">Reach for it when</p><p>Width-constrained canvases (editors, boards) and power users in a focus mode. The cleanest case of dynamism earning its keep — same destinations, two width budgets.</p></div></div>
+  </section>
+
+  <!-- ============ 04 DUAL RAIL ============ -->
+  <section class="spec">
+    <div class="spec-head"><span class="spec-num">04</span><h2>Dual rail — the communicator</h2><span class="ess">Two rails, two jobs: a thin icon rail of top-level contexts + a wider panel of the selected one's contents.</span></div>
+    <p class="grounding">grounded in <b>Slack · Discord · Teams · Spotify</b></p>
+    <div class="chips"><span class="chip">width · <b>icon + panel</b></span><span class="chip">surface · <b>two distinct</b></span><span class="chip">active · <b>filled row</b></span><span class="chip">unread · <b>bold + count</b></span><span class="chip dyn">switch container</span></div>
+    <div class="frame"><div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">northwind.slack-style.app</span></div><div class="frame-stage">
+      <div class="shell k-dual" data-theme="dark">
+        <div class="rail">
+          <nav class="iconrail" aria-label="Workspaces">
+            <button class="wsicon on" style="background:linear-gradient(135deg,#3d5ee0,#7a4ad0)" aria-label="Northwind workspace">N</button>
+            <button class="wsicon" style="background:#2f8f5b" aria-label="Field Ops workspace">F</button>
+            <button class="wsicon" style="background:#b8543a" aria-label="Support workspace">S</button>
+            <button class="wsicon add" aria-label="Add workspace"><svg style="width:18px;height:18px"><use href="#i-plus"/></svg></button>
+          </nav>
+          <div class="panel">
+            <div class="panel-h">Northwind<svg class="cv"><use href="#i-chevron-down"/></svg></div>
+            <div class="plist">
+              <div class="gl">Channels</div>
+              <a class="ch" href="#"><svg style="width:14px;height:14px" class="h"><use href="#i-hash"/></svg>general</a>
+              <a class="ch unread" href="#"><svg style="width:14px;height:14px" class="h"><use href="#i-hash"/></svg>operations<span class="ct">5</span></a>
+              <a class="ch on" href="#"><svg style="width:14px;height:14px" class="h"><use href="#i-hash"/></svg>incidents</a>
+              <a class="ch" href="#"><svg style="width:14px;height:14px" class="h"><use href="#i-hash"/></svg>random</a>
+              <div class="gl">Direct messages</div>
+              <a class="ch" href="#"><svg style="width:14px;height:14px"><use href="#i-message-square"/></svg>Kofi Asante</a>
+              <a class="ch unread" href="#"><svg style="width:14px;height:14px"><use href="#i-message-square"/></svg>Esi Boateng<span class="ct">2</span></a>
+            </div>
+          </div>
+        </div>
+        <main class="well"><div class="well-top"><span class="well-crumb"><b>#incidents</b></span><span class="well-spacer"></span><span class="well-pill"><svg style="width:14px;height:14px"><use href="#i-search"/></svg>Search…</span><span class="well-av"></span></div><h3># incidents</h3><p>3 members · pinned: runbook</p><div class="skel" style="width:80%;margin-bottom:12px"></div><div class="skel" style="width:64%;margin-bottom:12px"></div><div class="skel" style="width:72%;margin-bottom:12px"></div><div class="skel" style="width:48%"></div></main>
+      </div>
+    </div></div>
+    <div class="notes"><div class="note"><p class="nt">Why it works</p><p>The panel is <b>itself a sidebar</b> with all six dials — so the communicator is a <i>composition of two rails</i>, not a new primitive. Two deliberately distinct surfaces (icon-rail darker than panel) keep the switch always-visible.</p></div><div class="note"><p class="nt">Reach for it when</p><p>The product has <b>parallel top-level containers</b> a user switches between — workspaces, servers, spaces, accounts. Forcing it on a single-tenant app is over-engineering.</p></div></div>
+  </section>
+
+  <!-- ============ 05 PRIMARY + CONTEXTUAL SECONDARY ============ -->
+  <section class="spec">
+    <div class="spec-head"><span class="spec-num">05</span><h2>Primary + contextual secondary</h2><span class="ess">The rail's second column re-scopes to the current section — both hierarchy levels stay visible.</span></div>
+    <p class="grounding">grounded in <b>Supabase · Sentry · GitHub settings · AWS</b></p>
+    <div class="chips"><span class="chip">width · <b>rail + panel</b></span><span class="chip">surface · <b>light</b></span><span class="chip">active · <b>icon tint + fill</b></span><span class="chip">two route levels</span><span class="chip dyn">secondary re-scopes</span></div>
+    <div class="frame"><div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.northwind.io/auth/users</span></div><div class="frame-stage">
+      <div class="shell k-context">
+        <div class="rail">
+          <nav class="prim" aria-label="Sections">
+            <span class="sw-logo">N</span>
+            <a class="pi" href="#" aria-label="Tables"><svg class="ic"><use href="#i-database"/></svg></a>
+            <a class="pi on" href="#" aria-label="Authentication"><svg class="ic"><use href="#i-shield"/></svg></a>
+            <a class="pi" href="#" aria-label="Storage"><svg class="ic"><use href="#i-folder"/></svg></a>
+            <a class="pi" href="#" aria-label="Functions"><svg class="ic"><use href="#i-zap"/></svg></a>
+            <a class="pi" href="#" aria-label="Reports"><svg class="ic"><use href="#i-line-chart"/></svg></a>
+          </nav>
+          <nav class="sec" aria-label="Authentication">
+            <div class="sec-h">Authentication<br><span class="sub">access &amp; identity</span></div>
+            <a class="ni on" href="#"><svg class="ic"><use href="#i-users"/></svg><span class="lbl">Users</span></a>
+            <a class="ni" href="#"><svg class="ic"><use href="#i-shield"/></svg><span class="lbl">Policies</span></a>
+            <a class="ni" href="#"><svg class="ic"><use href="#i-git-branch"/></svg><span class="lbl">Providers</span></a>
+            <a class="ni" href="#"><svg class="ic"><use href="#i-settings"/></svg><span class="lbl">Settings</span></a>
+          </nav>
+        </div>
+        <main class="well"><div class="well-top"><span class="well-crumb">Authentication · <b>Users</b></span><span class="well-spacer"></span><span class="well-pill"><svg style="width:14px;height:14px"><use href="#i-search"/></svg>Search…</span><span class="well-av"></span></div><h3>Users</h3><p>1,284 identities</p><div class="skel" style="width:100%;height:34px;margin-bottom:8px"></div><div class="skel" style="width:100%;height:34px;margin-bottom:8px"></div><div class="skel" style="width:100%;height:34px"></div></main>
+      </div>
+    </div></div>
+    <div class="notes"><div class="note"><p class="nt">Why it works</p><p>The alternative to a deep collapsible tree for products with <b>two real levels</b> — it keeps both always-visible and kills "drill in → lose your place." The secondary <i>changing</i> per section is the alive quality a static rail lacks.</p></div><div class="note"><p class="nt">Reach for it when</p><p>Two-level route hierarchy (the Supabase/Sentry shape). Distinct from the content tree (06): this is <b>fixed route</b> hierarchy, not user-created content.</p></div></div>
+  </section>
+
+  <!-- ============ 06 CONTENT TREE ============ -->
+  <section class="spec">
+    <div class="spec-head"><span class="spec-num">06</span><h2>Collapsible content tree</h2><span class="ess">When the nav IS the content — user pages, nested, reorderable, with hover-revealed controls.</span></div>
+    <p class="grounding">grounded in <b>Notion · GitBook · Craft · VS Code explorer</b></p>
+    <div class="chips"><span class="chip">width · <b>wide</b></span><span class="chip">surface · <b>light</b></span><span class="chip">active · <b>subtle fill + indent</b></span><span class="chip">group · <b>content tree</b></span><span class="chip dyn">hover-reveal · expand</span></div>
+    <div class="frame"><div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">northwind.notion-style.site</span></div><div class="frame-stage">
+      <div class="shell k-tree">
+        <nav class="rail" aria-label="Pages">
+          <button class="sw"><span class="sw-logo">N</span><span class="sw-name">Northwind HQ</span><svg class="cv"><use href="#i-chevron-down"/></svg></button>
+          <div class="cmdk" style="display:flex;align-items:center;gap:8px;padding:6px 9px;margin-bottom:8px;border-radius:6px;background:var(--surface-sunken);color:var(--text-muted);font-size:13px"><svg style="width:14px;height:14px"><use href="#i-search"/></svg>Search</div>
+          <div class="gl">Favourites</div>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-star"/></svg><span class="lbl">Roadmap 2026</span></a>
+          <div class="gl">Workspace<svg class="add"><use href="#i-plus"/></svg></div>
+          <a class="ni open on" href="#"><svg class="dis"><use href="#i-chevron-right"/></svg><svg class="ic"><use href="#i-file-text"/></svg><span class="lbl">Operations</span><span class="hover-act"><span class="ha"><svg style="width:13px;height:13px"><use href="#i-more-horizontal"/></svg></span><span class="ha"><svg style="width:13px;height:13px"><use href="#i-plus"/></svg></span></span></a>
+          <div class="child">
+            <a class="ni pg on" href="#"><svg class="ic"><use href="#i-file-text"/></svg><span class="lbl">Runbooks</span></a>
+            <a class="ni pg" href="#"><svg class="ic"><use href="#i-file-text"/></svg><span class="lbl">Incident log</span><span class="hover-act"><span class="ha"><svg style="width:13px;height:13px"><use href="#i-more-horizontal"/></svg></span></span></a>
+          </div>
+          <a class="ni" href="#"><svg class="dis"><use href="#i-chevron-right"/></svg><svg class="ic"><use href="#i-folder"/></svg><span class="lbl">People &amp; teams</span><span class="hover-act"><span class="ha"><svg style="width:13px;height:13px"><use href="#i-more-horizontal"/></svg></span></span></a>
+          <a class="ni" href="#"><svg class="dis"><use href="#i-chevron-right"/></svg><svg class="ic"><use href="#i-file-text"/></svg><span class="lbl">Finance</span></a>
+          <div class="spring"></div>
+          <div class="foot"><button class="acct"><span class="av"></span><span><span class="nm">Ama Mensah</span></span></button></div>
+        </nav>
+        <main class="well"><div class="well-top"><span class="well-crumb">Operations / <b>Runbooks</b></span><span class="well-spacer"></span><span class="well-av"></span></div><h3>📘 Runbooks</h3><p>Last edited 2 hours ago</p><div class="skel" style="width:90%;margin-bottom:12px"></div><div class="skel" style="width:78%;margin-bottom:12px"></div><div class="skel" style="width:84%;margin-bottom:12px"></div><div class="skel" style="width:60%"></div></main>
+      </div>
+    </div></div>
+    <div class="notes"><div class="note"><p class="nt">Why it works</p><p><b>Hover-to-reveal is the signature restraint</b> — the <code>•••</code> and <code>+</code> appear only on row hover, so the resting state stays calm and the working state stays capable. Depth shows via indent + a thin guide line.</p></div><div class="note"><p class="nt">Reach for it when</p><p>The rail holds <b>user data, not routes</b> (the Notion shape) — reorderable, unbounded depth. Looks like 05 and is a different job.</p></div></div>
+  </section>
+
+  <!-- ============ 07 TINTED / BRAND ============ -->
+  <section class="spec">
+    <div class="spec-head"><span class="spec-num">07</span><h2>Tinted / brand rail</h2><span class="ess">Colour as the anchor — a low-chroma brand wash, not a saturated block. The on-brand answer to the dark stamp.</span></div>
+    <p class="grounding">grounded in <b>Spotify · Linear (themed) · fintech apps · Things</b></p>
+    <div class="chips"><span class="chip">width · <b>standard</b></span><span class="chip">surface · <b>tinted wash</b></span><span class="chip">active · <b>left bar + tint</b></span><span class="chip">group · <b>sections</b></span><span class="chip">one accent only</span></div>
+    <div class="frame"><div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.northwind.io</span></div><div class="frame-stage">
+      <div class="shell k-tint" data-theme="dark">
+        <nav class="rail" aria-label="Primary">
+          <button class="sw"><span class="sw-logo">N</span><span><span class="sw-name">Northwind</span><br><span class="sw-sub">Premium</span></span><svg class="cv"><use href="#i-chevron-down"/></svg></button>
+          <a class="ni on" href="#"><svg class="ic"><use href="#i-home"/></svg><span class="lbl">Home</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-line-chart"/></svg><span class="lbl">Insights</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-credit-card"/></svg><span class="lbl">Cards</span></a>
+          <div class="gl">Money</div>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-activity"/></svg><span class="lbl">Transactions</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-zap"/></svg><span class="lbl">Transfers</span><span class="ct">2</span></a>
+          <div class="spring"></div>
+          <div class="foot"><button class="acct"><span class="av"></span><span><span class="nm">Ama Mensah</span><br><span class="rl">Personal</span></span></button></div>
+        </nav>
+        <main class="well"><div class="well-top"><span class="well-crumb"><b>Home</b></span><span class="well-spacer"></span><span class="well-pill"><svg style="width:14px;height:14px"><use href="#i-search"/></svg>Search…</span><span class="well-av"></span></div><h3>Good evening, Ama</h3><p>Balance · ₵48,210.55</p><div class="skel s-card" style="height:88px;margin-bottom:16px"></div><div class="skel-row" style="grid-template-columns:1fr 1fr"><div class="skel s-card"></div><div class="skel s-card"></div></div></main>
+      </div>
+    </div></div>
+    <div class="notes"><div class="note"><p class="nt">Why it works</p><p>A <b>tint on the surface</b> anchors by hue+value instead of pure darkness — reads as "this product's rail" with zero illustration. The line not to cross: tint the surface <i>or</i> accent the state, calibrate the other down (else AP25 brand-vomit).</p></div><div class="note"><p class="nt">Reach for it when</p><p>You want an <b>on-brand anchor that isn't a dark stamp</b> — consumer, fintech, anything with a strong brand colour worth carrying into the chrome.</p></div></div>
+  </section>
+
+  <!-- ============ 08 INSET / FLOATING ============ -->
+  <section class="spec">
+    <div class="spec-head"><span class="spec-num">08</span><h2>Floating / inset card</h2><span class="ess">The rail detaches — a margin, a radius, a soft shadow. Both panes float as cards on a recessed page.</span></div>
+    <p class="grounding">grounded in <b>shadcn/ui (inset) · Vercel/v0 · Supabase (newer)</b></p>
+    <div class="chips"><span class="chip">width · <b>standard</b></span><span class="chip">surface · <b>inset card</b></span><span class="chip">active · <b>subtle fill</b></span><span class="chip">depth · <b>elevation-anchor</b></span><span class="chip">contemporary</span></div>
+    <div class="frame"><div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.northwind.io</span></div><div class="frame-stage">
+      <div class="shell k-inset">
+        <nav class="rail" aria-label="Primary">
+          <button class="sw"><span class="sw-logo">N</span><span class="sw-name">Northwind</span><svg class="cv"><use href="#i-chevron-down"/></svg></button>
+          <a class="ni on" href="#"><svg class="ic"><use href="#i-layout-dashboard"/></svg><span class="lbl">Overview</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-line-chart"/></svg><span class="lbl">Analytics</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-users"/></svg><span class="lbl">Audience</span></a>
+          <div class="gl">Account</div>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-credit-card"/></svg><span class="lbl">Billing</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-settings"/></svg><span class="lbl">Settings</span></a>
+          <div class="spring"></div>
+          <div class="foot"><button class="acct"><span class="av"></span><span><span class="nm">Ama Mensah</span><br><span class="rl">Pro plan</span></span></button></div>
+        </nav>
+        <main class="well"><div class="well-top"><span class="well-crumb"><b>Overview</b></span><span class="well-spacer"></span><span class="well-pill"><svg style="width:14px;height:14px"><use href="#i-search"/></svg>Search…</span><span class="well-av"></span></div><h3>Overview</h3><p>Rolling 30 days</p><div class="skel-row"><div class="skel s-card"></div><div class="skel s-card"></div><div class="skel s-card"></div></div><div class="skel s-card" style="height:120px"></div></main>
+      </div>
+    </div></div>
+    <div class="notes"><div class="note"><p class="nt">Why it works</p><p>It reads contemporary because it <b>abandons the edge-to-edge convention</b> — both panes sit <i>on</i> the page like cards. Depth is real (shadow + recess), so the elevation <i>replaces</i> the value-jump anchor — don't also darken the rail.</p></div><div class="note"><p class="nt">Reach for it when</p><p>Modern analytics / SaaS that wants an airy, designed feel. The cost is horizontal space; less right for a dense operator console.</p></div></div>
+  </section>
+
+  <!-- ============ 09 KEYBOARD-FIRST ============ -->
+  <section class="spec">
+    <div class="spec-head"><span class="spec-num">09</span><h2>Keyboard-first minimal</h2><span class="ess">The rail is deliberately sparse — a handful of destinations — because ⌘K is the real navigation.</span></div>
+    <p class="grounding">grounded in <b>Superhuman · Linear · Height · Raycast</b></p>
+    <div class="chips"><span class="chip">width · <b>standard (sparse)</b></span><span class="chip">surface · <b>light</b></span><span class="chip">active · <b>subtle fill</b></span><span class="chip">shortcuts shown</span><span class="chip dyn">⌘K is the nav</span></div>
+    <div class="frame"><div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">mail.northwind.io · ⌘K for everything</span></div><div class="frame-stage">
+      <div class="shell k-keys">
+        <nav class="rail" aria-label="Primary">
+          <button class="sw"><span class="sw-logo">N</span><span class="sw-name">Northwind</span></button>
+          <div class="cmdk"><svg class="ic"><use href="#i-command"/></svg>Jump to…<span class="kbd">⌘K</span></div>
+          <a class="ni on" href="#"><svg class="ic"><use href="#i-inbox"/></svg><span class="lbl">Inbox</span><span class="kb">G I</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-star"/></svg><span class="lbl">Starred</span><span class="kb">G S</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-file-text"/></svg><span class="lbl">Drafts</span><span class="kb">G D</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-calendar"/></svg><span class="lbl">Calendar</span><span class="kb">G C</span></a>
+          <p class="hint">Everything else lives in <b>⌘K</b> — the rail shows only where you are and the five things you do most.</p>
+          <div class="spring"></div>
+          <div class="foot"><button class="acct"><span class="av"></span><span><span class="nm">Ama Mensah</span></span></button></div>
+        </nav>
+        <main class="well"><div class="well-top"><span class="well-crumb"><b>Inbox</b></span><span class="well-spacer"></span><span class="well-pill"><svg style="width:14px;height:14px"><use href="#i-command"/></svg>⌘K</span><span class="well-av"></span></div><h3>Inbox</h3><p>Triage in 4 minutes</p><div class="skel" style="width:88%;height:40px;margin-bottom:8px"></div><div class="skel" style="width:88%;height:40px;margin-bottom:8px"></div><div class="skel" style="width:88%;height:40px"></div></main>
+      </div>
+    </div></div>
+    <div class="notes"><div class="note"><p class="nt">Why it works</p><p>The rail's job shrinks to <b>"where am I + my 5 most-used"</b>, not "every route." The signature is restraint + a prominent ⌘K affordance and the <code>G I</code> shortcut hints that teach the keyboard path.</p></div><div class="note"><p class="nt">Reach for it when</p><p>Speed tools for power users — email, issues, calendars. It's a <b>density+content</b> choice; any surface from 01–08 can be made keyboard-first.</p></div></div>
+  </section>
+
+  <!-- ============ 10 GLASS ============ -->
+  <section class="spec">
+    <div class="spec-head"><span class="spec-num">10</span><h2>Translucent / glass</h2><span class="ess">The earned exception. Vibrancy is a native-desktop signature — banned by default, delightful when the product genuinely is one.</span></div>
+    <p class="grounding">grounded in <b>macOS Finder / Mail · Things · Craft</b></p>
+    <div class="chips"><span class="chip">width · <b>standard</b></span><span class="chip">surface · <b>vibrancy + scrim</b></span><span class="chip">active · <b>raised fill</b></span><span class="chip">⚠ contrast scrim floor</span><span class="chip">use on purpose only</span></div>
+    <div class="frame"><div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">Northwind.app · macOS</span></div><div class="frame-stage">
+      <div class="shell k-glass">
+        <nav class="rail" aria-label="Primary">
+          <button class="sw"><span class="sw-logo">N</span><span class="sw-name">Northwind</span></button>
+          <div class="gl">Library</div>
+          <a class="ni on" href="#"><svg class="ic"><use href="#i-inbox"/></svg><span class="lbl">All items</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-star"/></svg><span class="lbl">Favourites</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-calendar"/></svg><span class="lbl">Today</span></a>
+          <div class="gl">Projects</div>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-folder"/></svg><span class="lbl">Operations</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-folder"/></svg><span class="lbl">Finance</span></a>
+          <div class="spring"></div>
+          <div class="foot"><button class="acct"><span class="av"></span><span><span class="nm">Ama Mensah</span></span></button></div>
+        </nav>
+        <main class="well"><div class="well-top"><span class="well-crumb"><b>All items</b></span><span class="well-spacer"></span><span class="well-pill"><svg style="width:14px;height:14px"><use href="#i-search"/></svg>Search…</span></div><h3>All items</h3><p>Vibrancy picks up the wash behind the window</p><div class="skel s-card" style="height:64px;margin-bottom:14px;background:rgba(255,255,255,.5)"></div><div class="skel s-card" style="height:64px;background:rgba(255,255,255,.5)"></div></main>
+      </div>
+    </div></div>
+    <div class="notes"><div class="note"><p class="nt">Why it works</p><p>The rail is a <b>translucent material</b> that reads as OS-integrated. The discipline: a semi-opaque <b>scrim floor</b> under the blur so labels never drop below 4.5:1 when a bright backdrop scrolls behind — or it fails the contrast gate instantly.</p></div><div class="note"><p class="nt">Reach for it when</p><p>A genuinely <b>native-feeling desktop app</b> — and nowhere else. It's the one surface that's a liability reached for reflexively and a delight when the platform earns it.</p></div></div>
+  </section>
+
+  <!-- ============ 11 OPS STATUS ============ -->
+  <section class="spec">
+    <div class="spec-head"><span class="spec-num">11</span><h2>Dense nested-section status</h2><span class="ess">The ops/admin spine — many sections, each with a health signal, hard-grouped and collapsible.</span></div>
+    <p class="grounding">grounded in <b>Grafana · Datadog · Sentry · Retool · k8s</b></p>
+    <div class="chips"><span class="chip">width · <b>standard, dense</b></span><span class="chip">surface · <b>dark</b></span><span class="chip">active · <b>fill + status dot</b></span><span class="chip">group · <b>collapsible</b></span><span class="chip dyn">live status</span></div>
+    <div class="frame"><div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">observe.northwind.io</span></div><div class="frame-stage">
+      <div class="shell k-ops" data-theme="dark">
+        <nav class="rail" aria-label="Primary">
+          <button class="sw"><span class="sw-logo">N</span><span><span class="sw-name">Northwind</span><br><span class="sw-sub">prod · eu-west</span></span><svg class="cv"><use href="#i-chevron-down"/></svg></button>
+          <div class="gl">Compute<svg class="cv"><use href="#i-chevron-down"/></svg></div>
+          <a class="ni on" href="#"><svg class="ic"><use href="#i-server"/></svg><span class="lbl">Services</span><span class="sd ok"></span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-box"/></svg><span class="lbl">Workers</span><span class="sd warn"></span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-database"/></svg><span class="lbl">Queues</span><span class="sd down"></span></a>
+          <div class="gl">Observability<svg class="cv"><use href="#i-chevron-down"/></svg></div>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-activity"/></svg><span class="lbl">Metrics</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-file-text"/></svg><span class="lbl">Logs</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-bell"/></svg><span class="lbl">Alerts</span><span class="ct" style="font-size:10px;padding:0 6px;border-radius:9px">7</span></a>
+          <div class="spring"></div>
+          <div class="foot"><button class="acct"><span class="av"></span><span><span class="nm">Ama Mensah</span><br><span class="rl">SRE</span></span></button></div>
+        </nav>
+        <main class="well"><div class="well-top"><span class="well-crumb">Compute · <b>Services</b></span><span class="well-spacer"></span><span class="well-pill"><svg style="width:14px;height:14px"><use href="#i-search"/></svg>Filter…</span><span class="well-av"></span></div><h3>Services</h3><p>18 services · 1 degraded</p><div class="skel" style="width:100%;height:28px;margin-bottom:6px"></div><div class="skel" style="width:100%;height:28px;margin-bottom:6px"></div><div class="skel" style="width:100%;height:28px;margin-bottom:6px"></div><div class="skel" style="width:100%;height:28px"></div></main>
+      </div>
+    </div></div>
+    <div class="notes"><div class="note"><p class="nt">Why it works</p><p>A <b>status signal per section</b> (a health dot, an alert count) — but <b>one carrier</b>: a dot <i>or</i> a count, never both, and the pulse reserved for genuinely-live. Density is the richness, not colour — the ops-console lesson at rail scale.</p></div><div class="note"><p class="nt">Reach for it when</p><p>Observability / admin / infra with far more destinations than a SaaS app. <b>Pairs with the ops-console cookbook</b> — same cool-technical voice, same status-as-shape discipline.</p></div></div>
+  </section>
+
+  <!-- ============ 12 STANDARD DEFAULT ============ -->
+  <section class="spec">
+    <div class="spec-head"><span class="spec-num">12</span><h2>Standard SaaS default</h2><span class="ess">The safe, correct baseline every other recipe varies from — filled-pill active, the sandwich, a collapse toggle.</span></div>
+    <p class="grounding">grounded in <b>Asana · Productboard · Amplitude · the web-app shell (P-SA-01)</b></p>
+    <div class="chips"><span class="chip">width · <b>standard</b></span><span class="chip">surface · <b>light</b></span><span class="chip">active · <b>filled pill</b></span><span class="chip">group · <b>sections + sandwich</b></span><span class="chip dyn">collapse · upgrade card</span></div>
+    <div class="frame"><div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">app.northwind.io</span></div><div class="frame-stage">
+      <div class="shell k-default">
+        <nav class="rail" aria-label="Primary">
+          <button class="sw"><span class="sw-logo">N</span><span class="sw-name">Northwind</span><span style="margin-left:auto;display:flex"><span class="collapse" role="button" tabindex="0" aria-label="Collapse sidebar"><svg style="width:15px;height:15px"><use href="#i-chevrons-left"/></svg></span></span></button>
+          <a class="ni on" href="#"><svg class="ic"><use href="#i-home"/></svg><span class="lbl">Home</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-inbox"/></svg><span class="lbl">Inbox</span><span class="ct">5</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-layout-dashboard"/></svg><span class="lbl">Projects</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-line-chart"/></svg><span class="lbl">Reporting</span></a>
+          <div class="gl">Workspace</div>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-users"/></svg><span class="lbl">Members</span></a>
+          <a class="ni" href="#"><svg class="ic"><use href="#i-settings"/></svg><span class="lbl">Settings</span></a>
+          <div class="spring"></div>
+          <div class="upsell"><div class="ut">Advanced trial</div><div class="us">5 days left on your free trial</div><a class="ub" href="#">Add billing info</a></div>
+          <div class="foot"><button class="acct"><span class="av"></span><span><span class="nm">Ama Mensah</span><br><span class="rl">Admin</span></span></button></div>
+        </nav>
+        <main class="well"><div class="well-top"><span class="well-crumb"><b>Home</b></span><span class="well-spacer"></span><span class="well-pill"><svg style="width:14px;height:14px"><use href="#i-search"/></svg>Search…</span><span class="well-av"></span></div><h3>Good evening, Ama</h3><p>3 projects need attention</p><div class="skel-row"><div class="skel s-card"></div><div class="skel s-card"></div><div class="skel s-card"></div></div><div class="skel s-card" style="height:110px"></div></main>
+      </div>
+    </div></div>
+    <div class="notes"><div class="note"><p class="nt">Why it works</p><p>Every dial set to its safest value — filled-pill active (unmistakable), the <b>sandwich</b> (switcher top / account bottom), a pinned <b>trial card</b> above the account (the real, repeated B2B pattern). This is the baseline; the eleven above are deviations <i>from</i> it.</p></div><div class="note"><p class="nt">Reach for it when</p><p>You don't have a reason to pick another. Correct and unremarkable beats clever and wrong — then borrow <b>one</b> move from 01–11 to make it yours.</p></div></div>
+  </section>
+
+  <p class="lede" style="margin-top:72px;font-size:16px">The single invariant across all twelve: <b>six dials + the sandwich, one accent, one active-carrier, a real seam to the content well.</b> They differ by how the dials are set and which dynamism is layered on — never by inventing colour, spacing, or a one-off part. That's converge-on-vocabulary / diverge-on-composition, applied to the most-defaulted surface in the system.</p>
+</div>
+</body></html>

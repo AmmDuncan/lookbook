@@ -60,6 +60,7 @@ A record opened from a list can be its **own page/route** (deep-linkable, refres
 - **Rail blocks**: 2–4 titled key-value blocks, gap-separated, optionally sticky. Related-records blocks carry counts + add/view-all.
 - **Timeline**: vertical, date-grouped, scrolls within its region if long.
 - **Mobile** (F50): single column — identity header, then key-meta, then main content, then rail blocks stacked, then timeline. Tabs become a scrollable tab strip or a select; nothing is dropped. Primary action can become a sticky bottom bar.
+- **Shell surfaces → pull each from its variation library; none generic.** The wrapping rail and the header band are primary surfaces — don't default them while you style the key-value blocks (that's `AP29`). Rail → `Sidebar Variations.html`. Header/identity band → `Header Topbar Variations.html`. Whole shell → `App Shell Variations.html`. Any tabular blocks (related-records, line-items) → `Data Display Gallery.html`. Name the pick for each in the *Surface deliberateness* receipt (SKILL.md step 4).
 
 ## Forbidden moves
 - **Action soup in the header** — five equal-weight buttons across the top. One primary; the rest go ghost or into "More actions" (P-DT-08).

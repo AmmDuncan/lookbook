@@ -13,8 +13,6 @@
 
 | File (in CD project) | Style | Notable looks it contributes |
 |---|---|---|
-| `Harbor Dashboard.html` | light cool-technical, refined | revenue-hero (stat fused w/ organic area chart + avg baseline) · kpi-sparkline-tile · txn-row w/ avatar · segmented 7d/30d/90d/YTD · greeting header · dimmed-decimals stat · empty-state |
-| `Harbor Dashboard - Dark Ops.html` | dark ops | dark variants of the above |
 | `Component Gallery.html` ⭐ | **Warm Studio** (cream dotted-paper, warm ink, clay/terracotta accent, Bricolage Grotesque display + Geist UI + Geist Mono) | **FLAGSHIP ATOM SET** — buttons(primary/secondary/ghost/destructive × default/hover/disabled) · form fields(text/select/search/textarea × default/focus/error/disabled + error msgs) · controls(checkbox/radio/toggle/segmented/tabs) · indicators(6 status badges, avatar sizes + stacked group, tooltip) · cards(metric/profile/feature-striped-image/bordered-pricing). Near-complete atom inventory in one style; numbered specimen-sheet layout. |
 | `Data Display Gallery.html` ⭐ | **Atelier / Grid** (cobalt accent, Swiss, Space Grotesk+Archivo+Plex Mono — fonts fall back, not uploaded) | **FLAGSHIP VIZ SET** — tables ×3(striped / compact-bordered-gridlines / separated card-rows w/ badges) · charts(area-line trend · vertical bar w/ one highlighted · stacked bar + legend · donut + center label + legend · 5-up sparkline row: line/area/bar/flat) · stat tiles ×3(accent-topped / sparkline-floor / inverse-cobalt) · progress(4 labeled horizontal bars + radial ring w/ legend) · metric·delta·trend composite(big figure + delta pill + trend area vs dashed target). All inline SVG, :root-driven. |
 | `Overlays & Navigation Gallery.html` ⭐ | **Midnight** (dark plum-charcoal, amber/gold accent, aurora glow, Sora+Hanken+JetBrains — fonts fall back) | **FLAGSHIP OVERLAY/NAV SET** — modal dialog + destructive dialog · slide-over drawer (edit form) · command palette ⌘K (search + grouped results + footer hints) · toasts (success+error) · dropdown menu (shortcuts + destructive item) · context menu (checkmark + submenu chevron) · profile popover (arrow) · tabs (underline + pill, live) · breadcrumbs · pagination (ellipsis). Gold focus ring on every interactive el; overlays shown in-context over dimmed/blurred backdrops. |
@@ -58,7 +56,7 @@
 | primary · secondary · ghost · destructive, each default/hover/disabled (Warm-Studio clay) | `Component Gallery.html` |
 | soft-tint · ghost · pill · sharp/squared · brutalist(yellow) · mono/terminal · icon+label · split-button · link/underline · FAB | `Button Variations.html` (skip the 5 AI-tell ones: gradient/neon/neumorphic/glassy/gradient-border) |
 | primary · secondary · ghost (editorial serif) | `Editorial component gallery.html` |
-| accent / gradient-button + outline (per-skin) | each `registers/dash-*.html` |
+| accent + outline buttons rendered across different skins/voices | each `registers/float-*.html` |
 
 ### Inputs & fields
 | Looks | src |
@@ -72,7 +70,7 @@
 |---|---|
 | checkbox · radio · toggle · segmented · tabs (Warm-Studio) | `Component Gallery.html` |
 | checkbox · radio · toggle (editorial) | `Editorial component gallery.html` |
-| segmented pill toggle (7d/30d/90d) | `Harbor Dashboard.html` |
+| segmented pill toggle (7d/30d/90d) | `Tabs & Segmented Variations.html` |
 
 ### Tabs & segmented
 | Looks | src |
@@ -84,8 +82,7 @@
 | Looks | src |
 |---|---|
 | 6 badges: dot + tinted pill (Active/Pending/Failed/Review/Draft/New ★) | `Component Gallery.html` |
-| dot + tinted pill (status) | `Harbor Dashboard.html`, `registers/dash-*.html` |
-| outlined uppercase mono (brutalist) | `registers/dash-brutalist.html` |
+| dot + tinted pill (status) | `Component Gallery.html`, `Badge, Chip & Tag Variations.html` |
 | editorial badges | `Editorial component gallery.html` |
 | **full sheet by purpose** — status(dot+tinted pill) · solid · outline · count/number · notification dot · removable filter chip(×) · selectable toggle chip · input token/tag in field · avatar+label chip · icon-leading · new/beta label · small-vs-large sizes | `Badge, chip & tag variations.html` |
 | **status by SHAPE+WEIGHT, not hue** (a11y/colorblind-safe): filled=Live · dot=Active · hollow-ring=Pending · square=Queued · cross=Failed · dashed=Draft | `Monochrome Component Gallery.html` |
@@ -106,22 +103,20 @@
 | Looks | src |
 |---|---|
 | 3 styles: accent-topped · sparkline-floor · inverse-cobalt | `Data Display Gallery.html` |
-| label+value+delta+inline sparkline | `Harbor Dashboard.html` |
-| divided rows in one card (sparkline per row) | `registers/dash-soft.html` |
-| hero stat + dimmed decimals + delta chip | `Harbor Dashboard.html` |
-| mono terminal stat (dark) | `registers/dash-darkops.html` · serif premium → `registers/dash-premium.html` |
+| label+value+delta+inline sparkline · hero stat + dimmed decimals + delta chip · metric·delta·trend composite | `Data Display Gallery.html` |
+| accent-topped KPI tile + delta chip (worked) | `worked-examples/console-pulled.html` |
 
 ### Tables
 | Looks | src |
 |---|---|
 | 3 treatments: striped · compact-bordered-gridlines · separated card-rows w/ badges | `Data Display Gallery.html` |
-| avatar + name/email + status badge + right amount | `Harbor Dashboard.html` |
+| avatar + name/email + status badge + right amount | `Data Display Gallery.html` · `List, Avatar & Timeline Molecules.html` |
+| gridlined table + status-by-shape badges (worked) | `worked-examples/console-pulled.html` |
 
 ### Charts / data viz
 | Looks | src |
 |---|---|
-| area-line trend · vertical bar (one highlighted) · stacked bar+legend · donut+center-label+legend · 5-up sparkline row | `Data Display Gallery.html` |
-| organic area chart + avg-baseline (fused with hero stat) | `Harbor Dashboard.html` |
+| area-line trend · vertical bar (one highlighted) · stacked bar+legend · donut+center-label+legend · 5-up sparkline row · organic area chart + avg-baseline | `Data Display Gallery.html` |
 | progress: 4 labeled horizontal bars + radial ring + legend | `Data Display Gallery.html` |
 | metric·delta·trend composite (figure + delta pill + trend area vs dashed target) | `Data Display Gallery.html` |
 
@@ -129,11 +124,13 @@
 | Looks | src |
 |---|---|
 | 6 by composition: classic sidebar+topbar · icon-rail · top-navbar+section-tabs · split master-detail · dual-sidebar · dense command-center | `App Shell Variations.html` |
+| rail-as-layout AXIS on one live dashboard (none / icon-rail / open / collapsible-mid-collapse) — see the drill-down study | `Dashboard Shell & Widget Studies.html` (DRILL-DOWN AXIS STUDIES) |
 
 ### Sidebars (shell component)
 | Looks | src |
 |---|---|
 | 8 structures: labeled-sections · collapsed-icon+tooltips · search-pinned(⌘K) · nested-expandable · workspace-switcher+profile · dark · compact-dense+badges · primary-action-above-nav | `Sidebar Variations.html` |
+| the rail shown as a layout AXIS in-context (none / icon-rail / open / collapsible) against an unchanged dashboard body | `Dashboard Shell & Widget Studies.html` (DRILL-DOWN AXIS STUDIES) |
 
 ### Headers / topbars (shell component)
 | Looks | src |
@@ -160,13 +157,14 @@
 | Looks | src |
 |---|---|
 | empty(icon+title+line+CTA) · loading skeleton (restrained shimmer) · error+Retry — trio | `Usage Examples — Molecules & Organisms.html` |
-| empty-state (icon+title+line) | `Harbor Dashboard.html` |
+| empty-state (icon+title+line) | `Usage Examples - Molecules & Organisms.html` |
 
 ### Organisms (real-use)
 | Looks | src |
 |---|---|
 | profile header · settings panel + sticky save bar · comment thread + composer · checkout/order summary · notification list(read/unread groups) · file uploader(progress) · filter/toolbar bar | `Usage Examples — Molecules & Organisms.html` |
-| full dashboards (light + dark) | `Harbor Dashboard.html` · `Harbor Dashboard - Dark Ops.html` · `registers/dash-*.html` (7 voices) |
+| full dashboards (worked) | `worked-examples/console-pulled.html` · composed recipe `Composed Recipe - Dashboard Home.html` · shell-axis study `Dashboard Shell & Widget Studies.html` |
+| same product in many voices (skin = dial space, not a preset list) | `registers/float-*.html` + `cookbooks/registers.md` |
 
 ### Marketing sections
 | Looks | src |
@@ -178,19 +176,23 @@
 |---|---|
 | centered-card login (social + or-divider + remember/forgot) · split-screen (form + brand panel) · sign-up + password-strength meter · forgot/reset · check-your-inbox verification · 2FA segmented OTP | `Auth Screens.html` |
 
-### Skins / aesthetics (the `:root` token blocks to copy)
-| Aesthetic | src |
+### Skins / aesthetics — an OPEN set, NOT a menu
+
+> **Skins are not limited to the ones below — or to Lookbook at all.** A skin is a *point in a dial space* (color · type · radius · elevation · density · border · accent-discipline), and the named ones here are just **example starting points**, not a closed list. Bring any skin you like — a brand's own palette + type, a skin from another system, one you compose from scratch — and apply it to ANY variation/composition. The forward model: **the variations (the `* Variations` sheets + the `* Studies` drill-downs + the composed recipes) are the SOURCE/inspo; the skin is whatever paint you choose.** The point of the examples is to show the dials moving, not to be picked from. (Dial space + how to compose a voice for any brief: `cookbooks/registers.md`; the same product rendered across voices: `registers/float-*.html`.)
+
+**Example skins** (copy a `:root` token block as a *starting point*, then change any dial):
+| Aesthetic (example) | src |
 |---|---|
-| cool-technical (light) | `Harbor Dashboard.html` |
+| cool-technical (light, Geist/indigo) | `kits/cool-technical/` skin · `registers/float-cool-technical.html` · `worked-examples/console-pulled.html` |
 | Warm Studio (cream/clay, Bricolage) | `Component Gallery.html` |
 | Atelier/Grid (cobalt Swiss) | `Data Display Gallery.html` |
 | Midnight (dark plum/gold) | `Overlays & Navigation Gallery.html` |
 | slate-blue (neutral pro) | `App Shell Variations.html` |
 | forest-green (warm-gray) | `Card variations.html` |
-| Editorial (ivory/ink/burgundy serif) | `Editorial component gallery.html` |
+| Editorial (ivory/ink/burgundy serif) | `Editorial component gallery.html` · `registers/float-{warm,dark,cold}-editorial.html` |
 | Monochrome (warm B/W + 1 blue, Public Sans; status-by-shape) | `Monochrome Component Gallery.html` |
 | emerald (marketing) | `Marketing sections.html` |
-| + 7 product voices | `registers/dash-{civic,soft,darkops,premium,brutalist,calm,free}.html` |
+| …or any skin you bring | not in Lookbook — that's the point |
 
 ### Adding personality (techniques + examples)
 | Technique (Plain → With-personality) | src |
@@ -199,11 +201,53 @@
 
 ---
 
+## DRILL-DOWN AXIS STUDIES (one surface · one axis · N labeled variants)
+
+A third index alongside the DICTIONARY (component families) and COMPOSED RECIPES (worked pages). A **drill-down study** holds ONE dataset constant and varies ONE structural axis across several **numbered, captioned** variants on a single liftable sheet — so a builder picking a treatment for that axis sees the full option space, not one default. All on the **cool-technical** skin (Geist, indigo accent, hairline borders), DVLA vehicle-registration domain, anti-tell-clean (no rounded-card + single-side accent border; see `anti-patterns.md` AP25/AP29). Generated in Claude Design (`Lookbook Specimens`), 2026-06-27. **Keep every variant — the value is the full set.** Open the sheet, read the captions, copy the variant whose job matches.
+
+**Cross-cutting axes** (each transfers across many surfaces):
+| Axis · variants | src |
+|---|---|
+| **Master–detail reveal** — full-navigate · side-panel drawer · inline-expand · modal-detail | `Master-Detail Reveal Studies.html` |
+| **Filter / facet placement** — top-bar chips · left rail · right flyout-drawer · collapsible rail · bottom sheet | `Filter Placement Studies.html` |
+| **Action / commit placement** — hero-header · sticky-footer bar · sticky-top · floating button · per-section | `Action & Commit Placement Studies.html` |
+| **Stepper / progress orientation** — horizontal · vertical · sidebar-rail · progress-bar · breadcrumb (active-step marked by fill/number, not a rounded-card+side-border tell) | `Stepper & Progress Orientation Studies.html` |
+| **Containment / chrome context** — full-page · in-shell · inline-panel · modal/sheet | `Containment & Chrome Context Studies.html` |
+| **View-mode & density** — card · list-rows · compact-rows · table × comfortable / compact / dense | `View-Mode & Density Studies.html` |
+
+**Surface-unique axes** (the gap a single component family doesn't cover):
+| Surface · axis · variants | src |
+|---|---|
+| **Calendar event-creation** — quick-add popover · drag-select range · create-slideover · inline-cell; + multi-calendar coloured lanes + single-day view | `Calendar Event-Creation Studies.html` |
+| **Kanban** — column-count (2 / 4 / 6–8) · card-anatomy depth (minimal / standard / rich) · swimlane grouping (priority / assignee / epic) | `Kanban Board Studies.html` |
+| **Pricing** — tier count & enterprise shape (2/3/4-tier + Contact-Sales) · billing-toggle placement (above / in-card / sticky) · spatial relation (parallel / carousel / accordion / stepped) | `Pricing Plan Studies.html` |
+| **Dashboard shell & widget** — sidebar-as-layout axis (none / icon-rail / open / collapsible) · widget interaction depth (static / drill-down / expandable / in-widget-edit) | `Dashboard Shell & Widget Studies.html` |
+| **Auth** — multi-step wizard · SSO-first · magic-link (entry + sent states) · password-recovery (request / sent / set-new) | `Authentication Flow Studies.html` |
+| **Inbox & thread** — thread model (flat / grouped / nested-quote / doc-comment) · compose surface (inline / slide-in / full-screen / quick-chip) · list-preview depth (minimal / standard / rich) | `Inbox & Thread Studies.html` |
+
+> Shell-surface tie-in: when manifesting an app screen's shell surfaces (SKILL.md step 4), the **Dashboard Shell & Widget** study is the rail-as-layout-axis reference, **Containment & Chrome Context** the in-shell-vs-inline reference — alongside the component-level `Sidebar Variations.html` / `App Shell Variations.html`.
+
+---
+
+## WORKED EXAMPLES — hand-built via the skill protocol (`harvest/worked-examples/`)
+
+Unlike every other specimen here (Claude Design exports), these were **hand-built by following the hardened SKILL.md protocol directly** — manifesting each shell surface from a named variant, locking the type/spacing ramps — as the 2026-06-28 validation that the protocol *forces* deliberate output. They double as reference for what "pulling from the dictionary" produces. Skinned in cool-technical **as ONE example skin — the same compositions take any skin** (Geist · indigo `#5B5BD6` · hairline, light); DVLA vehicle-registry domain; type `13·16·20·25·31·39` (1.25), spacing `4·8·12·16·24·32·48·64·96`. Open `index.html` for the labeled gateway.
+
+| File | What it demonstrates | Shell surfaces pulled |
+|---|---|---|
+| `console-pulled.html` | **Operator console — deliberate pulls.** The reference for a fully-manifested app screen. | rail → Sidebar Variations *dark + labeled-sections + count-badges*; topbar → Header Topbar *title+search+filter-chips*; table → Data Display *gridlines* + Monochrome *status-by-shape*; KPI → *accent-topped tiles*; active-nav → **bg-tint only** (Wren rule); states → Usage Examples *empty/loading/error* |
+| `console-baseline.html` | **The AP29 foil.** Identical KPIs/chart, shell left at generic defaults (bare white 240px rail, plain topbar, default `<table>`). Side-by-side with `console-pulled` it proves the manifest is load-bearing — the *only* difference is whether the shell was pulled. | none (deliberately generic) |
+| `detail-inspo.html` | **Inspo-not-clone.** Same vocabulary, *divergent* shell; blends two recipe compositions rather than cloning one. | rail → Sidebar Variations *collapsed icon-rail + tooltips*; topbar → Header Topbar *breadcrumb + actions*; body → Detail recipe *two-col + side-rail* BLENDED with *activity-timeline* |
+
+> Findings fed back from this test: `verification.md` gained a caveat that `check-contrast.mjs` over-reports on multi-surface (dark-rail + light-body) screens (cartesian token pairing → confirm real pairs with the pair-form); `fundamentals.md` F2 gained the concrete worked type ramp. Approved by Ammiel with zero design touches → the hardening works.
+
+---
+
 ## COMPOSED RECIPES (phase 2 — worked full pages; pull-from index)
 
 **MODEL (corrected 2026-06-19 per Ammiel — decouple COMPOSITION from SKIN):**
 - **Composition** = structural + interaction bones (shell, where filters/actions/nav live, table vs cards, pagination style, what's pinned). This is the ONLY variation axis. The 5 variations of an archetype differ ONLY in composition + interaction pattern.
-- **Skin** = color palette + font-family token set (the 8 aesthetics below). Paint, applied **uniformly** — NOT a variation. Each recipe page renders all 5 compositions in ONE uniform neutral skin so the composition difference is pure.
+- **Skin** = color palette + font-family token set (any skin — the listed aesthetics are examples, not a closed set; bring your own). Paint, applied **uniformly** — NOT a variation. Each recipe page renders all 5 compositions in ONE uniform neutral skin so the composition difference is pure.
 - Label variations by **composition** (plain structural names — "classic console", "filter-rail", "command/dense", "master-detail", "report/ledger"), NOT aesthetic codenames.
 - A **"Skins & how to apply"** section pairs the token blocks with the rule: composition = skeleton, skin = paint; pick ONE skin per product, apply across whichever compositions. (See `### Skins / aesthetics` below for the token sources.)
 - **Chart standard:** 1px muted gridlines or none · single accent stroke · smooth realistic data · donut = thin even ring no 3D · bars = consistent width shared baseline · tabular-numeral axis labels w/ padding · designer-drawn, not script-drawn.
@@ -415,6 +459,8 @@ _Recurring team-ups: **error spine** = large status number/glyph + message + pri
 ## SKINS & how to apply (the layer that stays uniform)
 A skin = the full set of **visual-style tokens** that swap uniformly WITHOUT changing layout/structure. It is **not** a variation — pick ONE skin per product and apply it across whichever compositions you choose. Composition = skeleton, skin = paint; any composition renders coherently in any skin.
 
+> **Skins are an OPEN set — bring your own.** The named example skins (`### Skins / aesthetics`) and the dial space (`cookbooks/registers.md`) exist to show the dials moving, NOT to be picked from a fixed menu. Lookbook's source layer is the **variations** (`* Variations` sheets + `* Studies` drill-downs + composed recipes); the skin applied to them can be any palette/type/dial-set you like — a brand's own, another system's, or one composed from scratch. "Use a skin Lookbook doesn't list" is the normal case, not an exception.
+
 **Skin token dimensions (the complete set — enriched 2026-06-19 per Ammiel):**
 - **Color** — bg · surface · ink (text) · muted/faint · accent · status (success/warn/danger) · border
 - **Type** — font-family (sans / serif / mono pairing) · scale · weight
@@ -424,7 +470,7 @@ A skin = the full set of **visual-style tokens** that swap uniformly WITHOUT cha
 - **Density** — compact / comfortable / spacious (spacing scale)
 - **Accent discipline** — how loud, how often (instances per screen)
 
-Each composed-recipe page closes with a "Skins & how to apply them" section. (Pages 1-5 show a lighter color+font row; from #6 on it's a token table with Color/Type/Radius/Elevation/Density rows × 3 example skin columns.) Copy-ready token blocks live in `### Skins / aesthetics` above (8 aesthetics + 7 voices).
+Each composed-recipe page closes with a "Skins & how to apply them" section. (Pages 1-5 show a lighter color+font row; from #6 on it's a token table with Color/Type/Radius/Elevation/Density rows × 3 example skin columns.) Copy-ready example token blocks live in `### Skins / aesthetics` above — **example starting points, not a closed list** (skins are open; see the note in that section).
 
 **PLANNED — `reskin` / `relayout` command (build after the 20 recipes are banked):** an interview-driven Lookbook command that operationalizes the compose-vs-skin split. Flow: (1) decide/build COMPOSITION first (pick archetype + composition from the recipe catalog, or assemble from families); (2) apply a SKIN (pick/answer-build from the token dimensions above); (3) user can then **re-skin** (swap the token set, layout untouched) OR **re-layout** (swap composition, skin carried over) independently. Asks questions about what you're going for (product type, voice, density, brand color) and resolves to a composition + skin pairing. This is the payoff of the whole phase-2 catalog: recipes = the composition library it draws from, SKINS = the paint library.
 

@@ -216,6 +216,7 @@ A third index alongside the DICTIONARY (component families) and COMPOSED RECIPES
 | **Containment / chrome context** — full-page · in-shell · inline-panel · modal/sheet | `Containment & Chrome Context Studies.html` |
 | **View-mode & density** — card · list-rows · compact-rows · table × comfortable / compact / dense | `View-Mode & Density Studies.html` |
 | **Bulk-select & multi-select action bar** — checkbox-col + floating pill · checkbox-col + sticky-footer toolbar · checkbox-col + inline header banner · hover-reveal checkbox + swap-in top toolbar · select-all master + summary chip w/ kebab · whole-row-select + right contextual side panel (selected rows = bg-tint only, no accent-border tell) | `Bulk-Select Action Bar Studies.html` |
+| **Responsive reflow** — ONE admin screen resolved across 3 breakpoints (Desktop 1280 · Tablet 768 · Mobile 375) as labeled device frames, with numbered pins → a reflow-notes legend per frame + between-frame transition captions. Decisions shown: nav rail → icon-rail → hamburger drawer · inline filter chips → Filters button → bottom sheet · full multi-col table → dropped columns → stacked touch cards · KPI row → tight row → scroll strip. (Sheet is ~1760px wide — view at ≥1800 to see frames + notes.) | `Responsive Reflow Studies.html` |
 
 **Surface-unique axes** (the gap a single component family doesn't cover):
 | Surface · axis · variants | src |

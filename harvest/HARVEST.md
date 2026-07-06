@@ -215,6 +215,7 @@ A third index alongside the DICTIONARY (component families) and COMPOSED RECIPES
 | **Stepper / progress orientation** — horizontal · vertical · sidebar-rail · progress-bar · breadcrumb (active-step marked by fill/number, not a rounded-card+side-border tell) | `Stepper & Progress Orientation Studies.html` |
 | **Containment / chrome context** — full-page · in-shell · inline-panel · modal/sheet | `Containment & Chrome Context Studies.html` |
 | **View-mode & density** — card · list-rows · compact-rows · table × comfortable / compact / dense | `View-Mode & Density Studies.html` |
+| **Bulk-select & multi-select action bar** — checkbox-col + floating pill · checkbox-col + sticky-footer toolbar · checkbox-col + inline header banner · hover-reveal checkbox + swap-in top toolbar · select-all master + summary chip w/ kebab · whole-row-select + right contextual side panel (selected rows = bg-tint only, no accent-border tell) | `Bulk-Select Action Bar Studies.html` |
 
 **Surface-unique axes** (the gap a single component family doesn't cover):
 | Surface · axis · variants | src |

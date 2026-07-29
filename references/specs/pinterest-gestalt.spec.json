@@ -1,0 +1,326 @@
+{
+  "name": "pinterest-gestalt",
+  "source": "https://gestalt.pinterest.systems/web/overview",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 8,
+    "onScalePct": 95.5,
+    "authoredValuesSampled": 804,
+    "distinctValues": 11,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 388
+      },
+      {
+        "value": 2,
+        "count": 359
+      },
+      {
+        "value": 16,
+        "count": 190
+      },
+      {
+        "value": 24,
+        "count": 171
+      },
+      {
+        "value": 12,
+        "count": 20
+      },
+      {
+        "value": 32,
+        "count": 13
+      },
+      {
+        "value": 4,
+        "count": 10
+      },
+      {
+        "value": 6,
+        "count": 6
+      },
+      {
+        "value": 40,
+        "count": 5
+      }
+    ],
+    "grouping": {
+      "samples": 3,
+      "byMethod": {
+        "nested": 2,
+        "within": 1
+      },
+      "medianInsideGap": 8,
+      "medianBetweenGap": 8,
+      "medianRatio": 2,
+      "confidence": "low — too few groups to generalise",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "-apple-system",
+        "count": 275
+      }
+    ],
+    "bodySize": 16,
+    "sizes": [
+      12,
+      16,
+      20,
+      36
+    ],
+    "distinctSizes": 4,
+    "weights": [
+      400,
+      600
+    ],
+    "roleCount": 7,
+    "scaleRatios": [
+      1.333,
+      1.25,
+      1.8
+    ],
+    "hierarchyCarriedBy": "size",
+    "channelSpread": {
+      "size": 0,
+      "weight": 0,
+      "ink": 0
+    },
+    "measureChars": 40,
+    "topRoles": [
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#111111",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 177,
+        "sample": "Information might be outdated. For the latest do"
+      },
+      {
+        "size": 20,
+        "weight": 600,
+        "color": "#111111",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 85,
+        "sample": "This is Gestalt’s legacy documentation"
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#111111",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 7,
+        "sample": "Get started"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#111111",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "© 2026 Pinterest"
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#ffffff",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Explore Gestalt 2.0"
+      },
+      {
+        "size": 36,
+        "weight": 600,
+        "color": "#111111",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Web component overview"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Overview"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 124.9
+      },
+      {
+        "hex": "#e3fae1",
+        "h": 115,
+        "s": 71.4,
+        "l": 93.1,
+        "c": 9.8,
+        "areaPct": 26.5
+      },
+      {
+        "hex": "#f1f1f1",
+        "h": 0,
+        "s": 0,
+        "l": 94.5,
+        "c": 0,
+        "areaPct": 5.5
+      },
+      {
+        "hex": "#d7edff",
+        "h": 207,
+        "s": 100,
+        "l": 92.2,
+        "c": 15.7,
+        "areaPct": 1
+      },
+      {
+        "hex": "#4a4a4a",
+        "h": 0,
+        "s": 0,
+        "l": 29,
+        "c": 0,
+        "areaPct": 0.8
+      },
+      {
+        "hex": "#efefef",
+        "h": 0,
+        "s": 0,
+        "l": 93.7,
+        "c": 0,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#111111",
+        "h": 0,
+        "s": 0,
+        "l": 6.7,
+        "c": 0,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#e60023",
+        "h": 351,
+        "s": 100,
+        "l": 45.1,
+        "c": 90.2,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#0074e8",
+        "h": 210,
+        "s": 100,
+        "l": 45.5,
+        "c": 91,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#111111",
+        "s": 0,
+        "l": 6.7,
+        "c": 0,
+        "sharePct": 99.6
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 0.4
+      }
+    ],
+    "neutralsTinted": "0/7",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 15.7,
+    "accentAreaPct": 27.6,
+    "accentVerdict": "accent is dominant",
+    "depth": {
+      "borderedElements": 3,
+      "shadowedElements": 1,
+      "borderToShadowRatio": 3,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0.12) 0px 2px 8px 0px"
+      ],
+      "radiusScale": [
+        8,
+        50,
+        999,
+        2,
+        12
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 10786,
+    "horizontalBleed": false,
+    "proseMaxWidth": 660,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "3-col: px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 463
+      },
+      {
+        "value": "column",
+        "count": 269
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 188,
+      "coveringMostContent": 13,
+      "top": [
+        24,
+        700,
+        356,
+        1044,
+        8,
+        22,
+        20,
+        360
+      ]
+    },
+    "density": {
+      "visibleElements": 2792,
+      "perScreenful": 233
+    }
+  }
+}

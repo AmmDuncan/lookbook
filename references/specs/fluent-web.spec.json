@@ -1,0 +1,416 @@
+{
+  "name": "fluent-web",
+  "source": "https://fluent2.microsoft.design/components/web/react/Button/usage",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 87.8,
+    "authoredValuesSampled": 189,
+    "distinctValues": 24,
+    "topSteps": [
+      {
+        "value": 6,
+        "count": 36
+      },
+      {
+        "value": 8,
+        "count": 35
+      },
+      {
+        "value": 2,
+        "count": 35
+      },
+      {
+        "value": 4,
+        "count": 31
+      },
+      {
+        "value": 32,
+        "count": 13
+      },
+      {
+        "value": 5,
+        "count": 13
+      },
+      {
+        "value": 3,
+        "count": 12
+      },
+      {
+        "value": 14,
+        "count": 12
+      },
+      {
+        "value": 12,
+        "count": 11
+      },
+      {
+        "value": 20,
+        "count": 6
+      },
+      {
+        "value": 11,
+        "count": 6
+      },
+      {
+        "value": 10,
+        "count": 5
+      }
+    ],
+    "grouping": {
+      "samples": 7,
+      "byMethod": {
+        "nested": 5,
+        "within": 2
+      },
+      "medianInsideGap": 4,
+      "medianBetweenGap": 40,
+      "medianRatio": 4.5,
+      "confidence": "medium",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Segoe UI",
+        "count": 39
+      },
+      {
+        "value": "monospace",
+        "count": 1
+      }
+    ],
+    "bodySize": 20,
+    "sizes": [
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      68
+    ],
+    "distinctSizes": 7,
+    "weights": [
+      400,
+      600
+    ],
+    "roleCount": 20,
+    "scaleRatios": [
+      1.2,
+      1.167,
+      1.143,
+      1.125,
+      1.111,
+      3.4
+    ],
+    "hierarchyCarriedBy": "size",
+    "channelSpread": {
+      "size": 0.74,
+      "weight": 0.33,
+      "ink": 0.38
+    },
+    "measureChars": 77,
+    "topRoles": [
+      {
+        "size": 20,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "The URL may be incorrect or the page may no long"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#616161",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Share your email with us, if you allow us to get"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#1b1a19",
+        "lineHeight": 1.15,
+        "tracking": 0,
+        "transform": "none",
+        "count": 6,
+        "sample": "Get started"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Give your voice and shape the future of Fluent 2"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#242424",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Feedback type"
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#616161",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Fluent 1"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#4d4d4d",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Contact Microsoft"
+      },
+      {
+        "size": 68,
+        "weight": 600,
+        "color": "#000000",
+        "lineHeight": 1.35,
+        "tracking": -2.72,
+        "transform": "none",
+        "count": 1,
+        "sample": "We couldn’t load that page"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#000000",
+        "lineHeight": 1.15,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Feedback"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#444444",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Android"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 34.9
+      },
+      {
+        "hex": "#f5f5f5",
+        "h": 0,
+        "s": 0,
+        "l": 96.1,
+        "c": 0,
+        "areaPct": 11.7
+      },
+      {
+        "hex": "#f0f0f0",
+        "h": 0,
+        "s": 0,
+        "l": 94.1,
+        "c": 0,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#ebebeb",
+        "h": 0,
+        "s": 0,
+        "l": 92.2,
+        "c": 0,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#000000",
+        "h": 0,
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#0c0c0c",
+        "h": 0,
+        "s": 0,
+        "l": 4.7,
+        "c": 0,
+        "areaPct": 0
+      },
+      {
+        "hex": "#b4d6fa",
+        "h": 211,
+        "s": 87.5,
+        "l": 84.3,
+        "c": 27.5,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 41.3
+      },
+      {
+        "hex": "#616161",
+        "s": 0,
+        "l": 38,
+        "c": 0,
+        "sharePct": 20.9
+      },
+      {
+        "hex": "#1b1a19",
+        "s": 3.8,
+        "l": 10.2,
+        "c": 0.8,
+        "sharePct": 16.2
+      },
+      {
+        "hex": "#242424",
+        "s": 0,
+        "l": 14.1,
+        "c": 0,
+        "sharePct": 8.2
+      },
+      {
+        "hex": "#4d4d4d",
+        "s": 0,
+        "l": 30.2,
+        "c": 0,
+        "sharePct": 5.6
+      },
+      {
+        "hex": "#444444",
+        "s": 0,
+        "l": 26.7,
+        "c": 0,
+        "sharePct": 2.4
+      },
+      {
+        "hex": "#424242",
+        "s": 0,
+        "l": 25.9,
+        "c": 0,
+        "sharePct": 2.3
+      },
+      {
+        "hex": "#484644",
+        "s": 2.9,
+        "l": 27.5,
+        "c": 1.6,
+        "sharePct": 1.1
+      },
+      {
+        "hex": "#af4e63",
+        "s": 38.3,
+        "l": 49.6,
+        "c": 38,
+        "sharePct": 0.9
+      },
+      {
+        "hex": "#bdbdbd",
+        "s": 0,
+        "l": 74.1,
+        "c": 0,
+        "sharePct": 0.9
+      }
+    ],
+    "neutralsTinted": "1/15",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 0,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 13,
+      "shadowedElements": 2,
+      "borderToShadowRatio": 6.5,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0.12) 0px 0px 2px 0px, rgba(0, 0, 0, 0.14) 0px 8px 16px 0px",
+        "rgb(68, 68, 68) 0px 0px 4px -2px"
+      ],
+      "radiusScale": [
+        2,
+        4,
+        8,
+        20,
+        6,
+        22
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 1156,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 2
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 38
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 33,
+      "coveringMostContent": 15,
+      "top": [
+        32,
+        352,
+        1350,
+        0,
+        38,
+        1352,
+        970,
+        196
+      ]
+    },
+    "density": {
+      "visibleElements": 159,
+      "perScreenful": 124
+    }
+  }
+}

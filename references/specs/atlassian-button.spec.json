@@ -1,0 +1,475 @@
+{
+  "name": "atlassian-button",
+  "source": "https://atlassian.design/components/button/examples",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 87.2,
+    "authoredValuesSampled": 1937,
+    "distinctValues": 12,
+    "topSteps": [
+      {
+        "value": 4,
+        "count": 956
+      },
+      {
+        "value": 2,
+        "count": 363
+      },
+      {
+        "value": 12,
+        "count": 293
+      },
+      {
+        "value": 8,
+        "count": 281
+      },
+      {
+        "value": 6,
+        "count": 248
+      },
+      {
+        "value": 16,
+        "count": 83
+      },
+      {
+        "value": 24,
+        "count": 61
+      },
+      {
+        "value": 32,
+        "count": 18
+      },
+      {
+        "value": 1,
+        "count": 16
+      },
+      {
+        "value": 40,
+        "count": 5
+      }
+    ],
+    "grouping": {
+      "samples": 27,
+      "byMethod": {
+        "nested": 25,
+        "within": 2
+      },
+      "medianInsideGap": 6,
+      "medianBetweenGap": 4,
+      "medianRatio": 0.67,
+      "confidence": "high",
+      "verdict": "space encodes little grouping — flat rhythm"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Atlassian Mono",
+        "count": 924
+      },
+      {
+        "value": "Atlassian Sans",
+        "count": 345
+      },
+      {
+        "value": "Charlie Display",
+        "count": 8
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      12,
+      12.3,
+      13.3,
+      14,
+      16,
+      20,
+      24,
+      40
+    ],
+    "distinctSizes": 8,
+    "weights": [
+      400,
+      500,
+      600,
+      653,
+      700
+    ],
+    "roleCount": 29,
+    "scaleRatios": [
+      1.025,
+      1.081,
+      1.053,
+      1.143,
+      1.25,
+      1.2,
+      1.667
+    ],
+    "hierarchyCarriedBy": "weight",
+    "channelSpread": {
+      "size": 0.19,
+      "weight": 0.42,
+      "ink": 0.24
+    },
+    "measureChars": 108,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#292a2e",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 26,
+        "sample": "Use default buttons for most actions that aren't"
+      },
+      {
+        "size": 12.3,
+        "weight": 400,
+        "color": "#292a2e",
+        "lineHeight": 1.63,
+        "tracking": 0,
+        "transform": "none",
+        "count": 613,
+        "sample": "React"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#505258",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 176,
+        "sample": "What's new"
+      },
+      {
+        "size": 12.3,
+        "weight": 700,
+        "color": "#1558bc",
+        "lineHeight": 1.63,
+        "tracking": 0,
+        "transform": "none",
+        "count": 147,
+        "sample": "import"
+      },
+      {
+        "size": 12.3,
+        "weight": 400,
+        "color": "#216e4e",
+        "lineHeight": 1.63,
+        "tracking": 0,
+        "transform": "none",
+        "count": 42,
+        "sample": "'react'"
+      },
+      {
+        "size": 12.3,
+        "weight": 400,
+        "color": "#206a83",
+        "lineHeight": 1.63,
+        "tracking": 0,
+        "transform": "none",
+        "count": 77,
+        "sample": "appearance"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#505258",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 32,
+        "sample": "We use this feedback to improve our documentatio"
+      },
+      {
+        "size": 12.3,
+        "weight": 400,
+        "color": "#803fa5",
+        "lineHeight": 1.63,
+        "tracking": 0,
+        "transform": "none",
+        "count": 44,
+        "sample": "Button"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#6b6e76",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 20,
+        "sample": "Default"
+      },
+      {
+        "size": 12,
+        "weight": 653,
+        "color": "#6b6e76",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 14,
+        "sample": "Forms and input"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#f8f8f8",
+        "h": 0,
+        "s": 0,
+        "l": 97.3,
+        "c": 0,
+        "areaPct": 280.2
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 97.4
+      },
+      {
+        "hex": "#fff5db",
+        "h": 43,
+        "s": 100,
+        "l": 92.9,
+        "c": 14.1,
+        "areaPct": 6.3
+      },
+      {
+        "hex": "#1868db",
+        "h": 215,
+        "s": 80.2,
+        "l": 47.6,
+        "c": 76.5,
+        "areaPct": 3
+      },
+      {
+        "hex": "#e9f2fe",
+        "h": 214,
+        "s": 91.3,
+        "l": 95.5,
+        "c": 8.2,
+        "areaPct": 1.1
+      },
+      {
+        "hex": "#001122",
+        "h": 210,
+        "s": 100,
+        "l": 6.7,
+        "c": 13.3,
+        "areaPct": 1
+      },
+      {
+        "hex": "#fbc828",
+        "h": 45,
+        "s": 96.3,
+        "l": 57.1,
+        "c": 82.7,
+        "areaPct": 0.7
+      },
+      {
+        "hex": "#ffd5d2",
+        "h": 4,
+        "s": 100,
+        "l": 91.2,
+        "c": 17.6,
+        "areaPct": 0.6
+      },
+      {
+        "hex": "#fce4a6",
+        "h": 43,
+        "s": 93.5,
+        "l": 82,
+        "c": 33.7,
+        "areaPct": 0.6
+      },
+      {
+        "hex": "#964ac0",
+        "h": 279,
+        "s": 48.4,
+        "l": 52.2,
+        "c": 46.3,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#c9372c",
+        "h": 4,
+        "s": 64.1,
+        "l": 48,
+        "c": 61.6,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#000000",
+        "h": 0,
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "areaPct": 0.3
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#292a2e",
+        "s": 5.7,
+        "l": 17.1,
+        "c": 2,
+        "sharePct": 47.9
+      },
+      {
+        "hex": "#505258",
+        "s": 4.8,
+        "l": 32.9,
+        "c": 3.1,
+        "sharePct": 22.5
+      },
+      {
+        "hex": "#1558bc",
+        "s": 79.9,
+        "l": 41,
+        "c": 65.5,
+        "sharePct": 7.4
+      },
+      {
+        "hex": "#216e4e",
+        "s": 53.8,
+        "l": 28,
+        "c": 30.2,
+        "sharePct": 6.4
+      },
+      {
+        "hex": "#206a83",
+        "s": 60.7,
+        "l": 32,
+        "c": 38.8,
+        "sharePct": 5.2
+      },
+      {
+        "hex": "#6b6e76",
+        "s": 4.9,
+        "l": 44.1,
+        "c": 4.3,
+        "sharePct": 4.1
+      },
+      {
+        "hex": "#803fa5",
+        "s": 44.7,
+        "l": 44.7,
+        "c": 40,
+        "sharePct": 2.5
+      },
+      {
+        "hex": "#1868db",
+        "s": 80.2,
+        "l": 47.6,
+        "c": 76.5,
+        "sharePct": 1.5
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 1
+      },
+      {
+        "hex": "#5d1f1a",
+        "s": 56.3,
+        "l": 23.3,
+        "c": 26.3,
+        "sharePct": 0.5
+      }
+    ],
+    "neutralsTinted": "3/7",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 82.7,
+    "accentAreaPct": 13.9,
+    "accentVerdict": "accent is present",
+    "depth": {
+      "borderedElements": 73,
+      "shadowedElements": 16,
+      "borderToShadowRatio": 4.56,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(11, 18, 14, 0.14) 0px 0px 0px 1.2px"
+      ],
+      "radiusScale": [
+        6,
+        4,
+        2,
+        8,
+        9999
+      ],
+      "gradientElements": 16
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": 756,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "4-col: px px px px",
+        "count": 105
+      },
+      {
+        "value": "6-col: subgrid [] [] [] [] []",
+        "count": 104
+      },
+      {
+        "value": "2-col: px px",
+        "count": 17
+      },
+      {
+        "value": "3-col: px px px",
+        "count": 2
+      },
+      {
+        "value": "5-col: px px px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 482
+      },
+      {
+        "value": "column",
+        "count": 230
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 124,
+      "coveringMostContent": 19,
+      "top": [
+        24,
+        430,
+        406,
+        52,
+        56,
+        12,
+        418,
+        480
+      ]
+    },
+    "density": {
+      "visibleElements": 3986,
+      "perScreenful": 3986
+    }
+  }
+}

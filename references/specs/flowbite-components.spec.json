@@ -1,0 +1,431 @@
+{
+  "name": "flowbite-components",
+  "source": "https://flowbite.com/docs/components/buttons/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 91.1,
+    "authoredValuesSampled": 953,
+    "distinctValues": 18,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 354
+      },
+      {
+        "value": 12,
+        "count": 134
+      },
+      {
+        "value": 16,
+        "count": 120
+      },
+      {
+        "value": 24,
+        "count": 96
+      },
+      {
+        "value": 32,
+        "count": 81
+      },
+      {
+        "value": 10,
+        "count": 64
+      },
+      {
+        "value": 4,
+        "count": 55
+      },
+      {
+        "value": 2,
+        "count": 20
+      },
+      {
+        "value": 6,
+        "count": 20
+      },
+      {
+        "value": 20,
+        "count": 16
+      },
+      {
+        "value": 48,
+        "count": 4
+      },
+      {
+        "value": 96,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 24,
+      "byMethod": {
+        "nested": 17,
+        "within": 7
+      },
+      "medianInsideGap": 7.5,
+      "medianBetweenGap": 18,
+      "medianRatio": 7,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "ui-monospace",
+        "count": 3477
+      },
+      {
+        "value": "Inter",
+        "count": 391
+      },
+      {
+        "value": "-apple-system",
+        "count": 2
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      8,
+      12,
+      13,
+      14,
+      16,
+      18,
+      20,
+      24,
+      30
+    ],
+    "distinctSizes": 9,
+    "weights": [
+      400,
+      500,
+      600
+    ],
+    "roleCount": 29,
+    "scaleRatios": [
+      1.5,
+      1.083,
+      1.077,
+      1.143,
+      1.125,
+      1.111,
+      1.2,
+      1.25
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0,
+      "weight": 0,
+      "ink": 0.02
+    },
+    "measureChars": 249,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#79b8ff",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1210,
+        "sample": "button"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#b392f0",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 812,
+        "sample": "type"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#4a5565",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 22,
+        "sample": "The button component is probably the most widely"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#e1e4e8",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 643,
+        "sample": ">Default</"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#4a5565",
+        "lineHeight": 1.67,
+        "tracking": 0,
+        "transform": "none",
+        "count": 120,
+        "sample": "9.3k"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#4a5565",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 137,
+        "sample": "Introduction"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#f97583",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 809,
+        "sample": ""
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#4a5565",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 31,
+        "sample": "Search"
+      },
+      {
+        "size": 24,
+        "weight": 500,
+        "color": "#101828",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 17,
+        "sample": "Default button"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#101828",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 25,
+        "sample": "We have launched the new Flowbite Design System "
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#24292e",
+        "h": 210,
+        "s": 12.2,
+        "l": 16.1,
+        "c": 3.9,
+        "areaPct": 30.7
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 27.4
+      },
+      {
+        "hex": "#f9fafb",
+        "h": 210,
+        "s": 20,
+        "l": 98,
+        "c": 0.8,
+        "areaPct": 12.5
+      },
+      {
+        "hex": "#f3f4f6",
+        "h": 220,
+        "s": 14.3,
+        "l": 95.9,
+        "c": 1.2,
+        "areaPct": 0.2
+      },
+      {
+        "hex": "#eff6ff",
+        "h": 214,
+        "s": 100,
+        "l": 96.9,
+        "c": 6.3,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#1447e6",
+        "h": 225,
+        "s": 84,
+        "l": 49,
+        "c": 82.4,
+        "areaPct": 0.1
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#79b8ff",
+        "s": 100,
+        "l": 73.7,
+        "c": 52.5,
+        "sharePct": 80.5
+      },
+      {
+        "hex": "#4a5565",
+        "s": 15.4,
+        "l": 34.3,
+        "c": 10.6,
+        "sharePct": 8.3
+      },
+      {
+        "hex": "#b392f0",
+        "s": 75.8,
+        "l": 75.7,
+        "c": 36.9,
+        "sharePct": 6.3
+      },
+      {
+        "hex": "#e1e4e8",
+        "s": 13.2,
+        "l": 89.6,
+        "c": 2.7,
+        "sharePct": 2.7
+      },
+      {
+        "hex": "#f97583",
+        "s": 91.7,
+        "l": 71.8,
+        "c": 51.8,
+        "sharePct": 1.1
+      },
+      {
+        "hex": "#101828",
+        "s": 42.9,
+        "l": 11,
+        "c": 9.4,
+        "sharePct": 0.9
+      },
+      {
+        "hex": "#1447e6",
+        "s": 84,
+        "l": 49,
+        "c": 82.4,
+        "sharePct": 0.1
+      },
+      {
+        "hex": "#1c398e",
+        "s": 67.1,
+        "l": 33.3,
+        "c": 44.7,
+        "sharePct": 0
+      },
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 0
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 0
+      }
+    ],
+    "neutralsTinted": "4/8",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 3.9,
+    "accentAreaPct": 0.1,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 265,
+      "shadowedElements": 13,
+      "borderToShadowRatio": 20.38,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px",
+        "rgba(0, 0, 0, 0.1) 0px 1px 4px 1px"
+      ],
+      "radiusScale": [
+        12,
+        33554400,
+        8,
+        6,
+        3,
+        16
+      ],
+      "gradientElements": 1
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 11451,
+    "horizontalBleed": false,
+    "proseMaxWidth": 48002,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "3-col: px px px",
+        "count": 17
+      },
+      {
+        "value": "2-col: px px",
+        "count": 17
+      },
+      {
+        "value": "6-col: px px px px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 355
+      },
+      {
+        "value": "column",
+        "count": 1
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 806,
+      "coveringMostContent": 209,
+      "top": [
+        258,
+        282,
+        26,
+        342,
+        290,
+        460,
+        392,
+        518
+      ]
+    },
+    "density": {
+      "visibleElements": 5080,
+      "perScreenful": 399
+    }
+  }
+}

@@ -1,0 +1,428 @@
+{
+  "name": "grafana-play",
+  "source": "https://play.grafana.org/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 89.8,
+    "authoredValuesSampled": 411,
+    "distinctValues": 17,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 206
+      },
+      {
+        "value": 4,
+        "count": 77
+      },
+      {
+        "value": 16,
+        "count": 61
+      },
+      {
+        "value": 7,
+        "count": 26
+      },
+      {
+        "value": 12,
+        "count": 12
+      },
+      {
+        "value": 3,
+        "count": 12
+      },
+      {
+        "value": 10,
+        "count": 10
+      },
+      {
+        "value": 15,
+        "count": 4
+      },
+      {
+        "value": 24,
+        "count": 4
+      },
+      {
+        "value": 20,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 24,
+      "byMethod": {
+        "nested": 24,
+        "within": 0
+      },
+      "medianInsideGap": 4,
+      "medianBetweenGap": 9,
+      "medianRatio": 2,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Inter",
+        "count": 72
+      },
+      {
+        "value": "Segoe UI",
+        "count": 19
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      11.9,
+      12,
+      12.6,
+      14,
+      15.4,
+      16.8,
+      18.2,
+      28
+    ],
+    "distinctSizes": 8,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 18,
+    "scaleRatios": [
+      1.008,
+      1.05,
+      1.111,
+      1.1,
+      1.091,
+      1.083,
+      1.538
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0,
+      "weight": 0,
+      "ink": 0.28
+    },
+    "measureChars": 80,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#ccccdc",
+        "lineHeight": 1.57,
+        "tracking": 0.15,
+        "transform": "none",
+        "count": 30,
+        "sample": "Grafana"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#6e9fff",
+        "lineHeight": 1.57,
+        "tracking": 0.15,
+        "transform": "none",
+        "count": 10,
+        "sample": "Automate all the things: How to use Grafana Clou"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0.15,
+        "transform": "none",
+        "count": 5,
+        "sample": "Play is a sandbox for testing and learning Grafa"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#ccccdc",
+        "lineHeight": 2.14,
+        "tracking": 0.15,
+        "transform": "none",
+        "count": 13,
+        "sample": "Edit"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#ccccdc",
+        "lineHeight": 1.5,
+        "tracking": 0.15,
+        "transform": "none",
+        "count": 9,
+        "sample": "What shipped this week"
+      },
+      {
+        "size": 14,
+        "weight": 700,
+        "color": "#000000",
+        "lineHeight": 1.57,
+        "tracking": 0.15,
+        "transform": "none",
+        "count": 6,
+        "sample": "Grafana Cloud"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#38bdf8",
+        "lineHeight": 1.5,
+        "tracking": 0.15,
+        "transform": "none",
+        "count": 3,
+        "sample": "get started fast with the free tier of Grafana C"
+      },
+      {
+        "size": 16.8,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.17,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "🧪 What is Grafana Play?"
+      },
+      {
+        "size": 12.6,
+        "weight": 400,
+        "color": "#94a3b8",
+        "lineHeight": 1.57,
+        "tracking": 0.15,
+        "transform": "none",
+        "count": 1,
+        "sample": "Senior SRE at COIN Metrics | Grafana Champion"
+      },
+      {
+        "size": 11.9,
+        "weight": 400,
+        "color": "#94a3b8",
+        "lineHeight": 1.57,
+        "tracking": 0.15,
+        "transform": "none",
+        "count": 1,
+        "sample": "Senior Observability Architect"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#111217",
+    "backgrounds": [
+      {
+        "hex": "#181b1f",
+        "h": 214,
+        "s": 12.7,
+        "l": 10.8,
+        "c": 2.7,
+        "areaPct": 306.2
+      },
+      {
+        "hex": "#1f2937",
+        "h": 215,
+        "s": 27.9,
+        "l": 16.9,
+        "c": 9.4,
+        "areaPct": 43.7
+      },
+      {
+        "hex": "#111217",
+        "h": 230,
+        "s": 15,
+        "l": 7.8,
+        "c": 2.4,
+        "areaPct": 6.8
+      },
+      {
+        "hex": "#0f172a",
+        "h": 222,
+        "s": 47.4,
+        "l": 11.2,
+        "c": 10.6,
+        "areaPct": 3.6
+      },
+      {
+        "hex": "#f9a825",
+        "h": 37,
+        "s": 94.6,
+        "l": 56.1,
+        "c": 83.1,
+        "areaPct": 2.8
+      },
+      {
+        "hex": "#2c2f35",
+        "h": 220,
+        "s": 9.3,
+        "l": 19,
+        "c": 3.5,
+        "areaPct": 1.3
+      },
+      {
+        "hex": "#cecede",
+        "h": 240,
+        "s": 19.5,
+        "l": 83.9,
+        "c": 6.3,
+        "areaPct": 0.7
+      },
+      {
+        "hex": "#475569",
+        "h": 215,
+        "s": 19.3,
+        "l": 34.5,
+        "c": 13.3,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#3d71d9",
+        "h": 220,
+        "s": 67.2,
+        "l": 54.5,
+        "c": 61.2,
+        "areaPct": 0.4
+      },
+      {
+        "hex": "#44464e",
+        "h": 228,
+        "s": 6.8,
+        "l": 28.6,
+        "c": 3.9,
+        "areaPct": 0
+      },
+      {
+        "hex": "#363940",
+        "h": 222,
+        "s": 8.5,
+        "l": 23.1,
+        "c": 3.9,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#ccccdc",
+        "s": 18.6,
+        "l": 83.1,
+        "c": 6.3,
+        "sharePct": 64.7
+      },
+      {
+        "hex": "#6e9fff",
+        "s": 100,
+        "l": 71.6,
+        "c": 56.9,
+        "sharePct": 15.5
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 14.4
+      },
+      {
+        "hex": "#38bdf8",
+        "s": 93.2,
+        "l": 59.6,
+        "c": 75.3,
+        "sharePct": 2.2
+      },
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 1.7
+      },
+      {
+        "hex": "#94a3b8",
+        "s": 20.2,
+        "l": 65.1,
+        "c": 14.1,
+        "sharePct": 1.3
+      },
+      {
+        "hex": "#ccccdd",
+        "s": 20,
+        "l": 83.3,
+        "c": 6.7,
+        "sharePct": 0.2
+      }
+    ],
+    "neutralsTinted": "8/10",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 83.1,
+    "accentAreaPct": 51,
+    "accentVerdict": "accent is dominant",
+    "depth": {
+      "borderedElements": 42,
+      "shadowedElements": 9,
+      "borderToShadowRatio": 4.67,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0.1) 0px 4px 10px 0px",
+        "rgba(0, 0, 0, 0.2) 0px 2px 5px 0px",
+        "rgba(0, 0, 0, 0.3) 0px 4px 12px 0px",
+        "rgb(1, 4, 9) 0px 8px 24px 0px"
+      ],
+      "radiusScale": [
+        6,
+        10,
+        8,
+        4,
+        50
+      ],
+      "gradientElements": 1
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": 557,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 141
+      },
+      {
+        "value": "column",
+        "count": 70
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 71,
+      "coveringMostContent": 20,
+      "top": [
+        12,
+        786,
+        336,
+        0,
+        338,
+        778,
+        48,
+        320
+      ]
+    },
+    "density": {
+      "visibleElements": 531,
+      "perScreenful": 531
+    }
+  }
+}

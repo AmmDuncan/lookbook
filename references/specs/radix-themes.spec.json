@@ -1,0 +1,467 @@
+{
+  "name": "radix-themes",
+  "source": "https://www.radix-ui.com/themes/docs/components/button",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 99.2,
+    "authoredValuesSampled": 1035,
+    "distinctValues": 15,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 443
+      },
+      {
+        "value": 12,
+        "count": 376
+      },
+      {
+        "value": 4,
+        "count": 90
+      },
+      {
+        "value": 1,
+        "count": 90
+      },
+      {
+        "value": 16,
+        "count": 84
+      },
+      {
+        "value": 3,
+        "count": 34
+      },
+      {
+        "value": 24,
+        "count": 29
+      },
+      {
+        "value": 2,
+        "count": 8
+      },
+      {
+        "value": 10,
+        "count": 8
+      },
+      {
+        "value": 40,
+        "count": 8
+      },
+      {
+        "value": 48,
+        "count": 6
+      },
+      {
+        "value": 64,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 43,
+      "byMethod": {
+        "nested": 43,
+        "within": 0
+      },
+      "medianInsideGap": 0,
+      "medianBetweenGap": 8,
+      "medianRatio": 8,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "soehneMono",
+        "count": 833
+      },
+      {
+        "value": "untitledSans",
+        "count": 143
+      },
+      {
+        "value": "-apple-system",
+        "count": 42
+      }
+    ],
+    "bodySize": 13.3,
+    "sizes": [
+      12,
+      12.6,
+      13.3,
+      14,
+      14.4,
+      16,
+      18,
+      24,
+      35
+    ],
+    "distinctSizes": 9,
+    "weights": [
+      400,
+      500,
+      700
+    ],
+    "roleCount": 29,
+    "scaleRatios": [
+      1.05,
+      1.056,
+      1.053,
+      1.029,
+      1.111,
+      1.125,
+      1.333,
+      1.458
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.27,
+      "weight": 0.17,
+      "ink": 0.41
+    },
+    "measureChars": 91,
+    "topRoles": [
+      {
+        "size": 13.3,
+        "weight": 400,
+        "color": "#1c2024",
+        "lineHeight": 1.65,
+        "tracking": 0,
+        "transform": "none",
+        "count": 514,
+        "sample": "Bookmark"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#1c2024",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 12,
+        "sample": "Radix Homepage"
+      },
+      {
+        "size": 13.3,
+        "weight": 400,
+        "color": "#3a5bc7",
+        "lineHeight": 1.65,
+        "tracking": 0,
+        "transform": "none",
+        "count": 125,
+        "sample": "Button"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#1c2024",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 75,
+        "sample": "Documentation"
+      },
+      {
+        "size": 13.3,
+        "weight": 400,
+        "color": "#cb1d63",
+        "lineHeight": 1.65,
+        "tracking": 0,
+        "transform": "none",
+        "count": 94,
+        "sample": "align"
+      },
+      {
+        "size": 13.3,
+        "weight": 400,
+        "color": "#1f2d5c",
+        "lineHeight": 1.65,
+        "tracking": 0,
+        "transform": "none",
+        "count": 74,
+        "sample": "center"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#000613",
+        "lineHeight": 1.14,
+        "tracking": 0.14,
+        "transform": "none",
+        "count": 24,
+        "sample": "Primitives"
+      },
+      {
+        "size": 12.6,
+        "weight": 400,
+        "color": "#000613",
+        "lineHeight": 1.58,
+        "tracking": -0.09,
+        "transform": "none",
+        "count": 10,
+        "sample": "boolean"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#002bb7",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "Edit profile"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#002bb7",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 7,
+        "sample": "View source"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 108.9
+      },
+      {
+        "hex": "#f7f9ff",
+        "h": 225,
+        "s": 100,
+        "l": 98.4,
+        "c": 3.1,
+        "areaPct": 32.8
+      },
+      {
+        "hex": "#0047f1",
+        "h": 222,
+        "s": 100,
+        "l": 47.3,
+        "c": 94.5,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#000033",
+        "h": 240,
+        "s": 100,
+        "l": 10,
+        "c": 20,
+        "areaPct": 0.4
+      },
+      {
+        "hex": "#3e63dd",
+        "h": 226,
+        "s": 70,
+        "l": 55.5,
+        "c": 62.4,
+        "areaPct": 0.2
+      },
+      {
+        "hex": "#0044ff",
+        "h": 224,
+        "s": 100,
+        "l": 50,
+        "c": 100,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#1c2024",
+        "h": 210,
+        "s": 12.5,
+        "l": 12.5,
+        "c": 3.1,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#f5f7ff",
+        "h": 228,
+        "s": 100,
+        "l": 98,
+        "c": 3.9,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#f9f9fb",
+        "h": 240,
+        "s": 20,
+        "l": 98,
+        "c": 0.8,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#8b8d98",
+        "h": 231,
+        "s": 5.9,
+        "l": 57.1,
+        "c": 5.1,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#00c1d1",
+        "h": 185,
+        "s": 100,
+        "l": 41,
+        "c": 82,
+        "areaPct": 0
+      },
+      {
+        "hex": "#ff9b00",
+        "h": 36,
+        "s": 100,
+        "l": 50,
+        "c": 100,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#1c2024",
+        "s": 12.5,
+        "l": 12.5,
+        "c": 3.1,
+        "sharePct": 49.7
+      },
+      {
+        "hex": "#3a5bc7",
+        "s": 55.7,
+        "l": 50.4,
+        "c": 55.3,
+        "sharePct": 14.1
+      },
+      {
+        "hex": "#cb1d63",
+        "s": 75,
+        "l": 45.5,
+        "c": 68.2,
+        "sharePct": 10.9
+      },
+      {
+        "hex": "#000613",
+        "s": 100,
+        "l": 3.7,
+        "c": 7.5,
+        "sharePct": 8.8
+      },
+      {
+        "hex": "#002bb7",
+        "s": 100,
+        "l": 35.9,
+        "c": 71.8,
+        "sharePct": 6.6
+      },
+      {
+        "hex": "#1f2d5c",
+        "s": 49.6,
+        "l": 24.1,
+        "c": 23.9,
+        "sharePct": 6
+      },
+      {
+        "hex": "#00072f",
+        "s": 100,
+        "l": 9.2,
+        "c": 18.4,
+        "sharePct": 1.4
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 1.4
+      },
+      {
+        "hex": "#fcfcfd",
+        "s": 20,
+        "l": 99,
+        "c": 0.4,
+        "sharePct": 0.4
+      },
+      {
+        "hex": "#007491",
+        "s": 100,
+        "l": 28.4,
+        "c": 56.9,
+        "sharePct": 0.2
+      }
+    ],
+    "neutralsTinted": "6/10",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 94.5,
+    "accentAreaPct": 1.2,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 1,
+      "shadowedElements": 29,
+      "borderToShadowRatio": 0.03,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgba(0, 0, 45, 0.09) 0px 1px 0px 0px",
+        "rgba(0, 9, 50, 0.12) 0px -1px 0px 0px inset",
+        "rgba(0, 0, 45, 0.09) 0px 0px 0px 1px inset, rgba(0, 0, 51, 0.06) 0px -2px 1px 0px inset, rgb(62, 99, 221) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.7) 0px 4px 2px -2px inset, rgba(255, 255, 255, 0.7) 0px 2px 1px -1px inset",
+        "rgba(0, 55, 237, 0.33) 0px 0px 0px 1px inset",
+        "rgba(0, 52, 220, 0.447) 0px 0px 0px 1px inset"
+      ],
+      "radiusScale": [
+        999,
+        4,
+        3,
+        8,
+        6,
+        7
+      ],
+      "gradientElements": 4
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 6484,
+    "horizontalBleed": false,
+    "proseMaxWidth": 730,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 253
+      },
+      {
+        "value": "column",
+        "count": 49
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 88,
+      "coveringMostContent": 15,
+      "top": [
+        444,
+        428,
+        24,
+        460,
+        476,
+        12,
+        468,
+        492
+      ]
+    },
+    "density": {
+      "visibleElements": 2106,
+      "perScreenful": 292
+    }
+  }
+}

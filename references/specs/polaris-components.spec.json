@@ -1,0 +1,420 @@
+{
+  "name": "polaris-components",
+  "source": "https://polaris.shopify.com/components",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 99.4,
+    "authoredValuesSampled": 1151,
+    "distinctValues": 19,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 512
+      },
+      {
+        "value": 1,
+        "count": 316
+      },
+      {
+        "value": 0,
+        "count": 228
+      },
+      {
+        "value": 4,
+        "count": 206
+      },
+      {
+        "value": 16,
+        "count": 150
+      },
+      {
+        "value": 12,
+        "count": 114
+      },
+      {
+        "value": 48,
+        "count": 93
+      },
+      {
+        "value": 24,
+        "count": 22
+      },
+      {
+        "value": 2,
+        "count": 17
+      },
+      {
+        "value": 36,
+        "count": 13
+      },
+      {
+        "value": 28,
+        "count": 12
+      },
+      {
+        "value": 32,
+        "count": 10
+      }
+    ],
+    "grouping": {
+      "samples": 88,
+      "byMethod": {
+        "nested": 6,
+        "within": 82
+      },
+      "medianInsideGap": 4,
+      "medianBetweenGap": 15.5,
+      "medianRatio": 3.75,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Inter",
+        "count": 365
+      },
+      {
+        "value": "Shopify Sans",
+        "count": 4
+      }
+    ],
+    "bodySize": 13,
+    "sizes": [
+      10,
+      12.8,
+      13,
+      14,
+      14.4,
+      16,
+      16.8,
+      18,
+      20.3,
+      22.8,
+      28.8,
+      36.5
+    ],
+    "distinctSizes": 12,
+    "weights": [
+      400,
+      450,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 22,
+    "scaleRatios": [
+      1.28,
+      1.016,
+      1.077,
+      1.029,
+      1.111,
+      1.05,
+      1.071,
+      1.128,
+      1.123,
+      1.263,
+      1.267
+    ],
+    "hierarchyCarriedBy": "size",
+    "channelSpread": {
+      "size": 0.3,
+      "weight": 0,
+      "ink": 0
+    },
+    "measureChars": 41,
+    "topRoles": [
+      {
+        "size": 13,
+        "weight": 450,
+        "color": "#434e4e",
+        "lineHeight": 1.55,
+        "tracking": 0,
+        "transform": "none",
+        "count": 90,
+        "sample": "Used for connecting or disconnecting a store to "
+      },
+      {
+        "size": 14.4,
+        "weight": 450,
+        "color": "#434e4e",
+        "lineHeight": 1.55,
+        "tracking": -0.14,
+        "transform": "none",
+        "count": 89,
+        "sample": "Account connection"
+      },
+      {
+        "size": 18,
+        "weight": 700,
+        "color": "#4e52b8",
+        "lineHeight": 1.25,
+        "tracking": -0.09,
+        "transform": "none",
+        "count": 89,
+        "sample": "Account connection"
+      },
+      {
+        "size": 12.8,
+        "weight": 400,
+        "color": "#434e4e",
+        "lineHeight": 1.55,
+        "tracking": -0.14,
+        "transform": "none",
+        "count": 44,
+        "sample": "Deprecated"
+      },
+      {
+        "size": 14.4,
+        "weight": 450,
+        "color": "#1c1e1e",
+        "lineHeight": 1.55,
+        "tracking": -0.14,
+        "transform": "none",
+        "count": 14,
+        "sample": "Search"
+      },
+      {
+        "size": 20.3,
+        "weight": 450,
+        "color": "#ffffff",
+        "lineHeight": 1.6,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Polaris Web Components are now the default way t"
+      },
+      {
+        "size": 10,
+        "weight": 450,
+        "color": "#ffffff",
+        "lineHeight": 1.2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "We and our partners use cookies and other techno"
+      },
+      {
+        "size": 22.8,
+        "weight": 700,
+        "color": "#1c1e1e",
+        "lineHeight": 1.25,
+        "tracking": -0.34,
+        "transform": "none",
+        "count": 12,
+        "sample": "Actions"
+      },
+      {
+        "size": 16,
+        "weight": 450,
+        "color": "#1c1e1e",
+        "lineHeight": 1.55,
+        "tracking": -0.04,
+        "transform": "none",
+        "count": 11,
+        "sample": "Getting started"
+      },
+      {
+        "size": 18,
+        "weight": 500,
+        "color": "#434e4e",
+        "lineHeight": 1.55,
+        "tracking": -0.18,
+        "transform": "none",
+        "count": 1,
+        "sample": "Components are the reusable building blocks for "
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#f1f1f1",
+        "h": 0,
+        "s": 0,
+        "l": 94.5,
+        "c": 0,
+        "areaPct": 25.6
+      },
+      {
+        "hex": "#f9f9f9",
+        "h": 0,
+        "s": 0,
+        "l": 97.6,
+        "c": 0,
+        "areaPct": 1.8
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 1.2
+      },
+      {
+        "hex": "#ffeceb",
+        "h": 3,
+        "s": 100,
+        "l": 96.1,
+        "c": 7.8,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#000000",
+        "h": 0,
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#d4f5e7",
+        "h": 155,
+        "s": 62.3,
+        "l": 89.6,
+        "c": 12.9,
+        "areaPct": 0.1
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#434e4e",
+        "s": 7.6,
+        "l": 28.4,
+        "c": 4.3,
+        "sharePct": 86.9
+      },
+      {
+        "hex": "#4e52b8",
+        "s": 42.7,
+        "l": 51.4,
+        "c": 41.6,
+        "sharePct": 6.2
+      },
+      {
+        "hex": "#1c1e1e",
+        "s": 3.4,
+        "l": 11.4,
+        "c": 0.8,
+        "sharePct": 3.2
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 2.6
+      },
+      {
+        "hex": "#00936f",
+        "s": 100,
+        "l": 28.8,
+        "c": 57.6,
+        "sharePct": 0.3
+      },
+      {
+        "hex": "#767676",
+        "s": 0,
+        "l": 46.3,
+        "c": 0,
+        "sharePct": 0.3
+      },
+      {
+        "hex": "#303030",
+        "s": 0,
+        "l": 18.8,
+        "c": 0,
+        "sharePct": 0.2
+      },
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 0.2
+      },
+      {
+        "hex": "#008060",
+        "s": 100,
+        "l": 25.1,
+        "c": 50.2,
+        "sharePct": 0.1
+      }
+    ],
+    "neutralsTinted": "2/11",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 7.8,
+    "accentAreaPct": 0.1,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 96,
+      "shadowedElements": 4,
+      "borderToShadowRatio": 24,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgb(233, 233, 233) 0px 1px 0px 0px inset",
+        "rgba(0, 0, 0, 0.03) 0px 2px 5px 0px, rgba(0, 0, 0, 0.03) 0px 2px 50px 0px",
+        "rgba(0, 0, 0, 0.075) 0px -2px 0px 0px inset",
+        "rgba(0, 0, 0, 0.25) 0px 10px 50px 0px, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px"
+      ],
+      "radiusScale": [
+        8,
+        10,
+        14,
+        50,
+        1000,
+        100
+      ],
+      "gradientElements": 1
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 9504,
+    "horizontalBleed": false,
+    "proseMaxWidth": 836,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "4-col: px px px px",
+        "count": 12
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 355
+      },
+      {
+        "value": "column",
+        "count": 5
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 81,
+      "coveringMostContent": 9,
+      "top": [
+        6,
+        312,
+        592,
+        872,
+        1152,
+        54,
+        304,
+        314
+      ]
+    },
+    "density": {
+      "visibleElements": 1298,
+      "perScreenful": 123
+    }
+  }
+}

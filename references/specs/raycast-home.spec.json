@@ -1,0 +1,475 @@
+{
+  "name": "raycast-home",
+  "source": "https://www.raycast.com/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 83.6,
+    "authoredValuesSampled": 2189,
+    "distinctValues": 36,
+    "topSteps": [
+      {
+        "value": 15,
+        "count": 636
+      },
+      {
+        "value": 8,
+        "count": 556
+      },
+      {
+        "value": 24,
+        "count": 306
+      },
+      {
+        "value": 12,
+        "count": 159
+      },
+      {
+        "value": 10,
+        "count": 159
+      },
+      {
+        "value": 16,
+        "count": 139
+      },
+      {
+        "value": 4,
+        "count": 48
+      },
+      {
+        "value": 3,
+        "count": 36
+      },
+      {
+        "value": 32,
+        "count": 29
+      },
+      {
+        "value": 50,
+        "count": 25
+      },
+      {
+        "value": 40,
+        "count": 23
+      },
+      {
+        "value": 20,
+        "count": 23
+      }
+    ],
+    "grouping": {
+      "samples": 49,
+      "byMethod": {
+        "nested": 45,
+        "within": 4
+      },
+      "medianInsideGap": 10,
+      "medianBetweenGap": 12,
+      "medianRatio": 2,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Inter",
+        "count": 499
+      },
+      {
+        "value": "SF Pro Text",
+        "count": 188
+      },
+      {
+        "value": "GeistMono",
+        "count": 21
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      16,
+      18,
+      20,
+      22,
+      23.8,
+      24,
+      32,
+      56,
+      64
+    ],
+    "distinctSizes": 14,
+    "weights": [
+      300,
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 35,
+    "scaleRatios": [
+      1.1,
+      1.091,
+      1.083,
+      1.077,
+      1.143,
+      1.125,
+      1.111,
+      1.1,
+      1.082,
+      1.008,
+      1.333,
+      1.75,
+      1.143
+    ],
+    "hierarchyCarriedBy": "mixed (size+ink)",
+    "channelSpread": {
+      "size": 0.62,
+      "weight": 0.33,
+      "ink": 0.58
+    },
+    "measureChars": 45,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#9c9c9d",
+        "lineHeight": null,
+        "tracking": 0.2,
+        "transform": "none",
+        "count": 87,
+        "sample": "Store"
+      },
+      {
+        "size": 16,
+        "weight": 500,
+        "color": "#ffffff",
+        "lineHeight": 1.6,
+        "tracking": 0.2,
+        "transform": "none",
+        "count": 47,
+        "sample": "Remember Everything."
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.15,
+        "tracking": 0.1,
+        "transform": "none",
+        "count": 72,
+        "sample": "All Types"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#ffffff",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 18,
+        "sample": "Introducing Raycast Focus"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#6a6b6c",
+        "lineHeight": 1.6,
+        "tracking": 0.2,
+        "transform": "none",
+        "count": 10,
+        "sample": "Engineering"
+      },
+      {
+        "size": 20,
+        "weight": 500,
+        "color": "#6a6b6c",
+        "lineHeight": null,
+        "tracking": 0.2,
+        "transform": "none",
+        "count": 9,
+        "sample": "One interface, everything you need."
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#6a6b6c",
+        "lineHeight": null,
+        "tracking": 0.3,
+        "transform": "none",
+        "count": 24,
+        "sample": "CEO, Vercel"
+      },
+      {
+        "size": 18,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": null,
+        "tracking": 0.2,
+        "transform": "none",
+        "count": 21,
+        "sample": "A collection of powerful productivity tools all "
+      },
+      {
+        "size": 20,
+        "weight": 500,
+        "color": "#ffffff",
+        "lineHeight": null,
+        "tracking": 0.2,
+        "transform": "none",
+        "count": 11,
+        "sample": "Take shortcuts, not detours."
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#ffffff",
+        "lineHeight": null,
+        "tracking": 0.3,
+        "transform": "none",
+        "count": 24,
+        "sample": "Guillermo Rauch"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#07080a",
+    "backgrounds": [
+      {
+        "hex": "#07080a",
+        "h": 220,
+        "s": 17.6,
+        "l": 3.3,
+        "c": 1.2,
+        "areaPct": 8.8
+      },
+      {
+        "hex": "#000000",
+        "h": 0,
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "areaPct": 8
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 3.5
+      },
+      {
+        "hex": "#9dbad8",
+        "h": 211,
+        "s": 43.1,
+        "l": 73.1,
+        "c": 23.1,
+        "areaPct": 3
+      },
+      {
+        "hex": "#434345",
+        "h": 240,
+        "s": 1.5,
+        "l": 26.7,
+        "c": 0.8,
+        "areaPct": 2.4
+      },
+      {
+        "hex": "#111214",
+        "h": 220,
+        "s": 8.1,
+        "l": 7.3,
+        "c": 1.2,
+        "areaPct": 0.9
+      },
+      {
+        "hex": "#e6e6e6",
+        "h": 0,
+        "s": 0,
+        "l": 90.2,
+        "c": 0,
+        "areaPct": 0.2
+      },
+      {
+        "hex": "#08090c",
+        "h": 225,
+        "s": 20,
+        "l": 3.9,
+        "c": 1.6,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#1b1c1e",
+        "h": 220,
+        "s": 5.3,
+        "l": 11.2,
+        "c": 1.2,
+        "areaPct": 0
+      },
+      {
+        "hex": "#452324",
+        "h": 358,
+        "s": 32.7,
+        "l": 20.4,
+        "c": 13.3,
+        "areaPct": 0
+      },
+      {
+        "hex": "#130d0e",
+        "h": 350,
+        "s": 18.8,
+        "l": 6.3,
+        "c": 2.4,
+        "areaPct": 0
+      },
+      {
+        "hex": "#ff6363",
+        "h": 0,
+        "s": 100,
+        "l": 69.4,
+        "c": 61.2,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 56.7
+      },
+      {
+        "hex": "#9c9c9d",
+        "s": 0.5,
+        "l": 61.4,
+        "c": 0.4,
+        "sharePct": 18.9
+      },
+      {
+        "hex": "#6a6b6c",
+        "s": 0.9,
+        "l": 42,
+        "c": 0.8,
+        "sharePct": 16
+      },
+      {
+        "hex": "#434345",
+        "s": 1.5,
+        "l": 26.7,
+        "c": 0.8,
+        "sharePct": 6.6
+      },
+      {
+        "hex": "#2f3031",
+        "s": 2.1,
+        "l": 18.8,
+        "c": 0.8,
+        "sharePct": 1.2
+      },
+      {
+        "hex": "#8cd6ff",
+        "s": 100,
+        "l": 77.5,
+        "c": 45.1,
+        "sharePct": 0.6
+      },
+      {
+        "hex": "#ff6363",
+        "s": 100,
+        "l": 69.4,
+        "c": 61.2,
+        "sharePct": 0
+      }
+    ],
+    "neutralsTinted": "5/14",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 23.1,
+    "accentAreaPct": 3,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 108,
+      "shadowedElements": 322,
+      "borderToShadowRatio": 0.34,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgba(255, 255, 255, 0.15) 0px 1px 1px 0px inset",
+        "rgba(0, 0, 0, 0.5) 0px 0px 0px 2px, rgba(255, 255, 255, 0.19) 0px 0px 14px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0.4px 0px inset, rgb(255, 255, 255) 0px 1px 0.4px 0px inset",
+        "rgba(245, 48, 107, 0.1) 0px 0px 20px 0px",
+        "rgba(255, 255, 255, 0.03) 0px 0px 40px 20px, rgba(255, 255, 255, 0.3) 0px 0.5px 0px 0px inset",
+        "rgba(255, 255, 255, 0.19) 0px 0px 2px 0px, rgba(255, 255, 255, 0.1) 0px 0.5px 0px 0px inset"
+      ],
+      "radiusScale": [
+        11,
+        8,
+        100,
+        6,
+        12,
+        20
+      ],
+      "gradientElements": 234
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 15626,
+    "horizontalBleed": false,
+    "proseMaxWidth": 430,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 38
+      },
+      {
+        "value": "5-col: px px px px px",
+        "count": 2
+      },
+      {
+        "value": "3-col: px px px",
+        "count": 2
+      },
+      {
+        "value": "6-col: px px px px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 773
+      },
+      {
+        "value": "column",
+        "count": 53
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 626,
+      "coveringMostContent": 295,
+      "top": [
+        392,
+        118,
+        2722,
+        142,
+        212,
+        3944,
+        188,
+        24
+      ]
+    },
+    "density": {
+      "visibleElements": 2459,
+      "perScreenful": 142
+    }
+  }
+}

@@ -1,0 +1,373 @@
+{
+  "name": "backstage-storybook",
+  "source": "https://backstage.io/storybook/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 82.9,
+    "authoredValuesSampled": 1230,
+    "distinctValues": 16,
+    "topSteps": [
+      {
+        "value": 6,
+        "count": 678
+      },
+      {
+        "value": 8,
+        "count": 133
+      },
+      {
+        "value": 4,
+        "count": 133
+      },
+      {
+        "value": 2,
+        "count": 132
+      },
+      {
+        "value": 5,
+        "count": 123
+      },
+      {
+        "value": 7,
+        "count": 52
+      },
+      {
+        "value": 10,
+        "count": 35
+      },
+      {
+        "value": 15,
+        "count": 33
+      },
+      {
+        "value": 16,
+        "count": 14
+      },
+      {
+        "value": 20,
+        "count": 9
+      },
+      {
+        "value": 12,
+        "count": 8
+      },
+      {
+        "value": 40,
+        "count": 7
+      }
+    ],
+    "grouping": {
+      "samples": 2,
+      "byMethod": {
+        "nested": 1,
+        "within": 1
+      },
+      "medianInsideGap": 2,
+      "medianBetweenGap": 16,
+      "medianRatio": 10,
+      "confidence": "low — too few groups to generalise",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Nunito Sans",
+        "count": 160
+      },
+      {
+        "value": "ui-monospace",
+        "count": 4
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      11,
+      12,
+      13,
+      14,
+      16,
+      24,
+      32
+    ],
+    "distinctSizes": 7,
+    "weights": [
+      400,
+      700
+    ],
+    "roleCount": 18,
+    "scaleRatios": [
+      1.091,
+      1.083,
+      1.077,
+      1.143,
+      1.5,
+      1.333
+    ],
+    "hierarchyCarriedBy": "weight",
+    "channelSpread": {
+      "size": 0.11,
+      "weight": 0.5,
+      "ink": 0.2
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#2e3338",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 115,
+        "sample": "Accordion"
+      },
+      {
+        "size": 11,
+        "weight": 700,
+        "color": "#5c6570",
+        "lineHeight": 1,
+        "tracking": 1.76,
+        "transform": "uppercase",
+        "count": 12,
+        "sample": "Backstage UI"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#2e3338",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Component test is rendering."
+      },
+      {
+        "size": 13,
+        "weight": 700,
+        "color": "#5c6570",
+        "lineHeight": 0.92,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "Actions"
+      },
+      {
+        "size": 24,
+        "weight": 400,
+        "color": "#2e3338",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Stories"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#2e3338",
+        "lineHeight": 1.08,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "union"
+      },
+      {
+        "size": 13,
+        "weight": 700,
+        "color": "#2e3338",
+        "lineHeight": 1.46,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "children"
+      },
+      {
+        "size": 12,
+        "weight": 700,
+        "color": "#2e3338",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Skip to sidebar"
+      },
+      {
+        "size": 12,
+        "weight": 700,
+        "color": "#0055b8",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Light"
+      },
+      {
+        "size": 32,
+        "weight": 400,
+        "color": "#2e3338",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Storybook"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#f6f9fc",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 89.7
+      },
+      {
+        "hex": "#f6f9fc",
+        "h": 210,
+        "s": 50,
+        "l": 97.6,
+        "c": 2.4,
+        "areaPct": 35.1
+      },
+      {
+        "hex": "#006deb",
+        "h": 212,
+        "s": 100,
+        "l": 46.1,
+        "c": 92.2,
+        "areaPct": 0.6
+      },
+      {
+        "hex": "#0071f1",
+        "h": 212,
+        "s": 100,
+        "l": 47.3,
+        "c": 94.5,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#284a72",
+        "h": 212,
+        "s": 48.1,
+        "l": 30.2,
+        "c": 29,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#2e3338",
+        "s": 9.8,
+        "l": 20,
+        "c": 3.9,
+        "sharePct": 87.4
+      },
+      {
+        "hex": "#5c6570",
+        "s": 9.8,
+        "l": 40,
+        "c": 7.8,
+        "sharePct": 10.7
+      },
+      {
+        "hex": "#0055b8",
+        "s": 100,
+        "l": 36.1,
+        "c": 72.2,
+        "sharePct": 0.9
+      },
+      {
+        "hex": "#006deb",
+        "s": 100,
+        "l": 46.1,
+        "c": 92.2,
+        "sharePct": 0.5
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 0.4
+      },
+      {
+        "hex": "#ff4400",
+        "s": 100,
+        "l": 50,
+        "c": 100,
+        "sharePct": 0.1
+      }
+    ],
+    "neutralsTinted": "3/5",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 92.2,
+    "accentAreaPct": 0.9,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 11,
+      "shadowedElements": 4,
+      "borderToShadowRatio": 2.75,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgb(217, 229, 242) 0px 0px 0px 1px inset",
+        "rgba(38, 74, 115, 0.15) 0px -1px 0px 0px inset"
+      ],
+      "radiusScale": [
+        4,
+        3,
+        6
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "3-col: px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 548
+      },
+      {
+        "value": "column",
+        "count": 9
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 37,
+      "coveringMostContent": 3,
+      "top": [
+        12,
+        300,
+        260,
+        0,
+        600,
+        586,
+        984,
+        1156
+      ]
+    },
+    "density": {
+      "visibleElements": 1189,
+      "perScreenful": 1189
+    }
+  }
+}

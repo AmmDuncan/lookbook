@@ -1,0 +1,376 @@
+{
+  "name": "excalidraw-app",
+  "source": "https://excalidraw.com/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 93.8,
+    "authoredValuesSampled": 97,
+    "distinctValues": 14,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 22
+      },
+      {
+        "value": 10,
+        "count": 22
+      },
+      {
+        "value": 12,
+        "count": 19
+      },
+      {
+        "value": 4,
+        "count": 15
+      },
+      {
+        "value": 16,
+        "count": 6
+      },
+      {
+        "value": 1,
+        "count": 4
+      },
+      {
+        "value": 3,
+        "count": 4
+      },
+      {
+        "value": 20,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 9,
+      "byMethod": {
+        "nested": 5,
+        "within": 4
+      },
+      "medianInsideGap": 8,
+      "medianBetweenGap": 31.5,
+      "medianRatio": 15.75,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Assistant",
+        "count": 18
+      },
+      {
+        "value": "Arial",
+        "count": 5
+      },
+      {
+        "value": "Excalifont",
+        "count": 4
+      },
+      {
+        "value": "monospace",
+        "count": 2
+      }
+    ],
+    "bodySize": 18,
+    "sizes": [
+      10,
+      12,
+      13.3,
+      14,
+      16,
+      18,
+      24,
+      32
+    ],
+    "distinctSizes": 8,
+    "weights": [
+      400,
+      500,
+      700
+    ],
+    "roleCount": 13,
+    "scaleRatios": [
+      1.2,
+      1.108,
+      1.053,
+      1.143,
+      1.125,
+      1.333,
+      1.333
+    ],
+    "hierarchyCarriedBy": "mixed (ink+size)",
+    "channelSpread": {
+      "size": 0.58,
+      "weight": 0.17,
+      "ink": 0.61
+    },
+    "measureChars": 51,
+    "topRoles": [
+      {
+        "size": 18,
+        "weight": 400,
+        "color": "#b8b8b8",
+        "lineHeight": 1.2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Your drawings are saved in your browser's storag"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#b8b8b8",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Export, preferences, languages, ..."
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#b8b8b8",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Cmd+O"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#999999",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Open"
+      },
+      {
+        "size": 10,
+        "weight": 400,
+        "color": "#b8b8b8",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "Scroll wheel"
+      },
+      {
+        "size": 24,
+        "weight": 700,
+        "color": "#1b1b1f",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Shapes"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#1b1b1f",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Drawing canvas"
+      },
+      {
+        "size": 13.3,
+        "weight": 500,
+        "color": "#1b1b1f",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Excalidraw+"
+      },
+      {
+        "size": 32,
+        "weight": 700,
+        "color": "#000000",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Excalidraw"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#999999",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Sign up"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 2.4
+      },
+      {
+        "hex": "#ececf4",
+        "h": 240,
+        "s": 26.7,
+        "l": 94.1,
+        "c": 3.1,
+        "areaPct": 1.1
+      },
+      {
+        "hex": "#6965db",
+        "h": 242,
+        "s": 62.1,
+        "l": 62.7,
+        "c": 46.3,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#e0dfff",
+        "h": 242,
+        "s": 100,
+        "l": 93.7,
+        "c": 12.5,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#f1f0ff",
+        "h": 244,
+        "s": 100,
+        "l": 97.1,
+        "c": 5.9,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#b8b8b8",
+        "s": 0,
+        "l": 72.2,
+        "c": 0,
+        "sharePct": 76
+      },
+      {
+        "hex": "#1b1b1f",
+        "s": 6.9,
+        "l": 11.4,
+        "c": 1.6,
+        "sharePct": 11.7
+      },
+      {
+        "hex": "#999999",
+        "s": 0,
+        "l": 60,
+        "c": 0,
+        "sharePct": 8.6
+      },
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 2.4
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 1.2
+      },
+      {
+        "hex": "#030064",
+        "s": 100,
+        "l": 19.6,
+        "c": 39.2,
+        "sharePct": 0.2
+      }
+    ],
+    "neutralsTinted": "3/8",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 3.1,
+    "accentAreaPct": 0.2,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 7,
+      "shadowedElements": 8,
+      "borderToShadowRatio": 0.88,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgb(255, 255, 255) 0px 0px 0px 1px",
+        "rgba(0, 0, 0, 0.17) 0px 0px 1px 0px, rgba(0, 0, 0, 0.08) 0px 0px 3px 0px, rgba(0, 0, 0, 0.05) 0px 7px 14px 0px"
+      ],
+      "radiusScale": [
+        8,
+        6,
+        4
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": 455,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "3-col: px px px",
+        "count": 6
+      },
+      {
+        "value": "15-col: px px px px px px px px px px px px px px px",
+        "count": 1
+      },
+      {
+        "value": "2-col: px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 64
+      },
+      {
+        "value": "column",
+        "count": 3
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 43,
+      "coveringMostContent": 26,
+      "top": [
+        16,
+        0,
+        450,
+        1388,
+        570,
+        158,
+        580,
+        194
+      ]
+    },
+    "density": {
+      "visibleElements": 247,
+      "perScreenful": 247
+    }
+  }
+}

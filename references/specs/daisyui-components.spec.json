@@ -1,0 +1,390 @@
+{
+  "name": "daisyui-components",
+  "source": "https://daisyui.com/components/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 87,
+    "authoredValuesSampled": 1349,
+    "distinctValues": 15,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 510
+      },
+      {
+        "value": 12,
+        "count": 348
+      },
+      {
+        "value": 16,
+        "count": 278
+      },
+      {
+        "value": 6,
+        "count": 158
+      },
+      {
+        "value": 4,
+        "count": 24
+      },
+      {
+        "value": 7,
+        "count": 16
+      },
+      {
+        "value": 24,
+        "count": 6
+      },
+      {
+        "value": 1,
+        "count": 3
+      },
+      {
+        "value": 32,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 6,
+      "byMethod": {
+        "nested": 6,
+        "within": 0
+      },
+      "medianInsideGap": 6,
+      "medianBetweenGap": 12,
+      "medianRatio": 1.95,
+      "confidence": "medium",
+      "verdict": "space encodes grouping"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "ui-sans-serif",
+        "count": 221
+      },
+      {
+        "value": "ui-monospace",
+        "count": 14
+      },
+      {
+        "value": "system-ui",
+        "count": 2
+      },
+      {
+        "value": "Outfit",
+        "count": 1
+      }
+    ],
+    "bodySize": 12,
+    "sizes": [
+      10,
+      11,
+      12,
+      14,
+      16,
+      36
+    ],
+    "distinctSizes": 6,
+    "weights": [
+      400,
+      600,
+      800
+    ],
+    "roleCount": 12,
+    "scaleRatios": [
+      1.1,
+      1.091,
+      1.167,
+      1.143,
+      2.25
+    ],
+    "hierarchyCarriedBy": "size",
+    "channelSpread": {
+      "size": 0.22,
+      "weight": 0,
+      "ink": 0
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#18181b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 71,
+        "sample": "Search…"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#18181b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 138,
+        "sample": "Components"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#19191b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "Components"
+      },
+      {
+        "size": 10,
+        "weight": 400,
+        "color": "#18181b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "ads via Carbon"
+      },
+      {
+        "size": 11,
+        "weight": 400,
+        "color": "#18181b",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "daisyUI MCP v1.5: Generate unique UIs now!"
+      },
+      {
+        "size": 10,
+        "weight": 400,
+        "color": "#18181c",
+        "lineHeight": 1.5,
+        "tracking": 0.25,
+        "transform": "none",
+        "count": 1,
+        "sample": "Beautiful chart integrations"
+      },
+      {
+        "size": 36,
+        "weight": 800,
+        "color": "#18181b",
+        "lineHeight": 1.11,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "All daisyUI components"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#18181c",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Docs"
+      },
+      {
+        "size": 11,
+        "weight": 600,
+        "color": "#18181c",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "daisyUI Charts"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#18181b",
+        "lineHeight": 1.75,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "68 components"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 113.2
+      },
+      {
+        "hex": "#eeeeee",
+        "h": 0,
+        "s": 0,
+        "l": 93.3,
+        "c": 0,
+        "areaPct": 32.4
+      },
+      {
+        "hex": "#f8f8f8",
+        "h": 0,
+        "s": 0,
+        "l": 97.3,
+        "c": 0,
+        "areaPct": 0.8
+      },
+      {
+        "hex": "#18181b",
+        "h": 240,
+        "s": 5.9,
+        "l": 10,
+        "c": 1.2,
+        "areaPct": 0
+      },
+      {
+        "hex": "#09090b",
+        "h": 240,
+        "s": 10,
+        "l": 3.9,
+        "c": 0.8,
+        "areaPct": 0
+      },
+      {
+        "hex": "#422ad5",
+        "h": 248,
+        "s": 67.1,
+        "l": 50,
+        "c": 67.1,
+        "areaPct": 0
+      },
+      {
+        "hex": "#f43098",
+        "h": 328,
+        "s": 89.9,
+        "l": 57.3,
+        "c": 76.9,
+        "areaPct": 0
+      },
+      {
+        "hex": "#00d3bb",
+        "h": 173,
+        "s": 100,
+        "l": 41.4,
+        "c": 82.7,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#18181b",
+        "s": 5.9,
+        "l": 10,
+        "c": 1.2,
+        "sharePct": 98.2
+      },
+      {
+        "hex": "#19191b",
+        "s": 3.8,
+        "l": 10.2,
+        "c": 0.8,
+        "sharePct": 0.9
+      },
+      {
+        "hex": "#18181c",
+        "s": 7.7,
+        "l": 10.2,
+        "c": 1.6,
+        "sharePct": 0.8
+      },
+      {
+        "hex": "#17171b",
+        "s": 8,
+        "l": 9.8,
+        "c": 1.6,
+        "sharePct": 0.1
+      },
+      {
+        "hex": "#e4e4e7",
+        "s": 5.9,
+        "l": 90,
+        "c": 1.2,
+        "sharePct": 0
+      }
+    ],
+    "neutralsTinted": "5/10",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 0,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 86,
+      "shadowedElements": 4,
+      "borderToShadowRatio": 21.5,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "oklch(0 0 0 / 0) 0px 0px 0px 0px inset, oklch(0 0 0 / 0) 0px 0px 0px 0px"
+      ],
+      "radiusScale": [
+        8,
+        4,
+        33554400,
+        6
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 5334,
+    "horizontalBleed": false,
+    "proseMaxWidth": 1,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 10
+      },
+      {
+        "value": "3-col: px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "column",
+        "count": 222
+      },
+      {
+        "value": "row",
+        "count": 182
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 45,
+      "coveringMostContent": 9,
+      "top": [
+        16,
+        368,
+        672,
+        976,
+        28,
+        688,
+        380,
+        384
+      ]
+    },
+    "density": {
+      "visibleElements": 832,
+      "perScreenful": 140
+    }
+  }
+}

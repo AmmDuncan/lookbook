@@ -1,0 +1,218 @@
+{
+  "name": "ontario-components",
+  "source": "https://designsystem.ontario.ca/components/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 8,
+    "onScalePct": 92,
+    "authoredValuesSampled": 25,
+    "distinctValues": 7,
+    "topSteps": [
+      {
+        "value": 16,
+        "count": 8
+      },
+      {
+        "value": 24,
+        "count": 8
+      },
+      {
+        "value": 32,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 4,
+      "byMethod": {
+        "nested": 2,
+        "within": 2
+      },
+      "medianInsideGap": 12.25,
+      "medianBetweenGap": 31.5,
+      "medianRatio": 1.92,
+      "confidence": "medium",
+      "verdict": "space encodes grouping"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Open Sans",
+        "count": 5
+      },
+      {
+        "value": "Raleway Modified",
+        "count": 4
+      }
+    ],
+    "bodySize": 16,
+    "sizes": [
+      16,
+      22,
+      24,
+      33,
+      40
+    ],
+    "distinctSizes": 5,
+    "weights": [
+      400,
+      700
+    ],
+    "roleCount": 6,
+    "scaleRatios": [
+      1.375,
+      1.091,
+      1.375,
+      1.212
+    ],
+    "hierarchyCarriedBy": "mixed (size+ink)",
+    "channelSpread": {
+      "size": 1.04,
+      "weight": 0.5,
+      "ink": 0.9
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#1a1a1a",
+        "lineHeight": 1.6,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Every element and style available in the design "
+      },
+      {
+        "size": 22,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.6,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Design and coding standards for building Governm"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#0066cc",
+        "lineHeight": 1.6,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "View all components"
+      },
+      {
+        "size": 33,
+        "weight": 700,
+        "color": "#1a1a1a",
+        "lineHeight": 1.33,
+        "tracking": 0.32,
+        "transform": "none",
+        "count": 1,
+        "sample": "Using the design system"
+      },
+      {
+        "size": 24,
+        "weight": 700,
+        "color": "#1a1a1a",
+        "lineHeight": 1.5,
+        "tracking": 0.5,
+        "transform": "none",
+        "count": 2,
+        "sample": "Components"
+      },
+      {
+        "size": 40,
+        "weight": 700,
+        "color": "#ffffff",
+        "lineHeight": 1.2,
+        "tracking": 0.64,
+        "transform": "none",
+        "count": 1,
+        "sample": "Ontario Design System"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#367a76",
+        "h": 176,
+        "s": 38.6,
+        "l": 34.5,
+        "c": 26.7,
+        "areaPct": 23.6
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#1a1a1a",
+        "s": 0,
+        "l": 10.2,
+        "c": 0,
+        "sharePct": 55.2
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 31.3
+      },
+      {
+        "hex": "#0066cc",
+        "s": 100,
+        "l": 40,
+        "c": 80,
+        "sharePct": 13.5
+      }
+    ],
+    "neutralsTinted": "0/2",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 26.7,
+    "accentAreaPct": 23.6,
+    "accentVerdict": "accent is present",
+    "depth": {
+      "borderedElements": 0,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 2023,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [],
+    "flexDirections": [],
+    "alignmentEdges": {
+      "distinct": 7,
+      "coveringMostContent": 4,
+      "top": [
+        0,
+        160,
+        144,
+        736,
+        544,
+        928,
+        720
+      ]
+    },
+    "density": {
+      "visibleElements": 32,
+      "perScreenful": 14
+    }
+  }
+}

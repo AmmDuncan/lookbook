@@ -1,0 +1,330 @@
+{
+  "name": "nhs-components",
+  "source": "https://service-manual.nhs.uk/design-system/components",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 97.4,
+    "authoredValuesSampled": 189,
+    "distinctValues": 13,
+    "topSteps": [
+      {
+        "value": 4,
+        "count": 80
+      },
+      {
+        "value": 8,
+        "count": 42
+      },
+      {
+        "value": 16,
+        "count": 32
+      },
+      {
+        "value": 24,
+        "count": 15
+      },
+      {
+        "value": 2,
+        "count": 10
+      },
+      {
+        "value": 12,
+        "count": 9
+      }
+    ],
+    "grouping": {
+      "samples": 4,
+      "byMethod": {
+        "nested": 3,
+        "within": 1
+      },
+      "medianInsideGap": 8,
+      "medianBetweenGap": 28,
+      "medianRatio": 1.92,
+      "confidence": "medium",
+      "verdict": "space encodes grouping"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Frutiger W01",
+        "count": 81
+      }
+    ],
+    "bodySize": 19,
+    "sizes": [
+      16,
+      19,
+      22,
+      26,
+      36,
+      48
+    ],
+    "distinctSizes": 6,
+    "weights": [
+      400,
+      600
+    ],
+    "roleCount": 14,
+    "scaleRatios": [
+      1.188,
+      1.158,
+      1.182,
+      1.385,
+      1.333
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.25,
+      "weight": 0,
+      "ink": 0.84
+    },
+    "measureChars": 116,
+    "topRoles": [
+      {
+        "size": 19,
+        "weight": 400,
+        "color": "#212b32",
+        "lineHeight": 1.47,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "We've put some small files called cookies on you"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#005eb8",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 41,
+        "sample": "Skip to main content"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#212b32",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Maintained by the at NHS England. If you've got "
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#003087",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 9,
+        "sample": "Accessibility statement"
+      },
+      {
+        "size": 19,
+        "weight": 400,
+        "color": "#005eb8",
+        "lineHeight": 1.47,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "read more about our cookies"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "NHS service standard"
+      },
+      {
+        "size": 19,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Digital service manual"
+      },
+      {
+        "size": 19,
+        "weight": 600,
+        "color": "#ffffff",
+        "lineHeight": 1.47,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "I'm OK with analytics cookies"
+      },
+      {
+        "size": 26,
+        "weight": 400,
+        "color": "#212b32",
+        "lineHeight": 1.23,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Components are reusable elements of the user int"
+      },
+      {
+        "size": 19,
+        "weight": 600,
+        "color": "#4c6272",
+        "lineHeight": 1.25,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Form elements"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#f0f4f5",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 15
+      },
+      {
+        "hex": "#d8dde0",
+        "h": 202,
+        "s": 11.4,
+        "l": 86.3,
+        "c": 3.1,
+        "areaPct": 10.5
+      },
+      {
+        "hex": "#005eb8",
+        "h": 209,
+        "s": 100,
+        "l": 36.1,
+        "c": 72.2,
+        "areaPct": 7.8
+      },
+      {
+        "hex": "#007f3b",
+        "h": 148,
+        "s": 100,
+        "l": 24.9,
+        "c": 49.8,
+        "areaPct": 1
+      },
+      {
+        "hex": "#edf4fa",
+        "h": 208,
+        "s": 56.5,
+        "l": 95.5,
+        "c": 5.1,
+        "areaPct": 0.1
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#212b32",
+        "s": 20.5,
+        "l": 16.3,
+        "c": 6.7,
+        "sharePct": 51.5
+      },
+      {
+        "hex": "#005eb8",
+        "s": 100,
+        "l": 36.1,
+        "c": 72.2,
+        "sharePct": 26.8
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 11
+      },
+      {
+        "hex": "#003087",
+        "s": 100,
+        "l": 26.5,
+        "c": 52.9,
+        "sharePct": 7.9
+      },
+      {
+        "hex": "#4c6272",
+        "s": 20,
+        "l": 37.3,
+        "c": 14.9,
+        "sharePct": 2.7
+      }
+    ],
+    "neutralsTinted": "3/5",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 72.2,
+    "accentAreaPct": 8.8,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 5,
+      "shadowedElements": 4,
+      "borderToShadowRatio": 1.25,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgb(33, 43, 50) 0px 0px 4px 0px",
+        "rgb(0, 64, 30) 0px 4px 0px 0px",
+        "rgb(51, 126, 198) 0px -1px 0px 0px"
+      ],
+      "radiusScale": [
+        4
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 2358,
+    "horizontalBleed": false,
+    "proseMaxWidth": 1100,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 8
+      },
+      {
+        "value": "column",
+        "count": 2
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 32,
+      "coveringMostContent": 5,
+      "top": [
+        170,
+        1034,
+        0,
+        454,
+        154,
+        812,
+        494,
+        376
+      ]
+    },
+    "density": {
+      "visibleElements": 179,
+      "perScreenful": 68
+    }
+  }
+}

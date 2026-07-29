@@ -1,0 +1,520 @@
+{
+  "name": "attio-home",
+  "source": "https://attio.com/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 90.4,
+    "authoredValuesSampled": 1979,
+    "distinctValues": 40,
+    "topSteps": [
+      {
+        "value": 4,
+        "count": 458
+      },
+      {
+        "value": 6,
+        "count": 289
+      },
+      {
+        "value": 8,
+        "count": 275
+      },
+      {
+        "value": 10,
+        "count": 186
+      },
+      {
+        "value": 1,
+        "count": 167
+      },
+      {
+        "value": 12,
+        "count": 150
+      },
+      {
+        "value": 24,
+        "count": 122
+      },
+      {
+        "value": 32,
+        "count": 100
+      },
+      {
+        "value": 2,
+        "count": 97
+      },
+      {
+        "value": 7,
+        "count": 91
+      },
+      {
+        "value": 5,
+        "count": 80
+      },
+      {
+        "value": 16,
+        "count": 68
+      }
+    ],
+    "grouping": {
+      "samples": 117,
+      "byMethod": {
+        "nested": 102,
+        "within": 15
+      },
+      "medianInsideGap": 4,
+      "medianBetweenGap": 12,
+      "medianRatio": 3.33,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "inter",
+        "count": 522
+      },
+      {
+        "value": "interDisplay",
+        "count": 41
+      },
+      {
+        "value": "tiemposText",
+        "count": 17
+      },
+      {
+        "value": "JetBrains Mono",
+        "count": 4
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      6,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      20,
+      24,
+      32,
+      38.4,
+      40,
+      48,
+      56,
+      64
+    ],
+    "distinctSizes": 19,
+    "weights": [
+      400,
+      500,
+      600
+    ],
+    "roleCount": 94,
+    "scaleRatios": [
+      1.333,
+      1.125,
+      1.111,
+      1.1,
+      1.091,
+      1.083,
+      1.077,
+      1.071,
+      1.067,
+      1.125,
+      1.111,
+      1.2,
+      1.333,
+      1.2,
+      1.042,
+      1.2,
+      1.167,
+      1.143
+    ],
+    "hierarchyCarriedBy": "size",
+    "channelSpread": {
+      "size": 1.13,
+      "weight": 0,
+      "ink": 0.69
+    },
+    "measureChars": 47,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#1c1d1f",
+        "lineHeight": 1.43,
+        "tracking": -0.14,
+        "transform": "none",
+        "count": 28,
+        "sample": "🚨 Deals at Risk"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#242629",
+        "lineHeight": 1.43,
+        "tracking": -0.14,
+        "transform": "none",
+        "count": 63,
+        "sample": "Home"
+      },
+      {
+        "size": 16,
+        "weight": 500,
+        "color": "#8f99a8",
+        "lineHeight": 1.38,
+        "tracking": -0.16,
+        "transform": "none",
+        "count": 8,
+        "sample": "Agents handle the research and busywork. Reps fo"
+      },
+      {
+        "size": 10,
+        "weight": 500,
+        "color": "#6f7988",
+        "lineHeight": 1.5,
+        "tracking": -0.16,
+        "transform": "none",
+        "count": 8,
+        "sample": "Everything's in spreadsheets right now and it's "
+      },
+      {
+        "size": 24,
+        "weight": 500,
+        "color": "#6f7988",
+        "lineHeight": 1.15,
+        "tracking": -0.24,
+        "transform": "none",
+        "count": 6,
+        "sample": "Agents prospect and reach out when buyers are lo"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#505967",
+        "lineHeight": 1.33,
+        "tracking": -0.16,
+        "transform": "none",
+        "count": 12,
+        "sample": "Changed roles"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#000000",
+        "lineHeight": 1.33,
+        "tracking": -0.12,
+        "transform": "none",
+        "count": 33,
+        "sample": "Favorites"
+      },
+      {
+        "size": 40,
+        "weight": 500,
+        "color": "#6f7988",
+        "lineHeight": 1.1,
+        "tracking": -0.4,
+        "transform": "none",
+        "count": 6,
+        "sample": "Picks up leads at 2am. Catches renewals before t"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#b5bdc9",
+        "lineHeight": 1.43,
+        "tracking": -0.07,
+        "transform": "none",
+        "count": 35,
+        "sample": "Refer a team"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#000000",
+        "lineHeight": 1.43,
+        "tracking": -0.14,
+        "transform": "none",
+        "count": 29,
+        "sample": "Configure"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 64.7
+      },
+      {
+        "hex": "#fafafb",
+        "h": 240,
+        "s": 11.1,
+        "l": 98.2,
+        "c": 0.4,
+        "areaPct": 53.6
+      },
+      {
+        "hex": "#101010",
+        "h": 0,
+        "s": 0,
+        "l": 6.3,
+        "c": 0,
+        "areaPct": 50.9
+      },
+      {
+        "hex": "#f3f4f6",
+        "h": 220,
+        "s": 14.3,
+        "l": 95.9,
+        "c": 1.2,
+        "areaPct": 30.6
+      },
+      {
+        "hex": "#f2f4f6",
+        "h": 210,
+        "s": 18.2,
+        "l": 95.7,
+        "c": 1.6,
+        "areaPct": 3.2
+      },
+      {
+        "hex": "#e4e7ec",
+        "h": 218,
+        "s": 17.4,
+        "l": 91,
+        "c": 3.1,
+        "areaPct": 2
+      },
+      {
+        "hex": "#000000",
+        "h": 0,
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "areaPct": 0.6
+      },
+      {
+        "hex": "#fbfbfb",
+        "h": 0,
+        "s": 0,
+        "l": 98.4,
+        "c": 0,
+        "areaPct": 0.6
+      },
+      {
+        "hex": "#232529",
+        "h": 220,
+        "s": 7.9,
+        "l": 14.9,
+        "c": 2.4,
+        "areaPct": 0.2
+      },
+      {
+        "hex": "#1c1d1f",
+        "h": 220,
+        "s": 5.1,
+        "l": 11.6,
+        "c": 1.2,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#202124",
+        "h": 225,
+        "s": 5.9,
+        "l": 13.3,
+        "c": 1.6,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#266df0",
+        "h": 219,
+        "s": 87.1,
+        "l": 54.5,
+        "c": 79.2,
+        "areaPct": 0.1
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#1c1d1f",
+        "s": 5.1,
+        "l": 11.6,
+        "c": 1.2,
+        "sharePct": 20.6
+      },
+      {
+        "hex": "#6f7988",
+        "s": 10.1,
+        "l": 48.4,
+        "c": 9.8,
+        "sharePct": 18
+      },
+      {
+        "hex": "#242629",
+        "s": 6.5,
+        "l": 15.1,
+        "c": 2,
+        "sharePct": 10.8
+      },
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 10.3
+      },
+      {
+        "hex": "#8f99a8",
+        "s": 12.6,
+        "l": 61,
+        "c": 9.8,
+        "sharePct": 9
+      },
+      {
+        "hex": "#505967",
+        "s": 12.6,
+        "l": 35.9,
+        "c": 9,
+        "sharePct": 7.3
+      },
+      {
+        "hex": "#101112",
+        "s": 5.9,
+        "l": 6.7,
+        "c": 0.8,
+        "sharePct": 3.4
+      },
+      {
+        "hex": "#b5bdc9",
+        "s": 15.6,
+        "l": 74.9,
+        "c": 7.8,
+        "sharePct": 3.4
+      },
+      {
+        "hex": "#232529",
+        "s": 7.9,
+        "l": 14.9,
+        "c": 2.4,
+        "sharePct": 3.2
+      },
+      {
+        "hex": "#fafafb",
+        "s": 11.1,
+        "l": 98.2,
+        "c": 0.4,
+        "sharePct": 2.2
+      }
+    ],
+    "neutralsTinted": "10/18",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 3.1,
+    "accentAreaPct": 0.1,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 249,
+      "shadowedElements": 83,
+      "borderToShadowRatio": 3,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "oklch(0 0 0 / 0.01) 0px 1px 2px 0px, oklch(0 0 0 / 0.02) 0px 2px 4px -1px, oklch(0 0 0 / 0.03) 0px 4px 8px -2px",
+        "rgba(11, 13, 24, 0.06) 0px 0px 0px 1px, rgba(11, 13, 24, 0.024) 0px 1px 2px 0px, rgba(11, 13, 24, 0.03) 0px 3px 6px 0px, rgba(11, 13, 24, 0.035) 0px 8px 14px 0px, rgba(11, 13, 24, 0.04) 0px 16px 28px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(28, 40, 64, 0.18) 0px 0px 2px 0px, rgba(0, 0, 0, 0.04) 0px 1px 3px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.04) 0px 12px 30px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(15, 107, 233, 0.12) 0px 2px 4px -2px, rgba(15, 107, 233, 0.08) 0px 3px 6px -2px"
+      ],
+      "radiusScale": [
+        8,
+        33554400,
+        12,
+        10,
+        5,
+        6
+      ],
+      "gradientElements": 87
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 17668,
+    "horizontalBleed": false,
+    "proseMaxWidth": 879,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "24-col: px px px px px px px px px px px px px px px px px px px px px px px px",
+        "count": 11
+      },
+      {
+        "value": "2-col: px px",
+        "count": 8
+      },
+      {
+        "value": "12-col: px px px px px px px px px px px px",
+        "count": 6
+      },
+      {
+        "value": "5-col: px px px px px",
+        "count": 2
+      },
+      {
+        "value": "4-col: px px px px",
+        "count": 2
+      },
+      {
+        "value": "8-col: subgrid [] [] [] [] [] [] []",
+        "count": 1
+      },
+      {
+        "value": "3-col: px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 625
+      },
+      {
+        "value": "column",
+        "count": 246
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 416,
+      "coveringMostContent": 153,
+      "top": [
+        26,
+        0,
+        84,
+        492,
+        374,
+        24,
+        720,
+        196
+      ]
+    },
+    "density": {
+      "visibleElements": 2945,
+      "perScreenful": 150
+    }
+  }
+}

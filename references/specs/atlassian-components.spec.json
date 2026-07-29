@@ -1,0 +1,399 @@
+{
+  "name": "atlassian-components",
+  "source": "https://atlassian.design/components",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 96.7,
+    "authoredValuesSampled": 1600,
+    "distinctValues": 11,
+    "topSteps": [
+      {
+        "value": 4,
+        "count": 1027
+      },
+      {
+        "value": 16,
+        "count": 392
+      },
+      {
+        "value": 2,
+        "count": 325
+      },
+      {
+        "value": 8,
+        "count": 68
+      },
+      {
+        "value": 6,
+        "count": 53
+      },
+      {
+        "value": 12,
+        "count": 31
+      },
+      {
+        "value": 24,
+        "count": 11
+      },
+      {
+        "value": 32,
+        "count": 8
+      },
+      {
+        "value": 40,
+        "count": 4
+      },
+      {
+        "value": 64,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 21,
+      "byMethod": {
+        "nested": 21,
+        "within": 0
+      },
+      "medianInsideGap": 0,
+      "medianBetweenGap": 16,
+      "medianRatio": 16,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Atlassian Sans",
+        "count": 385
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      12,
+      14,
+      16,
+      32,
+      48
+    ],
+    "distinctSizes": 5,
+    "weights": [
+      400,
+      500,
+      653,
+      700
+    ],
+    "roleCount": 16,
+    "scaleRatios": [
+      1.167,
+      1.143,
+      2,
+      1.5
+    ],
+    "hierarchyCarriedBy": "weight",
+    "channelSpread": {
+      "size": 0.19,
+      "weight": 0.42,
+      "ink": 0.16
+    },
+    "measureChars": 41,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#292a2e",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 89,
+        "sample": "A button triggers an event or action. They let u"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#505258",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 97,
+        "sample": "What's new"
+      },
+      {
+        "size": 16,
+        "weight": 653,
+        "color": "#292a2e",
+        "lineHeight": 1.25,
+        "tracking": 0,
+        "transform": "none",
+        "count": 93,
+        "sample": "Button"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#505258",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 31,
+        "sample": "What's new"
+      },
+      {
+        "size": 32,
+        "weight": 700,
+        "color": "#292a2e",
+        "lineHeight": 1.13,
+        "tracking": 0,
+        "transform": "none",
+        "count": 14,
+        "sample": "Forms and inputs"
+      },
+      {
+        "size": 12,
+        "weight": 653,
+        "color": "#6b6e76",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 14,
+        "sample": "Forms and input"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#292a2e",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Components are reusable building blocks that mee"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#5d1f1a",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "Deprecated"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#693200",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "Caution"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#48245d",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 14,
+        "sample": "Beta"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#f8f8f8",
+        "h": 0,
+        "s": 0,
+        "l": 97.3,
+        "c": 0,
+        "areaPct": 354.6
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 34.2
+      },
+      {
+        "hex": "#ffd5d2",
+        "h": 4,
+        "s": 100,
+        "l": 91.2,
+        "c": 17.6,
+        "areaPct": 1.2
+      },
+      {
+        "hex": "#fce4a6",
+        "h": 43,
+        "s": 93.5,
+        "l": 82,
+        "c": 33.7,
+        "areaPct": 1
+      },
+      {
+        "hex": "#e9f2fe",
+        "h": 214,
+        "s": 91.3,
+        "l": 95.5,
+        "c": 8.2,
+        "areaPct": 0.8
+      },
+      {
+        "hex": "#eed7fc",
+        "h": 277,
+        "s": 86,
+        "l": 91.6,
+        "c": 14.5,
+        "areaPct": 0.8
+      },
+      {
+        "hex": "#1868db",
+        "h": 215,
+        "s": 80.2,
+        "l": 47.6,
+        "c": 76.5,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#292a2e",
+        "s": 5.7,
+        "l": 17.1,
+        "c": 2,
+        "sharePct": 82
+      },
+      {
+        "hex": "#505258",
+        "s": 4.8,
+        "l": 32.9,
+        "c": 3.1,
+        "sharePct": 13
+      },
+      {
+        "hex": "#6b6e76",
+        "s": 4.9,
+        "l": 44.1,
+        "c": 4.3,
+        "sharePct": 1.9
+      },
+      {
+        "hex": "#5d1f1a",
+        "s": 56.3,
+        "l": 23.3,
+        "c": 26.3,
+        "sharePct": 1
+      },
+      {
+        "hex": "#693200",
+        "s": 100,
+        "l": 20.6,
+        "c": 41.2,
+        "sharePct": 0.8
+      },
+      {
+        "hex": "#48245d",
+        "s": 44.2,
+        "l": 25.3,
+        "c": 22.4,
+        "sharePct": 0.6
+      },
+      {
+        "hex": "#1868db",
+        "s": 80.2,
+        "l": 47.6,
+        "c": 76.5,
+        "sharePct": 0.4
+      },
+      {
+        "hex": "#101214",
+        "s": 11.1,
+        "l": 7.1,
+        "c": 1.6,
+        "sharePct": 0.3
+      }
+    ],
+    "neutralsTinted": "4/6",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 33.7,
+    "accentAreaPct": 3.8,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 130,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [
+        6,
+        16,
+        4,
+        2
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": 578,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "4-col: px px px px",
+        "count": 99
+      },
+      {
+        "value": "6-col: subgrid [] [] [] [] []",
+        "count": 98
+      },
+      {
+        "value": "3-col: px px px",
+        "count": 16
+      },
+      {
+        "value": "5-col: px px px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 469
+      },
+      {
+        "value": "column",
+        "count": 317
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 60,
+      "coveringMostContent": 9,
+      "top": [
+        24,
+        52,
+        56,
+        406,
+        12,
+        422,
+        752,
+        1082
+      ]
+    },
+    "density": {
+      "visibleElements": 2264,
+      "perScreenful": 2264
+    }
+  }
+}

@@ -1,0 +1,402 @@
+{
+  "name": "ionic-components",
+  "source": "https://ionicframework.com/docs/components",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 83.7,
+    "authoredValuesSampled": 878,
+    "distinctValues": 18,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 360
+      },
+      {
+        "value": 24,
+        "count": 192
+      },
+      {
+        "value": 12,
+        "count": 119
+      },
+      {
+        "value": 21,
+        "count": 98
+      },
+      {
+        "value": 5,
+        "count": 36
+      },
+      {
+        "value": 14,
+        "count": 33
+      },
+      {
+        "value": 16,
+        "count": 18
+      },
+      {
+        "value": 7,
+        "count": 5
+      },
+      {
+        "value": 2,
+        "count": 4
+      },
+      {
+        "value": 20,
+        "count": 4
+      },
+      {
+        "value": 6,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 16,
+      "byMethod": {
+        "nested": 4,
+        "within": 12
+      },
+      "medianInsideGap": 1,
+      "medianBetweenGap": 5,
+      "medianRatio": 5,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "system-ui",
+        "count": 230
+      },
+      {
+        "value": "ui-monospace",
+        "count": 2
+      },
+      {
+        "value": "-apple-system",
+        "count": 1
+      }
+    ],
+    "bodySize": 12,
+    "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      16.6,
+      20,
+      22.4,
+      48
+    ],
+    "distinctSizes": 9,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 20,
+    "scaleRatios": [
+      1.083,
+      1.077,
+      1.071,
+      1.067,
+      1.038,
+      1.205,
+      1.12,
+      2.143
+    ],
+    "hierarchyCarriedBy": "size",
+    "channelSpread": {
+      "size": 0.42,
+      "weight": 0.33,
+      "ink": 0.19
+    },
+    "measureChars": 43,
+    "topRoles": [
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#222d3a",
+        "lineHeight": 2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 37,
+        "sample": "Accordions provide collapsible sections in your "
+      },
+      {
+        "size": 13,
+        "weight": 500,
+        "color": "#445b78",
+        "lineHeight": 1.23,
+        "tracking": -0.13,
+        "transform": "none",
+        "count": 97,
+        "sample": "ion-accordion"
+      },
+      {
+        "size": 20,
+        "weight": 400,
+        "color": "#35404e",
+        "lineHeight": 2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Ionic apps are made of high-level building block"
+      },
+      {
+        "size": 15,
+        "weight": 600,
+        "color": "#141414",
+        "lineHeight": 1,
+        "tracking": -0.15,
+        "transform": "none",
+        "count": 39,
+        "sample": "Getting Started"
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#222d3a",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 37,
+        "sample": "Accordion"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#445b78",
+        "lineHeight": 1.21,
+        "tracking": 0,
+        "transform": "none",
+        "count": 6,
+        "sample": "Guide"
+      },
+      {
+        "size": 12,
+        "weight": 600,
+        "color": "#ffffff",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Ionic v8.0.0 Upgrade Guide"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#1b6dff",
+        "lineHeight": 1.15,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Edit this page"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#1c1e21",
+        "lineHeight": 1.15,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Skip to main content"
+      },
+      {
+        "size": 13,
+        "weight": 500,
+        "color": "#1b6dff",
+        "lineHeight": 1.23,
+        "tracking": -0.13,
+        "transform": "none",
+        "count": 1,
+        "sample": "UI Components"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 56.3
+      },
+      {
+        "hex": "#f0f6ff",
+        "h": 216,
+        "s": 100,
+        "l": 97.1,
+        "c": 5.9,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#ced6e0",
+        "h": 213,
+        "s": 22.5,
+        "l": 84.3,
+        "c": 7.1,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#222d3a",
+        "s": 26.1,
+        "l": 18,
+        "c": 9.4,
+        "sharePct": 62.7
+      },
+      {
+        "hex": "#445b78",
+        "s": 27.7,
+        "l": 36.9,
+        "c": 20.4,
+        "sharePct": 22.9
+      },
+      {
+        "hex": "#35404e",
+        "s": 19.1,
+        "l": 25.7,
+        "c": 9.8,
+        "sharePct": 5.7
+      },
+      {
+        "hex": "#141414",
+        "s": 0,
+        "l": 7.8,
+        "c": 0,
+        "sharePct": 5.6
+      },
+      {
+        "hex": "#1b6dff",
+        "s": 100,
+        "l": 55.3,
+        "c": 89.4,
+        "sharePct": 1.2
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 0.7
+      },
+      {
+        "hex": "#1c1e21",
+        "s": 8.2,
+        "l": 12,
+        "c": 2,
+        "sharePct": 0.4
+      },
+      {
+        "hex": "#92a0b3",
+        "s": 17.8,
+        "l": 63.7,
+        "c": 12.9,
+        "sharePct": 0.2
+      },
+      {
+        "hex": "#03060b",
+        "s": 57.1,
+        "l": 2.7,
+        "c": 3.1,
+        "sharePct": 0.2
+      },
+      {
+        "hex": "#f24c58",
+        "s": 86.5,
+        "l": 62.4,
+        "c": 65.1,
+        "sharePct": 0.2
+      }
+    ],
+    "neutralsTinted": "4/7",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 0,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 41,
+      "shadowedElements": 2,
+      "borderToShadowRatio": 20.5,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgb(243, 243, 243) 0px 1px 0px 0px",
+        "rgb(222, 227, 234) 0px 0px 0px 1px inset"
+      ],
+      "radiusScale": [
+        4,
+        12,
+        50,
+        6,
+        200,
+        8
+      ],
+      "gradientElements": 2
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 3784,
+    "horizontalBleed": false,
+    "proseMaxWidth": 960,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 2
+      },
+      {
+        "value": "3-col: px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 169
+      },
+      {
+        "value": "column",
+        "count": 40
+      },
+      {
+        "value": "row-reverse",
+        "count": 39
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 43,
+      "coveringMostContent": 5,
+      "top": [
+        24,
+        742,
+        1070,
+        416,
+        718,
+        390,
+        1044,
+        392
+      ]
+    },
+    "density": {
+      "visibleElements": 733,
+      "perScreenful": 174
+    }
+  }
+}

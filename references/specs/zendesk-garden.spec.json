@@ -1,0 +1,241 @@
+{
+  "name": "zendesk-garden",
+  "source": "https://garden.zendesk.com/components/overview",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 100,
+    "authoredValuesSampled": 39,
+    "distinctValues": 11,
+    "topSteps": [
+      {
+        "value": 10,
+        "count": 8
+      },
+      {
+        "value": 20,
+        "count": 8
+      },
+      {
+        "value": 8,
+        "count": 7
+      },
+      {
+        "value": 6,
+        "count": 6
+      },
+      {
+        "value": 12,
+        "count": 5
+      }
+    ],
+    "grouping": {
+      "samples": 3,
+      "byMethod": {
+        "nested": 2,
+        "within": 1
+      },
+      "medianInsideGap": 8,
+      "medianBetweenGap": 12,
+      "medianRatio": 1.5,
+      "confidence": "low — too few groups to generalise",
+      "verdict": "space encodes grouping"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "system-ui",
+        "count": 11
+      }
+    ],
+    "bodySize": 22,
+    "sizes": [
+      14,
+      16,
+      22,
+      48
+    ],
+    "distinctSizes": 4,
+    "weights": [
+      400,
+      700
+    ],
+    "roleCount": 5,
+    "scaleRatios": [
+      1.143,
+      1.375,
+      2.182
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.65,
+      "weight": 0,
+      "ink": 0.81
+    },
+    "measureChars": 48,
+    "topRoles": [
+      {
+        "size": 22,
+        "weight": 400,
+        "color": "#5c6970",
+        "lineHeight": 1.27,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "You won’t find anything growing on this page. He"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "Garden is the design system by Zendesk."
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#293239",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Design"
+      },
+      {
+        "size": 48,
+        "weight": 700,
+        "color": "#293239",
+        "lineHeight": 1.08,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Nothing to see here"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#5c6970",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "uppercase",
+        "count": 1,
+        "sample": "404 page not found"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#063940",
+        "h": 187,
+        "s": 82.9,
+        "l": 13.7,
+        "c": 22.7,
+        "areaPct": 14.8
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 8
+      },
+      {
+        "hex": "#daeded",
+        "h": 180,
+        "s": 34.5,
+        "l": 89.2,
+        "c": 7.5,
+        "areaPct": 4.7
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#5c6970",
+        "s": 9.8,
+        "l": 40,
+        "c": 7.8,
+        "sharePct": 49.6
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 31.4
+      },
+      {
+        "hex": "#293239",
+        "s": 16.3,
+        "l": 19.2,
+        "c": 6.3,
+        "sharePct": 19
+      }
+    ],
+    "neutralsTinted": "3/5",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 22.7,
+    "accentAreaPct": 14.8,
+    "accentVerdict": "accent is present",
+    "depth": {
+      "borderedElements": 2,
+      "shadowedElements": 1,
+      "borderToShadowRatio": 2,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgba(10, 13, 14, 0.04) 0px 16px 24px 0px"
+      ],
+      "radiusScale": [
+        4,
+        100
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 1077,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 18
+      },
+      {
+        "value": "column",
+        "count": 1
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 20,
+      "coveringMostContent": 12,
+      "top": [
+        0,
+        20,
+        16,
+        634,
+        1168,
+        904,
+        976,
+        1086
+      ]
+    },
+    "density": {
+      "visibleElements": 67,
+      "perScreenful": 56
+    }
+  }
+}

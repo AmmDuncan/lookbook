@@ -1,0 +1,456 @@
+{
+  "name": "tailwind-docs",
+  "source": "https://tailwindcss.com/docs/flex-basis",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 8,
+    "onScalePct": 82.4,
+    "authoredValuesSampled": 1124,
+    "distinctValues": 21,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 634
+      },
+      {
+        "value": 16,
+        "count": 199
+      },
+      {
+        "value": 4,
+        "count": 60
+      },
+      {
+        "value": 12,
+        "count": 59
+      },
+      {
+        "value": 24,
+        "count": 46
+      },
+      {
+        "value": 20,
+        "count": 38
+      },
+      {
+        "value": 30,
+        "count": 23
+      },
+      {
+        "value": 32,
+        "count": 22
+      },
+      {
+        "value": 40,
+        "count": 14
+      },
+      {
+        "value": 2,
+        "count": 6
+      },
+      {
+        "value": 6,
+        "count": 6
+      },
+      {
+        "value": 10,
+        "count": 5
+      }
+    ],
+    "grouping": {
+      "samples": 32,
+      "byMethod": {
+        "nested": 27,
+        "within": 5
+      },
+      "medianInsideGap": 8,
+      "medianBetweenGap": 12,
+      "medianRatio": 1.5,
+      "confidence": "high",
+      "verdict": "space encodes grouping"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "plexMono",
+        "count": 347
+      },
+      {
+        "value": "inter",
+        "count": 273
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      10,
+      12,
+      13,
+      14,
+      16,
+      18,
+      30
+    ],
+    "distinctSizes": 7,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 32,
+    "scaleRatios": [
+      1.2,
+      1.083,
+      1.077,
+      1.143,
+      1.125,
+      1.667
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.22,
+      "weight": 0.17,
+      "ink": 0.6
+    },
+    "measureChars": 96,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#4a5565",
+        "lineHeight": 2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 210,
+        "sample": "Components"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#364153",
+        "lineHeight": 2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 17,
+        "sample": "Use utilities like and to set the initial size o"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#7f22fe",
+        "lineHeight": 2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 23,
+        "sample": "flex-basis: calc(var(--spacing) * );"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#74d4ff",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 49,
+        "sample": "\"flex flex-row\""
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#99a1af",
+        "lineHeight": 2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 13,
+        "sample": "/* 16rem (256px) */"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#030712",
+        "lineHeight": 2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 24,
+        "sample": "basis-"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#6a7282",
+        "lineHeight": 2,
+        "tracking": 1.2,
+        "transform": "uppercase",
+        "count": 19,
+        "sample": "Getting started"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#00a6f4",
+        "lineHeight": 2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 19,
+        "sample": "basis-"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#030712",
+        "lineHeight": 1.71,
+        "tracking": 0,
+        "transform": "none",
+        "count": 19,
+        "sample": "Docs"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#90a1b9",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 98,
+        "sample": "<!-- ... -->"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 86.3
+      },
+      {
+        "hex": "#030712",
+        "h": 224,
+        "s": 71.4,
+        "l": 4.1,
+        "c": 5.9,
+        "areaPct": 11.6
+      },
+      {
+        "hex": "#000014",
+        "h": 240,
+        "s": 100,
+        "l": 3.9,
+        "c": 7.8,
+        "areaPct": 8.6
+      },
+      {
+        "hex": "#615fff",
+        "h": 241,
+        "s": 100,
+        "l": 68.6,
+        "c": 62.7,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#ad46ff",
+        "h": 273,
+        "s": 100,
+        "l": 63.7,
+        "c": 72.5,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#00a6f4",
+        "h": 199,
+        "s": 100,
+        "l": 47.8,
+        "c": 95.7,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#71d5ff",
+        "h": 198,
+        "s": 100,
+        "l": 72.2,
+        "c": 55.7,
+        "areaPct": 0.4
+      },
+      {
+        "hex": "#000000",
+        "h": 0,
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#00bdff",
+        "h": 196,
+        "s": 100,
+        "l": 50,
+        "c": 100,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#4a5565",
+        "s": 15.4,
+        "l": 34.3,
+        "c": 10.6,
+        "sharePct": 42.9
+      },
+      {
+        "hex": "#364153",
+        "s": 21.2,
+        "l": 26.9,
+        "c": 11.4,
+        "sharePct": 15.2
+      },
+      {
+        "hex": "#030712",
+        "s": 71.4,
+        "l": 4.1,
+        "c": 5.9,
+        "sharePct": 10.2
+      },
+      {
+        "hex": "#7f22fe",
+        "s": 99.1,
+        "l": 56.5,
+        "c": 86.3,
+        "sharePct": 9.3
+      },
+      {
+        "hex": "#74d4ff",
+        "s": 100,
+        "l": 72.7,
+        "c": 54.5,
+        "sharePct": 4.3
+      },
+      {
+        "hex": "#99a1af",
+        "s": 12.1,
+        "l": 64.3,
+        "c": 8.6,
+        "sharePct": 3.9
+      },
+      {
+        "hex": "#00a6f4",
+        "s": 100,
+        "l": 47.8,
+        "c": 95.7,
+        "sharePct": 3.4
+      },
+      {
+        "hex": "#6a7282",
+        "s": 10.2,
+        "l": 46.3,
+        "c": 9.4,
+        "sharePct": 3.1
+      },
+      {
+        "hex": "#90a1b9",
+        "s": 22.7,
+        "l": 64.5,
+        "c": 16.1,
+        "sharePct": 2.3
+      },
+      {
+        "hex": "#cad5e2",
+        "s": 29.3,
+        "l": 83.9,
+        "c": 9.4,
+        "sharePct": 1.8
+      }
+    ],
+    "neutralsTinted": "3/5",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 95.7,
+    "accentAreaPct": 1.9,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 242,
+      "shadowedElements": 15,
+      "borderToShadowRatio": 16.13,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.129999 -0.00404751 -0.027702 / 0.08) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.129999 -0.00404751 -0.027702 / 0.05) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.999994 0.0000455678 0.0000200868 / 0.1) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0 0 0 / 0.1) -5px 10px 15px -3px, oklab(0 0 0 / 0.1) -5px 4px 6px -4px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.999994 0.0000455678 0.0000200868 / 0.1) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.129999 -0.00404751 -0.027702 / 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      ],
+      "radiusScale": [
+        12,
+        8,
+        33554400,
+        16,
+        32
+      ],
+      "gradientElements": 7
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 4568,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "4-col: subgrid [] [] []",
+        "count": 22
+      },
+      {
+        "value": "4-col: px px px px",
+        "count": 2
+      },
+      {
+        "value": "2-col: px px",
+        "count": 2
+      },
+      {
+        "value": "3-col: subgrid [] []",
+        "count": 1
+      },
+      {
+        "value": "3-col: px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "column",
+        "count": 253
+      },
+      {
+        "value": "row",
+        "count": 44
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 86,
+      "coveringMostContent": 11,
+      "top": [
+        24,
+        376,
+        400,
+        1112,
+        380,
+        588,
+        384,
+        616
+      ]
+    },
+    "density": {
+      "visibleElements": 1224,
+      "perScreenful": 241
+    }
+  }
+}

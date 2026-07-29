@@ -1,0 +1,365 @@
+{
+  "name": "primer-components",
+  "source": "https://primer.style/components",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 8,
+    "onScalePct": 85.1,
+    "authoredValuesSampled": 1094,
+    "distinctValues": 12,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 581
+      },
+      {
+        "value": 32,
+        "count": 310
+      },
+      {
+        "value": 12,
+        "count": 75
+      },
+      {
+        "value": 28,
+        "count": 61
+      },
+      {
+        "value": 16,
+        "count": 26
+      },
+      {
+        "value": 6,
+        "count": 19
+      },
+      {
+        "value": 24,
+        "count": 10
+      },
+      {
+        "value": 7,
+        "count": 8
+      }
+    ],
+    "grouping": {
+      "samples": 53,
+      "byMethod": {
+        "nested": 0,
+        "within": 53
+      },
+      "medianInsideGap": 12,
+      "medianBetweenGap": 30,
+      "medianRatio": 2.5,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Mona Sans",
+        "count": 346
+      },
+      {
+        "value": "Mona Sans VF",
+        "count": 3
+      }
+    ],
+    "bodySize": 16,
+    "sizes": [
+      14,
+      16,
+      18,
+      22,
+      24,
+      40
+    ],
+    "distinctSizes": 6,
+    "weights": [
+      400,
+      460,
+      480,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 13,
+    "scaleRatios": [
+      1.143,
+      1.125,
+      1.222,
+      1.091,
+      1.667
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.17,
+      "weight": 0.13,
+      "ink": 0.23
+    },
+    "measureChars": 29,
+    "topRoles": [
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#58635b",
+        "lineHeight": 1.5,
+        "tracking": 0.24,
+        "transform": "none",
+        "count": 62,
+        "sample": "A collection of horizontally aligned IconButtons"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#1f2328",
+        "lineHeight": 1.25,
+        "tracking": 0,
+        "transform": "none",
+        "count": 139,
+        "sample": "Component status"
+      },
+      {
+        "size": 16,
+        "weight": 500,
+        "color": "#005dd5",
+        "lineHeight": 1.5,
+        "tracking": 0.24,
+        "transform": "none",
+        "count": 62,
+        "sample": "Learn more"
+      },
+      {
+        "size": 22,
+        "weight": 480,
+        "color": "#000000",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 62,
+        "sample": "ActionBar"
+      },
+      {
+        "size": 18,
+        "weight": 400,
+        "color": "#58635b",
+        "lineHeight": 1.5,
+        "tracking": 0.18,
+        "transform": "none",
+        "count": 1,
+        "sample": "Primer Components are reusable, interactive buil"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#1f2328",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "Search Product UI"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#0969da",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Skip to main content"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#59636e",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Brand UI"
+      },
+      {
+        "size": 24,
+        "weight": 700,
+        "color": "#1f2328",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Product UI navigation"
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#1f2328",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Primer"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 57.3
+      },
+      {
+        "hex": "#f6f8fa",
+        "h": 210,
+        "s": 28.6,
+        "l": 97.3,
+        "c": 1.6,
+        "areaPct": 0
+      },
+      {
+        "hex": "#d1d9e0",
+        "h": 208,
+        "s": 19.5,
+        "l": 84.9,
+        "c": 5.9,
+        "areaPct": 0
+      },
+      {
+        "hex": "#0377ff",
+        "h": 212,
+        "s": 100,
+        "l": 50.6,
+        "c": 98.8,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#58635b",
+        "s": 5.9,
+        "l": 36.7,
+        "c": 4.3,
+        "sharePct": 67.8
+      },
+      {
+        "hex": "#1f2328",
+        "s": 12.7,
+        "l": 13.9,
+        "c": 3.5,
+        "sharePct": 18.1
+      },
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 6.5
+      },
+      {
+        "hex": "#005dd5",
+        "s": 100,
+        "l": 41.8,
+        "c": 83.5,
+        "sharePct": 6.5
+      },
+      {
+        "hex": "#0969da",
+        "s": 92.1,
+        "l": 44.5,
+        "c": 82,
+        "sharePct": 0.5
+      },
+      {
+        "hex": "#59636e",
+        "s": 10.6,
+        "l": 39,
+        "c": 8.2,
+        "sharePct": 0.4
+      },
+      {
+        "hex": "#25292e",
+        "s": 10.8,
+        "l": 16.3,
+        "c": 3.5,
+        "sharePct": 0.1
+      }
+    ],
+    "neutralsTinted": "5/7",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 0,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 72,
+      "shadowedElements": 3,
+      "borderToShadowRatio": 24,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(31, 35, 40, 0.04) 0px 1px 0px 0px",
+        "rgba(31, 35, 40, 0.04) 0px 1px 0px 0px inset"
+      ],
+      "radiusScale": [
+        6,
+        8
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 11323,
+    "horizontalBleed": false,
+    "proseMaxWidth": 948,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "3-col: px px px",
+        "count": 140
+      },
+      {
+        "value": "4-col: px px px px",
+        "count": 138
+      },
+      {
+        "value": "2-col: px px",
+        "count": 62
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 143
+      },
+      {
+        "value": "column",
+        "count": 13
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 23,
+      "coveringMostContent": 5,
+      "top": [
+        24,
+        16,
+        430,
+        754,
+        1078,
+        396,
+        720,
+        1044
+      ]
+    },
+    "density": {
+      "visibleElements": 1627,
+      "perScreenful": 129
+    }
+  }
+}

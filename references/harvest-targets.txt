@@ -1,0 +1,43 @@
+# Corpus harvest targets — lane A of giving wren taste.
+#
+# The existing 32 cards are almost entirely design-system component galleries and
+# docs sites. That biases the bands toward one register. These targets add:
+#   (a) GOVERNMENT service design — the register DVLA actually works in
+#   (b) ENTERPRISE systems built for dense operator screens
+#   (c) REAL APP surfaces reachable without a login
+#
+# Unreachable targets are reported and skipped, never written as partial cards.
+# Format: slug<TAB>url  (or bare url, slug derived from host)
+
+# --- (a) government / public service ---
+uswds-components	https://designsystem.digital.gov/components/
+nhs-components	https://service-manual.nhs.uk/design-system/components
+au-gov-components	https://designsystem.gov.au/components/
+ontario-components	https://designsystem.ontario.ca/components/
+govuk-patterns	https://design-system.service.gov.uk/patterns/
+
+# --- (b) enterprise / operator-dense systems ---
+salesforce-lightning	https://www.lightningdesignsystem.com/components/overview/
+twilio-paste	https://paste.twilio.design/components
+zendesk-garden	https://garden.zendesk.com/components/overview
+elastic-eui	https://eui.elastic.co/docs/components/
+workday-canvas	https://canvas.workday.com/components/
+gitlab-pajamas	https://design.gitlab.com/components/overview
+pinterest-gestalt	https://gestalt.pinterest.systems/web/overview
+nordhealth	https://nordhealth.design/components/
+vaadin-components	https://vaadin.com/docs/latest/components
+
+# --- (c) real app surfaces, no login ---
+grafana-play	https://play.grafana.org/
+excalidraw-app	https://excalidraw.com/
+
+# --- (d) additional component libraries for volume ---
+ant-components	https://ant.design/components/overview/
+mui-components	https://mui.com/material-ui/all-components/
+chakra-components	https://chakra-ui.com/docs/components
+heroui-components	https://www.heroui.com/docs/components/button
+flowbite-components	https://flowbite.com/docs/components/buttons/
+shoelace-components	https://shoelace.style/components/button
+daisyui-components	https://daisyui.com/components/
+ionic-components	https://ionicframework.com/docs/components
+backstage-storybook	https://backstage.io/storybook/

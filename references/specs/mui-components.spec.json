@@ -1,0 +1,462 @@
+{
+  "name": "mui-components",
+  "source": "https://mui.com/material-ui/all-components/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 88.2,
+    "authoredValuesSampled": 1038,
+    "distinctValues": 22,
+    "topSteps": [
+      {
+        "value": 4,
+        "count": 290
+      },
+      {
+        "value": 6,
+        "count": 142
+      },
+      {
+        "value": 16,
+        "count": 138
+      },
+      {
+        "value": 12,
+        "count": 115
+      },
+      {
+        "value": 7,
+        "count": 96
+      },
+      {
+        "value": 36,
+        "count": 77
+      },
+      {
+        "value": 8,
+        "count": 61
+      },
+      {
+        "value": 0,
+        "count": 50
+      },
+      {
+        "value": 20,
+        "count": 40
+      },
+      {
+        "value": 10,
+        "count": 33
+      },
+      {
+        "value": 5,
+        "count": 24
+      },
+      {
+        "value": 2,
+        "count": 16
+      }
+    ],
+    "grouping": {
+      "samples": 13,
+      "byMethod": {
+        "nested": 10,
+        "within": 3
+      },
+      "medianInsideGap": 6,
+      "medianBetweenGap": 8,
+      "medianRatio": 3,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "IBM Plex Sans",
+        "count": 227
+      },
+      {
+        "value": "General Sans",
+        "count": 9
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      16,
+      18,
+      26,
+      36
+    ],
+    "distinctSizes": 9,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 25,
+    "scaleRatios": [
+      1.1,
+      1.091,
+      1.083,
+      1.077,
+      1.143,
+      1.125,
+      1.444,
+      1.385
+    ],
+    "hierarchyCarriedBy": "mixed (weight+size)",
+    "channelSpread": {
+      "size": 0.3,
+      "weight": 0.33,
+      "ink": 0.3
+    },
+    "measureChars": 70.5,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#1a1e23",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 70,
+        "sample": "Getting started"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#303741",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 67,
+        "sample": "Autocomplete"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#1a1e23",
+        "lineHeight": 1.63,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Material UI aims to provide building blocks for "
+      },
+      {
+        "size": 13,
+        "weight": 600,
+        "color": "#1a1e23",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 19,
+        "sample": "No guidelines"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#1a1e23",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "We use cookies to understand site usage and impr"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#006bd6",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "🚀 Material UI and MUI X v9 are out! Check out t"
+      },
+      {
+        "size": 13,
+        "weight": 600,
+        "color": "#0073e6",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 29,
+        "sample": ""
+      },
+      {
+        "size": 11,
+        "weight": 600,
+        "color": "#576375",
+        "lineHeight": 1.5,
+        "tracking": 1.6,
+        "transform": "uppercase",
+        "count": 10,
+        "sample": "Inputs"
+      },
+      {
+        "size": 26,
+        "weight": 600,
+        "color": "#1a1e23",
+        "lineHeight": 1.5,
+        "tracking": 0.1,
+        "transform": "none",
+        "count": 8,
+        "sample": "Inputs"
+      },
+      {
+        "size": 13,
+        "weight": 500,
+        "color": "#1a1e23",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "Inputs"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 33.4
+      },
+      {
+        "hex": "#ebf5ff",
+        "h": 210,
+        "s": 100,
+        "l": 96.1,
+        "c": 7.8,
+        "areaPct": 0.6
+      },
+      {
+        "hex": "#f5f7f7",
+        "h": 180,
+        "s": 11.1,
+        "l": 96.5,
+        "c": 0.8,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#cde6ff",
+        "h": 210,
+        "s": 100,
+        "l": 90.2,
+        "c": 19.6,
+        "areaPct": 0.4
+      },
+      {
+        "hex": "#f7f7f8",
+        "h": 240,
+        "s": 6.7,
+        "l": 97.1,
+        "c": 0.4,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#0073e6",
+        "h": 210,
+        "s": 100,
+        "l": 45.1,
+        "c": 90.2,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#ebebeb",
+        "h": 0,
+        "s": 0,
+        "l": 92.2,
+        "c": 0,
+        "areaPct": 0
+      },
+      {
+        "hex": "#0076e2",
+        "h": 209,
+        "s": 100,
+        "l": 44.3,
+        "c": 88.6,
+        "areaPct": 0
+      },
+      {
+        "hex": "#c5f5d9",
+        "h": 145,
+        "s": 70.6,
+        "l": 86.7,
+        "c": 18.8,
+        "areaPct": 0
+      },
+      {
+        "hex": "#fd5361",
+        "h": 355,
+        "s": 97.7,
+        "l": 65.9,
+        "c": 66.7,
+        "areaPct": 0
+      },
+      {
+        "hex": "#0057b7",
+        "h": 211,
+        "s": 100,
+        "l": 35.9,
+        "c": 71.8,
+        "areaPct": 0
+      },
+      {
+        "hex": "#ffd700",
+        "h": 51,
+        "s": 100,
+        "l": 50,
+        "c": 100,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#1a1e23",
+        "s": 14.8,
+        "l": 12,
+        "c": 3.5,
+        "sharePct": 60.2
+      },
+      {
+        "hex": "#303741",
+        "s": 15,
+        "l": 22.2,
+        "c": 6.7,
+        "sharePct": 25.6
+      },
+      {
+        "hex": "#006bd6",
+        "s": 100,
+        "l": 42,
+        "c": 83.9,
+        "sharePct": 6.1
+      },
+      {
+        "hex": "#0073e6",
+        "s": 100,
+        "l": 45.1,
+        "c": 90.2,
+        "sharePct": 3.3
+      },
+      {
+        "hex": "#576375",
+        "s": 14.7,
+        "l": 40,
+        "c": 11.8,
+        "sharePct": 3
+      },
+      {
+        "hex": "#0f1214",
+        "s": 14.3,
+        "l": 6.9,
+        "c": 2,
+        "sharePct": 0.8
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 0.6
+      },
+      {
+        "hex": "#0f5c2e",
+        "s": 72,
+        "l": 21,
+        "c": 30.2,
+        "sharePct": 0.2
+      },
+      {
+        "hex": "#98a4b3",
+        "s": 15.1,
+        "l": 64.9,
+        "c": 10.6,
+        "sharePct": 0.1
+      }
+    ],
+    "neutralsTinted": "4/9",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 7.8,
+    "accentAreaPct": 0.5,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 202,
+      "shadowedElements": 75,
+      "borderToShadowRatio": 2.69,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgb(255, 255, 255) 0px 1px 0px 0px inset, rgba(232, 234, 238, 0.4) 0px -1px 0px 0px inset, rgba(223, 226, 231, 0.5) 0px 1px 2px 0px",
+        "rgb(255, 255, 255) 0px 1px 0px 0px inset, rgba(223, 226, 231, 0.4) 0px -1px 0px 0px inset, rgba(223, 226, 231, 0.5) 0px 1px 2px 0px",
+        "rgb(255, 255, 255) 0px 2px 0px 0px inset, rgba(232, 234, 238, 0.3) 0px -2px 0px 0px inset, rgba(223, 226, 231, 0.5) 0px 1px 2px 0px",
+        "rgba(0, 115, 230, 0.1) 0px 0px 0px 2px, rgba(234, 237, 241, 0.3) 0px 2px 12px 0px inset",
+        "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px"
+      ],
+      "radiusScale": [
+        6,
+        12,
+        16,
+        8,
+        10,
+        7
+      ],
+      "gradientElements": 59
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 5658,
+    "horizontalBleed": false,
+    "proseMaxWidth": 778,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 310
+      },
+      {
+        "value": "column",
+        "count": 59
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 53,
+      "coveringMostContent": 13,
+      "top": [
+        10,
+        360,
+        626,
+        890,
+        362,
+        814,
+        1204,
+        0
+      ]
+    },
+    "density": {
+      "visibleElements": 868,
+      "perScreenful": 138
+    }
+  }
+}

@@ -1,0 +1,466 @@
+{
+  "name": "mantine-demo",
+  "source": "https://mantine.dev/core/button/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 75.4,
+    "authoredValuesSampled": 1689,
+    "distinctValues": 24,
+    "topSteps": [
+      {
+        "value": 6,
+        "count": 370
+      },
+      {
+        "value": 12,
+        "count": 300
+      },
+      {
+        "value": 5,
+        "count": 254
+      },
+      {
+        "value": 16,
+        "count": 218
+      },
+      {
+        "value": 2,
+        "count": 213
+      },
+      {
+        "value": 10,
+        "count": 153
+      },
+      {
+        "value": 1,
+        "count": 78
+      },
+      {
+        "value": 7,
+        "count": 63
+      },
+      {
+        "value": 18,
+        "count": 53
+      },
+      {
+        "value": 15,
+        "count": 53
+      },
+      {
+        "value": 9,
+        "count": 46
+      },
+      {
+        "value": 4,
+        "count": 39
+      }
+    ],
+    "grouping": {
+      "samples": 49,
+      "byMethod": {
+        "nested": 21,
+        "within": 28
+      },
+      "medianInsideGap": 7,
+      "medianBetweenGap": 29,
+      "medianRatio": 4.14,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Menlo",
+        "count": 1370
+      },
+      {
+        "value": "-apple-system",
+        "count": 295
+      },
+      {
+        "value": "Outfit",
+        "count": 35
+      }
+    ],
+    "bodySize": 15,
+    "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      26,
+      44
+    ],
+    "distinctSizes": 9,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 42,
+    "scaleRatios": [
+      1.091,
+      1.083,
+      1.077,
+      1.071,
+      1.067,
+      1.125,
+      1.444,
+      1.692
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.21,
+      "weight": 0.33,
+      "ink": 0.47
+    },
+    "measureChars": 110,
+    "topRoles": [
+      {
+        "size": 15,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": 1.65,
+        "tracking": 0,
+        "transform": "none",
+        "count": 29,
+        "sample": "If the prop is set, the will take 100% of the pa"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#1f2328",
+        "lineHeight": 1.7,
+        "tracking": 0,
+        "transform": "none",
+        "count": 545,
+        "sample": "{ Button }"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#0550ae",
+        "lineHeight": 1.7,
+        "tracking": 0,
+        "transform": "none",
+        "count": 166,
+        "sample": "variant"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#0a3069",
+        "lineHeight": 1.7,
+        "tracking": 0,
+        "transform": "none",
+        "count": 98,
+        "sample": "'@mantine/core'"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#495057",
+        "lineHeight": 1.55,
+        "tracking": 0,
+        "transform": "none",
+        "count": 117,
+        "sample": "Get started"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": 1.55,
+        "tracking": 0,
+        "transform": "none",
+        "count": 101,
+        "sample": "fullWidth"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#cf222e",
+        "lineHeight": 1.7,
+        "tracking": 0,
+        "transform": "none",
+        "count": 259,
+        "sample": "import"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#116329",
+        "lineHeight": 1.7,
+        "tracking": 0,
+        "transform": "none",
+        "count": 112,
+        "sample": "Button"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#6e7781",
+        "lineHeight": 1.7,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "* Hover over selectors to apply outline styles"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#000000",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 41,
+        "sample": "Mantine UI"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 84.6
+      },
+      {
+        "hex": "#f8f9fa",
+        "h": 210,
+        "s": 16.7,
+        "l": 97.6,
+        "c": 0.8,
+        "areaPct": 32.9
+      },
+      {
+        "hex": "#2b71c6",
+        "h": 213,
+        "s": 64.3,
+        "l": 47.3,
+        "c": 60.8,
+        "areaPct": 1.5
+      },
+      {
+        "hex": "#228be6",
+        "h": 208,
+        "s": 79.7,
+        "l": 51.8,
+        "c": 76.9,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#efefef",
+        "h": 0,
+        "s": 0,
+        "l": 93.7,
+        "c": 0,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#e9ecef",
+        "h": 210,
+        "s": 15.8,
+        "l": 92.5,
+        "c": 2.4,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#f1f3f5",
+        "h": 210,
+        "s": 16.7,
+        "l": 95.3,
+        "c": 1.6,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#e7f5ff",
+        "h": 205,
+        "s": 100,
+        "l": 95.3,
+        "c": 9.4,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#a9e34b",
+        "h": 83,
+        "s": 73.1,
+        "l": 59.2,
+        "c": 59.6,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#5865f2",
+        "h": 235,
+        "s": 85.6,
+        "l": 64.7,
+        "c": 60.4,
+        "areaPct": 0
+      },
+      {
+        "hex": "#d0ebff",
+        "h": 206,
+        "s": 100,
+        "l": 90.8,
+        "c": 18.4,
+        "areaPct": 0
+      },
+      {
+        "hex": "#c92a2a",
+        "h": 0,
+        "s": 65.4,
+        "l": 47.6,
+        "c": 62.4,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 37.6
+      },
+      {
+        "hex": "#1f2328",
+        "s": 12.7,
+        "l": 13.9,
+        "c": 3.5,
+        "sharePct": 14.2
+      },
+      {
+        "hex": "#495057",
+        "s": 8.8,
+        "l": 31.4,
+        "c": 5.5,
+        "sharePct": 9
+      },
+      {
+        "hex": "#0550ae",
+        "s": 94.4,
+        "l": 35.1,
+        "c": 66.3,
+        "sharePct": 7.4
+      },
+      {
+        "hex": "#0a3069",
+        "s": 82.6,
+        "l": 22.5,
+        "c": 37.3,
+        "sharePct": 7.3
+      },
+      {
+        "hex": "#cf222e",
+        "s": 71.8,
+        "l": 47.3,
+        "c": 67.8,
+        "sharePct": 5.6
+      },
+      {
+        "hex": "#116329",
+        "s": 70.7,
+        "l": 22.7,
+        "c": 32.2,
+        "sharePct": 4.9
+      },
+      {
+        "hex": "#868e96",
+        "s": 7.1,
+        "l": 55.7,
+        "c": 6.3,
+        "sharePct": 3.5
+      },
+      {
+        "hex": "#6e7781",
+        "s": 7.9,
+        "l": 46.9,
+        "c": 7.5,
+        "sharePct": 2.5
+      },
+      {
+        "hex": "#953800",
+        "s": 100,
+        "l": 29.2,
+        "c": 58.4,
+        "sharePct": 2.1
+      }
+    ],
+    "neutralsTinted": "6/10",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 60.8,
+    "accentAreaPct": 2,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 173,
+      "shadowedElements": 42,
+      "borderToShadowRatio": 4.12,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0.1) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.15) 0px 0px 4px 0px inset",
+        "rgba(0, 0, 0, 0.05) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px",
+        "rgba(0, 0, 0, 0.05) 0px 1px 3px 0px, rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px"
+      ],
+      "radiusScale": [
+        4,
+        8,
+        1000,
+        32,
+        7,
+        50
+      ],
+      "gradientElements": 41
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 16595,
+    "horizontalBleed": false,
+    "proseMaxWidth": 822,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 428
+      },
+      {
+        "value": "column",
+        "count": 10
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 230,
+      "coveringMostContent": 38,
+      "top": [
+        304,
+        288,
+        16,
+        286,
+        870,
+        1044,
+        1072,
+        302
+      ]
+    },
+    "density": {
+      "visibleElements": 3401,
+      "perScreenful": 184
+    }
+  }
+}

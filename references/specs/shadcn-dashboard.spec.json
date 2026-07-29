@@ -1,0 +1,393 @@
+{
+  "name": "shadcn-dashboard",
+  "source": "https://ui.shadcn.com/examples/dashboard",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 88.5,
+    "authoredValuesSampled": 1149,
+    "distinctValues": 12,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 736
+      },
+      {
+        "value": 4,
+        "count": 120
+      },
+      {
+        "value": 6,
+        "count": 102
+      },
+      {
+        "value": 24,
+        "count": 64
+      },
+      {
+        "value": 12,
+        "count": 55
+      },
+      {
+        "value": 2,
+        "count": 54
+      },
+      {
+        "value": 16,
+        "count": 31
+      },
+      {
+        "value": 10,
+        "count": 29
+      },
+      {
+        "value": 32,
+        "count": 9
+      },
+      {
+        "value": 3,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 20,
+      "byMethod": {
+        "nested": 17,
+        "within": 3
+      },
+      "medianInsideGap": 6,
+      "medianBetweenGap": 16,
+      "medianRatio": 2,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Geist",
+        "count": 195
+      },
+      {
+        "value": "Geist Mono",
+        "count": 2
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      12,
+      12.8,
+      14,
+      16,
+      18,
+      24,
+      48
+    ],
+    "distinctSizes": 7,
+    "weights": [
+      400,
+      500,
+      600
+    ],
+    "roleCount": 19,
+    "scaleRatios": [
+      1.067,
+      1.094,
+      1.143,
+      1.125,
+      1.333,
+      2
+    ],
+    "hierarchyCarriedBy": "mixed (ink+size)",
+    "channelSpread": {
+      "size": 0.42,
+      "weight": 0.17,
+      "ink": 0.45
+    },
+    "measureChars": 100,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#000000",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 71,
+        "sample": "Home"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#737373",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 15,
+        "sample": "Total Revenue"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#737373",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 23,
+        "sample": "Drag to reorder"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 21,
+        "sample": "Neutral"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#737373",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 21,
+        "sample": "120k"
+      },
+      {
+        "size": 18,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": 1.56,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "A set of beautifully designed components that yo"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "Jun 24"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#000000",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 9,
+        "sample": "Home"
+      },
+      {
+        "size": 16,
+        "weight": 500,
+        "color": "#737373",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "Examples"
+      },
+      {
+        "size": 48,
+        "weight": 600,
+        "color": "#000000",
+        "lineHeight": 1.1,
+        "tracking": -2.4,
+        "transform": "none",
+        "count": 1,
+        "sample": "The Foundation for your Design System"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 240.6
+      },
+      {
+        "hex": "#fafafa",
+        "h": 0,
+        "s": 0,
+        "l": 98,
+        "c": 0,
+        "areaPct": 12.3
+      },
+      {
+        "hex": "#f7f7f7",
+        "h": 0,
+        "s": 0,
+        "l": 96.9,
+        "c": 0,
+        "areaPct": 4.7
+      },
+      {
+        "hex": "#f5f5f5",
+        "h": 0,
+        "s": 0,
+        "l": 96.1,
+        "c": 0,
+        "areaPct": 2.6
+      },
+      {
+        "hex": "#feffff",
+        "h": 180,
+        "s": 100,
+        "l": 99.8,
+        "c": 0.4,
+        "areaPct": 1.8
+      },
+      {
+        "hex": "#000000",
+        "h": 0,
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#747474",
+        "h": 0,
+        "s": 0,
+        "l": 45.5,
+        "c": 0,
+        "areaPct": 0
+      },
+      {
+        "hex": "#2b7fff",
+        "h": 216,
+        "s": 100,
+        "l": 58.4,
+        "c": 83.1,
+        "areaPct": 0
+      },
+      {
+        "hex": "#e5e5e5",
+        "h": 0,
+        "s": 0,
+        "l": 89.8,
+        "c": 0,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 60.6
+      },
+      {
+        "hex": "#737373",
+        "s": 0,
+        "l": 45.1,
+        "c": 0,
+        "sharePct": 36
+      },
+      {
+        "hex": "#171717",
+        "s": 0,
+        "l": 9,
+        "c": 0,
+        "sharePct": 2.2
+      },
+      {
+        "hex": "#fafafa",
+        "s": 0,
+        "l": 98,
+        "c": 0,
+        "sharePct": 1.2
+      }
+    ],
+    "neutralsTinted": "0/12",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 0.4,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 89,
+      "shadowedElements": 55,
+      "borderToShadowRatio": 1.62,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px"
+      ],
+      "radiusScale": [
+        8,
+        33554400,
+        4,
+        10,
+        14,
+        2
+      ],
+      "gradientElements": 1
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 2045,
+    "horizontalBleed": false,
+    "proseMaxWidth": 896,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 5
+      },
+      {
+        "value": "4-col: px px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 190
+      },
+      {
+        "value": "column",
+        "count": 33
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 97,
+      "coveringMostContent": 34,
+      "top": [
+        62,
+        334,
+        982,
+        1064,
+        726,
+        358,
+        94,
+        364
+      ]
+    },
+    "density": {
+      "visibleElements": 847,
+      "perScreenful": 373
+    }
+  }
+}

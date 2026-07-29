@@ -1,0 +1,479 @@
+{
+  "name": "clerk-docs",
+  "source": "https://clerk.com/docs/quickstarts/nextjs",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 83.9,
+    "authoredValuesSampled": 709,
+    "distinctValues": 25,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 157
+      },
+      {
+        "value": 6,
+        "count": 113
+      },
+      {
+        "value": 12,
+        "count": 86
+      },
+      {
+        "value": 16,
+        "count": 79
+      },
+      {
+        "value": 5,
+        "count": 76
+      },
+      {
+        "value": 4,
+        "count": 42
+      },
+      {
+        "value": 7,
+        "count": 38
+      },
+      {
+        "value": 28,
+        "count": 36
+      },
+      {
+        "value": 2,
+        "count": 35
+      },
+      {
+        "value": 24,
+        "count": 30
+      },
+      {
+        "value": 64,
+        "count": 10
+      },
+      {
+        "value": 32,
+        "count": 8
+      }
+    ],
+    "grouping": {
+      "samples": 32,
+      "byMethod": {
+        "nested": 21,
+        "within": 11
+      },
+      "medianInsideGap": 12,
+      "medianBetweenGap": 28,
+      "medianRatio": 1.8,
+      "confidence": "high",
+      "verdict": "space encodes grouping"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "soehneMono",
+        "count": 252
+      },
+      {
+        "value": "geistNumbers",
+        "count": 175
+      }
+    ],
+    "bodySize": 15,
+    "sizes": [
+      10,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      20,
+      24,
+      32
+    ],
+    "distinctSizes": 10,
+    "weights": [
+      400,
+      450,
+      500,
+      600
+    ],
+    "roleCount": 34,
+    "scaleRatios": [
+      1.2,
+      1.083,
+      1.077,
+      1.071,
+      1.067,
+      1.125,
+      1.111,
+      1.2,
+      1.333
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.21,
+      "weight": 0.17,
+      "ink": 0.65
+    },
+    "measureChars": 86.5,
+    "topRoles": [
+      {
+        "size": 15,
+        "weight": 400,
+        "color": "#42434d",
+        "lineHeight": 1.87,
+        "tracking": 0,
+        "transform": "none",
+        "count": 30,
+        "sample": "This is the default quickstart for new Next.js a"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#5de3ff",
+        "lineHeight": 1.85,
+        "tracking": 0,
+        "transform": "none",
+        "count": 40,
+        "sample": "create"
+      },
+      {
+        "size": 13,
+        "weight": 500,
+        "color": "#131316",
+        "lineHeight": 1.85,
+        "tracking": 0,
+        "transform": "none",
+        "count": 29,
+        "sample": "Open in Cursor"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.85,
+        "tracking": 0,
+        "transform": "none",
+        "count": 82,
+        "sample": "{ clerkMiddleware }"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#5e5f6e",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Learn how to add Clerk's prebuilt authentication"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#131316",
+        "lineHeight": 1.85,
+        "tracking": 0,
+        "transform": "none",
+        "count": 22,
+        "sample": "clerkMiddleware()"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#bab1ff",
+        "lineHeight": 1.85,
+        "tracking": 0,
+        "transform": "none",
+        "count": 66,
+        "sample": "import"
+      },
+      {
+        "size": 15,
+        "weight": 400,
+        "color": "#131316",
+        "lineHeight": 1.87,
+        "tracking": 0,
+        "transform": "none",
+        "count": 13,
+        "sample": "Pages Router quickstart"
+      },
+      {
+        "size": 14,
+        "weight": 450,
+        "color": "#5e5f6e",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 17,
+        "sample": "Reference"
+      },
+      {
+        "size": 13,
+        "weight": 450,
+        "color": "#5e5f6e",
+        "lineHeight": 1.23,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "Create a new Next.js app"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#f7f7f8",
+    "backgrounds": [
+      {
+        "hex": "#f7f7f8",
+        "h": 240,
+        "s": 6.7,
+        "l": 97.1,
+        "c": 0.4,
+        "areaPct": 101
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 18.4
+      },
+      {
+        "hex": "#212126",
+        "h": 240,
+        "s": 7,
+        "l": 13.9,
+        "c": 2,
+        "areaPct": 14
+      },
+      {
+        "hex": "#2f3037",
+        "h": 233,
+        "s": 7.8,
+        "l": 20,
+        "c": 3.1,
+        "areaPct": 10.4
+      },
+      {
+        "hex": "#34424b",
+        "h": 203,
+        "s": 18.1,
+        "l": 24.9,
+        "c": 9,
+        "areaPct": 5.4
+      },
+      {
+        "hex": "#f7f7f7",
+        "h": 0,
+        "s": 0,
+        "l": 96.9,
+        "c": 0,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#eeeef0",
+        "h": 240,
+        "s": 6.2,
+        "l": 93.7,
+        "c": 0.8,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#42434d",
+        "h": 235,
+        "s": 7.7,
+        "l": 28,
+        "c": 4.3,
+        "areaPct": 0
+      },
+      {
+        "hex": "#6c47ff",
+        "h": 252,
+        "s": 100,
+        "l": 63.9,
+        "c": 72.2,
+        "areaPct": 0
+      },
+      {
+        "hex": "#626276",
+        "h": 240,
+        "s": 9.3,
+        "l": 42.4,
+        "c": 7.8,
+        "areaPct": 0
+      },
+      {
+        "hex": "#fafafb",
+        "h": 240,
+        "s": 11.1,
+        "l": 98.2,
+        "c": 0.4,
+        "areaPct": 0
+      },
+      {
+        "hex": "#131316",
+        "h": 240,
+        "s": 7.3,
+        "l": 8,
+        "c": 1.2,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#42434d",
+        "s": 7.7,
+        "l": 28,
+        "c": 4.3,
+        "sharePct": 42.2
+      },
+      {
+        "hex": "#131316",
+        "s": 7.3,
+        "l": 8,
+        "c": 1.2,
+        "sharePct": 20
+      },
+      {
+        "hex": "#5e5f6e",
+        "s": 7.8,
+        "l": 40,
+        "c": 6.3,
+        "sharePct": 11.4
+      },
+      {
+        "hex": "#5de3ff",
+        "s": 100,
+        "l": 68.2,
+        "c": 63.5,
+        "sharePct": 9.8
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 5.1
+      },
+      {
+        "hex": "#bab1ff",
+        "s": 100,
+        "l": 84.7,
+        "c": 30.6,
+        "sharePct": 4
+      },
+      {
+        "hex": "#9394a1",
+        "s": 6.9,
+        "l": 60.4,
+        "c": 5.5,
+        "sharePct": 3.4
+      },
+      {
+        "hex": "#86ef9b",
+        "s": 76.6,
+        "l": 73.1,
+        "c": 41.2,
+        "sharePct": 2
+      },
+      {
+        "hex": "#2f3037",
+        "s": 7.8,
+        "l": 20,
+        "c": 3.1,
+        "sharePct": 0.7
+      },
+      {
+        "hex": "#212126",
+        "s": 7,
+        "l": 13.9,
+        "c": 2,
+        "sharePct": 0.5
+      }
+    ],
+    "neutralsTinted": "11/17",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 9,
+    "accentAreaPct": 5.4,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 19,
+      "shadowedElements": 31,
+      "borderToShadowRatio": 0.61,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(66, 67, 77) 0px 0px 0px 0.5px, oklab(0.999994 0.0000455678 0.0000200868 / 0.07) 0px 1px 0px 0px inset, oklab(0.249859 0.00254738 -0.00901626 / 0.2) 0px 1px 3px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.249859 0.00254738 -0.00901626 / 0.075) 0px 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px, rgba(32, 42, 54, 0.04) 0px 4px 6px 0px, rgba(47, 48, 56, 0.15) 0px 24px 68px 0px, rgba(0, 0, 0, 0.09) 0px 2px 3px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(238, 238, 240) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.249859 0.00254738 -0.00901626 / 0.1) 0px 0px 0px 1px, rgba(19, 19, 22, 0.4) 0px 1px 5px -4px, rgba(32, 42, 54, 0.06) 0px 2px 5px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(33, 33, 38) 0px 0px 0px 1px, oklab(0.999994 0.0000455678 0.0000200868 / 0.07) 0px 1px 0px 0px inset, oklab(0.249859 0.00254738 -0.00901626 / 0.2) 0px 1px 3px 0px"
+      ],
+      "radiusScale": [
+        6,
+        8,
+        4,
+        33554400,
+        12,
+        16
+      ],
+      "gradientElements": 21
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 6288,
+    "horizontalBleed": false,
+    "proseMaxWidth": 680,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "22-col: px px px px px px px px px px px px px px px px px px px px px px",
+        "count": 1
+      },
+      {
+        "value": "2-col: px px",
+        "count": 1
+      },
+      {
+        "value": "6-col: px px px px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 99
+      },
+      {
+        "value": "column",
+        "count": 4
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 132,
+      "coveringMostContent": 42,
+      "top": [
+        386,
+        382,
+        350,
+        430,
+        18,
+        408,
+        524,
+        870
+      ]
+    },
+    "density": {
+      "visibleElements": 1114,
+      "perScreenful": 159
+    }
+  }
+}

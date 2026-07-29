@@ -1,0 +1,427 @@
+{
+  "name": "vaadin-components",
+  "source": "https://vaadin.com/docs/latest/components",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 8,
+    "onScalePct": 93,
+    "authoredValuesSampled": 833,
+    "distinctValues": 14,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 451
+      },
+      {
+        "value": 16,
+        "count": 174
+      },
+      {
+        "value": 24,
+        "count": 119
+      },
+      {
+        "value": 2,
+        "count": 72
+      },
+      {
+        "value": 4,
+        "count": 40
+      },
+      {
+        "value": 32,
+        "count": 23
+      },
+      {
+        "value": 6,
+        "count": 12
+      },
+      {
+        "value": 3,
+        "count": 6
+      },
+      {
+        "value": 64,
+        "count": 4
+      },
+      {
+        "value": 48,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 8,
+      "byMethod": {
+        "nested": 7,
+        "within": 1
+      },
+      "medianInsideGap": 20,
+      "medianBetweenGap": 32,
+      "medianRatio": 1.83,
+      "confidence": "high",
+      "verdict": "space encodes grouping"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "nb_international_pro",
+        "count": 315
+      },
+      {
+        "value": "Arial",
+        "count": 65
+      },
+      {
+        "value": "-apple-system",
+        "count": 4
+      },
+      {
+        "value": "nb_international_promono",
+        "count": 1
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      12,
+      12.6,
+      13.3,
+      14,
+      16,
+      18,
+      24,
+      32
+    ],
+    "distinctSizes": 8,
+    "weights": [
+      400,
+      500,
+      600
+    ],
+    "roleCount": 19,
+    "scaleRatios": [
+      1.05,
+      1.056,
+      1.053,
+      1.143,
+      1.125,
+      1.333,
+      1.333
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.07,
+      "weight": 0.17,
+      "ink": 0.53
+    },
+    "measureChars": 44,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#232e3c",
+        "lineHeight": 1.6,
+        "tracking": 0.16,
+        "transform": "none",
+        "count": 68,
+        "sample": "Text fields, date pickers, combo boxes, and ever"
+      },
+      {
+        "size": 13.3,
+        "weight": 400,
+        "color": "#a2b4cb",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 64,
+        "sample": "Show sub-pages of Getting Started"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#1a81fa",
+        "lineHeight": 1.6,
+        "tracking": 0.16,
+        "transform": "none",
+        "count": 69,
+        "sample": "Web Components 25.2.6"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#576b85",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 65,
+        "sample": "Search"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#0d1219",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 59,
+        "sample": "Docs"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#576b85",
+        "lineHeight": 1,
+        "tracking": 0.16,
+        "transform": "none",
+        "count": 9,
+        "sample": "Documentation versions (currently viewingVaadin "
+      },
+      {
+        "size": 18,
+        "weight": 400,
+        "color": "#0d1219",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 9,
+        "sample": "Data Entry"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#0d1219",
+        "lineHeight": 1.4,
+        "tracking": 0.16,
+        "transform": "none",
+        "count": 10,
+        "sample": "Vaadin 25.3 (pre-release)"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#0d1219",
+        "lineHeight": 1.4,
+        "tracking": 0.16,
+        "transform": "none",
+        "count": 8,
+        "sample": "Getting Started"
+      },
+      {
+        "size": 24,
+        "weight": 400,
+        "color": "#0d1219",
+        "lineHeight": 1.25,
+        "tracking": -0.48,
+        "transform": "none",
+        "count": 4,
+        "sample": "Data Entry"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 31.5
+      },
+      {
+        "hex": "#e7f1ff",
+        "h": 215,
+        "s": 100,
+        "l": 95.3,
+        "c": 9.4,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#8378ff",
+        "h": 245,
+        "s": 100,
+        "l": 73.5,
+        "c": 52.9,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#38c694",
+        "h": 159,
+        "s": 55.9,
+        "l": 49.8,
+        "c": 55.7,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#ff7d5f",
+        "h": 11,
+        "s": 100,
+        "l": 68.6,
+        "c": 62.7,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#ffe8ab",
+        "h": 44,
+        "s": 100,
+        "l": 83.5,
+        "c": 32.9,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#b4fbe1",
+        "h": 158,
+        "s": 89.9,
+        "l": 84.5,
+        "c": 27.8,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#f5f8fd",
+        "h": 218,
+        "s": 66.7,
+        "l": 97.6,
+        "c": 3.1,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#0968f6",
+        "h": 216,
+        "s": 92.9,
+        "l": 50,
+        "c": 92.9,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#232e3c",
+        "s": 26.3,
+        "l": 18.6,
+        "c": 9.8,
+        "sharePct": 56.9
+      },
+      {
+        "hex": "#a2b4cb",
+        "s": 28.3,
+        "l": 71.6,
+        "c": 16.1,
+        "sharePct": 16.1
+      },
+      {
+        "hex": "#1a81fa",
+        "s": 95.7,
+        "l": 54.1,
+        "c": 87.8,
+        "sharePct": 10.3
+      },
+      {
+        "hex": "#0d1219",
+        "s": 31.6,
+        "l": 7.5,
+        "c": 4.7,
+        "sharePct": 9.1
+      },
+      {
+        "hex": "#576b85",
+        "s": 20.9,
+        "l": 43.1,
+        "c": 18,
+        "sharePct": 7.3
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 0.1
+      },
+      {
+        "hex": "#8396af",
+        "s": 21.6,
+        "l": 60,
+        "c": 17.3,
+        "sharePct": 0.1
+      },
+      {
+        "hex": "#0042a6",
+        "s": 100,
+        "l": 32.5,
+        "c": 65.1,
+        "sharePct": 0.1
+      }
+    ],
+    "neutralsTinted": "2/4",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 0,
+    "accentAreaPct": 1.8,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 75,
+      "shadowedElements": 3,
+      "borderToShadowRatio": 25,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgb(224, 233, 244) 0px -1px 0px 0px inset, rgb(224, 233, 244) 0px -1px 0px 0px",
+        "rgba(10, 22, 41, 0.3) 0px 4px 12px -4px"
+      ],
+      "radiusScale": [
+        8,
+        4,
+        6,
+        3
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 9731,
+    "horizontalBleed": false,
+    "proseMaxWidth": 307,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "3-col: px px px",
+        "count": 5
+      },
+      {
+        "value": "4-col: px px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 300
+      },
+      {
+        "value": "column",
+        "count": 69
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 59,
+      "coveringMostContent": 7,
+      "top": [
+        84,
+        348,
+        688,
+        1026,
+        350,
+        686,
+        166,
+        1024
+      ]
+    },
+    "density": {
+      "visibleElements": 1200,
+      "perScreenful": 111
+    }
+  }
+}

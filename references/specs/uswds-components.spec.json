@@ -1,0 +1,419 @@
+{
+  "name": "uswds-components",
+  "source": "https://designsystem.digital.gov/components/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 8,
+    "onScalePct": 97.9,
+    "authoredValuesSampled": 766,
+    "distinctValues": 10,
+    "topSteps": [
+      {
+        "value": 24,
+        "count": 282
+      },
+      {
+        "value": 8,
+        "count": 235
+      },
+      {
+        "value": 16,
+        "count": 207
+      },
+      {
+        "value": 32,
+        "count": 22
+      },
+      {
+        "value": 12,
+        "count": 10
+      },
+      {
+        "value": 2,
+        "count": 5
+      },
+      {
+        "value": 20,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 9,
+      "byMethod": {
+        "nested": 6,
+        "within": 3
+      },
+      "medianInsideGap": 10,
+      "medianBetweenGap": 16.5,
+      "medianRatio": 2,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Public Sans Web",
+        "count": 196
+      },
+      {
+        "value": "Source Sans Pro Web",
+        "count": 2
+      }
+    ],
+    "bodySize": 16,
+    "sizes": [
+      12,
+      13,
+      14.1,
+      15,
+      16,
+      17,
+      20,
+      40
+    ],
+    "distinctSizes": 8,
+    "weights": [
+      300,
+      400,
+      700
+    ],
+    "roleCount": 32,
+    "scaleRatios": [
+      1.083,
+      1.085,
+      1.064,
+      1.067,
+      1.063,
+      1.176,
+      2
+    ],
+    "hierarchyCarriedBy": "weight",
+    "channelSpread": {
+      "size": 0.17,
+      "weight": 0.5,
+      "ink": 0.25
+    },
+    "measureChars": 38,
+    "topRoles": [
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#1b1b1b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 48,
+        "sample": "An accordion is a list of headers that hide or r"
+      },
+      {
+        "size": 15,
+        "weight": 400,
+        "color": "#5c5c5c",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 48,
+        "sample": "Accordion"
+      },
+      {
+        "size": 20,
+        "weight": 700,
+        "color": "#005ea2",
+        "lineHeight": 1.2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 47,
+        "sample": "Accordion"
+      },
+      {
+        "size": 15,
+        "weight": 400,
+        "color": "#adadad",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 7,
+        "sample": "About GSA"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": 1.6,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Filter by name and keyword"
+      },
+      {
+        "size": 14.1,
+        "weight": 400,
+        "color": "#2f4668",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Reach out in GitHub"
+      },
+      {
+        "size": 14.1,
+        "weight": 400,
+        "color": "#1b1b1b",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Have an idea or an issue?"
+      },
+      {
+        "size": 20,
+        "weight": 300,
+        "color": "#000000",
+        "lineHeight": 1.6,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "USWDS components are simple and consistent solut"
+      },
+      {
+        "size": 15,
+        "weight": 400,
+        "color": "#757575",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 7,
+        "sample": "How to use USWDS"
+      },
+      {
+        "size": 16,
+        "weight": 700,
+        "color": "#ffffff",
+        "lineHeight": 0.9,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "Download"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#fcfcfc",
+    "backgrounds": [
+      {
+        "hex": "#fcfcfc",
+        "h": 0,
+        "s": 0,
+        "l": 98.8,
+        "c": 0,
+        "areaPct": 81.1
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 55
+      },
+      {
+        "hex": "#f0f0f0",
+        "h": 0,
+        "s": 0,
+        "l": 94.1,
+        "c": 0,
+        "areaPct": 6.8
+      },
+      {
+        "hex": "#1b1b1b",
+        "h": 0,
+        "s": 0,
+        "l": 10.6,
+        "c": 0,
+        "areaPct": 5.5
+      },
+      {
+        "hex": "#e6e6e6",
+        "h": 0,
+        "s": 0,
+        "l": 90.2,
+        "c": 0,
+        "areaPct": 3.1
+      },
+      {
+        "hex": "#252f3e",
+        "h": 216,
+        "s": 25.3,
+        "l": 19.4,
+        "c": 9.8,
+        "areaPct": 1.8
+      },
+      {
+        "hex": "#adadad",
+        "h": 0,
+        "s": 0,
+        "l": 67.8,
+        "c": 0,
+        "areaPct": 0.8
+      },
+      {
+        "hex": "#13171f",
+        "h": 220,
+        "s": 24,
+        "l": 9.8,
+        "c": 4.7,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#00bde3",
+        "h": 190,
+        "s": 100,
+        "l": 44.5,
+        "c": 89,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#2672de",
+        "h": 215,
+        "s": 73.6,
+        "l": 51,
+        "c": 72.2,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#1b1b1b",
+        "s": 0,
+        "l": 10.6,
+        "c": 0,
+        "sharePct": 70.6
+      },
+      {
+        "hex": "#005ea2",
+        "s": 100,
+        "l": 31.8,
+        "c": 63.5,
+        "sharePct": 7.9
+      },
+      {
+        "hex": "#5c5c5c",
+        "s": 0,
+        "l": 36.1,
+        "c": 0,
+        "sharePct": 7.8
+      },
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 3.7
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 3
+      },
+      {
+        "hex": "#adadad",
+        "s": 0,
+        "l": 67.8,
+        "c": 0,
+        "sharePct": 2.3
+      },
+      {
+        "hex": "#2f4668",
+        "s": 37.7,
+        "l": 29.6,
+        "c": 22.4,
+        "sharePct": 1.5
+      },
+      {
+        "hex": "#757575",
+        "s": 0,
+        "l": 45.9,
+        "c": 0,
+        "sharePct": 1.2
+      },
+      {
+        "hex": "#e6e6e6",
+        "s": 0,
+        "l": 90.2,
+        "c": 0,
+        "sharePct": 0.7
+      },
+      {
+        "hex": "#2e2e2e",
+        "s": 0,
+        "l": 18,
+        "c": 0,
+        "sharePct": 0.4
+      }
+    ],
+    "neutralsTinted": "1/15",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 9.8,
+    "accentAreaPct": 1.9,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 103,
+      "shadowedElements": 3,
+      "borderToShadowRatio": 34.33,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgb(229, 160, 0) 0px 0px 0px 2px inset",
+        "rgba(255, 255, 255, 0.7) 0px 0px 0px 2px inset",
+        "rgb(0, 94, 162) 0px 0px 0px 2px inset"
+      ],
+      "radiusScale": [
+        4,
+        50
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 4382,
+    "horizontalBleed": false,
+    "proseMaxWidth": 596,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "column",
+        "count": 47
+      },
+      {
+        "value": "row",
+        "count": 20
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 63,
+      "coveringMostContent": 15,
+      "top": [
+        54,
+        318,
+        690,
+        1060,
+        294,
+        666,
+        1036,
+        292
+      ]
+    },
+    "density": {
+      "visibleElements": 589,
+      "perScreenful": 121
+    }
+  }
+}

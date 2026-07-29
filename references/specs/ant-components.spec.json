@@ -1,0 +1,391 @@
+{
+  "name": "ant-components",
+  "source": "https://ant.design/components/overview/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 96.4,
+    "authoredValuesSampled": 1159,
+    "distinctValues": 20,
+    "topSteps": [
+      {
+        "value": 12,
+        "count": 783
+      },
+      {
+        "value": 4,
+        "count": 154
+      },
+      {
+        "value": 36,
+        "count": 81
+      },
+      {
+        "value": 8,
+        "count": 50
+      },
+      {
+        "value": 7,
+        "count": 26
+      },
+      {
+        "value": 24,
+        "count": 20
+      },
+      {
+        "value": 16,
+        "count": 17
+      },
+      {
+        "value": 38,
+        "count": 8
+      },
+      {
+        "value": 2,
+        "count": 5
+      },
+      {
+        "value": 15,
+        "count": 4
+      },
+      {
+        "value": 48,
+        "count": 4
+      },
+      {
+        "value": 32,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 16,
+      "byMethod": {
+        "nested": 14,
+        "within": 2
+      },
+      "medianInsideGap": 4,
+      "medianBetweenGap": 16,
+      "medianRatio": 4,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "AlibabaSans",
+        "count": 166
+      },
+      {
+        "value": "Avenir",
+        "count": 95
+      },
+      {
+        "value": "sans-serif",
+        "count": 2
+      },
+      {
+        "value": "ui-monospace",
+        "count": 1
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      12,
+      12.6,
+      14,
+      16,
+      16.8,
+      18,
+      24,
+      32
+    ],
+    "distinctSizes": 8,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 14,
+    "scaleRatios": [
+      1.05,
+      1.111,
+      1.143,
+      1.05,
+      1.071,
+      1.333,
+      1.333
+    ],
+    "hierarchyCarriedBy": "weight",
+    "channelSpread": {
+      "size": 0,
+      "weight": 0.33,
+      "ink": 0
+    },
+    "measureChars": 133,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": 4.57,
+        "tracking": 0,
+        "transform": "none",
+        "count": 152,
+        "sample": "Design"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#000000",
+        "lineHeight": 1.57,
+        "tracking": 0,
+        "transform": "none",
+        "count": 78,
+        "sample": "Button"
+      },
+      {
+        "size": 24,
+        "weight": 500,
+        "color": "#000000",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "General"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#1677ff",
+        "lineHeight": 4.57,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Components"
+      },
+      {
+        "size": 16,
+        "weight": 500,
+        "color": "#000000",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Resources"
+      },
+      {
+        "size": 32,
+        "weight": 600,
+        "color": "#000000",
+        "lineHeight": 1.21,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Components Overview"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#52c41a",
+        "lineHeight": 1.67,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "v6.5.2"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#000000",
+        "lineHeight": 1.67,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": ""
+      },
+      {
+        "size": 18,
+        "weight": 700,
+        "color": "#000000",
+        "lineHeight": 1.78,
+        "tracking": -0.18,
+        "transform": "none",
+        "count": 1,
+        "sample": "Ant Design"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#cf1322",
+        "lineHeight": 1.67,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "DEPRECATED"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 47.4
+      },
+      {
+        "hex": "#f0f3fa",
+        "h": 222,
+        "s": 50,
+        "l": 96.1,
+        "c": 3.9,
+        "areaPct": 7.8
+      },
+      {
+        "hex": "#e6f4ff",
+        "h": 206,
+        "s": 100,
+        "l": 95.1,
+        "c": 9.8,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#f5f5f5",
+        "h": 0,
+        "s": 0,
+        "l": 96.1,
+        "c": 0,
+        "areaPct": 0
+      },
+      {
+        "hex": "#f6ffed",
+        "h": 90,
+        "s": 100,
+        "l": 96.5,
+        "c": 7.1,
+        "areaPct": 0
+      },
+      {
+        "hex": "#fff1f0",
+        "h": 4,
+        "s": 100,
+        "l": 97.1,
+        "c": 5.9,
+        "areaPct": 0
+      },
+      {
+        "hex": "#000000",
+        "h": 0,
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 96.2
+      },
+      {
+        "hex": "#1677ff",
+        "s": 100,
+        "l": 54.3,
+        "c": 91.4,
+        "sharePct": 2.5
+      },
+      {
+        "hex": "#52c41a",
+        "s": 76.6,
+        "l": 43.5,
+        "c": 66.7,
+        "sharePct": 0.7
+      },
+      {
+        "hex": "#cf1322",
+        "s": 83.2,
+        "l": 44.3,
+        "c": 73.7,
+        "sharePct": 0.4
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 0.1
+      }
+    ],
+    "neutralsTinted": "3/8",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 3.9,
+    "accentAreaPct": 0.1,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 185,
+      "shadowedElements": 3,
+      "borderToShadowRatio": 61.67,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0.05) 0px 1px 2px 0px, rgba(0, 0, 0, 0.03) 0px 1px 6px -1px, rgba(0, 0, 0, 0.03) 0px 2px 4px 0px",
+        "rgba(0, 0, 0, 0.14) 0px 106px 36px -116px inset"
+      ],
+      "radiusScale": [
+        8,
+        4,
+        50,
+        6,
+        20
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 7067,
+    "horizontalBleed": false,
+    "proseMaxWidth": 928,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 355
+      },
+      {
+        "value": "column",
+        "count": 78
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 95,
+      "coveringMostContent": 17,
+      "top": [
+        44,
+        348,
+        362,
+        600,
+        8,
+        838,
+        1076,
+        350
+      ]
+    },
+    "density": {
+      "visibleElements": 1531,
+      "perScreenful": 195
+    }
+  }
+}

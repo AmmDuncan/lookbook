@@ -1,0 +1,270 @@
+{
+  "name": "chakra-components",
+  "source": "https://chakra-ui.com/docs/components",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 90.4,
+    "authoredValuesSampled": 52,
+    "distinctValues": 7,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 27
+      },
+      {
+        "value": 4,
+        "count": 8
+      },
+      {
+        "value": 14,
+        "count": 5
+      },
+      {
+        "value": 12,
+        "count": 4
+      },
+      {
+        "value": 32,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 3,
+      "byMethod": {
+        "nested": 2,
+        "within": 1
+      },
+      "medianInsideGap": 10,
+      "medianBetweenGap": 8,
+      "medianRatio": 0.8,
+      "confidence": "low — too few groups to generalise",
+      "verdict": "space encodes little grouping — flat rhythm"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Wix Madefor Text",
+        "count": 16
+      },
+      {
+        "value": "SFMono-Regular",
+        "count": 1
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      11.2,
+      14,
+      16,
+      24
+    ],
+    "distinctSizes": 4,
+    "weights": [
+      400,
+      500,
+      600
+    ],
+    "roleCount": 7,
+    "scaleRatios": [
+      1.25,
+      1.143,
+      1.5
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.19,
+      "weight": 0.17,
+      "ink": 0.96
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#ffffff",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Build faster with Premium Chakra UI Components \ud83d"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#52525b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "Showcase"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#09090b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "The page you are looking for does not exist."
+      },
+      {
+        "size": 24,
+        "weight": 600,
+        "color": "#09090b",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "404. Page not found"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#09090b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Docs"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#27272a",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Sponsor"
+      },
+      {
+        "size": 11.2,
+        "weight": 500,
+        "color": "#27272a",
+        "lineHeight": 1.79,
+        "tracking": 1.12,
+        "transform": "none",
+        "count": 1,
+        "sample": ""
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 10.9
+      },
+      {
+        "hex": "#f4f4f5",
+        "h": 240,
+        "s": 4.8,
+        "l": 95.9,
+        "c": 0.4,
+        "areaPct": 0.7
+      },
+      {
+        "hex": "#000000",
+        "h": 0,
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "areaPct": 0.2
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#09090b",
+        "s": 10,
+        "l": 3.9,
+        "c": 0.8,
+        "sharePct": 36.8
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 28.2
+      },
+      {
+        "hex": "#52525b",
+        "s": 5.2,
+        "l": 33.9,
+        "c": 3.5,
+        "sharePct": 27.8
+      },
+      {
+        "hex": "#27272a",
+        "s": 3.7,
+        "l": 15.9,
+        "c": 1.2,
+        "sharePct": 7.2
+      }
+    ],
+    "neutralsTinted": "2/7",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 0.4,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 12,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [
+        4
+      ],
+      "gradientElements": 1
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 958,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 15
+      },
+      {
+        "value": "column",
+        "count": 1
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 22,
+      "coveringMostContent": 15,
+      "top": [
+        32,
+        0,
+        856,
+        486,
+        1328,
+        560,
+        192,
+        258
+      ]
+    },
+    "density": {
+      "visibleElements": 62,
+      "perScreenful": 58
+    }
+  }
+}

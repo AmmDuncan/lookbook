@@ -1,0 +1,379 @@
+{
+  "name": "salesforce-lightning",
+  "source": "https://www.lightningdesignsystem.com/components/overview/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 8,
+    "onScalePct": 92.1,
+    "authoredValuesSampled": 227,
+    "distinctValues": 17,
+    "topSteps": [
+      {
+        "value": 2,
+        "count": 338
+      },
+      {
+        "value": 8,
+        "count": 144
+      },
+      {
+        "value": 16,
+        "count": 41
+      },
+      {
+        "value": 24,
+        "count": 10
+      },
+      {
+        "value": 40,
+        "count": 7
+      },
+      {
+        "value": 12,
+        "count": 6
+      },
+      {
+        "value": 1,
+        "count": 4
+      },
+      {
+        "value": 5,
+        "count": 4
+      },
+      {
+        "value": 6,
+        "count": 4
+      },
+      {
+        "value": 32,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 4,
+      "byMethod": {
+        "nested": 2,
+        "within": 2
+      },
+      "medianInsideGap": 12,
+      "medianBetweenGap": 30,
+      "medianRatio": 2.25,
+      "confidence": "medium",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Inter",
+        "count": 92
+      },
+      {
+        "value": "AvantGardeForSalesforce",
+        "count": 7
+      },
+      {
+        "value": "DM sans",
+        "count": 3
+      }
+    ],
+    "bodySize": 16,
+    "sizes": [
+      13,
+      14,
+      16,
+      24,
+      32,
+      40
+    ],
+    "distinctSizes": 6,
+    "weights": [
+      300,
+      400,
+      500,
+      700
+    ],
+    "roleCount": 15,
+    "scaleRatios": [
+      1.077,
+      1.143,
+      1.5,
+      1.333,
+      1.25
+    ],
+    "hierarchyCarriedBy": "mixed (size+weight)",
+    "channelSpread": {
+      "size": 0.19,
+      "weight": 0.17,
+      "ink": 0.09
+    },
+    "measureChars": 103,
+    "topRoles": [
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#444444",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 18,
+        "sample": "SLDS 2 includes a curated collection of reusable"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#2e2e2e",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 56,
+        "sample": "Get Started"
+      },
+      {
+        "size": 16,
+        "weight": 700,
+        "color": "#444444",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 9,
+        "sample": "Pre-Built, Accessible UI Elements"
+      },
+      {
+        "size": 24,
+        "weight": 300,
+        "color": "#5c5c5c",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "A distinct element within a user interface that "
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#3a49da",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Components | Lightning Base Components"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#03234d",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Lightning Base Components"
+      },
+      {
+        "size": 16,
+        "weight": 500,
+        "color": "#444444",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Lighting Web Components"
+      },
+      {
+        "size": 24,
+        "weight": 400,
+        "color": "#03234d",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Lightning Base Components"
+      },
+      {
+        "size": 32,
+        "weight": 400,
+        "color": "#001642",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Component Types"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Styleguide secondary navigation"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 126.8
+      },
+      {
+        "hex": "#fbf3e0",
+        "h": 42,
+        "s": 77.1,
+        "l": 93.1,
+        "c": 10.6,
+        "areaPct": 6.8
+      },
+      {
+        "hex": "#e0e5f8",
+        "h": 227,
+        "s": 63.2,
+        "l": 92.5,
+        "c": 9.4,
+        "areaPct": 0.6
+      },
+      {
+        "hex": "#c51d54",
+        "h": 340,
+        "s": 74.3,
+        "l": 44.3,
+        "c": 65.9,
+        "areaPct": 0.4
+      },
+      {
+        "hex": "#3a49da",
+        "h": 234,
+        "s": 68.4,
+        "l": 54.1,
+        "c": 62.7,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#444444",
+        "s": 0,
+        "l": 26.7,
+        "c": 0,
+        "sharePct": 76.9
+      },
+      {
+        "hex": "#2e2e2e",
+        "s": 0,
+        "l": 18,
+        "c": 0,
+        "sharePct": 13.1
+      },
+      {
+        "hex": "#03234d",
+        "s": 92.5,
+        "l": 15.7,
+        "c": 29,
+        "sharePct": 3.6
+      },
+      {
+        "hex": "#5c5c5c",
+        "s": 0,
+        "l": 36.1,
+        "c": 0,
+        "sharePct": 2.2
+      },
+      {
+        "hex": "#3a49da",
+        "s": 68.4,
+        "l": 54.1,
+        "c": 62.7,
+        "sharePct": 2
+      },
+      {
+        "hex": "#001642",
+        "s": 100,
+        "l": 12.9,
+        "c": 25.9,
+        "sharePct": 1.1
+      },
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 0.8
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 0.4
+      }
+    ],
+    "neutralsTinted": "0/6",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 10.6,
+    "accentAreaPct": 7.8,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 14,
+      "shadowedElements": 3,
+      "borderToShadowRatio": 4.67,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0.1) 0px 2px 4px 0px"
+      ],
+      "radiusScale": [
+        3,
+        4,
+        20,
+        24,
+        2
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": 848,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 201
+      },
+      {
+        "value": "column",
+        "count": 86
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 33,
+      "coveringMostContent": 7,
+      "top": [
+        8,
+        416,
+        16,
+        200,
+        204,
+        40,
+        440,
+        0
+      ]
+    },
+    "density": {
+      "visibleElements": 729,
+      "perScreenful": 729
+    }
+  }
+}

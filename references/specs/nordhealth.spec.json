@@ -1,0 +1,349 @@
+{
+  "name": "nordhealth",
+  "source": "https://nordhealth.design/components/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 8,
+    "onScalePct": 92.5,
+    "authoredValuesSampled": 637,
+    "distinctValues": 9,
+    "topSteps": [
+      {
+        "value": 16,
+        "count": 361
+      },
+      {
+        "value": 8,
+        "count": 212
+      },
+      {
+        "value": 36,
+        "count": 28
+      },
+      {
+        "value": 4,
+        "count": 16
+      },
+      {
+        "value": 24,
+        "count": 8
+      },
+      {
+        "value": 10,
+        "count": 7
+      },
+      {
+        "value": 48,
+        "count": 7
+      }
+    ],
+    "grouping": {
+      "samples": 13,
+      "byMethod": {
+        "nested": 13,
+        "within": 0
+      },
+      "medianInsideGap": 0,
+      "medianBetweenGap": 16,
+      "medianRatio": 15,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Nordhealth Sans",
+        "count": 346
+      },
+      {
+        "value": "Nord Custom",
+        "count": 10
+      },
+      {
+        "value": "Arial",
+        "count": 4
+      },
+      {
+        "value": "Times",
+        "count": 2
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      9,
+      10,
+      11,
+      12,
+      14,
+      16,
+      20,
+      24
+    ],
+    "distinctSizes": 8,
+    "weights": [
+      400,
+      600,
+      670,
+      700
+    ],
+    "roleCount": 20,
+    "scaleRatios": [
+      1.111,
+      1.1,
+      1.091,
+      1.167,
+      1.143,
+      1.25,
+      1.2
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.19,
+      "weight": 0,
+      "ink": 0.31
+    },
+    "measureChars": 32,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#667680",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 70,
+        "sample": "Buttons are used for interface actions, with a p"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#36434a",
+        "lineHeight": 1.14,
+        "tracking": 0,
+        "transform": "none",
+        "count": 114,
+        "sample": "Search"
+      },
+      {
+        "size": 20,
+        "weight": 600,
+        "color": "#0c1a3d",
+        "lineHeight": 1.2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 70,
+        "sample": "Button"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#0c1a3d",
+        "lineHeight": 1.15,
+        "tracking": 0,
+        "transform": "none",
+        "count": 72,
+        "sample": "Alpha"
+      },
+      {
+        "size": 20,
+        "weight": 400,
+        "color": "#667680",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Presentational user interface components with en"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#667680",
+        "lineHeight": 1.67,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Tags"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#3559c7",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "— 18 new components, Light DOM APIs, and updates"
+      },
+      {
+        "size": 24,
+        "weight": 670,
+        "color": "#0c1a3d",
+        "lineHeight": 1.2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 9,
+        "sample": "Action"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#36434a",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 6,
+        "sample": "GitHub"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Keyboard shortcut ⌥ + L"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#f6f8f8",
+        "h": 180,
+        "s": 12.5,
+        "l": 96.9,
+        "c": 0.8,
+        "areaPct": 230.8
+      },
+      {
+        "hex": "#f6f8fa",
+        "h": 210,
+        "s": 28.6,
+        "l": 97.3,
+        "c": 1.6,
+        "areaPct": 112.6
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 100.4
+      },
+      {
+        "hex": "#eff2fb",
+        "h": 225,
+        "s": 60,
+        "l": 96.1,
+        "c": 4.7,
+        "areaPct": 4.6
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#667680",
+        "s": 11.3,
+        "l": 45.1,
+        "c": 10.2,
+        "sharePct": 74.9
+      },
+      {
+        "hex": "#0c1a3d",
+        "s": 67.1,
+        "l": 14.3,
+        "c": 19.2,
+        "sharePct": 12.6
+      },
+      {
+        "hex": "#36434a",
+        "s": 15.6,
+        "l": 25.1,
+        "c": 7.8,
+        "sharePct": 10.5
+      },
+      {
+        "hex": "#3559c7",
+        "s": 57.9,
+        "l": 49.4,
+        "c": 57.3,
+        "sharePct": 1.5
+      },
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 0.5
+      }
+    ],
+    "neutralsTinted": "3/6",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 4.7,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 75,
+      "shadowedElements": 2,
+      "borderToShadowRatio": 37.5,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(12, 12, 12, 0.09) 0px 1px 3px 0px"
+      ],
+      "radiusScale": [
+        5,
+        3,
+        999
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": 700,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "3-col: px px px",
+        "count": 10
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 248
+      },
+      {
+        "value": "column",
+        "count": 5
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 118,
+      "coveringMostContent": 24,
+      "top": [
+        286,
+        276,
+        572,
+        34,
+        868,
+        42,
+        584,
+        880
+      ]
+    },
+    "density": {
+      "visibleElements": 1884,
+      "perScreenful": 1884
+    }
+  }
+}

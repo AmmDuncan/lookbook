@@ -1,0 +1,315 @@
+{
+  "name": "govuk-components",
+  "source": "https://design-system.service.gov.uk/components/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 5,
+    "onScalePct": 95.3,
+    "authoredValuesSampled": 170,
+    "distinctValues": 16,
+    "topSteps": [
+      {
+        "value": 5,
+        "count": 117
+      },
+      {
+        "value": 2,
+        "count": 71
+      },
+      {
+        "value": 15,
+        "count": 16
+      },
+      {
+        "value": 20,
+        "count": 10
+      },
+      {
+        "value": 10,
+        "count": 7
+      },
+      {
+        "value": 25,
+        "count": 4
+      },
+      {
+        "value": 50,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 6,
+      "byMethod": {
+        "nested": 6,
+        "within": 0
+      },
+      "medianInsideGap": 19.5,
+      "medianBetweenGap": 25,
+      "medianRatio": 2.04,
+      "confidence": "medium",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "GDS Transport",
+        "count": 76
+      }
+    ],
+    "bodySize": 19,
+    "sizes": [
+      16,
+      19,
+      24,
+      28.5,
+      31,
+      48
+    ],
+    "distinctSizes": 6,
+    "weights": [
+      400,
+      700
+    ],
+    "roleCount": 11,
+    "scaleRatios": [
+      1.188,
+      1.263,
+      1.188,
+      1.088,
+      1.548
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.25,
+      "weight": 0,
+      "ink": 0.33
+    },
+    "measureChars": 76,
+    "topRoles": [
+      {
+        "size": 19,
+        "weight": 400,
+        "color": "#0b0c0c",
+        "lineHeight": 1.32,
+        "tracking": 0,
+        "transform": "none",
+        "count": 9,
+        "sample": "We’d like to use analytics cookies so we can und"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#1a65a6",
+        "lineHeight": 1.25,
+        "tracking": 0,
+        "transform": "none",
+        "count": 36,
+        "sample": "Accordion"
+      },
+      {
+        "size": 19,
+        "weight": 400,
+        "color": "#1a65a6",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 21,
+        "sample": "View cookies"
+      },
+      {
+        "size": 19,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Accept analytics cookies"
+      },
+      {
+        "size": 24,
+        "weight": 700,
+        "color": "#0b0c0c",
+        "lineHeight": 1.25,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Cookies on GOV.UK Design System"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#0b0c0c",
+        "lineHeight": 1.25,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Skip to main content"
+      },
+      {
+        "size": 24,
+        "weight": 700,
+        "color": "#000000",
+        "lineHeight": 1.25,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Pages in this section"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Search Design system"
+      },
+      {
+        "size": 31,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1,
+        "tracking": -0.47,
+        "transform": "none",
+        "count": 1,
+        "sample": "Design System"
+      },
+      {
+        "size": 28.5,
+        "weight": 700,
+        "color": "#0b0c0c",
+        "lineHeight": 1.32,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Support links"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#f4f8fb",
+        "h": 206,
+        "s": 46.7,
+        "l": 97.1,
+        "c": 2.7,
+        "areaPct": 29.6
+      },
+      {
+        "hex": "#1d70b8",
+        "h": 208,
+        "s": 72.8,
+        "l": 41.8,
+        "c": 60.8,
+        "areaPct": 2.9
+      },
+      {
+        "hex": "#0f7a52",
+        "h": 158,
+        "s": 78.1,
+        "l": 26.9,
+        "c": 42,
+        "areaPct": 0.6
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 0.5
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#0b0c0c",
+        "s": 4.3,
+        "l": 4.5,
+        "c": 0.4,
+        "sharePct": 53.4
+      },
+      {
+        "hex": "#1a65a6",
+        "s": 72.9,
+        "l": 37.6,
+        "c": 54.9,
+        "sharePct": 40.9
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 4.5
+      },
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 1.2
+      }
+    ],
+    "neutralsTinted": "1/5",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 60.8,
+    "accentAreaPct": 3.5,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 8,
+      "shadowedElements": 2,
+      "borderToShadowRatio": 4,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgb(8, 61, 41) 0px 2px 0px 0px"
+      ],
+      "radiusScale": [],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 2074,
+    "horizontalBleed": false,
+    "proseMaxWidth": 722,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 6
+      },
+      {
+        "value": "column",
+        "count": 1
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 29,
+      "coveringMostContent": 6,
+      "top": [
+        170,
+        460,
+        0,
+        156,
+        900,
+        374,
+        294,
+        510
+      ]
+    },
+    "density": {
+      "visibleElements": 189,
+      "perScreenful": 82
+    }
+  }
+}

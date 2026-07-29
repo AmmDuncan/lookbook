@@ -1,0 +1,477 @@
+{
+  "name": "posthog-docs",
+  "source": "https://posthog.com/docs/product-analytics/insights",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 80.3,
+    "authoredValuesSampled": 938,
+    "distinctValues": 23,
+    "topSteps": [
+      {
+        "value": 4,
+        "count": 451
+      },
+      {
+        "value": 2,
+        "count": 175
+      },
+      {
+        "value": 8,
+        "count": 172
+      },
+      {
+        "value": 6,
+        "count": 110
+      },
+      {
+        "value": 1,
+        "count": 109
+      },
+      {
+        "value": 16,
+        "count": 73
+      },
+      {
+        "value": 17,
+        "count": 28
+      },
+      {
+        "value": 12,
+        "count": 22
+      },
+      {
+        "value": 30,
+        "count": 20
+      },
+      {
+        "value": 20,
+        "count": 17
+      },
+      {
+        "value": 9,
+        "count": 8
+      },
+      {
+        "value": 32,
+        "count": 8
+      }
+    ],
+    "grouping": {
+      "samples": 45,
+      "byMethod": {
+        "nested": 33,
+        "within": 12
+      },
+      "medianInsideGap": 8,
+      "medianBetweenGap": 8.5,
+      "medianRatio": 1.45,
+      "confidence": "high",
+      "verdict": "space encodes grouping"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "RoundHog",
+        "count": 220
+      },
+      {
+        "value": "ui-monospace",
+        "count": 18
+      },
+      {
+        "value": "Source Code Pro",
+        "count": 1
+      }
+    ],
+    "bodySize": 15,
+    "sizes": [
+      12,
+      12.9,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19.3,
+      20,
+      21.4,
+      30
+    ],
+    "distinctSizes": 11,
+    "weights": [
+      400,
+      500,
+      600,
+      700,
+      800
+    ],
+    "roleCount": 36,
+    "scaleRatios": [
+      1.075,
+      1.008,
+      1.077,
+      1.071,
+      1.067,
+      1.125,
+      1.072,
+      1.036,
+      1.07,
+      1.402
+    ],
+    "hierarchyCarriedBy": "weight",
+    "channelSpread": {
+      "size": 0.1,
+      "weight": 0.33,
+      "ink": 0.2
+    },
+    "measureChars": 66,
+    "topRoles": [
+      {
+        "size": 15,
+        "weight": 500,
+        "color": "#111111",
+        "lineHeight": 1.71,
+        "tracking": 0,
+        "transform": "none",
+        "count": 18,
+        "sample": "Hi I've created an insight of type Trend which i"
+      },
+      {
+        "size": 15,
+        "weight": 500,
+        "color": "#374151",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 15,
+        "sample": "Insights are the main building blocks of product"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#23251d",
+        "lineHeight": 1.25,
+        "tracking": 0,
+        "transform": "none",
+        "count": 49,
+        "sample": "Product"
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#111111",
+        "lineHeight": 1.25,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "Consider dashboard filters in custom query insig"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#65675e",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "PostHog.com doesn't use third-party cookies, onl"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#9ea096",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 12,
+        "sample": "a year ago"
+      },
+      {
+        "size": 13,
+        "weight": 500,
+        "color": "#ffffff",
+        "lineHeight": 1.25,
+        "tracking": 0,
+        "transform": "none",
+        "count": 13,
+        "sample": "Home"
+      },
+      {
+        "size": 15,
+        "weight": 600,
+        "color": "#111827",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 13,
+        "sample": "events"
+      },
+      {
+        "size": 19.3,
+        "weight": 600,
+        "color": "#111827",
+        "lineHeight": 1.56,
+        "tracking": -0.48,
+        "transform": "none",
+        "count": 9,
+        "sample": "Trends"
+      },
+      {
+        "size": 15,
+        "weight": 600,
+        "color": "#111111",
+        "lineHeight": 1.71,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "https://posthog.com/docs/product-analytics/sql#s"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#eeefe9",
+    "backgrounds": [
+      {
+        "hex": "#e5e7e0",
+        "h": 77,
+        "s": 12.7,
+        "l": 89.2,
+        "c": 2.7,
+        "areaPct": 133.5
+      },
+      {
+        "hex": "#e6e7e0",
+        "h": 69,
+        "s": 12.7,
+        "l": 89.2,
+        "c": 2.7,
+        "areaPct": 70.5
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 16.9
+      },
+      {
+        "hex": "#2a2734",
+        "h": 254,
+        "s": 14.3,
+        "l": 17.8,
+        "c": 5.1,
+        "areaPct": 5.4
+      },
+      {
+        "hex": "#fdfdf7",
+        "h": 60,
+        "s": 60,
+        "l": 98,
+        "c": 2.4,
+        "areaPct": 4.4
+      },
+      {
+        "hex": "#1b2222",
+        "h": 180,
+        "s": 11.5,
+        "l": 12,
+        "c": 2.7,
+        "areaPct": 0.8
+      },
+      {
+        "hex": "#717180",
+        "h": 240,
+        "s": 6.2,
+        "l": 47.3,
+        "c": 5.9,
+        "areaPct": 0.4
+      },
+      {
+        "hex": "#cd8407",
+        "h": 38,
+        "s": 93.4,
+        "l": 41.6,
+        "c": 77.6,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#eb9d2a",
+        "h": 36,
+        "s": 82.8,
+        "l": 54.3,
+        "c": 75.7,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#3080f7",
+        "h": 216,
+        "s": 92.6,
+        "l": 57.8,
+        "c": 78,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#f45000",
+        "h": 20,
+        "s": 100,
+        "l": 47.8,
+        "c": 95.7,
+        "areaPct": 0.2
+      },
+      {
+        "hex": "#b42dda",
+        "h": 287,
+        "s": 70,
+        "l": 51.6,
+        "c": 67.8,
+        "areaPct": 0.1
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#111111",
+        "s": 0,
+        "l": 6.7,
+        "c": 0,
+        "sharePct": 45.5
+      },
+      {
+        "hex": "#374151",
+        "s": 19.1,
+        "l": 26.7,
+        "c": 10.2,
+        "sharePct": 26.1
+      },
+      {
+        "hex": "#23251d",
+        "s": 12.1,
+        "l": 12.9,
+        "c": 3.1,
+        "sharePct": 11.2
+      },
+      {
+        "hex": "#111827",
+        "s": 39.3,
+        "l": 11,
+        "c": 8.6,
+        "sharePct": 5
+      },
+      {
+        "hex": "#65675e",
+        "s": 4.6,
+        "l": 38.6,
+        "c": 3.5,
+        "sharePct": 2.9
+      },
+      {
+        "hex": "#9ea096",
+        "s": 5,
+        "l": 60.8,
+        "c": 3.9,
+        "sharePct": 2.2
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 2
+      },
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 1.4
+      },
+      {
+        "hex": "#9a86fd",
+        "s": 96.7,
+        "l": 75.9,
+        "c": 46.7,
+        "sharePct": 1.1
+      },
+      {
+        "hex": "#24261e",
+        "s": 11.8,
+        "l": 13.3,
+        "c": 3.1,
+        "sharePct": 1.1
+      }
+    ],
+    "neutralsTinted": "10/14",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 5.1,
+    "accentAreaPct": 1.2,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 116,
+      "shadowedElements": 7,
+      "borderToShadowRatio": 16.57,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.25) 0px 25px 50px -12px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px",
+        "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(59, 130, 246, 0.5) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(0, 128, 128) 0px 2px 0px 0px"
+      ],
+      "radiusScale": [
+        4,
+        9999,
+        2,
+        6,
+        20
+      ],
+      "gradientElements": 4
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": 543,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 305
+      },
+      {
+        "value": "column",
+        "count": 44
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 121,
+      "coveringMostContent": 33,
+      "top": [
+        500,
+        448,
+        158,
+        532,
+        166,
+        1362,
+        466,
+        958
+      ]
+    },
+    "density": {
+      "visibleElements": 1484,
+      "perScreenful": 1484
+    }
+  }
+}

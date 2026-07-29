@@ -1,0 +1,371 @@
+{
+  "name": "spectrum-components",
+  "source": "https://spectrum.adobe.com/page/button/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 84.2,
+    "authoredValuesSampled": 727,
+    "distinctValues": 18,
+    "topSteps": [
+      {
+        "value": 16,
+        "count": 380
+      },
+      {
+        "value": 24,
+        "count": 75
+      },
+      {
+        "value": 10,
+        "count": 62
+      },
+      {
+        "value": 12,
+        "count": 62
+      },
+      {
+        "value": 7,
+        "count": 30
+      },
+      {
+        "value": 80,
+        "count": 24
+      },
+      {
+        "value": 64,
+        "count": 18
+      },
+      {
+        "value": 20,
+        "count": 17
+      },
+      {
+        "value": 4,
+        "count": 17
+      },
+      {
+        "value": 33,
+        "count": 11
+      },
+      {
+        "value": 6,
+        "count": 11
+      },
+      {
+        "value": 8,
+        "count": 9
+      }
+    ],
+    "grouping": {
+      "samples": 20,
+      "byMethod": {
+        "nested": 10,
+        "within": 10
+      },
+      "medianInsideGap": 17,
+      "medianBetweenGap": 33,
+      "medianRatio": 2.46,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "adobe-clean",
+        "count": 220
+      },
+      {
+        "value": "adobe-clean-serif",
+        "count": 1
+      },
+      {
+        "value": "monospace",
+        "count": 1
+      }
+    ],
+    "bodySize": 16,
+    "sizes": [
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      58
+    ],
+    "distinctSizes": 7,
+    "weights": [
+      400,
+      700,
+      800
+    ],
+    "roleCount": 13,
+    "scaleRatios": [
+      1.167,
+      1.143,
+      1.125,
+      1.111,
+      1.1,
+      2.636
+    ],
+    "hierarchyCarriedBy": "weight",
+    "channelSpread": {
+      "size": 0.19,
+      "weight": 0.5,
+      "ink": 0.14
+    },
+    "measureChars": 59,
+    "topRoles": [
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#222222",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 41,
+        "sample": "Buttons should always have a label, unless they "
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#464646",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 17,
+        "sample": "Includes all interactive states that are applica"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#222222",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 52,
+        "sample": "Version 7.0.1"
+      },
+      {
+        "size": 18,
+        "weight": 700,
+        "color": "#000000",
+        "lineHeight": 1.3,
+        "tracking": 0,
+        "transform": "none",
+        "count": 33,
+        "sample": "Label and icon"
+      },
+      {
+        "size": 16,
+        "weight": 700,
+        "color": "#000000",
+        "lineHeight": 1.3,
+        "tracking": 0,
+        "transform": "none",
+        "count": 17,
+        "sample": "All interactive states"
+      },
+      {
+        "size": 18,
+        "weight": 400,
+        "color": "#222222",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Buttons allow users to perform an action or to n"
+      },
+      {
+        "size": 14,
+        "weight": 700,
+        "color": "#222222",
+        "lineHeight": 1.3,
+        "tracking": 0,
+        "transform": "none",
+        "count": 29,
+        "sample": "Property"
+      },
+      {
+        "size": 22,
+        "weight": 700,
+        "color": "#000000",
+        "lineHeight": 1.3,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "Table of contents"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#0000ee",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "Spectrum color theme"
+      },
+      {
+        "size": 18,
+        "weight": 400,
+        "color": "#0000ee",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "Anatomy"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 82.5
+      },
+      {
+        "hex": "#f8f8f8",
+        "h": 0,
+        "s": 0,
+        "l": 97.3,
+        "c": 0,
+        "areaPct": 15.6
+      },
+      {
+        "hex": "#f4f6fc",
+        "h": 225,
+        "s": 57.1,
+        "l": 97.3,
+        "c": 3.1,
+        "areaPct": 9.4
+      },
+      {
+        "hex": "#afbfe5",
+        "h": 222,
+        "s": 50.9,
+        "l": 79.2,
+        "c": 21.2,
+        "areaPct": 0.6
+      },
+      {
+        "hex": "#000000",
+        "h": 0,
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#222222",
+        "h": 0,
+        "s": 0,
+        "l": 13.3,
+        "c": 0,
+        "areaPct": 0.2
+      },
+      {
+        "hex": "#d5d5d5",
+        "h": 0,
+        "s": 0,
+        "l": 83.5,
+        "c": 0,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#222222",
+        "s": 0,
+        "l": 13.3,
+        "c": 0,
+        "sharePct": 75.1
+      },
+      {
+        "hex": "#464646",
+        "s": 0,
+        "l": 27.5,
+        "c": 0,
+        "sharePct": 14.1
+      },
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 8.8
+      },
+      {
+        "hex": "#0000ee",
+        "s": 100,
+        "l": 46.7,
+        "c": 93.3,
+        "sharePct": 2
+      }
+    ],
+    "neutralsTinted": "1/9",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 21.2,
+    "accentAreaPct": 0.6,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 82,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [
+        4,
+        1
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 16737,
+    "horizontalBleed": false,
+    "proseMaxWidth": 976,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 150
+      },
+      {
+        "value": "column",
+        "count": 16
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 40,
+      "coveringMostContent": 9,
+      "top": [
+        360,
+        344,
+        864,
+        424,
+        930,
+        24,
+        848,
+        404
+      ]
+    },
+    "density": {
+      "visibleElements": 916,
+      "perScreenful": 49
+    }
+  }
+}

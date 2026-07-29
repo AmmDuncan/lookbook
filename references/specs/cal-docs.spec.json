@@ -1,0 +1,313 @@
+{
+  "name": "cal-docs",
+  "source": "https://cal.com/docs/introduction",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 90.9,
+    "authoredValuesSampled": 33,
+    "distinctValues": 11,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 7
+      },
+      {
+        "value": 4,
+        "count": 6
+      },
+      {
+        "value": 48,
+        "count": 4
+      },
+      {
+        "value": 12,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 5,
+      "byMethod": {
+        "nested": 4,
+        "within": 1
+      },
+      "medianInsideGap": 14,
+      "medianBetweenGap": 24,
+      "medianRatio": 2.29,
+      "confidence": "medium",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Inter",
+        "count": 16
+      }
+    ],
+    "bodySize": 16,
+    "sizes": [
+      12,
+      14,
+      16,
+      24,
+      48
+    ],
+    "distinctSizes": 5,
+    "weights": [
+      400,
+      500,
+      600
+    ],
+    "roleCount": 10,
+    "scaleRatios": [
+      1.167,
+      1.143,
+      1.5,
+      2
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0,
+      "weight": 0.17,
+      "ink": 0.44
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Documentation Index"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#3f3f3f",
+        "lineHeight": 1.75,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "We couldn't find the page. Maybe you were lookin"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#707071",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Skip to main content"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#111827",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Calendar"
+      },
+      {
+        "size": 24,
+        "weight": 500,
+        "color": "#252626",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Page Not Found"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#707071",
+        "lineHeight": 1.71,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Search..."
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#ffffff",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Dashboard"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#505051",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Support"
+      },
+      {
+        "size": 48,
+        "weight": 600,
+        "color": "#111827",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": ""
+      },
+      {
+        "size": 12,
+        "weight": 600,
+        "color": "#707071",
+        "lineHeight": 1.33,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": ""
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 108.3
+      },
+      {
+        "hex": "#111827",
+        "h": 221,
+        "s": 39.3,
+        "l": 11,
+        "c": 8.6,
+        "areaPct": 0.3
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 41.8
+      },
+      {
+        "hex": "#3f3f3f",
+        "s": 0,
+        "l": 24.7,
+        "c": 0,
+        "sharePct": 22.6
+      },
+      {
+        "hex": "#707071",
+        "s": 0.4,
+        "l": 44.1,
+        "c": 0.4,
+        "sharePct": 15.2
+      },
+      {
+        "hex": "#111827",
+        "s": 39.3,
+        "l": 11,
+        "c": 8.6,
+        "sharePct": 11.7
+      },
+      {
+        "hex": "#252626",
+        "s": 1.3,
+        "l": 14.7,
+        "c": 0.4,
+        "sharePct": 4
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 2.6
+      },
+      {
+        "hex": "#505051",
+        "s": 0.6,
+        "l": 31.6,
+        "c": 0.4,
+        "sharePct": 2
+      }
+    ],
+    "neutralsTinted": "0/7",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 0,
+    "accentAreaPct": 0.3,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 1,
+      "shadowedElements": 1,
+      "borderToShadowRatio": 1,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.702506 0.0000319779 0.0000140071 / 0.3) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+      ],
+      "radiusScale": [
+        12
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 14
+      },
+      {
+        "value": "column",
+        "count": 4
+      },
+      {
+        "value": "row-reverse",
+        "count": 1
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 17,
+      "coveringMostContent": 8,
+      "top": [
+        0,
+        484,
+        1190,
+        48,
+        1268,
+        502,
+        1280,
+        336
+      ]
+    },
+    "density": {
+      "visibleElements": 60,
+      "perScreenful": 60
+    }
+  }
+}

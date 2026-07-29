@@ -1,0 +1,112 @@
+{
+  "name": "ramp-home",
+  "source": "https://ramp.com/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 1,
+    "onScalePct": 0,
+    "authoredValuesSampled": 2,
+    "distinctValues": 1,
+    "topSteps": [],
+    "grouping": {
+      "samples": 0,
+      "byMethod": {
+        "nested": 0,
+        "within": 0
+      },
+      "medianInsideGap": null,
+      "medianBetweenGap": null,
+      "medianRatio": null,
+      "confidence": "low — too few groups to generalise",
+      "verdict": "not measurable (too few nested groups)"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "monospace",
+        "count": 1
+      }
+    ],
+    "bodySize": 13,
+    "sizes": [
+      13
+    ],
+    "distinctSizes": 1,
+    "weights": [
+      400
+    ],
+    "roleCount": 1,
+    "scaleRatios": [],
+    "hierarchyCarriedBy": "size",
+    "channelSpread": {
+      "size": 0,
+      "weight": 0,
+      "ink": 0
+    },
+    "measureChars": 219,
+    "topRoles": [
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#000000",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "# Ramp — Machine Version **Quick links:** [Docs]"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [],
+    "inks": [
+      {
+        "hex": "#000000",
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "sharePct": 100
+      }
+    ],
+    "neutralsTinted": "0/1",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": null,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 0,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 4406,
+    "horizontalBleed": false,
+    "proseMaxWidth": 1424,
+    "mainRegionWidth": 1424,
+    "gridPrimitives": [],
+    "flexDirections": [],
+    "alignmentEdges": {
+      "distinct": 1,
+      "coveringMostContent": 1,
+      "top": [
+        8
+      ]
+    },
+    "density": {
+      "visibleElements": 1,
+      "perScreenful": 0
+    }
+  }
+}

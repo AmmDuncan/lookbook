@@ -1,0 +1,320 @@
+{
+  "name": "gitlab-pajamas",
+  "source": "https://design.gitlab.com/components/overview",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 8,
+    "onScalePct": 90.6,
+    "authoredValuesSampled": 498,
+    "distinctValues": 10,
+    "topSteps": [
+      {
+        "value": 16,
+        "count": 246
+      },
+      {
+        "value": 8,
+        "count": 194
+      },
+      {
+        "value": 2,
+        "count": 45
+      },
+      {
+        "value": 4,
+        "count": 44
+      },
+      {
+        "value": 32,
+        "count": 9
+      }
+    ],
+    "grouping": {
+      "samples": 3,
+      "byMethod": {
+        "nested": 3,
+        "within": 0
+      },
+      "medianInsideGap": 8,
+      "medianBetweenGap": 12,
+      "medianRatio": 2,
+      "confidence": "low — too few groups to generalise",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "GitLab Sans",
+        "count": 155
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      12,
+      14,
+      16,
+      25,
+      36
+    ],
+    "distinctSizes": 5,
+    "weights": [
+      400,
+      425,
+      600
+    ],
+    "roleCount": 11,
+    "scaleRatios": [
+      1.167,
+      1.143,
+      1.563,
+      1.44
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0,
+      "weight": 0.04,
+      "ink": 0.07
+    },
+    "measureChars": 45,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#3a383f",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 60,
+        "sample": "An accordion is used to show and hide content."
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#18171d",
+        "lineHeight": 1.14,
+        "tracking": 0,
+        "transform": "none",
+        "count": 61,
+        "sample": "Accordion"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#626168",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "Part of the extended design system layer"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#3a383f",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "A component is a UI element that serves a singul"
+      },
+      {
+        "size": 14,
+        "weight": 425,
+        "color": "#28272d",
+        "lineHeight": 1.14,
+        "tracking": 0,
+        "transform": "none",
+        "count": 15,
+        "sample": "Introduction"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#2f5ca0",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Page source"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#3a383f",
+        "lineHeight": 1.14,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Pajamas Design System"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.14,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Skip to main content"
+      },
+      {
+        "size": 36,
+        "weight": 600,
+        "color": "#18171d",
+        "lineHeight": 1.13,
+        "tracking": -0.36,
+        "transform": "none",
+        "count": 1,
+        "sample": "Pajamas components"
+      },
+      {
+        "size": 25,
+        "weight": 600,
+        "color": "#18171d",
+        "lineHeight": 1.25,
+        "tracking": -0.25,
+        "transform": "none",
+        "count": 1,
+        "sample": "Main navigation"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 58.8
+      },
+      {
+        "hex": "#fbfafd",
+        "h": 260,
+        "s": 42.9,
+        "l": 98.6,
+        "c": 1.2,
+        "areaPct": 4.8
+      },
+      {
+        "hex": "#3a383f",
+        "h": 257,
+        "s": 5.9,
+        "l": 23.3,
+        "c": 2.7,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#3a383f",
+        "s": 5.9,
+        "l": 23.3,
+        "c": 2.7,
+        "sharePct": 83.7
+      },
+      {
+        "hex": "#18171d",
+        "s": 11.5,
+        "l": 10.2,
+        "c": 2.4,
+        "sharePct": 8.6
+      },
+      {
+        "hex": "#626168",
+        "s": 3.5,
+        "l": 39.4,
+        "c": 2.7,
+        "sharePct": 4.5
+      },
+      {
+        "hex": "#28272d",
+        "s": 7.1,
+        "l": 16.5,
+        "c": 2.4,
+        "sharePct": 2.2
+      },
+      {
+        "hex": "#2f5ca0",
+        "s": 54.6,
+        "l": 40.6,
+        "c": 44.3,
+        "sharePct": 0.7
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 0.3
+      }
+    ],
+    "neutralsTinted": "6/8",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 1.2,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 66,
+      "shadowedElements": 1,
+      "borderToShadowRatio": 66,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgb(137, 136, 141) 0px 0px 0px 1px inset"
+      ],
+      "radiusScale": [
+        4,
+        8
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 3343,
+    "horizontalBleed": false,
+    "proseMaxWidth": 653,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "3-col: px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 107
+      },
+      {
+        "value": "column",
+        "count": 62
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 18,
+      "coveringMostContent": 7,
+      "top": [
+        304,
+        322,
+        690,
+        1058,
+        8,
+        672,
+        1040,
+        16
+      ]
+    },
+    "density": {
+      "visibleElements": 379,
+      "perScreenful": 102
+    }
+  }
+}

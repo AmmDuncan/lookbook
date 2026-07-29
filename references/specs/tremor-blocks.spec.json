@@ -1,0 +1,475 @@
+{
+  "name": "tremor-blocks",
+  "source": "https://tremor.so/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 86.7,
+    "authoredValuesSampled": 750,
+    "distinctValues": 19,
+    "topSteps": [
+      {
+        "value": 16,
+        "count": 272
+      },
+      {
+        "value": 24,
+        "count": 135
+      },
+      {
+        "value": 1,
+        "count": 94
+      },
+      {
+        "value": 8,
+        "count": 65
+      },
+      {
+        "value": 32,
+        "count": 62
+      },
+      {
+        "value": 4,
+        "count": 52
+      },
+      {
+        "value": 6,
+        "count": 41
+      },
+      {
+        "value": 12,
+        "count": 40
+      },
+      {
+        "value": 14,
+        "count": 30
+      },
+      {
+        "value": 10,
+        "count": 29
+      },
+      {
+        "value": 2,
+        "count": 17
+      },
+      {
+        "value": 20,
+        "count": 9
+      }
+    ],
+    "grouping": {
+      "samples": 54,
+      "byMethod": {
+        "nested": 35,
+        "within": 19
+      },
+      "medianInsideGap": 8,
+      "medianBetweenGap": 26.75,
+      "medianRatio": 3.5,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "ui-monospace",
+        "count": 1460
+      },
+      {
+        "value": "__GeistSans_fb8f2c",
+        "count": 235
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      12,
+      14,
+      16,
+      18,
+      20,
+      30,
+      36,
+      60
+    ],
+    "distinctSizes": 8,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 42,
+    "scaleRatios": [
+      1.167,
+      1.143,
+      1.125,
+      1.111,
+      1.5,
+      1.2,
+      1.667
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.36,
+      "weight": 0.17,
+      "ink": 0.89
+    },
+    "measureChars": 68,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 240,
+        "sample": "is joining ."
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#9cd2bb",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 133,
+        "sample": "import"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#ffd66d",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 69,
+        "sample": "\"react\""
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#364153",
+        "lineHeight": 1.71,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "tremor.so is dope"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#6a7282",
+        "lineHeight": 1.75,
+        "tracking": 0,
+        "transform": "none",
+        "count": 9,
+        "sample": "We already pushed the pixels so that you can foc"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#888d94",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 648,
+        "sample": ""
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#4a5565",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 57,
+        "sample": "10k requests"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#f96379",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 78,
+        "sample": "TooltipProps"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#9ca3af",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 251,
+        "sample": "// Tremor DonutChart [v0.0.0]"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#4a5565",
+        "lineHeight": 1.75,
+        "tracking": 0,
+        "transform": "none",
+        "count": 6,
+        "sample": "Analytical interfaces that allow your audience t"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 61.6
+      },
+      {
+        "hex": "#030712",
+        "h": 224,
+        "s": 71.4,
+        "l": 4.1,
+        "c": 5.9,
+        "areaPct": 37.4
+      },
+      {
+        "hex": "#fafafa",
+        "h": 0,
+        "s": 0,
+        "l": 98,
+        "c": 0,
+        "areaPct": 25.1
+      },
+      {
+        "hex": "#000000",
+        "h": 0,
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "areaPct": 1.3
+      },
+      {
+        "hex": "#f9fafb",
+        "h": 210,
+        "s": 20,
+        "l": 98,
+        "c": 0.8,
+        "areaPct": 1.1
+      },
+      {
+        "hex": "#2b7fff",
+        "h": 216,
+        "s": 100,
+        "l": 58.4,
+        "c": 83.1,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#f3f4f6",
+        "h": 220,
+        "s": 14.3,
+        "l": 95.9,
+        "c": 1.2,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#99a1af",
+        "h": 218,
+        "s": 12.1,
+        "l": 64.3,
+        "c": 8.6,
+        "areaPct": 0
+      },
+      {
+        "hex": "#eff6ff",
+        "h": 214,
+        "s": 100,
+        "l": 96.9,
+        "c": 6.3,
+        "areaPct": 0
+      },
+      {
+        "hex": "#8ec5ff",
+        "h": 211,
+        "s": 100,
+        "l": 77.8,
+        "c": 44.3,
+        "areaPct": 0
+      },
+      {
+        "hex": "#e5e7eb",
+        "h": 220,
+        "s": 13,
+        "l": 91,
+        "c": 2.4,
+        "areaPct": 0
+      },
+      {
+        "hex": "#bedbff",
+        "h": 213,
+        "s": 100,
+        "l": 87.3,
+        "c": 25.5,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 20.1
+      },
+      {
+        "hex": "#4a5565",
+        "s": 15.4,
+        "l": 34.3,
+        "c": 10.6,
+        "sharePct": 12
+      },
+      {
+        "hex": "#101828",
+        "s": 42.9,
+        "l": 11,
+        "c": 9.4,
+        "sharePct": 10.4
+      },
+      {
+        "hex": "#6a7282",
+        "s": 10.2,
+        "l": 46.3,
+        "c": 9.4,
+        "sharePct": 8.8
+      },
+      {
+        "hex": "#364153",
+        "s": 21.2,
+        "l": 26.9,
+        "c": 11.4,
+        "sharePct": 8.3
+      },
+      {
+        "hex": "#9cd2bb",
+        "s": 37.5,
+        "l": 71.8,
+        "c": 21.2,
+        "sharePct": 7.5
+      },
+      {
+        "hex": "#ffd66d",
+        "s": 100,
+        "l": 71.4,
+        "c": 57.3,
+        "sharePct": 7
+      },
+      {
+        "hex": "#888d94",
+        "s": 5.3,
+        "l": 55.7,
+        "c": 4.7,
+        "sharePct": 5.7
+      },
+      {
+        "hex": "#f96379",
+        "s": 92.6,
+        "l": 68.2,
+        "c": 58.8,
+        "sharePct": 5.5
+      },
+      {
+        "hex": "#9ca3af",
+        "s": 10.6,
+        "l": 64.9,
+        "c": 7.5,
+        "sharePct": 5.5
+      }
+    ],
+    "neutralsTinted": "6/11",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 83.1,
+    "accentAreaPct": 0.5,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 44,
+      "shadowedElements": 100,
+      "borderToShadowRatio": 0.44,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0 0 0 / 0.05) 0px 20px 25px -5px, oklab(0 0 0 / 0.05) 0px 8px 10px -6px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.928 -0.000571842 -0.00597269 / 0.5) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.21 -0.00316127 -0.0338527 / 0.05) 0px 0px 0px 1px, oklab(0 0 0 / 0.05) 0px 25px 50px -12px",
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px"
+      ],
+      "radiusScale": [
+        6,
+        1,
+        12,
+        8,
+        4,
+        33554400
+      ],
+      "gradientElements": 15
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 7419,
+    "horizontalBleed": false,
+    "proseMaxWidth": 1140,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "3-col: px px px",
+        "count": 6
+      },
+      {
+        "value": "2-col: px px",
+        "count": 4
+      },
+      {
+        "value": "12-col: px px px px px px px px px px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 116
+      },
+      {
+        "value": "column",
+        "count": 19
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 178,
+      "coveringMostContent": 42,
+      "top": [
+        140,
+        112,
+        176,
+        150,
+        764,
+        224,
+        192,
+        944
+      ]
+    },
+    "density": {
+      "visibleElements": 3578,
+      "perScreenful": 434
+    }
+  }
+}

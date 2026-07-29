@@ -1,0 +1,422 @@
+{
+  "name": "sentry-docs",
+  "source": "https://docs.sentry.io/product/issues/",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 91.2,
+    "authoredValuesSampled": 634,
+    "distinctValues": 14,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 287
+      },
+      {
+        "value": 4,
+        "count": 151
+      },
+      {
+        "value": 16,
+        "count": 49
+      },
+      {
+        "value": 12,
+        "count": 48
+      },
+      {
+        "value": 6,
+        "count": 37
+      },
+      {
+        "value": 20,
+        "count": 33
+      },
+      {
+        "value": 32,
+        "count": 9
+      },
+      {
+        "value": 24,
+        "count": 5
+      },
+      {
+        "value": 26,
+        "count": 5
+      },
+      {
+        "value": 11,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 18,
+      "byMethod": {
+        "nested": 12,
+        "within": 6
+      },
+      "medianInsideGap": 9,
+      "medianBetweenGap": 20,
+      "medianRatio": 1.8,
+      "confidence": "high",
+      "verdict": "space encodes grouping"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Rubik",
+        "count": 159
+      },
+      {
+        "value": "Roboto Mono",
+        "count": 6
+      }
+    ],
+    "bodySize": 16,
+    "sizes": [
+      10,
+      12,
+      12.8,
+      14,
+      14.4,
+      15.2,
+      16,
+      17.2,
+      20.8,
+      24,
+      32
+    ],
+    "distinctSizes": 11,
+    "weights": [
+      300,
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 26,
+    "scaleRatios": [
+      1.2,
+      1.067,
+      1.094,
+      1.029,
+      1.056,
+      1.053,
+      1.075,
+      1.209,
+      1.154,
+      1.333
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.07,
+      "weight": 0,
+      "ink": 0.26
+    },
+    "measureChars": 128,
+    "topRoles": [
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#21201c",
+        "lineHeight": 1.75,
+        "tracking": 0,
+        "transform": "none",
+        "count": 39,
+        "sample": "The page in Sentry displays information about pr"
+      },
+      {
+        "size": 15.2,
+        "weight": 400,
+        "color": "#21201c",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 32,
+        "sample": "Getting Started With Sentry"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#21201c",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 13,
+        "sample": "SDKs"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#6a5fc1",
+        "lineHeight": 1.75,
+        "tracking": 0,
+        "transform": "none",
+        "count": 13,
+        "sample": "triage"
+      },
+      {
+        "size": 20.8,
+        "weight": 300,
+        "color": "#362d59",
+        "lineHeight": 1.54,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Learn how to use Sentry’s Issues page, where you"
+      },
+      {
+        "size": 17.2,
+        "weight": 500,
+        "color": "#6a5fc1",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 9,
+        "sample": "Issue Views"
+      },
+      {
+        "size": 16,
+        "weight": 500,
+        "color": "#21201c",
+        "lineHeight": 1.75,
+        "tracking": 0,
+        "transform": "none",
+        "count": 12,
+        "sample": "Issues and Event Quotas"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#9c5f99",
+        "lineHeight": 1.75,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "is:unresolved"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#21201c",
+        "lineHeight": 1.43,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Was this helpful?"
+      },
+      {
+        "size": 14.4,
+        "weight": 400,
+        "color": "#6a5fc1",
+        "lineHeight": 1.75,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "How to contribute"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "transparent (inherits canvas)",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 103.9
+      },
+      {
+        "hex": "#f8f8ff",
+        "h": 240,
+        "s": 100,
+        "l": 98.6,
+        "c": 2.7,
+        "areaPct": 2.3
+      },
+      {
+        "hex": "#fdfdfc",
+        "h": 60,
+        "s": 20,
+        "l": 99,
+        "c": 0.4,
+        "areaPct": 1.4
+      },
+      {
+        "hex": "#6a5fc1",
+        "h": 247,
+        "s": 44.1,
+        "l": 56.5,
+        "c": 38.4,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#ffd00e",
+        "h": 48,
+        "s": 100,
+        "l": 52.7,
+        "c": 94.5,
+        "areaPct": 0
+      },
+      {
+        "hex": "#00f261",
+        "h": 144,
+        "s": 100,
+        "l": 47.5,
+        "c": 94.9,
+        "areaPct": 0
+      },
+      {
+        "hex": "#e5e7eb",
+        "h": 220,
+        "s": 13,
+        "l": 91,
+        "c": 2.4,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#21201c",
+        "s": 8.2,
+        "l": 12,
+        "c": 2,
+        "sharePct": 86
+      },
+      {
+        "hex": "#6a5fc1",
+        "s": 44.1,
+        "l": 56.5,
+        "c": 38.4,
+        "sharePct": 7.2
+      },
+      {
+        "hex": "#362d59",
+        "s": 32.8,
+        "l": 26.3,
+        "c": 17.3,
+        "sharePct": 3.4
+      },
+      {
+        "hex": "#9c5f99",
+        "s": 24.3,
+        "l": 49.2,
+        "c": 23.9,
+        "sharePct": 1.2
+      },
+      {
+        "hex": "#63635e",
+        "s": 2.6,
+        "l": 37.8,
+        "c": 2,
+        "sharePct": 1.1
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 0.6
+      },
+      {
+        "hex": "#181423",
+        "s": 27.3,
+        "l": 10.8,
+        "c": 5.9,
+        "sharePct": 0.2
+      },
+      {
+        "hex": "#8d8d86",
+        "s": 3,
+        "l": 53.9,
+        "c": 2.7,
+        "sharePct": 0.2
+      },
+      {
+        "hex": "#374151",
+        "s": 19.1,
+        "l": 26.7,
+        "c": 10.2,
+        "sharePct": 0.1
+      },
+      {
+        "hex": "#bbadc6",
+        "s": 18,
+        "l": 72.7,
+        "c": 9.8,
+        "sharePct": 0
+      }
+    ],
+    "neutralsTinted": "6/9",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 2.7,
+    "accentAreaPct": 0.3,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 26,
+      "shadowedElements": 4,
+      "borderToShadowRatio": 6.5,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0.2) 0px 2px 8px 0px",
+        "rgba(31, 21, 0, 0.098) 0px 2px 0px 0px"
+      ],
+      "radiusScale": [
+        4,
+        6,
+        8,
+        9999,
+        9
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 4562,
+    "horizontalBleed": false,
+    "proseMaxWidth": 1052,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 106
+      },
+      {
+        "value": "column",
+        "count": 2
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 70,
+      "coveringMostContent": 16,
+      "top": [
+        24,
+        324,
+        32,
+        356,
+        350,
+        44,
+        12,
+        0
+      ]
+    },
+    "density": {
+      "visibleElements": 481,
+      "perScreenful": 95
+    }
+  }
+}

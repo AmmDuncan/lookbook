@@ -7,3 +7,7 @@ dist
 .claude/
 .portability-codex/
 scripts/calibrate.local.md
+# Script output dirs — regenerated on every run
+scripts/.brief-out/
+scripts/.compare-out/
+scripts/.test-out/

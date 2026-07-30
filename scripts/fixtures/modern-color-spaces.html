@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>TEST FIXTURE — CSS Color 4 resolution</title>
+<!--
+  Regression fixture for the colour-resolution bug.
+
+  Canvas2D `fillStyle` normalises hex and rgb() but hands back lab(), oklch() and
+  color() untouched, so regexing digits out of the returned string read
+  `lab(100 0 0)` — pure white — as rgb(100,0,0), a dark red. Every modern design
+  system authors in these spaces, so the bug hit exactly the sites worth measuring
+  and produced plausible-looking numbers rather than an error.
+
+  Everything here is a NEUTRAL (white / near-white / grey / near-black) expressed
+  in a modern colour space. A correct extractor reports near-zero chroma and no
+  accent. A broken one reports saturated colour.
+-->
+<style>
+  body   { margin: 0; background: lab(100 0 0); font-family: system-ui, sans-serif; }
+  .a     { background: lab(100 0 0);        padding: 24px; }   /* white  */
+  .b     { background: oklch(0.98 0 0);     padding: 24px; }   /* near-white */
+  .c     { background: color(srgb 0.96 0.96 0.96); padding: 24px; }
+  .d     { background: oklch(0.15 0 0);     padding: 24px; color: lab(100 0 0); } /* near-black */
+  .e     { background: hsl(0 0% 90%);       padding: 24px; }
+  p      { margin: 0; color: oklch(0.25 0 0); font-size: 16px; }
+</style>
+</head>
+<body>
+  <div class="a"><p>Pure white surface expressed as lab(100 0 0).</p></div>
+  <div class="b"><p>Near-white surface expressed as oklch.</p></div>
+  <div class="c"><p>Light grey expressed via color(srgb ...).</p></div>
+  <div class="d"><p>Near-black surface with white text.</p></div>
+  <div class="e"><p>Light grey expressed as hsl, the control case.</p></div>
+</body>
+</html>

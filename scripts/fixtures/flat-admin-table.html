@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TEST FIXTURE — deliberately flat admin table</title>
+<!--
+  CONTROL FIXTURE. Deliberately mediocre CRAFT, deliberately clean FLOORS.
+  Do NOT copy anything from this file.
+
+  It tests whether a reviewer's CRAFT lens fires. For that test to mean anything,
+  the floors must genuinely pass — otherwise the reviewer finds P0 overflow and
+  a11y defects, those correctly outrank everything, and the craft lens is never
+  the thing under test. v1 of this fixture failed that: it claimed "nothing
+  overflows" and then bled to 741px in a 390px viewport. A control whose stated
+  premise is false is not a control.
+
+  So: floors are real here (responsive, headed, labelled, hover/focus states),
+  and every planted defect is a BAR defect.
+
+  PLANTED, and verified to actually measure that way:
+    1. PROXIMITY ~1.0  — nested groups at every level use the SAME 16px gap, so
+                          space encodes no grouping. Needs real nesting depth or
+                          the metric samples too thin to fire (v1 planted this and
+                          measured 9x on 2 groups: not measurable, not a defect).
+    2. HIERARCHY       — one ink level across the whole table; size substitutes.
+    3. ACCENT SPRAWL   — saturated blue over large areas.
+    4. TYPE SPRAWL     — 9 sizes including 14 and 15 one pixel apart.
+    5. SHADOW-LED      — a resting shadow on every static block, so shadowed
+                          outnumbers bordered (v1 had one shadowed element and
+                          correctly measured border-led).
+    6. NO ARCHETYPE GRAMMAR — no search, no filters, three visible row actions,
+                          raw UUIDs and ISO timestamps, no footer.
+
+  Deliberately NOT planted (these must stay clean so floors pass): contrast,
+  target size, overflow, headings, table semantics, focus states.
+-->
+<style>
+  :root { --blue: #2563eb; --ink: #111827; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #ffffff; font-family: system-ui, sans-serif; color: var(--ink); }
+
+  /* PLANT 1 — every gap at every nesting level is 16px. */
+  .page    { padding: 16px; display: flex; flex-direction: column; gap: 16px; max-width: 1400px; margin: 0 auto; }
+  .section { display: flex; flex-direction: column; gap: 16px; }
+  .group   { display: flex; flex-direction: column; gap: 16px; }
+  .field   { display: flex; flex-direction: column; gap: 16px; }
+  .row     { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* PLANT 5 — resting shadow on every static block. */
+  .card, .banner, .tile, .toolbar, .note {
+    border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,.12);
+  }
+  .card { background: #fff; padding: 16px; }
+  .note { background: #fff; padding: 16px; }
+
+  /* PLANT 3 — accent as decoration across large areas. */
+  .banner  { background: var(--blue); color: #fff; padding: 16px; }
+  .tile    { background: var(--blue); color: #fff; padding: 16px; flex: 1 1 200px; }
+  .toolbar { background: var(--blue); color: #fff; padding: 16px; }
+
+  /* PLANT 4 — 9 sizes; 14 and 15 collide. PLANT 2 — hierarchy by size, one ink. */
+  .t48 { font-size: 48px; font-weight: 700; }
+  .t32 { font-size: 32px; font-weight: 700; }
+  .t24 { font-size: 24px; font-weight: 700; }
+  .t20 { font-size: 20px; font-weight: 600; }
+  .t18 { font-size: 18px; font-weight: 600; }
+  .t15 { font-size: 15px; font-weight: 500; }
+  .t14 { font-size: 14px; font-weight: 500; }
+  .t12 { font-size: 12px; font-weight: 400; }
+  .t10 { font-size: 10px; font-weight: 400; }
+
+  /* Floors stay clean: the table scrolls rather than bleeding the page. */
+  .tablewrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 900px; }
+  th, td { padding: 16px; text-align: left; border: 1px solid #e5e7eb;
+           font-size: 14px; color: var(--ink); white-space: nowrap; }
+  th { font-size: 15px; font-weight: 600; }
+
+  .btn { background: var(--blue); color: #fff; border: 0; border-radius: 8px;
+         padding: 16px; font-size: 14px; cursor: pointer; }
+  .btn:hover  { background: #1d4ed8; }
+  .btn:active { background: #1e40af; }
+  .btn:focus-visible { outline: 2px solid #1e3a8a; outline-offset: 2px; }
+  tbody tr:hover { background: #f9fafb; }
+  a { color: var(--blue); }
+  a:hover { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+</style>
+</head>
+<body>
+  <main class="page">
+    <div class="banner">
+      <h1 class="t32">Vehicle Registrations</h1>
+      <p class="t18">Manage all vehicle registration records</p>
+    </div>
+
+    <div class="row">
+      <div class="tile"><div class="t48">1,284</div><div class="t18">Total records</div></div>
+      <div class="tile"><div class="t48">37</div><div class="t18">Pending review</div></div>
+      <div class="tile"><div class="t48">6</div><div class="t18">Rejected</div></div>
+    </div>
+
+    <div class="toolbar"><h2 class="t20">Registration records</h2></div>
+
+    <div class="card">
+      <div class="section">
+        <div class="group">
+          <div class="field">
+            <h3 class="t24">All records</h3>
+            <p class="t15">Showing 4 of 1,284 records</p>
+          </div>
+          <div class="field">
+            <div class="tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Record ID</th><th scope="col">Owner</th>
+                    <th scope="col">Registration</th><th scope="col">Status</th>
+                    <th scope="col">Created</th><th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="t12">8f2a1c4e-3b90-4d21-a7f6-1c9e0b3d5a88</td>
+                    <td>Kofi Mensah</td><td>GR 4821-24</td><td>ACTIVE</td>
+                    <td class="t10">2026-03-14T09:22:41.000Z</td>
+                    <td><button class="btn">View</button> <button class="btn">Edit</button> <button class="btn">Delete</button></td>
+                  </tr>
+                  <tr>
+                    <td class="t12">2d7b9e01-5f44-4a83-9c12-6e8a4f2b7d31</td>
+                    <td>Ama Owusu</td><td>GT 1190-23</td><td>PENDING_REVIEW</td>
+                    <td class="t10">2026-03-12T16:04:07.000Z</td>
+                    <td><button class="btn">View</button> <button class="btn">Edit</button> <button class="btn">Delete</button></td>
+                  </tr>
+                  <tr>
+                    <td class="t12">a11c6f38-8e72-4b05-bd93-0af7c1e64920</td>
+                    <td>Yaw Boateng</td><td>AS 7734-25</td><td>ACTIVE</td>
+                    <td class="t10">2026-03-11T11:47:53.000Z</td>
+                    <td><button class="btn">View</button> <button class="btn">Edit</button> <button class="btn">Delete</button></td>
+                  </tr>
+                  <tr>
+                    <td class="t12">c40e2a95-1d63-4f18-8a27-9b5d3e0c7f46</td>
+                    <td>Akosua Danso</td><td>WR 2205-22</td><td>REJECTED</td>
+                    <td class="t10">2026-03-09T08:15:29.000Z</td>
+                    <td><button class="btn">View</button> <button class="btn">Edit</button> <button class="btn">Delete</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="section">
+        <div class="group">
+          <div class="field">
+            <h3 class="t18">Retention</h3>
+            <p class="t14">Records are held for seven years from the date of first registration.</p>
+          </div>
+          <div class="field">
+            <h3 class="t18">Corrections</h3>
+            <p class="t14">Amendments require supporting documents. <a href="#g">See guidance</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="section">
+        <div class="group">
+          <div class="field">
+            <h3 class="t18">Fees</h3>
+            <p class="t14">Standard registration fee applies at first issue.</p>
+          </div>
+          <div class="field">
+            <h3 class="t18">Transfers</h3>
+            <p class="t14">Ownership transfers are processed within five working days.</p>
+          </div>
+          <div class="field">
+            <h3 class="t18">Appeals</h3>
+            <p class="t14">A rejected record may be appealed once within 30 days.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="section">
+        <div class="group">
+          <div class="field">
+            <h3 class="t18">Contact</h3>
+            <p class="t14">Enquiries are handled by the registrations desk.</p>
+          </div>
+          <div class="field">
+            <h3 class="t18">Hours</h3>
+            <p class="t14">Counter services operate on weekdays only.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

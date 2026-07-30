@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vehicle registrations</title>
+<!--
+  REDESIGN of flat-admin-table.html — same content, built to the craft brief.
+  This is the test artifact: if the brief works, the numbers move toward the
+  reference range and the squint gains a focal point.
+
+  Built to:
+    space      fields 8px apart, sections 32px apart  -> about 4x separation
+    type       4 text sizes (12/14/16/20), none within 1px, body 14px
+    hierarchy  3 ink levels, size held flat across every row
+    colour     accent on the primary action and status marks only
+    depth      hairlines and one background tier, zero resting shadows
+    grammar    search + filters row, two-line anchor column, status dot+word,
+               one visible row action plus overflow, pagination footer,
+               human dates, registration as the anchor instead of a UUID
+-->
+<style>
+  :root {
+    --ink:        #111827;   /* identity: the thing you are scanning for   */
+    --ink-muted:  #6b7280;   /* supporting data                            */
+    --ink-faint:  #9ca3af;   /* metadata                                   */
+    --line:       #e5e7eb;
+    --surface:    #ffffff;
+    --chrome:     #f9fafb;
+    --accent:     #2563eb;
+    --ok:         #15803d;
+    --warn:       #b45309;
+    --danger:     #b91c1c;
+
+    --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-6: 24px; --s-8: 32px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--chrome); color: var(--ink);
+         font-family: system-ui, -apple-system, sans-serif; font-size: 14px; }
+
+  /* Sections separated by 32px; content inside a section by 8px. ~4x. */
+  .page    { max-width: 1200px; margin: 0 auto; padding: var(--s-8) var(--s-6);
+             display: flex; flex-direction: column; gap: var(--s-8); }
+  .titles  { display: flex; flex-direction: column; gap: var(--s-2); }
+  .toolbar { display: flex; gap: var(--s-2); align-items: center; flex-wrap: wrap; }
+
+  h1 { font-size: 20px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  .sub { font-size: 14px; color: var(--ink-muted); margin: 0; }
+
+  .search { flex: 1 1 260px; min-width: 200px; position: relative; }
+  .search input { width: 100%; height: 36px; padding: 0 var(--s-3) 0 32px;
+                  font-size: 14px; color: var(--ink); background: var(--surface);
+                  border: 1px solid var(--line); border-radius: 6px; }
+  .search input::placeholder { color: var(--ink-faint); }
+  .search svg { position: absolute; left: 10px; top: 10px; color: var(--ink-faint); }
+  .search input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+
+  .filter { height: 36px; padding: 0 var(--s-3); font-size: 14px; color: var(--ink);
+            background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+  .filter:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  /* The one place accent is allowed to be a filled surface. */
+  .primary { height: 36px; padding: 0 var(--s-4); font-size: 14px; font-weight: 500;
+             color: #fff; background: var(--accent); border: 0; border-radius: 6px; cursor: pointer; }
+  .primary:hover { background: #1d4ed8; }
+  .primary:focus-visible { outline: 2px solid #1e3a8a; outline-offset: 2px; }
+
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { font-size: 12px; font-weight: 500; color: var(--ink-muted); text-align: left;
+       padding: var(--s-3) var(--s-4); border-bottom: 1px solid var(--line); white-space: nowrap; }
+  td { padding: var(--s-3) var(--s-4); border-bottom: 1px solid var(--line); vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: var(--chrome); }
+
+  /* Anchor column: identity at full ink, supporting line muted. Same size. */
+  .anchor  { font-size: 14px; color: var(--ink); }
+  .beneath { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+  .muted   { font-size: 14px; color: var(--ink-muted); }
+  .meta    { font-size: 12px; color: var(--ink-faint); white-space: nowrap; }
+
+  /* Status: a dot AND a word. Colour reinforces, never carries alone. */
+  .status { display: inline-flex; align-items: center; gap: var(--s-2);
+            font-size: 14px; color: var(--ink-muted); white-space: nowrap; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; flex: none; }
+  .dot-ok { background: var(--ok); } .dot-warn { background: var(--warn); } .dot-danger { background: var(--danger); }
+
+  .actions { text-align: right; white-space: nowrap; }
+  .link { font-size: 14px; color: var(--accent); background: none; border: 0;
+          padding: var(--s-1) var(--s-2); cursor: pointer; border-radius: 4px; }
+  .link:hover { text-decoration: underline; }
+  .link:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .more { width: 28px; height: 28px; border: 0; background: none; color: var(--ink-faint);
+          border-radius: 4px; cursor: pointer; font-size: 14px; }
+  .more:hover { background: var(--chrome); color: var(--ink); }
+  .more:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between;
+          gap: var(--s-4); padding: var(--s-3) var(--s-4); border-top: 1px solid var(--line);
+          font-size: 12px; color: var(--ink-muted); flex-wrap: wrap; }
+  .pager { display: flex; align-items: center; gap: var(--s-2); }
+  .pager button { font-size: 12px; color: var(--ink-muted); background: var(--surface);
+                  border: 1px solid var(--line); border-radius: 4px; padding: var(--s-1) var(--s-2); cursor: pointer; }
+  .pager button:hover:not(:disabled) { color: var(--ink); }
+  .pager button:disabled { color: var(--ink-faint); cursor: default; }
+  .tablewrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+  <main class="page">
+    <div class="titles">
+      <h1>Vehicle registrations</h1>
+      <p class="sub">1,284 records. 37 awaiting review.</p>
+    </div>
+
+    <div class="panel">
+      <div class="toolbar" style="padding: 12px 16px; border-bottom: 1px solid var(--line);">
+        <div class="search">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="7" cy="7" r="4.5" /><path d="M10.5 10.5 14 14" stroke-linecap="round" />
+          </svg>
+          <input type="search" placeholder="Search by registration or owner" aria-label="Search registrations" />
+        </div>
+        <select class="filter" aria-label="Status"><option>All statuses</option><option>Active</option><option>Awaiting review</option><option>Rejected</option></select>
+        <select class="filter" aria-label="Registered"><option>Any date</option><option>Last 30 days</option><option>This year</option></select>
+        <button class="primary" type="button">New registration</button>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Registration</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Status</th>
+              <th scope="col">Registered</th>
+              <th scope="col"><span class="meta">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="anchor">GR 4821-24</div><div class="beneath">Saloon, private</div></td>
+              <td class="muted">Kofi Mensah</td>
+              <td><span class="status"><span class="dot dot-ok"></span>Active</span></td>
+              <td class="meta">14 Mar 2026</td>
+              <td class="actions"><button class="link" type="button">View</button><button class="more" type="button" aria-label="More actions for GR 4821-24">&#8943;</button></td>
+            </tr>
+            <tr>
+              <td><div class="anchor">GT 1190-23</div><div class="beneath">Pickup, commercial</div></td>
+              <td class="muted">Ama Owusu</td>
+              <td><span class="status"><span class="dot dot-warn"></span>Awaiting review</span></td>
+              <td class="meta">12 Mar 2026</td>
+              <td class="actions"><button class="link" type="button">View</button><button class="more" type="button" aria-label="More actions for GT 1190-23">&#8943;</button></td>
+            </tr>
+            <tr>
+              <td><div class="anchor">AS 7734-25</div><div class="beneath">Saloon, private</div></td>
+              <td class="muted">Yaw Boateng</td>
+              <td><span class="status"><span class="dot dot-ok"></span>Active</span></td>
+              <td class="meta">11 Mar 2026</td>
+              <td class="actions"><button class="link" type="button">View</button><button class="more" type="button" aria-label="More actions for AS 7734-25">&#8943;</button></td>
+            </tr>
+            <tr>
+              <td><div class="anchor">WR 2205-22</div><div class="beneath">Motorcycle, private</div></td>
+              <td class="muted">Akosua Danso</td>
+              <td><span class="status"><span class="dot dot-danger"></span>Rejected</span></td>
+              <td class="meta">9 Mar 2026</td>
+              <td class="actions"><button class="link" type="button">View</button><button class="more" type="button" aria-label="More actions for WR 2205-22">&#8943;</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="foot">
+        <span>Showing 1&ndash;4 of 1,284</span>
+        <div class="pager">
+          <label for="per">Rows</label>
+          <select id="per" class="filter" style="height:28px;font-size:12px;padding:0 8px;"><option>25</option><option>50</option><option>100</option></select>
+          <button type="button" disabled>Previous</button>
+          <button type="button">Next</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

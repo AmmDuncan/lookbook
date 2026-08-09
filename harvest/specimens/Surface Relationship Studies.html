@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ============================================================================
-   SURFACE RELATIONSHIP STUDIES — one dataset, one axis.
+   SURFACE RELATIONSHIP STUDIES — one dataset, five axes.
    Nav content and page content are IDENTICAL in every frame. The only thing
    that changes is how the nav SURFACE relates to the content SURFACE.
    Composition, not skin: the greyscale proof at the bottom is the test.
@@ -63,7 +63,7 @@ button{font-family:inherit;color:inherit;}
 .axis p{font-size:14.5px;color:var(--muted);max-width:70ch;margin-top:8px;}
 
 /* ---------------------------------------------------------------- gallery */
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:34px 26px;}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 26px;}
 .spec{display:flex;flex-direction:column;gap:13px;}
 .lab{min-height:116px;}   /* keeps frames on a shared baseline across a row */
 .lab .nm{font-size:14.5px;font-weight:700;letter-spacing:-0.01em;}
@@ -234,6 +234,95 @@ td.own{color:var(--ink);font-weight:500;}
 .combo .row.bad .p{color:#8C2F28;}
 .combo .row.bad .p::after{content:' ✕';}
 
+/* ============ AXIS C: the same relations on a HORIZONTAL split ============
+   Sidebar swapped for a top bar. Nav items and page content unchanged. */
+.tapp{display:flex;flex-direction:column;height:100%;min-height:0;}
+.topnav{display:flex;align-items:center;gap:10px;padding:0 12px;height:38px;flex-shrink:0;overflow:hidden;}
+.topnav .links{display:flex;gap:2px;margin-left:4px;min-width:0;overflow:hidden;}
+.tni{padding:5px 8px;white-space:nowrap;flex-shrink:0;border-radius:6px;font-size:10px;font-weight:500;color:var(--muted);border:none;background:none;cursor:pointer;}
+.tni.on{background:var(--a-soft);color:var(--a);font-weight:600;}
+.tni:hover:not(.on){background:rgba(22,24,29,.045);color:var(--ink);}
+.topnav .right{margin-left:auto;display:flex;align-items:center;gap:7px;flex-shrink:0;}
+.tapp .main{flex:1;min-height:0;}
+
+.c1{background:#fff;}
+.c1 .topnav{border-bottom:1px solid var(--line);}
+
+.c2{background:#fff;}
+.c2 .main{padding-top:6px;}
+
+.c3{background:var(--sunk);}
+.c3 .main{background:#fff;box-shadow:var(--sh-2);}
+
+.c4{background:var(--page);}
+.c4 .main{background:#fff;margin:0 10px 10px;border-radius:10px;box-shadow:var(--sh-2);}
+
+.c5{background:var(--page);}
+.c5 .topnav{background:#fff;margin:10px 10px 0;border-radius:10px;box-shadow:var(--sh-2);}
+.c5 .main{padding-top:4px;}
+
+.c6{background:#1A1C24;}
+/* rail literals again — measured on #1A1C24, see the .r6 note above */
+.c6 .topnav{color:#E7E8EE;}
+.c6 .brand .nmx{color:#fff;}
+.c6 .tni{color:#B6BBCC;}
+.c6 .tni.on{background:rgba(255,255,255,.12);color:#fff;font-weight:600;}
+.c6 .tni:hover:not(.on){background:rgba(255,255,255,.06);color:#fff;}
+.c6 .av{background:#2A2D38;color:#C9C6F5;}
+.c6 .main{background:#fff;margin:0 9px 9px;border-radius:10px;}
+
+/* ================= AXIS D: which plane owns the scroll ===================
+   Real overflow, not a drawing of it — the scrollbars below are live. */
+.scrolls{overflow-y:scroll;scrollbar-width:thin;scrollbar-color:#B9BECD transparent;}
+.scrolls::-webkit-scrollbar{width:7px;}
+.scrolls::-webkit-scrollbar-thumb{background:#B9BECD;border-radius:4px;}
+.scrolls::-webkit-scrollbar-track{background:transparent;}
+
+.d1{background:#fff;display:block;height:100%;overflow-y:scroll;}   /* whole page scrolls */
+.d1 .inner{display:grid;grid-template-columns:150px 1fr;min-height:100%;}
+.d1 .main,.d1 .body{min-height:min-content;}
+.d1 .body{flex:none;}
+.d1 .nav{border-right:1px solid var(--line);}
+
+.d2{background:#fff;}                                  /* nav fixed, content scrolls */
+.d2 .nav{border-right:1px solid var(--line);}
+.d2 .main{overflow-y:scroll;}
+
+.d3{background:#fff;}                                  /* both scroll independently */
+.d3 .nav{border-right:1px solid var(--line);overflow-y:scroll;}
+.d3 .main{overflow-y:scroll;}
+
+.d4{background:#fff;}                                  /* content scrolls under a pinned header */
+.d4 .nav{border-right:1px solid var(--line);}
+.d4 .main{overflow-y:scroll;}
+.d4 .ph{position:sticky;top:0;z-index:2;background:#fff;box-shadow:0 1px 0 var(--line);}
+
+/* ============ AXIS E: rail collapse, held on ONE relation (04) ===========
+   Relation is floating-content throughout, so the only variable is the nav. */
+.e{background:var(--page);}
+.e .main{background:#fff;margin:10px 10px 10px 0;border-radius:10px;box-shadow:var(--sh-2);}
+.e2,.e3{grid-template-columns:52px 1fr;}
+.e4{grid-template-columns:1fr;}
+.e4 .nav{display:none;}
+.e4 .main{margin-left:10px;}
+/* icon-rail form: labels and section headings drop, marks stay centred */
+.e2 .nav,.e3 .nav{align-items:center;padding:11px 6px;}
+.e2 .ni,.e3 .ni{justify-content:center;padding:7px 0;gap:0;}
+.e2 .ni span.t,.e3 .ni span.t{display:none;}
+.e2 .navlbl,.e3 .navlbl{display:none;}
+.e2 .brand .nmx,.e3 .brand .nmx{display:none;}
+.e2 .uc .meta,.e3 .uc .meta{display:none;}
+.e2 .uc,.e3 .uc{justify-content:center;}
+/* hover-overlay: the expanded panel floats OVER the content plane */
+.e3{position:relative;}
+.e3 .flyout{position:absolute;top:10px;left:52px;width:150px;background:#fff;border-radius:10px;box-shadow:var(--sh-3);padding:10px;z-index:3;}
+.e3 .flyout .navlbl{padding-top:0;}
+.e3 .flyout .fi{display:flex;align-items:center;gap:8px;padding:6px 7px;border-radius:6px;font-size:10.5px;font-weight:500;color:var(--muted);}
+.e3 .flyout .fi.on{background:var(--a-soft);color:var(--a);font-weight:600;}
+.e4 .burger{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;border:1px solid var(--ctl);background:#fff;margin-right:9px;flex-shrink:0;}
+.e4 .burger svg{width:13px;height:13px;stroke:var(--ink);fill:none;stroke-width:1.8;}
+.eph{display:flex;align-items:center;min-width:0;}
+
 /* ------------------------------------------------------- greyscale proof */
 .proof{margin-top:60px;}
 .mono{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 18px;margin-top:22px;filter:grayscale(1);}
@@ -256,11 +345,11 @@ td.own{color:var(--ink);font-weight:500;}
 <div class="wrap">
 
   <header class="head">
-    <div class="eyebrow">Drill-down axis study · one surface · one axis</div>
+    <div class="eyebrow">Drill-down axis study · one surface · five axes</div>
     <h1>Surface relationship studies</h1>
     <div class="headcols">
       <div>
-  <p class="lede">Eight ways the <b>nav surface</b> can relate to the <b>content surface</b>. Nav items, page content and skin are identical in every frame — the only variable is the relationship between the two planes. This is the axis that makes a set of "distinct" shells stop reading as one design drawn eight times.</p>
+  <p class="lede">Eight ways the <b>nav surface</b> can relate to the <b>content surface</b>. Nav items, page content and skin are identical in every frame — the only variable is the relationship between the two planes. This is the axis that makes a set of "distinct" shells stop reading as one design drawn eight times. Four further axes follow: the same relations on a horizontal split, where the header sits, which plane owns the scroll, and what collapse does to all of it.</p>
       </div>
       <div class="note">
     <p><b>Why this axis exists.</b> Most shell libraries vary nav <i>content</i> — icon rail, nested groups, workspace switcher — while every specimen separates nav from content the same way: a 1px border with the sidebar flush to the viewport edge. That is one idea drawn N times.</p>
@@ -444,6 +533,176 @@ td.own{color:var(--ink);font-weight:500;}
 
   </div>
 
+  <div class="axis">
+    <div class="k">Axis C</div>
+    <h2>The same relations on a horizontal split</h2>
+    <p>Swap the sidebar for a top bar and the eight relations still apply — but they stop reading the same way. A bar has far less surface area than a rail, so tone and elevation do more work and the gutter does less. Six shown; 07 full-bleed and 08 two-tone transfer unchanged and are not repeated. Note the bar carries five destinations where the rail carried seven — a horizontal nav holds fewer items before it truncates, and pushing the remainder into an overflow menu is part of the trade, not an implementation detail.</p>
+  </div>
+
+  <div class="gallery" id="axisC">
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>C1</span>Bordered bar</div>
+        <div class="uw">The horizontal baseline, and the same trap as 01: a rule under the bar is what every marketing-site-turned-app reaches for first.</div>
+        <div class="mech">separator: 1px rule under a full-width bar</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="tapp c1" data-tpl="c"></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>C2</span>Same level</div>
+        <div class="uw">No rule. On a horizontal split this is riskier than 02 was: with only 38px of bar, losing the rule can leave the nav floating in the page rather than framing it.</div>
+        <div class="mech">separator: space alone · no rule, no tonal step</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="tapp c2" data-tpl="c"></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>C3</span>Sunken bar, raised content</div>
+        <div class="uw">The bar recedes into the ground and the page lifts in front of it. Works better horizontally than vertically — the eye reads the raised edge as the top of a document.</div>
+        <div class="mech">separator: elevation · bar on recess, content raised</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="tapp c3" data-tpl="c"></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>C4</span>Floating content</div>
+        <div class="uw">Content as an inset card below a flush bar. The strongest "this page is one object" reading available on a horizontal split.</div>
+        <div class="mech">separator: gap + radius + elevation below the bar</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="tapp c4" data-tpl="c"></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>C5</span>Inset bar</div>
+        <div class="uw">The bar becomes a floating card and the content sits on the ground — the horizontal twin of 05. Reads as a toolbar hovering over a workspace.</div>
+        <div class="mech">separator: gap + radius on the BAR · content uncontained</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="tapp c5" data-tpl="c"></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>C6</span>Ink bar, detached content</div>
+        <div class="uw">Dark bar, light plane floating below it. Carries brand in the smallest area of any relation here, which is why so many products land on it.</div>
+        <div class="mech">separator: tonal inversion + gap</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="tapp c6" data-tpl="c"></div></div></div>
+    </div>
+
+  </div>
+
+  <div class="axis">
+    <div class="k">Axis D</div>
+    <h2>Which plane owns the scroll</h2>
+    <p>Independent of every relation above, and the one most often decided by accident. The scrollbars in these four are live — the table is lengthened here so the overflow is real rather than drawn. Each frame is parked mid-scroll so the difference reads in a still; scroll inside one to feel it.</p>
+  </div>
+
+  <div class="gallery" id="axisD">
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>D1</span>Whole page scrolls</div>
+        <div class="uw">One scroll container: the nav travels up and off with the content. <b>Costs:</b> nav is unreachable deep in a long list. <b>Use when</b> the page is a document, not a workspace.</div>
+        <div class="mech">one scroll container · nav scrolls away</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="d1 scrolls" data-tpl="d1"></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>D2</span>Nav fixed, content scrolls</div>
+        <div class="uw">The app default. Nav is always reachable; only the work moves. <b>Costs:</b> a nav longer than the viewport becomes unreachable, which is what D3 fixes.</div>
+        <div class="mech">nav fixed · one scroll container in the content plane</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="app d2" data-tpl="d"></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>D3</span>Both scroll independently</div>
+        <div class="uw">Two scroll containers side by side. <b>Use when</b> the nav is genuinely long (workspaces, projects, saved views). <b>Costs:</b> two scrollbars is a real cognitive tax — don't reach for it early.</div>
+        <div class="mech">two scroll containers · nav lengthened here so its overflow is real</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="app d3" data-tpl="d"></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>D4</span>Content scrolls under a pinned header</div>
+        <div class="uw">D2 plus a sticky page header, so the title and primary action survive the scroll. <b>Use when</b> the page action stays relevant at row 200 — which on a registrations table it does.</div>
+        <div class="mech">nav fixed · page header sticky INSIDE the scroll container</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="app d4" data-tpl="d"></div></div></div>
+    </div>
+
+  </div>
+
+  <div class="axis">
+    <div class="k">Axis E</div>
+    <h2>Collapse is a relation change, not a width change</h2>
+    <p>All four hold relation 04 (floating content) constant and vary only the nav. Treating collapse as "the same nav, narrower" is the mistake: at 52px the nav stops reading as structure and starts reading as a toolbar, and the content plane silently becomes the whole product.</p>
+  </div>
+
+  <div class="gallery" id="axisE">
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>E1</span>Open</div>
+        <div class="uw">Labels visible, sections named. The content plane reads as one page <i>inside</i> an application.</div>
+        <div class="mech">150px · labels + section headings</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="app e e1" data-tpl="e"></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>E2</span>Icon rail</div>
+        <div class="uw">Same relation, but the balance flips: the plane now dominates and the nav reads as a toolbar. <b>Costs:</b> section headings are gone, so grouping has to survive in icon order alone.</div>
+        <div class="mech">52px · icons only · labels via tooltip</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="app e e2" data-tpl="e"></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>E3</span>Rail + hover flyout</div>
+        <div class="uw">The labels come back on demand, floating <i>over</i> the content plane — which is a third surface, and needs its own elevation step. <b>Use when</b> you want E2's density without losing wayfinding.</div>
+        <div class="mech">52px rail · expanded panel overlays the plane · covers the page title while open</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="app e e3" data-tpl="e3"></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="lab">
+        <div class="nm"><span>E4</span>Off canvas</div>
+        <div class="uw">No nav at rest; a control in the page header summons it. The relation has collapsed to nothing and the plane <i>is</i> the product. <b>Costs:</b> zero persistent wayfinding — every user is one click from lost.</div>
+        <div class="mech">0px · nav summoned · content plane full width</div>
+      </div>
+      <div class="frame"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dvla.gov.gh/registrations</div></div>
+        <div class="stage"><div class="app e e4" data-tpl="e4"></div></div></div>
+    </div>
+
+  </div>
+
   <div class="proof">
     <div class="axis" style="margin-top:0;">
       <div class="k">Proof</div>
@@ -453,7 +712,7 @@ td.own{color:var(--ink);font-weight:500;}
     <div class="mono" id="proofGrid"></div>
   </div>
 
-  <p class="foot"><b>Lifting from this sheet:</b> copy the frame's markup once, then copy only the <code>.rN</code> block — every relation is 3–8 declarations over the same shared interior. The interior classes (<code>.nav</code>, <code>.main</code>, <code>.kpi</code>, <code>.tbl</code>) are deliberately relation-agnostic so switching relation is a one-class change, not a rebuild.</p>
+  <p class="foot"><b>Lifting from this sheet:</b> copy the frame's markup once, then copy only the <code>.rN</code> / <code>.cN</code> / <code>.dN</code> / <code>.eN</code> block — every variant is 3–8 declarations over the same shared interior. The interior classes (<code>.nav</code>, <code>.main</code>, <code>.kpi</code>, <code>.tbl</code>) are deliberately relation-agnostic so switching relation is a one-class change, not a rebuild.</p>
 
 </div>
 
@@ -465,16 +724,44 @@ td.own{color:var(--ink);font-weight:500;}
   <nav class="nav">
     <div class="brand"><span class="mk"><b></b></span><span class="nmx">DVLA</span></div>
     <div class="navlbl">Operations</div>
-    <button class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Overview</button>
-    <button class="ni"><svg viewBox="0 0 24 24"><path d="M4 16h16M6 16V11l2-4h8l2 4v5"/><circle cx="8" cy="18" r="2"/><circle cx="16" cy="18" r="2"/></svg>Vehicles</button>
-    <button class="ni on" aria-current="page"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M8 15h5"/></svg>Registrations</button>
-    <button class="ni"><svg viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>Transfers</button>
-    <button class="ni"><svg viewBox="0 0 24 24"><path d="M9 11l2.5 2.5L16 9"/><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>Inspections</button>
+    <button class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span class="t">Overview</span></button>
+    <button class="ni"><svg viewBox="0 0 24 24"><path d="M4 16h16M6 16V11l2-4h8l2 4v5"/><circle cx="8" cy="18" r="2"/><circle cx="16" cy="18" r="2"/></svg><span class="t">Vehicles</span></button>
+    <button class="ni on" aria-current="page"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M8 15h5"/></svg><span class="t">Registrations</span></button>
+    <button class="ni"><svg viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg><span class="t">Transfers</span></button>
+    <button class="ni"><svg viewBox="0 0 24 24"><path d="M9 11l2.5 2.5L16 9"/><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg><span class="t">Inspections</span></button>
     <div class="navlbl">Admin</div>
-    <button class="ni"><svg viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Reports</button>
-    <button class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg>Settings</button>
-    <div class="uc"><span class="av">SR</span><span><span class="un" style="display:block">Steve Rogers</span><span class="ur">Registrar, Accra</span></span></div>
+    <button class="ni"><svg viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span class="t">Reports</span></button>
+    <button class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg><span class="t">Settings</span></button>
+    <div class="uc"><span class="av">SR</span><span class="meta"><span class="un" style="display:block">Steve Rogers</span><span class="ur">Registrar, Accra</span></span></div>
   </nav>
+</template>
+
+<template id="tpl-topnav">
+  <div class="topnav">
+    <div class="brand"><span class="mk"><b></b></span><span class="nmx">DVLA</span></div>
+    <div class="links">
+      <button class="tni">Overview</button>
+      <button class="tni">Vehicles</button>
+      <button class="tni on" aria-current="page">Registrations</button>
+      <button class="tni">Transfers</button>
+      <button class="tni">Inspections</button>
+    </div>
+    <div class="right">
+      <span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>Search</span>
+      <span class="av">SR</span>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-flyout">
+  <div class="flyout">
+    <div class="navlbl">Operations</div>
+    <div class="fi">Overview</div>
+    <div class="fi">Vehicles</div>
+    <div class="fi on">Registrations</div>
+    <div class="fi">Transfers</div>
+    <div class="fi">Inspections</div>
+  </div>
 </template>
 
 <template id="tpl-ph">
@@ -522,9 +809,97 @@ td.own{color:var(--ink);font-weight:500;}
 (function () {
   const tpl = id => document.getElementById(id).content.cloneNode(true);
 
+  /** The scroll axis needs content taller than the frame — same table, more rows. */
+  function longBody() {
+    const body = tpl('tpl-body');
+    const tbody = body.querySelector('tbody');
+    const seed = [...tbody.children].map((r) => r.cloneNode(true));
+    const plates = ['GR 5104-24', 'GT 2288-25', 'GW 6640-24', 'GE 8317-25',
+                    'GS 1122-25', 'GN 9043-24', 'GR 7765-25', 'GT 3391-24'];
+    plates.forEach((p, i) => {
+      const row = seed[i % seed.length].cloneNode(true);
+      row.querySelector('.reg').textContent = p;
+      tbody.appendChild(row);
+    });
+    return body;
+  }
+
   /** Stamp the shared nav + page content into a frame, per its data-tpl shape. */
   function fill(host) {
     const shape = host.dataset.tpl;
+
+    if (shape === 'c') {
+      host.appendChild(tpl('tpl-topnav'));
+      const main = document.createElement('div');
+      main.className = 'main';
+      main.appendChild(tpl('tpl-ph'));
+      main.appendChild(tpl('tpl-body'));
+      host.appendChild(main);
+      return;
+    }
+
+    if (shape === 'd1' || shape === 'd') {
+      const mount = shape === 'd1' ? document.createElement('div') : host;
+      if (shape === 'd1') { mount.className = 'inner'; }
+      mount.appendChild(tpl('tpl-nav'));
+      const main = document.createElement('div');
+      main.className = 'main';
+      main.appendChild(tpl('tpl-ph'));
+      main.appendChild(longBody());
+      if (shape !== 'd1') { main.classList.add('scrolls'); }
+      mount.appendChild(main);
+      if (shape === 'd1') { host.appendChild(mount); }
+      // D3 only: the nav is lengthened so its overflow is real rather than claimed.
+      if (host.classList.contains('d3')) {
+        const nav = mount.querySelector('.nav');
+        nav.classList.add('scrolls');
+        const anchor = nav.querySelector('.uc');
+        const label = document.createElement('div');
+        label.className = 'navlbl';
+        label.textContent = 'Saved views';
+        nav.insertBefore(label, anchor);
+        ['Overdue inspections', 'Accra North', 'Awaiting payment', 'Flagged VINs',
+         'Transferred 2025', 'Fleet accounts'].forEach((t) => {
+          const b = document.createElement('button');
+          b.className = 'ni';
+          b.innerHTML = '<svg viewBox="0 0 24 24"><path d="M5 5h14v14l-7-4-7 4z"/></svg><span class="t">' + t + '</span>';
+          nav.insertBefore(b, anchor);
+        });
+      }
+      return;
+    }
+
+    if (shape === 'e3') {
+      host.appendChild(tpl('tpl-nav'));
+      host.appendChild(tpl('tpl-flyout'));
+      const main = document.createElement('div');
+      main.className = 'main';
+      main.appendChild(tpl('tpl-ph'));
+      main.appendChild(tpl('tpl-body'));
+      host.appendChild(main);
+      return;
+    }
+
+    if (shape === 'e4') {
+      const main = document.createElement('div');
+      main.className = 'main';
+      const ph = tpl('tpl-ph');
+      const burger = document.createElement('button');
+      burger.className = 'burger';
+      burger.setAttribute('aria-label', 'Open navigation');
+      burger.innerHTML = '<svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+      const titleBlock = ph.querySelector('.ph > div');
+      const row = document.createElement('div');
+      row.className = 'eph';
+      titleBlock.parentNode.insertBefore(row, titleBlock);
+      row.appendChild(burger);
+      row.appendChild(titleBlock);
+      main.appendChild(ph);
+      main.appendChild(tpl('tpl-body'));
+      host.appendChild(main);
+      return;
+    }
+
     if (shape === 'h1') {
       host.appendChild(tpl('tpl-hdr'));
       const app = document.createElement('div');
@@ -548,6 +923,11 @@ td.own{color:var(--ink);font-weight:500;}
   }
 
   document.querySelectorAll('[data-tpl]').forEach(fill);
+
+  // Axis D is invisible at rest — every frame looks the same until something
+  // has scrolled. Park each one mid-scroll so the difference reads in a still.
+  document.querySelectorAll('#axisD .scrolls').forEach((el) => { el.scrollTop = 132; });
+  document.querySelectorAll('#axisD .d3 .nav').forEach((el) => { el.scrollTop = 46; });
 
   // Greyscale proof: clone the eight Axis-A frames at half scale.
   const grid = document.getElementById('proofGrid');

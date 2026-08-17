@@ -127,12 +127,14 @@
 |---|---|
 | 6 by composition: classic sidebar+topbar · icon-rail · top-navbar+section-tabs · split master-detail · dual-sidebar · dense command-center | `App Shell Variations.html` |
 | rail-as-layout AXIS on one live dashboard (none / icon-rail / open / collapsible-mid-collapse) — see the drill-down study | `Dashboard Shell & Widget Studies.html` (DRILL-DOWN AXIS STUDIES) |
+| ⚠️ **OPEN THIS FIRST** — the nav↔content surface RELATION (bordered / same-level / sunken nav + raised content / floating content / inset nav / ink rail + detached / full-bleed / two-tone), header position vs the split, and scroll ownership. The sheet above varies what nav CONTAINS while freezing the relation at flush-1px-border; pick the relation before styling either plane. | `Surface Relationship Studies.html` (DRILL-DOWN AXIS STUDIES) |
 
 ### Sidebars (shell component)
 | Looks | src |
 |---|---|
 | 8 structures: labeled-sections · collapsed-icon+tooltips · search-pinned(⌘K) · nested-expandable · workspace-switcher+profile · dark · compact-dense+badges · primary-action-above-nav | `Sidebar Variations.html` |
 | the rail shown as a layout AXIS in-context (none / icon-rail / open / collapsible) against an unchanged dashboard body | `Dashboard Shell & Widget Studies.html` (DRILL-DOWN AXIS STUDIES) |
+| ⚠️ **OPEN THIS FIRST** — how the rail's plane RELATES to the content plane (sunken rail + raised content, inset rail as its own card, ink rail + detached content, two-tone, full-bleed), plus collapse treated as a relation change (open / icon rail / hover flyout / off-canvas) rather than a width change. The sheet above varies rail STRUCTURE at a fixed relation. | `Surface Relationship Studies.html` (DRILL-DOWN AXIS STUDIES) |
 
 ### Headers / topbars (shell component)
 | Looks | src |

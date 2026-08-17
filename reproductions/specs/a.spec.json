@@ -1,0 +1,393 @@
+{
+  "name": "a",
+  "source": "http://localhost:8901/a.html",
+  "capturedAt": "2026-08-10",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 92.3,
+    "authoredValuesSampled": 365,
+    "distinctValues": 10,
+    "topSteps": [
+      {
+        "value": 16,
+        "count": 134
+      },
+      {
+        "value": 12,
+        "count": 134
+      },
+      {
+        "value": 8,
+        "count": 47
+      },
+      {
+        "value": 10,
+        "count": 16
+      },
+      {
+        "value": 6,
+        "count": 12
+      },
+      {
+        "value": 32,
+        "count": 11
+      },
+      {
+        "value": 20,
+        "count": 8
+      },
+      {
+        "value": 2,
+        "count": 6
+      }
+    ],
+    "grouping": {
+      "samples": 3,
+      "byMethod": {
+        "nested": 1,
+        "within": 2
+      },
+      "medianInsideGap": 8,
+      "medianBetweenGap": 16,
+      "medianRatio": 2.67,
+      "confidence": "low — too few groups to generalise",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Inter",
+        "count": 81
+      },
+      {
+        "value": "JetBrains Mono",
+        "count": 33
+      },
+      {
+        "value": "Archivo",
+        "count": 5
+      }
+    ],
+    "bodySize": 12,
+    "sizes": [
+      10,
+      11,
+      12,
+      14,
+      20,
+      24
+    ],
+    "distinctSizes": 6,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 26,
+    "scaleRatios": [
+      1.1,
+      1.091,
+      1.167,
+      1.429,
+      1.2
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.35,
+      "weight": 0.33,
+      "ink": 0.48
+    },
+    "measureChars": 189,
+    "topRoles": [
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#5f6b77",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 24,
+        "sample": "13 above threshold"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#101820",
+        "lineHeight": 1.57,
+        "tracking": 0,
+        "transform": "none",
+        "count": 20,
+        "sample": "Classroom block construction, 24 units"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#5f6b77",
+        "lineHeight": 1.57,
+        "tracking": 0,
+        "transform": "none",
+        "count": 15,
+        "sample": "Casework ›"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#dfe5ea",
+        "lineHeight": 1.57,
+        "tracking": 0,
+        "transform": "none",
+        "count": 6,
+        "sample": "Cases"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#101820",
+        "lineHeight": 1.57,
+        "tracking": -0.14,
+        "transform": "none",
+        "count": 5,
+        "sample": "SUB-2026-1242"
+      },
+      {
+        "size": 11,
+        "weight": 500,
+        "color": "#5f6b77",
+        "lineHeight": 2,
+        "tracking": 0.66,
+        "transform": "uppercase",
+        "count": 6,
+        "sample": "Submission & entity"
+      },
+      {
+        "size": 11,
+        "weight": 600,
+        "color": "#3d4a56",
+        "lineHeight": 2,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Ready to screen"
+      },
+      {
+        "size": 10,
+        "weight": 400,
+        "color": "#8794a0",
+        "lineHeight": 2.2,
+        "tracking": 0.8,
+        "transform": "uppercase",
+        "count": 5,
+        "sample": "Casework"
+      },
+      {
+        "size": 11,
+        "weight": 400,
+        "color": "#5f6b77",
+        "lineHeight": 2,
+        "tracking": 0.66,
+        "transform": "uppercase",
+        "count": 3,
+        "sample": "Ready to screen"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#5f6b77",
+        "lineHeight": 1.57,
+        "tracking": -0.14,
+        "transform": "none",
+        "count": 3,
+        "sample": "SUB-2026-1452"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#eef1f4",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 99.7
+      },
+      {
+        "hex": "#eef1f4",
+        "h": 210,
+        "s": 21.4,
+        "l": 94.5,
+        "c": 2.4,
+        "areaPct": 83.4
+      },
+      {
+        "hex": "#171d25",
+        "h": 214,
+        "s": 23.3,
+        "l": 11.8,
+        "c": 5.5,
+        "areaPct": 16.7
+      },
+      {
+        "hex": "#f6f8fa",
+        "h": 210,
+        "s": 28.6,
+        "l": 97.3,
+        "c": 1.6,
+        "areaPct": 10.8
+      },
+      {
+        "hex": "#121820",
+        "h": 214,
+        "s": 28,
+        "l": 9.8,
+        "c": 5.5,
+        "areaPct": 3.2
+      },
+      {
+        "hex": "#0f6e6e",
+        "h": 180,
+        "s": 76,
+        "l": 24.5,
+        "c": 37.3,
+        "areaPct": 0.7
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#5f6b77",
+        "s": 11.2,
+        "l": 42,
+        "c": 9.4,
+        "sharePct": 64.6
+      },
+      {
+        "hex": "#101820",
+        "s": 33.3,
+        "l": 9.4,
+        "c": 6.3,
+        "sharePct": 19.2
+      },
+      {
+        "hex": "#dfe5ea",
+        "s": 20.8,
+        "l": 89.6,
+        "c": 4.3,
+        "sharePct": 3.9
+      },
+      {
+        "hex": "#8794a0",
+        "s": 11.6,
+        "l": 57.8,
+        "c": 9.8,
+        "sharePct": 3.5
+      },
+      {
+        "hex": "#3d4a56",
+        "s": 17,
+        "l": 28.8,
+        "c": 9.8,
+        "sharePct": 2.6
+      },
+      {
+        "hex": "#909dab",
+        "s": 13.8,
+        "l": 61.8,
+        "c": 10.6,
+        "sharePct": 1.6
+      },
+      {
+        "hex": "#0a5555",
+        "s": 78.9,
+        "l": 18.6,
+        "c": 29.4,
+        "sharePct": 1.4
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 1.3
+      },
+      {
+        "hex": "#8a5a12",
+        "s": 76.9,
+        "l": 30.6,
+        "c": 47.1,
+        "sharePct": 1.2
+      },
+      {
+        "hex": "#f0857a",
+        "s": 79.7,
+        "l": 71,
+        "c": 46.3,
+        "sharePct": 0.7
+      }
+    ],
+    "neutralsTinted": "6/8",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 37.3,
+    "accentAreaPct": 0.7,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 16,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [
+        6,
+        999
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": 1136,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "3-col: px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 23
+      },
+      {
+        "value": "column",
+        "count": 2
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 26,
+      "coveringMostContent": 11,
+      "top": [
+        274,
+        290,
+        12,
+        272,
+        532,
+        778,
+        980,
+        1160
+      ]
+    },
+    "density": {
+      "visibleElements": 198,
+      "perScreenful": 198
+    }
+  }
+}

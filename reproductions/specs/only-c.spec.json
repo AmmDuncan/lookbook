@@ -1,0 +1,285 @@
+{
+  "name": "only-c",
+  "source": "/tmp/wren-ov/only-C.html",
+  "capturedAt": "2026-08-13",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 57.8,
+    "authoredValuesSampled": 45,
+    "distinctValues": 11,
+    "topSteps": [
+      {
+        "value": 12,
+        "count": 6
+      },
+      {
+        "value": 10,
+        "count": 6
+      },
+      {
+        "value": 7,
+        "count": 6
+      },
+      {
+        "value": 16,
+        "count": 5
+      },
+      {
+        "value": 9,
+        "count": 5
+      },
+      {
+        "value": 8,
+        "count": 4
+      },
+      {
+        "value": 11,
+        "count": 4
+      },
+      {
+        "value": 5,
+        "count": 4
+      },
+      {
+        "value": 6,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 2,
+      "byMethod": {
+        "nested": 1,
+        "within": 1
+      },
+      "medianInsideGap": 6.75,
+      "medianBetweenGap": 93,
+      "medianRatio": 15.27,
+      "confidence": "low — too few groups to generalise",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "-apple-system",
+        "count": 7
+      },
+      {
+        "value": "ui-monospace",
+        "count": 3
+      }
+    ],
+    "bodySize": 13,
+    "sizes": [
+      11,
+      12,
+      13,
+      16
+    ],
+    "distinctSizes": 4,
+    "weights": [
+      400,
+      500,
+      700
+    ],
+    "roleCount": 7,
+    "scaleRatios": [
+      1.091,
+      1.083,
+      1.231
+    ],
+    "hierarchyCarriedBy": "mixed (size+weight)",
+    "channelSpread": {
+      "size": 0.54,
+      "weight": 0.5,
+      "ink": 0.41
+    },
+    "measureChars": 56,
+    "topRoles": [
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#4a4e57",
+        "lineHeight": 1.55,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Michael greenlit: \"over to you\". That's his go-a"
+      },
+      {
+        "size": 11,
+        "weight": 400,
+        "color": "#787e88",
+        "lineHeight": null,
+        "tracking": 0.55,
+        "transform": "none",
+        "count": 3,
+        "sample": "PARKED 41m · DVLA"
+      },
+      {
+        "size": 16,
+        "weight": 700,
+        "color": "#16171a",
+        "lineHeight": 1.3,
+        "tracking": -0.24,
+        "transform": "none",
+        "count": 1,
+        "sample": "536469 — Add status filter to list"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#ffffff",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Send answer"
+      },
+      {
+        "size": 11,
+        "weight": 400,
+        "color": "#16171a",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Skip"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#787e88",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Later"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#16171a",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Open"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#e8e8e4",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 14.1
+      },
+      {
+        "hex": "#f4f4f1",
+        "h": 60,
+        "s": 12,
+        "l": 95.1,
+        "c": 1.2,
+        "areaPct": 4.4
+      },
+      {
+        "hex": "#3b3bc4",
+        "h": 240,
+        "s": 53.7,
+        "l": 50,
+        "c": 53.7,
+        "areaPct": 0.6
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#4a4e57",
+        "s": 8.1,
+        "l": 31.6,
+        "c": 5.1,
+        "sharePct": 61.8
+      },
+      {
+        "hex": "#787e88",
+        "s": 6.3,
+        "l": 50.2,
+        "c": 6.3,
+        "sharePct": 20.7
+      },
+      {
+        "hex": "#16171a",
+        "s": 8.3,
+        "l": 9.4,
+        "c": 1.6,
+        "sharePct": 14.2
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 3.3
+      }
+    ],
+    "neutralsTinted": "4/6",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 53.7,
+    "accentAreaPct": 0.6,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 8,
+      "shadowedElements": 1,
+      "borderToShadowRatio": 8,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(20, 20, 25, 0.1) 0px 8px 28px 0px, rgba(20, 20, 25, 0.06) 0px 1px 2px 0px"
+      ],
+      "radiusScale": [
+        7,
+        8,
+        12
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": 366,
+    "mainRegionWidth": 400,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 3
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 7,
+      "coveringMostContent": 4,
+      "top": [
+        42,
+        24,
+        26,
+        306,
+        298,
+        360,
+        356
+      ]
+    },
+    "density": {
+      "visibleElements": 17,
+      "perScreenful": 17
+    }
+  }
+}

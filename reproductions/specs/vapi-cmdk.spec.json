@@ -1,0 +1,253 @@
+{
+  "name": "vapi-cmdk",
+  "source": "reproductions/vapi-cmdk.html",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 100,
+    "authoredValuesSampled": 146,
+    "distinctValues": 9,
+    "topSteps": [
+      {
+        "value": 12,
+        "count": 44
+      },
+      {
+        "value": 10,
+        "count": 34
+      },
+      {
+        "value": 8,
+        "count": 28
+      },
+      {
+        "value": 4,
+        "count": 16
+      },
+      {
+        "value": 6,
+        "count": 10
+      },
+      {
+        "value": 16,
+        "count": 6
+      },
+      {
+        "value": 20,
+        "count": 5
+      }
+    ],
+    "grouping": {
+      "samples": 5,
+      "byMethod": {
+        "nested": 2,
+        "within": 3
+      },
+      "medianInsideGap": 12,
+      "medianBetweenGap": 68,
+      "medianRatio": 4.25,
+      "confidence": "medium",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Geist",
+        "count": 37
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      11,
+      12,
+      14
+    ],
+    "distinctSizes": 3,
+    "weights": [
+      400,
+      500
+    ],
+    "roleCount": 4,
+    "scaleRatios": [
+      1.091,
+      1.167
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.22,
+      "weight": 0,
+      "ink": 0.44
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#e6e7ea",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 12,
+        "sample": "Switch Organization"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#71757e",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "— Observe"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#71757e",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "to navigate"
+      },
+      {
+        "size": 11,
+        "weight": 500,
+        "color": "#565a62",
+        "lineHeight": null,
+        "tracking": 0.44,
+        "transform": "uppercase",
+        "count": 3,
+        "sample": "Actions"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#0b0c0e",
+    "backgrounds": [
+      {
+        "hex": "#050709",
+        "h": 210,
+        "s": 28.6,
+        "l": 2.7,
+        "c": 1.6,
+        "areaPct": 88.9
+      },
+      {
+        "hex": "#17181c",
+        "h": 228,
+        "s": 9.8,
+        "l": 10,
+        "c": 2,
+        "areaPct": 21.7
+      },
+      {
+        "hex": "#0e0f12",
+        "h": 225,
+        "s": 12.5,
+        "l": 6.3,
+        "c": 1.6,
+        "areaPct": 7.7
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 1.8
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#71757e",
+        "s": 5.4,
+        "l": 46.9,
+        "c": 5.1,
+        "sharePct": 51.9
+      },
+      {
+        "hex": "#e6e7ea",
+        "s": 8.7,
+        "l": 91,
+        "c": 1.6,
+        "sharePct": 40.5
+      },
+      {
+        "hex": "#565a62",
+        "s": 6.5,
+        "l": 36.1,
+        "c": 4.7,
+        "sharePct": 7.6
+      }
+    ],
+    "neutralsTinted": "6/7",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 2,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 12,
+      "shadowedElements": 1,
+      "borderToShadowRatio": 12,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0.6) 0px 24px 60px -12px, rgba(0, 0, 0, 0.5) 0px 8px 18px -8px"
+      ],
+      "radiusScale": [
+        5,
+        8,
+        4,
+        3,
+        14
+      ],
+      "gradientElements": 1
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 25
+      },
+      {
+        "value": "column",
+        "count": 1
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 21,
+      "coveringMostContent": 9,
+      "top": [
+        460,
+        500,
+        144,
+        10,
+        0,
+        452,
+        560,
+        578
+      ]
+    },
+    "density": {
+      "visibleElements": 125,
+      "perScreenful": 125
+    }
+  }
+}

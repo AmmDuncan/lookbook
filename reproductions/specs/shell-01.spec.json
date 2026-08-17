@@ -1,0 +1,427 @@
+{
+  "name": "shell-01",
+  "source": "/Users/ammielyawson/.claude/jobs/f24012ff/tmp/shell-01.html",
+  "capturedAt": "2026-08-09",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 63.6,
+    "authoredValuesSampled": 368,
+    "distinctValues": 15,
+    "topSteps": [
+      {
+        "value": 16,
+        "count": 112
+      },
+      {
+        "value": 9,
+        "count": 85
+      },
+      {
+        "value": 6,
+        "count": 36
+      },
+      {
+        "value": 8,
+        "count": 31
+      },
+      {
+        "value": 7,
+        "count": 29
+      },
+      {
+        "value": 10,
+        "count": 23
+      },
+      {
+        "value": 1,
+        "count": 19
+      },
+      {
+        "value": 4,
+        "count": 15
+      },
+      {
+        "value": 12,
+        "count": 10
+      },
+      {
+        "value": 5,
+        "count": 10
+      },
+      {
+        "value": 13,
+        "count": 10
+      },
+      {
+        "value": 2,
+        "count": 7
+      }
+    ],
+    "grouping": {
+      "samples": 4,
+      "byMethod": {
+        "nested": 3,
+        "within": 1
+      },
+      "medianInsideGap": 5,
+      "medianBetweenGap": 11,
+      "medianRatio": 2,
+      "confidence": "medium",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "ui-sans-serif",
+        "count": 108
+      }
+    ],
+    "bodySize": 13,
+    "sizes": [
+      11,
+      12,
+      13,
+      14,
+      19
+    ],
+    "distinctSizes": 5,
+    "weights": [
+      400,
+      500,
+      550,
+      600,
+      640,
+      650,
+      700,
+      750
+    ],
+    "roleCount": 26,
+    "scaleRatios": [
+      1.091,
+      1.083,
+      1.077,
+      1.357
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.24,
+      "weight": 0.4,
+      "ink": 0.54
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#4a4f59",
+        "lineHeight": 1.45,
+        "tracking": 0,
+        "transform": "none",
+        "count": 20,
+        "sample": "Awaiting my QA"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#767c88",
+        "lineHeight": 1.45,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "Ministry of Roads and Highways"
+      },
+      {
+        "size": 13,
+        "weight": 600,
+        "color": "#16181d",
+        "lineHeight": 1.45,
+        "tracking": 0,
+        "transform": "none",
+        "count": 9,
+        "sample": "My assessments"
+      },
+      {
+        "size": 11,
+        "weight": 700,
+        "color": "#9aa0ab",
+        "lineHeight": 1.45,
+        "tracking": 1.21,
+        "transform": "uppercase",
+        "count": 9,
+        "sample": "Assigned to me"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#9aa0ab",
+        "lineHeight": 1.45,
+        "tracking": 0,
+        "transform": "none",
+        "count": 12,
+        "sample": "54 open · 4 past deadline"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#16181d",
+        "lineHeight": 1.45,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "48,637,412"
+      },
+      {
+        "size": 11,
+        "weight": 600,
+        "color": "#9298a3",
+        "lineHeight": 1.45,
+        "tracking": 0.22,
+        "transform": "none",
+        "count": 4,
+        "sample": "Benchmarks"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#9aa0ab",
+        "lineHeight": 1.45,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Search reference or entity"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#9aa0ab",
+        "lineHeight": 1.45,
+        "tracking": 1,
+        "transform": "none",
+        "count": 8,
+        "sample": ""
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#767c88",
+        "lineHeight": 1.45,
+        "tracking": 0,
+        "transform": "none",
+        "count": 7,
+        "sample": "12 cases"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#ffffff",
+    "backgrounds": [
+      {
+        "hex": "#f2f3f5",
+        "h": 220,
+        "s": 13,
+        "l": 95.5,
+        "c": 1.2,
+        "areaPct": 138.8
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 63.3
+      },
+      {
+        "hex": "#f7f8f9",
+        "h": 210,
+        "s": 14.3,
+        "l": 97.3,
+        "c": 0.8,
+        "areaPct": 5.5
+      },
+      {
+        "hex": "#17191d",
+        "h": 220,
+        "s": 11.5,
+        "l": 10.2,
+        "c": 2.4,
+        "areaPct": 4.7
+      },
+      {
+        "hex": "#eff0f3",
+        "h": 225,
+        "s": 14.3,
+        "l": 94.5,
+        "c": 1.6,
+        "areaPct": 0.8
+      },
+      {
+        "hex": "#16181d",
+        "h": 223,
+        "s": 13.7,
+        "l": 10,
+        "c": 2.7,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#31363f",
+        "h": 219,
+        "s": 12.5,
+        "l": 22,
+        "c": 5.5,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#212429",
+        "h": 218,
+        "s": 10.8,
+        "l": 14.5,
+        "c": 3.1,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#3a3e46",
+        "h": 220,
+        "s": 9.4,
+        "l": 25.1,
+        "c": 4.7,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#9aa0ab",
+        "h": 219,
+        "s": 9.2,
+        "l": 63.7,
+        "c": 6.7,
+        "areaPct": 0
+      },
+      {
+        "hex": "#4a4f59",
+        "h": 220,
+        "s": 9.2,
+        "l": 32,
+        "c": 5.9,
+        "areaPct": 0
+      },
+      {
+        "hex": "#d3d6dd",
+        "h": 222,
+        "s": 12.8,
+        "l": 84.7,
+        "c": 3.9,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#4a4f59",
+        "s": 9.2,
+        "l": 32,
+        "c": 5.9,
+        "sharePct": 25.2
+      },
+      {
+        "hex": "#16181d",
+        "s": 13.7,
+        "l": 10,
+        "c": 2.7,
+        "sharePct": 25
+      },
+      {
+        "hex": "#767c88",
+        "s": 7.1,
+        "l": 49.8,
+        "c": 7.1,
+        "sharePct": 22.5
+      },
+      {
+        "hex": "#9aa0ab",
+        "s": 9.2,
+        "l": 63.7,
+        "c": 6.7,
+        "sharePct": 21
+      },
+      {
+        "hex": "#9298a3",
+        "s": 8.5,
+        "l": 60.6,
+        "c": 6.7,
+        "sharePct": 3.8
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 2.5
+      }
+    ],
+    "neutralsTinted": "15/18",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 2.4,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 37,
+      "shadowedElements": 13,
+      "borderToShadowRatio": 2.85,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgba(255, 255, 255, 0.14) 0px 1px 0px 0px inset",
+        "rgba(255, 255, 255, 0.9) 0px 1px 0px 0px inset",
+        "rgba(20, 22, 27, 0.24) 0px 1px 2px 0px",
+        "rgba(22, 24, 29, 0.06) 0px 0px 0px 1px inset",
+        "rgba(22, 24, 29, 0.14) 0px 0px 0px 2.5px"
+      ],
+      "radiusScale": [
+        6,
+        50,
+        7,
+        5,
+        8
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1280,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 34
+      },
+      {
+        "value": "column",
+        "count": 10
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 26,
+      "coveringMostContent": 9,
+      "top": [
+        342,
+        76,
+        358,
+        660,
+        842,
+        1060,
+        1196,
+        858
+      ]
+    },
+    "density": {
+      "visibleElements": 192,
+      "perScreenful": 192
+    }
+  }
+}

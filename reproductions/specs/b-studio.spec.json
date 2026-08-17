@@ -1,0 +1,483 @@
+{
+  "name": "b-studio",
+  "source": "b-studio.html",
+  "capturedAt": "2026-07-30",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 75.2,
+    "authoredValuesSampled": 274,
+    "distinctValues": 23,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 52
+      },
+      {
+        "value": 10,
+        "count": 46
+      },
+      {
+        "value": 6,
+        "count": 27
+      },
+      {
+        "value": 14,
+        "count": 24
+      },
+      {
+        "value": 4,
+        "count": 19
+      },
+      {
+        "value": 9,
+        "count": 13
+      },
+      {
+        "value": 13,
+        "count": 12
+      },
+      {
+        "value": 15,
+        "count": 12
+      },
+      {
+        "value": 1,
+        "count": 12
+      },
+      {
+        "value": 7,
+        "count": 12
+      },
+      {
+        "value": 11,
+        "count": 12
+      },
+      {
+        "value": 12,
+        "count": 9
+      }
+    ],
+    "grouping": {
+      "samples": 9,
+      "byMethod": {
+        "nested": 8,
+        "within": 1
+      },
+      "medianInsideGap": 10,
+      "medianBetweenGap": 14,
+      "medianRatio": 1.4,
+      "confidence": "high",
+      "verdict": "space encodes grouping"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "-apple-system",
+        "count": 45
+      },
+      {
+        "value": "SF Mono",
+        "count": 43
+      },
+      {
+        "value": "Arial",
+        "count": 7
+      }
+    ],
+    "bodySize": 11.5,
+    "sizes": [
+      10.5,
+      11,
+      11.5,
+      12,
+      12.5,
+      13,
+      13.3,
+      13.5,
+      14,
+      15,
+      22,
+      26
+    ],
+    "distinctSizes": 12,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 32,
+    "scaleRatios": [
+      1.048,
+      1.045,
+      1.043,
+      1.042,
+      1.04,
+      1.023,
+      1.015,
+      1.037,
+      1.071,
+      1.467,
+      1.182
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.28,
+      "weight": 0.33,
+      "ink": 0.5
+    },
+    "measureChars": 86,
+    "topRoles": [
+      {
+        "size": 11.5,
+        "weight": 400,
+        "color": "#7d8492",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 24,
+        "sample": "dvla-stores · decision blocked · packaging-hiera"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#4e5663",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 13,
+        "sample": "dvla-stores"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#14171e",
+        "lineHeight": null,
+        "tracking": -0.07,
+        "transform": "none",
+        "count": 6,
+        "sample": "Packaging hierarchy: the two-unit model can't ex"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#8d94a2",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Light app chrome, dark theatre for the media. Na"
+      },
+      {
+        "size": 13.5,
+        "weight": 400,
+        "color": "#7d8492",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "3 things need you. 4 rounds captured in the last"
+      },
+      {
+        "size": 12,
+        "weight": 600,
+        "color": "#7d8492",
+        "lineHeight": null,
+        "tracking": 0.72,
+        "transform": "uppercase",
+        "count": 4,
+        "sample": "Needs you"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#7d8492",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Click the frame while it plays to pin at that ti"
+      },
+      {
+        "size": 10.5,
+        "weight": 400,
+        "color": "#8f97a5",
+        "lineHeight": 1.3,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "01-queue.png"
+      },
+      {
+        "size": 12,
+        "weight": 600,
+        "color": "#7b8291",
+        "lineHeight": null,
+        "tracking": 0.96,
+        "transform": "uppercase",
+        "count": 2,
+        "sample": "B1 — Inbox"
+      },
+      {
+        "size": 11,
+        "weight": 400,
+        "color": "#7d8492",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "0:14 · 61%, 38%"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#0b0d11",
+    "backgrounds": [
+      {
+        "hex": "#f2f3f6",
+        "h": 225,
+        "s": 18.2,
+        "l": 95.7,
+        "c": 1.6,
+        "areaPct": 82.4
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 57.8
+      },
+      {
+        "hex": "#eef0f4",
+        "h": 220,
+        "s": 21.4,
+        "l": 94.5,
+        "c": 2.4,
+        "areaPct": 26.8
+      },
+      {
+        "hex": "#12141a",
+        "h": 225,
+        "s": 18.2,
+        "l": 8.6,
+        "c": 3.1,
+        "areaPct": 24.4
+      },
+      {
+        "hex": "#f7f8fa",
+        "h": 220,
+        "s": 23.1,
+        "l": 97.5,
+        "c": 1.2,
+        "areaPct": 15.3
+      },
+      {
+        "hex": "#1c2029",
+        "h": 222,
+        "s": 18.8,
+        "l": 13.5,
+        "c": 5.1,
+        "areaPct": 1.8
+      },
+      {
+        "hex": "#dfe3ea",
+        "h": 218,
+        "s": 20.8,
+        "l": 89.6,
+        "c": 4.3,
+        "areaPct": 1.1
+      },
+      {
+        "hex": "#316cff",
+        "h": 223,
+        "s": 100,
+        "l": 59.6,
+        "c": 80.8,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#d48e15",
+        "h": 38,
+        "s": 82,
+        "l": 45.7,
+        "c": 74.9,
+        "areaPct": 0.4
+      },
+      {
+        "hex": "#12744f",
+        "h": 157,
+        "s": 73.1,
+        "l": 26.3,
+        "c": 38.4,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#2a2f3a",
+        "h": 221,
+        "s": 16,
+        "l": 19.6,
+        "c": 6.3,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#d5dae3",
+        "h": 219,
+        "s": 20,
+        "l": 86.3,
+        "c": 5.5,
+        "areaPct": 0.1
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#7d8492",
+        "s": 8.8,
+        "l": 53.1,
+        "c": 8.2,
+        "sharePct": 36.2
+      },
+      {
+        "hex": "#14171e",
+        "s": 20,
+        "l": 9.8,
+        "c": 3.9,
+        "sharePct": 20.3
+      },
+      {
+        "hex": "#4e5663",
+        "s": 11.9,
+        "l": 34.7,
+        "c": 8.2,
+        "sharePct": 18.6
+      },
+      {
+        "hex": "#8d94a2",
+        "s": 10.1,
+        "l": 59.4,
+        "c": 8.2,
+        "sharePct": 13.6
+      },
+      {
+        "hex": "#8f97a5",
+        "s": 10.9,
+        "l": 60.4,
+        "c": 8.6,
+        "sharePct": 3.1
+      },
+      {
+        "hex": "#7b8291",
+        "s": 9.1,
+        "l": 52.5,
+        "c": 8.6,
+        "sharePct": 2.1
+      },
+      {
+        "hex": "#e9ebef",
+        "s": 15.8,
+        "l": 92.5,
+        "c": 2.4,
+        "sharePct": 1.2
+      },
+      {
+        "hex": "#1f57e0",
+        "s": 75.7,
+        "l": 50,
+        "c": 75.7,
+        "sharePct": 1.2
+      },
+      {
+        "hex": "#8a5300",
+        "s": 100,
+        "l": 27.1,
+        "c": 54.1,
+        "sharePct": 1.2
+      },
+      {
+        "hex": "#dfe4ec",
+        "s": 25.5,
+        "l": 90,
+        "c": 5.1,
+        "sharePct": 1
+      }
+    ],
+    "neutralsTinted": "11/12",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 80.8,
+    "accentAreaPct": 1.2,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 39,
+      "shadowedElements": 23,
+      "borderToShadowRatio": 1.7,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0.5) 0px 24px 60px 0px",
+        "rgba(17, 20, 28, 0.07) 0px 1px 2px 0px, rgba(17, 20, 28, 0.09) 0px 0px 0px 1px",
+        "rgba(17, 20, 28, 0.05) 0px 1px 2px 0px",
+        "rgba(17, 20, 28, 0.09) 0px 0px 0px 1px",
+        "rgba(17, 20, 28, 0.09) 0px 1px 2px 0px"
+      ],
+      "radiusScale": [
+        8,
+        7,
+        5,
+        11,
+        9,
+        999
+      ],
+      "gradientElements": 3
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 2177,
+    "horizontalBleed": true,
+    "proseMaxWidth": 600,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 14
+      },
+      {
+        "value": "3-col: px px px",
+        "count": 12
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 26
+      },
+      {
+        "value": "column",
+        "count": 5
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 41,
+      "coveringMostContent": 18,
+      "top": [
+        44,
+        292,
+        352,
+        266,
+        32,
+        52,
+        308,
+        1186
+      ]
+    },
+    "density": {
+      "visibleElements": 267,
+      "perScreenful": 110
+    }
+  }
+}

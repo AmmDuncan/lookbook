@@ -1,0 +1,348 @@
+{
+  "name": "only-b",
+  "source": "/tmp/wren-ov/only-B.html",
+  "capturedAt": "2026-08-13",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 39,
+    "authoredValuesSampled": 105,
+    "distinctValues": 13,
+    "topSteps": [
+      {
+        "value": 11,
+        "count": 22
+      },
+      {
+        "value": 7,
+        "count": 22
+      },
+      {
+        "value": 9,
+        "count": 12
+      },
+      {
+        "value": 6,
+        "count": 12
+      },
+      {
+        "value": 16,
+        "count": 10
+      },
+      {
+        "value": 8,
+        "count": 8
+      },
+      {
+        "value": 13,
+        "count": 8
+      },
+      {
+        "value": 4,
+        "count": 6
+      },
+      {
+        "value": 3,
+        "count": 4
+      },
+      {
+        "value": 12,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 8,
+      "byMethod": {
+        "nested": 4,
+        "within": 4
+      },
+      "medianInsideGap": 4.5,
+      "medianBetweenGap": 10,
+      "medianRatio": 2.25,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "-apple-system",
+        "count": 23
+      },
+      {
+        "value": "ui-monospace",
+        "count": 5
+      }
+    ],
+    "bodySize": 11,
+    "sizes": [
+      11,
+      12,
+      13
+    ],
+    "distinctSizes": 3,
+    "weights": [
+      400,
+      500,
+      600
+    ],
+    "roleCount": 9,
+    "scaleRatios": [
+      1.091,
+      1.083
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.24,
+      "weight": 0.33,
+      "ink": 0.41
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 11,
+        "weight": 400,
+        "color": "#787e88",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "ammiels-bot · feat/overlay · 6m"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#16171a",
+        "lineHeight": 1.45,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "The bot wants to ."
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#4a4e57",
+        "lineHeight": 1.45,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Michael greenlit \"over to you\" — but merging pas"
+      },
+      {
+        "size": 13,
+        "weight": 600,
+        "color": "#16171a",
+        "lineHeight": null,
+        "tracking": -0.13,
+        "transform": "none",
+        "count": 5,
+        "sample": "Waiting on you"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#787e88",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "Asks 1"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#ffffff",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Allow once"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#16171a",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Open"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "All 4"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#a32f2f",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Deny"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#e8e8e4",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 17.9
+      },
+      {
+        "hex": "#fbfbff",
+        "h": 240,
+        "s": 100,
+        "l": 99.2,
+        "c": 1.6,
+        "areaPct": 8
+      },
+      {
+        "hex": "#f4f4f1",
+        "h": 60,
+        "s": 12,
+        "l": 95.1,
+        "c": 1.2,
+        "areaPct": 1.3
+      },
+      {
+        "hex": "#3b3bc4",
+        "h": 240,
+        "s": 53.7,
+        "l": 50,
+        "c": 53.7,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#16171a",
+        "h": 225,
+        "s": 8.3,
+        "l": 9.4,
+        "c": 1.6,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#e3e3de",
+        "h": 60,
+        "s": 8.2,
+        "l": 88,
+        "c": 2,
+        "areaPct": 0
+      },
+      {
+        "hex": "#d2d2cb",
+        "h": 60,
+        "s": 7.2,
+        "l": 81,
+        "c": 2.7,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#16171a",
+        "s": 8.3,
+        "l": 9.4,
+        "c": 1.6,
+        "sharePct": 42.8
+      },
+      {
+        "hex": "#787e88",
+        "s": 6.3,
+        "l": 50.2,
+        "c": 6.3,
+        "sharePct": 33.6
+      },
+      {
+        "hex": "#4a4e57",
+        "s": 8.1,
+        "l": 31.6,
+        "c": 5.1,
+        "sharePct": 16.4
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 6.3
+      },
+      {
+        "hex": "#a32f2f",
+        "s": 55.2,
+        "l": 41.2,
+        "c": 45.5,
+        "sharePct": 0.9
+      }
+    ],
+    "neutralsTinted": "8/10",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 53.7,
+    "accentAreaPct": 0.5,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 14,
+      "shadowedElements": 1,
+      "borderToShadowRatio": 14,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(20, 20, 25, 0.1) 0px 8px 28px 0px, rgba(20, 20, 25, 0.06) 0px 1px 2px 0px"
+      ],
+      "radiusScale": [
+        7,
+        6,
+        50,
+        12
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 400,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 10
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 12,
+      "coveringMostContent": 5,
+      "top": [
+        60,
+        26,
+        24,
+        132,
+        192,
+        42,
+        38,
+        82
+      ]
+    },
+    "density": {
+      "visibleElements": 49,
+      "perScreenful": 49
+    }
+  }
+}

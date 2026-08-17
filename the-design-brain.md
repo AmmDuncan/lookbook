@@ -158,9 +158,11 @@ This is what makes dark mode a remap of ~15 semantic tokens, not a rewrite.
 
 Spacing is the invisible skeleton. Inconsistent spacing is the #1 reason a design "feels off" even when the user can't say why.
 
-**The spacing scale (4px base, the only values you may use)**
-0 · 2 · 4 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 48 · 64 · 80 · 96 · 128
-Every margin, padding, and gap is one of these. No 13px, no 30px. This single discipline does more for "looks professional" than almost anything else.
+**The spacing scale (progressive steps, the only values you may use)**
+0 · 2 · 4 · 6 · 8 · 10 · 12 · 14 · 16 · 20 · 24 · 28 · 32 · 36 · 40 · 48 · 56 · 64 · 80 · 96 · 128
+Every margin, padding, and gap is one of these. No 13px, no 22px, no 30px. This single discipline does more for "looks professional" than almost anything else.
+
+The steps coarsen as they grow, because that is where the eye stops resolving the difference: **2 up to 16, then 4 up to 40, then 8 and wider.** A flat 4px grid is the usual advice and it fails at both ends — it offers no step between 4 and 8, which is exactly where dense UI lives (Linear separates issue-row content on 6px; forcing that to 8 loosens the row and costs a line of data per screen), and above 40 it offers a 44 and a 52 that nobody can tell from 48. Hairlines — 1px borders and the 1px optical nudges that centre against them — sit outside the scale entirely: that is drawing, not spacing.
 
 **Rules**
 - Relationship through proximity. Related things sit close; unrelated things get air. The gap between groups must be visibly larger than the gap within a group (e.g. 32 between sections, 8–12 within). This one rule creates legible structure for free.

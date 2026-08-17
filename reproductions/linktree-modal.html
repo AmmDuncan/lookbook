@@ -46,7 +46,7 @@
   .appbg .sb .b { height: 26px; border-radius: 7px; background: #f0f0f3; margin-bottom: 8px; }
   .appbg .sb .b.s { width: 70%; height: 11px; background: #f2f2f4; }
   .appbg .main { padding: 20px 28px; }
-  .appbg .main .h { height: 16px; width: 90px; border-radius: 5px; background: #e9e9ec; margin-bottom: 22px; }
+  .appbg .main .h { height: 16px; width: 90px; border-radius: 5px; background: #e9e9ec; margin-bottom: 24px; }
   .appbg .main .card { height: 70px; border: 1px solid #ededf0; border-radius: 12px; background: #fff; margin-bottom: 14px; }
   .appbg .ph { margin: 24px; border-radius: 28px; background: #1a1a1f; }
 
@@ -55,12 +55,12 @@
   /* ---- the modal stack ---- */
   .modal-wrap { position: absolute; top: 130px; left: 50%; transform: translateX(-50%); width: 472px; }
   /* the prior-step card peeking behind */
-  .back-card { position: absolute; top: -22px; left: 16px; right: 16px; height: 70px; background: var(--back); border-radius: 20px 20px 0 0; box-shadow: 0 -6px 16px -8px rgba(20,18,28,.25); opacity: .7; display: flex; align-items: flex-start; justify-content: center; padding-top: 11px; }
+  .back-card { position: absolute; top: -22px; left: 16px; right: 16px; height: 70px; background: var(--back); border-radius: 20px 20px 0 0; box-shadow: 0 -6px 16px -8px rgba(20,18,28,.25); opacity: .7; display: flex; align-items: flex-start; justify-content: center; padding-top: 12px; }
   .back-card .bt { font-size: 14px; font-weight: 600; color: var(--muted); }
   .back-card .ba { position: absolute; left: 18px; top: 11px; color: var(--faint); }
 
-  .modal { position: relative; background: var(--card); border-radius: 22px; box-shadow: 0 30px 70px -18px rgba(20,18,28,.5), 0 12px 28px -12px rgba(20,18,28,.4); padding: 22px 26px 26px; }
-  .mhead { display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 22px; }
+  .modal { position: relative; background: var(--card); border-radius: 22px; box-shadow: 0 30px 70px -18px rgba(20,18,28,.5), 0 12px 28px -12px rgba(20,18,28,.4); padding: 24px 28px 28px; }
+  .mhead { display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 24px; }
   .mhead .ba { position: absolute; left: 0; color: var(--muted); }
   .mhead .t { font-size: 16px; font-weight: 600; }
   .mhead .x { position: absolute; right: 0; color: var(--muted); display: grid; place-items: center; }
@@ -73,7 +73,7 @@
   .select .cv { color: var(--muted); }
 
   .input { height: 46px; padding: 0 14px; background: var(--field); border: 1px solid var(--field-ln); border-radius: 11px; display: flex; align-items: center; font-size: 14px; color: var(--ink); }
-  .counter { text-align: right; font-size: 12px; color: var(--faint); margin-top: 7px; }
+  .counter { text-align: right; font-size: 12px; color: var(--faint); margin-top: 8px; }
 
   .choice { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
   .drag { color: #c4c7cd; flex: 0 0 auto; cursor: grab; }
@@ -90,9 +90,9 @@
     <!-- dimmed app behind -->
     <div class="appbg">
       <div class="sb">
-        <div class="b s" style="width:50%;margin-bottom:18px"></div>
+        <div class="b s" style="width:50%;margin-bottom:20px"></div>
         <div class="b"></div><div class="b"></div><div class="b"></div>
-        <div class="b s" style="margin:18px 0 8px"></div>
+        <div class="b s" style="margin:20px 0 8px"></div>
         <div class="b"></div><div class="b"></div><div class="b"></div>
       </div>
       <div class="main">
@@ -126,7 +126,7 @@
           </div>
         </div>
 
-        <div class="group" style="margin-bottom:18px">
+        <div class="group" style="margin-bottom:20px">
           <div class="flabel">Label</div>
           <div class="input">Design Scope</div>
           <div class="counter">12/200</div>

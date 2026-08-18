@@ -7,10 +7,20 @@ This is the canonical form of the protocol that used to live only inside `SKILL.
 ("Composing a page"). It is the same loop, with one step added: the **reference pass**
 (step 3), which was previously only an ordering rule and never a step you had to perform.
 
-> **The one rule that governs the whole flow:** you **pull** a composition from the
-> variation specimens. `fundamentals.md`, `the-design-brain.md` and `patterns/*` are the
-> floor you **judge against** — never the source you generate from. A direction that did
-> not begin from a named specimen is the #1 misfire.
+> **The one rule that governs the whole flow:** **layout and composition come from
+> somewhere real — and you say where.** Look in the Lookbook variation specimens first;
+> they are the preferred source, not a mandatory one. Mobbin, a real shipped product, or
+> your own generation are all legitimate when no specimen fits — the specimen layer is
+> not mature enough to cover every surface, and pretending otherwise produces a forced
+> adaptation that is worse than an honest original.
+>
+> What is **not** negotiable: every direction names its source, and when the source
+> wasn't a specimen, the gap gets logged in `harvest/GAPS.md`. That log is how the
+> variation layer grows toward being the default it wants to be.
+>
+> Separately: `fundamentals.md`, `the-design-brain.md` and `patterns/*` are the floor you
+> **judge against**, not a generator. Deriving a layout from a rules doc is still the
+> weakest of the options — it is the one that produces generic work.
 
 ---
 
@@ -48,14 +58,14 @@ Two or three of them, named. Extract the **decisions** — the type scale, where
 hierarchy comes from, what the one loud move is, what they refused to put on screen —
 and write them down as a short list.
 
-**You are extracting decisions, not a layout.** The reference does not become the thing
-you build; the specimen is still what you pull. The reference is what tells you whether
-your adaptation is any good, and it is the only step in this flow that puts real,
-non-self-graded evidence in front of your eye before you start.
+**Extract decisions, not a traced layout.** A reference can legitimately become the
+composition you build on (step 5) — but only once you can say *which* decisions you are
+taking and which you are refusing. Copying a screen you haven't decomposed is how the
+wrong genre gets imported wholesale.
 
-- **Open, in order:** `reproductions/*.md` (14 real screens already decision-extracted) ·
-  `references/specs/` + `references/visual/` (48 harvested cards) · then Mobbin or the
-  live product for anything those two don't cover.
+- **Open:** `reproductions/*.md` (14 real screens already decision-extracted) ·
+  `references/specs/` + `references/visual/` (48 harvested cards) · Mobbin or the live
+  product for anything those don't cover.
 - **Gate:** you can name 2–3 real products and, for each, one decision you are taking and
   one you are refusing. Written down, not recalled.
 - **Tell:** every reference is a design-system docs site. Those show components, not
@@ -73,10 +83,19 @@ responsive note.
   one item, many, error, permission-denied. Not discovered at the end.
 - **Tell:** a build that has only ever been seen with its happy-path data.
 
-## 5. Generate 2–3 directions — by pulling
+## 5. Generate 2–3 directions — each from a named source
 
-Each direction **starts from a named variation specimen** and is then adapted to the job
-and the skin. Make them genuinely distinct across three layers: **composition**
+**Look in `harvest/specimens/` first** — that is where layout and composition should come
+from when the layer covers your surface. When it doesn't, take the composition from a
+real product you decomposed in step 3, or generate an original. All three are legitimate;
+what is not legitimate is a direction whose origin you can't state.
+
+**If you didn't pull, log the gap** — one line in `harvest/GAPS.md`: the surface, what you
+needed, what the nearest specimen was and why it didn't fit. That file is the shopping
+list for the variation layer, and it is the only reason it will ever be mature enough to
+be the default.
+
+Then make the directions genuinely distinct across three layers: **composition**
 (arrangement, emphasis, density) · **visual** (how the same tokens are spent — dark rail
 vs light, accent-on-fill vs accent-on-text, elevated vs flat) · **structural** (the shell
 itself). Vary at least visual + composition; composition-only produces one design three
@@ -87,13 +106,14 @@ same accent, same fonts, same primitives. A new accent or an off-scale value is 
 direction, it is a bug.
 
 - **Open:** `harvest/specimens/` — the `* Variations` sheets, `* Studies` drill-downs,
-  composed recipes
-- **Gate:** each direction names its source (`<specimen file> · variant <name>`), and
-  ≥3 of these visibly differ between directions: rail styling · active-nav treatment ·
-  surface/card model · table treatment · KPI treatment · type rhythm · accent placement ·
-  density · chart presentation · header treatment.
-- **Tell:** you can't name the specimen a direction came from. It was derived, not pulled.
-  If no specimen fits, say so explicitly and adapt the nearest — never fall back silently.
+  composed recipes; then your step-3 references
+- **Gate:** each direction names its source — `<specimen file> · variant <name>`, or the
+  product it came from, or "original" — and any non-specimen source has a line in
+  `harvest/GAPS.md`. Plus ≥3 of these visibly differ between directions: rail styling ·
+  active-nav treatment · surface/card model · table treatment · KPI treatment · type
+  rhythm · accent placement · density · chart presentation · header treatment.
+- **Tell:** "I looked at the specimens" with no file named. A silent fallback is the
+  failure here — not the fallback itself.
 
 ## 6. Build the chosen direction
 
@@ -168,8 +188,9 @@ Map each reaction to the lever that owns it and re-enter the loop:
 
 | Layer | Role in this flow |
 |---|---|
-| `harvest/specimens/` | **Generate from.** Steps 4–5 pull here. |
-| `reproductions/`, `references/` | **Calibrate against.** Step 3 extracts decisions here. |
+| `harvest/specimens/` | **First place to look** for layout & composition (steps 4–5). Preferred, not mandatory — it does not yet cover every surface. |
+| `reproductions/`, `references/`, Mobbin | **Calibrate against** (step 3), and a legitimate composition source when no specimen fits. |
+| `harvest/GAPS.md` | **The shopping list.** Every surface the specimen layer failed to cover, with why. |
 | `cookbooks/` | **Deepen with.** Earned against a real screen; beats `patterns/*` for its surface. |
 | `fundamentals.md`, `the-design-brain.md` | **Judge against.** Step 7. Never the generator. |
 | `patterns/`, `kits/` | **Untrusted reference** until re-earned through `EXPERIMENT.md`. |

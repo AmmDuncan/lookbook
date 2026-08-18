@@ -327,7 +327,7 @@ writeFileSync(
   <header class="masthead">
     <p class="eyebrow">Lookbook</p>
     <h1>Design a surface.</h1>
-    <p class="lede">A screen starts by <strong>pulling a composition</strong> from the variation specimens — never by deriving one from principles. Each surface below gathers its specimens, earned cookbooks and reproductions in one view, with the layers that were never re-earned marked and pushed to the bottom.</p>
+    <p class="lede">Layout and composition come from somewhere real — <strong>the variation specimens first</strong>, a decomposed product or an honest original when none fits, and never derived from a rules doc. Each surface below gathers its specimens, earned cookbooks and reproductions in one view, with the layers that were never re-earned marked and pushed to the bottom.</p>
     <p class="meta">${SURFACES.length} surfaces · ${totalArtefacts} artefacts</p>
   </header>
   <a class="flow-cta" href="/flow">

@@ -48,8 +48,8 @@ export const SPINE = [
     id: 'pull',
     name: 'Pull from',
     blurb:
-      'Where a screen starts. Open a specimen and pull its composition — never cold-derive a layout from principles when a specimen exists.',
-    docs: ['harvest/HARVEST.md', 'RESKIN.md'],
+      'Where a screen starts. Look here first for layout and composition — preferred, not mandatory; when nothing fits, use a real product or an original and log the gap.',
+    docs: ['harvest/HARVEST.md', 'RESKIN.md', 'harvest/GAPS.md'],
   },
   {
     id: 'judge',

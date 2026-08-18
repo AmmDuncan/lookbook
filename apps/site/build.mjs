@@ -205,7 +205,9 @@ const entriesFor = (surface, key) =>
 
 const countOf = (surface) => KIND_ORDER.reduce((n, key) => n + (surface[key]?.length ?? 0), 0);
 
-function shell({ title, crumb = '', body }) {
+function shell({ title, crumb = '', current = '', body }) {
+  const link = (href, id, label) =>
+    `<a href="${href}"${current === id ? ' aria-current="page"' : ''}>${label}</a>`;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -222,7 +224,7 @@ function shell({ title, crumb = '', body }) {
   <a class="brand" href="/">Lookbook</a>
   <span class="crumb">${crumb}</span>
   <span class="spacer"></span>
-  <span class="links"><a href="/">Surfaces</a><a href="/all">A–Z</a></span>
+  <span class="links">${link('/flow', 'flow', 'Flow')}${link('/', 'surfaces', 'Surfaces')}${link('/all', 'all', 'A–Z')}</span>
 </nav>
 ${body}
 </body>
@@ -328,6 +330,11 @@ writeFileSync(
     <p class="lede">A screen starts by <strong>pulling a composition</strong> from the variation specimens — never by deriving one from principles. Each surface below gathers its specimens, earned cookbooks and reproductions in one view, with the layers that were never re-earned marked and pushed to the bottom.</p>
     <p class="meta">${SURFACES.length} surfaces · ${totalArtefacts} artefacts</p>
   </header>
+  <a class="flow-cta" href="/flow">
+    <span class="eyebrow">Start here</span>
+    <span class="flow-cta-title">The design flow →</span>
+    <span class="blurb">Eight steps from framing to ship, each with the artefact to open, the gate that closes it, and the tell that says you skipped it.</span>
+  </a>
   ${SPINE.map((group) => {
     const items = group.docs.map((f) => catalog.spine.get(f));
     return `<section class="group">
@@ -354,6 +361,89 @@ writeFileSync(
 </main>`,
   }),
 );
+
+// The flow — rendered from FLOW.md so the doc stays the single source of truth.
+{
+  const md = readFileSync(join(root, 'FLOW.md'), 'utf8');
+  const [head, ...sections] = md.split(/^## /m);
+  // The doc's opening paragraph becomes the page lede, so drop it from the body.
+  const intro = head
+    .replace(/^#\s+.+$/m, '')
+    .trim()
+    .split(/\n\s*\n/)
+    .slice(1)
+    .join('\n\n');
+
+  /** Split a step's body into its prose and its Open / Gate / Tell rows. */
+  const parseStep = (section) => {
+    const [heading, ...rest] = section.split('\n');
+    const body = rest.join('\n');
+    const firstRow = body.search(/^- \*\*(Open|Gate|Tell)/m);
+    const prose = (firstRow === -1 ? body : body.slice(0, firstRow)).trim();
+    const rows = (firstRow === -1 ? '' : body.slice(firstRow))
+      .split(/^- \*\*/m)
+      .filter(Boolean)
+      .map((part) => {
+        const [, rawLabel, value] = part.match(/^([^*]+)\*\*:?\s*([\s\S]*)$/) ?? [];
+        return rawLabel ? [rawLabel.replace(/[:,][\s\S]*$/, '').trim(), value.trim()] : null;
+      })
+      .filter(Boolean);
+    const [, num, title] = heading.match(/^(\d+)\.\s+(.+)$/) ?? [null, null, heading.trim()];
+    return { num, title, prose, rows };
+  };
+
+  const steps = sections.map(parseStep);
+  const numbered = steps.filter((s) => s.num);
+  const appendix = steps.filter((s) => !s.num);
+
+  const stepHtml = (step) => `<li class="step">
+      <p class="step-num" aria-hidden="true">${step.num}</p>
+      <div class="step-body">
+        <h2><span class="sr-only">Step ${step.num}. </span>${marked.parseInline(step.title)}</h2>
+        <div class="step-prose">${marked.parse(step.prose)}</div>
+        ${
+          step.rows.length
+            ? `<dl class="rows">${step.rows
+                .map(
+                  ([label, value]) =>
+                    `<div class="row row-${label.toLowerCase()}"><dt>${esc(label)}</dt><dd>${marked.parseInline(
+                      value.replace(/\n\s*/g, ' '),
+                    )}</dd></div>`,
+                )
+                .join('')}</dl>`
+            : ''
+        }
+      </div>
+    </li>`;
+
+  writeFileSync(
+    join(dist, 'flow.html'),
+    shell({
+      title: 'The design flow — Lookbook',
+      crumb: 'flow',
+      current: 'flow',
+      body: `<main class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">Lookbook</p>
+    <h1>The design flow.</h1>
+    <p class="lede">The sequence a screen actually goes through — ${numbered.length} steps, each with what you open, the gate that closes it, and the tell that says you skipped it.</p>
+  </header>
+  <div class="doc flow-intro">${marked.parse(intro)}</div>
+  <ol class="steps">
+    ${numbered.map(stepHtml).join('\n    ')}
+  </ol>
+  ${appendix
+    .map(
+      (s) => `<section class="aside">
+    <h2 class="appendix-head">${esc(s.title)}</h2>
+    <div class="doc">${marked.parse(s.prose)}</div>
+  </section>`,
+    )
+    .join('\n  ')}
+</main>`,
+    }),
+  );
+}
 
 // A-Z fallback.
 writeFileSync(

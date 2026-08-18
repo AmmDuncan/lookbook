@@ -21,6 +21,7 @@ description: >-
 
 Lookbook is layered; load only what the task needs. From fastest-start to deepest:
 
+- **`FLOW.md` — the design flow, start to ship.** The eight steps a screen goes through, each with what you open, the gate that closes it, and the tell that says you skipped it. It is the canonical form of the *Composing a page* protocol below, plus the **reference pass** (look at 2–3 real shipped screens and extract their decisions before you pull). Read it when you want the sequence; the sections below are the depth behind each step.
 - **`harvest/HARVEST.md` + `RESKIN.md` — compose-then-skin (START HERE for app screens).** The 20-archetype composed-recipe catalog + the build command. The fastest correct start for a full screen — see the next section.
 - **`the-design-brain.md` — the principles spine** (the *why*). 5 laws · 4 lineages · the Job→Hierarchy→Grid→Tokens→Components→States→Polish process · the type/space/color/depth/motion scales · anti-slop · domain playbooks. Validated by reproduction; a tighter distillation of `fundamentals.md`, which remains the cited-rule floor.
 - **`cookbooks/` — per-surface recipes earned by reproducing a real screen** (not self-graded). When the surface you're building matches a cookbook, load it — it beats `patterns/*` for that surface because it was proven against reality. Cookbooks grow by coverage; `patterns/` and `kits/` are superseded surface-by-surface as cookbooks reach them.
@@ -175,6 +176,8 @@ This is the **Mode A** path (primitives built/vendored to Lookbook's specs). In 
 ---
 
 ## Composing a page — the protocol
+
+> **`FLOW.md` is the canonical, walkable form of this protocol** — the same steps with an explicit gate and failure tell each, plus the reference pass (step 3: extract decisions from 2–3 real shipped screens before pulling). Follow `FLOW.md`; read the depth below.
 
 When building, redesigning, OR adding a new screen/flow inside an existing app (any mode — even when you'll build on the project's own components):
 

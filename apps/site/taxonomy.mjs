@@ -74,6 +74,7 @@ export const SPINE = [
 
 /** Root docs deliberately not published, with the reason. Keeps drops visible. */
 export const EXCLUDED = {
+  'FLOW.md': 'Published as the walkable /flow page, rendered from this file.',
   'PRODUCT.md': 'A parked product idea, not design guidance.',
   'BRIDGE-self-service.md': 'Analysis of one downstream project, not part of the system.',
   'PERSONA-skill-design-advisor.md': 'A lens for authoring skills, unrelated to designing UI.',

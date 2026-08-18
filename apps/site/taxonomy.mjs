@@ -68,13 +68,17 @@ export const SPINE = [
     id: 'about',
     name: 'About the system',
     blurb: 'What Lookbook is, how the layers rank, what has been built, and the per-project personality file.',
-    docs: ['SKILL.md', 'AGENTS.md', 'README.md', 'STATUS.md', 'KIT.md', 'personality.template.md'],
+    docs: ['SKILL.md', 'AGENTS.md', 'README.md', 'STATUS.md', 'personality.template.md'],
   },
 ];
 
 /** Root docs deliberately not published, with the reason. Keeps drops visible. */
 export const EXCLUDED = {
   'FLOW.md': 'Published as the walkable /flow page, rendered from this file.',
+  // The "pick your register" framing is the fixed-menu-of-looks model that
+  // cookbooks/registers.md killed on 2026-06-28. Publishing it presents a dead
+  // model as current.
+  'KIT.md': 'Register index for the retired fixed-preset model; superseded by the dial space in cookbooks/registers.md.',
   'PRODUCT.md': 'A parked product idea, not design guidance.',
   'BRIDGE-self-service.md': 'Analysis of one downstream project, not part of the system.',
   'PERSONA-skill-design-advisor.md': 'A lens for authoring skills, unrelated to designing UI.',

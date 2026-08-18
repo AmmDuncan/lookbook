@@ -5,6 +5,10 @@
   "description": "Lookbook — the design brain: fundamentals, per-surface patterns, anti-patterns, the token contract, and the gallery visual spec that back all web-app UI work.",
   "scripts": {
     "gallery": "python3 -m http.server 4444 --directory apps/gallery",
-    "sync-gallery": "bash scripts/sync-gallery.sh"
+    "sync-gallery": "bash scripts/sync-gallery.sh",
+    "site:build": "node apps/site/build.mjs",
+    "site:preview": "npm run site:build && npx wrangler dev --config apps/site/wrangler.jsonc",
+    "site:deploy": "npm run site:build && npx wrangler deploy --config apps/site/wrangler.jsonc",
+    "site:check": "bash apps/site/check.sh"
   }
 }

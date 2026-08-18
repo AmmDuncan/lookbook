@@ -1,33 +1,52 @@
 #!/usr/bin/env node
-// Build the static Lookbook site: gallery chapters + harvest specimens + an index.
-import { cpSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+// Build the deployed Lookbook: per-surface hub pages that pull each surface's
+// pattern doc, cookbooks, specimens, reproductions and kit files into one view,
+// plus an A-Z fallback index.
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { marked } from 'marked';
+import { SURFACES } from './taxonomy.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..', '..');
 const dist = join(here, 'dist');
 
-rmSync(dist, { recursive: true, force: true });
-mkdirSync(dist, { recursive: true });
+/**
+ * Where each artefact kind comes from and how it is served.
+ * `rename: false` keeps original filenames — the gallery's chrome.js links
+ * chapters by name, and Cloudflare's asset lookup is case-insensitive, so a
+ * lowercase duplicate would make both 404.
+ */
+const SOURCES = {
+  gallery: { dir: ['apps', 'gallery'], out: 'gallery', kind: 'html', rename: false, label: 'Gallery chapters' },
+  specimens: { dir: ['harvest', 'specimens'], out: 'specimens', kind: 'html', label: 'Specimens' },
+  reproductions: { dir: ['reproductions'], out: 'reproductions', kind: 'html', label: 'Reproductions' },
+  registers: { dir: ['registers'], out: 'registers', kind: 'html', label: 'Type registers' },
+  kits: { dir: ['kits'], out: 'kits', kind: 'html', depth: 2, label: 'Kit pieces' },
+  patterns: { dir: ['patterns'], out: 'docs/patterns', kind: 'md', label: 'Pattern docs' },
+  cookbooks: { dir: ['cookbooks'], out: 'docs/cookbooks', kind: 'md', label: 'Cookbooks' },
+};
 
 const slug = (name) =>
   name
-    .replace(/\.html$/, '')
+    .replace(/\.(html|md)$/, '')
     .toLowerCase()
     .replace(/&/g, ' and ')
-    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/[^a-z0-9/]+/g, '-')
     .replace(/^-|-$/g, '');
+
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const decode = (s) =>
   s
-    .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&#39;|&apos;/g, "'")
-    .replace(/&quot;/g, '"');
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, '&');
 
-// Many specimens ship a placeholder <title>, so the filename is the reliable label.
+// Several specimens ship a placeholder <title>, so fall back to the filename.
 const GENERIC_TITLE = /^(bundled page|document|untitled|page)$/i;
 
 const titleOf = (html, fallback) => {
@@ -35,142 +54,261 @@ const titleOf = (html, fallback) => {
   return !raw || GENERIC_TITLE.test(raw) ? fallback : raw;
 };
 
-/**
- * Copy a directory of standalone HTML into dist/<outDir>, returning link entries.
- * `rename: false` keeps the original filename — required for the gallery, whose
- * chrome.js links chapters by name (and whose asset paths are case-sensitive).
- */
-function collect(srcDir, outDir, { rename = true } = {}) {
-  mkdirSync(join(dist, outDir), { recursive: true });
-  return readdirSync(srcDir)
-    .filter((f) => f.endsWith('.html'))
-    .map((file) => {
-      const html = readFileSync(join(srcDir, file), 'utf8');
-      const name = rename ? `${slug(file)}.html` : file;
-      writeFileSync(join(dist, outDir, name), html);
-      return {
-        // Extensionless where we own the name; Cloudflare resolves it to the .html file.
-        href: `/${outDir}/${encodeURIComponent(name.replace(/\.html$/, ''))}`,
-        file,
-        title: titleOf(html, file.replace(/\.html$/, '')),
-      };
-    })
-    .sort((a, b) => a.title.localeCompare(b.title));
-}
-
-const galleryDir = join(root, 'apps', 'gallery');
-const gallery = collect(galleryDir, 'gallery', { rename: false });
-for (const asset of ['lookbook.css', 'components.css', 'chrome.js']) {
-  cpSync(join(galleryDir, asset), join(dist, 'gallery', asset));
-}
-cpSync(join(root, 'packages', 'tokens', 'src', 'tokens.css'), join(dist, 'gallery', 'tokens.css'));
-cpSync(join(root, 'apps', 'gallery', 'uploads'), join(dist, 'gallery', 'uploads'), {
-  recursive: true,
-});
-
-const specimens = collect(join(root, 'harvest', 'specimens'), 'specimens');
-
-const groupOf = (file) => {
-  if (/^Composed Recipe/.test(file)) return 'Page recipes';
-  if (/Studies\.html$/.test(file)) return 'Studies';
-  if (/Variations\.html$/.test(file)) return 'Variations';
-  if (/Galler(y|ies)\.html$/.test(file)) return 'Galleries';
-  return 'Sheets';
-};
-
-const groups = new Map([
-  ['Gallery chapters', gallery],
-  ['Variations', []],
-  ['Studies', []],
-  ['Page recipes', []],
-  ['Galleries', []],
-  ['Sheets', []],
-]);
-for (const specimen of specimens) groups.get(groupOf(specimen.file)).push(specimen);
-
-const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-/** Drop the prefixes and counts the group heading already carries. */
-const clean = (t) =>
+/** Strip prefixes and counts that the surrounding heading already carries. */
+const cleanTitle = (t) =>
   t
     .replace(/^Lookbook\s*[—–-]\s*/i, '')
     .replace(/^Composed Recipe\s*[—–-]\s*/i, '')
+    .replace(/^Pattern:\s*/i, '')
     .replace(/\s*\(\d+\s+compositions?\)\s*$/i, '')
     .trim();
 
-const section = ([name, items]) => `
-  <section class="group" id="${slug(name)}">
-    <header class="group-head">
-      <h2>${esc(name)}</h2><span class="count">${items.length}</span>
-    </header>
-    <ul class="grid">
-      ${items
-        .map(
-          (i) =>
-            `<li><a href="${i.href}"><span class="name">${esc(clean(i.title))}</span><span class="path">${esc(i.href)}</span></a></li>`,
-        )
-        .join('\n      ')}
-    </ul>
-  </section>`;
+/** First prose sentence of a markdown doc, for hub-card blurbs. */
+function summarise(md) {
+  const body = md
+    .split('\n')
+    .filter((l) => !/^\s*(#|\*\*(Inherits|Cite as|Molecule kit|Source|Status)|>|\||-{3,})/.test(l))
+    .join('\n');
+  const first = body.split(/\n\s*\n/).map((p) => p.trim()).find((p) => p.length > 60) || '';
+  const sentence = first.replace(/\s+/g, ' ').split(/(?<=\.)\s/)[0] || '';
+  const plain = sentence.replace(/[*`_]/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1');
+  return plain.length > 190 ? `${plain.slice(0, 187)}…` : plain;
+}
 
-const total = gallery.length + specimens.length;
+/** Recursively list files with `ext` under dir, returning paths relative to it. */
+function listFiles(dir, ext, depth = 1, prefix = '') {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) return depth > 1 ? listFiles(join(dir, entry.name), ext, depth - 1, rel) : [];
+    return entry.name.endsWith(ext) ? [rel] : [];
+  });
+}
 
-writeFileSync(
-  join(dist, 'index.html'),
-  `<!DOCTYPE html>
+// ---------------------------------------------------------------- collect
+
+rmSync(dist, { recursive: true, force: true });
+mkdirSync(dist, { recursive: true });
+
+/** kind -> Map<basename, entry>. Entries carry href, title, blurb. */
+const catalog = {};
+const docQueue = [];
+
+for (const [key, source] of Object.entries(SOURCES)) {
+  const srcDir = join(root, ...source.dir);
+  const outDir = join(dist, source.out);
+  const entries = new Map();
+
+  for (const file of listFiles(srcDir, source.kind === 'md' ? '.md' : '.html', source.depth ?? 1)) {
+    const raw = readFileSync(join(srcDir, file), 'utf8');
+    const fallback = file.replace(/\.(html|md)$/, '').split('/').pop();
+    const name = source.rename === false ? file : `${slug(file)}.html`;
+    const outPath = join(outDir, name);
+    mkdirSync(dirname(outPath), { recursive: true });
+
+    const isDoc = source.kind === 'md';
+    // Docs are written in a second pass — their "used by" rail needs the full catalog.
+    if (isDoc) docQueue.push({ key, file, raw, outPath });
+    else writeFileSync(outPath, raw);
+
+    entries.set(file, {
+      file,
+      title: isDoc ? cleanTitle(raw.match(/^#\s+(.+)$/m)?.[1]?.trim() || fallback) : cleanTitle(titleOf(raw, fallback)),
+      blurb: isDoc ? summarise(raw) : '',
+      href: `/${source.out}/${name.replace(/\.html$/, '').split('/').map(encodeURIComponent).join('/')}`,
+    });
+  }
+  catalog[key] = entries;
+}
+
+// Assets the gallery chapters load relatively; tokens.css lives in the tokens package.
+for (const asset of ['lookbook.css', 'components.css', 'chrome.js']) {
+  cpSync(join(root, 'apps', 'gallery', asset), join(dist, 'gallery', asset));
+}
+cpSync(join(root, 'packages', 'tokens', 'src', 'tokens.css'), join(dist, 'gallery', 'tokens.css'));
+cpSync(join(root, 'apps', 'gallery', 'uploads'), join(dist, 'gallery', 'uploads'), { recursive: true });
+for (const kit of readdirSync(join(root, 'kits'), { withFileTypes: true }).filter((d) => d.isDirectory())) {
+  for (const asset of ['_tokens.css', '_icons.svg']) {
+    const from = join(root, 'kits', kit.name, asset);
+    if (existsSync(from)) cpSync(from, join(dist, 'kits', kit.name, asset));
+  }
+}
+cpSync(join(here, 'site.css'), join(dist, 'site.css'));
+
+// ------------------------------------------------------- coverage check
+
+const claimed = Object.fromEntries(Object.keys(SOURCES).map((k) => [k, new Set()]));
+const unknown = [];
+for (const surface of SURFACES) {
+  for (const key of Object.keys(SOURCES)) {
+    for (const file of surface[key] ?? []) {
+      if (!catalog[key].has(file)) unknown.push(`${surface.id}: ${key}/${file} does not exist`);
+      claimed[key].add(file);
+    }
+  }
+}
+const unclaimed = Object.keys(SOURCES).flatMap((key) =>
+  [...catalog[key].keys()].filter((f) => !claimed[key].has(f)).map((f) => `${key}/${f}`),
+);
+if (unknown.length || unclaimed.length) {
+  console.error('taxonomy.mjs is out of date:');
+  for (const line of [...unknown, ...unclaimed.map((u) => `unclaimed: ${u}`)]) console.error(`  ${line}`);
+  process.exit(1);
+}
+
+// ------------------------------------------------------------- rendering
+
+const KIND_ORDER = ['patterns', 'cookbooks', 'specimens', 'gallery', 'reproductions', 'kits', 'registers'];
+
+const entriesFor = (surface, key) =>
+  (surface[key] ?? []).map((file) => catalog[key].get(file)).sort((a, b) => a.title.localeCompare(b.title));
+
+const countOf = (surface) => KIND_ORDER.reduce((n, key) => n + (surface[key]?.length ?? 0), 0);
+
+function shell({ title, crumb = '', body }) {
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lookbook — specimen library</title>
+<title>${esc(title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --paper:#EFEFEC; --surface:#FFFFFF; --border:#E2E2DE; --border-2:#D4D4CE;
-  --ink:#1B1B1E; --muted:#5C5C58; --subtle:#6E6E68; --accent:#4F46E5;
-  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
-  --font-mono:'JetBrains Mono',ui-monospace,monospace;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-ui);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:8px}
-.wrap{max-width:1120px;margin:0 auto;padding:72px 32px 96px}
-header.masthead{border-bottom:1px solid var(--border-2);padding-bottom:28px}
-.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--subtle)}
-h1{font-size:44px;line-height:1.1;font-weight:800;letter-spacing:-.02em;margin:14px 0 10px}
-.lede{color:var(--muted);max-width:60ch;font-size:17px}
-.meta{margin-top:18px;font-family:var(--font-mono);font-size:12px;color:var(--subtle)}
-.group{margin-top:48px}
-.group-head{display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
-.group-head h2{font-size:15px;font-weight:700;letter-spacing:-.01em}
-.count{font-family:var(--font-mono);font-size:11px;color:var(--subtle)}
-.grid{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:10px}
-.grid a{display:flex;flex-direction:column;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .12s ease,transform .12s ease}
-.grid a:hover{border-color:var(--accent);transform:translateY(-1px)}
-.name{font-weight:600;letter-spacing:-.01em}
-.path{font-family:var(--font-mono);font-size:11px;color:var(--subtle)}
-@media (max-width:640px){.wrap{padding:48px 20px 72px}h1{font-size:34px}}
-@media (prefers-reduced-motion:reduce){.grid a{transition:none}.grid a:hover{transform:none}}
-</style>
+<link rel="stylesheet" href="/site.css">
 </head>
 <body>
-<div class="wrap">
-  <header class="masthead">
-    <p class="eyebrow">Lookbook</p>
-    <h1>Specimen library</h1>
-    <p class="lede">Rendered reference sheets: component variations, composition studies, and full page recipes. Open one and read the pixels — composition does not survive a grep.</p>
-    <p class="meta">${total} sheets · ${gallery.length} gallery chapters · ${specimens.length} specimens</p>
-  </header>
-  ${[...groups]
-    .filter(([, items]) => items.length)
-    .map(section)
-    .join('\n')}
-</div>
+<nav class="topbar">
+  <a class="brand" href="/">Lookbook</a>
+  <span class="crumb">${crumb}</span>
+  <span class="spacer"></span>
+  <span class="links"><a href="/">Surfaces</a><a href="/all">A–Z</a></span>
+</nav>
+${body}
 </body>
 </html>
-`,
+`;
+}
+
+/** Chrome for a rendered markdown doc, with a rail back to the surfaces citing it. */
+function renderDoc({ key, file, raw }) {
+  const { title } = catalog[key].get(file);
+  const usedBy = SURFACES.filter((s) => (s[key] ?? []).includes(file));
+  return shell({
+    title: `${title} — Lookbook`,
+    crumb: `${SOURCES[key].label.toLowerCase()} · ${esc(title)}`,
+    body: `<main class="wrap"><article class="doc">${marked.parse(raw)}</article>${
+      usedBy.length
+        ? `<aside class="aside"><p class="eyebrow">Used by</p><ul class="rail">${usedBy
+            .map((s) => `<li><a href="/s/${s.id}">${esc(s.name)}</a></li>`)
+            .join('')}</ul></aside>`
+        : ''
+    }</main>`,
+  });
+}
+
+for (const doc of docQueue) writeFileSync(doc.outPath, renderDoc(doc));
+
+const cardList = (items) =>
+  `<ul class="grid">${items
+    .map(
+      (i) =>
+        `<li><a href="${i.href}"><span class="name">${esc(i.title)}</span>${
+          i.blurb ? `<span class="blurb">${esc(i.blurb)}</span>` : `<span class="path">${esc(i.href)}</span>`
+        }</a></li>`,
+    )
+    .join('')}</ul>`;
+
+const railFor = (currentId) =>
+  `<ul class="rail">${SURFACES.map(
+    (s) =>
+      `<li><a href="/s/${s.id}"${s.id === currentId ? ' aria-current="page"' : ''}>${esc(s.name)}</a></li>`,
+  ).join('')}</ul>`;
+
+// Surface hubs.
+mkdirSync(join(dist, 's'), { recursive: true });
+for (const surface of SURFACES) {
+  const groups = KIND_ORDER.map((key) => [SOURCES[key].label, entriesFor(surface, key)]).filter(
+    ([, items]) => items.length,
+  );
+  writeFileSync(
+    join(dist, 's', `${surface.id}.html`),
+    shell({
+      title: `${surface.name} — Lookbook`,
+      crumb: `surface · ${esc(surface.id)}`,
+      body: `<main class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">Surface</p>
+    <h1>${esc(surface.name)}</h1>
+    <p class="lede">${esc(surface.blurb)}</p>
+    <p class="meta">${countOf(surface)} artefacts · ${groups.map(([l, i]) => `${i.length} ${l.toLowerCase()}`).join(' · ')}</p>
+  </header>
+  ${groups
+    .map(
+      ([label, items]) => `<section class="group">
+    <div class="group-head"><h2>${esc(label)}</h2><span class="count">${items.length}</span></div>
+    ${cardList(items)}
+  </section>`,
+    )
+    .join('\n  ')}
+  <aside class="aside"><p class="eyebrow">Other surfaces</p>${railFor(surface.id)}</aside>
+</main>`,
+    }),
+  );
+}
+
+// Surfaces index.
+const totalArtefacts = Object.values(catalog).reduce((n, m) => n + m.size, 0);
+writeFileSync(
+  join(dist, 'index.html'),
+  shell({
+    title: 'Lookbook — surfaces',
+    body: `<main class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">Lookbook</p>
+    <h1>Design a surface.</h1>
+    <p class="lede">Every surface pulls its pattern doc, cookbooks, specimen sheets, reproductions and kit pieces into one view — so the rules and the rendered evidence sit side by side. Open a sheet and read the pixels; composition does not survive a grep.</p>
+    <p class="meta">${SURFACES.length} surfaces · ${totalArtefacts} artefacts</p>
+  </header>
+  <ul class="surfaces">
+    ${SURFACES.map(
+      (s) => `<li><a href="/s/${s.id}">
+      <h2>${esc(s.name)}</h2>
+      <p class="blurb">${esc(s.blurb)}</p>
+      <span class="tally">${KIND_ORDER.filter((k) => s[k]?.length)
+        .map((k) => `<span class="pill">${s[k].length} ${esc(SOURCES[k].label.toLowerCase())}</span>`)
+        .join('')}</span>
+    </a></li>`,
+    ).join('\n    ')}
+  </ul>
+</main>`,
+  }),
 );
 
-console.log(`built ${total} pages into apps/site/dist`);
+// A-Z fallback.
+writeFileSync(
+  join(dist, 'all.html'),
+  shell({
+    title: 'Lookbook — everything A–Z',
+    crumb: 'everything',
+    body: `<main class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">Lookbook</p>
+    <h1>Everything, A–Z</h1>
+    <p class="lede">The flat list, by kind. If you know what you are looking for by name, it is faster than the surfaces.</p>
+    <p class="meta">${totalArtefacts} artefacts</p>
+  </header>
+  ${KIND_ORDER.map((key) => {
+    const items = [...catalog[key].values()].sort((a, b) => a.title.localeCompare(b.title));
+    return `<section class="group">
+    <div class="group-head"><h2>${esc(SOURCES[key].label)}</h2><span class="count">${items.length}</span></div>
+    ${cardList(items)}
+  </section>`;
+  }).join('\n  ')}
+</main>`,
+  }),
+);
+
+console.log(
+  `built ${SURFACES.length} surface hubs over ${totalArtefacts} artefacts ` +
+    `(${KIND_ORDER.map((k) => `${catalog[k].size} ${k}`).join(', ')})`,
+);

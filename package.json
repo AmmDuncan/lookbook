@@ -10,5 +10,8 @@
     "site:preview": "npm run site:build && npx wrangler dev --config apps/site/wrangler.jsonc",
     "site:deploy": "npm run site:build && npx wrangler deploy --config apps/site/wrangler.jsonc",
     "site:check": "bash apps/site/check.sh"
+  },
+  "devDependencies": {
+    "marked": "^18.0.9"
   }
 }

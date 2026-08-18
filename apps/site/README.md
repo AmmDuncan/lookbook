@@ -14,12 +14,25 @@ npm run site:deploy    # build + wrangler deploy
 npm run site:check     # crawl the surfaces and assert every link is 200
 ```
 
+## The layers are not peers
+
+`SKILL.md` ranks them and the site follows: you **pull a composition from the variation
+specimens**, judge it against the earned cookbooks, and treat `patterns/` and `kits/` as
+"untrusted reference until re-earned through the reproduction gate". So on every hub the
+specimens come first and those two sit below a divider, tagged.
+
+Kit tags are not hand-maintained — `build.mjs` parses the verdict table in
+`kits/COVERAGE.md`, so the site cannot disagree with the repo's own status file.
+COVERED → `superseded` (21 files), ORPHAN or infra → `untrusted reference` (12).
+Nothing is deleted, per COVERAGE.md's own "the specimens stay as frozen reference".
+
 ## Adding content
 
-`taxonomy.mjs` maps files to surfaces. The build **fails** if a file under any source
-dir is claimed by no surface, or if a surface claims a file that does not exist — so
-adding a specimen forces the relationship decision instead of letting it fall out of
-the index silently. An artefact may belong to several surfaces.
+`taxonomy.mjs` maps files to surfaces, and `SPINE` holds the system-wide docs. The build
+**fails** if a file under any source dir is claimed by no surface, if a surface claims a
+file that does not exist, or if a new root `.md` is in neither `SPINE` nor `EXCLUDED` —
+so adding content forces the placement decision instead of letting it fall out of the
+index silently. An artefact may belong to several surfaces.
 
 ## Two gotchas the build encodes
 

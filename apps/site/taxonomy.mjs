@@ -1,4 +1,4 @@
-// Which artefacts belong to which surface.
+// Which artefacts belong to which surface, and how much each layer is trusted.
 //
 // A surface is a thing you sit down to design — a list page, an auth screen, a
 // dashboard. Every specimen, pattern doc, cookbook, reproduction, gallery
@@ -7,6 +7,77 @@
 //
 // Keys are basenames within each source dir (see SOURCES in build.mjs).
 // An artefact may appear under several surfaces — relationships are not a tree.
+
+/**
+ * The layers are NOT peers. Per SKILL.md: the variation specimens are what you
+ * GENERATE from, cookbooks are earned against a real screen, and `patterns/` +
+ * `kits/` are "untrusted reference until re-earned through the reproduction
+ * gate". Kit files carry a per-file verdict from `kits/COVERAGE.md`, which the
+ * build parses rather than duplicating here.
+ */
+export const TIERS = {
+  source: { label: 'Pull from', note: 'The variation layer — what you generate a screen from.' },
+  earned: { label: 'Earned', note: 'Proven by reproducing a real screen, not self-graded.' },
+  reference: {
+    label: 'Untrusted reference',
+    note: 'Self-graded, never re-earned through the reproduction gate. Read it, do not trust it.',
+  },
+  superseded: {
+    label: 'Superseded',
+    note: 'A cookbook now covers this surface and was earned against reality. Use that instead.',
+  },
+};
+
+/** Default tier per artefact kind; `kits` is overridden per file from COVERAGE.md. */
+export const KIND_TIERS = {
+  specimens: 'source',
+  gallery: 'source',
+  reproductions: 'earned',
+  registers: 'earned',
+  cookbooks: 'earned',
+  patterns: 'reference',
+  kits: 'reference',
+};
+
+/**
+ * The spine: system-wide docs that outrank everything per-surface.
+ * Grouped by the job they do, in the order SKILL.md puts them.
+ */
+export const SPINE = [
+  {
+    id: 'pull',
+    name: 'Pull from',
+    blurb:
+      'Where a screen starts. Open a specimen and pull its composition — never cold-derive a layout from principles when a specimen exists.',
+    docs: ['harvest/HARVEST.md', 'RESKIN.md'],
+  },
+  {
+    id: 'judge',
+    name: 'Judge against',
+    blurb:
+      'The floor you measure the result against — cited by ID. Not the source you generate from; deriving from these instead of pulling is the #1 misfire.',
+    docs: ['fundamentals.md', 'the-design-brain.md', 'anti-patterns.md', 'archetype-completeness.md'],
+  },
+  {
+    id: 'verify',
+    name: 'Verify & gate',
+    blurb: 'The depth floor, the runnable pass, the receipt, and the reproduction gate that re-earns an untrusted layer.',
+    docs: ['depth-rubric.md', 'verification.md', 'CHECKLIST.md', 'EXPERIMENT.md'],
+  },
+  {
+    id: 'about',
+    name: 'About the system',
+    blurb: 'What Lookbook is, how the layers rank, what has been built, and the per-project personality file.',
+    docs: ['SKILL.md', 'AGENTS.md', 'README.md', 'STATUS.md', 'KIT.md', 'personality.template.md'],
+  },
+];
+
+/** Root docs deliberately not published, with the reason. Keeps drops visible. */
+export const EXCLUDED = {
+  'PRODUCT.md': 'A parked product idea, not design guidance.',
+  'BRIDGE-self-service.md': 'Analysis of one downstream project, not part of the system.',
+  'PERSONA-skill-design-advisor.md': 'A lens for authoring skills, unrelated to designing UI.',
+};
 
 export const SURFACES = [
   {

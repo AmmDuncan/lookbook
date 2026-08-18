@@ -6,7 +6,7 @@ import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, write
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
-import { SURFACES } from './taxonomy.mjs';
+import { EXCLUDED, KIND_TIERS, SPINE, SURFACES, TIERS } from './taxonomy.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..', '..');
@@ -26,7 +26,29 @@ const SOURCES = {
   kits: { dir: ['kits'], out: 'kits', kind: 'html', depth: 2, label: 'Kit pieces' },
   patterns: { dir: ['patterns'], out: 'docs/patterns', kind: 'md', label: 'Pattern docs' },
   cookbooks: { dir: ['cookbooks'], out: 'docs/cookbooks', kind: 'md', label: 'Cookbooks' },
+  spine: { dir: [], out: 'docs', kind: 'md', depth: 2, label: 'System docs', global: true },
 };
+
+/**
+ * Per-kit-file verdicts, parsed from `kits/COVERAGE.md` so the site can never
+ * disagree with the repo's own status file.
+ * COVERED (a cookbook earned it) -> superseded; ORPHAN / infra -> reference.
+ */
+function readKitCoverage(root) {
+  const md = readFileSync(join(root, 'kits', 'COVERAGE.md'), 'utf8');
+  const verdicts = new Map();
+  let voice = '';
+  for (const line of md.split('\n')) {
+    const heading = line.match(/^##\s+([\w-]+)\/\s*$/);
+    if (heading) voice = heading[1];
+    const row = line.match(/^\|\s*`([^`]+)`\s*\|\s*([^|]+?)\s*\|/);
+    if (!voice || !row) continue;
+    const [, name, status] = row;
+    if (!/^(atom|recipe|organism)-/.test(name)) continue;
+    verdicts.set(`${voice}/${name}.html`, /covered/i.test(status) ? 'superseded' : 'reference');
+  }
+  return verdicts;
+}
 
 const slug = (name) =>
   name
@@ -92,6 +114,8 @@ mkdirSync(dist, { recursive: true });
 /** kind -> Map<basename, entry>. Entries carry href, title, blurb. */
 const catalog = {};
 const docQueue = [];
+const kitVerdicts = readKitCoverage(root);
+const spineDocs = new Set(SPINE.flatMap((group) => group.docs));
 
 for (const [key, source] of Object.entries(SOURCES)) {
   const srcDir = join(root, ...source.dir);
@@ -99,6 +123,9 @@ for (const [key, source] of Object.entries(SOURCES)) {
   const entries = new Map();
 
   for (const file of listFiles(srcDir, source.kind === 'md' ? '.md' : '.html', source.depth ?? 1)) {
+    // The spine reads the repo root, where most subdirectories are other kinds.
+    if (key === 'spine' && !spineDocs.has(file) && !EXCLUDED[file]) continue;
+    if (key === 'spine' && EXCLUDED[file]) continue;
     const raw = readFileSync(join(srcDir, file), 'utf8');
     const fallback = file.replace(/\.(html|md)$/, '').split('/').pop();
     const name = source.rename === false ? file : `${slug(file)}.html`;
@@ -112,6 +139,7 @@ for (const [key, source] of Object.entries(SOURCES)) {
 
     entries.set(file, {
       file,
+      tier: key === 'kits' ? (kitVerdicts.get(file) ?? 'reference') : KIND_TIERS[key],
       title: isDoc ? cleanTitle(raw.match(/^#\s+(.+)$/m)?.[1]?.trim() || fallback) : cleanTitle(titleOf(raw, fallback)),
       blurb: isDoc ? summarise(raw) : '',
       href: `/${source.out}/${name.replace(/\.html$/, '').split('/').map(encodeURIComponent).join('/')}`,
@@ -136,19 +164,29 @@ cpSync(join(here, 'site.css'), join(dist, 'site.css'));
 
 // ------------------------------------------------------- coverage check
 
-const claimed = Object.fromEntries(Object.keys(SOURCES).map((k) => [k, new Set()]));
+const PER_SURFACE = Object.keys(SOURCES).filter((k) => !SOURCES[k].global);
+const claimed = Object.fromEntries(PER_SURFACE.map((k) => [k, new Set()]));
 const unknown = [];
 for (const surface of SURFACES) {
-  for (const key of Object.keys(SOURCES)) {
+  for (const key of PER_SURFACE) {
     for (const file of surface[key] ?? []) {
       if (!catalog[key].has(file)) unknown.push(`${surface.id}: ${key}/${file} does not exist`);
       claimed[key].add(file);
     }
   }
 }
-const unclaimed = Object.keys(SOURCES).flatMap((key) =>
-  [...catalog[key].keys()].filter((f) => !claimed[key].has(f)).map((f) => `${key}/${f}`),
-);
+for (const file of spineDocs) {
+  if (!catalog.spine.has(file)) unknown.push(`SPINE: ${file} does not exist`);
+}
+const unclaimed = [
+  ...PER_SURFACE.flatMap((key) =>
+    [...catalog[key].keys()].filter((f) => !claimed[key].has(f)).map((f) => `${key}/${f}`),
+  ),
+  // A new root doc must be placed in SPINE or explicitly excluded, never dropped silently.
+  ...listFiles(root, '.md', 1)
+    .filter((f) => !spineDocs.has(f) && !EXCLUDED[f])
+    .map((f) => `root doc ${f} (add to SPINE or EXCLUDED)`),
+];
 if (unknown.length || unclaimed.length) {
   console.error('taxonomy.mjs is out of date:');
   for (const line of [...unknown, ...unclaimed.map((u) => `unclaimed: ${u}`)]) console.error(`  ${line}`);
@@ -157,7 +195,10 @@ if (unknown.length || unclaimed.length) {
 
 // ------------------------------------------------------------- rendering
 
-const KIND_ORDER = ['patterns', 'cookbooks', 'specimens', 'gallery', 'reproductions', 'kits', 'registers'];
+// Order per SKILL.md: pull from the variation layer first, judge with the earned
+// cookbooks second, and only then the layers that were never re-earned.
+const KIND_ORDER = ['specimens', 'gallery', 'reproductions', 'registers', 'cookbooks', 'patterns', 'kits'];
+const DEMOTED = new Set(['patterns', 'kits']);
 
 const entriesFor = (surface, key) =>
   (surface[key] ?? []).map((file) => catalog[key].get(file)).sort((a, b) => a.title.localeCompare(b.title));
@@ -191,12 +232,16 @@ ${body}
 
 /** Chrome for a rendered markdown doc, with a rail back to the surfaces citing it. */
 function renderDoc({ key, file, raw }) {
-  const { title } = catalog[key].get(file);
+  const { title, tier } = catalog[key].get(file);
   const usedBy = SURFACES.filter((s) => (s[key] ?? []).includes(file));
+  const banner =
+    tier === 'reference' || tier === 'superseded'
+      ? `<p class="banner banner-${tier}"><strong>${esc(TIERS[tier].label)}.</strong> ${esc(TIERS[tier].note)}</p>`
+      : '';
   return shell({
     title: `${title} — Lookbook`,
     crumb: `${SOURCES[key].label.toLowerCase()} · ${esc(title)}`,
-    body: `<main class="wrap"><article class="doc">${marked.parse(raw)}</article>${
+    body: `<main class="wrap">${banner}<article class="doc">${marked.parse(raw)}</article>${
       usedBy.length
         ? `<aside class="aside"><p class="eyebrow">Used by</p><ul class="rail">${usedBy
             .map((s) => `<li><a href="/s/${s.id}">${esc(s.name)}</a></li>`)
@@ -208,11 +253,16 @@ function renderDoc({ key, file, raw }) {
 
 for (const doc of docQueue) writeFileSync(doc.outPath, renderDoc(doc));
 
+const tierTag = (tier) =>
+  tier === 'reference' || tier === 'superseded'
+    ? `<span class="tag tag-${tier}" title="${esc(TIERS[tier].note)}">${esc(TIERS[tier].label)}</span>`
+    : '';
+
 const cardList = (items) =>
   `<ul class="grid">${items
     .map(
       (i) =>
-        `<li><a href="${i.href}"><span class="name">${esc(i.title)}</span>${
+        `<li><a href="${i.href}" class="card"><span class="name">${esc(i.title)}${tierTag(i.tier)}</span>${
           i.blurb ? `<span class="blurb">${esc(i.blurb)}</span>` : `<span class="path">${esc(i.href)}</span>`
         }</a></li>`,
     )
@@ -227,9 +277,10 @@ const railFor = (currentId) =>
 // Surface hubs.
 mkdirSync(join(dist, 's'), { recursive: true });
 for (const surface of SURFACES) {
-  const groups = KIND_ORDER.map((key) => [SOURCES[key].label, entriesFor(surface, key)]).filter(
-    ([, items]) => items.length,
+  const groups = KIND_ORDER.map((key) => [key, SOURCES[key].label, entriesFor(surface, key)]).filter(
+    ([, , items]) => items.length,
   );
+  const firstDemoted = groups.findIndex(([key]) => DEMOTED.has(key));
   writeFileSync(
     join(dist, 's', `${surface.id}.html`),
     shell({
@@ -240,11 +291,19 @@ for (const surface of SURFACES) {
     <p class="eyebrow">Surface</p>
     <h1>${esc(surface.name)}</h1>
     <p class="lede">${esc(surface.blurb)}</p>
-    <p class="meta">${countOf(surface)} artefacts · ${groups.map(([l, i]) => `${i.length} ${l.toLowerCase()}`).join(' · ')}</p>
+    <p class="meta">${countOf(surface)} artefacts · ${groups.map(([, l, i]) => `${i.length} ${l.toLowerCase()}`).join(' · ')}</p>
   </header>
   ${groups
     .map(
-      ([label, items]) => `<section class="group">
+      ([key, label, items], index) =>
+        `${
+          index === firstDemoted && firstDemoted !== -1
+            ? `<div class="demoted-head">
+    <p class="eyebrow">Untrusted reference</p>
+    <p class="lede">Self-graded layers that were never re-earned through the reproduction gate. Read them for context; where a cookbook above covers the same surface, it wins.</p>
+  </div>`
+            : ''
+        }<section class="group${DEMOTED.has(key) ? ' demoted' : ''}">
     <div class="group-head"><h2>${esc(label)}</h2><span class="count">${items.length}</span></div>
     ${cardList(items)}
   </section>`,
@@ -266,9 +325,21 @@ writeFileSync(
   <header class="masthead">
     <p class="eyebrow">Lookbook</p>
     <h1>Design a surface.</h1>
-    <p class="lede">Every surface pulls its pattern doc, cookbooks, specimen sheets, reproductions and kit pieces into one view — so the rules and the rendered evidence sit side by side. Open a sheet and read the pixels; composition does not survive a grep.</p>
+    <p class="lede">A screen starts by <strong>pulling a composition</strong> from the variation specimens — never by deriving one from principles. Each surface below gathers its specimens, earned cookbooks and reproductions in one view, with the layers that were never re-earned marked and pushed to the bottom.</p>
     <p class="meta">${SURFACES.length} surfaces · ${totalArtefacts} artefacts</p>
   </header>
+  ${SPINE.map((group) => {
+    const items = group.docs.map((f) => catalog.spine.get(f));
+    return `<section class="group">
+    <div class="group-head"><h2>${esc(group.name)}</h2><span class="count">${items.length}</span></div>
+    <p class="lede group-lede">${esc(group.blurb)}</p>
+    ${cardList(items)}
+  </section>`;
+  }).join('\n  ')}
+  <section class="group">
+    <div class="group-head"><h2>Surfaces</h2><span class="count">${SURFACES.length}</span></div>
+    <p class="lede group-lede">One page per thing you sit down to design.</p>
+  </section>
   <ul class="surfaces">
     ${SURFACES.map(
       (s) => `<li><a href="/s/${s.id}">
@@ -297,7 +368,7 @@ writeFileSync(
     <p class="lede">The flat list, by kind. If you know what you are looking for by name, it is faster than the surfaces.</p>
     <p class="meta">${totalArtefacts} artefacts</p>
   </header>
-  ${KIND_ORDER.map((key) => {
+  ${['spine', ...KIND_ORDER].map((key) => {
     const items = [...catalog[key].values()].sort((a, b) => a.title.localeCompare(b.title));
     return `<section class="group">
     <div class="group-head"><h2>${esc(SOURCES[key].label)}</h2><span class="count">${items.length}</span></div>

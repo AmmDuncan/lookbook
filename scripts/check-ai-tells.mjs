@@ -79,11 +79,48 @@ function leftAccentCallout(rule) {
   return `left-accent callout — "${rule.selector}" tints a block and puts a ${w}px bar down its left edge. Shipped products carry that emphasis with a heading, an icon or the tint alone. Drop the border-left.`
 }
 
-const CHECKS = [leftAccentCallout]
+/**
+ * TELL 2 — the rounded left-bar. Ammiel's most-detested generated tell (2026-08-25):
+ * a rounded element with a coloured bar down ONLY its left edge. The squared accent
+ * fights the corner radius and reads as machine-made. Broader than TELL 1 — it does
+ * NOT require a background tint, which is exactly why the tinted-only rule missed it.
+ *
+ * Fires on: border-left >= 2px that paints + a non-zero border-radius, WITHOUT a
+ * symmetric all-side `border` (that's a bordered card, not an accent). Nav/tab/active
+ * edge-markers are exempt, same as TELL 1.
+ */
+function roundedLeftBar(rule) {
+  const border = decl(rule.body, 'border-left') ?? decl(rule.body, 'border-inline-start')
+  if (!border) {
+    return null
+  }
+  const w = widthPx(border)
+  if (w === null || w < 2 || !paints(border)) {
+    return null
+  }
+  const radius = decl(rule.body, 'border-radius')
+    ?? decl(rule.body, 'border-top-left-radius')
+    ?? decl(rule.body, 'border-top-right-radius')
+    ?? decl(rule.body, 'border-bottom-left-radius')
+  if (!radius || widthPx(radius) === 0) {
+    return null
+  }
+  // A symmetric card border (all four sides via `border:`) is not a left accent.
+  const full = decl(rule.body, 'border')
+  if (full && (widthPx(full) ?? 0) >= 2 && paints(full)) {
+    return null
+  }
+  // NOTE: role (nav/active/tab) does NOT exempt. Ammiel's rule (2026-08-25): the crime is
+  // a border-left riding a ROUNDED edge — square strip-ends on round corners — whatever the
+  // element's job. A rounded active marker with a border-left is the same conflict.
+  return `rounded + left-bar — "${rule.selector}" rounds the corners AND runs a ${w}px bar down the left EDGE (square strip-ends fighting the round corner). Re-do it as an INSET accent (a strip inset from the edge, or its own rounding) — keep the colour, lose the edge conflict.`
+}
+
+const CHECKS = [leftAccentCallout, roundedLeftBar]
 
 async function lint(path) {
   const src = await readFile(path, 'utf8')
-  const css = [...src.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map((m) => m[1]).join('\n')
+  const css = [...src.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map((m) => m[1]).join('\n').replace(/\/\*[\s\S]*?\*\//g, '')
   const findings = []
   for (const rule of rules(css)) {
     for (const check of CHECKS) {
@@ -96,9 +133,11 @@ async function lint(path) {
   // Inline styles bypass the stylesheet entirely — check them too, or the rule is
   // trivially defeated by moving the declaration onto the element.
   for (const m of src.matchAll(/style="([^"]*)"/gi)) {
-    const hit = leftAccentCallout({ selector: 'inline style', body: m[1] })
-    if (hit) {
-      findings.push(hit)
+    for (const check of CHECKS) {
+      const hit = check({ selector: 'inline style', body: m[1] })
+      if (hit) {
+        findings.push(hit)
+      }
     }
   }
   return findings

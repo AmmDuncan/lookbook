@@ -1,0 +1,409 @@
+{
+  "name": "c",
+  "source": "/Users/ammielyawson/.claude/evidence/afcas/2026-08-22_directions/profile-notifications/C.html",
+  "capturedAt": "2026-08-22",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 65.5,
+    "authoredValuesSampled": 432,
+    "distinctValues": 19,
+    "topSteps": [
+      {
+        "value": 11,
+        "count": 76
+      },
+      {
+        "value": 24,
+        "count": 56
+      },
+      {
+        "value": 10,
+        "count": 50
+      },
+      {
+        "value": 14,
+        "count": 47
+      },
+      {
+        "value": 16,
+        "count": 44
+      },
+      {
+        "value": 20,
+        "count": 43
+      },
+      {
+        "value": 3,
+        "count": 26
+      },
+      {
+        "value": 13,
+        "count": 24
+      },
+      {
+        "value": 9,
+        "count": 21
+      },
+      {
+        "value": 7,
+        "count": 16
+      },
+      {
+        "value": 17,
+        "count": 12
+      },
+      {
+        "value": 12,
+        "count": 9
+      }
+    ],
+    "grouping": {
+      "samples": 16,
+      "byMethod": {
+        "nested": 12,
+        "within": 4
+      },
+      "medianInsideGap": 4.5,
+      "medianBetweenGap": 15,
+      "medianRatio": 3.5,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Roboto",
+        "count": 165
+      },
+      {
+        "value": "Montserrat",
+        "count": 4
+      },
+      {
+        "value": "Roboto Mono",
+        "count": 4
+      }
+    ],
+    "bodySize": 12,
+    "sizes": [
+      11,
+      12,
+      13,
+      14,
+      16,
+      24,
+      30
+    ],
+    "distinctSizes": 7,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 18,
+    "scaleRatios": [
+      1.091,
+      1.083,
+      1.077,
+      1.143,
+      1.5,
+      1.25
+    ],
+    "hierarchyCarriedBy": "mixed (size+ink)",
+    "channelSpread": {
+      "size": 0.22,
+      "weight": 0.17,
+      "ink": 0.2
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#6e6868",
+        "lineHeight": 1.3,
+        "tracking": 0,
+        "transform": "none",
+        "count": 41,
+        "sample": "Administrator"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#3a3636",
+        "lineHeight": 1.3,
+        "tracking": 0,
+        "transform": "none",
+        "count": 28,
+        "sample": "Steve Rogers"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "of 6 payment exceptions handed to you."
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.25,
+        "tracking": 0,
+        "transform": "none",
+        "count": 22,
+        "sample": "Payment System"
+      },
+      {
+        "size": 11,
+        "weight": 500,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 1.21,
+        "transform": "uppercase",
+        "count": 18,
+        "sample": "Today"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 16,
+        "sample": "Ama Serwaa"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 1.44,
+        "transform": "uppercase",
+        "count": 3,
+        "sample": "Direction C · 1 of 2 — /admin/notifications, pro"
+      },
+      {
+        "size": 13,
+        "weight": 500,
+        "color": "#3a3636",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 9,
+        "sample": "Case escalated"
+      },
+      {
+        "size": 24,
+        "weight": 600,
+        "color": "#3a3636",
+        "lineHeight": 1.3,
+        "tracking": -0.24,
+        "transform": "none",
+        "count": 2,
+        "sample": "Payment exception escalated"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "Open case X1AWABNKD"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#e8e6e6",
+    "backgrounds": [
+      {
+        "hex": "#f2f1f1",
+        "h": 0,
+        "s": 3.7,
+        "l": 94.7,
+        "c": 0.4,
+        "areaPct": 94.3
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 72.1
+      },
+      {
+        "hex": "#1a1313",
+        "h": 0,
+        "s": 15.6,
+        "l": 8.8,
+        "c": 2.7,
+        "areaPct": 47.2
+      },
+      {
+        "hex": "#fafafa",
+        "h": 0,
+        "s": 0,
+        "l": 98,
+        "c": 0,
+        "areaPct": 5.1
+      },
+      {
+        "hex": "#fdf3f2",
+        "h": 5,
+        "s": 73.3,
+        "l": 97.1,
+        "c": 4.3,
+        "areaPct": 2
+      },
+      {
+        "hex": "#251e1e",
+        "h": 0,
+        "s": 10.4,
+        "l": 13.1,
+        "c": 2.7,
+        "areaPct": 0.8
+      },
+      {
+        "hex": "#561212",
+        "h": 0,
+        "s": 65.4,
+        "l": 20.4,
+        "c": 26.7,
+        "areaPct": 0.7
+      },
+      {
+        "hex": "#c4110c",
+        "h": 2,
+        "s": 88.5,
+        "l": 40.8,
+        "c": 72.2,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#6e6868",
+        "s": 2.8,
+        "l": 42,
+        "c": 2.4,
+        "sharePct": 57.1
+      },
+      {
+        "hex": "#3a3636",
+        "s": 3.6,
+        "l": 22,
+        "c": 1.6,
+        "sharePct": 29.8
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 9.7
+      },
+      {
+        "hex": "#561212",
+        "s": 65.4,
+        "l": 20.4,
+        "c": 26.7,
+        "sharePct": 1.7
+      },
+      {
+        "hex": "#c4110c",
+        "s": 88.5,
+        "l": 40.8,
+        "c": 72.2,
+        "sharePct": 0.9
+      },
+      {
+        "hex": "#92400e",
+        "s": 82.5,
+        "l": 31.4,
+        "c": 51.8,
+        "sharePct": 0.9
+      }
+    ],
+    "neutralsTinted": "5/9",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 26.7,
+    "accentAreaPct": 0.7,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 70,
+      "shadowedElements": 3,
+      "borderToShadowRatio": 23.33,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(92, 0, 0, 0.04) 0px 1px 2px 0px, rgba(92, 0, 0, 0.1) 0px 6px 16px -12px",
+        "rgba(92, 0, 0, 0.3) -24px 0px 48px -24px"
+      ],
+      "radiusScale": [
+        10,
+        50,
+        9,
+        16,
+        12
+      ],
+      "gradientElements": 2
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 1908,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 6
+      },
+      {
+        "value": "3-col: px px px",
+        "count": 6
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 62
+      },
+      {
+        "value": "column",
+        "count": 9
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 40,
+      "coveringMostContent": 15,
+      "top": [
+        732,
+        334,
+        10,
+        54,
+        314,
+        866,
+        890,
+        0
+      ]
+    },
+    "density": {
+      "visibleElements": 423,
+      "perScreenful": 200
+    }
+  }
+}

@@ -1,0 +1,477 @@
+{
+  "name": "c-native",
+  "source": "c-native.html",
+  "capturedAt": "2026-07-30",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 78.8,
+    "authoredValuesSampled": 274,
+    "distinctValues": 16,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 66
+      },
+      {
+        "value": 6,
+        "count": 37
+      },
+      {
+        "value": 10,
+        "count": 32
+      },
+      {
+        "value": 9,
+        "count": 32
+      },
+      {
+        "value": 4,
+        "count": 20
+      },
+      {
+        "value": 16,
+        "count": 18
+      },
+      {
+        "value": 3,
+        "count": 18
+      },
+      {
+        "value": 14,
+        "count": 17
+      },
+      {
+        "value": 12,
+        "count": 17
+      },
+      {
+        "value": 7,
+        "count": 13
+      },
+      {
+        "value": 11,
+        "count": 13
+      },
+      {
+        "value": 1,
+        "count": 10
+      }
+    ],
+    "grouping": {
+      "samples": 9,
+      "byMethod": {
+        "nested": 8,
+        "within": 1
+      },
+      "medianInsideGap": 10,
+      "medianBetweenGap": 11,
+      "medianRatio": 1.1,
+      "confidence": "high",
+      "verdict": "space encodes little grouping — flat rhythm"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "-apple-system",
+        "count": 63
+      },
+      {
+        "value": "SF Mono",
+        "count": 39
+      },
+      {
+        "value": "Arial",
+        "count": 5
+      },
+      {
+        "value": "monospace",
+        "count": 1
+      }
+    ],
+    "bodySize": 13.5,
+    "sizes": [
+      9.5,
+      10.5,
+      11,
+      11.5,
+      12,
+      12.5,
+      13,
+      13.3,
+      13.5,
+      14,
+      15,
+      26
+    ],
+    "distinctSizes": 12,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 27,
+    "scaleRatios": [
+      1.105,
+      1.048,
+      1.045,
+      1.043,
+      1.042,
+      1.04,
+      1.023,
+      1.015,
+      1.037,
+      1.071,
+      1.733
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.28,
+      "weight": 0.33,
+      "ink": 0.48
+    },
+    "measureChars": 86,
+    "topRoles": [
+      {
+        "size": 13.5,
+        "weight": 500,
+        "color": "#1c1c1e",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 6,
+        "sample": "Packaging hierarchy: the two-unit model can't ex"
+      },
+      {
+        "size": 11.5,
+        "weight": 400,
+        "color": "#55555c",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 9,
+        "sample": "packaging-hierarchy"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#8d94a2",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "macOS-shaped and quiet: source-list sidebar with"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#86868c",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 29,
+        "sample": "dvla-stores · decision blocked ·"
+      },
+      {
+        "size": 11,
+        "weight": 400,
+        "color": "#86868c",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "1440×900"
+      },
+      {
+        "size": 13,
+        "weight": 500,
+        "color": "#1c1c1e",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "Library"
+      },
+      {
+        "size": 13.3,
+        "weight": 400,
+        "color": "#55555c",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Sub-line at 500 still reads heavier than the pri"
+      },
+      {
+        "size": 11.5,
+        "weight": 600,
+        "color": "#86868c",
+        "lineHeight": null,
+        "tracking": 0.57,
+        "transform": "uppercase",
+        "count": 4,
+        "sample": "Needs you"
+      },
+      {
+        "size": 12,
+        "weight": 600,
+        "color": "#55555c",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "A — 01-baseline-capture"
+      },
+      {
+        "size": 12.5,
+        "weight": 400,
+        "color": "#1f57e0",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "dvla-stores"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#0b0d11",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 123.7
+      },
+      {
+        "hex": "#ececf0",
+        "h": 240,
+        "s": 11.8,
+        "l": 93.3,
+        "c": 1.6,
+        "areaPct": 82.3
+      },
+      {
+        "hex": "#f6f6f8",
+        "h": 240,
+        "s": 12.5,
+        "l": 96.9,
+        "c": 0.8,
+        "areaPct": 32.4
+      },
+      {
+        "hex": "#e6e6ea",
+        "h": 240,
+        "s": 8.7,
+        "l": 91,
+        "c": 1.6,
+        "areaPct": 12.4
+      },
+      {
+        "hex": "#e9434e",
+        "h": 356,
+        "s": 79,
+        "l": 58.8,
+        "c": 65.1,
+        "areaPct": 2.1
+      },
+      {
+        "hex": "#dfe1e7",
+        "h": 225,
+        "s": 14.3,
+        "l": 89,
+        "c": 3.1,
+        "areaPct": 1
+      },
+      {
+        "hex": "#2f6bff",
+        "h": 223,
+        "s": 100,
+        "l": 59.2,
+        "c": 81.6,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#d9dce2",
+        "h": 220,
+        "s": 13.4,
+        "l": 86.9,
+        "c": 3.5,
+        "areaPct": 0.2
+      },
+      {
+        "hex": "#e5484d",
+        "h": 358,
+        "s": 75.1,
+        "l": 59,
+        "c": 61.6,
+        "areaPct": 0
+      },
+      {
+        "hex": "#2e6cff",
+        "h": 222,
+        "s": 100,
+        "l": 59,
+        "c": 82,
+        "areaPct": 0
+      },
+      {
+        "hex": "#000000",
+        "h": 0,
+        "s": 0,
+        "l": 0,
+        "c": 0,
+        "areaPct": 0
+      },
+      {
+        "hex": "#ff5f57",
+        "h": 3,
+        "s": 100,
+        "l": 67.1,
+        "c": 65.9,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#86868c",
+        "s": 2.5,
+        "l": 53.7,
+        "c": 2.4,
+        "sharePct": 27.7
+      },
+      {
+        "hex": "#1c1c1e",
+        "s": 3.4,
+        "l": 11.4,
+        "c": 0.8,
+        "sharePct": 25.9
+      },
+      {
+        "hex": "#55555c",
+        "s": 4,
+        "l": 34.7,
+        "c": 2.7,
+        "sharePct": 22.8
+      },
+      {
+        "hex": "#8d94a2",
+        "s": 10.1,
+        "l": 59.4,
+        "c": 8.2,
+        "sharePct": 15.1
+      },
+      {
+        "hex": "#1f57e0",
+        "s": 75.7,
+        "l": 50,
+        "c": 75.7,
+        "sharePct": 3.1
+      },
+      {
+        "hex": "#7b8291",
+        "s": 9.1,
+        "l": 52.5,
+        "c": 8.6,
+        "sharePct": 2.4
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 1.8
+      },
+      {
+        "hex": "#e9ebef",
+        "s": 15.8,
+        "l": 92.5,
+        "c": 2.4,
+        "sharePct": 1.2
+      }
+    ],
+    "neutralsTinted": "7/12",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 81.6,
+    "accentAreaPct": 2.6,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 45,
+      "shadowedElements": 18,
+      "borderToShadowRatio": 2.5,
+      "strategy": "shadow-led",
+      "distinctShadows": [
+        "rgba(0, 0, 0, 0.5) 0px 24px 60px 0px",
+        "rgba(0, 0, 0, 0.07) 0px 0px 0px 1px",
+        "rgba(0, 0, 0, 0.08) 0px 2px 10px 0px",
+        "rgba(47, 107, 255, 0.25) 0px 0px 0px 3px",
+        "rgb(47, 107, 255) 0px 0px 0px 1.5px"
+      ],
+      "radiusScale": [
+        6,
+        4,
+        50,
+        7,
+        5,
+        12
+      ],
+      "gradientElements": 3
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 2178,
+    "horizontalBleed": true,
+    "proseMaxWidth": 600,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "3-col: px px px",
+        "count": 12
+      },
+      {
+        "value": "2-col: px px",
+        "count": 11
+      },
+      {
+        "value": "4-col: px px px px",
+        "count": 6
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 24
+      },
+      {
+        "value": "column",
+        "count": 8
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 40,
+      "coveringMostContent": 18,
+      "top": [
+        294,
+        42,
+        250,
+        1198,
+        76,
+        32,
+        1332,
+        266
+      ]
+    },
+    "density": {
+      "visibleElements": 295,
+      "perScreenful": 122
+    }
+  }
+}

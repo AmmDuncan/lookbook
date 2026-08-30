@@ -45,9 +45,9 @@
   .mono { font-family: var(--mono); }
 
   /* ---------------- header ---------------- */
-  .head { border-bottom: 1px solid var(--line); padding-bottom: 36px; margin-bottom: 52px; }
+  .head { border-bottom: 1px solid var(--line); padding-bottom: 36px; margin-bottom: 56px; }
   .kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
-  h1 { font-size: 40px; line-height: 1.05; letter-spacing: -.03em; font-weight: 600; margin: 18px 0 0; }
+  h1 { font-size: 40px; line-height: 1.05; letter-spacing: -.03em; font-weight: 600; margin: 20px 0 0; }
   .dek { max-width: 560px; margin: 16px 0 0; font-size: 16px; color: var(--muted); line-height: 1.6; }
 
   /* ---------------- section frame ---------------- */
@@ -62,22 +62,22 @@
      ================================================================ */
   .stage { display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: start; }
   .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px -50px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.03); }
-  .card-top { padding: 22px 28px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 12px; }
+  .card-top { padding: 24px 28px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 12px; }
   .card-top .glyph { width: 30px; height: 30px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line2); display: grid; place-items: center; color: var(--mint); }
   .card-top .t { font-size: 15px; font-weight: 600; }
   .card-top .s { font-size: 12.5px; color: var(--faint); margin-top: 1px; }
-  .card-body { padding: 26px 28px 28px; }
-  .card-foot { padding: 18px 28px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.012); }
+  .card-body { padding: 28px 28px 28px; }
+  .card-foot { padding: 20px 28px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.012); }
   .card-foot .spacer { flex: 1; }
 
   /* the field unit — label ABOVE, help/error BELOW (P-F-06/11) */
-  .field { margin-bottom: 22px; }
+  .field { margin-bottom: 24px; }
   .field:last-child { margin-bottom: 0; }
   .lbl { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
   .lbl .req { color: var(--mint); font-family: var(--mono); font-size: 12px; }
   .lbl .opt { margin-left: auto; font-size: 11.5px; font-weight: 400; color: var(--faint); font-family: var(--mono); }
-  .help { font-size: 12.5px; color: var(--faint); margin-top: 7px; line-height: 1.5; }
-  .err { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--neg); margin-top: 7px; }
+  .help { font-size: 12.5px; color: var(--faint); margin-top: 8px; line-height: 1.5; }
+  .err { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--neg); margin-top: 8px; }
   .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
   /* ---------------- the controls ---------------- */
@@ -95,7 +95,7 @@
   /* input wrapper (for prefix/suffix + in-field icons) */
   .inwrap { position: relative; display: flex; align-items: center; }
   .inwrap .pre { position: absolute; left: 12px; font-family: var(--mono); font-size: 13px; color: var(--faint); pointer-events: none; }
-  .inwrap.has-pre .ctl { padding-left: 86px; }
+  .inwrap.has-pre .ctl { padding-left: 86px; } /* scale-exempt: clears the "float.app/" prefix — measured from the prefix, not the rhythm */
   .inwrap .suf-icon { position: absolute; right: 11px; display: grid; place-items: center; pointer-events: none; }
   .inwrap .spin { position: absolute; right: 11px; }
 
@@ -111,7 +111,7 @@
 
   /* segmented control */
   /* each segment is its own button with its own focus ring (a button group, not a roving group) */
-  .seg { display: inline-flex; background: var(--panel); border: 1px solid var(--line2); border-radius: var(--r); padding: 3px; gap: 3px; }
+  .seg { display: inline-flex; background: var(--panel); border: 1px solid var(--line2); border-radius: var(--r); padding: 4px; gap: 4px; }
   .seg.is-disabled { opacity: .4; cursor: not-allowed; }
   .seg button { font-family: var(--font); font-size: 13px; font-weight: 500; color: var(--muted); background: transparent; border: none; border-radius: 6px; padding: 6px 14px; cursor: pointer; transition: color .12s, background .12s; }
   .seg button:hover { color: var(--text); background: rgba(255,255,255,.04); }
@@ -119,7 +119,7 @@
   .seg button.on { background: var(--elev); color: var(--text); box-shadow: 0 1px 0 rgba(255,255,255,.05), 0 1px 2px rgba(0,0,0,.4); }
 
   /* checkbox + radio rows */
-  .choice { display: flex; align-items: flex-start; gap: 11px; padding: 9px 0; }
+  .choice { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; }
   .box, .dot-r { flex: 0 0 auto; width: 18px; height: 18px; border: 1px solid var(--line3); background: var(--panel2); margin-top: 1px; display: grid; place-items: center; cursor: pointer; outline: none; transition: border-color .12s, background .12s, box-shadow .12s; }
   .box { border-radius: 5px; }
   .dot-r { border-radius: 50%; }
@@ -155,28 +155,28 @@
   /* combobox (server-search) open popover */
   .cmb { position: relative; }
   .cmb-pop { margin-top: 6px; background: var(--elev); border: 1px solid var(--line2); border-radius: 10px; box-shadow: 0 24px 50px -24px rgba(0,0,0,.9); overflow: hidden; }
-  .cmb-search { display: flex; align-items: center; gap: 9px; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+  .cmb-search { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--line); }
   .cmb-search svg { color: var(--faint); flex: 0 0 auto; }
   .cmb-search input { flex: 1; background: transparent; border: none; outline: none; font-family: var(--font); font-size: 13.5px; color: var(--text); }
   .cmb-search input::placeholder { color: var(--faint); }
   .cmb-search input:focus { box-shadow: 0 0 0 2px var(--ring); border-radius: 4px; }
-  .cmb-search .k { font-family: var(--mono); font-size: 10.5px; color: var(--faint); border: 1px solid var(--line2); border-radius: 4px; padding: 1px 5px; }
-  .cmb-load { display: flex; align-items: center; gap: 9px; padding: 11px 13px; font-size: 12.5px; color: var(--faint); font-family: var(--mono); }
-  .opt { display: flex; align-items: center; gap: 10px; padding: 9px 13px; font-size: 13.5px; color: var(--muted); cursor: pointer; }
+  .cmb-search .k { font-family: var(--mono); font-size: 10.5px; color: var(--faint); border: 1px solid var(--line2); border-radius: 4px; padding: 1px 6px; }
+  .cmb-load { display: flex; align-items: center; gap: 10px; padding: 12px 14px; font-size: 12.5px; color: var(--faint); font-family: var(--mono); }
+  .opt { display: flex; align-items: center; gap: 10px; padding: 10px 14px; font-size: 13.5px; color: var(--muted); cursor: pointer; }
   .opt:hover, .opt.is-hover { background: rgba(255,255,255,.045); color: var(--text); }
   /* the keyboard-highlighted option (aria-activedescendant) — an explicit indicator, not the native ring */
   .opt:focus-visible, .opt.is-active-desc { outline: none; background: rgba(111,224,192,.08); color: var(--text); box-shadow: inset 2px 0 0 var(--mint); }
   .opt .ava { width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(140deg,#3a3d44,#16171a); border: 1px solid var(--line2); flex: 0 0 auto; }
   .opt.sel { color: var(--text); }
   .opt .ck { margin-left: auto; color: var(--mint); }
-  .cmb-foot { padding: 8px 13px; border-top: 1px solid var(--line); font-size: 12px; color: var(--faint); }
+  .cmb-foot { padding: 8px 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--faint); }
 
   /* spinner */
   .spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--line3); border-top-color: var(--mint); display: inline-block; }
   .spin.sm { width: 13px; height: 13px; border-width: 2px; }
 
   /* buttons — 3-tier hierarchy */
-  .btn { font-family: var(--font); font-size: 13.5px; font-weight: 500; height: 38px; padding: 0 18px; border-radius: var(--r); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; outline: none; border: 1px solid transparent; transition: background .12s, border-color .12s, opacity .12s, transform .04s; white-space: nowrap; }
+  .btn { font-family: var(--font); font-size: 13.5px; font-weight: 500; height: 38px; padding: 0 20px; border-radius: var(--r); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; outline: none; border: 1px solid transparent; transition: background .12s, border-color .12s, opacity .12s, transform .04s; white-space: nowrap; }
   .btn:focus-visible, .btn.is-focus { outline: 2px solid var(--mint); outline-offset: 2px; }
   .btn:active, .btn.is-active { transform: translateY(1px); }
   /* primary — high emphasis, near-white fill (NOT the accent) */
@@ -198,7 +198,7 @@
   .rail { position: sticky; top: 40px; }
   .rail h4 { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-bottom: 16px; }
   .rail ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-  .rail li { font-size: 12.5px; color: var(--muted); line-height: 1.55; padding-left: 18px; position: relative; }
+  .rail li { font-size: 12.5px; color: var(--muted); line-height: 1.55; padding-left: 20px; position: relative; }
   .rail li::before { content: ""; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 2px; background: var(--line3); }
   .rail li b { color: var(--text); font-weight: 500; }
   .rail li code { font-family: var(--mono); font-size: 11.5px; color: var(--mint); }
@@ -206,7 +206,7 @@
   /* ================================================================
      2 · STATE MATRIX — every control across the full state row
      ================================================================ */
-  .track { border-top: 1px solid var(--line); padding: 26px 0; }
+  .track { border-top: 1px solid var(--line); padding: 28px 0; }
   .track:last-child { border-bottom: 1px solid var(--line); }
   .track-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
   .track-desc { font-size: 12.5px; color: var(--faint); margin-bottom: 20px; line-height: 1.5; }
@@ -297,7 +297,7 @@
           </div>
 
           <!-- combobox server-search, open -->
-          <div class="field" style="margin-top:22px">
+          <div class="field" style="margin-top:24px">
             <label class="lbl" for="f-team">Team <span class="opt">optional</span></label>
             <div class="cmb">
               <div class="inwrap">
@@ -479,7 +479,7 @@
         <div class="cell btncell"><div class="st">Primary · loading</div><div class="stage-mini"><button class="btn btn-1 is-disabled"><span class="spin sm"></span>Creating…</button></div></div>
         <div class="cell btncell"><div class="st">Primary · disabled</div><div class="stage-mini"><button class="btn btn-1 is-disabled">Create project</button></div></div>
       </div>
-      <div class="cells" style="margin-top:22px">
+      <div class="cells" style="margin-top:24px">
         <div class="cell btncell"><div class="st">Secondary</div><div class="stage-mini"><button class="btn btn-2">Save draft</button></div></div>
         <div class="cell btncell"><div class="st">Secondary · hover</div><div class="stage-mini"><button class="btn btn-2 is-hover">Save draft</button></div></div>
         <div class="cell btncell"><div class="st key">Secondary · focus</div><div class="stage-mini"><button class="btn btn-2 is-focus">Save draft</button></div></div>
@@ -509,7 +509,7 @@
           <span class="cmb" style="width:268px;display:block">
             <span class="inwrap"><input class="ctl" value="zzz" style="width:268px" /><span class="suf-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><path d="M7 10l5 5 5-5"/></svg></span></span>
             <span class="cmb-pop" style="display:block">
-              <span class="cmb-foot" style="display:block;padding:14px 13px;text-align:center">No teams match "zzz".</span>
+              <span class="cmb-foot" style="display:block;padding:14px 14px;text-align:center">No teams match "zzz".</span>
             </span>
           </span>
         </div>

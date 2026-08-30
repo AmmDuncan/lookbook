@@ -1,0 +1,391 @@
+{
+  "name": "editorial-index",
+  "source": "reproductions/editorial-index.html",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 82.4,
+    "authoredValuesSampled": 176,
+    "distinctValues": 15,
+    "topSteps": [
+      {
+        "value": 32,
+        "count": 27
+      },
+      {
+        "value": 36,
+        "count": 26
+      },
+      {
+        "value": 12,
+        "count": 25
+      },
+      {
+        "value": 14,
+        "count": 21
+      },
+      {
+        "value": 64,
+        "count": 14
+      },
+      {
+        "value": 24,
+        "count": 14
+      },
+      {
+        "value": 20,
+        "count": 12
+      },
+      {
+        "value": 8,
+        "count": 10
+      },
+      {
+        "value": 10,
+        "count": 9
+      },
+      {
+        "value": 4,
+        "count": 8
+      },
+      {
+        "value": 16,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 5,
+      "byMethod": {
+        "nested": 4,
+        "within": 1
+      },
+      "medianInsideGap": 11.5,
+      "medianBetweenGap": 32,
+      "medianRatio": 2.78,
+      "confidence": "medium",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Newsreader",
+        "count": 71
+      },
+      {
+        "value": "Fraunces",
+        "count": 24
+      }
+    ],
+    "bodySize": 14.5,
+    "sizes": [
+      10,
+      10.5,
+      11,
+      11.5,
+      12,
+      12.5,
+      13,
+      14,
+      14.5,
+      17,
+      19,
+      22,
+      24,
+      26,
+      30,
+      44,
+      80
+    ],
+    "distinctSizes": 17,
+    "weights": [
+      300,
+      400,
+      500,
+      600
+    ],
+    "roleCount": 30,
+    "scaleRatios": [
+      1.05,
+      1.048,
+      1.045,
+      1.043,
+      1.042,
+      1.04,
+      1.077,
+      1.036,
+      1.172,
+      1.118,
+      1.158,
+      1.091,
+      1.083,
+      1.154,
+      1.467,
+      1.818
+    ],
+    "hierarchyCarriedBy": "size",
+    "channelSpread": {
+      "size": 1,
+      "weight": 0.17,
+      "ink": 0.22
+    },
+    "measureChars": 53,
+    "topRoles": [
+      {
+        "size": 14.5,
+        "weight": 400,
+        "color": "#4a4339",
+        "lineHeight": 1.6,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "Olu Martins built fourteen public libraries acro"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#4a4339",
+        "lineHeight": null,
+        "tracking": 0.12,
+        "transform": "none",
+        "count": 7,
+        "sample": "A short meditation on , , and the words that res"
+      },
+      {
+        "size": 24,
+        "weight": 500,
+        "color": "#1c1915",
+        "lineHeight": 1.14,
+        "tracking": -0.36,
+        "transform": "none",
+        "count": 4,
+        "sample": "The Word for Homesickness That Requires Two Tran"
+      },
+      {
+        "size": 19,
+        "weight": 400,
+        "color": "#4a4339",
+        "lineHeight": 1.65,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "A story of two sisters, a failing archive, and t"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#5e5242",
+        "lineHeight": null,
+        "tracking": 0.12,
+        "transform": "none",
+        "count": 12,
+        "sample": "Newsletter"
+      },
+      {
+        "size": 11,
+        "weight": 500,
+        "color": "#8b2517",
+        "lineHeight": null,
+        "tracking": 2.2,
+        "transform": "uppercase",
+        "count": 13,
+        "sample": "Cover Essay · Fiction"
+      },
+      {
+        "size": 12.5,
+        "weight": 400,
+        "color": "#5e5242",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "By Ekundayo Babatunde"
+      },
+      {
+        "size": 30,
+        "weight": 500,
+        "color": "#1c1915",
+        "lineHeight": 1.08,
+        "tracking": -0.45,
+        "transform": "uppercase",
+        "count": 3,
+        "sample": "The Architect Who Refused to Name His Buildings"
+      },
+      {
+        "size": 17,
+        "weight": 500,
+        "color": "#1c1915",
+        "lineHeight": 1.15,
+        "tracking": -0.26,
+        "transform": "uppercase",
+        "count": 3,
+        "sample": "On Keeping Lists No One Will Ever See"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#1c1915",
+        "lineHeight": 1.55,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Print + digital subscription. Access to our full"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#f6f0e3",
+    "backgrounds": [
+      {
+        "hex": "#f6f0e3",
+        "h": 41,
+        "s": 51.4,
+        "l": 92.7,
+        "c": 7.5,
+        "areaPct": 100
+      },
+      {
+        "hex": "#f0d96a",
+        "h": 50,
+        "s": 81.7,
+        "l": 67.8,
+        "c": 52.5,
+        "areaPct": 4.3
+      },
+      {
+        "hex": "#1c1915",
+        "h": 34,
+        "s": 14.3,
+        "l": 9.6,
+        "c": 2.7,
+        "areaPct": 0.2
+      },
+      {
+        "hex": "#8b2517",
+        "h": 7,
+        "s": 71.6,
+        "l": 31.8,
+        "c": 45.5,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#d9ceb2",
+        "h": 43,
+        "s": 33.9,
+        "l": 77.5,
+        "c": 15.3,
+        "areaPct": 0.1
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#4a4339",
+        "s": 13,
+        "l": 25.7,
+        "c": 6.7,
+        "sharePct": 54
+      },
+      {
+        "hex": "#1c1915",
+        "s": 14.3,
+        "l": 9.6,
+        "c": 2.7,
+        "sharePct": 27.3
+      },
+      {
+        "hex": "#5e5242",
+        "s": 17.5,
+        "l": 31.4,
+        "c": 11,
+        "sharePct": 12.3
+      },
+      {
+        "hex": "#8b2517",
+        "s": 71.6,
+        "l": 31.8,
+        "c": 45.5,
+        "sharePct": 5.7
+      },
+      {
+        "hex": "#f0d96a",
+        "s": 81.7,
+        "l": 67.8,
+        "c": 52.5,
+        "sharePct": 0.4
+      },
+      {
+        "hex": "#fff7f0",
+        "s": 100,
+        "l": 97.1,
+        "c": 5.9,
+        "sharePct": 0.3
+      }
+    ],
+    "neutralsTinted": "5/5",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 52.5,
+    "accentAreaPct": 4.5,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 25,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [
+        3,
+        2
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 2167,
+    "horizontalBleed": false,
+    "proseMaxWidth": 1184,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 5
+      },
+      {
+        "value": "3-col: px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 9
+      },
+      {
+        "value": "column",
+        "count": 7
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 36,
+      "coveringMostContent": 12,
+      "top": [
+        64,
+        192,
+        100,
+        538,
+        0,
+        976,
+        972,
+        502
+      ]
+    },
+    "density": {
+      "visibleElements": 139,
+      "perScreenful": 58
+    }
+  }
+}

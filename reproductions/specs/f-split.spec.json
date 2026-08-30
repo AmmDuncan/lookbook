@@ -1,0 +1,359 @@
+{
+  "name": "f-split",
+  "source": "f-split.html",
+  "capturedAt": "2026-08-23",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 97.3,
+    "authoredValuesSampled": 112,
+    "distinctValues": 18,
+    "topSteps": [
+      {
+        "value": 14,
+        "count": 17
+      },
+      {
+        "value": 8,
+        "count": 15
+      },
+      {
+        "value": 10,
+        "count": 14
+      },
+      {
+        "value": 16,
+        "count": 12
+      },
+      {
+        "value": 20,
+        "count": 10
+      },
+      {
+        "value": 12,
+        "count": 10
+      },
+      {
+        "value": 32,
+        "count": 9
+      },
+      {
+        "value": 18,
+        "count": 6
+      },
+      {
+        "value": 6,
+        "count": 4
+      },
+      {
+        "value": 24,
+        "count": 3
+      },
+      {
+        "value": 2,
+        "count": 3
+      },
+      {
+        "value": 5,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 8,
+      "byMethod": {
+        "nested": 5,
+        "within": 3
+      },
+      "medianInsideGap": 7,
+      "medianBetweenGap": 14,
+      "medianRatio": 2.15,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Roboto",
+        "count": 49
+      },
+      {
+        "value": "Montserrat",
+        "count": 6
+      },
+      {
+        "value": "Roboto Mono",
+        "count": 3
+      }
+    ],
+    "bodySize": 12,
+    "sizes": [
+      11,
+      12,
+      14,
+      16,
+      20,
+      24
+    ],
+    "distinctSizes": 6,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 13,
+    "scaleRatios": [
+      1.091,
+      1.167,
+      1.143,
+      1.25,
+      1.2
+    ],
+    "hierarchyCarriedBy": "mixed (size+ink)",
+    "channelSpread": {
+      "size": 0.22,
+      "weight": 0.17,
+      "ink": 0.2
+    },
+    "measureChars": 120,
+    "topRoles": [
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "Invoices"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#3a3636",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "Depot 3 Ltd"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#3a3636",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "X1AXJXIY5"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "Invoice no."
+      },
+      {
+        "size": 11,
+        "weight": 500,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 0.6,
+        "transform": "uppercase",
+        "count": 3,
+        "sample": "Billed to"
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#3a3636",
+        "lineHeight": 1.3,
+        "tracking": -0.16,
+        "transform": "none",
+        "count": 1,
+        "sample": "Ghana National Fire Service"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#3a3636",
+        "lineHeight": 1.4,
+        "tracking": -0.14,
+        "transform": "none",
+        "count": 3,
+        "sample": "Payment"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Charge"
+      },
+      {
+        "size": 20,
+        "weight": 700,
+        "color": "#3a3636",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "GHS 50.00"
+      },
+      {
+        "size": 24,
+        "weight": 600,
+        "color": "#3a3636",
+        "lineHeight": 1.1,
+        "tracking": -0.72,
+        "transform": "none",
+        "count": 1,
+        "sample": "Invoice X1AXJXIY5"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#f3f4f6",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 63.5
+      },
+      {
+        "hex": "#5c0000",
+        "h": 0,
+        "s": 100,
+        "l": 18,
+        "c": 36.1,
+        "areaPct": 0.5
+      },
+      {
+        "hex": "#fff8f2",
+        "h": 28,
+        "s": 100,
+        "l": 97.5,
+        "c": 5.1,
+        "areaPct": 0.2
+      },
+      {
+        "hex": "#007a55",
+        "h": 162,
+        "s": 100,
+        "l": 23.9,
+        "c": 47.8,
+        "areaPct": 0
+      },
+      {
+        "hex": "#973c00",
+        "h": 24,
+        "s": 100,
+        "l": 29.6,
+        "c": 59.2,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#6e6868",
+        "s": 2.8,
+        "l": 42,
+        "c": 2.4,
+        "sharePct": 53.1
+      },
+      {
+        "hex": "#3a3636",
+        "s": 3.6,
+        "l": 22,
+        "c": 1.6,
+        "sharePct": 43.5
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 1.7
+      },
+      {
+        "hex": "#973c00",
+        "s": 100,
+        "l": 29.6,
+        "c": 59.2,
+        "sharePct": 1.6
+      }
+    ],
+    "neutralsTinted": "3/5",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 36.1,
+    "accentAreaPct": 0.5,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 17,
+      "shadowedElements": 4,
+      "borderToShadowRatio": 4.25,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(90, 0, 0, 0.05) 0px 1px 3px 0px, rgba(90, 0, 0, 0.14) 0px 10px 30px -16px"
+      ],
+      "radiusScale": [
+        999,
+        10,
+        14,
+        8
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 918,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1240,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 7
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 15
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 18,
+      "coveringMostContent": 9,
+      "top": [
+        990,
+        178,
+        1014,
+        760,
+        672,
+        132,
+        554,
+        652
+      ]
+    },
+    "density": {
+      "visibleElements": 100,
+      "perScreenful": 98
+    }
+  }
+}

@@ -1,0 +1,386 @@
+{
+  "name": "epidemic-pricing",
+  "source": "reproductions/epidemic-pricing.html",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 98.8,
+    "authoredValuesSampled": 85,
+    "distinctValues": 18,
+    "topSteps": [
+      {
+        "value": 10,
+        "count": 22
+      },
+      {
+        "value": 2,
+        "count": 17
+      },
+      {
+        "value": 24,
+        "count": 17
+      },
+      {
+        "value": 4,
+        "count": 9
+      },
+      {
+        "value": 12,
+        "count": 8
+      },
+      {
+        "value": 8,
+        "count": 6
+      },
+      {
+        "value": 16,
+        "count": 4
+      },
+      {
+        "value": 20,
+        "count": 4
+      },
+      {
+        "value": 1,
+        "count": 4
+      },
+      {
+        "value": 28,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 9,
+      "byMethod": {
+        "nested": 6,
+        "within": 3
+      },
+      "medianInsideGap": 12,
+      "medianBetweenGap": 22,
+      "medianRatio": 2.3,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Hanken Grotesk",
+        "count": 37
+      },
+      {
+        "value": "Newsreader",
+        "count": 1
+      }
+    ],
+    "bodySize": 13.5,
+    "sizes": [
+      11,
+      12.5,
+      13,
+      13.5,
+      14,
+      15,
+      16,
+      26,
+      30,
+      38
+    ],
+    "distinctSizes": 10,
+    "weights": [
+      400,
+      500,
+      600,
+      700,
+      800
+    ],
+    "roleCount": 16,
+    "scaleRatios": [
+      1.136,
+      1.04,
+      1.038,
+      1.037,
+      1.071,
+      1.067,
+      1.625,
+      1.154,
+      1.267
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.36,
+      "weight": 0.33,
+      "ink": 0.46
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 13.5,
+        "weight": 400,
+        "color": "#2c2b27",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "Publish anywhere online"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#6b6a64",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "/month"
+      },
+      {
+        "size": 13.5,
+        "weight": 600,
+        "color": "#15140f",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Everything in Personal, plus:"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#ffffff",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Start free trial"
+      },
+      {
+        "size": 38,
+        "weight": 500,
+        "color": "#15140f",
+        "lineHeight": 1.5,
+        "tracking": -0.38,
+        "transform": "none",
+        "count": 1,
+        "sample": "30-day free trial. Cancel anytime."
+      },
+      {
+        "size": 15,
+        "weight": 600,
+        "color": "#15140f",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Personal"
+      },
+      {
+        "size": 11,
+        "weight": 600,
+        "color": "#2c2b27",
+        "lineHeight": 1.5,
+        "tracking": 1.32,
+        "transform": "none",
+        "count": 1,
+        "sample": "100% SECURE PAYMENTS"
+      },
+      {
+        "size": 26,
+        "weight": 600,
+        "color": "#15140f",
+        "lineHeight": 1.5,
+        "tracking": -0.26,
+        "transform": "none",
+        "count": 1,
+        "sample": "Request a quote"
+      },
+      {
+        "size": 13.5,
+        "weight": 500,
+        "color": "#ffffff",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Pay monthly"
+      },
+      {
+        "size": 13.5,
+        "weight": 500,
+        "color": "#2c2b27",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Pay yearly"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#f4f3f1",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 30.4
+      },
+      {
+        "hex": "#fb529b",
+        "h": 334,
+        "s": 95.5,
+        "l": 65.3,
+        "c": 66.3,
+        "areaPct": 1.8
+      },
+      {
+        "hex": "#15140f",
+        "h": 50,
+        "s": 16.7,
+        "l": 7.1,
+        "c": 2.4,
+        "areaPct": 1.2
+      },
+      {
+        "hex": "#e7e5e0",
+        "h": 43,
+        "s": 12.7,
+        "l": 89.2,
+        "c": 2.7,
+        "areaPct": 0.7
+      },
+      {
+        "hex": "#eb001b",
+        "h": 353,
+        "s": 100,
+        "l": 46.1,
+        "c": 92.2,
+        "areaPct": 0
+      },
+      {
+        "hex": "#f79e1b",
+        "h": 36,
+        "s": 93.2,
+        "l": 53.7,
+        "c": 86.3,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#2c2b27",
+        "s": 6,
+        "l": 16.3,
+        "c": 2,
+        "sharePct": 55.5
+      },
+      {
+        "hex": "#15140f",
+        "s": 16.7,
+        "l": 7.1,
+        "c": 2.4,
+        "sharePct": 22.9
+      },
+      {
+        "hex": "#6b6a64",
+        "s": 3.4,
+        "l": 40.6,
+        "c": 2.7,
+        "sharePct": 11.1
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 8.4
+      },
+      {
+        "hex": "#8a8983",
+        "s": 2.9,
+        "l": 52.7,
+        "c": 2.7,
+        "sharePct": 1.2
+      },
+      {
+        "hex": "#7a8aa3",
+        "s": 18.2,
+        "l": 55.9,
+        "c": 16.1,
+        "sharePct": 0.4
+      },
+      {
+        "hex": "#5a6b85",
+        "s": 19.3,
+        "l": 43.7,
+        "c": 16.9,
+        "sharePct": 0.4
+      }
+    ],
+    "neutralsTinted": "6/8",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 66.3,
+    "accentAreaPct": 1.8,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 4,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [
+        10,
+        50,
+        999
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1000,
+    "gridPrimitives": [
+      {
+        "value": "3-col: px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 18
+      },
+      {
+        "value": "column",
+        "count": 6
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 19,
+      "coveringMostContent": 9,
+      "top": [
+        278,
+        594,
+        910,
+        252,
+        40,
+        220,
+        614,
+        618
+      ]
+    },
+    "density": {
+      "visibleElements": 87,
+      "perScreenful": 87
+    }
+  }
+}

@@ -1,0 +1,387 @@
+{
+  "name": "linear-issue-list",
+  "source": "reproductions/linear-issue-list.html",
+  "capturedAt": "2026-07-29",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "onScalePct": 81.5,
+    "authoredValuesSampled": 260,
+    "distinctValues": 10,
+    "topSteps": [
+      {
+        "value": 8,
+        "count": 144
+      },
+      {
+        "value": 6,
+        "count": 41
+      },
+      {
+        "value": 16,
+        "count": 36
+      },
+      {
+        "value": 12,
+        "count": 24
+      },
+      {
+        "value": 1,
+        "count": 8
+      },
+      {
+        "value": 10,
+        "count": 6
+      },
+      {
+        "value": 4,
+        "count": 5
+      },
+      {
+        "value": 2,
+        "count": 4
+      },
+      {
+        "value": 28,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 16,
+      "byMethod": {
+        "nested": 15,
+        "within": 1
+      },
+      "medianInsideGap": 7,
+      "medianBetweenGap": 8,
+      "medianRatio": 1.33,
+      "confidence": "high",
+      "verdict": "space encodes little grouping — flat rhythm"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Geist",
+        "count": 102
+      }
+    ],
+    "bodySize": 13,
+    "sizes": [
+      8,
+      9,
+      10,
+      12,
+      13
+    ],
+    "distinctSizes": 5,
+    "weights": [
+      400,
+      500,
+      600
+    ],
+    "roleCount": 13,
+    "scaleRatios": [
+      1.125,
+      1.111,
+      1.2,
+      1.083
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.12,
+      "weight": 0,
+      "ink": 0.53
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#eeeef0",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 11,
+        "sample": "Issues"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#8a8f98",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 25,
+        "sample": "29 days"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#8a8f98",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 15,
+        "sample": "Inbox"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#62666d",
+        "lineHeight": 1.4,
+        "tracking": 0.12,
+        "transform": "none",
+        "count": 23,
+        "sample": "Workspace"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#62666d",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Performance pass"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#eeeef0",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "In Progress"
+      },
+      {
+        "size": 13,
+        "weight": 500,
+        "color": "#eeeef0",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Northwind"
+      },
+      {
+        "size": 9,
+        "weight": 600,
+        "color": "#ffffff",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 9,
+        "sample": ""
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#62666d",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": ""
+      },
+      {
+        "size": 9,
+        "weight": 600,
+        "color": "#62666d",
+        "lineHeight": 1.4,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": ""
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#08090a",
+    "backgrounds": [
+      {
+        "hex": "#0f1011",
+        "h": 210,
+        "s": 6.3,
+        "l": 6.3,
+        "c": 0.8,
+        "areaPct": 84
+      },
+      {
+        "hex": "#131417",
+        "h": 225,
+        "s": 9.5,
+        "l": 8.2,
+        "c": 1.6,
+        "areaPct": 13.5
+      },
+      {
+        "hex": "#5d6cd1",
+        "h": 232,
+        "s": 55.8,
+        "l": 59.2,
+        "c": 45.5,
+        "areaPct": 0.4
+      },
+      {
+        "hex": "#15161a",
+        "h": 228,
+        "s": 10.6,
+        "l": 9.2,
+        "c": 2,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#3d8f6f",
+        "h": 157,
+        "s": 40.2,
+        "l": 40,
+        "c": 32.2,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#8a5cc4",
+        "h": 267,
+        "s": 46.8,
+        "l": 56.5,
+        "c": 40.8,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#c2683f",
+        "h": 19,
+        "s": 51.8,
+        "l": 50.4,
+        "c": 51.4,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#5e6ad2",
+        "h": 234,
+        "s": 56.3,
+        "l": 59.6,
+        "c": 45.5,
+        "areaPct": 0
+      },
+      {
+        "hex": "#4ea7fc",
+        "h": 209,
+        "s": 96.7,
+        "l": 64.7,
+        "c": 68.2,
+        "areaPct": 0
+      },
+      {
+        "hex": "#b29dff",
+        "h": 253,
+        "s": 100,
+        "l": 80.8,
+        "c": 38.4,
+        "areaPct": 0
+      },
+      {
+        "hex": "#e0a73c",
+        "h": 39,
+        "s": 72.6,
+        "l": 55.7,
+        "c": 64.3,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#eeeef0",
+        "s": 6.2,
+        "l": 93.7,
+        "c": 0.8,
+        "sharePct": 42.8
+      },
+      {
+        "hex": "#8a8f98",
+        "s": 6.4,
+        "l": 56.9,
+        "c": 5.5,
+        "sharePct": 37.2
+      },
+      {
+        "hex": "#62666d",
+        "s": 5.3,
+        "l": 40.6,
+        "c": 4.3,
+        "sharePct": 18
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 2
+      }
+    ],
+    "neutralsTinted": "4/7",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 1.6,
+    "accentAreaPct": 0.7,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 12,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [
+        5,
+        50,
+        4,
+        11,
+        8
+      ],
+      "gradientElements": 2
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 77
+      },
+      {
+        "value": "column",
+        "count": 6
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 32,
+      "coveringMostContent": 12,
+      "top": [
+        8,
+        1356,
+        222,
+        262,
+        346,
+        0,
+        1122,
+        1294
+      ]
+    },
+    "density": {
+      "visibleElements": 344,
+      "perScreenful": 344
+    }
+  }
+}

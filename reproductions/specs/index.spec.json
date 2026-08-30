@@ -1,0 +1,387 @@
+{
+  "name": "index",
+  "source": "index.html",
+  "capturedAt": "2026-08-17",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 93.4,
+    "authoredValuesSampled": 1060,
+    "distinctValues": 12,
+    "topSteps": [
+      {
+        "value": 16,
+        "count": 396
+      },
+      {
+        "value": 8,
+        "count": 374
+      },
+      {
+        "value": 2,
+        "count": 122
+      },
+      {
+        "value": 6,
+        "count": 87
+      },
+      {
+        "value": 12,
+        "count": 68
+      },
+      {
+        "value": 1,
+        "count": 64
+      },
+      {
+        "value": 11,
+        "count": 64
+      },
+      {
+        "value": 10,
+        "count": 56
+      },
+      {
+        "value": 7,
+        "count": 6
+      },
+      {
+        "value": 44,
+        "count": 4
+      },
+      {
+        "value": 14,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 11,
+      "byMethod": {
+        "nested": 6,
+        "within": 5
+      },
+      "medianInsideGap": 6,
+      "medianBetweenGap": 14,
+      "medianRatio": 6,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Inter",
+        "count": 200
+      },
+      {
+        "value": "Roboto Mono",
+        "count": 32
+      }
+    ],
+    "bodySize": 13,
+    "sizes": [
+      11,
+      12,
+      13,
+      14,
+      18,
+      26
+    ],
+    "distinctSizes": 6,
+    "weights": [
+      400,
+      600,
+      700
+    ],
+    "roleCount": 22,
+    "scaleRatios": [
+      1.091,
+      1.083,
+      1.077,
+      1.286,
+      1.444
+    ],
+    "hierarchyCarriedBy": "weight",
+    "channelSpread": {
+      "size": 0.22,
+      "weight": 0.33,
+      "ink": 0.23
+    },
+    "measureChars": 138,
+    "topRoles": [
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#525252",
+        "lineHeight": 1.55,
+        "tracking": 0,
+        "transform": "none",
+        "count": 6,
+        "sample": "~100px rows for six short fields · two bordered "
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#404040",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 84,
+        "sample": "Regular"
+      },
+      {
+        "size": 14,
+        "weight": 600,
+        "color": "#171717",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 32,
+        "sample": "Adenta"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#525252",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Same data, same tokens, three different structur"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#171717",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 23,
+        "sample": "Greater Accra"
+      },
+      {
+        "size": 11,
+        "weight": 600,
+        "color": "#525252",
+        "lineHeight": null,
+        "tracking": 0.66,
+        "transform": "uppercase",
+        "count": 18,
+        "sample": "Branch"
+      },
+      {
+        "size": 13,
+        "weight": 600,
+        "color": "#171717",
+        "lineHeight": 1.55,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "Same columns, half the height."
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#525252",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "Adenta"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#737373",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 7,
+        "sample": "Active"
+      },
+      {
+        "size": 18,
+        "weight": 700,
+        "color": "#171717",
+        "lineHeight": null,
+        "tracking": -0.18,
+        "transform": "none",
+        "count": 4,
+        "sample": "What ships today"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#f4f5f7",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 70.5
+      },
+      {
+        "hex": "#f5f5f5",
+        "h": 0,
+        "s": 0,
+        "l": 96.1,
+        "c": 0,
+        "areaPct": 7.7
+      },
+      {
+        "hex": "#eef0f3",
+        "h": 216,
+        "s": 17.2,
+        "l": 94.3,
+        "c": 2,
+        "areaPct": 6.9
+      },
+      {
+        "hex": "#fffbeb",
+        "h": 48,
+        "s": 100,
+        "l": 96.1,
+        "c": 7.8,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#e8f5ee",
+        "h": 148,
+        "s": 39.4,
+        "l": 93.5,
+        "c": 5.1,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#dbeafe",
+        "h": 214,
+        "s": 94.6,
+        "l": 92.7,
+        "c": 13.7,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#525252",
+        "s": 0,
+        "l": 32.2,
+        "c": 0,
+        "sharePct": 49.3
+      },
+      {
+        "hex": "#171717",
+        "s": 0,
+        "l": 9,
+        "c": 0,
+        "sharePct": 28.1
+      },
+      {
+        "hex": "#404040",
+        "s": 0,
+        "l": 25.1,
+        "c": 0,
+        "sharePct": 14.7
+      },
+      {
+        "hex": "#737373",
+        "s": 0,
+        "l": 45.1,
+        "c": 0,
+        "sharePct": 4.4
+      },
+      {
+        "hex": "#b45309",
+        "s": 90.5,
+        "l": 37.1,
+        "c": 67.1,
+        "sharePct": 1.1
+      },
+      {
+        "hex": "#a3a3a3",
+        "s": 0,
+        "l": 63.9,
+        "c": 0,
+        "sharePct": 1.1
+      },
+      {
+        "hex": "#028043",
+        "s": 96.9,
+        "l": 25.5,
+        "c": 49.4,
+        "sharePct": 0.7
+      },
+      {
+        "hex": "#1d4ed8",
+        "s": 76.3,
+        "l": 48,
+        "c": 73.3,
+        "sharePct": 0.5
+      },
+      {
+        "hex": "#015a2f",
+        "s": 97.8,
+        "l": 17.8,
+        "c": 34.9,
+        "sharePct": 0.2
+      }
+    ],
+    "neutralsTinted": "3/10",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 2,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 108,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [
+        "rgb(245, 158, 11) 3px 0px 0px 0px inset"
+      ],
+      "radiusScale": [
+        999,
+        8,
+        12
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 2951,
+    "horizontalBleed": false,
+    "proseMaxWidth": 900,
+    "mainRegionWidth": 1340,
+    "gridPrimitives": [],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 45
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 48,
+      "coveringMostContent": 17,
+      "top": [
+        52,
+        1326,
+        68,
+        1342,
+        50,
+        524,
+        658,
+        840
+      ]
+    },
+    "density": {
+      "visibleElements": 554,
+      "perScreenful": 169
+    }
+  }
+}

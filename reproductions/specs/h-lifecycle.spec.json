@@ -1,0 +1,350 @@
+{
+  "name": "h-lifecycle",
+  "source": "/Users/ammielyawson/.claude/evidence/afcas/2026-08-23_invoice-directions/01-away-from-hero/h-lifecycle.html",
+  "capturedAt": "2026-08-23",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 100,
+    "authoredValuesSampled": 113,
+    "distinctValues": 13,
+    "topSteps": [
+      {
+        "value": 10,
+        "count": 21
+      },
+      {
+        "value": 12,
+        "count": 16
+      },
+      {
+        "value": 14,
+        "count": 14
+      },
+      {
+        "value": 24,
+        "count": 12
+      },
+      {
+        "value": 22,
+        "count": 12
+      },
+      {
+        "value": 8,
+        "count": 10
+      },
+      {
+        "value": 4,
+        "count": 7
+      },
+      {
+        "value": 28,
+        "count": 6
+      },
+      {
+        "value": 16,
+        "count": 5
+      },
+      {
+        "value": 32,
+        "count": 4
+      },
+      {
+        "value": 20,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 10,
+      "byMethod": {
+        "nested": 8,
+        "within": 2
+      },
+      "medianInsideGap": 6.75,
+      "medianBetweenGap": 16,
+      "medianRatio": 2.64,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Roboto",
+        "count": 48
+      },
+      {
+        "value": "Montserrat",
+        "count": 4
+      },
+      {
+        "value": "Roboto Mono",
+        "count": 2
+      }
+    ],
+    "bodySize": 12,
+    "sizes": [
+      11,
+      12,
+      14,
+      16,
+      20,
+      24
+    ],
+    "distinctSizes": 6,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 14,
+    "scaleRatios": [
+      1.091,
+      1.167,
+      1.143,
+      1.25,
+      1.2
+    ],
+    "hierarchyCarriedBy": "mixed (size+ink)",
+    "channelSpread": {
+      "size": 0.22,
+      "weight": 0.17,
+      "ink": 0.2
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 18,
+        "sample": "Invoices"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#3a3636",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "From the provider webhook"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Depot 3 Ltd · Provider stock tagging · raised 23"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#3a3636",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 8,
+        "sample": "Download"
+      },
+      {
+        "size": 16,
+        "weight": 700,
+        "color": "#3a3636",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "GHS 50.00 outstanding"
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#3a3636",
+        "lineHeight": 1.3,
+        "tracking": -0.16,
+        "transform": "none",
+        "count": 3,
+        "sample": "Charges"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Charge"
+      },
+      {
+        "size": 24,
+        "weight": 600,
+        "color": "#3a3636",
+        "lineHeight": 1.1,
+        "tracking": -0.72,
+        "transform": "none",
+        "count": 1,
+        "sample": "Invoice X1AXJXIY5"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#973c00",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Awaiting payment"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Record payment"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#f3f4f6",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 50.6
+      },
+      {
+        "hex": "#5c0000",
+        "h": 0,
+        "s": 100,
+        "l": 18,
+        "c": 36.1,
+        "areaPct": 0.4
+      },
+      {
+        "hex": "#007a55",
+        "h": 162,
+        "s": 100,
+        "l": 23.9,
+        "c": 47.8,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#973c00",
+        "h": 24,
+        "s": 100,
+        "l": 29.6,
+        "c": 59.2,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#6e6868",
+        "s": 2.8,
+        "l": 42,
+        "c": 2.4,
+        "sharePct": 61.6
+      },
+      {
+        "hex": "#3a3636",
+        "s": 3.6,
+        "l": 22,
+        "c": 1.6,
+        "sharePct": 34.2
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 2.1
+      },
+      {
+        "hex": "#973c00",
+        "s": 100,
+        "l": 29.6,
+        "c": 59.2,
+        "sharePct": 2
+      }
+    ],
+    "neutralsTinted": "2/4",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 0,
+    "accentAreaPct": 0.5,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 20,
+      "shadowedElements": 4,
+      "borderToShadowRatio": 5,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(90, 0, 0, 0.05) 0px 1px 3px 0px, rgba(90, 0, 0, 0.14) 0px 10px 30px -16px"
+      ],
+      "radiusScale": [
+        10,
+        14,
+        999
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1120,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 2
+      },
+      {
+        "value": "4-col: px px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 15
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 27,
+      "coveringMostContent": 12,
+      "top": [
+        222,
+        938,
+        192,
+        480,
+        742,
+        216,
+        598,
+        1006
+      ]
+    },
+    "density": {
+      "visibleElements": 93,
+      "perScreenful": 93
+    }
+  }
+}

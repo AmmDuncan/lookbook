@@ -1,0 +1,368 @@
+{
+  "name": "direction-a",
+  "source": "direction-a.html",
+  "capturedAt": "2026-08-23",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 95.9,
+    "authoredValuesSampled": 172,
+    "distinctValues": 17,
+    "topSteps": [
+      {
+        "value": 12,
+        "count": 44
+      },
+      {
+        "value": 16,
+        "count": 26
+      },
+      {
+        "value": 14,
+        "count": 22
+      },
+      {
+        "value": 4,
+        "count": 16
+      },
+      {
+        "value": 8,
+        "count": 12
+      },
+      {
+        "value": 20,
+        "count": 10
+      },
+      {
+        "value": 10,
+        "count": 8
+      },
+      {
+        "value": 18,
+        "count": 7
+      },
+      {
+        "value": 6,
+        "count": 6
+      },
+      {
+        "value": 11,
+        "count": 6
+      },
+      {
+        "value": 24,
+        "count": 5
+      },
+      {
+        "value": 28,
+        "count": 5
+      }
+    ],
+    "grouping": {
+      "samples": 12,
+      "byMethod": {
+        "nested": 6,
+        "within": 6
+      },
+      "medianInsideGap": 6.5,
+      "medianBetweenGap": 19,
+      "medianRatio": 8.03,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Inter",
+        "count": 44
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      26
+    ],
+    "distinctSizes": 7,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 19,
+    "scaleRatios": [
+      1.083,
+      1.077,
+      1.071,
+      1.067,
+      1.125,
+      1.444
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.3,
+      "weight": 0.33,
+      "ink": 0.9
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#696969",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "23 August 2026"
+      },
+      {
+        "size": 16,
+        "weight": 500,
+        "color": "#071a2b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Register a vehicle"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 6,
+        "sample": "Dashboard"
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#071a2b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "Your vehicles"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#696969",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Finish setting up your business to start using s"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#696969",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Nissan Rogue"
+      },
+      {
+        "size": 15,
+        "weight": 500,
+        "color": "#071a2b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "GR 2419-25"
+      },
+      {
+        "size": 16,
+        "weight": 500,
+        "color": "#05663e",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "View"
+      },
+      {
+        "size": 18,
+        "weight": 600,
+        "color": "#071a2b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Set up your business"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "ammduncan+11..."
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#f8f9fb",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 44.1
+      },
+      {
+        "hex": "#eef2f5",
+        "h": 206,
+        "s": 25.9,
+        "l": 94.7,
+        "c": 2.7,
+        "areaPct": 0.7
+      },
+      {
+        "hex": "#05663e",
+        "h": 155,
+        "s": 90.7,
+        "l": 21,
+        "c": 38,
+        "areaPct": 0.4
+      },
+      {
+        "hex": "#eaf5ee",
+        "h": 142,
+        "s": 35.5,
+        "l": 93.9,
+        "c": 4.3,
+        "areaPct": 0.4
+      },
+      {
+        "hex": "#071a2b",
+        "h": 208,
+        "s": 72,
+        "l": 9.8,
+        "c": 14.1,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#41a66b",
+        "h": 145,
+        "s": 43.7,
+        "l": 45.3,
+        "c": 39.6,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#696969",
+        "s": 0,
+        "l": 41.2,
+        "c": 0,
+        "sharePct": 55.3
+      },
+      {
+        "hex": "#071a2b",
+        "s": 72,
+        "l": 9.8,
+        "c": 14.1,
+        "sharePct": 25.9
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 14.4
+      },
+      {
+        "hex": "#05663e",
+        "s": 90.7,
+        "l": 21,
+        "c": 38,
+        "sharePct": 4.4
+      }
+    ],
+    "neutralsTinted": "2/5",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 2.7,
+    "accentAreaPct": 0.7,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 19,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [
+        10,
+        50,
+        12,
+        8,
+        999
+      ],
+      "gradientElements": 1
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 2
+      },
+      {
+        "value": "3-col: px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 23
+      },
+      {
+        "value": "column",
+        "count": 3
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 28,
+      "coveringMostContent": 12,
+      "top": [
+        390,
+        350,
+        1082,
+        16,
+        320,
+        1132,
+        74,
+        936
+      ]
+    },
+    "density": {
+      "visibleElements": 135,
+      "perScreenful": 135
+    }
+  }
+}

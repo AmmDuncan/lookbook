@@ -1,0 +1,316 @@
+{
+  "name": "c-summary-history",
+  "source": "c-summary-history.html",
+  "capturedAt": "2026-08-27",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 3,
+    "onScalePct": 54.2,
+    "authoredValuesSampled": 83,
+    "distinctValues": 18,
+    "topSteps": [
+      {
+        "value": 9,
+        "count": 22
+      },
+      {
+        "value": 20,
+        "count": 11
+      },
+      {
+        "value": 2,
+        "count": 10
+      },
+      {
+        "value": 18,
+        "count": 8
+      },
+      {
+        "value": 8,
+        "count": 7
+      },
+      {
+        "value": 6,
+        "count": 6
+      },
+      {
+        "value": 24,
+        "count": 4
+      },
+      {
+        "value": 7,
+        "count": 4
+      },
+      {
+        "value": 11,
+        "count": 4
+      },
+      {
+        "value": 5,
+        "count": 3
+      },
+      {
+        "value": 15,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 8,
+      "byMethod": {
+        "nested": 6,
+        "within": 2
+      },
+      "medianInsideGap": 7.5,
+      "medianBetweenGap": 16,
+      "medianRatio": 3.23,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Inter",
+        "count": 42
+      },
+      {
+        "value": "Roboto Mono",
+        "count": 2
+      },
+      {
+        "value": "Arial",
+        "count": 2
+      }
+    ],
+    "bodySize": 12,
+    "sizes": [
+      11,
+      12,
+      13,
+      13.3,
+      14,
+      15,
+      21,
+      22
+    ],
+    "distinctSizes": 8,
+    "weights": [
+      400,
+      500,
+      600
+    ],
+    "roleCount": 12,
+    "scaleRatios": [
+      1.091,
+      1.083,
+      1.023,
+      1.053,
+      1.071,
+      1.4,
+      1.048
+    ],
+    "hierarchyCarriedBy": "weight",
+    "channelSpread": {
+      "size": 0.22,
+      "weight": 0.33,
+      "ink": 0.23
+    },
+    "measureChars": 38,
+    "topRoles": [
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#525252",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 15,
+        "sample": "services on"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#171717",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "Nana Kwame Kuhney"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#525252",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Website:"
+      },
+      {
+        "size": 11,
+        "weight": 600,
+        "color": "#525252",
+        "lineHeight": null,
+        "tracking": 0.44,
+        "transform": "uppercase",
+        "count": 5,
+        "sample": "Ultra"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#525252",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "AFRIGYEI"
+      },
+      {
+        "size": 13.3,
+        "weight": 500,
+        "color": "#171717",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Edit branch"
+      },
+      {
+        "size": 22,
+        "weight": 600,
+        "color": "#171717",
+        "lineHeight": 1.15,
+        "tracking": -0.22,
+        "transform": "none",
+        "count": 1,
+        "sample": "Afrigyei, Awoshie"
+      },
+      {
+        "size": 15,
+        "weight": 600,
+        "color": "#171717",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Change history"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#028043",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "‹ Back"
+      },
+      {
+        "size": 13,
+        "weight": 500,
+        "color": "#028043",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Manage"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#eef0f3",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 47.6
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#525252",
+        "s": 0,
+        "l": 32.2,
+        "c": 0,
+        "sharePct": 62.9
+      },
+      {
+        "hex": "#171717",
+        "s": 0,
+        "l": 9,
+        "c": 0,
+        "sharePct": 35.2
+      },
+      {
+        "hex": "#028043",
+        "s": 96.9,
+        "l": 25.5,
+        "c": 49.4,
+        "sharePct": 1.9
+      }
+    ],
+    "neutralsTinted": "0/3",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 0,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 16,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [
+        10,
+        999,
+        8
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 17
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 16,
+      "coveringMostContent": 6,
+      "top": [
+        1128,
+        66,
+        46,
+        24,
+        716,
+        806,
+        1106,
+        1296
+      ]
+    },
+    "density": {
+      "visibleElements": 78,
+      "perScreenful": 78
+    }
+  }
+}

@@ -1,0 +1,361 @@
+{
+  "name": "direction-b",
+  "source": "direction-b.html",
+  "capturedAt": "2026-08-23",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 94,
+    "authoredValuesSampled": 133,
+    "distinctValues": 17,
+    "topSteps": [
+      {
+        "value": 12,
+        "count": 30
+      },
+      {
+        "value": 20,
+        "count": 26
+      },
+      {
+        "value": 10,
+        "count": 16
+      },
+      {
+        "value": 14,
+        "count": 14
+      },
+      {
+        "value": 8,
+        "count": 8
+      },
+      {
+        "value": 4,
+        "count": 7
+      },
+      {
+        "value": 6,
+        "count": 6
+      },
+      {
+        "value": 11,
+        "count": 6
+      },
+      {
+        "value": 18,
+        "count": 6
+      },
+      {
+        "value": 16,
+        "count": 5
+      },
+      {
+        "value": 2,
+        "count": 5
+      },
+      {
+        "value": 40,
+        "count": 3
+      }
+    ],
+    "grouping": {
+      "samples": 8,
+      "byMethod": {
+        "nested": 4,
+        "within": 4
+      },
+      "medianInsideGap": 4,
+      "medianBetweenGap": 17.5,
+      "medianRatio": 5,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Inter",
+        "count": 38
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      22,
+      26,
+      32
+    ],
+    "distinctSizes": 8,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 18,
+    "scaleRatios": [
+      1.083,
+      1.077,
+      1.071,
+      1.067,
+      1.375,
+      1.182,
+      1.231
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.19,
+      "weight": 0.33,
+      "ink": 0.9
+    },
+    "measureChars": 68,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#696969",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "23 August 2026"
+      },
+      {
+        "size": 15,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Services stay locked until your registration det"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 6,
+        "sample": "Dashboard"
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#071a2b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Your vehicles"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "ammduncan+11..."
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#05663e",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "View fleet"
+      },
+      {
+        "size": 16,
+        "weight": 500,
+        "color": "#05663e",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Continue setup"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#696969",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Here is where your business stands."
+      },
+      {
+        "size": 22,
+        "weight": 600,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Complete your business profile"
+      },
+      {
+        "size": 15,
+        "weight": 400,
+        "color": "#696969",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "Nissan Rogue"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#f8f9fb",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 29.9
+      },
+      {
+        "hex": "#eef2f5",
+        "h": 206,
+        "s": 25.9,
+        "l": 94.7,
+        "c": 2.7,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#071a2b",
+        "h": 208,
+        "s": 72,
+        "l": 9.8,
+        "c": 14.1,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#bdfabe",
+        "h": 121,
+        "s": 85.9,
+        "l": 86.1,
+        "c": 23.9,
+        "areaPct": 0.1
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 40.8
+      },
+      {
+        "hex": "#696969",
+        "s": 0,
+        "l": 41.2,
+        "c": 0,
+        "sharePct": 36.6
+      },
+      {
+        "hex": "#05663e",
+        "s": 90.7,
+        "l": 21,
+        "c": 38,
+        "sharePct": 11.3
+      },
+      {
+        "hex": "#071a2b",
+        "s": 72,
+        "l": 9.8,
+        "c": 14.1,
+        "sharePct": 11.3
+      },
+      {
+        "hex": "#8f9fab",
+        "s": 14.3,
+        "l": 61.6,
+        "c": 11,
+        "sharePct": 0.1
+      }
+    ],
+    "neutralsTinted": "1/4",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 0,
+    "accentAreaPct": 0.4,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 11,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [
+        10,
+        12,
+        50,
+        8,
+        4
+      ],
+      "gradientElements": 2
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 1
+      },
+      {
+        "value": "4-col: px px px px",
+        "count": 1
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 15
+      },
+      {
+        "value": "column",
+        "count": 6
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 19,
+      "coveringMostContent": 8,
+      "top": [
+        890,
+        340,
+        16,
+        320,
+        1164,
+        74,
+        868,
+        342
+      ]
+    },
+    "density": {
+      "visibleElements": 86,
+      "perScreenful": 86
+    }
+  }
+}

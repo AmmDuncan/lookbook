@@ -1,0 +1,385 @@
+{
+  "name": "b",
+  "source": "/Users/ammielyawson/.claude/evidence/afcas/2026-08-22_directions/profile-notifications/B.html",
+  "capturedAt": "2026-08-22",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 78.8,
+    "authoredValuesSampled": 500,
+    "distinctValues": 21,
+    "topSteps": [
+      {
+        "value": 12,
+        "count": 114
+      },
+      {
+        "value": 24,
+        "count": 104
+      },
+      {
+        "value": 11,
+        "count": 60
+      },
+      {
+        "value": 14,
+        "count": 52
+      },
+      {
+        "value": 10,
+        "count": 36
+      },
+      {
+        "value": 18,
+        "count": 20
+      },
+      {
+        "value": 20,
+        "count": 16
+      },
+      {
+        "value": 2,
+        "count": 13
+      },
+      {
+        "value": 9,
+        "count": 12
+      },
+      {
+        "value": 7,
+        "count": 12
+      },
+      {
+        "value": 3,
+        "count": 12
+      },
+      {
+        "value": 13,
+        "count": 12
+      }
+    ],
+    "grouping": {
+      "samples": 16,
+      "byMethod": {
+        "nested": 14,
+        "within": 2
+      },
+      "medianInsideGap": 3.75,
+      "medianBetweenGap": 15,
+      "medianRatio": 3.75,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Roboto",
+        "count": 141
+      },
+      {
+        "value": "Roboto Mono",
+        "count": 12
+      },
+      {
+        "value": "Montserrat",
+        "count": 8
+      }
+    ],
+    "bodySize": 12,
+    "sizes": [
+      11,
+      12,
+      13,
+      14,
+      20,
+      30
+    ],
+    "distinctSizes": 6,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 17,
+    "scaleRatios": [
+      1.091,
+      1.083,
+      1.077,
+      1.429,
+      1.5
+    ],
+    "hierarchyCarriedBy": "mixed (size+ink)",
+    "channelSpread": {
+      "size": 0.22,
+      "weight": 0.17,
+      "ink": 0.2
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#6e6868",
+        "lineHeight": 1.3,
+        "tracking": 0,
+        "transform": "none",
+        "count": 33,
+        "sample": "Administrator"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#3a3636",
+        "lineHeight": 1.3,
+        "tracking": 0,
+        "transform": "none",
+        "count": 29,
+        "sample": "Steve Rogers"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 19,
+        "sample": "41.204.18.7"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.25,
+        "tracking": 0,
+        "transform": "none",
+        "count": 22,
+        "sample": "Payment System"
+      },
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 6,
+        "sample": "Your identity, what it reaches, and where it is "
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 1.44,
+        "transform": "uppercase",
+        "count": 4,
+        "sample": "Direction B · 1 of 2 — /admin/account"
+      },
+      {
+        "size": 11,
+        "weight": 500,
+        "color": "#6e6868",
+        "lineHeight": 1.5,
+        "tracking": 1.21,
+        "transform": "uppercase",
+        "count": 10,
+        "sample": "On this page"
+      },
+      {
+        "size": 12,
+        "weight": 500,
+        "color": "#561212",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 10,
+        "sample": "Sign out"
+      },
+      {
+        "size": 20,
+        "weight": 600,
+        "color": "#3a3636",
+        "lineHeight": 1.3,
+        "tracking": -0.2,
+        "transform": "none",
+        "count": 6,
+        "sample": "Identity"
+      },
+      {
+        "size": 13,
+        "weight": 500,
+        "color": "#3a3636",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Payment exception escalated"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#e8e6e6",
+    "backgrounds": [
+      {
+        "hex": "#f2f1f1",
+        "h": 0,
+        "s": 3.7,
+        "l": 94.7,
+        "c": 0.4,
+        "areaPct": 94.3
+      },
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 57.5
+      },
+      {
+        "hex": "#fafafa",
+        "h": 0,
+        "s": 0,
+        "l": 98,
+        "c": 0,
+        "areaPct": 1.3
+      },
+      {
+        "hex": "#251e1e",
+        "h": 0,
+        "s": 10.4,
+        "l": 13.1,
+        "c": 2.7,
+        "areaPct": 0.8
+      },
+      {
+        "hex": "#561212",
+        "h": 0,
+        "s": 65.4,
+        "l": 20.4,
+        "c": 26.7,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#c4110c",
+        "h": 2,
+        "s": 88.5,
+        "l": 40.8,
+        "c": 72.2,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#6e6868",
+        "s": 2.8,
+        "l": 42,
+        "c": 2.4,
+        "sharePct": 58.5
+      },
+      {
+        "hex": "#3a3636",
+        "s": 3.6,
+        "l": 22,
+        "c": 1.6,
+        "sharePct": 26.7
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 9.1
+      },
+      {
+        "hex": "#561212",
+        "s": 65.4,
+        "l": 20.4,
+        "c": 26.7,
+        "sharePct": 4
+      },
+      {
+        "hex": "#c4110c",
+        "s": 88.5,
+        "l": 40.8,
+        "c": 72.2,
+        "sharePct": 1.8
+      }
+    ],
+    "neutralsTinted": "3/7",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 2.7,
+    "accentAreaPct": 0.1,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 57,
+      "shadowedElements": 5,
+      "borderToShadowRatio": 11.4,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgba(92, 0, 0, 0.04) 0px 1px 2px 0px",
+        "rgba(92, 0, 0, 0.04) 0px 1px 2px 0px, rgba(92, 0, 0, 0.1) 0px 6px 16px -12px",
+        "rgba(92, 0, 0, 0.04) 0px 1px 2px 0px, rgba(92, 0, 0, 0.28) 0px 24px 48px -20px"
+      ],
+      "radiusScale": [
+        10,
+        9,
+        50,
+        12,
+        16
+      ],
+      "gradientElements": 2
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 1908,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 4
+      },
+      {
+        "value": "3-col: px px px",
+        "count": 2
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 63
+      },
+      {
+        "value": "column",
+        "count": 6
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 36,
+      "coveringMostContent": 13,
+      "top": [
+        562,
+        538,
+        10,
+        856,
+        54,
+        312,
+        838,
+        588
+      ]
+    },
+    "density": {
+      "visibleElements": 436,
+      "perScreenful": 206
+    }
+  }
+}

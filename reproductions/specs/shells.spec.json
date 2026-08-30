@@ -1,0 +1,474 @@
+{
+  "name": "shells",
+  "source": "/Users/ammielyawson/.claude/evidence/afcas/2026-08-17_ui-baseline/03-shell-directions/shells.html",
+  "capturedAt": "2026-08-17",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 3,
+    "onScalePct": 43.4,
+    "authoredValuesSampled": 703,
+    "distinctValues": 26,
+    "topSteps": [
+      {
+        "value": 9,
+        "count": 252
+      },
+      {
+        "value": 8,
+        "count": 102
+      },
+      {
+        "value": 7,
+        "count": 84
+      },
+      {
+        "value": 11,
+        "count": 57
+      },
+      {
+        "value": 13,
+        "count": 44
+      },
+      {
+        "value": 3,
+        "count": 35
+      },
+      {
+        "value": 5,
+        "count": 34
+      },
+      {
+        "value": 6,
+        "count": 23
+      },
+      {
+        "value": 14,
+        "count": 21
+      },
+      {
+        "value": 2,
+        "count": 21
+      },
+      {
+        "value": 15,
+        "count": 18
+      },
+      {
+        "value": 1,
+        "count": 18
+      }
+    ],
+    "grouping": {
+      "samples": 25,
+      "byMethod": {
+        "nested": 6,
+        "within": 19
+      },
+      "medianInsideGap": 3,
+      "medianBetweenGap": 11.5,
+      "medianRatio": 2.43,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "ui-sans-serif",
+        "count": 123
+      },
+      {
+        "value": "ui-monospace",
+        "count": 73
+      },
+      {
+        "value": "Arial",
+        "count": 6
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      18,
+      19,
+      21,
+      27,
+      46
+    ],
+    "distinctSizes": 12,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 34,
+    "scaleRatios": [
+      1.111,
+      1.1,
+      1.091,
+      1.083,
+      1.077,
+      1.071,
+      1.2,
+      1.056,
+      1.105,
+      1.286,
+      1.704
+    ],
+    "hierarchyCarriedBy": "size",
+    "channelSpread": {
+      "size": 0.45,
+      "weight": 0.33,
+      "ink": 0.19
+    },
+    "measureChars": 99,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#4a463d",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 14,
+        "sample": "Institution comes from the session. Evidence tha"
+      },
+      {
+        "size": 15,
+        "weight": 400,
+        "color": "#4a463d",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Use when one fact must never leave the screen. T"
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#7d776c",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 6,
+        "sample": "axis A · sunken nav + raised content · axis B · "
+      },
+      {
+        "size": 12,
+        "weight": 400,
+        "color": "#4a463d",
+        "lineHeight": null,
+        "tracking": 0,
+        "transform": "none",
+        "count": 21,
+        "sample": "Export"
+      },
+      {
+        "size": 11,
+        "weight": 400,
+        "color": "#7d776c",
+        "lineHeight": 1,
+        "tracking": 0,
+        "transform": "none",
+        "count": 17,
+        "sample": "afcas.gov.gh/sd/invoices?status=pending&sort=-is"
+      },
+      {
+        "size": 9,
+        "weight": 600,
+        "color": "#7d776c",
+        "lineHeight": 1,
+        "tracking": 1.35,
+        "transform": "uppercase",
+        "count": 31,
+        "sample": "Work"
+      },
+      {
+        "size": 18,
+        "weight": 400,
+        "color": "#4a463d",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Same nav, same page, same data in all three. Onl"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#7d776c",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "Captured against local seeded data — 21 SD invoi"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#b9b5ab",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 13,
+        "sample": "Overview"
+      },
+      {
+        "size": 12,
+        "weight": 700,
+        "color": "#7d776c",
+        "lineHeight": 1.5,
+        "tracking": 0.6,
+        "transform": "uppercase",
+        "count": 4,
+        "sample": "What it buys / what it costs"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#eceae4",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 86.8
+      },
+      {
+        "hex": "#141310",
+        "h": 45,
+        "s": 11.1,
+        "l": 7.1,
+        "c": 1.6,
+        "areaPct": 12.1
+      },
+      {
+        "hex": "#eceae4",
+        "h": 45,
+        "s": 17.4,
+        "l": 91,
+        "c": 3.1,
+        "areaPct": 12.1
+      },
+      {
+        "hex": "#f6f4f0",
+        "h": 40,
+        "s": 25,
+        "l": 95.3,
+        "c": 2.4,
+        "areaPct": 2.7
+      },
+      {
+        "hex": "#faf9f6",
+        "h": 45,
+        "s": 28.6,
+        "l": 97.3,
+        "c": 1.6,
+        "areaPct": 2.3
+      },
+      {
+        "hex": "#e6e3db",
+        "h": 44,
+        "s": 18,
+        "l": 88,
+        "c": 4.3,
+        "areaPct": 2.1
+      },
+      {
+        "hex": "#1c1b16",
+        "h": 50,
+        "s": 12,
+        "l": 9.8,
+        "c": 2.4,
+        "areaPct": 2
+      },
+      {
+        "hex": "#302e27",
+        "h": 47,
+        "s": 10.3,
+        "l": 17.1,
+        "c": 3.5,
+        "areaPct": 0.2
+      },
+      {
+        "hex": "#16150f",
+        "h": 51,
+        "s": 18.9,
+        "l": 7.3,
+        "c": 2.7,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#fbf7e9",
+        "h": 47,
+        "s": 69.2,
+        "l": 94.9,
+        "c": 7.1,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#eef6f0",
+        "h": 135,
+        "s": 30.8,
+        "l": 94.9,
+        "c": 3.1,
+        "areaPct": 0
+      },
+      {
+        "hex": "#514c3f",
+        "h": 43,
+        "s": 12.5,
+        "l": 28.2,
+        "c": 7.1,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#4a463d",
+        "s": 9.6,
+        "l": 26.5,
+        "c": 5.1,
+        "sharePct": 60.9
+      },
+      {
+        "hex": "#7d776c",
+        "s": 7.3,
+        "l": 45.7,
+        "c": 6.7,
+        "sharePct": 25.7
+      },
+      {
+        "hex": "#16150f",
+        "s": 18.9,
+        "l": 7.3,
+        "c": 2.7,
+        "sharePct": 8.7
+      },
+      {
+        "hex": "#b9b5ab",
+        "s": 9.1,
+        "l": 69.8,
+        "c": 5.5,
+        "sharePct": 2.1
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 1
+      },
+      {
+        "hex": "#8a6d1f",
+        "s": 63.3,
+        "l": 33.1,
+        "c": 42,
+        "sharePct": 0.7
+      },
+      {
+        "hex": "#8a857a",
+        "s": 6.4,
+        "l": 51,
+        "c": 6.3,
+        "sharePct": 0.5
+      },
+      {
+        "hex": "#2f6a44",
+        "s": 38.6,
+        "l": 30,
+        "c": 23.1,
+        "sharePct": 0.2
+      },
+      {
+        "hex": "#8d887d",
+        "s": 6.6,
+        "l": 52.2,
+        "c": 6.3,
+        "sharePct": 0.1
+      }
+    ],
+    "neutralsTinted": "17/19",
+    "neutralTintVerdict": "neutrals are tinted (designed)",
+    "maxChroma": 4.3,
+    "accentAreaPct": 0,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 65,
+      "shadowedElements": 4,
+      "borderToShadowRatio": 16.25,
+      "strategy": "border-led, shadows reserved",
+      "distinctShadows": [
+        "rgb(255, 255, 255) 2px 0px 0px 0px inset",
+        "rgba(0, 0, 0, 0.28) 0px 1px 2px 0px, rgba(0, 0, 0, 0.2) 0px 10px 26px 0px",
+        "rgb(22, 21, 15) 2px 0px 0px 0px inset"
+      ],
+      "radiusScale": [
+        6,
+        3,
+        8,
+        5,
+        999,
+        50
+      ],
+      "gradientElements": 0
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 4014,
+    "horizontalBleed": false,
+    "proseMaxWidth": 1256,
+    "mainRegionWidth": 1320,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 3
+      },
+      {
+        "value": "4-col: px px px px",
+        "count": 3
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 42
+      },
+      {
+        "value": "column",
+        "count": 6
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 64,
+      "coveringMostContent": 30,
+      "top": [
+        330,
+        92,
+        104,
+        350,
+        110,
+        134,
+        116,
+        94
+      ]
+    },
+    "density": {
+      "visibleElements": 351,
+      "perScreenful": 79
+    }
+  }
+}

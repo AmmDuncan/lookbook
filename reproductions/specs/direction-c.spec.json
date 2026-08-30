@@ -1,0 +1,371 @@
+{
+  "name": "direction-c",
+  "source": "direction-c.html",
+  "capturedAt": "2026-08-23",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "spacing": {
+    "baseUnit": 2,
+    "onScalePct": 94,
+    "authoredValuesSampled": 151,
+    "distinctValues": 16,
+    "topSteps": [
+      {
+        "value": 12,
+        "count": 31
+      },
+      {
+        "value": 8,
+        "count": 24
+      },
+      {
+        "value": 14,
+        "count": 20
+      },
+      {
+        "value": 4,
+        "count": 12
+      },
+      {
+        "value": 16,
+        "count": 10
+      },
+      {
+        "value": 20,
+        "count": 10
+      },
+      {
+        "value": 10,
+        "count": 9
+      },
+      {
+        "value": 18,
+        "count": 9
+      },
+      {
+        "value": 24,
+        "count": 8
+      },
+      {
+        "value": 11,
+        "count": 8
+      },
+      {
+        "value": 6,
+        "count": 4
+      },
+      {
+        "value": 2,
+        "count": 4
+      }
+    ],
+    "grouping": {
+      "samples": 11,
+      "byMethod": {
+        "nested": 4,
+        "within": 7
+      },
+      "medianInsideGap": 8,
+      "medianBetweenGap": 20,
+      "medianRatio": 6.67,
+      "confidence": "high",
+      "verdict": "space encodes grouping strongly"
+    }
+  },
+  "type": {
+    "families": [
+      {
+        "value": "Inter",
+        "count": 38
+      }
+    ],
+    "bodySize": 14,
+    "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      26
+    ],
+    "distinctSizes": 7,
+    "weights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "roleCount": 17,
+    "scaleRatios": [
+      1.083,
+      1.077,
+      1.071,
+      1.067,
+      1.125,
+      1.444
+    ],
+    "hierarchyCarriedBy": "ink",
+    "channelSpread": {
+      "size": 0.19,
+      "weight": 0.33,
+      "ink": 0.9
+    },
+    "measureChars": null,
+    "topRoles": [
+      {
+        "size": 14,
+        "weight": 400,
+        "color": "#696969",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 5,
+        "sample": "23 August 2026"
+      },
+      {
+        "size": 16,
+        "weight": 500,
+        "color": "#071a2b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Finish your business profile"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 6,
+        "sample": "Dashboard"
+      },
+      {
+        "size": 15,
+        "weight": 400,
+        "color": "#696969",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 4,
+        "sample": "Vehicle GR 2419-25 added to your fleet"
+      },
+      {
+        "size": 14,
+        "weight": 500,
+        "color": "#05663e",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Add vehicle"
+      },
+      {
+        "size": 16,
+        "weight": 400,
+        "color": "#696969",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "3 things need your attention."
+      },
+      {
+        "size": 16,
+        "weight": 500,
+        "color": "#05663e",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 3,
+        "sample": "Add driver"
+      },
+      {
+        "size": 16,
+        "weight": 600,
+        "color": "#071a2b",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 2,
+        "sample": "AMM Logistics"
+      },
+      {
+        "size": 13,
+        "weight": 400,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "ammduncan+11..."
+      },
+      {
+        "size": 13,
+        "weight": 600,
+        "color": "#ffffff",
+        "lineHeight": 1.5,
+        "tracking": 0,
+        "transform": "none",
+        "count": 1,
+        "sample": "AMM Logistics"
+      }
+    ]
+  },
+  "color": {
+    "pageBg": "#f8f9fb",
+    "backgrounds": [
+      {
+        "hex": "#ffffff",
+        "h": 0,
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "areaPct": 36.8
+      },
+      {
+        "hex": "#05663e",
+        "h": 155,
+        "s": 90.7,
+        "l": 21,
+        "c": 38,
+        "areaPct": 0.4
+      },
+      {
+        "hex": "#eef2f5",
+        "h": 206,
+        "s": 25.9,
+        "l": 94.7,
+        "c": 2.7,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#071a2b",
+        "h": 208,
+        "s": 72,
+        "l": 9.8,
+        "c": 14.1,
+        "areaPct": 0.3
+      },
+      {
+        "hex": "#eaf5ee",
+        "h": 142,
+        "s": 35.5,
+        "l": 93.9,
+        "c": 4.3,
+        "areaPct": 0.2
+      },
+      {
+        "hex": "#fff5dd",
+        "h": 42,
+        "s": 100,
+        "l": 93.3,
+        "c": 13.3,
+        "areaPct": 0.1
+      },
+      {
+        "hex": "#41a66b",
+        "h": 145,
+        "s": 43.7,
+        "l": 45.3,
+        "c": 39.6,
+        "areaPct": 0
+      }
+    ],
+    "inks": [
+      {
+        "hex": "#696969",
+        "s": 0,
+        "l": 41.2,
+        "c": 0,
+        "sharePct": 47
+      },
+      {
+        "hex": "#071a2b",
+        "s": 72,
+        "l": 9.8,
+        "c": 14.1,
+        "sharePct": 21.9
+      },
+      {
+        "hex": "#ffffff",
+        "s": 0,
+        "l": 100,
+        "c": 0,
+        "sharePct": 20.3
+      },
+      {
+        "hex": "#05663e",
+        "s": 90.7,
+        "l": 21,
+        "c": 38,
+        "sharePct": 10.9
+      }
+    ],
+    "neutralsTinted": "2/5",
+    "neutralTintVerdict": "neutrals are near-pure grey (default-ish)",
+    "maxChroma": 0,
+    "accentAreaPct": 0.8,
+    "accentVerdict": "accent is scarce",
+    "depth": {
+      "borderedElements": 15,
+      "shadowedElements": 0,
+      "borderToShadowRatio": null,
+      "strategy": "borders only, zero resting shadows",
+      "distinctShadows": [],
+      "radiusScale": [
+        10,
+        50,
+        12,
+        8
+      ],
+      "gradientElements": 1
+    }
+  },
+  "composition": {
+    "pageWidth": 1440,
+    "pageHeight": 900,
+    "horizontalBleed": false,
+    "proseMaxWidth": null,
+    "mainRegionWidth": 1440,
+    "gridPrimitives": [
+      {
+        "value": "2-col: px px",
+        "count": 2
+      }
+    ],
+    "flexDirections": [
+      {
+        "value": "row",
+        "count": 22
+      },
+      {
+        "value": "column",
+        "count": 2
+      }
+    ],
+    "alignmentEdges": {
+      "distinct": 17,
+      "coveringMostContent": 8,
+      "top": [
+        1102,
+        402,
+        16,
+        346,
+        320,
+        74,
+        350,
+        1080
+      ]
+    },
+    "density": {
+      "visibleElements": 103,
+      "perScreenful": 103
+    }
+  }
+}

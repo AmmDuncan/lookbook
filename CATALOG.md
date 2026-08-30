@@ -23,7 +23,7 @@ Last catalogued: 2026-08-30.
 
 ---
 
-## 1 · Specimens — `harvest/specimens/` (62 sheets)
+## 1 · Specimens — `harvest/specimens/` (265 sheets)
 
 Per-family variation sheets and composed page recipes. The first place to look for any layout.
 Catalogued in detail in `harvest/HARVEST.md`.

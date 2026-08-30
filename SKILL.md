@@ -17,6 +17,9 @@ description: >-
 
 # Lookbook — the UI design mastermind
 
+> **Looking for a specific file? `CATALOG.md` is the single source of truth** — every live
+> file in this library is listed there, along with what was removed and why.
+
 ## The layers — pull each on demand
 
 Lookbook is layered; load only what the task needs. From fastest-start to deepest:

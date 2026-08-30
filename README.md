@@ -1,5 +1,8 @@
 # Lookbook
 
+> **Looking for a specific file? `CATALOG.md` is the single source of truth** — every live
+> file in this library is listed there, along with what was removed and why.
+
 **Lookbook is a design brain with a render-and-look loop at its core — and a compose-then-skin catalog as the fastest way in.**
 
 An agent-facing reasoning layer (timeless fundamentals, per-surface patterns, a composition grammar, an anti-generic-AI sweep) wired to a perception loop: it builds the screen, renders the real pixels, *looks*, and iterates — against what it sees and your eye — instead of emitting code it never views. Design **intelligence + a way of seeing**, on whatever stack you already use. It is not a component library; bring your own components.

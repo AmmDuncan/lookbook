@@ -1,0 +1,4 @@
+# Gate scratch output (wren visual-pass writes squint/shot images here).
+# Regenerable per run - never reference material, never committed.
+*
+!.gitignore

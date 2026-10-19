@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inline add-new · prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F1F0EC; --surface:#FFFFFF; --inset:#F7F6F2;
+  --border:#DCDAD2; --border-2:#918E84;
+  --ink:#1C1D21; --muted:#595B62; --subtle:#6B6D75;
+  --accent:#3358C6; --accent-ink:#274aa8; --accent-tint:rgba(51,88,198,0.13); --accent-soft:#EEF2FC;
+  --bad:#B23A2E; --bad-tint:rgba(178,58,46,0.11);
+  --ok:#2C6E49; --ok-tint:rgba(44,110,73,0.12);
+  --font-ui:'Hanken Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --r-2:6px; --r-3:9px; --r-4:12px;
+  --sh-1:0 1px 2px rgba(28,29,33,.06);
+  --sh-2:0 8px 24px rgba(28,29,33,.10),0 1px 2px rgba(28,29,33,.06);
+  --d-micro:150ms; --d-std:240ms; --d-exit:180ms;
+  --ease-out:cubic-bezier(0,0,.2,1); --ease-in:cubic-bezier(.4,0,1,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-ink)}
+.kicker{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--subtle)}
+h1{font-size:24px;line-height:1.2;font-weight:600;margin:6px 0 4px;letter-spacing:-.01em}
+.lede{color:var(--muted);max-width:60ch;margin:0 0 24px}
+
+.page{max-width:1120px;margin:0 auto;padding:32px 32px 96px}
+@media (max-width:560px){.page{padding:20px 16px 64px}}
+.topnav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px;font-size:13px;flex-wrap:wrap}
+.topnav .crumbs a{color:var(--muted);text-decoration:none}
+.topnav .crumbs a:hover{color:var(--ink)}
+.topnav .crumbs span{color:var(--subtle);margin:0 8px}
+.dirs{display:flex;gap:6px;flex-wrap:wrap}
+.dirs a{padding:6px 10px;border-radius:999px;border:1px solid var(--border);text-decoration:none;color:var(--muted);background:var(--surface)}
+.dirs a[aria-current="page"]{border-color:var(--accent);color:var(--accent-ink);background:var(--accent-soft)}
+
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:32px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-4);box-shadow:var(--sh-1)}
+.card-h{padding:20px 24px 0}
+.card-h h2{font-size:16px;font-weight:600;margin:0}
+.card-h p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.card-b{padding:20px 24px 24px;display:grid;gap:20px}
+.card-f{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;align-items:center;gap:12px;flex-wrap:wrap}
+.card-f .why{font-size:12.5px;color:var(--muted)}
+.btn-primary[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
+@media (max-width:560px){.card-h{padding:16px 16px 0}.card-b,.card-f{padding-left:16px;padding-right:16px}.card-f .why{flex-basis:100%;margin:0 0 2px}}
+
+.aside{display:grid;gap:16px;position:sticky;top:24px}
+.aside .card-b{gap:12px;padding:16px 20px 20px}
+.aside h3{font-size:13px;font-weight:600;margin:0}
+.ctl{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.ctl input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);margin:0}
+.ctl select{font:inherit;font-size:13px;border:1px solid var(--border-2);border-radius:var(--r-2);padding:4px 8px;background:#fff;color:var(--ink)}
+.log{font-family:var(--font-mono);font-size:11.5px;color:var(--muted);margin:0;padding:0;list-style:none;display:grid;gap:4px;max-height:240px;overflow:auto}
+.log li{padding-left:14px;text-indent:-14px}
+.log li::before{content:"› ";color:var(--subtle)}
+.log li.ok{color:var(--ok)}
+.log li.bad{color:var(--bad)}
+.log:empty::after{content:"Nothing yet. Open the brand picker and type a brand we don't have.";color:var(--subtle);white-space:normal;text-indent:0}
+
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:560px){.row{grid-template-columns:1fr}}
+.f{display:grid;gap:7px;min-width:0;align-content:start}
+.lbl{font-size:12.5px;font-weight:600;color:var(--ink)}
+.lbl .opt{font-weight:400;color:var(--subtle)}
+.help{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px;min-height:17px}
+.help.err{color:var(--bad)}
+.help.ok{color:var(--ok)}
+.help svg{width:13px;height:13px;flex-shrink:0}
+.fld{width:100%;font:inherit;font-size:14px;color:var(--ink);background:#fff;border:1px solid var(--border-2);border-radius:var(--r-3);padding:10px 12px;transition:border-color var(--d-micro),box-shadow var(--d-micro),background var(--d-micro)}
+.fld::placeholder{color:var(--subtle)}
+.fld:hover{border-color:#B4B0A4}
+.fld:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint)}
+.fld.is-error{border-color:var(--bad);box-shadow:0 0 0 3px var(--bad-tint)}
+.fld:disabled,.fld[readonly]{background:var(--inset);color:var(--muted)}
+.sel{position:relative}
+.sel select{appearance:none;padding-right:34px}
+.sel svg{position:absolute;right:11px;top:50%;width:16px;height:16px;margin-top:-8px;color:var(--muted);pointer-events:none}
+
+.btn{font:inherit;font-size:13.5px;font-weight:600;border-radius:var(--r-3);padding:9px 14px;border:1px solid transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px;min-height:38px;transition:background var(--d-micro),border-color var(--d-micro),color var(--d-micro),opacity var(--d-micro)}
+.btn svg{width:15px;height:15px}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-ink)}
+.btn-primary[disabled]{opacity:.55;cursor:not-allowed}
+.btn-primary.is-busy[disabled]{opacity:1;cursor:progress}
+.btn-primary.is-done{background:var(--ok)}
+.btn-ghost{background:transparent;color:var(--muted);border-color:var(--border-2)}
+.btn-ghost:hover{color:var(--ink);background:var(--inset)}
+.btn-link{background:none;border:0;padding:4px 2px;color:var(--accent-ink);font-weight:600;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;border-radius:4px;min-height:32px}
+.btn-link svg{width:14px;height:14px}
+.btn-link:hover{text-decoration:underline}
+.btn-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.spin{width:14px;height:14px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.combo{position:relative}
+.combo .cin{padding-right:34px}
+.combo .chev{position:absolute;right:11px;top:11px;width:16px;height:16px;color:var(--muted);pointer-events:none;transition:transform var(--d-micro)}
+.combo[data-open="true"] .chev{transform:rotate(180deg)}
+.combo .cin.is-added{border-color:var(--ok);box-shadow:0 0 0 3px var(--ok-tint);animation:added .6s var(--ease-out) 1}
+@keyframes added{0%{box-shadow:0 0 0 0 rgba(44,110,73,.35)}100%{box-shadow:0 0 0 8px rgba(44,110,73,0)}}
+.pop{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--border);border-radius:var(--r-3);box-shadow:var(--sh-2);z-index:20;overflow:hidden;
+  transform-origin:top center;opacity:0;transform:translateY(-4px) scale(.995);visibility:hidden;transition:opacity var(--d-exit) var(--ease-in),transform var(--d-exit) var(--ease-in),visibility 0s linear var(--d-exit)}
+.combo[data-open="true"] .pop{opacity:1;transform:none;visibility:visible;transition:opacity var(--d-std) var(--ease-out),transform var(--d-std) var(--ease-out),visibility 0s}
+.list{list-style:none;margin:0;padding:6px;max-height:224px;overflow:auto}
+.opt{padding:8px 10px;border-radius:var(--r-2);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.opt mark{background:none;color:inherit;font-weight:700}
+.opt[aria-selected="true"],.opt.is-active{background:var(--accent-soft);color:var(--accent-ink)}
+.opt .ck{width:14px;height:14px;color:var(--accent);flex-shrink:0}
+.opt .meta{font-size:12px;color:var(--subtle)}
+.empty{padding:12px 10px;color:var(--muted);font-size:13px}
+.opt.create{justify-content:flex-start;font-weight:600;color:var(--accent-ink);min-height:44px}
+.opt.create:not(:first-child){margin-top:6px;border-top:1px solid var(--border);border-radius:0 0 var(--r-2) var(--r-2);padding-top:12px}
+.empty{padding:12px 10px 4px}
+.opt.create svg{width:15px;height:15px;flex-shrink:0}
+.opt.create .term{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.addform{display:grid;gap:14px}
+.addform .hd{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:32px}
+.addform .hd h3{font-size:14px;font-weight:600;margin:0;display:flex;align-items:center;gap:8px}
+.addform .hd h3 .tag{font-size:11px;font-weight:600;color:var(--accent-ink);background:var(--accent-soft);padding:2px 7px;border-radius:999px;letter-spacing:.02em}
+.addform .acts{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.addform .fail{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--bad);background:var(--bad-tint);padding:10px 12px;border-radius:var(--r-2)}
+.addform .fail svg{width:15px;height:15px;flex-shrink:0;margin-top:2px}
+.addform .fail[hidden]{display:none}
+
+/* A: accordion below the picker */
+.acc{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--d-exit) var(--ease-in)}
+.acc[data-open="true"]{grid-template-rows:1fr;transition:grid-template-rows var(--d-std) var(--ease-out)}
+.acc > .acc-in{min-height:0;overflow:hidden;padding:0 4px 4px;margin:0 -4px}
+.acc .panel{margin-top:10px;padding:16px;border:1px solid var(--border);border-radius:var(--r-4);background:var(--inset);
+  opacity:0;transform:translateY(-4px);transition:opacity var(--d-exit) var(--ease-in),transform var(--d-exit) var(--ease-in)}
+.acc[data-open="true"] .panel{opacity:1;transform:none;transition:opacity var(--d-std) var(--ease-out) 60ms,transform var(--d-std) var(--ease-out) 60ms}
+
+/* B: replace in place */
+.slot-h{transition:height var(--d-std) var(--ease-out)}
+.slot-h.is-animating{overflow:hidden}
+.slot{display:grid;grid-template-columns:1fr}
+.slot > .layer{grid-area:1/1;transition:opacity var(--d-exit) var(--ease-in),transform var(--d-exit) var(--ease-in),visibility 0s linear var(--d-exit)}
+.slot > .layer[aria-hidden="true"]{opacity:0;transform:translateY(6px);pointer-events:none;visibility:hidden}
+.slot > .layer[aria-hidden="false"]{opacity:1;transform:none;visibility:visible;transition:opacity var(--d-std) var(--ease-out) var(--d-exit),transform var(--d-std) var(--ease-out) var(--d-exit),visibility 0s}
+.layer-form{padding:16px;border:1px solid var(--border);border-radius:var(--r-4);background:var(--inset)}
+
+/* C: form inside the popover */
+.pop .views{display:grid;grid-template-columns:1fr}
+.pop .views > *{grid-area:1/1;transition:transform var(--d-std) var(--ease-out),opacity var(--d-std) var(--ease-out),visibility 0s}
+.pop .view-form{padding:14px}
+.pop:not([data-view="form"]) .view-form{transform:translateX(24px);opacity:0;visibility:hidden;pointer-events:none;transition:transform var(--d-exit) var(--ease-in),opacity var(--d-exit) var(--ease-in),visibility 0s linear var(--d-exit)}
+.pop[data-view="form"] .view-list{transform:translateX(-24px);opacity:0;visibility:hidden;pointer-events:none;transition:transform var(--d-exit) var(--ease-in),opacity var(--d-exit) var(--ease-in),visibility 0s linear var(--d-exit)}
+.combo[data-view="form"] .cin{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint)}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+  .spin{animation-duration:.7s!important}
+  .pop,.slot > .layer,.pop .views > *,.acc .panel{transform:none!important}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+</svg>
+
+<div class="page">
+  <nav class="topnav" aria-label="Exploration">
+    <div class="crumbs"><span class="kicker">Specimen · Studies</span><span>/</span><b id="dirName">Direction</b></div>
+    <div class="dirs" id="dirs">
+      <a href="?mode=a" data-mode="a">A · Accordion below</a>
+      <a href="?mode=b" data-mode="b">B · Replace in place</a>
+      <a href="?mode=c" data-mode="c">C · Inside the popover</a>
+    </div>
+  </nav>
+  <div class="card" style="margin-bottom:24px"><div class="card-b" style="gap:8px;font-size:13px;color:var(--muted)">
+    <h2 style="font-size:16px;margin:0;color:var(--ink)">Inline create from a picker: where each container shines</h2>
+    <p style="margin:0"><b style="color:var(--ink)">A · Accordion below</b> shines when the host form can grow: the picker never moves, the form takes NEW space under it, and the confirmation lands where the eye already is. Default.</p>
+    <p style="margin:0"><b style="color:var(--ink)">B · Replace in place</b> shines when height is the constraint (drawer, slideover, short card): the slot swaps, total height stays near constant. Crossfade must be sequenced, exit before enter.</p>
+    <p style="margin:0"><b style="color:var(--ink)">C · Inside the popover</b> shines for a one-field, instant create (add a tag, press Enter). With a real form it covers the fields it exists to unblock and Tab lands behind it. Its list-to-form slide is the clearest “one level deeper” cue and can live inside A's panel.</p>
+    <p style="margin:0">Never a modal on top of the form. Interactive: type <b style="color:var(--ink)">Changan</b> in Brand, use the Simulate panel for failure and latency.</p>
+  </div></div>
+
+  <div class="grid">
+    <form class="card" id="host" autocomplete="off" novalidate>
+      <div class="card-h">
+        <h2>Register vehicle</h2>
+        <p>Try a brand we don't have, e.g. <b>Changan</b> or <b>Kantanka</b>.</p>
+      </div>
+      <div class="card-b">
+        <div class="row">
+          <div class="f">
+            <label class="lbl" for="reg">Registration number</label>
+            <input class="fld" id="reg" value="GR 4521-24">
+            <div class="help"></div>
+          </div>
+          <div class="f">
+            <label class="lbl" for="year">Year of manufacture</label>
+            <input class="fld" id="year" value="2022" inputmode="numeric">
+            <div class="help"></div>
+          </div>
+        </div>
+
+        <!-- Brand picker: the slot every direction plays in -->
+        <div class="slot-h" id="slotH">
+          <div class="slot" id="slot">
+            <div class="layer layer-picker" id="layerPicker" aria-hidden="false">
+              <div class="f">
+                <label class="lbl" for="brand">Brand</label>
+                <div class="combo" id="combo" data-open="false">
+                  <input class="fld cin" id="brand" role="combobox" aria-expanded="false" aria-controls="brandList" aria-autocomplete="list" aria-haspopup="listbox" placeholder="Search brands" autocomplete="off">
+                  <svg class="chev"><use href="#i-chev"/></svg>
+                  <div class="pop" id="pop" data-view="list">
+                    <div class="views">
+                      <div class="view-list" id="viewList">
+                        <div class="empty" id="brandEmpty" hidden></div>
+                        <ul class="list" id="brandList" role="listbox" aria-label="Brands"></ul>
+                      </div>
+                      <div class="view-form" id="viewForm" aria-hidden="true"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="help" id="brandHelp"></div>
+                <!-- A mounts here -->
+                <div class="acc" id="acc" data-open="false"><div class="acc-in"><div class="panel" id="accPanel"></div></div></div>
+              </div>
+            </div>
+            <!-- B mounts here -->
+            <div class="layer layer-form" id="layerForm" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f">
+            <label class="lbl" for="model">Model</label>
+            <input class="fld" id="model" placeholder="Enter the model" disabled>
+            <div class="help" id="modelHelp">Choose a brand first.</div>
+          </div>
+          <div class="f">
+            <label class="lbl" for="colour">Colour</label>
+            <div class="sel"><select class="fld" id="colour"><option>White</option><option>Silver</option><option>Black</option><option>Blue</option></select><svg><use href="#i-chev"/></svg></div>
+            <div class="help"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-f">
+        <button type="button" class="btn btn-ghost">Cancel</button>
+        <span class="why" id="hostWhy" hidden>Finish adding the brand first.</span>
+        <button type="submit" class="btn btn-primary" id="hostSave">Save vehicle</button>
+      </div>
+    </form>
+
+    <aside class="aside">
+      <div class="card"><div class="card-b">
+        <h3>Simulate</h3>
+        <label class="ctl"><input type="checkbox" id="simFail"> Save fails (server error)</label>
+        <label class="ctl">Latency <select id="simLat"><option value="300">300 ms</option><option value="900" selected>900 ms</option><option value="2000">2 s</option></select></label>
+        <button type="button" class="btn btn-ghost" id="reset" style="justify-self:start">Reset prototype</button>
+      </div></div>
+      <div class="card"><div class="card-b">
+        <h3>What happened</h3>
+        <ol class="log" id="log" aria-live="polite"></ol>
+      </div></div>
+    </aside>
+  </div>
+</div>
+
+<div class="sr" id="live" aria-live="polite"></div>
+
+<template id="tplForm">
+  <div class="addform" role="group" aria-labelledby="afTitle">
+    <div class="hd">
+      <h3 id="afTitle"><span class="tag" aria-hidden="true">New</span>Add brand</h3>
+      <button type="button" class="btn-link" data-act="back"><svg><use href="#i-back"/></svg>Back to brands</button>
+    </div>
+    <div class="fail" role="alert" hidden><svg><use href="#i-alert"/></svg><span>We could not save the brand. Try again. If it keeps failing, the brand service may be unavailable.</span></div>
+    <div class="f">
+      <label class="lbl" for="afName">Brand name</label>
+      <input class="fld" id="afName" name="name" required aria-describedby="afNameErr">
+      <div class="help" data-err="name" id="afNameErr"></div>
+    </div>
+    <div class="f">
+      <label class="lbl" for="afType">Vehicle type</label>
+      <div class="sel"><select class="fld" id="afType" name="type" required aria-describedby="afTypeErr">
+        <option value="">Select a type</option><option>Car</option><option>Motorcycle</option><option>Truck</option><option>Bus</option>
+      </select><svg><use href="#i-chev"/></svg></div>
+      <div class="help" data-err="type" id="afTypeErr"></div>
+    </div>
+    <div class="acts">
+      <button type="button" class="btn btn-primary" data-act="save">Add brand</button>
+    </div>
+  </div>
+</template>
+
+<script>
+(() => {
+  const qs = (s, r = document) => r.querySelector(s);
+  const mode = new URLSearchParams(location.search).get('mode') || 'a';
+  const names = { a: 'A · Accordion below the picker', b: 'B · Replace in place', c: 'C · Inside the popover' };
+  qs('#dirName').textContent = names[mode] || names.a;
+  document.querySelectorAll('#dirs a').forEach(a => { if (a.dataset.mode === mode) { a.setAttribute('aria-current', 'page'); } });
+  document.title = names[mode] + ' · inline add-new';
+
+  const seed = () => [
+    { id: 1, name: 'Toyota', type: 'Car' }, { id: 2, name: 'Hyundai', type: 'Car' }, { id: 3, name: 'Kia', type: 'Car' },
+    { id: 4, name: 'Nissan', type: 'Car' }, { id: 5, name: 'Honda', type: 'Motorcycle' }, { id: 6, name: 'Mercedes-Benz', type: 'Car' },
+    { id: 7, name: 'Isuzu', type: 'Truck' }, { id: 8, name: 'Yutong', type: 'Bus' }, { id: 9, name: 'Bajaj', type: 'Motorcycle' },
+  ];
+  let brands = seed();
+  let selected = null;
+  let drafts = {};
+  let flowOpen = false;
+  let prevValue = '';
+
+  const combo = qs('#combo'), input = qs('#brand'), pop = qs('#pop'), list = qs('#brandList'),
+        empty = qs('#brandEmpty'),
+        help = qs('#brandHelp'), live = qs('#live'), log = qs('#log'), model = qs('#model'), modelHelp = qs('#modelHelp'),
+        hostSave = qs('#hostSave'), hostWhy = qs('#hostWhy'),
+        acc = qs('#acc'), accPanel = qs('#accPanel'), slotH = qs('#slotH'), layerPicker = qs('#layerPicker'), layerForm = qs('#layerForm'),
+        viewForm = qs('#viewForm');
+
+  const say = (msg, cls) => { const li = document.createElement('li'); li.textContent = msg; if (cls) { li.className = cls; } log.prepend(li); };
+  const announce = (msg) => { live.textContent = ''; setTimeout(() => { live.textContent = msg; }, 30); };
+  const dur = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 240;
+
+  /* ---------- combobox ---------- */
+  let active = -1;
+  let items = [];
+  let canCreate = false;
+  const norm = s => s.trim().toLowerCase();
+  const highlight = (name, term) => {
+    if (!term) { return name; }
+    const i = name.toLowerCase().indexOf(term.toLowerCase());
+    if (i < 0) { return name; }
+    return name.slice(0, i) + '<mark>' + name.slice(i, i + term.length) + '</mark>' + name.slice(i + term.length);
+  };
+  function render() {
+    const term = input.value.trim();
+    const t = norm(term);
+    const hits = brands.filter(b => !t || b.name.toLowerCase().includes(t));
+    items = hits;
+    list.innerHTML = hits.map((b, i) =>
+      `<li class="opt" role="option" id="opt-${b.id}" data-i="${i}" aria-selected="${selected && selected.id === b.id}">
+         <span>${highlight(b.name, term)} <span class="meta">${b.type}</span></span>
+         ${selected && selected.id === b.id ? '<svg class="ck"><use href="#i-check"/></svg>' : ''}
+       </li>`).join('');
+    const exact = hits.some(b => norm(b.name) === t);
+    empty.hidden = hits.length > 0;
+    empty.textContent = hits.length ? '' : `No brand matches “${term}”.`;
+    canCreate = t.length >= 2 && !exact;
+    if (canCreate) {
+      list.insertAdjacentHTML('beforeend', `<li class="opt create" role="option" id="opt-create" data-i="${hits.length}" aria-selected="false"><svg><use href="#i-plus"/></svg><span>Add <span class="term">“${term}”</span> as a new brand</span></li>`);
+    }
+    active = -1;
+    setActive(-1);
+  }
+  function setActive(i) {
+    active = i;
+    list.querySelectorAll('.opt').forEach(o => o.classList.toggle('is-active', +o.dataset.i === i));
+    const a = i >= 0 ? list.querySelector(`[data-i="${i}"]`) : null;
+    input.setAttribute('aria-activedescendant', a ? a.id : '');
+    if (a) { a.scrollIntoView({ block: 'nearest' }); }
+  }
+  function open() {
+    if (combo.dataset.open === 'true') { return; }
+    if (flowOpen && mode !== 'c') { return; }
+    combo.dataset.open = 'true';
+    input.setAttribute('aria-expanded', 'true');
+    render();
+  }
+  function close() {
+    if (combo.dataset.open !== 'true') { return; }
+    if (mode === 'c' && pop.dataset.view === 'form') { return; }
+    combo.dataset.open = 'false';
+    input.setAttribute('aria-expanded', 'false');
+    setActive(-1);
+    if (!flowOpen && selected && norm(input.value) !== norm(selected.name)) { input.value = selected.name; }
+    if (!flowOpen && !selected && input.value.trim()) { input.value = ''; }
+  }
+  function pick(b, opts = {}) {
+    selected = b;
+    input.value = b.name;
+    model.disabled = false;
+    modelHelp.textContent = '';
+    if (!opts.silent) { say(`Selected ${b.name}`); }
+    close();
+  }
+  let skipOpenOnFocus = false;
+  const refocus = () => { skipOpenOnFocus = true; input.focus(); setTimeout(() => { skipOpenOnFocus = false; }, 50); };
+  input.addEventListener('focus', () => { if (skipOpenOnFocus) { return; } open(); });
+  input.addEventListener('input', () => { if (flowOpen && mode !== 'c') { return; } open(); render(); });
+  input.addEventListener('click', open);
+  input.addEventListener('keydown', e => {
+    if (flowOpen && mode !== 'c') { return; }
+    const n = items.length + (canCreate ? 1 : 0);
+    if (e.key === 'ArrowDown') { e.preventDefault(); open(); setActive(n ? (active + 1) % n : -1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(n ? (active - 1 + n) % n : -1); }
+    else if (e.key === 'Enter') {
+      if (combo.dataset.open !== 'true') { return; }
+      e.preventDefault();
+      if (active >= 0 && active < items.length) { pick(items[active]); }
+      else if (active === items.length && canCreate) { startAdd(input.value.trim()); }
+      else if (items.length === 1) { pick(items[0]); }
+      else if (canCreate) { startAdd(input.value.trim()); }
+    }
+    else if (e.key === 'Escape') { e.preventDefault(); close(); }
+  });
+  list.addEventListener('mousedown', e => {
+    const o = e.target.closest('.opt'); if (!o) { return; }
+    e.preventDefault();
+    if (o.id === 'opt-create') { startAdd(input.value.trim()); } else { pick(items[+o.dataset.i]); }
+  });
+  document.addEventListener('mousedown', e => {
+    if (combo.contains(e.target)) { return; }
+    if (mode === 'c' && pop.dataset.view === 'form') { if (!(qs('.addform') && qs('.addform').contains(e.target))) { backFromAdd('outside'); } return; }
+    close();
+  });
+
+  /* ---------- add flow (shared) ---------- */
+  let form = null, term = '';
+  function mountPoint() { return mode === 'a' ? accPanel : mode === 'b' ? layerForm : viewForm; }
+  function buildForm(t) {
+    const frag = qs('#tplForm').content.cloneNode(true);
+    const root = frag.firstElementChild;
+    const d = drafts[norm(t)] || { name: t, type: '' };
+    qs('#afName', root).value = d.name;
+    qs('#afType', root).value = d.type;
+    root.addEventListener('click', e => {
+      const b = e.target.closest('[data-act]'); if (!b) { return; }
+      if (b.dataset.act === 'back') { backFromAdd('back'); }
+      if (b.dataset.act === 'save') { save(); }
+    });
+    root.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { e.preventDefault(); backFromAdd('esc'); }
+      if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') { e.preventDefault(); save(); }
+    });
+    root.addEventListener('input', () => {
+      drafts[norm(term)] = { name: qs('#afName', root).value, type: qs('#afType', root).value };
+      qs('[data-err="name"]', root).textContent = ''; qs('#afName', root).classList.remove('is-error');
+    });
+    return root;
+  }
+  function lockHost(on) {
+    hostSave.setAttribute('aria-disabled', on ? 'true' : 'false');
+    if (on) { hostSave.setAttribute('aria-describedby', 'hostWhy'); } else { hostSave.removeAttribute('aria-describedby'); }
+    hostWhy.hidden = !on;
+  }
+  function startAdd(t) {
+    if (flowOpen) { return; }
+    term = t; flowOpen = true; prevValue = selected ? selected.name : '';
+    form = buildForm(t);
+    const mp = mountPoint(); mp.innerHTML = ''; mp.appendChild(form);
+    lockHost(true);
+    help.className = 'help'; help.textContent = '';
+    say(`Add “${t}” → ${mode === 'a' ? 'accordion opens below' : mode === 'b' ? 'picker replaced by form' : 'popover swaps to form'}`);
+    if (mode === 'a') {
+      close();
+      input.value = t; input.readOnly = true;
+      requestAnimationFrame(() => { acc.dataset.open = 'true'; });
+    }
+    if (mode === 'b') {
+      close();
+      swapLayers(layerPicker, layerForm);
+    }
+    if (mode === 'c') {
+      pop.dataset.view = 'form'; combo.dataset.view = 'form';
+      viewForm.setAttribute('aria-hidden', 'false');
+      input.readOnly = true; input.setAttribute('aria-expanded', 'false');
+    }
+    setTimeout(() => { qs('#afName', form).focus(); qs('#afName', form).select(); }, dur() * 0.6);
+  }
+  function swapLayers(from, to) {
+    const h0 = slotH.offsetHeight;
+    from.setAttribute('aria-hidden', 'true');
+    to.setAttribute('aria-hidden', 'false');
+    slotH.classList.add('is-animating');
+    slotH.style.height = h0 + 'px';
+    requestAnimationFrame(() => {
+      const h1 = to.offsetHeight;
+      slotH.style.height = h1 + 'px';
+      setTimeout(() => { slotH.style.height = ''; slotH.classList.remove('is-animating'); }, dur() + 20);
+    });
+  }
+  function teardown() {
+    flowOpen = false;
+    lockHost(false);
+    if (mode === 'a') {
+      acc.dataset.open = 'false';
+      setTimeout(() => { accPanel.innerHTML = ''; }, dur());
+      input.readOnly = false;
+    }
+    if (mode === 'b') {
+      swapLayers(layerForm, layerPicker);
+      setTimeout(() => { layerForm.innerHTML = ''; }, dur());
+    }
+    if (mode === 'c') {
+      pop.dataset.view = 'list'; combo.dataset.view = '';
+      viewForm.setAttribute('aria-hidden', 'true');
+      input.readOnly = false;
+      setTimeout(() => { viewForm.innerHTML = ''; }, dur());
+    }
+  }
+  function backFromAdd(reason) {
+    if (!flowOpen) { return; }
+    const d = drafts[norm(term)];
+    const dirty = d && (d.name !== term || d.type);
+    teardown();
+    input.value = dirty && !prevValue ? term : prevValue;
+    if (!prevValue) { selected = null; }
+    if (mode === 'c') { combo.dataset.open = 'false'; input.setAttribute('aria-expanded', 'false'); }
+    say(dirty ? `Back (${reason}) — draft kept, choose Add “${term}” again to continue` : `Back (${reason})`);
+    if (dirty) { help.className = 'help'; help.textContent = `Draft for “${d.name}” kept. Choose “Add” again to continue.`; }
+    refocus();
+    if (mode !== 'c') { close(); }
+  }
+  function validate() {
+    let ok = true;
+    const name = qs('#afName', form), type = qs('#afType', form);
+    const flag = (el, key, msg) => { qs(`[data-err="${key}"]`, form).textContent = msg; el.classList.toggle('is-error', !!msg); el.setAttribute('aria-invalid', msg ? 'true' : 'false'); };
+    flag(name, 'name', '');
+    if (!name.value.trim()) { flag(name, 'name', 'Enter the brand name.'); ok = false; }
+    else if (brands.some(b => norm(b.name) === norm(name.value))) { flag(name, 'name', `${name.value.trim()} already exists. Pick it from the list.`); ok = false; }
+    if (!type.value) { flag(type, 'type', 'Select the vehicle type.'); ok = false; } else { flag(type, 'type', ''); }
+    if (!ok) { (name.classList.contains('is-error') ? name : type).focus(); }
+    return ok;
+  }
+  function save() {
+    if (!form || form.dataset.busy) { return; }
+    if (!validate()) { return; }
+    const btn = qs('[data-act="save"]', form), fail = qs('.fail', form);
+    const name = qs('#afName', form).value.trim(), type = qs('#afType', form).value;
+    fail.hidden = true;
+    form.dataset.busy = '1';
+    form.querySelectorAll('input,select,button').forEach(el => { el.disabled = true; });
+    btn.disabled = true; btn.classList.add('is-busy'); btn.innerHTML = '<span class="spin"></span>Adding…';
+    say(`POST /brands {name:“${name}”, type:${type}}`);
+    setTimeout(() => {
+      form.querySelectorAll('input,select,button').forEach(el => { el.disabled = false; });
+      if (qs('#simFail').checked) {
+        btn.classList.remove('is-busy'); btn.disabled = false; btn.textContent = 'Try again';
+        delete form.dataset.busy;
+        fail.hidden = false;
+        say('500 — error stays at the point of failure, draft intact', 'bad');
+        return;
+      }
+      const b = { id: Date.now(), name, type };
+      brands.push(b); brands.sort((x, y) => x.name.localeCompare(y.name));
+      delete drafts[norm(term)];
+      btn.classList.remove('is-busy'); btn.classList.add('is-done'); btn.innerHTML = '<svg><use href="#i-check"/></svg>Added';
+      say(`201 — “${name}” created, selecting it`, 'ok');
+      setTimeout(() => {
+        form.dataset.busy = '';
+        teardown();
+        pick(b, { silent: true });
+        if (mode === 'c') { combo.dataset.open = 'false'; input.setAttribute('aria-expanded', 'false'); }
+        input.classList.add('is-added');
+        help.className = 'help ok'; help.innerHTML = `<svg><use href="#i-check"/></svg>${name} added and selected`;
+        announce(`${name} added to brands and selected.`);
+        setTimeout(refocus, dur());
+        setTimeout(() => { input.classList.remove('is-added'); }, 1600);
+        setTimeout(() => { if (help.classList.contains('ok')) { help.className = 'help'; help.textContent = ''; } }, 4000);
+      }, 420);
+    }, +qs('#simLat').value);
+  }
+
+  qs('#host').addEventListener('submit', e => {
+    e.preventDefault();
+    if (flowOpen) { qs('#afName', form).focus(); say('Save vehicle blocked — focus moved into the open add form'); return; }
+    say(selected ? `Save vehicle → brand ${selected.name}` : 'Save vehicle → no brand');
+  });
+  qs('#reset').addEventListener('click', () => {
+    if (flowOpen) { backFromAdd('reset'); }
+    brands = seed(); selected = null; drafts = {}; input.value = ''; model.disabled = true; modelHelp.textContent = 'Choose a brand first.';
+    help.className = 'help'; help.textContent = ''; log.innerHTML = ''; input.classList.remove('is-added');
+    say('Reset');
+  });
+})();
+</script>
+</body>
+</html>

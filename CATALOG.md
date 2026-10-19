@@ -23,7 +23,7 @@ Last catalogued: 2026-08-30.
 
 ---
 
-## 1 · Specimens — `harvest/specimens/` (64 sheets)
+## 1 · Specimens — `harvest/specimens/` (65 sheets)
 
 Per-family variation sheets and composed page recipes. The first place to look for any layout.
 Catalogued in detail in `harvest/HARVEST.md`.
@@ -38,7 +38,7 @@ Catalogued in detail in `harvest/HARVEST.md`.
 **Studies** (drill-downs on one hard question)
 `Action & Commit Placement` · `Authentication Flow` · `Internal Auth` · `Bulk-Select Action Bar` ·
 `Calendar Event-Creation` · `Case Review & Action-Center` · `Containment & Chrome Context` ·
-`Dashboard Shell & Widget` · `Filter Placement` · `Inbox & Thread` · `Kanban Board` ·
+`Dashboard Shell & Widget` · `Filter Placement` · `Inbox & Thread` · `Inline Create` (interactive, `?mode=a|b|c`) · `Kanban Board` ·
 `Long-Form Organization` · `Master-Detail Reveal` · `Mobile App Shell` · `Pagination & Load-More` ·
 `Per-Row Action Affordance` · `Pricing Plan` · `Printable Financial Document` · `Responsive Reflow` ·
 `Role-Gated UI` · `Stepper & Progress Orientation` · `Tenant Accent Theming` · `View-Mode & Density` ·
